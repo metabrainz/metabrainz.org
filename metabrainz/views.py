@@ -25,8 +25,7 @@ def press_releases():
 
 @index_bp.route('/white-papers')
 def white_papers():
-    # TODO: Create this page.
-    return render_template('home.html')
+    return render_template('about/white_papers.html')
 
 
 @index_bp.route('/privacy')
