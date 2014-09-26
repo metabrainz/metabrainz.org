@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% block head %}
+      <meta charset="utf-8">
+      <title>{% block title %}MetaBrainz Foundation{% endblock %}</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+
+      {% if config.DEBUG %}
+        <link rel="stylesheet/less" type="text/css" href="{{ url_for('static', filename='css/styles.less') }}" />
+        <script src="{{ url_for('static', filename='js/less-1.7.5.min.js') }}"></script>
+      {% else %}
+        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" media="screen" />
+      {% endif %}
+    {% endblock %}
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      {% block content %}
+        <!-- Page content -->
+      {% endblock %}
+
+    </div>
+
+    {% block scripts %}
+      <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+
+  </body>
+
+</html>
