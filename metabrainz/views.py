@@ -20,8 +20,7 @@ def sponsors():
 
 @index_bp.route('/press-releases')
 def press_releases():
-    # TODO: Create this page.
-    return render_template('home.html')
+    return render_template('about/press_releases.html')
 
 
 @index_bp.route('/white-papers')
