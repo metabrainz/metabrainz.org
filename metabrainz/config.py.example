@@ -1,0 +1,6 @@
+# -*- coding: utf-8 -*-
+# CUSTOM CONFIGURATION
+
+DEBUG = True  # set to False in production mode
+
+SECRET_KEY = "CHANGE_THIS"
