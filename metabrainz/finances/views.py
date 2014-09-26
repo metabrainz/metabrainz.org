@@ -23,5 +23,4 @@ def highest_donors():
 
 @finances_bp.route('/historical')
 def historical():
-    # TODO: Create this page.
-    return render_template('home.html')
+    return render_template('finances/historical.html')
