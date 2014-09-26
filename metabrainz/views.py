@@ -10,8 +10,7 @@ def home():
 
 @index_bp.route('/customers')
 def customers():
-    # TODO: Create this page.
-    return render_template('home.html')
+    return render_template('about/customers.html')
 
 
 @index_bp.route('/sponsors')
