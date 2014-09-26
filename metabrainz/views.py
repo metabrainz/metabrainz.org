@@ -30,8 +30,7 @@ def white_papers():
 
 @index_bp.route('/privacy')
 def privacy_policy():
-    # TODO: Create this page.
-    return render_template('home.html')
+    return render_template('about/privacy.html')
 
 
 @index_bp.route('/contact')
