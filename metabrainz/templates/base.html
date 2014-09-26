@@ -29,8 +29,14 @@
 
       {% block footer %}
         <hr />
-        <div class="footer">
-          <a href="https://twitter.com/MetaBrainz">Twitter</a>
+        <div class="footer clearfix">
+          <ul class="list-inline pull-left">
+            <li><a href="{{ url_for('index.privacy_policy') }}">Privacy Policy</a></li>
+            <li><a href="https://twitter.com/MetaBrainz">Twitter</a></li>
+          </ul>
+          <div class="pull-right">
+            Hosted by <a href="http://digitalwest.net/">Digital West</a>. Sponsored by: <a href="http://www.google.com/">Google</a>, <a href="http://osuosl.org/">OSUOSL</a> and <a href="{{ url_for('index.sponsors') }}">others&hellip;</a>
+          </div>
         </div>
       {% endblock %}
 
