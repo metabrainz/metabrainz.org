@@ -15,6 +15,8 @@ After VM is created and running, access it via SSH and start the application:
     $ cd /vagrant
     $ python run.py
 
+Web server should be accessible at http://localhost:5000/.
+
 
 If you want to discuss something, go to *#musicbrainz-devel* IRC channel on *irc.freenode.net*.
 More info is available at https://wiki.musicbrainz.org/Communication.
