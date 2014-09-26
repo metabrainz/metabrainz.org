@@ -5,5 +5,16 @@ donation_bp = Blueprint('donation', __name__)
 
 @donation_bp.route('/')
 def index():
-    # TODO: Create this page.
-    return render_template('home.html')
+    return render_template('donation/donate.html')
+
+
+@donation_bp.route('/paypal')
+def paypal():
+    # TODO: Implement!
+    return "Not implemented!"
+
+
+@donation_bp.route('/wepay')
+def wepay():
+    # TODO: Implement!
+    return "Not implemented!"
