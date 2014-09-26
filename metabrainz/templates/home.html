@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Welcome to MetaBrainz!</h1>
+
+  <img class="pull-right" alt="MetaBrainz logo" src="{{ url_for('static', filename='img/metabrainz_logo.png') }}"/>
+
+  <p>
+    The MetaBrainz Foundation is a 501(c)(3) tax-exempt non-profit founded in December 2004 and based in San Luis Obispo, California, that believes in free, open access to data.
+  </p>
+  <p>
+    The MetaBrainz Foundation has been set up to build community maintained databases and make them available in the public domain or under Creative Commons licenses. Our data is mostly gathered by volunteers, and verified by a voting system to make sure it is consistent and correct. All non-commercial use is free, but commercial users are asked to pay for regular updates of the data in order to help fund the project. We encourage all data users to contribute to the data gathering process so that our data can be as comprehensive as possible.
+  </p>
+  <p>
+    The MetaBrainz Foundation believes in <a href="{{ url_for('finances.index') }}">transparent finances</a> and has several <a href="{{ url_for('index.customers') }}">commercial customers</a> who pay for timely and convenient access to data. The MetaBrainz Foundation is also supported by a number of <a href="{{ url_for('index.sponsors') }}">sponsors</a> who provide funds in order for the foundation to accomplish its goals.
+  </p>
+  <p>
+    <a href="http://musicbrainz.org">MusicBrainz</a>, a community-maintained open source encyclopedia of music information, is currently the MetaBrainz Foundation's sole project. MusicBrainz was created in 2000 and has gathered a significant number of users who curate a large database of information about music.
+  </p>
+
+  <h2>Board of Directors</h2>
+  <p>
+    Our board of directors consists of:
+    <ul>
+      <li>Director Nick Ashton-Hart, Executive Director of the <a href="http://www.internet-ecosystem.org/people">Internet &amp; Digital Ecosystem Alliance</a></li>
+      <li>Director <a href="http://paulbennun.com/">Paul Bennun</a> of <a href="http://www.somethinelse.com/">Somethin' Else</a></li>
+      <li>Director <a href="http://craphound.com/">Cory Doctorow</a>, Sci-Fi author and editor of the <a href="http://boingboing.net/">Boing Boing</a> weblog</li>
+      <li>Director <a href="http://uk.linkedin.com/pub/matthew-hawn/8/b74/8a">Matthew Hawn</a> of <a href="http://last.fm">Last.fm</a></li>
+      <li>Executive Director <a href="http://mayhem-chaos.net/">Robert Kaye</a> of the MetaBrainz Foundation</li>
+      <li>Director Carol Smith of <a href="http://google.com">Google</a>, leader of <a href="http://code.google.com/soc/">Google's Summer of Code Project</a></li>
+      <li>Director <a href="http://brianzisk.com/">Brian Zisk</a> of the <a href="http://futureofmusic.org/">Future of Music Coalition</a> and <a href="http://sfmusictech.com/">San Francisco Music Tech Summit</a></li>
+    </ul>
+    <ul>
+      <li>Director Emeritus <a href="http://lessig.org/">Lawrence Lessig</a> of the <a href="http://cyber.law.harvard.edu/people/llessig">Berkman Center for Internet and Society</a> and <a href="http://creativecommons.org/">Creative Commons</a></li>
+      <li>Director Emeritus <a href="http://joi.ito.com/">Joichi Ito</a> of <a href="http://www.neoteny.com/">Neoteny Co. Ltd.</a></li>
+    </ul>
+  </p>
+
+  <h2>Officers</h2>
+  <p>
+    The officers of this company are:
+    <ul>
+      <li>President Robert Kaye</li>
+      <li>Treasurer and secretary Carol Smith</li>
+    </ul>
+  </p>
+{% endblock %}
