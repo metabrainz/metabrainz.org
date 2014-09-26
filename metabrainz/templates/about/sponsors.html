@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Sponsors</h1>
+
+  <p>
+    The MetaBrainz Foundation wishes to offer a huge thank you to all of our sponsors and partners for their support in helping MusicBrainz operate.
+  </p>
+  <p>
+    Some of the following organizations and individuals have provided funding, others have supported us by providing access to tools and technologies that have helped us grow. In either case they played a significant role in the success and growth of MusicBrainz.
+  </p>
+  <p>We would not exist without you — <b>Thank You!</b></p>
+
+  <h2>Recent contributions</h2>
+  <p>
+    Thank you to <a href="http://google.com">Google</a>, <a href="http://spotify">Spotify</a>, and <a href="http://wikimedia.de/">Wikimedia Deutschland</a> for sponsoring the <a href="http://musicbrainz.org/doc/MusicBrainz_Summit/13">13th annual MusicBrainz summit</a> in September, 2013.
+  </p>
+
+  <style>
+    td { vertical-align: middle !important; }
+    tr :first-child { text-align: center; }
+  </style>
+
+  <h2>Sponsors</h2>
+  <table class="table table-bordered table-condensed">
+    <tbody>
+    <tr>
+      <td><img src="{{ url_for('static', filename='img/logos/200px-logo_google.jpg') }}"></td>
+      <td><b><a href="http://www.google.com/">Google</a></b> has been an extremely supportive sponsor. They've donated over <b>$240,000</b> and they employ our treasurer and secretary, Carol Smith.</td>
+    </tr>
+
+    <tr>
+      <td><img src="{{ url_for('static', filename='img/logos/logo_osl.png') }}"></td>
+      <td>The <b><a href="http://osuosl.org/">OSU Open Source Lab</a></b> hosts the FTP mirror server that handles the distribution of the <a href="http://musicbrainz.org/doc/MusicBrainz_Database">MusicBrainz Database</a> replication packets, thus saving us considerable load and bandwidth costs.</td>
+    </tr>
+
+    <tr>
+      <td><img src="{{ url_for('static', filename='img/logos/logo_digitalwest.jpg') }}"></td>
+      <td>Our main hosting provider, <b><a href="http://digitalwest.net/">Digital West Networks Inc.</a></b>, gives us a discount because of our non-profit status. They're also a really cool bunch of people who provide excellent service.</td>
+    </tr>
+
+    <tr>
+      <td><img src="{{ url_for('static', filename='img/logos/250px-logo_layer42.png') }}"></td>
+      <td><b><a href="http://layer42.net">Layer42</a></b> generously hosts a test server for us, free of charge!</td>
+    </tr>
+
+    <tr>
+      <td><img src="{{ url_for('static', filename='img/logos/200px-logo_github.png') }}"></td>
+      <td><b><a href="http://github.com">GitHub</a></b> provides us with a free Bronze account for hosting our sysadmin repositories.</td>
+    </tr>
+    </tbody>
+  </table>
+  
+  <h2>Individuals</h2>
+  <ul>
+    <li>Richard Jones donated <b>$50,000</b> in 2010 (<a href="http://blog.musicbrainz.org/?p=539">blog post</a>).</li>
+    <li>Our ever helpful <a href="http://metabrainz.org/">Board of Directors</a>.</li>
+    <li>All the <a href="http://musicbrainz.org/doc/About/Team">people who make MusicBrainz happen</a> on a day-to-day basis.</li>
+    <li>And of course, <a href="http://metabrainz.org/donations/by-amount">everyone who has donated</a> to the MetaBrainz Foundation.</li>
+  </ul>
+
+  <h2>Supporters</h2>
+  <p>The following organizations have provided valuable support. We are very grateful for all that they've done and for all that they continue doing.</p>
+  <ul>
+    <li>The <b><a href="http://www.bbc.co.uk/">BBC</a></b> selected MusicBrainz as its music metadata partner in 2007 and has since been using our data to supplement their artist profiles and album reviews on their <a href="http://www.bbc.co.uk/music">music site</a>.</li>
+    <li><b><a href="http://www.oracle.com/sun">Sun Microsystems</a></b> donated a $11,000 server in December 2006 to help us manage our increasing traffic (<a href="http://blog.musicbrainz.org/?p=230">blog post</a>).</li>
+    <li><b><a href="http://creativecommons.org/">Creative Commons</a></b> created the open license that enables our business model to thrive.</li>
+    <li><b><a href="http://oreilly.com/">O'Reilly Media</a></b> gave MusicBrainz $500 to start off a bank account for the project before the MetaBrainz Foundation existed.</li>
+  </ul>
+
+  <h2>Other support</h2>
+  <p>
+    Many people have helped us in uncountable ways over the years. Help ranges from minor support like putting up Robert Kaye in a hotel room for a night, a posh flat for a week, a free meal here or there or in kind donations.
+  </p>
+  <ul>
+    <li>Ben Chobot donated two beefy servers in 2008 that make up our search back-bone and Chad Wilson donated cash to purchase a much needed switch for the MusicBrainz servers.</li>
+    <li>John Buckman of <a href="http://magnatune.com">Magnatune</a> has put up Robert Kaye in his spare and very posh flat in London a number of times. With the hotel costs in London, this is a non-trivial amount of support.</li>
+    <li>Derek Sivers of <a href="http://cdbaby.com">CD Baby</a> provided hotel accommodations, use of his spare flat in Portland, and countless dinners to Robert Kaye.</li>
+    <li>Ed Cavazos from <a href="http://fr.com">Fish &amp; Richardson</a> provides ongoing pro-bono legal advice for the occasional Intellectual Property questions that MusicBrainz faces.</li>
+    <li>Dan Appleman with <a href="http://www.hewm.com">Heller Ehrman LLP</a> provides ongoing help crafting contracts for licensing our data.</li>
+    <li><a href="http://theblight.net">Neil Girling</a> provided a fully loaded Apple G5 machine for use in the MetaBrainz Foundation headquarters.</li>
+  </ul>
+{% endblock %}

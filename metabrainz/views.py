@@ -15,8 +15,7 @@ def customers():
 
 @index_bp.route('/sponsors')
 def sponsors():
-    # TODO: Create this page.
-    return render_template('home.html')
+    return render_template('about/sponsors.html')
 
 
 @index_bp.route('/press-releases')
