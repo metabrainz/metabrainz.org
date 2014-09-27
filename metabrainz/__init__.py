@@ -18,6 +18,6 @@ def create_app():
     app.register_blueprint(index_bp)
     app.register_blueprint(finances_bp, url_prefix='/finances')
     app.register_blueprint(reports_bp, url_prefix='/reports')
-    app.register_blueprint(donation_bp, url_prefix='/donation')
+    app.register_blueprint(donation_bp, url_prefix='/donate')
 
     return app
