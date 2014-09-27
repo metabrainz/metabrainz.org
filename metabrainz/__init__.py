@@ -9,6 +9,10 @@ def create_app():
     app.config.from_object(default_config)
     app.config.from_object('metabrainz.config')
 
+    # Database
+    from model import db
+    db.init_app(app)
+
     # Blueprints
     from views import index_bp
     from finances.views import finances_bp
