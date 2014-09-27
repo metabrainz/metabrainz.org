@@ -17,6 +17,19 @@ After VM is created and running, access it via SSH and start the application:
 
 Web server should be accessible at http://localhost:5000/.
 
+### Testing
 
-If you want to discuss something, go to *#musicbrainz-devel* IRC channel on *irc.freenode.net*.
+We use [nose](http://readthedocs.org/docs/nose/) package to run test cases:
+
+    $ nosetests
+
+If you want to take a look at code coverage use:
+
+    $ nosetests --with-coverage --cover-package=metabrainz --cover-erase --cover-html
+
+This will produce a coverage report in HTML format. It will be located in cover/index.html file.
+
+## Community
+
+If you want to discuss something, go to #musicbrainz-devel IRC channel on irc.freenode.net.
 More info is available at https://wiki.musicbrainz.org/Communication.

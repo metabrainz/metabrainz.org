@@ -10,3 +10,13 @@ venv
 *.log
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Test results
+/cover/
+nosetests.xml
+.tox/
+.cache
+.coverage
+
+# Vagrant
+.vagrant
