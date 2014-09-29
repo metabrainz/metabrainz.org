@@ -14,7 +14,3 @@ class FinancesViewsTestCase(FlaskTestCase):
     def test_highest_donors(self):
         response = self.client.get("/finances/donations/by-amount")
         self.assert200(response)
-
-    def test_historical(self):
-        response = self.client.get("/finances/historical")
-        self.assert200(response)
