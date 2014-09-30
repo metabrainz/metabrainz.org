@@ -3,4 +3,8 @@
 
 DEBUG = True  # set to False in production mode
 
+# Donations
+PAYMENT_PRODUCTION = False  # set to False to use testing environments in WePay and PayPal
+WEPAY_ACCESS_TOKEN = ""
+
 SECRET_KEY = "CHANGE_THIS"

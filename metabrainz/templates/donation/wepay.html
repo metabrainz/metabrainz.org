@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Make a Donation with WePay</h1>
+
+  <p>
+    To make a WePay donation, please verify the amount below. If you wish to credit this donation to a particular MusicBrainz user, please fill in the user name as well.
+  </p>
+
+  <p>
+    The personal information provided to the MetaBrainz Foundation during the donation process will not be shared with anyone. For more information, please take a look at our <a href="{{ url_for('index.privacy_policy') }}">privacy policy</a>.
+  </p>
+
+  <p><strong>
+    You must enter your MusicBrainz user name below to have Picard/MusicBrainz stop nagging you.
+  </strong></p>
+
+  {% if form.errors %}
+    <ul class="errors">
+      {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+        {% for error in field_errors %}
+          <li>{{ form[field_name].label }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="POST" class="form-horizontal" role="form">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+      {{ form.amount.label(class="col-sm-2 control-label") }}
+      <div class="col-sm-2 input-group">
+        {{ form.amount(id="inputAmount", class="form-control") | safe }}
+        <span class="input-group-addon">USD {{ '<strong>per month</strong>'|safe if recur }}</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      {{ form.editor.label(class="col-sm-2 control-label") }}
+      <div class="col-sm-2">
+        {{ form.editor(id="inputEditor", class="form-control") | safe }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label>
+            {{ form.can_contact | safe }}{{ form.can_contact.label.text }}
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label>
+            {{ form.anonymous | safe }}{{ form.anonymous.label.text }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="image" src="{{ url_for('static', filename='img/buttons/wepay-donate.png') }}"
+               style="border: 0" name="submit" alt="Donate with WePay" title="Donate!" />
+      </div>
+    </div>
+  </form>
+{% endblock %}
