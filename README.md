@@ -1,6 +1,6 @@
 # metabrainz.org
 
-Modern version of [MetaBrainz Foundation](http://metabrainz.org/) website.
+Modern version of the [MetaBrainz Foundation](http://metabrainz.org/) website.
 
 ## Development
 
@@ -30,6 +30,19 @@ If you want to take a look at code coverage use:
     $ nosetests --with-coverage --cover-package=metabrainz --cover-erase --cover-html
 
 This will produce a coverage report in HTML format. It will be located in cover/index.html file.
+
+### Testing donations
+
+Before doing anything make sure that `PAYMENT_PRODUCTION` variable in configuration file is set to `False`!
+This way you'll use testing environments where credit cards and bank accounts are not actually charged.
+More info about testing environments for each payment service can be found in their documentation:
+
+* WePay: https://www.wepay.com/developer/reference/testing
+* PayPal: https://developer.paypal.com/webapps/developer/docs/
+
+Please note that in order for [IPNs](https://en.wikipedia.org/wiki/Instant_payment_notification) to work,
+application MUST be publicly available. If you are doing development on your local machine it is likely
+that your callback endpoints will not be reachable from payment processors.
 
 ## Community
 
