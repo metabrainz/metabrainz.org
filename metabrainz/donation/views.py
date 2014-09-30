@@ -48,7 +48,7 @@ def wepay():
 
         response = wepay.call('/%s/create' % operation_type, params)
 
-        if response['error']:
+        if 'error' in response:
             return redirect(url_for('.error'))
         else:
             return redirect(response['%s_uri' % operation_type])
