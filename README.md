@@ -4,6 +4,8 @@ Modern version of [MetaBrainz Foundation](http://metabrainz.org/) website.
 
 ## Development
 
+Before starting the application copy `config.py.example` into `config.py` and tweak the configuration.
+
 The easiest way to set up a development environment is to use [Vagrant](https://www.vagrantup.com/).
 This command will create and configure virtual machine that you will be able to use for development:
 
