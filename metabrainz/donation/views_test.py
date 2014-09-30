@@ -14,3 +14,11 @@ class DonationViewsTestCase(FlaskTestCase):
     def test_wepay(self):
         response = self.client.get("/donate/wepay")
         self.assert200(response)
+
+    def test_wepay_callback(self):
+        response = self.client.get("/donate/wepay/complete")
+        self.assert200(response)
+
+    def test_error(self):
+        response = self.client.get("/donate/error")
+        self.assert200(response)
