@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 
 class WePayForm(Form):
     amount = DecimalField(
-        "Amount", description="USD",
+        "Amount",
         validators=[DataRequired("You need to specify amount of money that you want to donate.")])
     editor = StringField("User name")
     can_contact = BooleanField("You may email me about future fundraising events (this will be very seldom)")
