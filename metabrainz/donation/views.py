@@ -43,7 +43,7 @@ def wepay():
             params['auto_recur'] = True
             params['short_description'] = 'Recurring donation to MetaBrainz Foundation'
         else:
-            params['typez'] = 'DONATION'
+            params['type'] = 'DONATION'
             params['short_description'] = 'Donation to MetaBrainz Foundation'
 
         response = wepay.call('/%s/create' % operation_type, params)
