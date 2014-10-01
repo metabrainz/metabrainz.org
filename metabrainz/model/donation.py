@@ -43,6 +43,10 @@ class Donation(db.Model):
         if 'payer_email' in details and cls.is_donor_blocked(details['payer_email']):
             return True
 
+        if details['gross'] < 0.50:
+            # Tiny donation
+            pass
+
         if details['state'] in ['settled', 'captured']:
             # Payment has been received
 
