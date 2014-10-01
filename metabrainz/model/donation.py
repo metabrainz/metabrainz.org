@@ -59,6 +59,7 @@ class Donation(db.Model):
                 anonymous=anonymous,
                 amount=details['gross']-details['fee'],
                 fee=details['fee'],
+                paypal_trans_id=checkout_id,
             )
 
             if 'shipping_address' in details:
