@@ -29,7 +29,8 @@ class Donation(db.Model):
     fee = db.Column(db.String, server_default='')
     memo = db.Column(db.String, server_default='')
 
-    def verify_and_log_wepay_checkout(self, checkout_id, editor, anonymous, can_contact):
+    @classmethod
+    def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):
         # Looking up updated information about the object
         wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],
                       access_token=current_app.config['WEPAY_ACCESS_TOKEN'])
@@ -39,13 +40,13 @@ class Donation(db.Model):
         if 'error' in details:
             return False
 
-        if 'payer_email' in details and self.is_donor_blocked(details['payer_email']):
+        if 'payer_email' in details and cls.is_donor_blocked(details['payer_email']):
             return True
 
         if details['state'] in ['settled', 'captured']:
             # Payment has been received
 
-            new_donation = Donation(
+            new_donation = cls(
                 first_name=details['payer_name'],
                 last_name='',
                 email=details['payer_email'],
