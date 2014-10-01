@@ -1,7 +1,9 @@
-from flask import Blueprint, request, render_template, url_for, redirect
+from flask import Blueprint, request, render_template, url_for, redirect, current_app
+from werkzeug.exceptions import BadRequest, InternalServerError
 from forms import WePayForm
 from wepay import WePay
-from flask import current_app
+from metabrainz.model.donation import Donation
+
 
 donation_bp = Blueprint('donation', __name__)
 
@@ -33,6 +35,7 @@ def wepay():
     recur = request.args.get('recur') == '1'
     amount = request.args.get('amount') or 0
 
+    print request.headers['Host']
     form = WePayForm(float(amount))
 
     if form.validate_on_submit():
@@ -49,6 +52,15 @@ def wepay():
             'require_shipping': True,
         }
 
+        # Setting callback_uri that will receive IPNs
+        if request.headers['Host'].startswith('localhost') or request.headers['Host'].startswith('127.0.0.1'):
+            # Also passing arguments that will be returned with IPNs
+            params['callback_uri'] = url_for('.wepay_ipn', _external=True,
+                                             editor=form.editor.data,
+                                             anonymous=form.anonymous.data,
+                                             can_contact=form.can_contact.data)
+
+        print params['callback_uri']
         # Setting parameters that are specific for selected type of donation
         if recur:
             params['period'] = 'monthly'
@@ -70,8 +82,27 @@ def wepay():
 
 @donation_bp.route('/wepay/ipn', methods=['POST'])
 def wepay_ipn():
-    # TODO: Verify and log WePay checkout.
-    return "Not implemented!"
+    """Endpoint that receives Instant Payment Notifications (IPNs) from WePay.
+
+    More info is available at https://www.wepay.com/developer/reference/ipn.
+    """
+
+    # Checking the type of object (should be `checkout`)
+    if 'checkout_id' in request.form:
+        checkout_id = request.form['checkout_id']
+    else:
+        raise BadRequest('Invalid object_id.')
+
+    # Getting additional info that was passed with callback_uri during payment creation
+    editor = request.args['editor']
+    anonymous = request.args['anonymous']
+    can_contact = request.args['can_contact']
+
+    result = Donation.verify_and_log_wepay_checkout(checkout_id, editor, anonymous, can_contact)
+    if result is True:
+        return "Recorded."
+    else:
+        raise InternalServerError()
 
 
 @donation_bp.route('/complete')
