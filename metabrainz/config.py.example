@@ -4,3 +4,5 @@
 DEBUG = True  # set to False in production mode
 
 SECRET_KEY = "CHANGE_THIS"
+
+USE_COMPILED_STYLING = not DEBUG
