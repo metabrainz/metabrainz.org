@@ -40,9 +40,6 @@ class Donation(db.Model):
         if 'error' in details:
             return False
 
-        if 'payer_email' in details and cls.is_donor_blocked(details['payer_email']):
-            return True
-
         if details['gross'] < 0.50:
             # Tiny donation
             pass
@@ -92,8 +89,3 @@ class Donation(db.Model):
             return False
 
         return True
-
-    @staticmethod
-    def is_donor_blocked(email):
-        pattern = re.compile('^yewm200')
-        return email == 'gypsy313309496@aol.com' or pattern.match(email)
