@@ -24,7 +24,7 @@ class Donation(db.Model):
 
     # Transaction details
     timestamp = db.Column(db.DateTime, server_default='now()')
-    paypal_trans_id = db.Column(db.String(32), nullable=False)
+    transaction_id = db.Column('paypal_trans_id', db.String(32), nullable=False)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.String, server_default='')
     memo = db.Column(db.String, server_default='')
@@ -59,7 +59,7 @@ class Donation(db.Model):
                 anonymous=anonymous,
                 amount=details['gross']-details['fee'],
                 fee=details['fee'],
-                paypal_trans_id=checkout_id,
+                transaction_id=checkout_id,
             )
 
             if 'shipping_address' in details:
