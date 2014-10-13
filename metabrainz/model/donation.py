@@ -1,7 +1,6 @@
 from metabrainz.model import db
 from flask import current_app
 from wepay import WePay
-import re
 
 
 class Donation(db.Model):
