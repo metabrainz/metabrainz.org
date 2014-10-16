@@ -3,11 +3,17 @@
 
 DEBUG = True  # set to False in production mode
 
-# PAYMENTS
+# Primary database
+# Example: "postgresql://metabrainz:metabrainz@localhost:5432/metabrainz"
+SQLALCHEMY_DATABASE_URI = "postgresql://<user>:<pass>@<host>:<port>/<db>"
+
+# Database for testing
+TEST_SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz_test:metabrainz_test@localhost:5432/metabrainz_test"
+
+# Payments
 PAYMENT_PRODUCTION = False  # set to False to use testing environments in WePay and PayPal
 WEPAY_ACCESS_TOKEN = ""
 WEPAY_ACCOUNT_ID = ""
-
 
 SECRET_KEY = "CHANGE_THIS"
 
