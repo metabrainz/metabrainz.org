@@ -13,7 +13,7 @@ class Donation(db.Model):
     last_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
     moderator = db.Column(db.String, server_default='')
-    contact = db.Column('contact', db.Boolean, server_default='FALSE')
+    can_contact = db.Column('contact', db.Boolean, server_default='FALSE')
     anonymous = db.Column('anon', db.Boolean, server_default='FALSE')
     address_street = db.Column(db.String, server_default='')
     address_city = db.Column(db.String, server_default='')
@@ -33,7 +33,6 @@ class Donation(db.Model):
         # Looking up updated information about the object
         wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],
                       access_token=current_app.config['WEPAY_ACCESS_TOKEN'])
-
         details = wepay.call('/checkout', {'checkout_id': checkout_id})
 
         if 'error' in details:
