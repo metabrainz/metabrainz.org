@@ -43,7 +43,7 @@ class Donation(db.Model):
             # Tiny donation
             pass
 
-        if details['state'] in ['settled', 'captured']:
+        elif details['state'] in ['settled', 'captured']:
             # Payment has been received
 
             new_donation = cls(
