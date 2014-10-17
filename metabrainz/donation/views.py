@@ -1,6 +1,5 @@
 from flask import Blueprint, request, render_template, url_for, redirect, current_app
 from werkzeug.exceptions import BadRequest, InternalServerError
-from forms import WePayForm
 from wepay import WePay
 from metabrainz.model.donation import Donation
 
@@ -36,7 +35,8 @@ def wepay():
     amount = request.args.get('amount') or 0
 
     print request.headers['Host']
-    form = WePayForm(float(amount))
+    import forms
+    form = forms.BaseDonationForm(float(amount))
 
     if form.validate_on_submit():
         operation_type = 'preapproval' if recur else 'checkout'
