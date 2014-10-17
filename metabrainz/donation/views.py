@@ -67,8 +67,8 @@ def wepay():
             'require_shipping': True,
         }
 
-        # Setting callback_uri that will receive IPNs
-        if request.headers['Host'].startswith('localhost') or request.headers['Host'].startswith('127.0.0.1'):
+        # Setting callback_uri that will receive IPNs if endpoint is not local
+        if not (request.headers['Host'].startswith('localhost') or request.headers['Host'].startswith('127.0.0.1')):
             # Also passing arguments that will be returned with IPNs
             params['callback_uri'] = url_for('.wepay_ipn', _external=True,
                                              editor=form.editor.data,
