@@ -5,8 +5,8 @@ from wtforms.validators import DataRequired
 from flask import url_for, request
 
 
-class BaseDonationForm(Form):
-    """Base form for donations."""
+class WePayForm(Form):
+    """Form for WePay donations."""
     amount = DecimalField(
         "Amount",
         validators=[DataRequired("You need to specify amount of money that you want to donate.")])

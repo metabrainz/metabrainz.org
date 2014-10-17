@@ -51,7 +51,7 @@ def wepay():
     amount = request.args.get('amount') or 0
 
     import forms
-    form = forms.BaseDonationForm(float(amount))
+    form = forms.WePayForm(float(amount))
 
     if form.validate_on_submit():
         operation_type = 'preapproval' if recur else 'checkout'
