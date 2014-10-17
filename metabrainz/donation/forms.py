@@ -19,10 +19,13 @@ class WePayForm(Form):
         Form.__init__(self, **kwargs)
 
 
-    """Base form for PayPal donations."""
 class BasePayPalForm(Form):
+    """Base form for PayPal donations.
+
+    Info about variables can be found at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/.
+    """
     business = StringField(widget=HiddenInput(), default="donations@metabrainz.org")
-    no_shipping = StringField(widget=HiddenInput(), default="2")
+    no_shipping = StringField(widget=HiddenInput(), default="2")  # prompt for an address, and require one
     ret_url = StringField(widget=HiddenInput(), id="return", default=url_for('donation.complete', _external=True))
     cancel_return = StringField(widget=HiddenInput(), default=url_for('donation.cancelled', _external=True))
     currency_code = StringField(widget=HiddenInput(), default="USD")
@@ -52,7 +55,7 @@ class PayPalRecurringForm(BasePayPalForm):
     """Form for recurring donations via PayPal."""
     cmd = StringField(widget=HiddenInput(), default="_xclick-subscriptions")
     item_name = StringField(widget=HiddenInput(), default="Recurring donation to MetaBrainz Foundation")
-    t3 = StringField(widget=HiddenInput(), default="M")
-    p3 = StringField(widget=HiddenInput(), default="1")
-    src = StringField(widget=HiddenInput(), default="1")
-    sra = StringField(widget=HiddenInput(), default="1")
+    t3 = StringField(widget=HiddenInput(), default="M")  # regular subscription units of duration ('M' is month)
+    p3 = StringField(widget=HiddenInput(), default="1")  # subscription duration
+    src = StringField(widget=HiddenInput(), default="1")  # recurring payments
+    sra = StringField(widget=HiddenInput(), default="1")  # reattempt on failure

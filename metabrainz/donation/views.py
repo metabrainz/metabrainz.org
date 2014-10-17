@@ -14,17 +14,22 @@ def index():
 
 @donation_bp.route('/paypal')
 def paypal():
-    """Donation page for PayPal."""
-    recur = request.args.get('recur') == '1'
+    """Donation page for PayPal.
+
+    We use PayPal Payments Standard to receive donations. Form is submitted directly to
+    PayPal, so we don't need to do processing there. More information about this functionality
+    is avaukabke at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/formbasics/.
+    """
+    recurring = request.args.get('recur') == '1'
     amount = request.args.get('amount') or 0
 
     import forms
-    if recur:
+    if recurring:
         form = forms.PayPalRecurringForm(float(amount))
     else:
         form = forms.PayPalOneTimeForm(float(amount))
 
-    return render_template('donation/paypal.html', form=form, recur=recur)
+    return render_template('donation/paypal.html', form=form, recur=recurring)
 
 
 @donation_bp.route('/paypal/ipn', methods=['POST'])
@@ -47,14 +52,14 @@ def wepay():
     - one time single payment (https://www.wepay.com/developer/reference/checkout)
     - recurring monthly donation (https://www.wepay.com/developer/reference/preapproval)
     """
-    recur = request.args.get('recur') == '1'
+    recurring = request.args.get('recur') == '1'
     amount = request.args.get('amount') or 0
 
     import forms
     form = forms.WePayForm(float(amount))
 
     if form.validate_on_submit():
-        operation_type = 'preapproval' if recur else 'checkout'
+        operation_type = 'preapproval' if recurring else 'checkout'
 
         wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],
                       access_token=current_app.config['WEPAY_ACCESS_TOKEN'])
@@ -76,7 +81,7 @@ def wepay():
                                              can_contact=form.can_contact.data)
 
         # Setting parameters that are specific for selected type of donation
-        if recur:
+        if recurring:
             params['period'] = 'monthly'
             params['auto_recur'] = True
             params['short_description'] = 'Recurring donation to MetaBrainz Foundation'
@@ -91,7 +96,7 @@ def wepay():
         else:
             return redirect(response['%s_uri' % operation_type])
 
-    return render_template('donation/wepay.html', form=form, recur=recur)
+    return render_template('donation/wepay.html', form=form, recur=recurring)
 
 
 @donation_bp.route('/wepay/ipn', methods=['POST'])
