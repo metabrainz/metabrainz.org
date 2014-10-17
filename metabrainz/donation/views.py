@@ -34,7 +34,6 @@ def wepay():
     recur = request.args.get('recur') == '1'
     amount = request.args.get('amount') or 0
 
-    print request.headers['Host']
     import forms
     form = forms.BaseDonationForm(float(amount))
 
@@ -60,7 +59,6 @@ def wepay():
                                              anonymous=form.anonymous.data,
                                              can_contact=form.can_contact.data)
 
-        print params['callback_uri']
         # Setting parameters that are specific for selected type of donation
         if recur:
             params['period'] = 'monthly'
