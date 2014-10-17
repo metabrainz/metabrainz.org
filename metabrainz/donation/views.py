@@ -15,8 +15,16 @@ def index():
 @donation_bp.route('/paypal')
 def paypal():
     """Donation page for PayPal."""
-    # TODO: Implement donation page for PayPal!
-    return "Not implemented!"
+    recur = request.args.get('recur') == '1'
+    amount = request.args.get('amount') or 0
+
+    import forms
+    if recur:
+        form = forms.PayPalRecurringForm(float(amount))
+    else:
+        form = forms.PayPalOneTimeForm(float(amount))
+
+    return render_template('donation/paypal.html', form=form, recur=recur)
 
 
 @donation_bp.route('/wepay', methods=['GET', 'POST'])
@@ -107,6 +115,12 @@ def wepay_ipn():
 def complete():
     """Endpoint for successful donations."""
     return render_template('donation/complete.html')
+
+
+@donation_bp.route('/cancelled')
+def cancelled():
+    """Endpoint for cancelled donations."""
+    return render_template('donation/cancelled.html')
 
 
 @donation_bp.route('/error')
