@@ -27,6 +27,14 @@ def paypal():
     return render_template('donation/paypal.html', form=form, recur=recur)
 
 
+@donation_bp.route('/paypal/ipn', methods=['POST'])
+def paypal_ipn():
+    """Endpoint that receives Instant Payment Notifications (IPNs) from PayPal.
+    """
+    # TODO: Implement
+    pass
+
+
 @donation_bp.route('/wepay', methods=['GET', 'POST'])
 def wepay():
     """Donation page for WePay.
