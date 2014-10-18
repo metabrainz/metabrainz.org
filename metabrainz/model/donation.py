@@ -60,8 +60,23 @@ class Donation(db.Model):
             pass
 
         elif form['payment_status'] == 'Completed' and form['business'] != current_app.config['PAYPAL_BUSINESS']:
-            # TODO: Implement
-            pass
+            new_donation = cls(
+                first_name=form['first_name'],
+                last_name=form['last_name'],
+                email=form['payer_email'],
+                # TODO: Set custom variables like editor's name (moderator), anonymity, and contact preference.
+                address_street=form['address_street'],
+                address_city=form['address_city'],
+                address_state=form['address_state'],
+                address_zip=form['address_zip'],
+                address_country=form['address_country'],
+                amount=form['mc_gross']-form['mc_fee'],
+                fee=form['mc_fee'],
+                transaction_id=form['txn_id'],
+            )
+            db.session.add(new_donation)
+            db.session.commit()
+            # TODO: Send receipt.
 
         elif form['payment_status'] == 'Pending':
             # Payment is pending
@@ -92,7 +107,6 @@ class Donation(db.Model):
 
         elif details['state'] in ['settled', 'captured']:
             # Payment has been received
-
             new_donation = cls(
                 first_name=details['payer_name'],
                 last_name='',
