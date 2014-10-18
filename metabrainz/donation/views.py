@@ -2,6 +2,7 @@ from flask import Blueprint, request, render_template, url_for, redirect, curren
 from werkzeug.exceptions import BadRequest, InternalServerError
 from wepay import WePay
 from metabrainz.model.donation import Donation
+import requests
 
 
 donation_bp = Blueprint('donation', __name__)
@@ -35,9 +36,23 @@ def paypal():
 @donation_bp.route('/paypal/ipn', methods=['POST'])
 def paypal_ipn():
     """Endpoint that receives Instant Payment Notifications (IPNs) from PayPal.
+
+    Specifications are available at https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNImplementation/.
     """
-    # TODO: Implement
-    pass
+    data = request.get_data()
+
+    if current_app.config['PAYMENT_PRODUCTION']:
+        paypal_url = 'https://www.paypal.com/cgi-bin/webscr'
+    else:
+        paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
+
+    # Checking if data is legit
+    r = requests.post(paypal_url, data='cmd=_notify-validate&'+data)
+    if r.text == 'VERIFIED':
+        # TODO: Save info in the DB (use data.form object).
+        pass
+
+    return '', 200
 
 
 @donation_bp.route('/wepay', methods=['GET', 'POST'])
