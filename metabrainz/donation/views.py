@@ -47,10 +47,9 @@ def paypal_ipn():
         paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
 
     # Checking if data is legit
-    r = requests.post(paypal_url, data='cmd=_notify-validate&'+data)
-    if r.text == 'VERIFIED':
-        # TODO: Save info in the DB (use data.form object).
-        pass
+    verification_response = requests.post(paypal_url, data='cmd=_notify-validate&'+data)
+    if verification_response.text == 'VERIFIED':
+        Donation.process_paypal_ipn(request.form)
 
     return '', 200
 

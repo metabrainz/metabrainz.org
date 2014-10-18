@@ -33,6 +33,50 @@ class Donation(db.Model):
         return cls.query.filter_by(transaction_id=transaction_id).first()
 
     @classmethod
+    def process_paypal_ipn(cls, form):
+        """Processor for PayPal IPNs (Instant Payment Notifications).
+
+        Should be used only after IPN request is verified. See PayPal documentation for
+        more info about the process.
+
+        Args:
+            form: The form parameters from IPN request that contains IPN variables.
+                See https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNandPDTVariables/
+                for more info about them.
+        """
+
+        # Checking that txn_id has not been previously processed
+        if cls.get_by_transaction_id(form['txn_id']) is not None:
+            # Transaction ID used before
+            pass
+
+        # Checking that receiver_email is the primary PayPal email
+        elif form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
+            # Not primary email
+            pass
+
+        elif form['mc_gross'] < 0.50:
+            # Tiny donation
+            pass
+
+        elif form['payment_status'] == 'Completed' and form['business'] != current_app.config['PAYPAL_BUSINESS']:
+            # TODO: Implement
+            pass
+
+        elif form['payment_status'] == 'Pending':
+            # Payment is pending
+            pass
+
+        elif form['business'] == current_app.config['PAYPAL_BUSINESS']:
+            # non donation received
+            pass
+
+        else:
+            # Other status (no error)
+            pass
+
+
+    @classmethod
     def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):
         # Looking up updated information about the object
         wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],

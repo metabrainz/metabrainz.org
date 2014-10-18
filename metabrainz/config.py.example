@@ -15,6 +15,9 @@ PAYMENT_PRODUCTION = False  # set to False to use testing environments in WePay 
 WEPAY_ACCESS_TOKEN = ""
 WEPAY_ACCOUNT_ID = ""
 
+PAYPAL_PRIMARY_EMAIL = "paypal@metabrainz.org"
+PAYPAL_BUSINESS = "payment@metabrainz.org"
+
 SECRET_KEY = "CHANGE_THIS"
 
 USE_COMPILED_STYLING = not DEBUG
