@@ -29,6 +29,10 @@ class Donation(db.Model):
     memo = db.Column(db.String, server_default='')
 
     @classmethod
+    def get_by_transaction_id(cls, transaction_id):
+        return cls.query.filter_by(transaction_id=transaction_id).first()
+
+    @classmethod
     def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):
         # Looking up updated information about the object
         wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],

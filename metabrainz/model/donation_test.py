@@ -42,11 +42,12 @@ class FakeWePay(object):
 
 
 class DonationModelTestCase(ModelTestCase):
+
     def setUp(self):
         super(DonationModelTestCase, self).setUp()
         donation.WePay = lambda production=True, access_token=None, api_version=None: FakeWePay(production, access_token, api_version)
 
-    def test_addition(self):
+    def test_get_by_transaction_id(self):
         new = Donation()
         new.first_name = 'Tester'
         new.last_name = 'Testing'
@@ -56,12 +57,14 @@ class DonationModelTestCase(ModelTestCase):
         db.session.add(new)
         db.session.commit()
 
-        donations = Donation.query.all()
-        self.assertEqual(len(donations), 1)
+        result = Donation.get_by_transaction_id('TEST')
+        self.assertIsNotNone(result)
+
+        bad_result = Donation.get_by_transaction_id('MISSING')
+        self.assertIsNone(bad_result)
 
     def test_verify_and_log_wepay_checkout(self):
         self.assertTrue(Donation.verify_and_log_wepay_checkout(12345, 'Tester', False, True))
 
         # Donation should be in the DB now
-        donation = Donation.query.all()[0]
-        self.assertEqual(donation.transaction_id, str(12345))
+        self.assertEqual(Donation.query.all()[0].transaction_id, str(12345))
