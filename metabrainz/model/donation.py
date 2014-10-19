@@ -12,7 +12,7 @@ class Donation(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
-    moderator = db.Column(db.String, server_default='')
+    moderator = db.Column(db.String, server_default='')  # MusicBrainz username
     can_contact = db.Column('contact', db.Boolean, server_default='FALSE')
     anonymous = db.Column('anon', db.Boolean, server_default='FALSE')
     address_street = db.Column(db.String, server_default='')
@@ -64,7 +64,7 @@ class Donation(db.Model):
                 first_name=form['first_name'],
                 last_name=form['last_name'],
                 email=form['payer_email'],
-                # TODO: Set custom variables like editor's name (moderator), anonymity, and contact preference.
+                moderator=form['custom'],
                 address_street=form['address_street'],
                 address_city=form['address_city'],
                 address_state=form['address_state'],
@@ -74,9 +74,21 @@ class Donation(db.Model):
                 fee=float(form['mc_fee']),
                 transaction_id=form['txn_id'],
             )
+
+            if 'option_name1' in form and 'option_name2' in form:
+                if (form['option_name1'] == 'anonymous' and form['option_selection1'] == 'yes') or \
+                        (form['option_name2'] == 'anonymous' and form['option_selection2'] == 'yes') or \
+                                form['option_name2'] == 'yes':
+                    new_donation.anonymous = True
+                if (form['option_name1'] == 'contact' and form['option_selection1'] == 'yes') or \
+                        (form['option_name2'] == 'contact' and form['option_selection2'] == 'yes') or \
+                                form['option_name2'] == 'yes':
+                    new_donation.can_contact = True
+
             db.session.add(new_donation)
             db.session.commit()
-            # TODO: Send receipt.
+
+            # TODO: Send receipt
 
         elif form['payment_status'] == 'Pending':
             # Payment is pending
@@ -89,7 +101,6 @@ class Donation(db.Model):
         else:
             # Other status (no error)
             pass
-
 
     @classmethod
     def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):

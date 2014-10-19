@@ -131,7 +131,7 @@ def wepay_ipn():
         raise InternalServerError()
 
 
-@donation_bp.route('/complete')
+@donation_bp.route('/complete', methods=['GET', 'POST'])
 def complete():
     """Endpoint for successful donations."""
     return render_template('donation/complete.html')
