@@ -21,35 +21,61 @@
       {% else %}
         action="https://www.sandbox.paypal.com/cgi-bin/webscr"
       {% endif %}>
-    {{ form.hidden_tag() }}
+
+    {# Info about variables can be found at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/ #}
+
+    <input type="hidden" name="business" value="donations@metabrainz.org" />
+    <input type="hidden" name="no_shipping" value="2" />
+    <input type="hidden" name="return" value="{{ url_for('donation.complete', _external=True) }}" />
+    <input type="hidden" name="cancel_return" value="{{ url_for('donation.cancelled', _external=True) }}" />
+    <input type="hidden" name="notify_url" value="{{ url_for('donation.paypal_ipn', _external=True) }}" />
+    <input type="hidden" name="currency_code" value="USD" />
+
+    {% if recur %}
+      <input type="hidden" name="cmd" value="_xclick-subscriptions" />
+      <input type="hidden" name="item_name" value="Recurring donation to MetaBrainz Foundation" />
+      <input type="hidden" name="t3" value="M"> {# units of duration ('M' is month) #}
+      <input type="hidden" name="p3" value="1"> {# subscription duration #}
+      <input type="hidden" name="src" value="1"> {# recurring payments #}
+      <input type="hidden" name="sra" value="1"> {# reattempt on failure #}
+    {% else %}
+      <input type="hidden" name="cmd" value="_xclick" />
+      <input type="hidden" name="item_name" value="Donation to MetaBrainz Foundation" />
+    {% endif %}
 
     <div class="form-group">
-      {{ form.amount.label(class="col-sm-2 control-label") }}
+      <label for="amount" class="col-sm-2 control-label">Amount</label>
       <div class="col-sm-2 input-group">
-        {{ form.amount(id="inputAmount", class="form-control") | safe }}
+        <input type="text" id="amount" class="form-control"
+               name="{{ 'a3' if recur else 'amount' }}"
+               value="{{ amount }}" size="10">
         <span class="input-group-addon">USD {{ '<strong>per month</strong>'|safe if recur }}</span>
       </div>
     </div>
 
     <div class="form-group">
-      {{ form.editor.label(class="col-sm-2 control-label") }}
+      <label for="editor" class="col-sm-2 control-label">User name</label>
       <div class="col-sm-2">
-        {{ form.editor(id="inputEditor", class="form-control") | safe }}
+        <input type="text" id="editor" name="custom" class="form-control" size="20" />
       </div>
     </div>
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <div class="checkbox">
-          <label>
-            {{ form.can_contact | safe }}{{ form.can_contact.label.text }}
+          <label for="os0">
+            <input type="hidden" name="on0" value="contact"/>
+            <input type="checkbox" id="os0" name="os0" value="yes"/>
+            You may email me about future fundraising events (this will be very seldom)
           </label>
         </div>
       </div>
       <div class="col-sm-offset-2 col-sm-10">
         <div class="checkbox">
-          <label>
-            {{ form.anonymous | safe }}{{ form.anonymous.label.text }}
+          <label for="os1">
+            <input type="hidden" name="on1" value="anonymous"/>
+            <input type="checkbox" id="os1" name="os1" value="yes"/>
+            I would like this donation to be anonymous (don't list my name on the finances page)
           </label>
         </div>
       </div>
@@ -61,5 +87,6 @@
                style="border: 0" name="submit" alt="Donate with PayPal" title="Donate!" />
       </div>
     </div>
+
   </form>
 {% endblock %}

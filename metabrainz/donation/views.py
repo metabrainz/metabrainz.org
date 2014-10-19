@@ -23,14 +23,7 @@ def paypal():
     """
     recurring = request.args.get('recur') == '1'
     amount = request.args.get('amount') or 0
-
-    import forms
-    if recurring:
-        form = forms.PayPalRecurringForm(float(amount))
-    else:
-        form = forms.PayPalOneTimeForm(float(amount))
-
-    return render_template('donation/paypal.html', form=form, recur=recurring)
+    return render_template('donation/paypal.html', recurring=recurring, amount=amount)
 
 
 @donation_bp.route('/paypal/ipn', methods=['POST'])
@@ -157,4 +150,3 @@ def error():
     Users should be redirected there when errors occur during payment process.
     """
     return render_template('donation/error.html')
-
