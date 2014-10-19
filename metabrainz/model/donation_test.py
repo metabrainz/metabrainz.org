@@ -2,7 +2,7 @@ from metabrainz.model.testing import ModelTestCase
 import donation
 from donation import Donation
 from metabrainz.model import db
-from flask import url_for
+from flask import url_for, current_app
 
 
 class FakeWePay(object):
@@ -62,6 +62,35 @@ class DonationModelTestCase(ModelTestCase):
 
         bad_result = Donation.get_by_transaction_id('MISSING')
         self.assertIsNone(bad_result)
+
+    def test_process_paypal_ipn(self):
+        form = {  # This is not a complete list
+            'first_name': 'Tester',
+            'last_name': 'Testing',
+            'custom': 'tester',  # MusicBrainz username
+            'payer_email': 'tester@metabrainz.org',  # MusicBrainz username
+            'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
+            'business': 'donations@metabrainz.org',
+            'address_street': '1 Main St',
+            'address_city': 'San Jose',
+            'address_state': 'CA',
+            'address_country': 'United States',
+            'address_zip': '95131',
+            'mc_gross': '42.50',
+            'mc_fee': '1',
+            'txn_id': 'TEST',
+            'payment_status': 'Completed',
+
+            # Additional variables:
+            'option_name1': 'anonymous',
+            'option_selection1': 'yes',
+            'option_name2': 'contact',
+            'option_selection2': 'yes',
+        }
+        Donation.process_paypal_ipn(form)
+
+        # Donation should be in the DB now
+        self.assertEqual(Donation.query.all()[0].transaction_id, 'TEST')
 
     def test_verify_and_log_wepay_checkout(self):
         self.assertTrue(Donation.verify_and_log_wepay_checkout(12345, 'Tester', False, True))
