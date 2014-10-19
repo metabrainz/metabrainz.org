@@ -45,62 +45,50 @@ class Donation(db.Model):
                 for more info about them.
         """
 
+        # Only processing completed donations
+        if form['payment_status'] != 'Completed':
+            return
+
+        # We shouldn't process transactions to address for payments
+        if form['business'] == current_app.config['PAYPAL_BUSINESS']:
+            return
+
+        if form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
+            return
+
         # Checking that txn_id has not been previously processed
         if cls.get_by_transaction_id(form['txn_id']) is not None:
-            # Transaction ID used before
-            pass
+            return
 
-        # Checking that receiver_email is the primary PayPal email
-        elif form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
-            # Not primary email
-            pass
+        new_donation = cls(
+            first_name=form['first_name'],
+            last_name=form['last_name'],
+            email=form['payer_email'],
+            moderator=form['custom'],
+            address_street=form['address_street'],
+            address_city=form['address_city'],
+            address_state=form['address_state'],
+            address_postcode=form['address_zip'],
+            address_country=form['address_country'],
+            amount=float(form['mc_gross']) - float(form['mc_fee']),
+            fee=float(form['mc_fee']),
+            transaction_id=form['txn_id'],
+        )
 
-        elif float(form['mc_gross']) < 0.50:
-            # Tiny donation
-            pass
+        if 'option_name1' in form and 'option_name2' in form:
+            if (form['option_name1'] == 'anonymous' and form['option_selection1'] == 'yes') or \
+                    (form['option_name2'] == 'anonymous' and form['option_selection2'] == 'yes') or \
+                            form['option_name2'] == 'yes':
+                new_donation.anonymous = True
+            if (form['option_name1'] == 'contact' and form['option_selection1'] == 'yes') or \
+                    (form['option_name2'] == 'contact' and form['option_selection2'] == 'yes') or \
+                            form['option_name2'] == 'yes':
+                new_donation.can_contact = True
 
-        elif form['payment_status'] == 'Completed' and form['business'] != current_app.config['PAYPAL_BUSINESS']:
-            new_donation = cls(
-                first_name=form['first_name'],
-                last_name=form['last_name'],
-                email=form['payer_email'],
-                moderator=form['custom'],
-                address_street=form['address_street'],
-                address_city=form['address_city'],
-                address_state=form['address_state'],
-                address_postcode=form['address_zip'],
-                address_country=form['address_country'],
-                amount=float(form['mc_gross']) - float(form['mc_fee']),
-                fee=float(form['mc_fee']),
-                transaction_id=form['txn_id'],
-            )
+        db.session.add(new_donation)
+        db.session.commit()
 
-            if 'option_name1' in form and 'option_name2' in form:
-                if (form['option_name1'] == 'anonymous' and form['option_selection1'] == 'yes') or \
-                        (form['option_name2'] == 'anonymous' and form['option_selection2'] == 'yes') or \
-                                form['option_name2'] == 'yes':
-                    new_donation.anonymous = True
-                if (form['option_name1'] == 'contact' and form['option_selection1'] == 'yes') or \
-                        (form['option_name2'] == 'contact' and form['option_selection2'] == 'yes') or \
-                                form['option_name2'] == 'yes':
-                    new_donation.can_contact = True
-
-            db.session.add(new_donation)
-            db.session.commit()
-
-            # TODO: Send receipt
-
-        elif form['payment_status'] == 'Pending':
-            # Payment is pending
-            pass
-
-        elif form['business'] == current_app.config['PAYPAL_BUSINESS']:
-            # non donation received
-            pass
-
-        else:
-            # Other status (no error)
-            pass
+        # TODO: Send receipt
 
     @classmethod
     def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):
@@ -114,9 +102,9 @@ class Donation(db.Model):
 
         if details['gross'] < 0.50:
             # Tiny donation
-            pass
+            return True
 
-        elif details['state'] in ['settled', 'captured']:
+        if details['state'] in ['settled', 'captured']:
             # Payment has been received
             new_donation = cls(
                 first_name=details['payer_name'],
@@ -145,7 +133,8 @@ class Donation(db.Model):
 
             db.session.add(new_donation)
             db.session.commit()
-            # TODO: Send receipt.
+
+            # TODO: Send receipt
 
         elif details['state'] in ['authorized', 'reserved']:
             # Payment is pending
