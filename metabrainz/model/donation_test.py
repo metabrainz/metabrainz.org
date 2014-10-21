@@ -1,4 +1,4 @@
-from metabrainz.model.testing import ModelTestCase
+from metabrainz.testing import FlaskTestCase
 import donation
 from donation import Donation
 from metabrainz.model import db
@@ -41,11 +41,12 @@ class FakeWePay(object):
             raise NotImplementedError()
 
 
-class DonationModelTestCase(ModelTestCase):
+class DonationModelTestCase(FlaskTestCase):
 
     def setUp(self):
         super(DonationModelTestCase, self).setUp()
-        donation.WePay = lambda production=True, access_token=None, api_version=None: FakeWePay(production, access_token, api_version)
+        donation.WePay = lambda production=True, access_token=None, api_version=None:\
+            FakeWePay(production, access_token, api_version)
 
     def test_get_by_transaction_id(self):
         new = Donation()
