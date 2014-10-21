@@ -14,7 +14,6 @@ TEST_SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz_test:metabrainz_test@loc
 PAYMENT_PRODUCTION = False  # set to False to use testing environments in WePay and PayPal
 WEPAY_ACCESS_TOKEN = ""
 WEPAY_ACCOUNT_ID = ""
-
 PAYPAL_PRIMARY_EMAIL = "paypal@metabrainz.org"
 PAYPAL_BUSINESS = "payment@metabrainz.org"
 
