@@ -56,6 +56,9 @@ class Donation(db.Model):
         if form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
             return
 
+        if float(form['mc_gross']) < 0.50:
+            return  # Tiny donation
+
         # Checking that txn_id has not been previously processed
         if cls.get_by_transaction_id(form['txn_id']) is not None:
             return
