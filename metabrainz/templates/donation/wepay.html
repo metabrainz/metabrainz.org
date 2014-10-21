@@ -34,7 +34,7 @@
       {{ form.amount.label(class="col-sm-2 control-label") }}
       <div class="col-sm-2 input-group">
         {{ form.amount(id="inputAmount", class="form-control") | safe }}
-        <span class="input-group-addon">USD {{ '<strong>per month</strong>'|safe if recur }}</span>
+        <span class="input-group-addon">USD {{ '<strong>per month</strong>'|safe if recurring }}</span>
       </div>
     </div>
 

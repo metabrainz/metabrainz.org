@@ -103,7 +103,7 @@ def wepay():
         else:
             return redirect(response['%s_uri' % operation_type])
 
-    return render_template('donation/wepay.html', form=form, recur=recurring)
+    return render_template('donation/wepay.html', form=form, recurring=recurring)
 
 
 @donation_bp.route('/wepay/ipn', methods=['POST'])
