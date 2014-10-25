@@ -18,11 +18,6 @@ def sponsors():
     return render_template('about/sponsors.html')
 
 
-@index_bp.route('/press-releases')
-def press_releases():
-    return render_template('about/press_releases.html')
-
-
 @index_bp.route('/white-papers')
 def white_papers():
     return render_template('about/white_papers.html')
