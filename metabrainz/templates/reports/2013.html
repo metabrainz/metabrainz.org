@@ -1,0 +1,428 @@
+{% extends 'base.html' %}
+
+{% block title %}Annual Report 2013 - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+<h1>MetaBrainz Foundation Annual Report 2013</h1>
+
+<h2>Year in review</h2>
+<p>
+  2013 continued the pace of life
+  that we had set for MusicBrainz in 2012. We continued to release new versions of the server software every two weeks
+  and our core development team was focused on improving the site based on bug reports and feature requests from our
+  community. After a lot of tweaking of our internal processes of how we collect bugs and feature requests and then how
+  to implement, test and roll out new code, we've hit a stable process that is heavily community driven. This stable
+  work method allowed the team to focus on improving the site and continuing to add new features (like Areas and Places)
+  that we've been wanting to add for the past few years.
+</p>
+<p>
+  The Cover Art Archive continues to grow and is now the
+  primary source for cover art for MusicBrainz. We also embarked on the journey to create a music review site as one of
+  the Summer of Code projects and continued to work on a data repository that will contain data from 3rd party data
+  sources. Some record labels are warming up to MusicBrainz and are considering providing us data feeds, which we will
+  feed into our new data repository. This is intended to bridge the gap between a top-down data stream from a label and
+  a bottom-up community like MusicBrainz.
+</p>
+<p>
+  Overall the year was somewhat quiet and normal; we had the usual 2
+  schema change releases and a good Summer of Code. We had our annual summit and took on a few new customers. But, we
+  also faced some challenges on the business side as a number of customers were behind on payments. In the end, that
+  forced some team changes and led to us sending a cake to Amazon to congratulate them on the third anniversary of an
+  outstanding invoice. Our finances at the end of 2013 are much stronger than when 2013 started and we're looking much
+  more solid for 2014.
+</p>
+
+<h3>New customers</h3>
+<p>We had four new customers in 2013: 7digital, BandPage, InterTech Media, and Spotify.</p>
+<p>7digital uses MusicBrainz data in
+  their digital content platform to provide consumers, partners and developers with open access to an extensive
+  international catalogue of high quality digital content. BandPage uses MusicBrainz data to aid matching their data to
+  the data of their partners. InterTech Media uses MusicBrainz to provide services to radio stations to power their
+  "recently played" listings. Spotify uses MusicBrainz data to improve their data for their music streaming
+  services.
+</p>
+
+<h3>13.05 schema change</h3>
+<p>
+  This release
+  introduced a new core entity called <a href="http://musicbrainz.org/doc/Area">area</a>. This entity
+  allows us to capture information about countries, subdivisions, cities, and other geographic regions. We currently
+  have information on just under 88,000 areas.
+</p>
+<p>
+  Another addition was support for ISNI codes, which make it easier
+  to cross-reference data in MusicBrainz with other databases. We also added the capability for multiple release events
+  and added the schema changes for instrument credits.
+</p>
+
+<h3>13.10 schema change</h3>
+<p>
+  This release added another core entity called <a href="http://musicbrainz.org/doc/Place">place</a>.
+  This entity allows us to capture information about physical buildings such as recording studios as well as outdoor
+  venues. We currently have information on just under 3,000 places. Place support was added by Nicolás Tamargo
+  (reosarevok) during our 2013 Summer of Code.
+</p>
+<p>
+  The other major change in this release was to add a recording
+  attribute that identifies the recording as a video. This is useful for situations where a DVD or a digital release
+  contains both audio and video recordings. We also finally removed support for PUIDs, since AcoustID had become the
+  preferred acoustic fingerprinting solution for MusicBrainz a while ago.
+</p>
+
+<h3>Google Summer of Code</h3>
+<p>
+  We had three students for Google Summer of Code 2013: Michael Wiencek (bitmap), Nicolás Tamargo (reosarevok),
+  and Maciej Czerwiński (mjjc).
+</p>
+<p>
+  This was Michael's third Summer of Code with us. This year he took on the
+  daunting challenge of improving our release editor and he, yet again, produced some amazing work. Most of his
+  improvements were behind the scenes, but the visible result for users will be a major improvement in speed. The new
+  release editor is still in the review and testing process and has an expected ship date of the end of February.
+  Michael was mentored by Ian McEwen (ianmcorvidae), another MusicBrainz Summer of Code veteran.
+</p>
+<p>
+  Nicolás took on
+  the task of adding place support. This was an extension of the area support added earlier in the year. There is an
+  excellent <a href="http://blog.musicbrainz.org/2013/11/19/introducing-places/">introduction
+    and visualization of places</a> on our blog. Nicolás was mentored by Nikki.
+</p>
+<p>
+  Maciej's proposal was to create a
+  CC-licensed repository for music reviews. This would be a site that allows anyone to write a non-neutral point of view
+  review that could then be integrated with MusicBrainz and its data. The project completed all of its goals, but was
+  left unfinished since releasing the project was beyond the stated goals for the summer. Maciej was mentored by Rob
+  (ruaok).
+</p>
+
+<h3>MusicBrainz summit</h3>
+<p>
+  The 13th
+  MusicBrainz summit was held in Berlin, Germany, from Sept 20-22nd. The summit was attended by 15 members of the
+  MusicBrainz community as well as Anders Arpteg from Spotify and Lydia Pintscher from Wikimedia / Wikidata. The summit
+  was very productive and resulted in several actionable tasks.
+  An <a href="http://blog.musicbrainz.org/2013/09/25/musicbrainz-summit-13/">overview of the summit</a> is
+  available on our blog, and there is also a <a href="http://musicbrainz.org/doc/MusicBrainz_Summit/13">detailed
+    listing of discussed topics</a>.
+</p>
+<p>
+  We thank Google and Spotify for sponsoring the 2013 summit, and to Wikimedia
+  Deutschland for hosting and providing good internet!
+</p>
+
+<h3>The Amazon cake</h3>
+<p>
+  Amazon has been a customer of MusicBrainz for a few years and our business dealings had been on quite a few
+  levels (Amazon Associates, Live Data Feed, SoundUnwound). In the end, the process of paying invoices to MetaBrainz at
+  Amazon had become so convoluted that the money simply stopped flowing. Things had gotten so bad that one invoice was
+  approaching a 3-year anniversary; no matter what people at Amazon tried, payments never made it through for a variety
+  of reasons. After many repeated proddings to get the money flowing again, we threatened to send them a nice cake for
+  the 3rd anniversary of the invoice and then post a picture of the cake to Twitter. Still nothing materialized, so we
+  sent the cake as promised and posted the picture to Twitter and
+  <a href="http://boingboing.net/2013/12/04/charity-sends-amazon-a-cake-ce.html">Cory posted the picture to BoingBoing</a>.
+  To give Amazon a mountain of credit, the right people finally started talking and a few days later
+  we had a conference call to clear the air, verify outstanding invoices and prepare a lump-sum payment. Before the week
+  was out we had a check from Amazon, paying off all outstanding invoices.</p>
+
+<h3>Team changes</h3>
+<p>
+  In 2013 the MusicBrainz team also hit some snags that were painful to deal with. Due to several customers not
+  paying is in a timely fashion we found ourselves in a cash crunch situation and it was clear that we could not
+  continue paying the team we had in place. After a lot of internal discussion the painful decision was made to let Kuno
+  Woudt (Warp) go in order for us to survive the cash crunch and to adjust our spending rate to be less than our income
+  rate. (We realize that in the tech world this may seem like a foreign concept, but as a non-profit we're bound by
+  simple laws like finances and gravity).
+</p>
+<p>
+  Then at the summit in Berlin, Oliver Charles (ocharles) gave notice and
+  said that his heart was no longer into coding in perl and that he wanted to find a Haskell team to join. Within
+  minutes of this announcement the suggestions came flooding in that we should hire Bitmap as he was about to graduate
+  from University. Luckily for everyone, the offer from MusicBrainz came at the perfect time, which allowed an orderly
+  hand-off from Ocharles to Bitmap.
+</p>
+
+<h2>Looking ahead</h2>
+<p>2013 brought about 2 new projects that will play a significant role in our future:</p>
+<p>
+  1. <b>Geordi</b> -- Geordi
+  is intended to be an intermediary data site that allows us to store data from music labels so that our community can
+  search, match and import data from music labels. Sadly we were not able to create a fully functioning system (there
+  was a lot of learn about how to do this right), but we're going to re-new our efforts to bring this project about in
+  2014. Last year the Ninja Tune label was the first label to provide us with a dump of their data for inclusion into
+  MusicBrainz. Once Geordi is fully functional, we plan to import this data and make it available for the MusicBrainz
+  community to import into the main database.
+</p>
+<p>2. <b>CritiqueBrainz</b> -- This new site will allow users to write
+  non-neutral point of view reviews of artists and releases. Sites like Wikipedia are great for getting a lot of
+  interesting information about music, but Wikipedia's neutral point of view policy isn't well suited for a music
+  review. We feel that music reviews should be written with passion and we hope that CritiqueBrainz will allow users to
+  do this. All of the content in CritiqueBrainz will be Creative Commons licensed and cross-linked with MusicBrainz. The
+  first phase of CritiqueBrainz was created as part of Summer of Code, but the scope was too broad to create a fully
+  functioning site. We will pick up CritiqueBrainz for Summer of Code in 2014.
+</p>
+
+<h2>Traffic</h2>
+<img height="676" width="850" src="{{ url_for('static', filename='files/annual-reports/2013/traffic.png') }}">
+<p>
+  This traffic graph conveys only the successful requests made to the main <a href="http://musicbrainz.org">http://musicbrainz.org</a> servers. Aside from
+  some monthly fluctuations, our traffic has been generally stable. This is not because of the amount of traffic that is
+  requested of us, but because how we limit traffic to the site. If we honored all of the requests made to
+  musicbrainz.org, all of our servers would be constantly on fire. With the resources and bandwidth we have available
+  right now, our server farm is decently loaded and still able to handle occasional traffic spikes.
+</p>
+
+<h2>Finances</h2>
+<p>Our finances in 2013 are summarized by our Profit &amp; Loss statement:</p>
+    
+<table class="table table-bordered table-striped">
+  <tbody>
+  <tr><th colspan="2">Income</th></tr>
+  <tr><td>General Donations</td><td>$72,042.49</td></tr>
+  <tr><td>PayPal Donations</td><td>$6,035.07</td></tr>
+  <tr><td>Live Data Feed Licenses</td><td>$179,510.55</td></tr>
+  <tr><td>Summit Sponsorship</td><td>$7,500.00</td></tr>
+  <tr><td>Consulting</td><td>$1,500.00</td></tr>
+  <tr><td>CC Data License</td><td>$9,160.00</td></tr>
+  <tr><td>Web Service Access</td><td>$660.00</td></tr>
+  <tr><td>Amazon Affiliate Program</td><td>$1,048.65</td></tr>
+  <tr><td>Tagger Affiliate Program</td><td>$10,445.05</td></tr>
+  <tr><td>CD Baby Affiliate Program</td><td>$5.95</td></tr>
+  <tr><td>Bank Interest</td><td>$54.55</td></tr>
+  <tr><td><b>Total Income</b></td><td><b>$287,962.31</b></td>
+  </tr>
+  </tbody>
+</table>
+    
+<table class="table table-bordered table-striped">
+  <tbody>
+  <tr><th colspan="2">Expenses</th></tr>
+  <tr><td>Development</td><td>$98,828.69</td></tr>
+  <tr><td>Officer Salary</td><td>$75,429.95</td></tr>
+  <tr><td>Community Manager</td><td>$10,893.07</td></tr>
+  <tr><td>Hosting</td><td>$21,425.00</td></tr>
+  <tr><td>Bank</td><td>$1,278.78</td></tr>
+  <tr><td>PayPal</td><td>$1,056.18</td></tr>
+  <tr><td>WePay</td><td>$21.11</td></tr>
+  <tr><td>Rent</td><td>$854.00</td></tr>
+  <tr><td>Utilities</td><td>$68.90</td></tr>
+  <tr><td>Hardware</td><td>$3,331.65</td></tr>
+  <tr><td>Travel</td><td>$3,019.87</td></tr>
+  <tr><td>Internet</td><td>$649.43</td></tr>
+  <tr><td>Marketing</td><td>$1,000.00</td></tr>
+  <tr><td>Gifts</td><td>$116.48</td></tr>
+  <tr><td>Events</td><td>$7,182.43</td></tr>
+  <tr><td>Filing Fees</td><td>$70.00</td></tr>
+  <tr><td>Software</td><td>$488.00</td></tr>
+  <tr><td>Insurance</td><td>$2,258.00</td></tr>
+  <tr><td>Accounting</td><td>$1,871.00</td></tr>
+  <tr><td><b>Total Expenses</b></td><td><b>$229,842.54</b></td></tr>
+  </tbody>
+</table>
+    
+<p>
+  In the first half of 2013 we struggled to make ends meet. This led to a forced team
+  change (see above) and a renewed focus to bring in more money to keep operations afloat. The latter half of the year
+  was much better as our burn rate was more realistic and income was starting to improve. The efforts to collect money
+  in the latter half of the year also bore fruit, which allowed us to close the year with record income and in the
+  black! We had excess income of $58,119.77 for 2013, which gave us a solid start into 2014.
+</p>
+<p>
+  In the course of
+  2013 we spent $3,331.65 on hardware and $21,425.00 on hosting costs for a total of $24,756.65. In the same time we
+  served 4.20 billion hits, of which 3.94 billion were web service hits. Please note that the graph above is an
+  aggregate of all attempted requests which is greater than the 4.20 billion served responses. Compared to 2012, our
+  traffic in 2013 was down by 16%.
+</p>
+<p>
+  Our cost of 1 million hits was $5.89 and the cost of 1 million web service
+  hits was $6.28. These costs increased over 2012 because we had to pay for a few hardware maintenance tasks and our
+  overall traffic was down. These two factors combined drive up the costs for 1M requests.
+</p>
+<p>
+  In 2013 we spent
+  $109,721.76 in salaries for developers/community management and our costs for administration was $75,429.95. We earned
+  $179,510.55 from our Live Data Feed and $9,160.00 from Creative Commons licensed data for a total of $188,670.55,
+  which is a 52% increase over last year. A part of this increase was some customers finally making payments in 2013,
+  when they should've paid in 2012. Also in 2013, we added a new category of paid Web Service access and that brought in
+  $660.00.
+</p>
+<p>
+  Our summit sponsorship income was much larger in 2013 than it was in 2012, because the summit
+  sponsorship payment from Spotify for 2012 was wrapped into another contract from 2012 and wasn't paid until 2013. Our
+  end user donations via PayPal came to $6,035.07, which is down 55% from last year. Direct/large donations added up to
+  $72,042.49, including $40,000 from Google, $20,000 from AOL and $10,000 from Spotify.
+</p>
+
+<h2>Top contributors</h2>
+
+<table class="table table-bordered table-striped">
+  <tbody>
+  <tr><th colspan="6">Top voters</th></tr>
+  <tr>
+    <th>1</th><td><a href="http://musicbrainz.org/user/pankkake">pankkake</a></td><td>99,925</td>
+    <th>13</th><td><a href="http://musicbrainz.org/user/mat813">mat813</a></td><td>13,266</td>
+  </tr>
+  <tr>
+    <th>2</th><td><a href="http://musicbrainz.org/user/chabreyflint">chabreyflint</a></td><td>94,371</td>
+    <th>14</th><td><a href="http://musicbrainz.org/user/spl0k">spl0k</a></td><td>12,838</td>
+  </tr>
+  <tr>
+    <th>3</th><td><a href="http://musicbrainz.org/user/fmera">fmera</a></td><td>50,083</td>
+    <th>15</th><td><a href="http://musicbrainz.org/user/murdos">murdos</a></td><td>12,193</td>
+  </tr>
+  <tr>
+    <th>4</th><td><a href="http://musicbrainz.org/user/viper666">viper666</a></td><td>49,076</td>
+    <th>16</th><td><a href="http://musicbrainz.org/user/jesus2099">jesus2099</a></td><td>11,455</td>
+  </tr>
+  <tr>
+    <th>5</th><td><a href="http://musicbrainz.org/user/Ataki">Ataki</a></td><td>39,371</td>
+    <th>17</th><td><a href="http://musicbrainz.org/user/drsaunde">drsaunde</a></td><td>11,450</td>
+  </tr>
+  <tr>
+    <th>6</th><td><a href="http://musicbrainz.org/user/reosarevok">reosarevok</a></td><td>38,436</td>
+    <th>18</th><td><a href="http://musicbrainz.org/user/MeinDummy">MeinDummy</a></td><td>10,248</td>
+  </tr>
+  <tr>
+    <th>7</th><td><a href="http://musicbrainz.org/user/Jazzy%20Jarilith">Jazzy Jarilith</a></td><td>33,696</td>
+    <th>19</th><td><a href="http://musicbrainz.org/user/teleguise">teleguise</a></td><td>9,513</td>
+  </tr>
+  <tr>
+    <th>8</th><td><a href="http://musicbrainz.org/user/MrH">MrH</a></td><td>33,493</td>
+    <th>20</th><td><a href="http://musicbrainz.org/user/otters61">otters61</a></td><td>9,129</td>
+  </tr>
+  <tr>
+    <th>9</th><td><a href="http://musicbrainz.org/user/salo.rock">salo.rock</a></td><td>32,098</td>
+    <th>21</th><td><a href="http://musicbrainz.org/user/monxton">monxton</a></td><td>8,902</td>
+  </tr>
+  <tr>
+    <th>10</th><td><a href="http://musicbrainz.org/user/ListMyCDs.com">ListMyCDs.com</a></td><td>22,971</td>
+    <th>22</th><td><a href="http://musicbrainz.org/user/nikki">nikki</a></td><td>7,003</td>
+  </tr>
+  <tr>
+    <th>11</th><td><a href="http://musicbrainz.org/user/Zas">Zas</a></td><td>22,136</td>
+    <th>23</th><td><a href="http://musicbrainz.org/user/KRSCuan">KRSCuan</a></td><td>6,797</td>
+  </tr>
+  <tr>
+    <th>12</th><td><a href="http://musicbrainz.org/user/sbontrager">sbontrager</a></td><td>16,988</td>
+    <th>24</th><td><a href="http://musicbrainz.org/user/steinbdj">steinbdj</a></td><td>6,549</td>
+  </tr>
+  </tbody>
+</table>
+
+<table class="table table-bordered table-striped">
+  <tbody>
+  <tr><th colspan="6">Top editors</th></tr>
+  <tr>
+    <th>1</th><td><a href="http://musicbrainz.org/user/m___ah">m___ah</a></td><td>305,683</td>
+    <th>13</th><td><a href="http://musicbrainz.org/user/Sekhmetouserapis">Sekhmetouserapis</a></td><td>51,980</td>
+  </tr>
+  <tr>
+    <th>2</th><td><a href="http://musicbrainz.org/user/reosarevok">reosarevok</a></td><td>208,415</td>
+    <th>14</th><td><a href="http://musicbrainz.org/user/SultS">SultS</a></td><td>48,588</td>
+  </tr>
+  <tr>
+    <th>3</th><td><a href="http://musicbrainz.org/user/ListMyCDs.com">ListMyCDs.com</a></td><td>192,558</td>
+    <th>15</th><td><a href="http://musicbrainz.org/user/nikki">nikki</a></td><td>46,673</td>
+  </tr>
+  <tr>
+    <th>4</th><td><a href="http://musicbrainz.org/user/Senax">Senax</a></td><td>146,402</td>
+    <th>16</th><td><a href="http://musicbrainz.org/user/mudcrow">mudcrow</a></td><td>46,628</td>
+  </tr>
+  <tr>
+    <th>5</th><td><a href="http://musicbrainz.org/user/kaik">kaik</a></td><td>132,484</td>
+    <th>17</th><td><a href="http://musicbrainz.org/user/MrH">MrH</a></td><td>45,997</td>
+  </tr>
+  <tr>
+    <th>6</th><td><a href="http://musicbrainz.org/user/drsaunde">drsaunde</a></td><td>117,819</td>
+    <th>18</th><td><a href="http://musicbrainz.org/user/Hawke">Hawke</a></td><td>39,714</td>
+  </tr>
+  <tr>
+    <th>7</th><td><a href="http://musicbrainz.org/user/HibiscusKazeneko">HibiscusKazeneko</a></td><td>85,221</td>
+    <th>19</th><td><a href="http://musicbrainz.org/user/Phil.B">Phil.B</a></td><td>38,812</td>
+  </tr>
+  <tr>
+    <th>8</th><td><a href="http://musicbrainz.org/user/monxton">monxton</a></td><td>78,047</td>
+    <th>20</th><td><a href="http://musicbrainz.org/user/jesus2099">jesus2099</a></td><td>38,728</td>
+  </tr>
+  <tr>
+    <th>9</th><td><a href="http://musicbrainz.org/user/loujin">loujin</a></td><td>69,682</td>
+    <th>21</th><td><a href="http://musicbrainz.org/user/yeeeargh">yeeeargh</a></td><td>37,257</td>
+  </tr>
+  <tr>
+    <th>10</th><td><a href="http://musicbrainz.org/user/otters61">otters61</a></td><td>63,110</td>
+    <th>22</th><td><a href="http://musicbrainz.org/user/salo.rock">salo.rock</a></td><td>35,332</td>
+  </tr>
+  <tr>
+    <th>11</th><td><a href="http://musicbrainz.org/user/rochusw">rochusw</a></td><td>53,965</td>
+    <th>23</th><td><a href="http://musicbrainz.org/user/dimpole">dimpole</a></td><td>33,473</td>
+  </tr>
+  <tr>
+    <th>12</th><td><a href="http://musicbrainz.org/user/fmera">fmera</a></td><td>53,865</td>
+    <th>24</th><td><a href="http://musicbrainz.org/user/chabreyflint">chabreyflint</a></td><td>32,904</td>
+  </tr>
+  </tbody>
+</table>
+
+<p>
+  In 2013, 18,710 editors made a total of 5,047,607 edits. The total number of editors
+  is down from 20,540 in 2012, but the total number of edits has increased by over 800,000 edits. Feedback from the
+  music tech industry confirms the good work of our editors as many people regard MusicBrainz as the best source of
+  music metadata and stable music IDs that can be used to cross-reference music data-sets. Thanks to everyone who edited
+  MusicBrainz in 2013!
+</p>
+
+<h2>Server farm</h2>
+<img class="pull-right" height="473" width="350" src="{{ url_for('static', filename='files/annual-reports/2013/servers.jpg') }}">
+<p>At the end of 2013, MusicBrainz had 20 machines in service. From the top, going down:</p>
+<ul>
+  <li>rika: User sandbox machine (mbsandbox.org)</li>
+  <li>lolo: An extra front end web server</li>
+  <li>scooby: ftp, system statistics, blog</li>
+  <li>pino: MetaBrainz, MusicBrainz Classic, Cover Art Archive</li>
+  <li>baron: Database failover server</li>
+  <li>hoser: VM host (forums, blog)</li>
+  <li>dagon: Backup server (not in use)</li>
+  <li>rocko: Geordi / log analysis</li>
+  <li>cartman: Classic search server, index builder</li>
+  <li>wiley: New catch all server: SVN, git, jira, wiki, trac, mail, backups</li>
+  <li>dib: Network router, takes up a slot, but only visible from the back.</li>
+  <li>carl: Redundant network gateway</li>
+  <li>lenny: Redundant network gateway</li>
+  <li>sakura: Backup server (not in use)</li>
+  <li>asterix: web server</li>
+  <li>astro: web server</li>
+  <li>roobarb: search server</li>
+  <li>pingu: web server</li>
+  <li>dora: search server, memcached server</li>
+  <li>totoro: database server</li>
+</ul>
+<p>Not shown: Hobbes (Mac mini, tucked away in the back), continuous integration (jenkins).</p>
+<p>
+  MusicBrainz uses
+  14.65 Mbits of bandwidth per second on average (1.95 Mbps inbound, 12.78 Mbps outbound) and draws 31 Amps of current
+  for a power consumption of about 3,410 Watts. MusicBrainz physically occupies 20 Us of space (half of a rack) at
+  <a href="http://digitalwest.net/">Digital West</a> in San Luis Obispo, CA.
+</p>
+
+<h2>Words of appreciation</h2>
+<p>
+  Many thanks to our editors, voters, peer reviewers, bug watchers and other members of our community -- without
+  you MusicBrainz would not be what it is today!
+</p>
+<p>
+  We'd like to also thank our developers that pushed out dozens of
+  releases of the site, Picard and our numerous client libraries. All of your work is critical to enabling the
+  MusicBrainz community to do its job.
+</p>
+<p>
+  We'd also like to thank our awesome <a href="http://metabrainz.org/">Board of Directors</a>, Brewster Kahle and
+  the <a href="http://archive.org">Internet Archive</a>, all of the <a href="http://metabrainz.org/donations/by-date">
+  donors who contributed money</a> and all of our <a href="//wiki.musicbrainz.org/MetaBrainz:Customers">customers</a>.
+</p>
+<p>
+  In particular we'd like to thank AOL, Google, and Spotify for their large donations made in 2013. These large
+  contributions allow us to carry on with our goal of making MusicBrainz the most comprehensive music encyclopedia out
+  there!
+</p>
+<p>Thank you to everyone who contributed in 2013!</p>
+{% endblock %}
