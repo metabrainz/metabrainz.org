@@ -8,7 +8,7 @@ reports_bp = Blueprint('reports', __name__)
 @reports_bp.route('/<year>')
 def index(year):
     """This endpoint handles requests for pages with annual reports.
-    
+
     If you want to create a new report just add a new HTML file into
     /metabrainz/templates/reports directory.
     """
