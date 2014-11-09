@@ -21,3 +21,8 @@ PAYPAL_BUSINESS = "payment@metabrainz.org"
 SECRET_KEY = "CHANGE_THIS"
 
 USE_COMPILED_STYLING = not DEBUG
+
+# Mail server
+SMTP_SERVER = 'localhost'
+SMTP_PORT = 25
+MAIL_FROM_DOMAIN = "metabrainz.org"

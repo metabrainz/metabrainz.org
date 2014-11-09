@@ -1,4 +1,5 @@
 from metabrainz.model import db
+from metabrainz.donation.receipts import send_receipt
 from flask import current_app
 from wepay import WePay
 
@@ -88,7 +89,13 @@ class Donation(db.Model):
         db.session.add(new_donation)
         db.session.commit()
 
-        # TODO: Send receipt
+        send_receipt(
+            new_donation.email,
+            new_donation.timestamp,
+            new_donation.amount,
+            '%s %s' % (new_donation.first_name, new_donation.last_name),
+            new_donation.moderator,
+        )
 
     @classmethod
     def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):
