@@ -65,6 +65,11 @@ def _create_header(canvas, document):
 
 
 def _generate_recript(email, date, amount, name, editor_name):
+    """This function generates PDF file with a receipt.
+
+    Returns:
+        Temporary file that needs to be closed after all operations on it are complete.
+    """
     story = [Spacer(0, 20)]
     # TODO: Fix content margins
 
