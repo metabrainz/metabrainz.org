@@ -28,9 +28,9 @@
 
     <input type="hidden" name="business" value="donations@metabrainz.org" />
     <input type="hidden" name="no_shipping" value="2" />
-    <input type="hidden" name="return" value="{{ url_for('donation.complete', _external=True) }}" />
-    <input type="hidden" name="cancel_return" value="{{ url_for('donation.cancelled', _external=True) }}" />
-    <input type="hidden" name="notify_url" value="{{ url_for('donation.paypal_ipn', _external=True) }}" />
+    <input type="hidden" name="return" value="{{ url_for('donations.complete', _external=True) }}" />
+    <input type="hidden" name="cancel_return" value="{{ url_for('donations.cancelled', _external=True) }}" />
+    <input type="hidden" name="notify_url" value="{{ url_for('donations.paypal_ipn', _external=True) }}" />
     <input type="hidden" name="currency_code" value="USD" />
 
     {% if recurring %}

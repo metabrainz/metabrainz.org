@@ -19,16 +19,16 @@ class FakeRequests(object):
             return FakeResponse('VERIFIED')
 
 
-class DonationViewsTestCase(FlaskTestCase):
+class DonationsViewsTestCase(FlaskTestCase):
     def setUp(self):
-        super(DonationViewsTestCase, self).setUp()
+        super(DonationsViewsTestCase, self).setUp()
         views.requests = FakeRequests()
 
     def test_index(self):
-        self.assert200(self.client.get("/donate/"))
+        self.assert200(self.client.get("/donations/"))
 
     def test_paypal(self):
-        self.assert200(self.client.get("/donate/paypal"))
+        self.assert200(self.client.get("/donations/paypal"))
 
     def test_paypal_ipn(self):
         ipn_data = {
@@ -55,7 +55,7 @@ class DonationViewsTestCase(FlaskTestCase):
             'option_name2': 'contact',
             'option_selection2': 'yes',
         }
-        resp = self.client.post("/donate/paypal/ipn", data=ipn_data)
+        resp = self.client.post("/donations/paypal/ipn", data=ipn_data)
         self.assert200(resp)
 
         # Donation should be in the DB now
@@ -64,14 +64,14 @@ class DonationViewsTestCase(FlaskTestCase):
 
 
     def test_wepay(self):
-        self.assert200(self.client.get("/donate/wepay"))
+        self.assert200(self.client.get("/donations/wepay"))
 
     def test_complete(self):
-        self.assert200(self.client.get("/donate/complete"))
-        self.assert200(self.client.post("/donate/complete"))
+        self.assert200(self.client.get("/donations/complete"))
+        self.assert200(self.client.post("/donations/complete"))
 
     def test_cancelled(self):
-        self.assert200(self.client.get("/donate/cancelled"))
+        self.assert200(self.client.get("/donations/cancelled"))
 
     def test_error(self):
-        self.assert200(self.client.get("/donate/error"))
+        self.assert200(self.client.get("/donations/error"))
