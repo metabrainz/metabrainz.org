@@ -15,10 +15,6 @@ class IndexViewsTestCase(FlaskTestCase):
         response = self.client.get("/sponsors")
         self.assert200(response)
 
-    def test_press_releases(self):
-        response = self.client.get("/press-releases")
-        self.assert200(response)
-
     def test_white_papers(self):
         response = self.client.get("/white-papers")
         self.assert200(response)
