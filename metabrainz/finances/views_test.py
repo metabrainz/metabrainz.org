@@ -12,5 +12,5 @@ class FinancesViewsTestCase(FlaskTestCase):
         self.assert200(response)
 
     def test_highest_donors(self):
-        response = self.client.get("/finances/donations/by-amount")
+        response = self.client.get("/finances/highest-donors")
         self.assert200(response)
