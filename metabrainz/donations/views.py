@@ -10,8 +10,11 @@ donations_bp = Blueprint('donations', __name__)
 
 @donations_bp.route('/')
 def index():
+    """Home page for donations."""
     return render_template('donations/donate.html')
 
+
+# PAYPAL
 
 @donations_bp.route('/paypal')
 def paypal():
@@ -24,7 +27,6 @@ def paypal():
     recurring = request.args.get('recur') == '1'
     amount = request.args.get('amount') or 0
     return render_template('donations/paypal.html', recurring=recurring, amount=amount)
-
 
 @donations_bp.route('/paypal/ipn', methods=['POST'])
 def paypal_ipn():
@@ -46,6 +48,8 @@ def paypal_ipn():
 
     return '', 200
 
+
+# WEPAY
 
 @donations_bp.route('/wepay', methods=['GET', 'POST'])
 def wepay():
@@ -105,7 +109,6 @@ def wepay():
 
     return render_template('donations/wepay.html', form=form, recurring=recurring)
 
-
 @donations_bp.route('/wepay/ipn', methods=['POST'])
 def wepay_ipn():
     """Endpoint that receives Instant Payment Notifications (IPNs) from WePay.
@@ -131,17 +134,17 @@ def wepay_ipn():
         raise InternalServerError()
 
 
+# DONATION RESULTS
+
 @donations_bp.route('/complete', methods=['GET', 'POST'])
 def complete():
     """Endpoint for successful donations."""
     return render_template('donations/complete.html')
 
-
 @donations_bp.route('/cancelled')
 def cancelled():
     """Endpoint for cancelled donations."""
     return render_template('donations/cancelled.html')
-
 
 @donations_bp.route('/error')
 def error():
