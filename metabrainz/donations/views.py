@@ -13,6 +13,11 @@ def index():
     """Home page for donations."""
     return render_template('donations/donate.html')
 
+@donations_bp.route('/nag-check/<editor>')
+def nag_check(editor):
+    # TODO: Implement
+    return 'Not implemented'
+
 
 # PAYPAL
 
