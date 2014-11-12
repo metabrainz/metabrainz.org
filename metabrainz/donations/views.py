@@ -15,8 +15,8 @@ def index():
 
 @donations_bp.route('/nag-check/<editor>')
 def nag_check(editor):
-    # TODO: Implement
-    return 'Not implemented'
+    a, b = Donation.get_nag_days(editor)
+    return '%s,%s\n' % (a, b)
 
 
 # PAYPAL
