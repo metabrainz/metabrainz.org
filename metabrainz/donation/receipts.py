@@ -71,7 +71,6 @@ def _generate_recript(email, date, amount, name, editor_name):
         Temporary file that needs to be closed after all operations on it are complete.
     """
     story = [Spacer(0, 20)]
-    # TODO: Fix content margins
 
     address_style = ParagraphStyle("address")
     address_style.fontName = _PRIMARY_FONT
@@ -129,6 +128,7 @@ def _generate_recript(email, date, amount, name, editor_name):
     story.append(thanks_par)
 
     file = tempfile.NamedTemporaryFile()
-    doc = SimpleDocTemplate(file.name, pagesize=(595, 792))
+    doc = SimpleDocTemplate(file.name, pagesize=(595, 792),
+                            leftMargin=52, rightMargin=44)
     doc.build(story, onFirstPage=_create_header)
     return file
