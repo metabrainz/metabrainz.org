@@ -29,6 +29,31 @@ class Donation(db.Model):
     memo = db.Column(db.String)
 
     @classmethod
+    def add_donation(cls, first_name, last_name, email, amount, fee,
+                     address_street=None, address_city=None, address_state=None,
+                     address_postcode=None, address_country=None,
+                     date=None, editor=None, can_contact=None, anonymous=None):
+        new_donation = cls(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            moderator=editor,
+            address_street=address_street,
+            address_city=address_city,
+            address_state=address_state,
+            address_postcode=address_postcode,
+            address_country=address_country,
+            amount=amount,
+            fee=fee,
+            timestamp=date,
+            can_contact=can_contact,
+            anonymous=anonymous,
+        )
+        db.session.add(new_donation)
+        db.session.commit()
+        return new_donation
+
+    @classmethod
     def get_by_transaction_id(cls, transaction_id):
         return cls.query.filter_by(transaction_id=transaction_id).first()
 
