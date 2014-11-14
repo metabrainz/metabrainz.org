@@ -12,21 +12,21 @@ class Donation(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
-    moderator = db.Column(db.String, server_default='')  # MusicBrainz username
+    moderator = db.Column(db.String)  # MusicBrainz username
     can_contact = db.Column('contact', db.Boolean, server_default='FALSE')
     anonymous = db.Column('anon', db.Boolean, server_default='FALSE')
-    address_street = db.Column(db.String, server_default='')
-    address_city = db.Column(db.String, server_default='')
-    address_state = db.Column(db.String, server_default='')
-    address_postcode = db.Column(db.String, server_default='')
-    address_country = db.Column(db.String, server_default='')
+    address_street = db.Column(db.String)
+    address_city = db.Column(db.String)
+    address_state = db.Column(db.String)
+    address_postcode = db.Column(db.String)
+    address_country = db.Column(db.String)
 
     # Transaction details
     timestamp = db.Column(db.DateTime, server_default='now()')
-    transaction_id = db.Column('paypal_trans_id', db.String(32), nullable=False)
+    transaction_id = db.Column('paypal_trans_id', db.String(32))
     amount = db.Column(db.Numeric(11, 2), nullable=False)
-    fee = db.Column(db.String, server_default='')
-    memo = db.Column(db.String, server_default='')
+    fee = db.Column(db.Numeric(11, 2), nullable=False)
+    memo = db.Column(db.String)
 
     @classmethod
     def get_by_transaction_id(cls, transaction_id):
