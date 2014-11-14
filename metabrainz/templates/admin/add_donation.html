@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Manually add a donation - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1>Manually add a donation</h1>
+
+  <div class="alert alert-danger" role="alert"><b>Danger zone!</b> To enter a donation manually, fill out the fields below and press the butan.</div>
+
+  {% for field in form.errors %}
+    {% for error in form.errors[field] %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endfor %}
+
+  <form action="{{ url_for('admin.add_donation') }}" method="POST" class="form-horizontal" role="form">
+    {{ form.csrf_token }}
+
+    <div class="form-group">{{ form.first_name.label }} {{ form.first_name }}</div>
+    <div class="form-group">{{ form.last_name.label }} {{ form.last_name }}</div>
+    <div class="form-group">{{ form.email.label }} {{ form.email }}</div>
+
+    <div class="form-group">{{ form.can_contact.label }} {{ form.can_contact }}</div>
+    <div class="form-group">{{ form.anonymous.label }} {{ form.anonymous }}</div>
+
+    <div class="form-group">{{ form.address_street.label }} {{ form.address_street }}</div>
+    <div class="form-group">{{ form.address_city.label }} {{ form.address_city }}</div>
+    <div class="form-group">{{ form.address_state.label }} {{ form.address_state }}</div>
+    <div class="form-group">{{ form.address_postcode.label }} {{ form.address_postcode }}</div>
+    <div class="form-group">{{ form.address_country.label }} {{ form.address_country }}</div>
+
+    <div class="form-group">{{ form.payment_date.label }} {{ form.payment_date }}</div>
+    <div class="form-group">{{ form.amount.label }} {{ form.amount }} USD</div>
+    <div class="form-group">{{ form.fee.label }} {{ form.fee }} USD</div>
+
+    <div class="form-group">{{ form.editor.label }} {{ form.editor }}</div>
+
+    <div class="form-group">{{ form.memo.label }} {{ form.memo }}</div>
+
+    <div class="form-group"><input type="submit" value="Add donation"></div>
+  </form>
+{% endblock %}
