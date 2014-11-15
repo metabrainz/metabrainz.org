@@ -19,6 +19,7 @@ service postgresql restart
 curl -sL https://deb.nodesource.com/setup | sudo bash -
 apt-get install -y nodejs
 npm install -g less
+npm install -g less-plugin-clean-css
 
 cd /vagrant
 pip install -r requirements.txt
