@@ -20,8 +20,8 @@ class AddDonationForm(Form):
     address_country = StringField("Country")
 
     payment_date = DateField("Payment date")
-    amount = DecimalField("Amount", validators=[DataRequired()])
-    fee = DecimalField("Fee", validators=[DataRequired()])
+    amount = DecimalField("Amount (USD)", validators=[DataRequired()])
+    fee = DecimalField("Fee (USD)", validators=[DataRequired()])
 
     editor = StringField("Editor name")
 
