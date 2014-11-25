@@ -20,7 +20,6 @@
           <ul class="dropdown-menu" role="menu">
             <li><a href="{{ url_for('index.customers') }}">Customers</a></li>
             <li><a href="{{ url_for('index.sponsors') }}">Sponsors</a></li>
-            <li><a href="{{ url_for('index.press_releases') }}">Press Releases</a></li>
             <li><a href="{{ url_for('index.white_papers') }}">White Papers</a></li>
             <li><a href="{{ url_for('index.privacy_policy') }}">Privacy Policy</a></li>
           </ul>
@@ -40,18 +39,18 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Annual Report <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Annual Report 2013</a></li>
-            <li><a href="#">Annual Report 2012</a></li>
-            <li><a href="#">Annual Report 2011</a></li>
-            <li><a href="#">Annual Report 2010</a></li>
-            <li><a href="#">Annual Report 2009</a></li>
-            <li><a href="#">Annual Report 2008</a></li>
-            <li><a href="#">Annual Report 2007</a></li>
-            <li><a href="#">Annual Report 2006</a></li>
+            <li><a href="{{ url_for('reports.index', year=2013) }}">Annual Report 2013</a></li>
+            <li><a href="{{ url_for('reports.index', year=2012) }}">Annual Report 2012</a></li>
+            <li><a href="{{ url_for('reports.index', year=2011) }}">Annual Report 2011</a></li>
+            <li><a href="{{ url_for('reports.index', year=2010) }}">Annual Report 2010</a></li>
+            <li><a href="{{ url_for('reports.index', year=2009) }}">Annual Report 2009</a></li>
+            <li><a href="{{ url_for('reports.index', year=2008) }}">Annual Report 2008</a></li>
+            <li><a href="{{ url_for('reports.index', year=2007) }}">Annual Report 2007</a></li>
+            <li><a href="{{ url_for('reports.index', year=2006) }}">Annual Report 2006</a></li>
           </ul>
         </li>
 
-        <li><a href="{{ url_for('donation.index') }}">Donate</a></li>
+        <li><a href="{{ url_for('donations.index') }}">Donate</a></li>
 
         <li><a href="{{ url_for('index.contact') }}">Contact</a></li>
       </ul>

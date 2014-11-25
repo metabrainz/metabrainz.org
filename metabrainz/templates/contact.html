@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
+{% block title %}Contact - MetaBrainz Foundation{% endblock %}
+
 {% block content %}
   <h1>Contact</h1>
 
-  <p>For donations to the non-profit, please visit our <a href="{{ url_for('donation.index') }}">donation page</a>.</p>
+  <p>For donations to the non-profit, please visit our <a href="{{ url_for('donations.index') }}">donation page</a>.</p>
 
   <h2>E-mail us</h2>
   <p>General inquiries: <a href="mailto:nonprofit@metabrainz.org">nonprofit@metabrainz.org</a></p>

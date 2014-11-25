@@ -5,8 +5,7 @@ finances_bp = Blueprint('finances', __name__)
 
 @finances_bp.route('/')
 def index():
-    # TODO: Create this page.
-    return "Page is missing."
+    return render_template('finances/finances.html')
 
 
 @finances_bp.route('/donations')

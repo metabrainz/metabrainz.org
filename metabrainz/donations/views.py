@@ -5,15 +5,15 @@ from metabrainz.model.donation import Donation
 import requests
 
 
-donation_bp = Blueprint('donation', __name__)
+donations_bp = Blueprint('donations', __name__)
 
 
-@donation_bp.route('/')
+@donations_bp.route('/')
 def index():
-    return render_template('donation/donate.html')
+    return render_template('donations/donate.html')
 
 
-@donation_bp.route('/paypal')
+@donations_bp.route('/paypal')
 def paypal():
     """Donation page for PayPal.
 
@@ -23,10 +23,10 @@ def paypal():
     """
     recurring = request.args.get('recur') == '1'
     amount = request.args.get('amount') or 0
-    return render_template('donation/paypal.html', recurring=recurring, amount=amount)
+    return render_template('donations/paypal.html', recurring=recurring, amount=amount)
 
 
-@donation_bp.route('/paypal/ipn', methods=['POST'])
+@donations_bp.route('/paypal/ipn', methods=['POST'])
 def paypal_ipn():
     """Endpoint that receives Instant Payment Notifications (IPNs) from PayPal.
 
@@ -47,7 +47,7 @@ def paypal_ipn():
     return '', 200
 
 
-@donation_bp.route('/wepay', methods=['GET', 'POST'])
+@donations_bp.route('/wepay', methods=['GET', 'POST'])
 def wepay():
     """Donation page for WePay.
 
@@ -103,10 +103,10 @@ def wepay():
         else:
             return redirect(response['%s_uri' % operation_type])
 
-    return render_template('donation/wepay.html', form=form, recur=recurring)
+    return render_template('donations/wepay.html', form=form, recurring=recurring)
 
 
-@donation_bp.route('/wepay/ipn', methods=['POST'])
+@donations_bp.route('/wepay/ipn', methods=['POST'])
 def wepay_ipn():
     """Endpoint that receives Instant Payment Notifications (IPNs) from WePay.
 
@@ -131,22 +131,22 @@ def wepay_ipn():
         raise InternalServerError()
 
 
-@donation_bp.route('/complete', methods=['GET', 'POST'])
+@donations_bp.route('/complete', methods=['GET', 'POST'])
 def complete():
     """Endpoint for successful donations."""
-    return render_template('donation/complete.html')
+    return render_template('donations/complete.html')
 
 
-@donation_bp.route('/cancelled')
+@donations_bp.route('/cancelled')
 def cancelled():
     """Endpoint for cancelled donations."""
-    return render_template('donation/cancelled.html')
+    return render_template('donations/cancelled.html')
 
 
-@donation_bp.route('/error')
+@donations_bp.route('/error')
 def error():
     """Error page for donations.
 
     Users should be redirected there when errors occur during payment process.
     """
-    return render_template('donation/error.html')
+    return render_template('donations/error.html')

@@ -1,4 +1,4 @@
-from metabrainz.model.testing import ModelTestCase
+from metabrainz.testing import FlaskTestCase
 import donation
 from donation import Donation
 from metabrainz.model import db
@@ -28,8 +28,8 @@ class FakeWePay(object):
                 'shipping_fee': 5,
                 'fee_payer': 'payer',
                 'reference_id': 'abc123',
-                'redirect_uri': url_for('donation.complete', _external=True),
-                'callback_uri': url_for('donation.wepay_ipn', _external=True,
+                'redirect_uri': url_for('donations.complete', _external=True),
+                'callback_uri': url_for('donations.wepay_ipn', _external=True,
                                         editor='Tester',
                                         anonymous=False,
                                         can_contact=True),
@@ -41,11 +41,12 @@ class FakeWePay(object):
             raise NotImplementedError()
 
 
-class DonationModelTestCase(ModelTestCase):
+class DonationModelTestCase(FlaskTestCase):
 
     def setUp(self):
         super(DonationModelTestCase, self).setUp()
-        donation.WePay = lambda production=True, access_token=None, api_version=None: FakeWePay(production, access_token, api_version)
+        donation.WePay = lambda production=True, access_token=None, api_version=None:\
+            FakeWePay(production, access_token, api_version)
 
     def test_get_by_transaction_id(self):
         new = Donation()
@@ -64,7 +65,7 @@ class DonationModelTestCase(ModelTestCase):
         self.assertIsNone(bad_result)
 
     def test_process_paypal_ipn(self):
-        form = {  # This is not a complete list
+        good_form = {  # This is not a complete list
             'first_name': 'Tester',
             'last_name': 'Testing',
             'custom': 'tester',  # MusicBrainz username
@@ -78,7 +79,7 @@ class DonationModelTestCase(ModelTestCase):
             'address_zip': '95131',
             'mc_gross': '42.50',
             'mc_fee': '1',
-            'txn_id': 'TEST',
+            'txn_id': 'TEST1',
             'payment_status': 'Completed',
 
             # Additional variables:
@@ -87,10 +88,31 @@ class DonationModelTestCase(ModelTestCase):
             'option_name2': 'contact',
             'option_selection2': 'yes',
         }
-        Donation.process_paypal_ipn(form)
-
+        Donation.process_paypal_ipn(good_form)
         # Donation should be in the DB now
-        self.assertEqual(Donation.query.all()[0].transaction_id, 'TEST')
+        self.assertEqual(len(Donation.query.all()), 1)
+        self.assertEqual(Donation.query.all()[0].transaction_id, 'TEST1')
+
+        relatively_bad_form = good_form
+        relatively_bad_form['txn_id'] = 'TEST2'
+        relatively_bad_form['mc_gross'] = '0.49'
+        Donation.process_paypal_ipn(relatively_bad_form)
+        # There should still be one recorded donation
+        self.assertEqual(len(Donation.query.all()), 1)
+
+        bad_form = good_form
+        relatively_bad_form['txn_id'] = 'TEST3'
+        bad_form['business'] = current_app.config['PAYPAL_BUSINESS']
+        Donation.process_paypal_ipn(bad_form)
+        # There should still be one recorded donation
+        self.assertEqual(len(Donation.query.all()), 1)
+
+        super_bad_form = good_form
+        relatively_bad_form['txn_id'] = 'TEST4'
+        super_bad_form['payment_status'] = 'Refunded'  # What kind of monster would do that?!
+        Donation.process_paypal_ipn(super_bad_form)
+        # There should still be one recorded donation
+        self.assertEqual(len(Donation.query.all()), 1)
 
     def test_verify_and_log_wepay_checkout(self):
         self.assertTrue(Donation.verify_and_log_wepay_checkout(12345, 'Tester', False, True))

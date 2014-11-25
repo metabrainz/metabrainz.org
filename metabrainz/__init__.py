@@ -15,11 +15,13 @@ def create_app():
     from views import index_bp
     from finances.views import finances_bp
     from reports.views import reports_bp
-    from donation.views import donation_bp
+    from donations.views import donations_bp
+    from admin.views import admin_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(finances_bp, url_prefix='/finances')
     app.register_blueprint(reports_bp, url_prefix='/reports')
-    app.register_blueprint(donation_bp, url_prefix='/donate')
+    app.register_blueprint(donations_bp, url_prefix='/donations')
+    app.register_blueprint(admin_bp, url_prefix='/admin')
 
     return app

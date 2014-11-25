@@ -13,21 +13,46 @@ class Donation(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
-    moderator = db.Column(db.String, server_default='')  # MusicBrainz username
+    moderator = db.Column(db.String)  # MusicBrainz username
     can_contact = db.Column('contact', db.Boolean, server_default='FALSE')
     anonymous = db.Column('anon', db.Boolean, server_default='FALSE')
-    address_street = db.Column(db.String, server_default='')
-    address_city = db.Column(db.String, server_default='')
-    address_state = db.Column(db.String, server_default='')
-    address_postcode = db.Column(db.String, server_default='')
-    address_country = db.Column(db.String, server_default='')
+    address_street = db.Column(db.String)
+    address_city = db.Column(db.String)
+    address_state = db.Column(db.String)
+    address_postcode = db.Column(db.String)
+    address_country = db.Column(db.String)
 
     # Transaction details
     timestamp = db.Column(db.DateTime, server_default='now()')
-    transaction_id = db.Column('paypal_trans_id', db.String(32), nullable=False)
+    transaction_id = db.Column('paypal_trans_id', db.String(32))
     amount = db.Column(db.Numeric(11, 2), nullable=False)
-    fee = db.Column(db.String, server_default='')
-    memo = db.Column(db.String, server_default='')
+    fee = db.Column(db.Numeric(11, 2), nullable=False)
+    memo = db.Column(db.String)
+
+    @classmethod
+    def add_donation(cls, first_name, last_name, email, amount, fee,
+                     address_street=None, address_city=None, address_state=None,
+                     address_postcode=None, address_country=None,
+                     date=None, editor=None, can_contact=None, anonymous=None):
+        new_donation = cls(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            moderator=editor,
+            address_street=address_street,
+            address_city=address_city,
+            address_state=address_state,
+            address_postcode=address_postcode,
+            address_country=address_country,
+            amount=amount,
+            fee=fee,
+            timestamp=date,
+            can_contact=can_contact,
+            anonymous=anonymous,
+        )
+        db.session.add(new_donation)
+        db.session.commit()
+        return new_donation
 
     @classmethod
     def get_by_transaction_id(cls, transaction_id):
@@ -56,6 +81,9 @@ class Donation(db.Model):
 
         if form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
             return
+
+        if float(form['mc_gross']) < 0.50:
+            return  # Tiny donation
 
         # Checking that txn_id has not been previously processed
         if cls.get_by_transaction_id(form['txn_id']) is not None:
