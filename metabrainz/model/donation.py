@@ -169,7 +169,13 @@ class Donation(db.Model):
             db.session.add(new_donation)
             db.session.commit()
 
-            # TODO: Send receipt
+            send_receipt(
+                new_donation.email,
+                new_donation.timestamp,
+                new_donation.amount,
+                '%s %s' % (new_donation.first_name, new_donation.last_name),
+                new_donation.moderator,
+            )
 
         elif details['state'] in ['authorized', 'reserved']:
             # Payment is pending
