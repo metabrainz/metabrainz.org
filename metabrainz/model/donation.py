@@ -1,5 +1,5 @@
 from metabrainz.model import db
-from metabrainz.donation.receipts import send_receipt
+from metabrainz.donations.receipts import send_receipt
 from flask import current_app
 from wepay import WePay
 
