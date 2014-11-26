@@ -23,9 +23,10 @@ def send_receipt(email, date, amount, name, editor_name):
     message.attach(MIMEText(
         "Dear %s:\n\n"
         "Thank you very much for your donation to the MetaBrainz Foundation!\n\n"
-        "Your donation will allow the MetaBrainz Foundation to continue operating and "
-        "improving the MusicBrainz project (http://musicbrainz.org). MusicBrainz depends "
-        "on donations from the community and therefore deeply appreciates your support.\n\n"
+        "Your donation will allow the MetaBrainz Foundation to continue operating "
+        "and improving the MusicBrainz project and its related projects. The "
+        "foundation depends on donations from the community and therefore deeply "
+        "appreciates your support.\n\n"
         "The MetaBrainz Foundation is a United States 501(c)(3) tax-exempt public charity. This "
         "allows US taxpayers to deduct this donation from their taxes under section 170 of the "
         "Internal Revenue Service code.\n\n"
