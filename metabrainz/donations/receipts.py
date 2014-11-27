@@ -54,7 +54,6 @@ def _create_header(canvas, document):
     canvas.setAuthor("MetaBrainz Foundation Inc.")
     canvas.setTitle("Donation Receipt")
     canvas.setKeywords("metabrainz musicbrainz donation receipt")
-    # TODO: Write more metadata (creation date, etc.)
 
     canvas.setFont(_PRIMARY_FONT_BOLD, 16)
     canvas.drawRightString(550, 700, "MetaBrainz Foundation Inc.")
