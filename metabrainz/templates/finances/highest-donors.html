@@ -20,7 +20,7 @@
       {% for donation in donations %}
         <tr>
           <td>
-            {% if not donation %}
+            {% if donation.anonymous %}
               (anonymous)
             {% else %}
               {{ donation.first_name }} {{ donation.last_name }}
