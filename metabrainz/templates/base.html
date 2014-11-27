@@ -1,3 +1,5 @@
+{% from 'macros.html' import print_message %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +25,12 @@
     {% include 'navbar.html' %}
 
     <div class="container">
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          {{ print_message(message, category) }}
+        {% endfor %}
+      {% endwith %}
 
       {% block content %}
         <!-- Page content -->
