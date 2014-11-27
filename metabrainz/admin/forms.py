@@ -6,9 +6,9 @@ from wtforms.validators import DataRequired
 
 class AddDonationForm(Form):
     """Form for manually adding donations."""
-    first_name = StringField("First name", validators=[DataRequired()])
-    last_name = StringField("Last name", validators=[DataRequired()])
-    email = EmailField("Email", validators=[DataRequired()])
+    first_name = StringField("First name", validators=[DataRequired("First name is required.")])
+    last_name = StringField("Last name", validators=[DataRequired("Last name is required.")])
+    email = EmailField("Email", validators=[DataRequired("Email is required.")])
 
     can_contact = BooleanField("This donor may be contacted")
     anonymous = BooleanField("This donor wishes to remain anonymous")
@@ -20,7 +20,7 @@ class AddDonationForm(Form):
     address_country = StringField("Country")
 
     payment_date = DateField("Payment date")
-    amount = DecimalField("Amount (USD)", validators=[DataRequired()])
+    amount = DecimalField("Amount (USD)", validators=[DataRequired("You need to specify amount.")])
     fee = DecimalField("Fee (USD)", default=0)
 
     editor = StringField("Editor name")
