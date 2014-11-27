@@ -33,7 +33,7 @@ class FakeWePay(object):
                                         editor='Tester',
                                         anonymous=False,
                                         can_contact=True),
-                'payer_email': 'api@wepay.com',
+                'payer_email': 'test@example.org',
                 'payer_name': 'Tester Testing',
                 'auto_capture': True,
             }
@@ -52,7 +52,7 @@ class DonationModelTestCase(FlaskTestCase):
         new = Donation()
         new.first_name = 'Tester'
         new.last_name = 'Testing'
-        new.email = 'testing@testers.org'
+        new.email = 'test@example.org'
         new.transaction_id = 'TEST'
         new.amount = 42.50
         db.session.add(new)
@@ -69,7 +69,7 @@ class DonationModelTestCase(FlaskTestCase):
             'first_name': 'Tester',
             'last_name': 'Testing',
             'custom': 'tester',  # MusicBrainz username
-            'payer_email': 'tester@metabrainz.org',  # MusicBrainz username
+            'payer_email': 'test@example.org',
             'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
             'business': 'donations@metabrainz.org',
             'address_street': '1 Main St',

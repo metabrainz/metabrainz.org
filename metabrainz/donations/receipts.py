@@ -14,6 +14,9 @@ import tempfile
 
 
 def send_receipt(email, date, amount, name, editor_name):
+    if current_app.config['TESTING']:  # Not sending any emails during the testing process
+        return
+
     from_addr = 'donations@' + current_app.config['MAIL_FROM_DOMAIN']
 
     message = MIMEMultipart('mixed')

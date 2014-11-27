@@ -36,7 +36,7 @@ class DonationsViewsTestCase(FlaskTestCase):
             'first_name': 'Tester',
             'last_name': 'Testing',
             'custom': 'tester',  # MusicBrainz username
-            'payer_email': 'tester@metabrainz.org',  # MusicBrainz username
+            'payer_email': 'test@example.org',
             'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
             'business': 'donations@metabrainz.org',
             'address_street': '1 Main St',
