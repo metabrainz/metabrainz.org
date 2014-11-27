@@ -10,7 +10,7 @@ class AddDonationForm(Form):
     last_name = StringField("Last name", validators=[DataRequired("Last name is required.")])
     email = EmailField("Email", validators=[DataRequired("Email is required.")])
 
-    can_contact = BooleanField("This donor may be contacted")
+    can_contact = BooleanField("This donor may be contacted", default=True)
     anonymous = BooleanField("This donor wishes to remain anonymous")
 
     address_street = StringField("Street")
