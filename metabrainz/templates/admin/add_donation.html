@@ -9,7 +9,7 @@
 
   {% for field in form.errors %}
     {% for error in form.errors[field] %}
-      <div class="alert alert-danger">{{ error }}</div>
+      <div class="alert alert-danger">{{ field }}: {{ error }}</div>
     {% endfor %}
   {% endfor %}
 
