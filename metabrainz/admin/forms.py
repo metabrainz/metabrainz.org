@@ -21,7 +21,7 @@ class AddDonationForm(Form):
 
     payment_date = DateField("Payment date")
     amount = DecimalField("Amount (USD)", validators=[DataRequired()])
-    fee = DecimalField("Fee (USD)", validators=[DataRequired()])
+    fee = DecimalField("Fee (USD)", default=0)
 
     editor = StringField("Editor name")
 
