@@ -22,7 +22,7 @@ class Donation(db.Model):
     address_country = db.Column(db.String, server_default='')
 
     # Transaction details
-    timestamp = db.Column(db.DateTime, server_default='now()')
+    timestamp = db.Column("payment_date", db.DateTime, server_default='now()')  # TODO: Fix name of this row
     transaction_id = db.Column('paypal_trans_id', db.String(32), nullable=False)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.String, server_default='')
@@ -31,6 +31,33 @@ class Donation(db.Model):
     @classmethod
     def get_by_transaction_id(cls, transaction_id):
         return cls.query.filter_by(transaction_id=transaction_id).first()
+
+    @staticmethod
+    def get_nag_days(editor):
+        """
+
+        Returns:
+            Two values. First one indicates if editor should be nagged:
+            -1 = unknown person, 0 = no need to nag, 1 = should be nagged.
+            Second is...
+        """
+        days_per_dollar = 7.5
+        result = db.session.execute(
+            "SELECT ((amount + fee) * :days_per_dollar) - "
+            "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
+            "FROM donation "
+            "WHERE lower(moderator) = lower(:editor) "
+            "ORDER BY nag DESC "
+            "LIMIT 1",
+            {'editor': editor, 'days_per_dollar': days_per_dollar}
+        ).fetchone()
+
+        if result is None:
+            return -1, 0
+        elif result[0] >= 0:
+            return 0, result[0]
+        else:
+            return 1, result[0]
 
     @classmethod
     def get_recent_donations(cls, limit=None, offset=None):

@@ -13,6 +13,13 @@ def index():
     """Home page for donations."""
     return render_template('donations/donate.html')
 
+@donations_bp.route('/nag-check/<editor>')
+def nag_check(editor):
+    a, b = Donation.get_nag_days(editor)
+    return '%s,%s\n' % (a, b)
+
+
+# PAYPAL
 
 # PAYPAL
 
