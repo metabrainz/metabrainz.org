@@ -11,6 +11,9 @@ def create_app():
     from model import db
     db.init_app(app)
 
+    from utils import reformat_datetime
+    app.jinja_env.filters['datetime'] = reformat_datetime
+
     # Blueprints
     from views import index_bp
     from finances.views import finances_bp
