@@ -2,6 +2,7 @@ from metabrainz.model import db
 from metabrainz.donations.receipts import send_receipt
 from flask import current_app
 from wepay import WePay
+from datetime import datetime
 
 
 class Donation(db.Model):
@@ -23,7 +24,7 @@ class Donation(db.Model):
     address_country = db.Column(db.String)
 
     # Transaction details
-    timestamp = db.Column("payment_date", db.DateTime, server_default='now()')  # TODO: Fix name of this row
+    payment_date = db.Column(db.DateTime, default=datetime.utcnow)
     transaction_id = db.Column('paypal_trans_id', db.String(32))
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
@@ -33,7 +34,7 @@ class Donation(db.Model):
     def add_donation(cls, first_name, last_name, email, amount, fee=0,
                      address_street=None, address_city=None, address_state=None,
                      address_postcode=None, address_country=None,
-                     date=None, editor=None, can_contact=None, anonymous=None):
+                     payment_date=None, editor=None, can_contact=None, anonymous=None):
         new_donation = cls(
             first_name=first_name,
             last_name=last_name,
@@ -46,7 +47,7 @@ class Donation(db.Model):
             address_country=address_country,
             amount=amount,
             fee=fee,
-            timestamp=date,
+            payment_date=payment_date,
             can_contact=can_contact,
             anonymous=anonymous,
         )
@@ -146,7 +147,7 @@ class Donation(db.Model):
 
         send_receipt(
             new_donation.email,
-            new_donation.timestamp,
+            new_donation.payment_date,
             new_donation.amount,
             '%s %s' % (new_donation.first_name, new_donation.last_name),
             new_donation.moderator,
@@ -198,7 +199,7 @@ class Donation(db.Model):
 
             send_receipt(
                 new_donation.email,
-                new_donation.timestamp,
+                new_donation.payment_date,
                 new_donation.amount,
                 '%s %s' % (new_donation.first_name, new_donation.last_name),
                 new_donation.moderator,

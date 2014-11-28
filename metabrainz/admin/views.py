@@ -25,7 +25,7 @@ def add_donation():
             address_state=form.address_state.data,
             address_postcode=form.address_postcode.data,
             address_country=form.address_country.data,
-            date=form.payment_date.data,
+            payment_date=form.payment_date.data,
             can_contact=form.can_contact.data,
             anonymous=form.anonymous.data,
         )
