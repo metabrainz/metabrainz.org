@@ -20,7 +20,7 @@
       <tbody>
       {% for donation in donations %}
         <tr>
-          <td>{{ donation.timestamp|datetime }}</td>
+          <td>{{ donation.payment_date|datetime }}</td>
           <td>
             {% if donation.anonymous %}
               (anonymous)
