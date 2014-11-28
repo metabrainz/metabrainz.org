@@ -58,7 +58,9 @@
 
         {% for cur_page in range(start, last_page+1) %}
           {% if loop.index < 9 %}
-            <li {{ 'class=active' if cur_page == page }}><a href="{{ url_for('finances.donations', page=cur_page) }}">{{ cur_page }}</a></li>
+            <li {{ 'class=active' if cur_page == page }}>
+              <a href="{{ url_for('finances.donations', page=cur_page) }}">{{ cur_page }}</a>
+            </li>
           {% endif %}
         {% endfor %}
 
