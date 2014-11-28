@@ -46,8 +46,16 @@
     {% set last_page = (count / limit)|round(method='ceil')|int %}
     <nav>
       <ul class="pagination">
-        <li {{ 'class=disabled' if page == 1 }}><a href="{{ url_for('finances.donations', page=1) }}"><span aria-hidden="true">&laquo;</span><span class="sr-only">First</span></a></li>
-        <li {{ 'class=disabled' if page == 1 }}><a href="{{ url_for('finances.donations', page=page-1) }}"><span aria-hidden="true">&lsaquo;</span><span class="sr-only">Previous</span></a></li>
+        <li {{ 'class=disabled' if page == 1 }}>
+          <a href="{{ url_for('finances.donations', page=1) if page != 1 else '#' }}">
+            <span aria-hidden="true">&laquo;</span><span class="sr-only">First</span>
+          </a>
+        </li>
+        <li {{ 'class=disabled' if page == 1 }}>
+          <a href="{{ url_for('finances.donations', page=page-1) if page != 1 else '#' }}">
+            <span aria-hidden="true">&lsaquo;</span><span class="sr-only">Previous</span>
+          </a>
+        </li>
 
         {% for cur_page in range(start, last_page+1) %}
           {% if loop.index < 9 %}
@@ -55,8 +63,16 @@
           {% endif %}
         {% endfor %}
 
-        <li {{ 'class=disabled' if page == last_page }}><a href="{{ url_for('finances.donations', page=page+1) }}"><span aria-hidden="true">&rsaquo;</span><span class="sr-only">Next</span></a></li>
-        <li {{ 'class=disabled' if page == last_page }}><a href="{{ url_for('finances.donations', page=last_page) }}"><span aria-hidden="true">&raquo;</span><span class="sr-only">Last</span></a></li>
+        <li {{ 'class=disabled' if page == last_page }}>
+          <a href="{{ url_for('finances.donations', page=page+1) if page != last_page else '#' }}">
+            <span aria-hidden="true">&rsaquo;</span><span class="sr-only">Next</span>
+          </a>
+        </li>
+        <li {{ 'class=disabled' if page == last_page }}>
+          <a href="{{ url_for('finances.donations', page=last_page) if page != last_page else '#' }}">
+            <span aria-hidden="true">&raquo;</span><span class="sr-only">Last</span>
+          </a>
+        </li>
       </ul>
     </nav>
   {% endif %}
