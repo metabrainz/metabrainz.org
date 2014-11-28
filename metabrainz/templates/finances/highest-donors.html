@@ -41,7 +41,6 @@
     {% else %}
       {% set start = 1 %}
     {% endif %}
-    {% set last_page = (count / limit)|round(method='ceil')|int %}
     <nav>
       <ul class="pagination">
         <li {{ 'class=disabled' if page == 1 }}>
