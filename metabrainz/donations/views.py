@@ -21,8 +21,6 @@ def nag_check(editor):
 
 # PAYPAL
 
-# PAYPAL
-
 @donations_bp.route('/paypal')
 def paypal():
     """Donation page for PayPal.
