@@ -26,11 +26,11 @@ class Donation(db.Model):
     timestamp = db.Column("payment_date", db.DateTime, server_default='now()')  # TODO: Fix name of this row
     transaction_id = db.Column('paypal_trans_id', db.String(32))
     amount = db.Column(db.Numeric(11, 2), nullable=False)
-    fee = db.Column(db.Numeric(11, 2), nullable=False)
+    fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
     memo = db.Column(db.String)
 
     @classmethod
-    def add_donation(cls, first_name, last_name, email, amount, fee,
+    def add_donation(cls, first_name, last_name, email, amount, fee=0,
                      address_street=None, address_city=None, address_state=None,
                      address_postcode=None, address_country=None,
                      date=None, editor=None, can_contact=None, anonymous=None):
