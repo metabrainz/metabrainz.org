@@ -31,7 +31,7 @@ def donations():
 def highest_donors():
     page = int(request.args.get('page', default=1))
     if page < 1:
-        return redirect(url_for('.donations'))
+        return redirect(url_for('.highest_donors'))
     limit = 30
     offset = (page - 1) * limit
     count, donations = Donation.get_biggest_donations(limit=limit, offset=offset)
