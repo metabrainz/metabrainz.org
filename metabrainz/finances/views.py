@@ -1,3 +1,4 @@
+from __future__ import division
 from flask import Blueprint, request, render_template, url_for, redirect
 from metabrainz.model.donation import Donation
 from math import ceil
@@ -19,7 +20,7 @@ def donations():
     offset = (page - 1) * limit
     count, donations = Donation.get_recent_donations(limit=limit, offset=offset)
 
-    last_page = int(ceil(count / limit)) or 1  # First will be 0 if less than one page
+    last_page = int(ceil(count / limit))
     if page > last_page:
         return redirect(url_for('.donations', page=last_page))
 
@@ -36,7 +37,7 @@ def highest_donors():
     offset = (page - 1) * limit
     count, donations = Donation.get_biggest_donations(limit=limit, offset=offset)
 
-    last_page = int(ceil(count / limit)) or 1  # First will be 0 if less than one page
+    last_page = int(ceil(count / limit))
     if page > last_page:
         return redirect(url_for('.highest_donors', page=last_page))
 
