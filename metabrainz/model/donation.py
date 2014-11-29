@@ -11,24 +11,24 @@ class Donation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     # Personal details
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
+    first_name = db.Column(db.Unicode, nullable=False)
+    last_name = db.Column(db.Unicode, nullable=False)
+    email = db.Column(db.Unicode, nullable=False)
     moderator = db.Column(db.String)  # MusicBrainz username
     can_contact = db.Column('contact', db.Boolean, server_default='FALSE')
     anonymous = db.Column('anon', db.Boolean, server_default='FALSE')
-    address_street = db.Column(db.String)
-    address_city = db.Column(db.String)
-    address_state = db.Column(db.String)
-    address_postcode = db.Column(db.String)
-    address_country = db.Column(db.String)
+    address_street = db.Column(db.Unicode)
+    address_city = db.Column(db.Unicode)
+    address_state = db.Column(db.Unicode)
+    address_postcode = db.Column(db.Unicode)
+    address_country = db.Column(db.Unicode)
 
     # Transaction details
     payment_date = db.Column(db.DateTime, default=datetime.utcnow)
     transaction_id = db.Column('paypal_trans_id', db.String(32))
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
-    memo = db.Column(db.String)
+    memo = db.Column(db.Unicode)
 
     @classmethod
     def add_donation(cls, first_name, last_name, email, amount, fee=0,
