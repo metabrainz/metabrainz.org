@@ -33,7 +33,8 @@ def send_receipt(email, date, amount, name, editor_name):
         "The MetaBrainz Foundation is a United States 501(c)(3) tax-exempt public charity. This "
         "allows US taxpayers to deduct this donation from their taxes under section 170 of the "
         "Internal Revenue Service code.\n\n"
-        "Please save a printed copy of the attached PDF receipt for your records." % name
+        "Please save a printed copy of the attached PDF receipt for your records." % name,
+        _charset='utf-8'
     ))
 
     receipt_file = _generate_recript(email, date, amount, name, editor_name)
