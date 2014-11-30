@@ -7,6 +7,12 @@ def create_app():
     # Configuration
     app.config.from_object('metabrainz.config')
 
+    if app.debug:
+        # Debug toolbar
+        from flask_debugtoolbar import DebugToolbarExtension
+        DebugToolbarExtension(app)
+        app.config['DEBUG_TB_TEMPLATE_EDITOR_ENABLED'] = True
+
     # Database
     from model import db
     db.init_app(app)
