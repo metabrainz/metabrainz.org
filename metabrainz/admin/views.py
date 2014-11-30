@@ -34,7 +34,7 @@ def add_donation():
               'success')
         send_receipt(
             new_donation.email,
-            new_donation.timestamp,
+            new_donation.payment_date,
             new_donation.amount,
             '%s %s' % (new_donation.first_name, new_donation.last_name),
             new_donation.moderator,

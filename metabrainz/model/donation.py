@@ -87,6 +87,46 @@ class Donation(db.Model):
             return 1, result[0]
 
     @classmethod
+    def get_recent_donations(cls, limit=None, offset=None):
+        """Getter for most recent donations.
+
+        Args:
+            limit: Maximum number of donations to be returned.
+            offset: Offset of the result.
+
+        Returns:
+            Tuple with two items. First is total number if donations. Second
+            is a list of donations sorted by payment_date with a specified offset.
+        """
+        query = cls.query.order_by(cls.payment_date)
+        count = query.count()  # Total count should be calculated before limits
+        if limit is not None:
+            query = query.limit(limit)
+        if offset is not None:
+            query = query.offset(offset)
+        return count, query.all()
+
+    @classmethod
+    def get_biggest_donations(cls, limit=None, offset=None):
+        """Getter for biggest donations.
+
+        Args:
+            limit: Maximum number of donations to be returned.
+            offset: Offset of the result.
+
+        Returns:
+            Tuple with two items. First is total number if donations. Second
+            is a list of donations sorted by amount with a specified offset.
+        """
+        query = cls.query.order_by(-cls.amount)
+        count = query.count()  # Total count should be calculated before limits
+        if limit is not None:
+            query = query.limit(limit)
+        if offset is not None:
+            query = query.offset(offset)
+        return count, query.all()
+
+    @classmethod
     def process_paypal_ipn(cls, form):
         """Processor for PayPal IPNs (Instant Payment Notifications).
 
