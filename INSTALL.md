@@ -51,7 +51,8 @@ the *requirements.txt* file. To install them run:
 
 ### Database creation
 
-*TO BE WRITTEN*
+    $ python manage.py create_db
+    $ python manage.py create_tables
 
 ### Starting the server
 

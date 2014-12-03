@@ -1,4 +1,6 @@
 from urlparse import urlsplit
+from sqlalchemy import create_engine
+from metabrainz.model import db
 import subprocess
 
 
@@ -10,6 +12,11 @@ def explode_db_url(url):
     """
     url = urlsplit(url)
     return url.hostname, url.path[1:], url.username, url.password
+
+
+def create_tables(db_uri):
+    engine = create_engine(db_uri)
+    db.metadata.create_all(engine)
 
 
 def init_postgres(uri):
