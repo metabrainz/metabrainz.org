@@ -15,3 +15,5 @@ class Tier(db.Model):
     # repeating primary plans) are listed on the "view all tiers" page that
     # lists everything.
     primary = db.Column(db.Boolean, nullable=False, default=False)
+
+    organizations = db.relationship('Organization', backref='tier')

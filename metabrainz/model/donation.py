@@ -30,6 +30,8 @@ class Donation(db.Model):
     fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
     memo = db.Column(db.Unicode)
 
+    organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'))  # Organization that made this donation
+
     @classmethod
     def add_donation(cls, first_name, last_name, email, amount, fee=0,
                      address_street=None, address_city=None, address_state=None,
