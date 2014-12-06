@@ -11,6 +11,7 @@ class Tier(db.Model):
     short_desc = db.Column(db.Unicode)
     long_desc = db.Column(db.Unicode)
     price = db.Column(db.Numeric(11, 2), nullable=False)  # per month
+    available = db.Column(db.Boolean, default=False)  # Indicates if orgs can sign up to that on their own
 
     # Primary tiers are shown on the signup page. Secondary plans (along with
     # repeating primary plans) are listed on the "view all tiers" page that
@@ -39,9 +40,10 @@ class TierAdminView(ModelView):
     column_descriptions = dict(
         price='USD',
         primary='Primary tiers are displayed first',
+        available='Indicates if organizations can sign up to that tier on their own',
     )
-    column_list = ('id', 'name', 'price', 'primary',)
-    form_columns = ('name', 'price', 'short_desc', 'long_desc', 'primary',)
+    column_list = ('id', 'name', 'price', 'primary', 'available',)
+    form_columns = ('name', 'price', 'short_desc', 'long_desc', 'primary', 'available',)
 
     def __init__(self, session, **kwargs):
         super(TierAdminView, self).__init__(Tier, session, name='Tiers', **kwargs)
