@@ -27,6 +27,10 @@ class Tier(db.Model):
         return self.name
 
     @classmethod
+    def get_tier(cls, id):
+        return cls.query.filter(cls.id == id).first()
+
+    @classmethod
     def get_all(cls):
         """Returns list of all tiers sorted by price."""
         return cls.query.order_by(cls.price).all()
