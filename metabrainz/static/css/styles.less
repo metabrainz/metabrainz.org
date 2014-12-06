@@ -105,10 +105,14 @@ img.pull-right { padding-left: 15px; }
 #customers {
   table {
     td { vertical-align: middle !important; }
-    tr :first-child { // Logo or name
+    td:first-child { // Logo or name
       width: 160px;
       text-align: center;
       img { max-width: 150px; }
+    }
+    td:nth-child(2) { // Description
+      padding-left: 30px;
+      text-align: left;
     }
   }
 }
