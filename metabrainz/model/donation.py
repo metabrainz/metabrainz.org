@@ -15,7 +15,7 @@ class Donation(db.Model):
     first_name = db.Column(db.Unicode, nullable=False)
     last_name = db.Column(db.Unicode, nullable=False)
     email = db.Column(db.Unicode, nullable=False)
-    moderator = db.Column(db.String)  # MusicBrainz username
+    mb_username = db.Column(db.String)  # MusicBrainz username
     can_contact = db.Column('contact', db.Boolean, server_default='FALSE')
     anonymous = db.Column('anon', db.Boolean, server_default='FALSE')
     address_street = db.Column(db.Unicode)
@@ -45,7 +45,7 @@ class Donation(db.Model):
             first_name=first_name,
             last_name=last_name,
             email=email,
-            moderator=editor,
+            mb_username=editor,
             address_street=address_street,
             address_city=address_city,
             address_state=address_state,
@@ -79,7 +79,7 @@ class Donation(db.Model):
             "SELECT ((amount + fee) * :days_per_dollar) - "
             "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
             "FROM donation "
-            "WHERE lower(moderator) = lower(:editor) "
+            "WHERE lower(mb_username) = lower(:editor) "
             "ORDER BY nag DESC "
             "LIMIT 1",
             {'editor': editor, 'days_per_dollar': days_per_dollar}
@@ -167,7 +167,7 @@ class Donation(db.Model):
             first_name=form['first_name'],
             last_name=form['last_name'],
             email=form['payer_email'],
-            moderator=form['custom'],
+            mb_username=form['custom'],
             address_street=form['address_street'],
             address_city=form['address_city'],
             address_state=form['address_state'],
@@ -196,7 +196,7 @@ class Donation(db.Model):
             new_donation.payment_date,
             new_donation.amount,
             '%s %s' % (new_donation.first_name, new_donation.last_name),
-            new_donation.moderator,
+            new_donation.mb_username,
         )
 
     @classmethod
@@ -219,7 +219,7 @@ class Donation(db.Model):
                 first_name=details['payer_name'],
                 last_name='',
                 email=details['payer_email'],
-                moderator=editor,
+                mb_username=editor,
                 can_contact=can_contact,
                 anonymous=anonymous,
                 amount=details['gross'] - details['fee'],
@@ -248,7 +248,7 @@ class Donation(db.Model):
                 new_donation.payment_date,
                 new_donation.amount,
                 '%s %s' % (new_donation.first_name, new_donation.last_name),
-                new_donation.moderator,
+                new_donation.mb_username,
             )
 
         elif details['state'] in ['authorized', 'reserved']:
@@ -269,7 +269,7 @@ class Donation(db.Model):
 class DonationAdminView(ModelView):
     column_labels = dict(
         id='ID',
-        moderator='MusicBrainz ID',
+        mb_username='MusicBrainz username',
         address_street='Street',
         address_city='City',
         address_state='State',

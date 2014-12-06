@@ -26,8 +26,8 @@
               (anonymous)
             {% else %}
               {{ donation.first_name }} {{ donation.last_name }}
-              {% if donation.moderator %}
-                (<a href="//musicbrainz.org/user/{{ donation.moderator }}">{{ donation.moderator }}</a>)
+              {% if donation.mb_username %}
+                (<a href="//musicbrainz.org/user/{{ donation.mb_username }}">{{ donation.mb_username }}</a>)
               {% endif %}
             {% endif %}
           </td>
