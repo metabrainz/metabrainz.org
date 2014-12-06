@@ -18,7 +18,7 @@ class Tier(db.Model):
     # lists everything.
     primary = db.Column(db.Boolean, nullable=False, default=False)
 
-    organizations = db.relationship('Organization', backref='tier')
+    organizations = db.relationship('Organization', backref='tier', order_by='Organization.name')
 
     def __unicode__(self):
         return self.name
