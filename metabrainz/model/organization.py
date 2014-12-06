@@ -1,6 +1,6 @@
 from metabrainz.model import db
+from metabrainz.model.admin_view import AdminView
 from metabrainz.model.donation import Donation
-from flask_admin.contrib.sqla import ModelView
 from markdown import markdown
 
 
@@ -47,7 +47,7 @@ class Organization(db.Model):
             return None
 
 
-class OrganizationAdminView(ModelView):
+class OrganizationAdminView(AdminView):
     column_labels = dict(
         id='ID',
         logo_url='Logo URL',

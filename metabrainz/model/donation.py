@@ -1,7 +1,7 @@
 from metabrainz.model import db
+from metabrainz.model.admin_view import AdminView
 from metabrainz.donations.receipts import send_receipt
 from flask import current_app
-from flask_admin.contrib.sqla import ModelView
 from wepay import WePay
 from datetime import datetime
 
@@ -266,7 +266,7 @@ class Donation(db.Model):
         return True
 
 
-class DonationAdminView(ModelView):
+class DonationAdminView(AdminView):
     column_labels = dict(
         id='ID',
         mb_username='MusicBrainz username',

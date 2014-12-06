@@ -1,6 +1,6 @@
 from metabrainz.model import db
+from metabrainz.model.admin_view import AdminView
 from metabrainz.model.organization import Organization
-from flask_admin.contrib.sqla import ModelView
 
 
 class Tier(db.Model):
@@ -39,7 +39,7 @@ class Tier(db.Model):
         return self.organizations.filter(Organization.featured == True).all()
 
 
-class TierAdminView(ModelView):
+class TierAdminView(AdminView):
     column_labels = dict(
         id='ID',
         short_desc='Short description',
