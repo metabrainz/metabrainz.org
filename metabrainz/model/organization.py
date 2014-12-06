@@ -14,6 +14,7 @@ class Organization(db.Model):
     api_url = db.Column(db.Unicode)
     description = db.Column(db.Unicode)  # How organization uses MetaBrainz projects (Markdown)
     good_standing = db.Column(db.Boolean, nullable=False, default=True)
+    featured = db.Column(db.Boolean, nullable=False, default=False)
 
     contact_name = db.Column(db.Unicode, nullable=False)
     email = db.Column(db.Unicode, nullable=False)
@@ -64,7 +65,7 @@ class OrganizationAdminView(ModelView):
     )
     column_list = ('name', 'tier', 'good_standing',)
     form_columns = (
-        'name', 'tier', 'good_standing', 'logo_url', 'website_url',
+        'name', 'tier', 'good_standing', 'featured', 'logo_url', 'website_url',
         'description', 'api_url', 'contact_name', 'email', 'address_street',
         'address_city', 'address_state', 'address_postcode', 'address_country',
     )

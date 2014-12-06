@@ -13,12 +13,13 @@
   <div id="customers">
   {% for tier in tiers|reverse %}
 
-    {% if tier.organizations %}
+    {% set feautred_orgs = tier.get_featured_orgs() %}
+    {% if feautred_orgs %}
       <h2>{{ tier.name }} tier</h2>
       <p class="text-muted"><em>{{ tier.short_desc }}</em></p>
       <table class="table">
 
-        {% for org in tier.organizations %}
+        {% for org in feautred_orgs %}
           <tr>
             <td>
               {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}

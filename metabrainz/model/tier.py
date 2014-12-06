@@ -1,4 +1,5 @@
 from metabrainz.model import db
+from metabrainz.model.organization import Organization
 from flask_admin.contrib.sqla import ModelView
 
 
@@ -18,7 +19,9 @@ class Tier(db.Model):
     # lists everything.
     primary = db.Column(db.Boolean, nullable=False, default=False)
 
-    organizations = db.relationship('Organization', backref='tier', order_by='Organization.name')
+    organizations = db.relationship(Organization, backref='tier',
+                                    order_by=Organization.name,
+                                    lazy="dynamic")
 
     def __unicode__(self):
         return self.name
@@ -27,6 +30,9 @@ class Tier(db.Model):
     def get_all(cls):
         """Returns list of all tiers sorted by price."""
         return cls.query.order_by(cls.price).all()
+
+    def get_featured_orgs(self):
+        return self.organizations.filter(Organization.featured == True).all()
 
 
 class TierAdminView(ModelView):
