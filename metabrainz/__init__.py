@@ -26,13 +26,23 @@ def create_app():
     from support.views import support_bp
     from reports.views import reports_bp
     from donations.views import donations_bp
-    from admin.views import admin_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(finances_bp, url_prefix='/finances')
     app.register_blueprint(support_bp, url_prefix='/support')
     app.register_blueprint(reports_bp, url_prefix='/reports')
     app.register_blueprint(donations_bp, url_prefix='/donations')
-    app.register_blueprint(admin_bp, url_prefix='/admin')
+
+    # Admin section
+    from flask_admin import Admin
+    admin = Admin(app, name='Danger Zone')
+
+    from metabrainz.model.tier import TierAdminView
+    from metabrainz.model.organization import OrganizationAdminView
+    from metabrainz.model.donation import DonationAdminView
+
+    admin.add_view(TierAdminView(db.session))
+    admin.add_view(OrganizationAdminView(db.session))
+    admin.add_view(DonationAdminView(db.session))
 
     return app

@@ -1,6 +1,7 @@
 from metabrainz.model import db
 from metabrainz.donations.receipts import send_receipt
 from flask import current_app
+from flask_admin.contrib.sqla import ModelView
 from wepay import WePay
 from datetime import datetime
 
@@ -31,6 +32,9 @@ class Donation(db.Model):
     memo = db.Column(db.Unicode)
 
     organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'))  # Organization that made this donation
+
+    def __unicode__(self):
+        return 'Donation #%s' % self.id
 
     @classmethod
     def add_donation(cls, first_name, last_name, email, amount, fee=0,
@@ -218,7 +222,7 @@ class Donation(db.Model):
                 moderator=editor,
                 can_contact=can_contact,
                 anonymous=anonymous,
-                amount=details['gross']-details['fee'],
+                amount=details['gross'] - details['fee'],
                 fee=details['fee'],
                 transaction_id=checkout_id,
             )
@@ -260,3 +264,31 @@ class Donation(db.Model):
             return False
 
         return True
+
+
+class DonationAdminView(ModelView):
+    column_labels = dict(
+        id='ID',
+        moderator='MusicBrainz ID',
+        address_street='Street',
+        address_city='City',
+        address_state='State',
+        address_postcode='Postal code',
+        address_country='Country',
+    )
+    column_descriptions = dict(
+        organization='Organization associated with this donation',
+        can_contact='This donor may be contacted',
+        anonymous='This donor wishes to remain anonymous',
+        amount='USD',
+        fee='USD',
+    )
+    column_list = ('id', 'email', 'first_name', 'last_name', 'amount', 'fee',)
+    form_columns = (
+        'first_name', 'last_name', 'email', 'address_street', 'address_city',
+        'address_state', 'address_postcode', 'address_country', 'amount', 'fee',
+        'payment_date', 'organization', 'memo', 'can_contact', 'anonymous',
+    )
+
+    def __init__(self, session, **kwargs):
+        super(DonationAdminView, self).__init__(Donation, session, name='Donations', **kwargs)
