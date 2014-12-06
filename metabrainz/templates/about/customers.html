@@ -20,7 +20,7 @@
       <table class="table">
 
         {% for org in feautred_orgs %}
-          <tr>
+          <tr {{ 'class=danger' if not org.good_standing }}>
             <td>
               {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}
                 {% if org.logo_url %}
@@ -30,7 +30,14 @@
                 {% endif %}
               {% if org.website_url %}</a>{% endif %}
             </td>
-            <td>{{ org.get_description_html()|safe }}</td>
+            <td>
+              {{ org.get_description_html()|safe }}
+              {% if not org.good_standing %}
+                <p class="text-danger">
+                  This organization has a <a href="{{ url_for('support.bad_standing') }}">bad standing</a>.
+                </p>
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
 

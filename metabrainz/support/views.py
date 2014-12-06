@@ -16,3 +16,8 @@ def tier(tier_id):
     if t is None:
         raise NotFound("Can't find tier with a specified ID.")
     return render_template('support/tier.html', tier=t)
+
+
+@support_bp.route('/bad')
+def bad_standing():
+    return render_template('support/index.html', tiers=Tier.get_all())
