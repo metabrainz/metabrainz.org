@@ -27,7 +27,7 @@
                 {{ org.name }}
               {% endif %}
             </td>
-            <td>{{ org.description }}</td>
+            <td>{{ org.get_description_html()|safe }}</td>
           </tr>
         {% endfor %}
 

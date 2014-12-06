@@ -1,5 +1,6 @@
 from metabrainz.model import db
 from flask_admin.contrib.sqla import ModelView
+from markdown import markdown
 
 
 class Organization(db.Model):
@@ -11,7 +12,7 @@ class Organization(db.Model):
     logo_url = db.Column(db.Unicode)
     website_url = db.Column(db.Unicode)
     api_url = db.Column(db.Unicode)
-    description = db.Column(db.Unicode)  # How organization uses MetaBrainz projects
+    description = db.Column(db.Unicode)  # How organization uses MetaBrainz projects (Markdown)
     good_standing = db.Column(db.Boolean, nullable=False, default=True)
 
     contact_name = db.Column(db.Unicode, nullable=False)
@@ -36,6 +37,10 @@ class Organization(db.Model):
         """Returns list of all organizations."""
         return cls.query.all()
 
+    def get_description_html(self):
+        """Converts description text (Markdown) into HTML and returns it."""
+        return markdown(self.description, safe_mode="escape")
+
 
 class OrganizationAdminView(ModelView):
     column_labels = dict(
@@ -52,7 +57,7 @@ class OrganizationAdminView(ModelView):
         address_country='Country',
     )
     column_descriptions = dict(
-        description='How organization uses MetaBrainz projects',
+        description='How organization uses MetaBrainz projects (Markdown supported)',
     )
     column_list = ('name', 'tier', 'good_standing',)
     form_columns = (
