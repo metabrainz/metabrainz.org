@@ -11,7 +11,7 @@
   </p>
 
   <div id="customers">
-  {% for tier in tiers %}
+  {% for tier in tiers|reverse %}
 
     {% if tier.organizations %}
       <h2>{{ tier.name }} tier</h2>
