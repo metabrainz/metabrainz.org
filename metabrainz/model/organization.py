@@ -49,7 +49,7 @@ class OrganizationAdminView(ModelView):
     column_descriptions = dict(
         description='How organization uses MetaBrainz projects',
     )
-    column_list = ('id', 'name', 'tier', 'good_standing',)
+    column_list = ('name', 'tier', 'good_standing',)
     form_columns = (
         'name', 'tier', 'good_standing', 'logo_url', 'website_url', 'api_url',
         'contact_name', 'email', 'address_street', 'address_city',
