@@ -34,7 +34,7 @@
               {{ org.get_description_html()|safe }}
               {% if not org.good_standing %}
                 <p class="text-danger">
-                  This organization has a <a href="{{ url_for('support.bad_standing') }}">bad standing</a>.
+                  <em>This organization has a <a href="{{ url_for('support.bad_standing') }}">bad standing</a>.</em>
                 </p>
               {% endif %}
             </td>
