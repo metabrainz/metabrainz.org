@@ -292,3 +292,13 @@ class DonationAdminView(ModelView):
 
     def __init__(self, session, **kwargs):
         super(DonationAdminView, self).__init__(Donation, session, name='Donations', **kwargs)
+
+    def after_model_change(self, form, new_donation, is_created):
+        if is_created:
+            send_receipt(
+                new_donation.email,
+                new_donation.payment_date,
+                new_donation.amount,
+                '%s %s' % (new_donation.first_name, new_donation.last_name),
+                new_donation.mb_username,
+            )
