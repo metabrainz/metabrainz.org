@@ -20,4 +20,4 @@ def tier(tier_id):
 
 @support_bp.route('/bad')
 def bad_standing():
-    return render_template('support/index.html', tiers=Tier.get_all())
+    return render_template('support/bad-standing.html')
