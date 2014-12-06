@@ -56,9 +56,9 @@ class OrganizationAdminView(ModelView):
     )
     column_list = ('name', 'tier', 'good_standing',)
     form_columns = (
-        'name', 'tier', 'good_standing', 'logo_url', 'website_url', 'api_url',
-        'contact_name', 'email', 'address_street', 'address_city',
-        'address_state', 'address_postcode', 'address_country',
+        'name', 'tier', 'good_standing', 'logo_url', 'website_url',
+        'description', 'api_url', 'contact_name', 'email', 'address_street',
+        'address_city', 'address_state', 'address_postcode', 'address_country',
     )
 
     def __init__(self, session, **kwargs):
