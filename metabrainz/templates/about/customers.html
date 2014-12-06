@@ -21,11 +21,13 @@
         {% for org in tier.organizations %}
           <tr>
             <td>
-              {% if org.logo_url %}
-                <img src="{{ org.logo_url }}"/>
-              {% else %}
-                {{ org.name }}
-              {% endif %}
+              {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}
+                {% if org.logo_url %}
+                  <img src="{{ org.logo_url }}"/>
+                {% else %}
+                  {{ org.name }}
+                {% endif %}
+              {% if org.website_url %}</a>{% endif %}
             </td>
             <td>{{ org.get_description_html()|safe }}</td>
           </tr>
