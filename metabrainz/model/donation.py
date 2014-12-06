@@ -16,8 +16,8 @@ class Donation(db.Model):
     last_name = db.Column(db.Unicode, nullable=False)
     email = db.Column(db.Unicode, nullable=False)
     mb_username = db.Column(db.String)  # MusicBrainz username
-    can_contact = db.Column('contact', db.Boolean, server_default='FALSE')
-    anonymous = db.Column('anon', db.Boolean, server_default='FALSE')
+    can_contact = db.Column('contact', db.Boolean, nullable=False, default=True)
+    anonymous = db.Column('anon', db.Boolean, nullable=False, default=False)
     address_street = db.Column(db.Unicode)
     address_city = db.Column(db.Unicode)
     address_state = db.Column(db.Unicode)
