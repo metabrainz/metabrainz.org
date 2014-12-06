@@ -39,7 +39,10 @@ class Organization(db.Model):
 
     def get_description_html(self):
         """Converts description text (Markdown) into HTML and returns it."""
-        return markdown(self.description, safe_mode="escape")
+        if self.description is not None:
+            return markdown(self.description, safe_mode="escape")
+        else:
+            return None
 
 
 class OrganizationAdminView(ModelView):
