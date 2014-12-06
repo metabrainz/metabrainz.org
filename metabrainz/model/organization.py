@@ -1,4 +1,5 @@
 from metabrainz.model import db
+from metabrainz.model.donation import Donation
 from flask_admin.contrib.sqla import ModelView
 from markdown import markdown
 
@@ -28,7 +29,7 @@ class Organization(db.Model):
 
     tier_id = db.Column(db.Integer, db.ForeignKey('tier.id'))
 
-    donations = db.relationship('Donation', backref='organization')
+    donations = db.relationship(Donation, backref='organization')
 
     def __unicode__(self):
         return self.name
