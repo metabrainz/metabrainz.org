@@ -17,3 +17,8 @@ class Tier(db.Model):
     primary = db.Column(db.Boolean, nullable=False, default=False)
 
     organizations = db.relationship('Organization', backref='tier')
+
+    @classmethod
+    def get_all(cls):
+        """Returns list of all tiers sorted by price."""
+        return cls.query.order_by(cls.price).all()

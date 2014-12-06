@@ -29,7 +29,7 @@
 //@import "bootstrap/labels.less";
 //@import "bootstrap/badges.less";
 //@import "bootstrap/jumbotron.less";
-//@import "bootstrap/thumbnails.less";
+@import "bootstrap/thumbnails.less";
 @import "bootstrap/alerts.less";
 //@import "bootstrap/progress-bars.less";
 //@import "bootstrap/media.less";
@@ -71,7 +71,7 @@
 @headings-color: @text-green;
 @headings-font-weight: bold;
 h1 { color: inherit; }
-@font-size-h1: ceil((@font-size-base * 1.8));
+@font-size-h1: ceil((@font-size-base * 2));
 @font-size-h2: ceil((@font-size-base * 1.5));
 @font-size-h3: ceil((@font-size-base * 1.3));
 @font-size-h4: ceil((@font-size-base * 1.2));
@@ -96,3 +96,8 @@ body {
 
 img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
+
+
+#tiers {
+  margin-top: 40px;
+}
