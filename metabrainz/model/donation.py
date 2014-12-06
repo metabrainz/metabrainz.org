@@ -1,5 +1,4 @@
 from metabrainz.model import db
-from metabrainz.model.organization import Organization
 from metabrainz.donations.receipts import send_receipt
 from flask import current_app
 from flask_admin.contrib.sqla import ModelView
@@ -32,7 +31,7 @@ class Donation(db.Model):
     fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
     memo = db.Column(db.Unicode)
 
-    organization_id = db.Column(db.Integer, db.ForeignKey(Organization.id))  # Organization that made this donation
+    organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'))  # Organization that made this donation
 
     def __unicode__(self):
         return 'Donation #%s' % self.id

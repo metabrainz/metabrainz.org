@@ -14,18 +14,18 @@ def create_app():
         app.config['DEBUG_TB_TEMPLATE_EDITOR_ENABLED'] = True
 
     # Database
-    from model import db
+    from metabrainz.model import db
     db.init_app(app)
 
     from utils import reformat_datetime
     app.jinja_env.filters['datetime'] = reformat_datetime
 
     # Blueprints
-    from views import index_bp
-    from finances.views import finances_bp
-    from support.views import support_bp
-    from reports.views import reports_bp
-    from donations.views import donations_bp
+    from metabrainz.views import index_bp
+    from metabrainz.finances.views import finances_bp
+    from metabrainz.support.views import support_bp
+    from metabrainz.reports.views import reports_bp
+    from metabrainz.donations.views import donations_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(finances_bp, url_prefix='/finances')
