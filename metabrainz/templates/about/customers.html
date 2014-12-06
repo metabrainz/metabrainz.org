@@ -35,11 +35,11 @@
         {% endfor %}
 
       </table>
-    {% endif %}
 
-    <p><em><a href="{{ url_for('support.tier', tier_id=tier.id) }}">
-        View {{ 'other organizations and ' if tier.organizations.count() > feautred_orgs|length }}and additional info about this tier
-    </a></em></p>
+      <p><em><a href="{{ url_for('support.tier', tier_id=tier.id) }}">
+        View {{ 'other organizations and ' if tier.organizations.count() > feautred_orgs|length }}additional info about this tier
+      </a></em></p>
+    {% endif %}
 
   {% endfor %}
   </div>
