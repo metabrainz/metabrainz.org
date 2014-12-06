@@ -7,8 +7,13 @@
 
   <p>{{ tier.long_desc }}</p>
 
+  <p class="text-center">
+    <a href="#" class="btn btn-primary btn-lg" role="button">Sign up</a>
+  </p>
+
   {% set organizations = tier.organizations.all() %}
   {% if organizations|length > 0 %}
+    <h3>Organizations on this tier</h3>
     <div id="customers">
       <table class="table">
 
