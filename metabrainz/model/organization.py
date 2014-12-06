@@ -31,6 +31,11 @@ class Organization(db.Model):
     def __unicode__(self):
         return self.name
 
+    @classmethod
+    def get_all(cls):
+        """Returns list of all organizations."""
+        return cls.query.all()
+
 
 class OrganizationAdminView(ModelView):
     column_labels = dict(
