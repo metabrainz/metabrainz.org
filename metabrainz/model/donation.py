@@ -275,7 +275,6 @@ class DonationAdminView(AdminView):
         address_country='Country',
     )
     column_descriptions = dict(
-        organization='Organization associated with this donation',
         can_contact='This donor may be contacted',
         anonymous='This donor wishes to remain anonymous',
         amount='USD',
@@ -285,7 +284,7 @@ class DonationAdminView(AdminView):
     form_columns = (
         'first_name', 'last_name', 'email', 'address_street', 'address_city',
         'address_state', 'address_postcode', 'address_country', 'amount', 'fee',
-        'payment_date', 'organization', 'memo', 'can_contact', 'anonymous',
+        'payment_date', 'memo', 'can_contact', 'anonymous',
     )
 
     def __init__(self, session, **kwargs):
