@@ -31,8 +31,6 @@ class Donation(db.Model):
     fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
     memo = db.Column(db.Unicode)
 
-    organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'))  # Organization that made this donation
-
     def __unicode__(self):
         return 'Donation #%s' % self.id
 
