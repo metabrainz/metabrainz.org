@@ -43,9 +43,9 @@
             <td><strong>{{ tier.name }}</strong></td>
             <td>{{ tier.short_desc }}</td>
             <td>${{ tier.price }}/mo</td>
-            <td><a href="{{ url_for('support.tier', tier_id=tier.id) }}"
-                   class="btn btn-default btn-xs" role="button">More info</a></td>
             <td>
+              <a href="{{ url_for('support.tier', tier_id=tier.id) }}"
+                   class="btn btn-default btn-xs" role="button">More info</a>
               {% if tier.available %}
                 <a href="{{ url_for('support.signup', tier_id=tier.id) }}"
                    class="btn btn-primary btn-xs" role="button">Sign up</a>
