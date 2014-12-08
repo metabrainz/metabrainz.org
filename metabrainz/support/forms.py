@@ -1,5 +1,5 @@
 from flask_wtf import Form, RecaptchaField
-from wtforms import StringField, TextAreaField
+from wtforms import StringField, TextAreaField, RadioField
 from wtforms.fields.html5 import EmailField, URLField
 from wtforms.validators import DataRequired
 
@@ -21,5 +21,15 @@ class SignUpForm(Form):
 
     contact_name = StringField("Contact name", validators=[DataRequired("You need to provide name of the person to contact.")])
     contact_email = EmailField("Contact email", validators=[DataRequired("Email of contact person is required.")])
+
+    payment_method = RadioField(
+        "Choose a payment method:",
+        choices=[
+            ("paypal", "PayPal"),
+            ("stripe", "Stripe"),
+            ("invoicing", "Invoicing"),
+            ("bitcoin", "Bitcoin"),
+        ],
+        validators=[DataRequired(message="You need to choose a payment method!")])
 
     recaptcha = RecaptchaField()
