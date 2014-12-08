@@ -20,9 +20,10 @@
     {{ form.csrf_token }}
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Tier</label>
-      <div class="col-sm-10">
-        <div>{{ tier.name }} (${{ tier.price }}/mo)</div>
+      <label class="col-sm-2 control-label">Selected tier</label>
+      <div class="col-sm-4" style="padding-top: 7px">
+        <b>{{ tier.name }}</b>
+        <em class="text-muted">${{ tier.price }}/mo</em>
       </div>
     </div>
 
