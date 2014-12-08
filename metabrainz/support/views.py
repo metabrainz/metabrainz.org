@@ -19,6 +19,10 @@ def signup():
         return redirect(url_for('.index'))
 
     tier = Tier.get_tier(tier_id)
+    if tier is None:
+        flash('You need to select one of available tiers!', 'error')
+        return redirect(url_for('.index'))
+
     if not tier.available:
         flash("You can't sign up for this tier on your own. Please contact us"
               "if you want to do that.", 'error')
