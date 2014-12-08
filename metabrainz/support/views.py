@@ -18,7 +18,10 @@ def signup():
         flash('You need to select one of the tiers first!', 'error')
         return redirect(url_for('.index'))
 
-    tier = Tier.get_tier(tier_id)
+    try:
+        tier = Tier.get_tier(int(tier_id))
+    except ValueError:
+        tier = None
     if tier is None:
         flash('You need to select one of available tiers!', 'error')
         return redirect(url_for('.index'))
