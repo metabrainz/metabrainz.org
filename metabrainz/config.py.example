@@ -24,6 +24,10 @@ RECAPTCHA_SECRET_KEY = ""
 ADMIN_USERNAME = "CHANGE_THIS"
 ADMIN_PASSWORD = "CHANGE_THIS"
 
+# Name and email address of the person who will receive notifications
+MANAGER_NAME = "Jonnie Doe"
+MANAGER_EMAIL = "jonnie@example.org"
+
 SECRET_KEY = "CHANGE_THIS"
 
 USE_COMPILED_STYLING = not DEBUG

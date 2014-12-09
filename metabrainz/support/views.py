@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from metabrainz.model.tier import Tier
 from werkzeug.exceptions import NotFound
 from metabrainz.support.forms import SignUpForm
+from metabrainz.support.notifications import send_org_signup_notification
 
 support_bp = Blueprint('support', __name__)
 
@@ -34,7 +35,26 @@ def signup():
     form = SignUpForm()
 
     if form.validate_on_submit():
-        # TODO: Send email notification to admin
+        send_org_signup_notification([
+            ('Organization name', form.org_name.data),
+            ('Contact name', form.contact_name.data),
+            ('Contact email', form.contact_email.data),
+
+            ('Website URL', form.website_url.data),
+            ('Logo image URL', form.logo_url.data),
+            ('API URL', form.api_url.data),
+
+            ('Street', form.address_street.data),
+            ('City', form.address_city.data),
+            ('State', form.address_state.data),
+            ('Postal code', form.address_postcode.data),
+            ('Country', form.address_country.data),
+
+            ('Tier', '#%s - %s' % (tier.id, tier.name)),
+            ('Payment method', form.payment_method.data),
+
+            ('Usage description', form.description.data),
+        ])
         return render_template('support/signup-success.html')
 
     else:
