@@ -35,19 +35,7 @@
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Annual Report <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ url_for('reports.index', year=2013) }}">Annual Report 2013</a></li>
-            <li><a href="{{ url_for('reports.index', year=2012) }}">Annual Report 2012</a></li>
-            <li><a href="{{ url_for('reports.index', year=2011) }}">Annual Report 2011</a></li>
-            <li><a href="{{ url_for('reports.index', year=2010) }}">Annual Report 2010</a></li>
-            <li><a href="{{ url_for('reports.index', year=2009) }}">Annual Report 2009</a></li>
-            <li><a href="{{ url_for('reports.index', year=2008) }}">Annual Report 2008</a></li>
-            <li><a href="{{ url_for('reports.index', year=2007) }}">Annual Report 2007</a></li>
-            <li><a href="{{ url_for('reports.index', year=2006) }}">Annual Report 2006</a></li>
-          </ul>
-        </li>
+        <li><a href="{{ url_for('reports.index') }}">Annual Reports</a></li>
 
         <li><a href="{{ url_for('donations.index') }}">Donate</a></li>
 

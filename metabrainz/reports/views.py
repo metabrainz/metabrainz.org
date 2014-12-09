@@ -1,18 +1,44 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 from werkzeug.exceptions import NotFound
-from jinja2.exceptions import TemplateNotFound
+import os
+import codecs
 
-reports_bp = Blueprint('reports', __name__)
+reports_bp = Blueprint('reports', __name__, static_folder='files')
 
 
-@reports_bp.route('/<year>')
-def index(year):
-    """This endpoint handles requests for pages with annual reports.
+@reports_bp.route("/")
+def index():
+    years = list_years()
+    if years:
+        # Redirecting to the latest report
+        return redirect(url_for('.view', year=years[-1]))
+    else:
+        raise NotFound('No reports created.')
 
-    If you want to create a new report just add a new HTML file into
-    /metabrainz/templates/reports directory.
-    """
-    try:
-        return render_template('reports/%s.html' % year)
-    except TemplateNotFound:
-        return NotFound("Requested annual report was not found.")
+
+@reports_bp.route('/<int:year>')
+def view(year):
+    """This endpoint handles requests for pages with annual reports."""
+    report = load_report(year)
+    if report is None:
+        raise NotFound('Requested annual report was not found.')
+    return render_template('reports/annual-report.html', year=year,
+                           all_years=list_years(), report=report)
+
+
+def list_years():
+    # Getting list of directories with reports for each year
+    dirs = os.walk(reports_bp.static_folder).next()[1]
+    years = map(int, dirs)
+    return years
+
+
+def load_report(year):
+    report_location = os.path.abspath(
+        os.path.join(reports_bp.static_folder, str(year), 'content.html'))
+    if os.path.exists(report_location):
+        with codecs.open(report_location, encoding='utf8') as f:
+            report = f.read()
+        return report
+    else:
+        return None

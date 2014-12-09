@@ -1,10 +1,3 @@
-{% extends 'base.html' %}
-
-{% block title %}Annual Report 2012 - MetaBrainz Foundation{% endblock %}
-
-{% block content %}
-<h1>MetaBrainz Foundation Annual Report 2012</h1>
-
 <h2>Year in review</h2><p>After an exciting and action packed 2011, 2012 was a little more calm. Since our last major
   schema update for the Next Generation Schema, we've spent a considerable amount of time making further improvements
   and ironing out the kinks from that major release. Our development team pushed out updates weekly for a number of
@@ -246,7 +239,7 @@
   requests made of us. In early 2012 we started throttling some very demanding client applications and throughout 2012
   continued to tweak our traffic shaping in an effort to make MusicBrainz as available to as many people as
   possible:</p><p><img height="303"
-                       src="{{ url_for('static', filename='files/annual-reports/2012/traffic.png') }}"
+                       src="files/2012/traffic.png"
                        width="850"></p><p>This traffic graph conveys only the requests made to the main <a
     href="http://musicbrainz.org">http://musicbrainz.org</a> servers.</p><p>Several organizations such as <a
     href="http://www.videolan.org/vlc/index.html">VLC</a> have <a
@@ -467,7 +460,7 @@
   bots making changes to our database increased, but by far the largest share of the work of editing MusicBrainz is
   still done by our community of editors. One more year down and still, MusicBrainz would be nothing without its
   editors! Thank you for another stellar year of editing!</p><h2>Server farm</h2>
-<div><img src="{{ url_for('static', filename='files/annual-reports/2012/servers.jpg') }}" class="pull-right"
+<div><img src="files/2012/servers.jpg" class="pull-right"
           width="350"></div><p>At the end of 2012, MusicBrainz had 17 machines in service. From the top, going down:</p>
 <ul>
   <li>rika: User sandbox machine (mbsandbox.org)</li>
@@ -505,4 +498,3 @@
   and an anonymous record label for the large donations made in 2012. These large contributions allow us to carry on
   with our goal of making MusicBrainz the most comprehensive music encyclopedia out there!</p>
 <p>Thank you to everyone who contributed in 2012!</p>
-{% endblock %}

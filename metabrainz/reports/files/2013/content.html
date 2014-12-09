@@ -1,10 +1,3 @@
-{% extends 'base.html' %}
-
-{% block title %}Annual Report 2013 - MetaBrainz Foundation{% endblock %}
-
-{% block content %}
-<h1>MetaBrainz Foundation Annual Report 2013</h1>
-
 <h2>Year in review</h2>
 <p>
   2013 continued the pace of life
@@ -162,7 +155,7 @@
 </p>
 
 <h2>Traffic</h2>
-<img height="676" width="850" src="{{ url_for('static', filename='files/annual-reports/2013/traffic.png') }}">
+<img height="676" width="850" src="files/2013/traffic.png">
 <p>
   This traffic graph conveys only the successful requests made to the main <a href="http://musicbrainz.org">http://musicbrainz.org</a> servers. Aside from
   some monthly fluctuations, our traffic has been generally stable. This is not because of the amount of traffic that is
@@ -372,7 +365,7 @@
 </p>
 
 <h2>Server farm</h2>
-<img class="pull-right" height="473" width="350" src="{{ url_for('static', filename='files/annual-reports/2013/servers.jpg') }}">
+<img class="pull-right" height="473" width="350" src="files/2013/servers.jpg">
 <p>At the end of 2013, MusicBrainz had 20 machines in service. From the top, going down:</p>
 <ul>
   <li>rika: User sandbox machine (mbsandbox.org)</li>
@@ -425,4 +418,3 @@
   there!
 </p>
 <p>Thank you to everyone who contributed in 2013!</p>
-{% endblock %}

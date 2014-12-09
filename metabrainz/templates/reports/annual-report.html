@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Annual Report {{ year }} - MetaBrainz Foundation{% endblock %}
+{% block content %}
+  <h1>Annual Reports</h1>
+
+  <ul class="nav nav-pills">
+    {% for current_year in all_years %}
+      <li role="presentation" {{ 'class=active' if current_year == year }}>
+        <a href="{{ url_for('reports.view', year=current_year) }}">{{ current_year }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2>{{ year }}</h2>
+
+  <div id="report">{{ report|safe }}</div>
+
+{% endblock %}
