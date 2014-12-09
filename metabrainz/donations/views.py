@@ -57,12 +57,12 @@ def nag_check(editor):
 @donations_bp.route('/complete', methods=['GET', 'POST'])
 def complete():
     """Endpoint for successful donations."""
-    return render_template('donations/complete.html')
+    return render_template('donations/results/complete.html')
 
 @donations_bp.route('/cancelled')
 def cancelled():
     """Endpoint for cancelled donations."""
-    return render_template('donations/cancelled.html')
+    return render_template('donations/results/cancelled.html')
 
 @donations_bp.route('/error')
 def error():
@@ -70,4 +70,4 @@ def error():
 
     Users should be redirected there when errors occur during payment process.
     """
-    return render_template('donations/error.html')
+    return render_template('donations/results/error.html')
