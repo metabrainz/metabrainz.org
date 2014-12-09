@@ -13,8 +13,8 @@
 
   <p>Your donations will be used to operate the MusicBrainz project. This includes paying for ongoing expenses like hosting, hardware, maintaining a modest office in San Luis Obispo, California, and paying a minimal salary for MetaBrainz employees working on MusicBrainz.</p>
 
-  <p>Where has my contribution gone? See our <a href="{{ url_for('finances.index') }}">transparent finances</a>.</p>
-  <p>Who else is contributing? See our list of <a href="{{ url_for('finances.donations') }}">donors</a>.</p>
+  <p>Where has my contribution gone? See our <a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>
+  <p>Who else is contributing? See our list of <a href="{{ url_for('financial_reports.donations') }}">donors</a>.</p>
 
   <h2>Donate with PayPal or WePay</h2>
 
@@ -22,52 +22,52 @@
   <table width="100%">
     <tr>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=10, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=10, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=25, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=25, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=50, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=50, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=100, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=100, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=500, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=500, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=0, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=0, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
     </tr>
     <tr>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=10, recur=0) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=10, recur=0) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=25, recur=0) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=25, recur=0) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=50, recur=0) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=50, recur=0) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=100, recur=0) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=100, recur=0) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=500, recur=0) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=500, recur=0) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=0, recur=0) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=0, recur=0) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
@@ -86,52 +86,52 @@
   <table width="100%">
     <tr>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=10, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=10, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=25, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=25, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=50, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=50, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=100, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=100, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=500, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=500, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.paypal', amount=0, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
+        <a href="{{ url_for('donations_paypal.donate', amount=0, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
       </td>
     </tr>
     <tr>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=10, recur=1) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=10, recur=1) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=25, recur=1) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=25, recur=1) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=50, recur=1) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=50, recur=1) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=100, recur=1) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=100, recur=1) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=500, recur=1) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=500, recur=1) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
       <td align="center" width="16%">
-        <a href="{{ url_for('donations.wepay', amount=0, recur=1) }}">
+        <a href="{{ url_for('donations_wepay.donate', amount=0, recur=1) }}">
           <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
         </a>
       </td>
