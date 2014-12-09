@@ -19,11 +19,6 @@ def sponsors():
     return render_template('about/sponsors.html')
 
 
-@index_bp.route('/white-papers')
-def white_papers():
-    return render_template('about/white_papers.html')
-
-
 @index_bp.route('/privacy')
 def privacy_policy():
     return render_template('about/privacy.html')
