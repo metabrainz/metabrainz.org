@@ -9,6 +9,11 @@ def home():
     return render_template('home.html')
 
 
+@index_bp.route('/about')
+def about():
+    return render_template('about/index.html')
+
+
 @index_bp.route('/customers')
 def customers():
     return render_template('about/customers.html', tiers=Tier.get_all())
@@ -22,8 +27,3 @@ def sponsors():
 @index_bp.route('/privacy')
 def privacy_policy():
     return render_template('about/privacy.html')
-
-
-@index_bp.route('/contact')
-def contact():
-    return render_template('contact.html')

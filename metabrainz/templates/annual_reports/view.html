@@ -6,7 +6,7 @@
   <ul class="nav nav-pills">
     {% for current_year in all_years %}
       <li role="presentation" {{ 'class=active' if current_year == year }}>
-        <a href="{{ url_for('reports.view', year=current_year) }}">{{ current_year }}</a>
+        <a href="{{ url_for('annual_reports.view', year=current_year) }}">{{ current_year }}</a>
       </li>
     {% endfor %}
   </ul>

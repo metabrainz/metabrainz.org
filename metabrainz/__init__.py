@@ -22,15 +22,15 @@ def create_app():
 
     # Blueprints
     from metabrainz.views import index_bp
-    from metabrainz.finances.views import finances_bp
+    from metabrainz.reports.financial_reports.views import financial_reports_bp
+    from metabrainz.reports.annual_reports.views import annual_reports_bp
     from metabrainz.support.views import support_bp
-    from metabrainz.reports.views import reports_bp
     from metabrainz.donations.views import donations_bp
 
     app.register_blueprint(index_bp)
-    app.register_blueprint(finances_bp, url_prefix='/finances')
+    app.register_blueprint(financial_reports_bp, url_prefix='/finances')
+    app.register_blueprint(annual_reports_bp, url_prefix='/reports')
     app.register_blueprint(support_bp, url_prefix='/support')
-    app.register_blueprint(reports_bp, url_prefix='/reports')
     app.register_blueprint(donations_bp, url_prefix='/donations')
 
     # Admin section
