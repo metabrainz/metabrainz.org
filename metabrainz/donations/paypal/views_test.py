@@ -19,16 +19,13 @@ class FakeRequests(object):
             return FakeResponse('VERIFIED')
 
 
-class DonationsViewsTestCase(FlaskTestCase):
+class DonationsPayPalViewsTestCase(FlaskTestCase):
     def setUp(self):
-        super(DonationsViewsTestCase, self).setUp()
+        super(DonationsPayPalViewsTestCase, self).setUp()
         views.requests = FakeRequests()
 
-    def test_index(self):
-        self.assert200(self.client.get("/donations/"))
-
     def test_paypal(self):
-        self.assert200(self.client.get("/donations/paypal"))
+        self.assert200(self.client.get("/donations/paypal/"))
 
     def test_paypal_ipn(self):
         ipn_data = {
@@ -61,17 +58,3 @@ class DonationsViewsTestCase(FlaskTestCase):
         # Donation should be in the DB now
         self.assertEqual(len(Donation.query.all()), 1)
         self.assertEqual(Donation.query.all()[0].transaction_id, 'RANDOM-ID')
-
-
-    def test_wepay(self):
-        self.assert200(self.client.get("/donations/wepay"))
-
-    def test_complete(self):
-        self.assert200(self.client.get("/donations/complete"))
-        self.assert200(self.client.post("/donations/complete"))
-
-    def test_cancelled(self):
-        self.assert200(self.client.get("/donations/cancelled"))
-
-    def test_error(self):
-        self.assert200(self.client.get("/donations/error"))
