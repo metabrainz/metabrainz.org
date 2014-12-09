@@ -15,7 +15,7 @@ class Donation(db.Model):
     first_name = db.Column(db.Unicode, nullable=False)
     last_name = db.Column(db.Unicode, nullable=False)
     email = db.Column(db.Unicode, nullable=False)
-    mb_username = db.Column(db.String)  # MusicBrainz username
+    editor_name = db.Column(db.String)  # MusicBrainz username
     can_contact = db.Column('contact', db.Boolean, nullable=False, default=True)
     anonymous = db.Column('anon', db.Boolean, nullable=False, default=False)
     address_street = db.Column(db.Unicode)
@@ -35,31 +35,6 @@ class Donation(db.Model):
         return 'Donation #%s' % self.id
 
     @classmethod
-    def add_donation(cls, first_name, last_name, email, amount, fee=0,
-                     address_street=None, address_city=None, address_state=None,
-                     address_postcode=None, address_country=None,
-                     payment_date=None, editor=None, can_contact=None, anonymous=None):
-        new_donation = cls(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            mb_username=editor,
-            address_street=address_street,
-            address_city=address_city,
-            address_state=address_state,
-            address_postcode=address_postcode,
-            address_country=address_country,
-            amount=amount,
-            fee=fee,
-            payment_date=payment_date,
-            can_contact=can_contact,
-            anonymous=anonymous,
-        )
-        db.session.add(new_donation)
-        db.session.commit()
-        return new_donation
-
-    @classmethod
     def get_by_transaction_id(cls, transaction_id):
         return cls.query.filter_by(transaction_id=transaction_id).first()
 
@@ -77,7 +52,7 @@ class Donation(db.Model):
             "SELECT ((amount + fee) * :days_per_dollar) - "
             "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
             "FROM donation "
-            "WHERE lower(mb_username) = lower(:editor) "
+            "WHERE lower(editor_name) = lower(:editor) "
             "ORDER BY nag DESC "
             "LIMIT 1",
             {'editor': editor, 'days_per_dollar': days_per_dollar}
@@ -194,7 +169,7 @@ class Donation(db.Model):
             new_donation.payment_date,
             new_donation.amount,
             '%s %s' % (new_donation.first_name, new_donation.last_name),
-            new_donation.mb_username,
+            new_donation.editor_name,
         )
 
     @classmethod
@@ -246,7 +221,7 @@ class Donation(db.Model):
                 new_donation.payment_date,
                 new_donation.amount,
                 '%s %s' % (new_donation.first_name, new_donation.last_name),
-                new_donation.mb_username,
+                new_donation.editor_name,
             )
 
         elif details['state'] in ['authorized', 'reserved']:

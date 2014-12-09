@@ -35,7 +35,7 @@ def create_app():
 
     # Admin section
     from flask_admin import Admin
-    admin = Admin(app, name='Danger Zone')
+    admin = Admin(app, name='BDFLs only!')
 
     from metabrainz.model.tier import TierAdminView
     from metabrainz.model.organization import OrganizationAdminView
