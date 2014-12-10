@@ -3,7 +3,18 @@
 {% block title %}Donations - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h2>Donations</h2>
+  <h2>Donors</h2>
+
+  <p>
+    <ul class="nav nav-pills">
+      <li role="presentation" {{ 'class=active' if order == 'date' }}>
+        <a href="{{ url_for('donations.donors', order='date') }}">by date</a>
+      </li>
+      <li role="presentation" {{ 'class=active' if order == 'amount' }}>
+        <a href="{{ url_for('donations.donors', order='amount') }}">by amount</a>
+      </li>
+    </ul>
+  </p>
 
   {% if not donations %}
     No donations. :(
@@ -46,12 +57,12 @@
     <nav>
       <ul class="pagination">
         <li {{ 'class=disabled' if page == 1 }}>
-          <a href="{{ url_for('finances.donations', page=1) if page != 1 else '#' }}">
+          <a href="{{ url_for('donations.donors', order=order, page=1) if page != 1 else '#' }}">
             <span aria-hidden="true">&laquo;</span><span class="sr-only">First</span>
           </a>
         </li>
         <li {{ 'class=disabled' if page == 1 }}>
-          <a href="{{ url_for('finances.donations', page=page-1) if page != 1 else '#' }}">
+          <a href="{{ url_for('donations.donors', order=order, page=page-1) if page != 1 else '#' }}">
             <span aria-hidden="true">&lsaquo;</span><span class="sr-only">Previous</span>
           </a>
         </li>
@@ -59,18 +70,18 @@
         {% for cur_page in range(start, last_page+1) %}
           {% if loop.index < 9 %}
             <li {{ 'class=active' if cur_page == page }}>
-              <a href="{{ url_for('finances.donations', page=cur_page) }}">{{ cur_page }}</a>
+              <a href="{{ url_for('donations.donors', order=order, page=cur_page) }}">{{ cur_page }}</a>
             </li>
           {% endif %}
         {% endfor %}
 
         <li {{ 'class=disabled' if page == last_page }}>
-          <a href="{{ url_for('finances.donations', page=page+1) if page != last_page else '#' }}">
+          <a href="{{ url_for('donations.donors', order=order, page=page+1) if page != last_page else '#' }}">
             <span aria-hidden="true">&rsaquo;</span><span class="sr-only">Next</span>
           </a>
         </li>
         <li {{ 'class=disabled' if page == last_page }}>
-          <a href="{{ url_for('finances.donations', page=last_page) if page != last_page else '#' }}">
+          <a href="{{ url_for('donations.donors', order=order, page=last_page) if page != last_page else '#' }}">
             <span aria-hidden="true">&raquo;</span><span class="sr-only">Last</span>
           </a>
         </li>

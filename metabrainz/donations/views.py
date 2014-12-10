@@ -16,34 +16,24 @@ def index():
 def donors():
     page = int(request.args.get('page', default=1))
     if page < 1:
-        return redirect(url_for('.donations'))
+        return redirect(url_for('.donors'))
     limit = 30
     offset = (page - 1) * limit
-    count, donations = Donation.get_recent_donations(limit=limit, offset=offset)
+
+    order = request.args.get('order', default='date')
+    if order == 'date':
+        count, donations = Donation.get_recent_donations(limit=limit, offset=offset)
+    elif order == 'amount':
+        count, donations = Donation.get_biggest_donations(limit=limit, offset=offset)
+    else:
+        return redirect(url_for('.donors'))
 
     last_page = int(ceil(count / limit))
-    if page > last_page:
-        return redirect(url_for('.donations', page=last_page))
+    if last_page != 0 and page > last_page:
+        return redirect(url_for('.donors', page=last_page))
 
     return render_template('donations/donors.html', donations=donations,
-                           page=page, last_page=last_page)
-
-
-@donations_bp.route('/highest-donors')
-def highest_donors():
-    page = int(request.args.get('page', default=1))
-    if page < 1:
-        return redirect(url_for('.highest_donors'))
-    limit = 30
-    offset = (page - 1) * limit
-    count, donations = Donation.get_biggest_donations(limit=limit, offset=offset)
-
-    last_page = int(ceil(count / limit))
-    if page > last_page:
-        return redirect(url_for('.highest_donors', page=last_page))
-
-    return render_template('donations/donors_highest.html', donations=donations,
-                           page=page, last_page=last_page)
+                           page=page, last_page=last_page, order=order)
 
 
 @donations_bp.route('/nag-check/<editor>')
