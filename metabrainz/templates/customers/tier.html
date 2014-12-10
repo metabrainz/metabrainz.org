@@ -9,7 +9,7 @@
 
   <p class="text-center">
     {% if tier.available %}
-    <a href="{{ url_for('support.signup', tier_id=tier.id) }}"
+    <a href="{{ url_for('customers.signup', tier_id=tier.id) }}"
        class="btn btn-primary btn-lg" role="button">Sign up</a>
     {% else %}
       <em class="text-muted">You need to contact us if you want to sign up to this tier.</em>
@@ -37,7 +37,7 @@
               {{ org.get_description_html()|safe }}
               {% if not org.good_standing %}
                 <p class="text-danger">
-                  <em>This organization has a <a href="{{ url_for('support.bad_standing') }}">bad standing</a>.</em>
+                  <em>This organization has a <a href="{{ url_for('customers.bad_standing') }}">bad standing</a>.</em>
                 </p>
               {% endif %}
             </td>

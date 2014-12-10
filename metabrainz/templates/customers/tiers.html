@@ -19,10 +19,10 @@
                   <h3>{{ tier.name }}</h3>
                   <p class="lead">${{ tier.price }}/mo</p>
                   <p>{{ tier.short_desc }}</p>
-                  <p><a href="{{ url_for('support.tier', tier_id=tier.id) }}"
+                  <p><a href="{{ url_for('customers.tier', tier_id=tier.id) }}"
                         class="btn btn-default btn-block" role="button">More info</a></p>
                   {% if tier.available %}
-                    <p><a href="{{ url_for('support.signup', tier_id=tier.id) }}"
+                    <p><a href="{{ url_for('customers.signup', tier_id=tier.id) }}"
                           class="btn btn-primary btn-block" role="button">Sign up</a></p>
                   {% endif %}
                 </div>
@@ -44,10 +44,10 @@
             <td>{{ tier.short_desc }}</td>
             <td>${{ tier.price }}/mo</td>
             <td>
-              <a href="{{ url_for('support.tier', tier_id=tier.id) }}"
+              <a href="{{ url_for('customers.tier', tier_id=tier.id) }}"
                    class="btn btn-default btn-xs" role="button">More info</a>
               {% if tier.available %}
-                <a href="{{ url_for('support.signup', tier_id=tier.id) }}"
+                <a href="{{ url_for('customers.signup', tier_id=tier.id) }}"
                    class="btn btn-primary btn-xs" role="button">Sign up</a>
               {% endif %}
             </td>

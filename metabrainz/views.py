@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template
-from metabrainz.model.tier import Tier
 from metabrainz.model.organization import Organization
 
 index_bp = Blueprint('index', __name__)
@@ -16,11 +15,6 @@ def home():
 @index_bp.route('/about')
 def about():
     return render_template('about/index.html')
-
-
-@index_bp.route('/customers')
-def customers():
-    return render_template('about/customers.html', tiers=Tier.get_all())
 
 
 @index_bp.route('/sponsors')

@@ -1,31 +1,36 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from metabrainz.model.tier import Tier
+from flask import Blueprint, render_template, flash, redirect, url_for
 from werkzeug.exceptions import NotFound
-from metabrainz.support.forms import SignUpForm
-from metabrainz.support.notifications import send_org_signup_notification
+from metabrainz.model.tier import Tier
+from metabrainz.customers.forms import SignUpForm
+from metabrainz.customers.notifications import send_org_signup_notification
 
-support_bp = Blueprint('support', __name__)
+customers_bp = Blueprint('customers', __name__)
 
 
-@support_bp.route('/tiers')
+@customers_bp.route('/')
 def index():
-    return render_template('support/index.html', tiers=Tier.get_all())
+    return render_template('customers/list.html', tiers=Tier.get_all())
 
 
-@support_bp.route('/signup', methods=('GET', 'POST'))
-def signup():
-    tier_id = request.args.get('tier_id')
-    if tier_id is None:
-        flash('You need to select one of the tiers first!', 'error')
-        return redirect(url_for('.index'))
+@customers_bp.route('/tiers/')
+def tiers():
+    return render_template('customers/tiers.html', tiers=Tier.get_all())
 
-    try:
-        tier = Tier.get_tier(int(tier_id))
-    except ValueError:
-        tier = None
+
+@customers_bp.route('/tiers/<tier_id>')
+def tier(tier_id):
+    t = Tier.get_tier(tier_id)
+    if t is None:
+        raise NotFound("Can't find tier with a specified ID.")
+    return render_template('customers/tier.html', tier=t)
+
+
+@customers_bp.route('/tiers/<int:tier_id>/signup', methods=('GET', 'POST'))
+def signup(tier_id):
+    tier = Tier.get_tier(tier_id)
     if tier is None:
         flash('You need to select one of available tiers!', 'error')
-        return redirect(url_for('.index'))
+        return redirect(url_for('.tiers'))
 
     if not tier.available:
         flash("You can't sign up for this tier on your own. Please contact us"
@@ -55,20 +60,12 @@ def signup():
 
             ('Usage description', form.description.data),
         ])
-        return render_template('support/signup-success.html')
+        return render_template('customers/signup-success.html')
 
     else:
-        return render_template('support/signup.html', form=form, tier=tier)
+        return render_template('customers/signup.html', form=form, tier=tier)
 
 
-@support_bp.route('/tiers/<tier_id>')
-def tier(tier_id):
-    t = Tier.get_tier(tier_id)
-    if t is None:
-        raise NotFound("Can't find tier with a specified ID.")
-    return render_template('support/tier.html', tier=t)
-
-
-@support_bp.route('/bad')
+@customers_bp.route('/bad')
 def bad_standing():
-    return render_template('support/bad-standing.html')
+    return render_template('customers/bad-standing.html')
