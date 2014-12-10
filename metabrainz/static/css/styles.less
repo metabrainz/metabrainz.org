@@ -100,40 +100,52 @@ img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
 
 // Home page
-#projects {
-  text-align: center;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  .col-md-6 {
-    img {
-      display: block;
-      margin: auto;
-      max-height: 100px;
-    }
-    h2 { margin-top: 12px; }
-  }
-}
-#featured-organizations {
-  margin-top: 40px;
-  margin-bottom: 40px;
+#homepage {
+  @section-margin: 40px;
 
-  @featured-org-height: 50px;
-  .col-md-3 {
-    height: @featured-org-height;
-    line-height: @featured-org-height;
+  #intro { margin-bottom: @section-margin - 10px; }
+  #projects {
     text-align: center;
-    @media (max-width: @screen-xs-max) { margin-top: 10px; }
-    > span {
-      display: inline-block;
-      vertical-align: middle;
-      line-height: normal;
+    margin-bottom: @section-margin;
+    > .col-md-6 {
+      margin-top: 10px;
+      h3 { margin-top: 20px; }
+    }
+    .with-img {
+      @media (min-width: @screen-xs-max) { height: 192px; }
       img {
         display: block;
         margin: auto;
-        max-height: @featured-org-height;
+        max-height: 100px;
+      }
+      h3 { margin-top: 12px; }
+    }
+  }
+
+  #more-intro { margin-bottom: @section-margin; }
+
+  #featured-organizations {
+    margin-bottom: @section-margin;
+    @featured-org-height: 50px;
+    .col-md-3 {
+      height: @featured-org-height;
+      line-height: @featured-org-height;
+      text-align: center;
+      @media (max-width: @screen-xs-max) { margin-top: 10px; }
+
+      > span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        img {
+          display: block;
+          margin: auto;
+          max-height: @featured-org-height;
+        }
       }
     }
   }
+
 }
 
 
