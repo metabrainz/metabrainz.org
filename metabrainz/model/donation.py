@@ -272,5 +272,5 @@ class DonationAdminView(AdminView):
                 new_donation.payment_date,
                 new_donation.amount,
                 '%s %s' % (new_donation.first_name, new_donation.last_name),
-                new_donation.mb_username,
+                new_donation.editor_name,
             )
