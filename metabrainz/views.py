@@ -9,19 +9,19 @@ def home():
     featured_orgs = Organization.get_featured()
     # TODO: Randomize featured_orgs
     # TODO: Select only 4 featured_orgs
-    return render_template('home.html', featured_orgs=featured_orgs)
+    return render_template('index/index.html', featured_orgs=featured_orgs)
 
 
 @index_bp.route('/about')
 def about():
-    return render_template('about/index.html')
+    return render_template('index/about.html')
 
 
 @index_bp.route('/sponsors')
 def sponsors():
-    return render_template('about/sponsors.html')
+    return render_template('index/sponsors.html')
 
 
 @index_bp.route('/privacy')
 def privacy_policy():
-    return render_template('about/privacy.html')
+    return render_template('index/privacy.html')

@@ -5,4 +5,4 @@ financial_reports_bp = Blueprint('financial_reports', __name__, static_folder='f
 
 @financial_reports_bp.route('/')
 def index():
-    return render_template('financial_reports/index.html')
+    return render_template('reports/financial_reports/index.html')

@@ -22,7 +22,7 @@ def view(year):
     report = load_report(year)
     if report is None:
         raise NotFound('Requested annual report was not found.')
-    return render_template('annual_reports/view.html', year=year,
+    return render_template('reports/annual_reports/view.html', year=year,
                            all_years=list_years(), report=report)
 
 
