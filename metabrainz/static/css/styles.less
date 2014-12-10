@@ -78,12 +78,15 @@ h1 { color: inherit; }
 @font-size-h5: @font-size-base;
 @font-size-h6: ceil((@font-size-base * 0.85));
 
+
+@container-lg: @container-sm;
+@container-md: @container-sm;
+
 body {
   padding-bottom: 25px;
 }
 
 // Navbar
-@grid-float-breakpoint: @screen-md-min; // Point at which the navbar becomes uncollapsed
 @navbar-default-border: @mb-green;
 @navbar-default-brand-color: @mb-blue;
 .navbar {
@@ -95,8 +98,6 @@ body {
 
 img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
-
-.container {width: 850px;}
 
 // Home page
 #projects {
