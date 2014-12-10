@@ -115,10 +115,22 @@ img.pull-right { padding-left: 15px; }
 #featured-organizations {
   margin-top: 40px;
   margin-bottom: 40px;
-  img {
-    display: block;
-    margin: auto;
-    max-height: 80px;
+
+  @featured-org-height: 50px;
+  .col-md-3 {
+    height: @featured-org-height;
+    line-height: @featured-org-height;
+    text-align: center;
+    > span {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: normal;
+      img {
+        display: block;
+        margin: auto;
+        max-height: @featured-org-height;
+      }
+    }
   }
 }
 

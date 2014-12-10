@@ -51,11 +51,13 @@
   <div id="featured-organizations" class="row">
     {% for org in featured_orgs %}
       <div class="col-md-3">
-        {% if org.logo_url %}
-          <img src="{{ org.logo_url }}" class="img-responsive" />
-        {% else %}
-          {{ org.name }}
-        {% endif %}
+        <span>
+          {% if org.logo_url %}
+            <img src="{{ org.logo_url }}" class="img-responsive" />
+          {% else %}
+            {{ org.name }}
+          {% endif %}
+        </span>
       </div>
     {% endfor %}
   </div>
