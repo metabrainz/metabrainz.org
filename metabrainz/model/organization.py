@@ -37,6 +37,10 @@ class Organization(db.Model):
         """Returns list of all organizations."""
         return cls.query.all()
 
+    @classmethod
+    def get_featured(cls):
+        return cls.query.filter(cls.featured).all()
+
     def get_description_html(self):
         """Converts description text (Markdown) into HTML and returns it."""
         if self.description is not None:
