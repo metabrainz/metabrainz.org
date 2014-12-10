@@ -140,7 +140,7 @@ class Donation(db.Model):
             first_name=form['first_name'],
             last_name=form['last_name'],
             email=form['payer_email'],
-            mb_username=form['custom'],
+            editor_name=form['custom'],
             address_street=form['address_street'],
             address_city=form['address_city'],
             address_state=form['address_state'],
@@ -192,7 +192,7 @@ class Donation(db.Model):
                 first_name=details['payer_name'],
                 last_name='',
                 email=details['payer_email'],
-                mb_username=editor,
+                editor_name=editor,
                 can_contact=can_contact,
                 anonymous=anonymous,
                 amount=details['gross'] - details['fee'],
@@ -242,7 +242,7 @@ class Donation(db.Model):
 class DonationAdminView(AdminView):
     column_labels = dict(
         id='ID',
-        mb_username='MusicBrainz username',
+        editor_name='MusicBrainz username',
         address_street='Street',
         address_city='City',
         address_state='State',

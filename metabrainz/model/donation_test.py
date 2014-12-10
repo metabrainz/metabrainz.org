@@ -29,7 +29,7 @@ class FakeWePay(object):
                 'fee_payer': 'payer',
                 'reference_id': 'abc123',
                 'redirect_uri': url_for('donations.complete', _external=True),
-                'callback_uri': url_for('donations.wepay_ipn', _external=True,
+                'callback_uri': url_for('donations_wepay.ipn', _external=True,
                                         editor='Tester',
                                         anonymous=False,
                                         can_contact=True),

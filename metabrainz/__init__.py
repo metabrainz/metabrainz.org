@@ -17,7 +17,7 @@ def create_app():
     from metabrainz.model import db
     db.init_app(app)
 
-    from utils import reformat_datetime
+    from metabrainz.utils import reformat_datetime
     app.jinja_env.filters['datetime'] = reformat_datetime
 
     # Blueprints
