@@ -130,7 +130,7 @@ class DonationModelTestCase(FlaskTestCase):
             "created": 1418632523,
             "livemode": False,
             "paid": True,
-            "amount": 500,  # cents
+            "amount": 422,  # cents
             "currency": u"usd",
             "refunded": False,
             "captured": True,

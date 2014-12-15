@@ -1,3 +1,4 @@
+from __future__ import division
 from metabrainz.model import db
 from metabrainz.model.admin_view import AdminView
 from metabrainz.donations.receipts import send_receipt
@@ -249,7 +250,7 @@ class Donation(db.Model):
         new_donation = cls(
             first_name=charge.card.name,
             last_name='',
-            amount=charge.amount,
+            amount=charge.amount / 100,  # cents should be converted
             transaction_id=charge.id,
 
             address_street=charge.card.address_line1,
