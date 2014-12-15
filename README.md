@@ -42,6 +42,7 @@ testing environments for each payment service can be found in their documentatio
 
 * WePay: https://www.wepay.com/developer/reference/testing
 * PayPal: https://developer.paypal.com/webapps/developer/docs/
+* Stripe: https://stripe.com/docs/testing
 
 Please note that in order for [IPNs](https://en.wikipedia.org/wiki/Instant_payment_notification)
 to work, application MUST be publicly available. If you are doing development
