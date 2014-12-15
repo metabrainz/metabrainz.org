@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
 from metabrainz.testing import FlaskTestCase
 import donation
+import stripe
+from stripe import convert_to_stripe_object
 from donation import Donation
 from metabrainz.model import db
 from flask import url_for, current_app
@@ -119,3 +122,68 @@ class DonationModelTestCase(FlaskTestCase):
 
         # Donation should be in the DB now
         self.assertEqual(Donation.query.all()[0].transaction_id, str(12345))
+
+    def test_log_stripe_charge(self):
+        # Function should execute without any exceptions
+        charge = convert_to_stripe_object({
+            "id": u"ch_129uK7F21qH57QtHKDVLKgzw",
+            "object": u"charge",
+            "created": 1418632523,
+            "livemode": False,
+            "paid": True,
+            "amount": 500,  # cents
+            "currency": u"usd",
+            "refunded": False,
+            "captured": True,
+            "refunds": {
+                "object": u"list",
+                "total_count": 0,
+                "has_more": False,
+                "url": u"/v1/charges/ch_129uK7F21qH57QtHKDVLKgzw/refunds",
+                "data": []
+            },
+            "card": {
+                "id": u"card_129uK7F21qH57QtHKDVLKgzw",
+                "object": u"card",
+                "last4": u"4242",
+                "brand": u"Visa",
+                "funding": u"credit",
+                "exp_month": 11,
+                "exp_year": 2016,
+                "fingerprint": u"aN68e7DfeDQozGLZ",
+                "country": u"US",
+                "name": u"Тестовый Покупатель",
+                "address_line1": u"Тестовая улица 21",
+                "address_line2": None,
+                "address_city": u"Благовещенск",
+                "address_state": None,
+                "address_zip": u"675000",
+                "address_country": u"Russian Federation",
+                "cvc_check": u"pass",
+                "address_line1_check": u"pass",
+                "address_zip_check": u"pass",
+                "dynamic_last4": None,
+                "customer": None
+            },
+            "balance_transaction": u"txn_129uK7F21qH57QtHKDVLKgzw",
+            "failure_message": None,
+            "failure_code": None,
+            "amount_refunded": 0,
+            "customer": None,
+            "invoice": None,
+            "description": u"Donation to MetaBrainz Foundation",
+            "dispute": None,
+            "metadata": {
+                "anonymous": u"False",  # passed as a string
+                "can_contact": u"True",  # passed as a string
+                "email": u"tsukanovroman@gmail.com",
+                "editor": u"tester123"
+            },
+            "statement_description": None,
+            "fraud_details": {
+            },
+            "receipt_email": None,
+            "receipt_number": None,
+            "shipping": None
+        }, None)
+        Donation.log_stripe_charge(charge)

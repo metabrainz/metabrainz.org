@@ -15,7 +15,7 @@ class Donation(db.Model):
     first_name = db.Column(db.Unicode, nullable=False)
     last_name = db.Column(db.Unicode, nullable=False)
     email = db.Column(db.Unicode, nullable=False)
-    editor_name = db.Column(db.String)  # MusicBrainz username
+    editor_name = db.Column(db.Unicode)  # MusicBrainz username
     can_contact = db.Column('contact', db.Boolean, nullable=False, default=True)
     anonymous = db.Column('anon', db.Boolean, nullable=False, default=False)
     address_street = db.Column(db.Unicode)
@@ -26,7 +26,7 @@ class Donation(db.Model):
 
     # Transaction details
     payment_date = db.Column(db.DateTime, default=datetime.utcnow)
-    transaction_id = db.Column('paypal_trans_id', db.String(32))
+    transaction_id = db.Column(db.Unicode)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
     memo = db.Column(db.Unicode)
@@ -237,6 +237,42 @@ class Donation(db.Model):
             return False
 
         return True
+
+    @classmethod
+    def log_stripe_charge(cls, charge):
+        """Log successful Stripe charge.
+
+        Args:
+            charge: The charge object from Stripe. More information about it is
+                available at https://stripe.com/docs/api/python#charge_object.
+        """
+        new_donation = cls(
+            first_name=charge.card.name,
+            last_name='',
+            amount=charge.amount,
+            transaction_id=charge.id,
+
+            address_street=charge.card.address_line1,
+            address_city=charge.card.address_city,
+            address_state=charge.card.address_state,
+            address_postcode=charge.card.address_zip,
+            address_country=charge.card.address_country,
+
+            email=charge.metadata.email,
+            editor_name=charge.metadata.editor,
+            can_contact=charge.metadata.can_contact == u'True',
+            anonymous=charge.metadata.anonymous == u'True',
+        )
+        db.session.add(new_donation)
+        db.session.commit()
+
+        send_receipt(
+            new_donation.email,
+            new_donation.payment_date,
+            new_donation.amount,
+            '%s %s' % (new_donation.first_name, new_donation.last_name),
+            new_donation.editor_name,
+        )
 
 
 class DonationAdminView(AdminView):

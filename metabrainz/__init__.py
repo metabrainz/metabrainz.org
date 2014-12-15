@@ -28,6 +28,7 @@ def create_app():
     from metabrainz.donations.views import donations_bp
     from metabrainz.donations.paypal.views import donations_paypal_bp
     from metabrainz.donations.wepay.views import donations_wepay_bp
+    from metabrainz.donations.stripe.views import donations_stripe_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
@@ -36,6 +37,7 @@ def create_app():
     app.register_blueprint(donations_bp, url_prefix='/donations')
     app.register_blueprint(donations_paypal_bp, url_prefix='/donations/paypal')
     app.register_blueprint(donations_wepay_bp, url_prefix='/donations/wepay')
+    app.register_blueprint(donations_stripe_bp, url_prefix='/donations/stripe')
 
     # Admin section
     from flask_admin import Admin

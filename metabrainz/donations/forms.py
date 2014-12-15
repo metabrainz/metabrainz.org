@@ -3,8 +3,7 @@ from wtforms import DecimalField, StringField, BooleanField
 from wtforms.validators import DataRequired
 
 
-class WePayForm(Form):
-    """Form for WePay donations."""
+class DonationForm(Form):
     amount = DecimalField(
         "Amount",
         validators=[DataRequired("You need to specify amount of money that you want to donate.")])

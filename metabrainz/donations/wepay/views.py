@@ -1,5 +1,5 @@
+from metabrainz.donations import forms
 from flask import Blueprint, request, render_template, url_for, redirect, current_app
-from metabrainz.donations.wepay import forms
 from werkzeug.exceptions import BadRequest, InternalServerError
 from wepay import WePay
 from metabrainz.model.donation import Donation
@@ -22,7 +22,7 @@ def donate():
     recurring = request.args.get('recur') == '1'
     amount = request.args.get('amount') or 0
 
-    form = forms.WePayForm(float(amount))
+    form = forms.DonationForm(float(amount))
 
     if form.validate_on_submit():
         operation_type = 'preapproval' if recurring else 'checkout'
