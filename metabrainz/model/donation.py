@@ -270,7 +270,7 @@ class Donation(db.Model):
             new_donation.email,
             new_donation.payment_date,
             new_donation.amount,
-            '%s %s' % (new_donation.first_name, new_donation.last_name),
+            new_donation.first_name,  # Last name is not used with Stripe
             new_donation.editor_name,
         )
 
