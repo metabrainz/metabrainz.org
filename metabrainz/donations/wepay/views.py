@@ -33,7 +33,7 @@ def donate():
         params = {
             'account_id': current_app.config['WEPAY_ACCOUNT_ID'],
             'amount': float(form.amount.data),
-            'redirect_uri': url_for('.complete', _external=True),
+            'redirect_uri': url_for('donations.complete', _external=True),
             'mode': 'regular',
             'require_shipping': True,
         }
