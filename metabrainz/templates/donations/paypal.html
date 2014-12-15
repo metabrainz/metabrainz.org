@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'donations/base.html' %}
 
 {% block title %}PayPal - Donation - MetaBrainz Foundation{% endblock %}
 
-{% block content %}
+{% block donations_content %}
   <h1>Make a Donation with PayPal</h1>
 
   <p>
@@ -30,7 +30,7 @@
     <input type="hidden" name="no_shipping" value="2" />
     <input type="hidden" name="return" value="{{ url_for('donations.complete', _external=True) }}" />
     <input type="hidden" name="cancel_return" value="{{ url_for('donations.cancelled', _external=True) }}" />
-    <input type="hidden" name="notify_url" value="{{ url_for('donations.paypal_ipn', _external=True) }}" />
+    <input type="hidden" name="notify_url" value="{{ url_for('donations_paypal.ipn', _external=True) }}" />
     <input type="hidden" name="currency_code" value="USD" />
 
     {% if recurring %}

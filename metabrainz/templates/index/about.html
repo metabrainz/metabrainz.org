@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}About - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1>About the MetaBrainz Foundation</h1>
+
+  {# TODO: Review text in this template #}
+
+  {# TODO: Add more content #}
+
+  <div class="row">
+    <div class="col-md-9">
+      <p>
+        The MetaBrainz Foundation is a 501(c)(3) tax-exempt non-profit founded in
+        December 2004 and based in San Luis Obispo, California, that believes in
+        free, open access to data.
+      </p>
+      <p>
+        The MetaBrainz Foundation has been set up to build community maintained
+        databases and make them available in the public domain or under Creative
+        Commons licenses. Our data is mostly gathered by volunteers, and verified
+        by a voting system to make sure it is consistent and correct. All
+        non-commercial use is free, but commercial users are asked to pay for
+        regular updates of the data in order to help fund the project. We
+        encourage all data users to contribute to the data gathering process so
+        that our data can be as comprehensive as possible.
+      </p>
+      <p>
+        The MetaBrainz Foundation believes in <a href="{{ url_for('financial_reports.index') }}">
+        transparent finances</a> and has several <a href="{{ url_for('customers.index') }}">
+        commercial customers</a> who pay for timely and convenient access to
+        data. The MetaBrainz Foundation is also supported by a number of
+        <a href="{{ url_for('index.sponsors') }}">sponsors</a> who provide
+        funds in order for the foundation to accomplish its goals.
+      </p>
+    </div>
+    <div class="col-md-3">
+      <img class="img-responsive" alt="MetaBrainz logo"
+           src="{{ url_for('static', filename='img/logos/metabrainz.png') }}"/>
+    </div>
+  </div>
+
+  <h3>Board of Directors</h3>
+  Our board of directors consists of:
+  <ul>
+    <li>Director Nick Ashton-Hart, Executive Director of the <a href="http://www.internet-ecosystem.org/people">Internet &amp; Digital Ecosystem Alliance</a></li>
+    <li>Director <a href="http://paulbennun.com/">Paul Bennun</a> of <a href="http://www.somethinelse.com/">Somethin' Else</a></li>
+    <li>Director <a href="http://craphound.com/">Cory Doctorow</a>, Sci-Fi author and editor of the <a href="http://boingboing.net/">Boing Boing</a> weblog</li>
+    <li>Director <a href="http://uk.linkedin.com/pub/matthew-hawn/8/b74/8a">Matthew Hawn</a> of <a href="http://last.fm">Last.fm</a></li>
+    <li>Executive Director <a href="http://mayhem-chaos.net/">Robert Kaye</a> of the MetaBrainz Foundation</li>
+    <li>Director Carol Smith of <a href="http://google.com">Google</a>, leader of <a href="http://code.google.com/soc/">Google's Summer of Code Project</a></li>
+    <li>Director <a href="http://brianzisk.com/">Brian Zisk</a> of the <a href="http://futureofmusic.org/">Future of Music Coalition</a> and <a href="http://sfmusictech.com/">San Francisco Music Tech Summit</a></li>
+  </ul>
+  <ul>
+    <li>Director Emeritus <a href="http://lessig.org/">Lawrence Lessig</a> of the <a href="http://cyber.law.harvard.edu/people/llessig">Berkman Center for Internet and Society</a> and <a href="http://creativecommons.org/">Creative Commons</a></li>
+    <li>Director Emeritus <a href="http://joi.ito.com/">Joichi Ito</a> of <a href="http://www.neoteny.com/">Neoteny Co. Ltd.</a></li>
+  </ul>
+
+  <h3>Officers</h3>
+  The officers of this company are:
+  <ul>
+    <li>President Robert Kaye</li>
+    <li>Treasurer and secretary Carol Smith</li>
+  </ul>
+
+  <h2>Contact</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>E-mail us</h3>
+      <p>
+        General inquiries: <a href="mailto:nonprofit@metabrainz.org">nonprofit@metabrainz.org</a><br />
+        Donations: <a href="mailto:donations@metabrainz.org">donations@metabrainz.org</a><br />
+        Sponsorship inquiries: <a href="mailto:sponsors@metabrainz.org">sponsors@metabrainz.org</a>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h3>IRC</h3>
+      <p>
+        The MetaBrainz/MusicBrainz team, as well as MusicBrainz users, hang
+        out in the <a href="irc://irc.freenode.net/musicbrainz">#musicbrainz</a>
+        channel on IRC chat at irc.freenode.net. Please feel free to browse the
+        <a href="http://chatlogs.musicbrainz.org/">IRC log archives</a>.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h3>Mailing address</h3>
+      <p>
+        MetaBrainz Foundation<br />
+        3565 South Higuera St, Suite B<br />
+        San Luis Obispo, CA 93401<br />
+        United States
+      </p>
+    </div>
+  </div>
+
+{% endblock %}

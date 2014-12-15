@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ tier.name }} tier - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1>{{ tier.name }} tier</h1>
+
+  <p>{{ tier.long_desc }}</p>
+
+  <p class="text-center">
+    {% if tier.available %}
+    <a href="{{ url_for('customers.signup', tier_id=tier.id) }}"
+       class="btn btn-primary btn-lg" role="button">Sign up</a>
+    {% else %}
+      <em class="text-muted">You need to contact us if you want to sign up to this tier.</em>
+    {% endif %}
+  </p>
+
+  {% set organizations = tier.organizations.all() %}
+  {% if organizations|length > 0 %}
+    <h3>Organizations on this tier</h3>
+    <div id="customers">
+      <table class="table">
+
+        {% for org in organizations %}
+          <tr {{ 'class=danger' if not org.good_standing }}>
+            <td>
+              {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}
+              {% if org.logo_url %}
+                <img src="{{ org.logo_url }}"/>
+              {% else %}
+                {{ org.name }}
+              {% endif %}
+              {% if org.website_url %}</a>{% endif %}
+            </td>
+            <td>
+              {{ org.get_description_html()|safe }}
+              {% if not org.good_standing %}
+                <p class="text-danger">
+                  <em>This organization has a <a href="{{ url_for('customers.bad_standing') }}">bad standing</a>.</em>
+                </p>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+
+      </table>
+    </div>
+  {% endif %}
+
+{% endblock %}

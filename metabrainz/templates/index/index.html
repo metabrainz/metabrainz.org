@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div id="homepage">
+
+    <h2>Welcome to MetaBrainz!</h2>
+
+    <div id="intro">
+      <p>
+        The MetaBrainz Foundation is a non-profit that believes in free, open
+        access to data. It has been set up to build community maintained
+        databases and make them available in the public domain or under Creative
+        Commons licenses.
+      </p>
+      <p>
+        Our data is mostly gathered by volunteers, and verified
+        by a voting system to make sure it is consistent and correct. All
+        non-commercial use is free, but commercial users are asked to pay for
+        regular updates of the data in order to help fund the project. We
+        encourage all data users to contribute to the data gathering process so
+        that our data can be as comprehensive as possible.
+      </p>
+    </div>
+
+    <div id="projects" class="row">
+      <div class="col-md-6 with-img">
+        <img src="{{ url_for('static', filename='img/logos/musicbrainz.png') }}" />
+        <h3><a href="https://musicbrainz.org/">MusicBrainz</a></h3>
+        <em>Open music encyclopedia that collects music metadata and makes it available to the public</em>
+      </div>
+      <div class="col-md-6 with-img">
+        <img src="{{ url_for('static', filename='img/logos/acousticbrainz.png') }}" />
+        <h3><a href="http://acousticbrainz.org/">AcousticBrainz</a></h3>
+        <em>Crowdsourced collection of acoustic information</em>
+      </div>
+      <div class="col-md-6">
+        <h3><a href="https://critiquebrainz.org/">CritiqueBrainz</a></h3>
+        <em>Repository for Creative Commons licensed music reviews</em>
+      </div>
+      <div class="col-md-6">
+        <h3><a href="https://coverartarchive.org/">Cover Art Archive</a></h3>
+        <em>Repository of music cover art that is freely and easily accessible</em>
+      </div>
+    </div>
+
+    <div id="more-intro">
+      <p>
+        The MetaBrainz Foundation believes in <a href="{{ url_for('financial_reports.index') }}">
+        transparent finances</a> and has several <a href="{{ url_for('customers.index') }}">
+        commercial customers</a> who pay for timely and convenient access to
+        data. The MetaBrainz Foundation is also supported by a number of
+        <a href="{{ url_for('index.sponsors') }}">sponsors</a> who provide
+        funds in order for the foundation to accomplish its goals.
+      </p>
+    </div>
+
+    <div id="featured-organizations" class="row">
+      {% for org in featured_orgs %}
+        <div class="col-md-3">
+        <span>
+          {% if org.logo_url %}
+            <img src="{{ org.logo_url }}" class="img-responsive" />
+          {% else %}
+            {{ org.name }}
+          {% endif %}
+        </span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div id="additional-intro">
+      To get more information about the foundation go to <a href="{{ url_for('index.about') }}">
+      about</a> page.
+    </div>
+
+  </div>
+{% endblock %}

@@ -1,6 +1,9 @@
 from metabrainz.model import db
+from metabrainz.model.admin_view import AdminView
+from metabrainz.donations.receipts import send_receipt
 from flask import current_app
 from wepay import WePay
+from datetime import datetime
 
 
 class Donation(db.Model):
@@ -9,28 +12,98 @@ class Donation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     # Personal details
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
-    moderator = db.Column(db.String, server_default='')  # MusicBrainz username
-    can_contact = db.Column('contact', db.Boolean, server_default='FALSE')
-    anonymous = db.Column('anon', db.Boolean, server_default='FALSE')
-    address_street = db.Column(db.String, server_default='')
-    address_city = db.Column(db.String, server_default='')
-    address_state = db.Column(db.String, server_default='')
-    address_postcode = db.Column(db.String, server_default='')
-    address_country = db.Column(db.String, server_default='')
+    first_name = db.Column(db.Unicode, nullable=False)
+    last_name = db.Column(db.Unicode, nullable=False)
+    email = db.Column(db.Unicode, nullable=False)
+    editor_name = db.Column(db.String)  # MusicBrainz username
+    can_contact = db.Column('contact', db.Boolean, nullable=False, default=True)
+    anonymous = db.Column('anon', db.Boolean, nullable=False, default=False)
+    address_street = db.Column(db.Unicode)
+    address_city = db.Column(db.Unicode)
+    address_state = db.Column(db.Unicode)
+    address_postcode = db.Column(db.Unicode)
+    address_country = db.Column(db.Unicode)
 
     # Transaction details
-    timestamp = db.Column(db.DateTime, server_default='now()')
-    transaction_id = db.Column('paypal_trans_id', db.String(32), nullable=False)
+    payment_date = db.Column(db.DateTime, default=datetime.utcnow)
+    transaction_id = db.Column('paypal_trans_id', db.String(32))
     amount = db.Column(db.Numeric(11, 2), nullable=False)
-    fee = db.Column(db.String, server_default='')
-    memo = db.Column(db.String, server_default='')
+    fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
+    memo = db.Column(db.Unicode)
+
+    def __unicode__(self):
+        return 'Donation #%s' % self.id
 
     @classmethod
     def get_by_transaction_id(cls, transaction_id):
         return cls.query.filter_by(transaction_id=transaction_id).first()
+
+    @staticmethod
+    def get_nag_days(editor):
+        """
+
+        Returns:
+            Two values. First one indicates if editor should be nagged:
+            -1 = unknown person, 0 = no need to nag, 1 = should be nagged.
+            Second is...
+        """
+        days_per_dollar = 7.5
+        result = db.session.execute(
+            "SELECT ((amount + fee) * :days_per_dollar) - "
+            "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
+            "FROM donation "
+            "WHERE lower(editor_name) = lower(:editor) "
+            "ORDER BY nag DESC "
+            "LIMIT 1",
+            {'editor': editor, 'days_per_dollar': days_per_dollar}
+        ).fetchone()
+
+        if result is None:
+            return -1, 0
+        elif result[0] >= 0:
+            return 0, result[0]
+        else:
+            return 1, result[0]
+
+    @classmethod
+    def get_recent_donations(cls, limit=None, offset=None):
+        """Getter for most recent donations.
+
+        Args:
+            limit: Maximum number of donations to be returned.
+            offset: Offset of the result.
+
+        Returns:
+            Tuple with two items. First is total number if donations. Second
+            is a list of donations sorted by payment_date with a specified offset.
+        """
+        query = cls.query.order_by(cls.payment_date)
+        count = query.count()  # Total count should be calculated before limits
+        if limit is not None:
+            query = query.limit(limit)
+        if offset is not None:
+            query = query.offset(offset)
+        return count, query.all()
+
+    @classmethod
+    def get_biggest_donations(cls, limit=None, offset=None):
+        """Getter for biggest donations.
+
+        Args:
+            limit: Maximum number of donations to be returned.
+            offset: Offset of the result.
+
+        Returns:
+            Tuple with two items. First is total number if donations. Second
+            is a list of donations sorted by amount with a specified offset.
+        """
+        query = cls.query.order_by(-cls.amount)
+        count = query.count()  # Total count should be calculated before limits
+        if limit is not None:
+            query = query.limit(limit)
+        if offset is not None:
+            query = query.offset(offset)
+        return count, query.all()
 
     @classmethod
     def process_paypal_ipn(cls, form):
@@ -67,7 +140,7 @@ class Donation(db.Model):
             first_name=form['first_name'],
             last_name=form['last_name'],
             email=form['payer_email'],
-            moderator=form['custom'],
+            editor_name=form['custom'],
             address_street=form['address_street'],
             address_city=form['address_city'],
             address_state=form['address_state'],
@@ -91,7 +164,13 @@ class Donation(db.Model):
         db.session.add(new_donation)
         db.session.commit()
 
-        # TODO: Send receipt
+        send_receipt(
+            new_donation.email,
+            new_donation.payment_date,
+            new_donation.amount,
+            '%s %s' % (new_donation.first_name, new_donation.last_name),
+            new_donation.editor_name,
+        )
 
     @classmethod
     def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):
@@ -113,10 +192,10 @@ class Donation(db.Model):
                 first_name=details['payer_name'],
                 last_name='',
                 email=details['payer_email'],
-                moderator=editor,
+                editor_name=editor,
                 can_contact=can_contact,
                 anonymous=anonymous,
-                amount=details['gross']-details['fee'],
+                amount=details['gross'] - details['fee'],
                 fee=details['fee'],
                 transaction_id=checkout_id,
             )
@@ -137,7 +216,13 @@ class Donation(db.Model):
             db.session.add(new_donation)
             db.session.commit()
 
-            # TODO: Send receipt
+            send_receipt(
+                new_donation.email,
+                new_donation.payment_date,
+                new_donation.amount,
+                '%s %s' % (new_donation.first_name, new_donation.last_name),
+                new_donation.editor_name,
+            )
 
         elif details['state'] in ['authorized', 'reserved']:
             # Payment is pending
@@ -152,3 +237,40 @@ class Donation(db.Model):
             return False
 
         return True
+
+
+class DonationAdminView(AdminView):
+    column_labels = dict(
+        id='ID',
+        editor_name='MusicBrainz username',
+        address_street='Street',
+        address_city='City',
+        address_state='State',
+        address_postcode='Postal code',
+        address_country='Country',
+    )
+    column_descriptions = dict(
+        can_contact='This donor may be contacted',
+        anonymous='This donor wishes to remain anonymous',
+        amount='USD',
+        fee='USD',
+    )
+    column_list = ('id', 'email', 'first_name', 'last_name', 'amount', 'fee',)
+    form_columns = (
+        'first_name', 'last_name', 'email', 'address_street', 'address_city',
+        'address_state', 'address_postcode', 'address_country', 'amount', 'fee',
+        'payment_date', 'memo', 'can_contact', 'anonymous',
+    )
+
+    def __init__(self, session, **kwargs):
+        super(DonationAdminView, self).__init__(Donation, session, name='Donations', **kwargs)
+
+    def after_model_change(self, form, new_donation, is_created):
+        if is_created:
+            send_receipt(
+                new_donation.email,
+                new_donation.payment_date,
+                new_donation.amount,
+                '%s %s' % (new_donation.first_name, new_donation.last_name),
+                new_donation.editor_name,
+            )

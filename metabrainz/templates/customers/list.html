@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Customers - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1>Customers</h1>
+
+  {# TODO: Update text on this page. #}
+
+  <p><b>
+    You can sign up to one of the tiers listed below at
+    <a href="{{ url_for('customers.tiers') }}">the tiers page</a>.
+  </b></p>
+
+  <p>
+    The following organizations license our data and use <a href="http://musicbrainz.org/doc/MusicBrainz_Identifier">MusicBrainz Identifiers</a> (MBIDs) for their own operations. This list does not include any individuals/companies that are using our Public Domain/Creative Commons data snapshots -- there are many users of this data beyond the licensees listed here:
+  </p>
+
+  <div id="customers">
+  {% for tier in tiers|reverse %}
+
+    {% set feautred_orgs = tier.get_featured_orgs() %}
+    {% if feautred_orgs|length > 0 %}
+      <h2>{{ tier.name }} tier</h2>
+      <p class="text-muted"><em>{{ tier.short_desc }}</em></p>
+      <table class="table">
+
+        {% for org in feautred_orgs %}
+          <tr {{ 'class=danger' if not org.good_standing }}>
+            <td>
+              {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}
+                {% if org.logo_url %}
+                  <img src="{{ org.logo_url }}"/>
+                {% else %}
+                  {{ org.name }}
+                {% endif %}
+              {% if org.website_url %}</a>{% endif %}
+            </td>
+            <td>
+              {{ org.get_description_html()|safe }}
+              {% if not org.good_standing %}
+                <p class="text-danger">
+                  <em>This organization has a <a href="{{ url_for('customers.bad_standing') }}">bad standing</a>.</em>
+                </p>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+
+      </table>
+
+      <p><em><a href="{{ url_for('customers.tier', tier_id=tier.id) }}">
+        View {{ 'other organizations and ' if tier.organizations.count() > feautred_orgs|length }}additional info about this tier
+      </a></em></p>
+    {% endif %}
+
+  {% endfor %}
+  </div>
+
+  <br /><p>Do you know of others using the MusicBrainz data? If so please, contact us and let us know.</p>
+
+{% endblock %}

@@ -1,3 +1,5 @@
+{% from 'macros.html' import print_message %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +26,12 @@
 
     <div class="container">
 
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          {{ print_message(message, category) }}
+        {% endfor %}
+      {% endwith %}
+
       {% block content %}
         <!-- Page content -->
       {% endblock %}
@@ -33,10 +41,14 @@
         <div class="footer clearfix">
           <ul class="list-inline pull-left">
             <li><a href="{{ url_for('index.privacy_policy') }}">Privacy Policy</a></li>
+            <li><a href="http://blog.musicbrainz.org/category/metabrainz/">Blog</a></li>
             <li><a href="https://twitter.com/MetaBrainz">Twitter</a></li>
           </ul>
           <div class="pull-right">
-            Hosted by <a href="http://digitalwest.net/">Digital West</a>. Sponsored by: <a href="http://www.google.com/">Google</a>, <a href="http://osuosl.org/">OSUOSL</a> and <a href="{{ url_for('index.sponsors') }}">others&hellip;</a>
+            Hosted by <a href="http://digitalwest.net/">Digital West</a>.
+            Sponsored by: <a href="http://www.google.com/">Google</a>,
+            <a href="http://osuosl.org/">OSUOSL</a> and
+            <a href="{{ url_for('index.sponsors') }}">others&hellip;</a>
           </div>
         </div>
       {% endblock %}
