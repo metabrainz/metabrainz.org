@@ -8,7 +8,12 @@
   <p>{{ tier.long_desc }}</p>
 
   <p class="text-center">
-    <a href="#" class="btn btn-primary btn-lg" role="button">Sign up</a>
+    {% if tier.available %}
+    <a href="{{ url_for('support.signup', tier_id=tier.id) }}"
+       class="btn btn-primary btn-lg" role="button">Sign up</a>
+    {% else %}
+      <em class="text-muted">You need to contact us if you want to sign up to this tier.</em>
+    {% endif %}
   </p>
 
   {% set organizations = tier.organizations.all() %}

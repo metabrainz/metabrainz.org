@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign up - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1>Sign up</h1>
+
+  <p><em class="text-muted">
+    This form is meant for organizations that use our projects. If you just want to
+    donate, please go to <a href="{{ url_for('donations.index') }}">donations page</a>.
+  </em></p>
+
+  {% for field in form.errors %}
+    {% for error in form.errors[field] %}
+      <div class="alert alert-danger">{{ field }}: {{ error }}</div>
+    {% endfor %}
+  {% endfor %}
+
+  <form class="form-horizontal" role="form" method="POST">
+    {{ form.csrf_token }}
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Selected tier</label>
+      <div class="col-sm-4" style="padding-top: 7px">
+        <b>{{ tier.name }}</b>
+        <em class="text-muted">${{ tier.price }}/mo</em>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        {{ form.org_name.label.text }}
+        <span style="color: red">*</span>
+      </label>
+      <div class="col-sm-4">{{ form.org_name(class="form-control", required="required") }}</div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        {{ form.website_url.label.text }}
+        <span style="color: red">*</span>
+      </label>
+      <div class="col-sm-4">{{ form.website_url(class="form-control", required="required") }}</div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ form.logo_url.label.text }}</label>
+      <div class="col-sm-4">{{ form.logo_url(class="form-control") }}</div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ form.api_url.label.text }}</label>
+      <div class="col-sm-4">{{ form.api_url(class="form-control") }}</div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ form.description.label.text }}</label>
+      <div class="col-sm-4">{{ form.description(class="form-control") }}</div>
+    </div>
+    <br />
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ form.address_street.label.text }}</label>
+      <div class="col-sm-4">{{ form.address_street(class="form-control") }}</div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ form.address_city.label.text }}</label>
+      <div class="col-sm-4">{{ form.address_city(class="form-control") }}</div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ form.address_state.label.text }}</label>
+      <div class="col-sm-4">{{ form.address_state(class="form-control") }}</div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ form.address_postcode.label.text }}</label>
+      <div class="col-sm-4">{{ form.address_postcode(class="form-control") }}</div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ form.address_country.label.text }}</label>
+      <div class="col-sm-4">{{ form.address_country(class="form-control") }}</div>
+    </div>
+    <br />
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        {{ form.contact_name.label.text }}
+        <span style="color: red">*</span>
+      </label>
+      <div class="col-sm-4">{{ form.contact_name(class="form-control", required="required") }}</div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        {{ form.contact_email.label.text }}
+        <span style="color: red">*</span>
+      </label>
+      <div class="col-sm-4">{{ form.contact_email(class="form-control", required="required") }}</div>
+    </div>
+    <br />
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        {{ form.payment_method.label.text }}
+        <span style="color: red">*</span>
+      </label>
+      <div class="col-sm-10">
+        {% for choice in form.payment_method %}
+          <div class="radio">
+            <label>{{ choice }}{{ choice.label.text | safe }}</label>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <br />
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">{{ form.recaptcha }}</div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+    </div>
+    <br />
+  </form>
+{% endblock %}
