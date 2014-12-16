@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, current_app
+from flask import Blueprint, request, current_app, redirect, url_for
 from metabrainz.donations.forms import DonationForm
 from metabrainz.model.donation import Donation
 import stripe
@@ -14,7 +14,7 @@ def donate():
     """
     form = DonationForm()
     if not form.validate():
-        return render_template('donations/results/error.html')
+        return redirect(url_for('donations.error'))
 
     if current_app.config['PAYMENT_PRODUCTION']:
         stripe.api_key = current_app.config['STRIPE_KEYS']['SECRET']
@@ -40,8 +40,8 @@ def donate():
         )
     except stripe.CardError, e:
         # The card has been declined
-        return render_template('donations/results/error.html')
+        return redirect(url_for('donations.error'))
 
     Donation.log_stripe_charge(charge)
 
-    return render_template('donations/results/complete.html')
+    return redirect(url_for('donations.complete'))
