@@ -260,10 +260,13 @@ class Donation(db.Model):
             address_country=charge.card.address_country,
 
             email=charge.metadata.email,
-            editor_name=charge.metadata.editor,
             can_contact=charge.metadata.can_contact == u'True',
             anonymous=charge.metadata.anonymous == u'True',
         )
+
+        if 'editor' in charge.metadata:
+            new_donation.editor_name = charge.metadata.editor
+
         db.session.add(new_donation)
         db.session.commit()
 
