@@ -7,6 +7,11 @@ def create_app():
     # Configuration
     app.config.from_object('metabrainz.config')
 
+    # Logging
+    if app.debug is False:
+        from metabrainz import loggers
+        loggers.add_email_handler(app)
+
     if app.debug:
         # Debug toolbar
         from flask_debugtoolbar import DebugToolbarExtension

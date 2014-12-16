@@ -51,6 +51,11 @@ RECAPTCHA_SECRET_KEY = ""
 ADMIN_USERNAME = "CHANGE_THIS"
 ADMIN_PASSWORD = "CHANGE_THIS"
 
+# Logging
+# List of email addresses of people who will receive notifications about errors
+LOG_RECIPIENTS = ["tsukanovroman@gmail.com", ]
+LOG_EMAIL_TOPIC = "MetaBrainz Website Failure"
+
 # Name and email address of the person who will receive notifications
 MANAGER_NAME = "Jonnie Doe"
 MANAGER_EMAIL = "jonnie@example.org"
