@@ -1,182 +1,263 @@
-{% extends 'donations/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Donation - MetaBrainz Foundation{% endblock %}
 
-{% block donations_content %}
-  <style>
-    td { padding: 2px; }
-  </style>
+{% block content %}
+  <div id="donation">
+    <h1>Make a Donation</h1>
 
-  <h1>Make a Donation</h1>
+    <p>
+      If you feel that <a href="http://musicbrainz.org">MusicBrainz</a> is a
+      worthwhile effort, please consider contributing money to the MetaBrainz
+      Foundation. The MetaBrainz Foundation is a <a href="http://en.wikipedia.org/wiki/Non-profit_organization">
+      501(c)(3) tax-exempt non-profit</a> based in California that operates the
+      MusicBrainz project. All of your donations will be tax-deductible and you
+      will receive a receipt that you can use to deduct your donation off your
+      taxes if you are a US taxpayer.
+    </p>
 
-  <p>If you feel that <a href="http://musicbrainz.org">MusicBrainz</a> is a worthwhile effort, please consider contributing money to the MetaBrainz Foundation. The MetaBrainz Foundation is a <a href="http://en.wikipedia.org/wiki/Non-profit_organization">501(c)(3) tax-exempt non-profit</a> based in California that operates the MusicBrainz project. All of your donations will be tax-deductible and you will receive a receipt that you can use to deduct your donation off your taxes if you are a US taxpayer.</p>
+    <p>
+      Your donations will be used to operate the MusicBrainz project. This
+      includes paying for ongoing expenses like hosting, hardware, maintaining a
+      modest office in San Luis Obispo, California, and paying a minimal salary
+      for MetaBrainz employees working on MusicBrainz.
+    </p>
 
-  <p>Your donations will be used to operate the MusicBrainz project. This includes paying for ongoing expenses like hosting, hardware, maintaining a modest office in San Luis Obispo, California, and paying a minimal salary for MetaBrainz employees working on MusicBrainz.</p>
+    <p>Where has my contribution gone? See our<a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>
+    <p>Who else is contributing? See our list of <a href="{{ url_for('donations.donors') }}">donors</a>.</p>
 
-  <p>Where has my contribution gone? See our <a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>
-  <p>Who else is contributing? See our list of <a href="{{ url_for('donations.donors') }}">donors</a>.</p>
+    {% if config.PAYMENT_PRODUCTION != True %}
+      <div class="alert alert-warning" role="alert">
+        <b>Be careful!</b> This is a development version of the website. Do NOT
+        use your real credit card credentials! If you want send an actual
+        donation, go to <a href="http://metabrainz.org/">metabrainz.org</a>.
+      </div>
+    {% endif %}
 
-  <h2>Donate with PayPal or WePay</h2>
+    <div id="donation-panel" class="panel panel-default">
+      <form id="donation-form" method="POST" class="panel-body form-horizontal" role="form">
+        {{ form.hidden_tag() }}
 
-  <p>To send money via PayPal or WePay, please use one of the convenient buttons below:</p>
-  <table width="100%">
-    <tr>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=10, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=25, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=50, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=100, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=500, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=0, recur=0) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=10, recur=0) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=25, recur=0) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=50, recur=0) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=100, recur=0) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=500, recur=0) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=0, recur=0) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_stripe.donate', amount=10) }}">Stripe</a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_stripe.donate', amount=25) }}">Stripe</a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_stripe.donate', amount=50) }}">Stripe</a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_stripe.donate', amount=100) }}">Stripe</a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_stripe.donate', amount=500) }}">Stripe</a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_stripe.donate', amount=0) }}">Stripe</a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" width="16%">$10</td>
-      <td align="center" width="16%">$25</td>
-      <td align="center" width="16%">$50</td>
-      <td align="center" width="16%">$100</td>
-      <td align="center" width="16%">$500</td>
-      <td align="center" width="16%">$Other</td>
-    </tr>
-  </table>
+        <div id="amount-group" class="form-group">
+          <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">Amount</label>
+          <div class="col-sm-4">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              {{ form.amount(id="input-amount", class="form-control", value="50.00") | safe }}</div>
+          </div>
+        </div>
 
-  <p>To set up a recurring monthly donation, use the buttons below:</p>
-  <table width="100%">
-    <tr>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=10, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=25, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=50, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=100, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=500, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_paypal.donate', amount=0, recur=1) }}"><img src="{{ url_for('static', filename='img/buttons/paypal-logo.png') }}" /></a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=10, recur=1) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=25, recur=1) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=50, recur=1) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=100, recur=1) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=500, recur=1) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-      <td align="center" width="16%">
-        <a href="{{ url_for('donations_wepay.donate', amount=0, recur=1) }}">
-          <img style="vertical-align: middle" src="{{ url_for('static', filename='img/buttons/wepay-logo.png') }}" />
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" width="16%">$10/month</td>
-      <td align="center" width="16%">$25/month</td>
-      <td align="center" width="16%">$50/month</td>
-      <td align="center" width="16%">$100/month</td>
-      <td align="center" width="16%">$500/month</td>
-      <td align="center" width="16%">$Other/month</td>
-    </tr>
-  </table>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-6">
+            <div class="checkbox">
+              <label>
+                {{ form.recurring(id="recurring-flag") | safe }}
+                I want this to be a recurring monthly donation
+              </label>
+            </div>
+          </div>
+        </div>
 
-  <h2>Donating Bitcoins</h2>
-  <p>If you would like to make a donation to us in bitcoins, please use this address:</p>
-  <p><em style="margin-left: 2em">1Pc7sFnuRfDQ2rGoNwRA3nBX1Pqjjqb15v</em></p>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-6">
+            {{ form.editor(id="input-editor", class="form-control", placeholder="MusicBrainz username", data_toggle="tooltip", data_placement="bottom", title="Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you") | safe }}
+          </div>
+        </div>
 
-  <h2>Donating money in other ways</h2>
-  <p>If you would like to donate cash using a check or a bank draft, please send them to:</p>
-  <p>
-    MetaBrainz Foundation<br />
-    3565 South Higuera St, Suite B<br />
-    San Luis Obispo, CA 93401<br />
-    United States
-  </p>
-  <p>Please make checks payable to the <strong>MetaBrainz Foundation</strong>.</p>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-6">
+            <div class="checkbox">
+              <label>
+                {{ form.can_contact(id="can-contact-flag") | safe }}
+                Email me about future fundraising events
+                <br /><small>This will be very seldom</small>
+              </label>
+            </div>
+          </div>
+          <div class="col-sm-offset-3 col-sm-6">
+            <div class="checkbox">
+              <label>
+                {{ form.anonymous(id="anonymous-flag") | safe }}
+                I would like this donation to be anonymous
+                <br /><small>Your name won't appear in the donors list</small>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-6">
+            <button id="btn-stripe" type="button" class="btn">Donate with Card</button>
+            <button id="btn-paypal" type="button" class="btn">
+              <img src="{{ url_for('static', filename='img/donations/paypal.svg') }}" />
+            </button>
+            <button id="btn-wepay" type="button" class="btn">
+              <img src="{{ url_for('static', filename='img/donations/wepay.png') }}" />
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+    <p>
+      <small>
+        The personal information provided to the MetaBrainz Foundation during the
+        donation process will not be shared with anyone. For more information,
+        please take a look at our <a href="{{ url_for('index.privacy_policy') }}">
+        privacy policy</a>.
+      </small>
+    </p>
+
+    <h2>Other ways to donate</h2>
+
+    <h3>Bitcoin</h3>
+    <p>If you would like to make a donation to us in bitcoins, please use this address:</p>
+    <p><em style="margin-left: 2em">1Pc7sFnuRfDQ2rGoNwRA3nBX1Pqjjqb15v</em></p>
+
+    <h3>Cash</h3>
+    <p>If you would like to donate cash using a check or a bank draft, please send them to:</p>
+    <p>
+      MetaBrainz Foundation<br/>
+      3565 South Higuera St, Suite B<br/>
+      San Luis Obispo, CA 93401<br/>
+      United States
+    </p>
+    <p>Please make checks payable to the <strong>MetaBrainz Foundation</strong>.</p>
+
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script>
+    $(document).ready(function () {
+      $(function () { $('[data-toggle="tooltip"]').tooltip() });
+
+      var form = $("#donation-form");
+      var buttons = {
+        stripe: $('#btn-stripe'),
+        paypal: $('#btn-paypal'),
+        wepay: $('#btn-wepay')
+      };
+
+      function setButtonsState(enabled) {
+        if (enabled === true) {
+          $.each(buttons, function( index, button ) {
+            button.removeAttr('disabled');
+          });
+          updateRecurringState();
+
+        } else { // Disabled
+          $.each(buttons, function( index, button ) {
+            button.attr('disabled', 'disabled');
+          });
+        }
+      }
+
+      function updateRecurringState() {
+        // We don't support recurring donations via Stripe
+        if ($('#recurring-flag').is(":checked")) {
+          buttons.stripe.attr('disabled', 'disabled');
+        } else {
+          buttons.stripe.removeAttr('disabled');
+        }
+      }
+
+      $('#recurring-flag').change(function() {
+        updateRecurringState();
+      });
+
+
+      // Stripe
+      var stripeHandler = StripeCheckout.configure({
+        key: "{{ stripe_public_key }}",
+        name: "MetaBrainz Foundation",
+        description: "Donation to MetaBrainz Foundation",
+        address: "true",
+
+        token: function(token) {
+          form.attr("action", "{{ url_for('donations_stripe.donate') }}");
+          $('<input>').attr({type: 'hidden', name: 'stripeToken', value: token.id}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'stripeEmail', value: token.email}).appendTo(form);
+          form.submit();
+        },
+
+        closed: function() {
+          setButtonsState(true);
+        }
+      });
+      buttons.stripe.on('click', function(e) {
+        setButtonsState(false);
+        stripeHandler.open({
+          amount: $("#input-amount").val() * 100 // cents
+        });
+        e.preventDefault();
+      });
+      $(window).on('popstate', function() { stripeHandler.close(); });
+
+      // PayPal
+      buttons.paypal.on('click', function(e) {
+        setButtonsState(false);
+        {% if config.PAYMENT_PRODUCTION %}
+          form.attr("action", "https://www.paypal.com/cgi-bin/webscr");
+        {% else %}
+          form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
+        {% endif %}
+
+        {# Info about variables can be found at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/ #}
+
+        $('<input>').attr({type: 'hidden', name: 'business', value: 'donations@metabrainz.org'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('donations.complete', _external=True) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('donations.cancelled', _external=True) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('donations_paypal.ipn', _external=True) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'currency_code', value: 'USD'}).appendTo(form);
+
+        if ($('#recurring-flag').is(":checked")) { // Recurring donations
+          $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick-subscriptions'}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Recurring donation to MetaBrainz Foundation'}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 't3', value: 'M'}).appendTo(form); {# units of duration ('M' is month) #}
+          $('<input>').attr({type: 'hidden', name: 'p3', value: '1'}).appendTo(form); {# subscription duration #}
+          $('<input>').attr({type: 'hidden', name: 'src', value: '1'}).appendTo(form); {# recurring payments #}
+          $('<input>').attr({type: 'hidden', name: 'sra', value: '1'}).appendTo(form); {# reattempt on failure #}
+
+        } else {  // One-time donation
+          $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick'}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Donation to MetaBrainz Foundation'}).appendTo(form);
+        }
+
+        {# Reconfiguring inputs for PayPal #}
+        if ($('#recurring-flag').is(":checked")) { // Recurring donations
+          $("#input-amount").attr('name', 'a3');
+        } else {  // One-time donation
+          $("#input-amount").attr('name', 'amount');
+        }
+
+        $("#input-editor").attr('name', 'custom');
+
+        $('<input>').attr({type: 'hidden', name: 'on0', value: 'contact'}).appendTo(form);
+        $("#can-contact-flag").attr('name', 'os0');
+        $("#can-contact-flag").attr('value', 'yes'); {# Boolean values are compared to 'yes' in IPN processor. #}
+
+        $('<input>').attr({type: 'hidden', name: 'on1', value: 'anonymous'}).appendTo(form);
+        $("#can-contact-flag").attr('name', 'os1');
+        $("#anonymous-flag").attr('value', 'yes'); {# Boolean values are compared to 'yes' in IPN processor. #}
+
+        form.submit();
+        return false;
+      });
+
+      // WePay
+      buttons.wepay.on('click', function(e) {
+        setButtonsState(false);
+        form.attr("action", "{{ url_for('donations_wepay.donate') }}");
+        form.submit();
+        return false;
+      });
+
+    });
+  </script>
 {% endblock %}

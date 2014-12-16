@@ -1,6 +1,7 @@
 from __future__ import division
-from flask import Blueprint, request, render_template, url_for, redirect
+from flask import Blueprint, request, render_template, url_for, redirect, current_app
 from metabrainz.model.donation import Donation
+from metabrainz.donations.forms import DonationForm
 from math import ceil
 
 donations_bp = Blueprint('donations', __name__)
@@ -8,8 +9,13 @@ donations_bp = Blueprint('donations', __name__)
 
 @donations_bp.route('/')
 def index():
-    """Home page for donations."""
-    return render_template('donations/donate.html')
+    if current_app.config['PAYMENT_PRODUCTION']:
+        stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
+    else:
+        stripe_public_key = current_app.config['STRIPE_TEST_KEYS']['PUBLISHABLE']
+
+    return render_template('donations/donate.html', form=DonationForm(),
+                           stripe_public_key=stripe_public_key)
 
 
 @donations_bp.route('/donors')

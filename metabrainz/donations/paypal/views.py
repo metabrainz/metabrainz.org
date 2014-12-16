@@ -1,21 +1,8 @@
-from flask import Blueprint, request, render_template, current_app
+from flask import Blueprint, request, current_app
 from metabrainz.model.donation import Donation
 import requests
 
 donations_paypal_bp = Blueprint('donations_paypal', __name__)
-
-
-@donations_paypal_bp.route('/')
-def donate():
-    """Donation page for PayPal.
-
-    We use PayPal Payments Standard to receive donations. Form is submitted directly to
-    PayPal, so we don't need to do processing there. More information about this functionality
-    is avaukabke at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/formbasics/.
-    """
-    recurring = request.args.get('recur') == '1'
-    amount = request.args.get('amount') or 0
-    return render_template('donations/paypal.html', recurring=recurring, amount=amount)
 
 
 @donations_paypal_bp.route('/ipn', methods=['POST'])

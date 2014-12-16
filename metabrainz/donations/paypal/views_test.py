@@ -24,9 +24,6 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
         super(DonationsPayPalViewsTestCase, self).setUp()
         views.requests = FakeRequests()
 
-    def test_paypal(self):
-        self.assert200(self.client.get("/donations/paypal/"))
-
     def test_paypal_ipn(self):
         ipn_data = {
             # This is not a complete list

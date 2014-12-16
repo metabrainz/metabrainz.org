@@ -1,5 +1,5 @@
 from metabrainz.donations import forms
-from flask import Blueprint, request, render_template, url_for, redirect, current_app
+from flask import Blueprint, request, url_for, redirect, current_app
 from werkzeug.exceptions import BadRequest, InternalServerError
 from wepay import WePay
 from metabrainz.model.donation import Donation
@@ -7,9 +7,9 @@ from metabrainz.model.donation import Donation
 donations_wepay_bp = Blueprint('donations_wepay', __name__)
 
 
-@donations_wepay_bp.route('/', methods=['GET', 'POST'])
+@donations_wepay_bp.route('/', methods=['POST'])
 def donate():
-    """Donation page for WePay.
+    """Donation processor for WePay.
 
     We use official Python SDK to make API calls. Its source code is available at
     https://github.com/wepay/Python-SDK. Description of all WePay API endpoints and
@@ -19,50 +19,48 @@ def donate():
     - one time single payment (https://www.wepay.com/developer/reference/checkout)
     - recurring monthly donation (https://www.wepay.com/developer/reference/preapproval)
     """
-    recurring = request.args.get('recur') == '1'
-    amount = request.args.get('amount') or 0
 
-    form = forms.DonationForm(float(amount))
+    form = forms.DonationForm()
 
-    if form.validate_on_submit():
-        operation_type = 'preapproval' if recurring else 'checkout'
+    if not form.validate():
+        return redirect(url_for('donations.error'))
 
-        wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],
-                      access_token=current_app.config['WEPAY_ACCESS_TOKEN'])
+    operation_type = 'preapproval' if form.recurring.data is True else 'checkout'
 
-        params = {
-            'account_id': current_app.config['WEPAY_ACCOUNT_ID'],
-            'amount': float(form.amount.data),
-            'redirect_uri': url_for('donations.complete', _external=True),
-            'mode': 'regular',
-            'require_shipping': True,
-        }
+    wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],
+                  access_token=current_app.config['WEPAY_ACCESS_TOKEN'])
 
-        # Setting callback_uri that will receive IPNs if endpoint is not local
-        if not (request.headers['Host'].startswith('localhost') or request.headers['Host'].startswith('127.0.0.1')):
-            # Also passing arguments that will be returned with IPNs
-            params['callback_uri'] = url_for('.ipn', _external=True,
-                                             editor=form.editor.data,
-                                             anonymous=form.anonymous.data,
-                                             can_contact=form.can_contact.data)
+    params = {
+        'account_id': current_app.config['WEPAY_ACCOUNT_ID'],
+        'amount': float(form.amount.data),
+        'redirect_uri': url_for('donations.complete', _external=True),
+        'mode': 'regular',
+        'require_shipping': True,
+    }
 
-        # Setting parameters that are specific for selected type of donation
-        if recurring:
-            params['period'] = 'monthly'
-            params['auto_recur'] = True
-            params['short_description'] = 'Recurring donation to MetaBrainz Foundation'
-        else:
-            params['type'] = 'DONATION'
-            params['short_description'] = 'Donation to MetaBrainz Foundation'
+    # Setting callback_uri that will receive IPNs if endpoint is not local
+    if not (request.headers['Host'].startswith('localhost') or request.headers['Host'].startswith('127.0.0.1')):
+        # Also passing arguments that will be returned with IPNs
+        params['callback_uri'] = url_for('.ipn', _external=True,
+                                         editor=form.editor.data,
+                                         anonymous=form.anonymous.data,
+                                         can_contact=form.can_contact.data)
 
-        response = wepay.call('/%s/create' % operation_type, params)
+    # Setting parameters that are specific for selected type of donation
+    if form.recurring.data is True:
+        params['period'] = 'monthly'
+        params['auto_recur'] = True
+        params['short_description'] = 'Recurring donation to MetaBrainz Foundation'
+    else:
+        params['type'] = 'DONATION'
+        params['short_description'] = 'Donation to MetaBrainz Foundation'
 
-        if 'error' in response:
-            return redirect(url_for('.error'))
-        else:
-            return redirect(response['%s_uri' % operation_type])
+    response = wepay.call('/%s/create' % operation_type, params)
 
-    return render_template('donations/wepay.html', form=form, recurring=recurring)
+    if 'error' in response:
+        return redirect(url_for('donations.error'))
+    else:
+        return redirect(response['%s_uri' % operation_type])
 
 
 @donations_wepay_bp.route('/ipn', methods=['POST'])
