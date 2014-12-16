@@ -11,15 +11,13 @@ def ipn():
 
     Specifications are available at https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNImplementation/.
     """
-    data = request.get_data()
-
     if current_app.config['PAYMENT_PRODUCTION']:
         paypal_url = 'https://www.paypal.com/cgi-bin/webscr'
     else:
         paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
 
     # Checking if data is legit
-    verification_response = requests.post(paypal_url, data='cmd=_notify-validate&'+data)
+    verification_response = requests.post(paypal_url, data='cmd=_notify-validate&'+request.get_data())
     if verification_response.text == 'VERIFIED':
         Donation.process_paypal_ipn(request.form)
 
