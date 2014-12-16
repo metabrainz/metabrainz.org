@@ -34,7 +34,7 @@ def create_app():
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
     app.register_blueprint(customers_bp, url_prefix='/customers')
-    app.register_blueprint(donations_bp, url_prefix='/donations')
+    app.register_blueprint(donations_bp, url_prefix='/donate')
     app.register_blueprint(donations_paypal_bp, url_prefix='/donations/paypal')
     app.register_blueprint(donations_wepay_bp, url_prefix='/donations/wepay')
     app.register_blueprint(donations_stripe_bp, url_prefix='/donations/stripe')
