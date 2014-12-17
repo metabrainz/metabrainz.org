@@ -6,10 +6,7 @@ index_bp = Blueprint('index', __name__)
 
 @index_bp.route('/')
 def home():
-    featured_orgs = Organization.get_featured()
-    # TODO: Randomize featured_orgs
-    # TODO: Select only 4 featured_orgs
-    return render_template('index/index.html', featured_orgs=featured_orgs)
+    return render_template('index/index.html', featured_orgs=Organization.get_featured(4))
 
 
 @index_bp.route('/about')
