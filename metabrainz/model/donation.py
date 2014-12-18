@@ -78,7 +78,7 @@ class Donation(db.Model):
             Tuple with two items. First is total number if donations. Second
             is a list of donations sorted by payment_date with a specified offset.
         """
-        query = cls.query.order_by(cls.payment_date)
+        query = cls.query.order_by(cls.payment_date.desc())
         count = query.count()  # Total count should be calculated before limits
         if limit is not None:
             query = query.limit(limit)
