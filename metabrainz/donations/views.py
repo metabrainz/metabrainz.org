@@ -1,6 +1,7 @@
 from __future__ import division
-from flask import Blueprint, request, render_template, url_for, redirect
+from flask import Blueprint, request, render_template, url_for, redirect, current_app, flash
 from metabrainz.model.donation import Donation
+from metabrainz.donations.forms import DonationForm
 from math import ceil
 
 donations_bp = Blueprint('donations', __name__)
@@ -8,8 +9,13 @@ donations_bp = Blueprint('donations', __name__)
 
 @donations_bp.route('/')
 def index():
-    """Home page for donations."""
-    return render_template('donations/donate.html')
+    if current_app.config['PAYMENT_PRODUCTION']:
+        stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
+    else:
+        stripe_public_key = current_app.config['STRIPE_TEST_KEYS']['PUBLISHABLE']
+
+    return render_template('donations/donate.html', form=DonationForm(),
+                           stripe_public_key=stripe_public_key)
 
 
 @donations_bp.route('/donors')
@@ -47,12 +53,16 @@ def nag_check(editor):
 @donations_bp.route('/complete', methods=['GET', 'POST'])
 def complete():
     """Endpoint for successful donations."""
-    return render_template('donations/results/complete.html')
+    flash("Thank you for making a donation to the MetaBrainz Foundation. Your "
+          "support is greatly appreciated!", 'success')
+    return redirect(url_for('donations.donors'))
 
 @donations_bp.route('/cancelled')
 def cancelled():
     """Endpoint for cancelled donations."""
-    return render_template('donations/results/cancelled.html')
+    flash("We're sorry to see that you won't be donating today. We hope that "
+          "you'll change your mind!")
+    return redirect(url_for('donations.index'))
 
 @donations_bp.route('/error')
 def error():
@@ -60,4 +70,6 @@ def error():
 
     Users should be redirected there when errors occur during payment process.
     """
-    return render_template('donations/results/error.html')
+    flash("We're sorry, but it appears we've run into an error and can't "
+          "process your donation.", 'error')
+    return redirect(url_for('donations.index'))

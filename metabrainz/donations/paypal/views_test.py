@@ -1,6 +1,6 @@
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model.donation import Donation
-from flask import current_app
+from flask import current_app, url_for
 import views
 
 
@@ -23,9 +23,6 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
     def setUp(self):
         super(DonationsPayPalViewsTestCase, self).setUp()
         views.requests = FakeRequests()
-
-    def test_paypal(self):
-        self.assert200(self.client.get("/donations/paypal/"))
 
     def test_paypal_ipn(self):
         ipn_data = {
@@ -52,7 +49,7 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
             'option_name2': 'contact',
             'option_selection2': 'yes',
         }
-        resp = self.client.post("/donations/paypal/ipn", data=ipn_data)
+        resp = self.client.post(url_for('donations_paypal.ipn'), data=ipn_data)
         self.assert200(resp)
 
         # Donation should be in the DB now

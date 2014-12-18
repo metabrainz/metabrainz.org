@@ -5,6 +5,7 @@ Flask-SQLAlchemy == 2.0
 SQLAlchemy == 0.9.7
 psycopg2 == 2.5.4
 wepay == 0.3.0
+stripe == 1.19.1
 requests == 2.4.3
 reportlab == 3.1.8
 Fabric == 1.10.0

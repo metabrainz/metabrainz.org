@@ -3,6 +3,11 @@
 
 DEBUG = True  # set to False in production mode
 
+
+###########
+# DATABASES
+###########
+
 # Primary database
 # Example: "postgresql://metabrainz:metabrainz@localhost:5432/metabrainz"
 SQLALCHEMY_DATABASE_URI = "postgresql://<user>:<pass>@<host>:<port>/<db>"
@@ -10,12 +15,34 @@ SQLALCHEMY_DATABASE_URI = "postgresql://<user>:<pass>@<host>:<port>/<db>"
 # Database for testing
 TEST_SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz_test:metabrainz_test@localhost:5432/metabrainz_test"
 
-# Payments
-PAYMENT_PRODUCTION = False  # set to False to use testing environments in WePay and PayPal
-WEPAY_ACCESS_TOKEN = ""
+
+##########
+# PAYMENTS
+##########
+
+PAYMENT_PRODUCTION = False  # set to False to use testing environments for donations
+
+# WePay
+# https://www.wepay.com/developer/reference/account-id
 WEPAY_ACCOUNT_ID = ""
+# https://www.wepay.com/developer/reference/access-tokens
+WEPAY_ACCESS_TOKEN = ""
+
+# PayPal
 PAYPAL_PRIMARY_EMAIL = "paypal@metabrainz.org"
 PAYPAL_BUSINESS = "payment@metabrainz.org"
+
+# Stripe
+# https://stripe.com/docs/tutorials/dashboard#api-keys
+STRIPE_KEYS = {
+    "SECRET": "",
+    "PUBLISHABLE": "",
+}
+STRIPE_TEST_KEYS = {
+    "SECRET": "",
+    "PUBLISHABLE": "",
+}
+
 
 # reCAPTCHA (https://www.google.com/recaptcha/)
 RECAPTCHA_SITE_KEY = ""
@@ -33,6 +60,6 @@ SECRET_KEY = "CHANGE_THIS"
 USE_COMPILED_STYLING = not DEBUG
 
 # Mail server
-SMTP_SERVER = 'localhost'
+SMTP_SERVER = "localhost"
 SMTP_PORT = 25
 MAIL_FROM_DOMAIN = "metabrainz.org"
