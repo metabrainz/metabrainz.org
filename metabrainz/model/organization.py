@@ -1,6 +1,6 @@
 from metabrainz.model import db
 from metabrainz.model.admin_view import AdminView
-from metabrainz.model.donation import Donation
+from sqlalchemy.sql.expression import func
 from markdown import markdown
 
 
@@ -38,8 +38,8 @@ class Organization(db.Model):
         return cls.query.all()
 
     @classmethod
-    def get_featured(cls):
-        return cls.query.filter(cls.featured).all()
+    def get_featured(cls, limit=4):
+        return cls.query.filter(cls.featured).order_by(func.random()).limit(limit).all()
 
     def get_description_html(self):
         """Converts description text (Markdown) into HTML and returns it."""

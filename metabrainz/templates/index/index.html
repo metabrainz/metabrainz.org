@@ -23,21 +23,21 @@
     </div>
 
     <div id="projects" class="row">
-      <div class="col-md-6 with-img">
+      <div class="col-sm-6 with-img">
         <img src="{{ url_for('static', filename='img/logos/musicbrainz.png') }}" />
         <h3><a href="https://musicbrainz.org/">MusicBrainz</a></h3>
         <em>Open music encyclopedia that collects music metadata and makes it available to the public</em>
       </div>
-      <div class="col-md-6 with-img">
+      <div class="col-sm-6 with-img">
         <img src="{{ url_for('static', filename='img/logos/acousticbrainz.png') }}" />
         <h3><a href="http://acousticbrainz.org/">AcousticBrainz</a></h3>
         <em>Crowdsourced collection of acoustic information</em>
       </div>
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <h3><a href="https://critiquebrainz.org/">CritiqueBrainz</a></h3>
         <em>Repository for Creative Commons licensed music reviews</em>
       </div>
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <h3><a href="https://coverartarchive.org/">Cover Art Archive</a></h3>
         <em>Repository of music cover art that is freely and easily accessible</em>
       </div>
@@ -56,10 +56,10 @@
 
     <div id="featured-organizations" class="row">
       {% for org in featured_orgs %}
-        <div class="col-md-3">
+        <div class="col-sm-3">
         <span>
           {% if org.logo_url %}
-            <img src="{{ org.logo_url }}" class="img-responsive" />
+            <img src="{{ org.logo_url }}" />
           {% else %}
             {{ org.name }}
           {% endif %}
