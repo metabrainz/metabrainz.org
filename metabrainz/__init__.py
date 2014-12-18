@@ -8,9 +8,8 @@ def create_app():
     app.config.from_object('metabrainz.config')
 
     # Logging
-    if app.debug is False:
-        from metabrainz import loggers
-        loggers.add_email_handler(app)
+    from metabrainz import loggers
+    loggers.init_loggers(app)
 
     if app.debug:
         # Debug toolbar

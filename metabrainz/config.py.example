@@ -3,22 +3,21 @@
 
 DEBUG = True  # set to False in production mode
 
+SECRET_KEY = "CHANGE_THIS"
 
-###########
+
 # DATABASES
-###########
 
 # Primary database
-# Example: "postgresql://metabrainz:metabrainz@localhost:5432/metabrainz"
+# Example:
+# SQLALCHEMY_DATABASE_URI = "postgresql://mb:mb@localhost:5432/metabrainz"
 SQLALCHEMY_DATABASE_URI = "postgresql://<user>:<pass>@<host>:<port>/<db>"
 
 # Database for testing
 TEST_SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz_test:metabrainz_test@localhost:5432/metabrainz_test"
 
 
-##########
 # PAYMENTS
-##########
 
 PAYMENT_PRODUCTION = False  # set to False to use testing environments for donations
 
@@ -44,25 +43,34 @@ STRIPE_TEST_KEYS = {
 }
 
 
+# LOGGING
+
+#LOG_FILE_ENABLED = True
+#LOG_FILE = "server.log"
+
+#LOG_EMAIL_ENABLED = True
+#LOG_EMAIL_TOPIC = "MetaBrainz Website Failure"
+#LOG_EMAIL_RECIPIENTS = []  # Array with email addresses (strings)
+
+#LOG_SENTRY_ENABLED = True
+#SENTRY_DSN = ""
+
+
+# OTHER STUFF
+
 # reCAPTCHA (https://www.google.com/recaptcha/)
-RECAPTCHA_SITE_KEY = ""
-RECAPTCHA_SECRET_KEY = ""
+RECAPTCHA_PUBLIC_KEY = ""
+RECAPTCHA_PRIVATE_KEY = ""
 
-ADMIN_USERNAME = "CHANGE_THIS"
-ADMIN_PASSWORD = "CHANGE_THIS"
-
-# Logging
-# List of email addresses of people who will receive notifications about errors
-LOG_RECIPIENTS = ["tsukanovroman@gmail.com", ]
-LOG_EMAIL_TOPIC = "MetaBrainz Website Failure"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "admin"
 
 # Name and email address of the person who will receive notifications
+# about new organizations that sign up
 MANAGER_NAME = "Jonnie Doe"
 MANAGER_EMAIL = "jonnie@example.org"
 
-SECRET_KEY = "CHANGE_THIS"
-
-USE_COMPILED_STYLING = not DEBUG
+#USE_COMPILED_STYLING = True
 
 # Mail server
 SMTP_SERVER = "localhost"
