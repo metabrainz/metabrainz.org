@@ -1,5 +1,5 @@
 from __future__ import division
-from flask import Blueprint, request, render_template, url_for, redirect, current_app
+from flask import Blueprint, request, render_template, url_for, redirect, current_app, flash
 from metabrainz.model.donation import Donation
 from metabrainz.donations.forms import DonationForm
 from math import ceil
@@ -53,12 +53,16 @@ def nag_check(editor):
 @donations_bp.route('/complete', methods=['GET', 'POST'])
 def complete():
     """Endpoint for successful donations."""
-    return render_template('donations/results/complete.html')
+    flash("Thank you for making a donation to the MetaBrainz Foundation. Your "
+          "support is greatly appreciated!", 'success')
+    return redirect(url_for('donations.donors'))
 
 @donations_bp.route('/cancelled')
 def cancelled():
     """Endpoint for cancelled donations."""
-    return render_template('donations/results/cancelled.html')
+    flash("We're sorry to see that you won't be donating today. We hope that "
+          "you'll change your mind!")
+    return redirect(url_for('donations.index'))
 
 @donations_bp.route('/error')
 def error():
@@ -66,4 +70,6 @@ def error():
 
     Users should be redirected there when errors occur during payment process.
     """
-    return render_template('donations/results/error.html')
+    flash("We're sorry, but it appears we've run into an error and can't "
+          "process your donation.", 'error')
+    return redirect(url_for('donations.index'))
