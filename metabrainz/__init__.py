@@ -20,6 +20,10 @@ def create_app():
     from metabrainz.utils import reformat_datetime
     app.jinja_env.filters['datetime'] = reformat_datetime
 
+    # Error handling
+    from errors import init_error_handlers
+    init_error_handlers(app)
+
     # Blueprints
     from metabrainz.views import index_bp
     from metabrainz.reports.financial_reports.views import financial_reports_bp
