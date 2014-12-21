@@ -11,7 +11,7 @@ class SignUpForm(Form):
     logo_url = URLField("Logo image URL")
     api_url = URLField("API URL")
 
-    description = TextAreaField("How are you using our API?")
+    description = TextAreaField("How are you using our API?", validators=[DataRequired("Please, tell us how you (will) use our API.")])
 
     address_street = StringField("Street")
     address_city = StringField("City")
