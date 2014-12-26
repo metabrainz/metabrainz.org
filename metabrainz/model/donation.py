@@ -38,7 +38,7 @@ class Donation(db.Model):
 
     @classmethod
     def get_by_transaction_id(cls, transaction_id):
-        return cls.query.filter_by(transaction_id=transaction_id).first()
+        return cls.query.filter_by(transaction_id=str(transaction_id)).first()
 
     @staticmethod
     def get_nag_days(editor):
@@ -204,6 +204,12 @@ class Donation(db.Model):
 
         if details['state'] in ['settled', 'captured']:
             # Payment has been received
+
+            # Checking that txn_id has not been previously processed
+            if cls.get_by_transaction_id(details['checkout_id']) is not None:
+                current_app.logger.debug('WePay: Transaction ID %s has been used before.', details['checkout_id'])
+                return
+
             new_donation = cls(
                 first_name=details['payer_name'],
                 last_name='',
