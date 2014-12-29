@@ -58,9 +58,9 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div id="input-editor-fg" class="form-group">
           <div class="col-sm-offset-3 col-sm-6">
-            {{ form.editor(id="input-editor", class="form-control", placeholder="MusicBrainz username", data_toggle="tooltip", data_placement="bottom", title="Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you") | safe }}
+            {{ form.editor(id="input-editor", class="form-control", placeholder="MusicBrainz username", data_toggle="tooltip", data_placement="bottom") | safe }}
           </div>
         </div>
 
@@ -134,9 +134,49 @@
   <script src="https://checkout.stripe.com/checkout.js"></script>
   <script>
     $(document).ready(function () {
-      $(function () { $('[data-toggle="tooltip"]').tooltip() });
 
       var form = $("#donation-form");
+
+      // Editor input stuff
+      var editor = $("#input-editor");
+      function setEditorTooltip(text, state) {
+        editor.tooltip('destroy');
+        editor.tooltip({title: text});
+        var editorFormGroup = $("#input-editor-fg");
+        editorFormGroup.removeClass(function (index, css) {
+          return (css.match(/(^|\s)has-\S+/g) || []).join(' ');
+        });
+        if (editor !== null) {
+          editorFormGroup.addClass('has-' + state);
+        }
+      }
+      var defaultEditorTooltipText = "Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you";
+      setEditorTooltip(defaultEditorTooltipText, null);
+      editor.on('input', function () { setEditorTooltip(defaultEditorTooltipText, null); });
+      editor.change(function () {
+        var value = editor.val();
+        if (value.length == 0) {
+          setEditorTooltip(defaultEditorTooltipText, null);
+        } else {
+          $.ajax({
+            url: "{{ url_for('donations.check_editor') }}",
+            data: {q: value},
+            dataType: "json",
+            success: function (response) {
+              if (response.error) {
+                setEditorTooltip("MusicBrainz is currently unavailable. " +
+                "Please, make sure that your username is correct.", 'warning');
+              } else if (response.found == true && response.editor == value) {
+                setEditorTooltip("Your donation will be associated with this account.", 'success');
+              } else {
+                setEditorTooltip("We can't find this account. Please, make sure it's correct", 'error');
+              }
+            }
+          });
+        }
+      });
+
+
       var buttons = {
         stripe: $('#btn-stripe'),
         paypal: $('#btn-paypal'),
@@ -236,7 +276,7 @@
           $("#input-amount").attr('name', 'amount');
         }
 
-        $("#input-editor").attr('name', 'custom');
+        editor.attr('name', 'custom');
 
         $('<input>').attr({type: 'hidden', name: 'on0', value: 'contact'}).appendTo(form);
         $("#can-contact-flag").attr('name', 'os0');

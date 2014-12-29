@@ -1,8 +1,10 @@
 from __future__ import division
-from flask import Blueprint, request, render_template, url_for, redirect, current_app, flash
+from flask import Blueprint, request, render_template, url_for, redirect, current_app, flash, jsonify
 from metabrainz.model.donation import Donation
 from metabrainz.donations.forms import DonationForm
 from math import ceil
+import requests
+from requests.exceptions import RequestException
 
 donations_bp = Blueprint('donations', __name__)
 
@@ -46,6 +48,31 @@ def donors():
 def nag_check(editor):
     a, b = Donation.get_nag_days(editor)
     return '%s,%s\n' % (a, b)
+
+
+@donations_bp.route('/check-editor/')
+def check_editor():
+    """Endpoint for checking if editor exists."""
+    editor = request.args.get('q')
+    if editor is None:
+        return jsonify({'error': 'Editor not specified.'}), 400
+
+    try:
+        resp = requests.get('https://musicbrainz.org/ws/js/editor/?q=' + request.args.get('q')).json()
+    except RequestException as e:
+        return jsonify({'error': e})
+
+    found = False
+    for item in resp:
+        if 'name' in item:
+            if item['name'].lower() == editor.lower():
+                found = True
+                break
+
+    return jsonify({
+        'editor': editor,
+        'found': found,
+    })
 
 
 # DONATION RESULTS
