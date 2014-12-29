@@ -141,18 +141,18 @@
       var editor = $("#input-editor");
       function setEditorTooltip(text, state) {
         editor.tooltip('destroy');
-        editor.tooltip({title: text});        
+        editor.tooltip({title: text});
+        var editorFormGroup = $("#input-editor-fg");
+        editorFormGroup.removeClass(function (index, css) {
+          return (css.match(/(^|\s)has-\S+/g) || []).join(' ');
+        });
         if (editor !== null) {
-          $("#input-editor-fg").addClass('has-' + state);
+          editorFormGroup.addClass('has-' + state);
         }
       }
       var defaultEditorTooltipText = "Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you";
       setEditorTooltip(defaultEditorTooltipText, null);
-      editor.on('input', function () {
-        $("#input-editor-fg").removeClass(function (index, css) {
-          return (css.match(/(^|\s)has-\S+/g) || []).join(' ');
-        });
-      });
+      editor.on('input', function () { setEditorTooltip(defaultEditorTooltipText, null); });
       editor.change(function () {
         var value = editor.val();
         if (value.length == 0) {
