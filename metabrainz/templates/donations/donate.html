@@ -23,7 +23,7 @@
       for MetaBrainz employees working on MusicBrainz.
     </p>
 
-    <p>Where has my contribution gone? See our<a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>
+    <p>Where has my contribution gone? See our <a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>
     <p>Who else is contributing? See our list of <a href="{{ url_for('donations.donors') }}">donors</a>.</p>
 
     {% if config.PAYMENT_PRODUCTION != True %}
@@ -38,12 +38,17 @@
       <form id="donation-form" method="POST" class="panel-body form-horizontal" role="form">
         {{ form.hidden_tag() }}
 
-        <div id="amount-group" class="form-group">
+        <div class="form-group">
           <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">Amount</label>
           <div class="col-sm-4">
-            <div class="input-group">
+            <div id="input-amount-fg" class="input-group">
               <span class="input-group-addon">$</span>
               {{ form.amount(id="input-amount", class="form-control", value="50.00") | safe }}</div>
+          </div>
+          <div id="big-amount-info" class="col-sm-offset-3 col-sm-6" style="display:none">
+            If you would like to make a large donation, please contact us at
+            <a href="mailto:donations@metabrainz.org">donations@metabrainz.org</a>
+            before you do.
           </div>
         </div>
 
@@ -85,15 +90,19 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div id="buttons" class="form-group">
           <div class="col-sm-offset-3 col-sm-6">
-            <button id="btn-stripe" type="button" class="btn">Donate with Card</button>
-            <button id="btn-paypal" type="button" class="btn">
-              <img src="{{ url_for('static', filename='img/donations/paypal.svg') }}" />
-            </button>
-            <button id="btn-wepay" type="button" class="btn">
-              <img src="{{ url_for('static', filename='img/donations/wepay.png') }}" />
-            </button>
+            <div class="btn-row">
+              <button id="btn-stripe" type="button" class="btn">Donate with Credit Card</button>
+            </div>
+            <div class="btn-row">
+              <button id="btn-paypal" type="button" class="btn">
+                <img src="{{ url_for('static', filename='img/donations/paypal.svg') }}" />
+              </button>
+              <button id="btn-wepay" type="button" class="btn">
+                <img src="{{ url_for('static', filename='img/donations/wepay.png') }}" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -137,12 +146,59 @@
 
       var form = $("#donation-form");
 
-      // Editor input stuff
+
+      ///////////////////
+      // DONATION BUTTONS
+      ///////////////////
+
+      var buttons = {
+        stripe: $('#btn-stripe'),
+        paypal: $('#btn-paypal'),
+        wepay: $('#btn-wepay')
+      };
+
+      function setButtonsState(enabled) {
+        if (enabled === true) {
+          $.each(buttons, function( index, button ) {
+            button.removeAttr('disabled');
+          });
+          updateRecurringState();
+
+        } else { // Disabled
+          $.each(buttons, function( index, button ) {
+            button.attr('disabled', 'disabled');
+          });
+        }
+      }
+
+
+      ///////////////
+      // AMOUNT INPUT
+      ///////////////
+      var MAX_AMOUNT = 900000;
+      var amount = $("#input-amount");
+      var bigAmountInfo = $("#big-amount-info");
+      amount.on('input', function () {
+        var value = amount.val();
+        if (value > MAX_AMOUNT) {
+          bigAmountInfo.show();
+          setButtonsState(false);
+        } else {
+          bigAmountInfo.hide();
+          setButtonsState(true);
+        }
+      });
+
+
+      ///////////////
+      // EDITOR INPUT
+      ///////////////
       var editor = $("#input-editor");
+      var editorFormGroup = $("#input-editor-fg");
+
       function setEditorTooltip(text, state) {
         editor.tooltip('destroy');
         editor.tooltip({title: text});
-        var editorFormGroup = $("#input-editor-fg");
         editorFormGroup.removeClass(function (index, css) {
           return (css.match(/(^|\s)has-\S+/g) || []).join(' ');
         });
@@ -150,8 +206,10 @@
           editorFormGroup.addClass('has-' + state);
         }
       }
+
       var defaultEditorTooltipText = "Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you";
       setEditorTooltip(defaultEditorTooltipText, null);
+
       editor.on('input', function () { setEditorTooltip(defaultEditorTooltipText, null); });
       editor.change(function () {
         var value = editor.val();
@@ -177,25 +235,9 @@
       });
 
 
-      var buttons = {
-        stripe: $('#btn-stripe'),
-        paypal: $('#btn-paypal'),
-        wepay: $('#btn-wepay')
-      };
-
-      function setButtonsState(enabled) {
-        if (enabled === true) {
-          $.each(buttons, function( index, button ) {
-            button.removeAttr('disabled');
-          });
-          updateRecurringState();
-
-        } else { // Disabled
-          $.each(buttons, function( index, button ) {
-            button.attr('disabled', 'disabled');
-          });
-        }
-      }
+      ///////////
+      // PAYMENTS
+      ///////////
 
       function updateRecurringState() {
         // We don't support recurring donations via Stripe
@@ -232,7 +274,7 @@
       buttons.stripe.on('click', function(e) {
         setButtonsState(false);
         stripeHandler.open({
-          amount: $("#input-amount").val() * 100 // cents
+          amount: amount.val() * 100 // cents
         });
         e.preventDefault();
       });
@@ -271,9 +313,9 @@
 
         {# Reconfiguring inputs for PayPal #}
         if ($('#recurring-flag').is(":checked")) { // Recurring donations
-          $("#input-amount").attr('name', 'a3');
+          amount.attr('name', 'a3');
         } else {  // One-time donation
-          $("#input-amount").attr('name', 'amount');
+          amount.attr('name', 'amount');
         }
 
         editor.attr('name', 'custom');
