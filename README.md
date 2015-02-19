@@ -54,7 +54,8 @@ reachable from payment processors.
 If you want to do development you should use instructions above. It is much
 easier way to start.
 
-For more detailed installation instructions see INSTALL.md file.
+For more detailed installation instructions see [INSTALL.md](https://github.com/metabrainz/metabrainz.org/blob/master/INSTALL.md)
+file.
 
 ## Community
 
