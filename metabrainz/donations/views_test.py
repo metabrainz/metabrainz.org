@@ -12,11 +12,15 @@ class DonationsViewsTestCase(FlaskTestCase):
         self.assert200(response)
 
     def test_complete(self):
-        self.assert200(self.client.get(url_for('donations.complete')))
-        self.assert200(self.client.post(url_for('donations.complete')))
+        response = self.client.get(url_for('donations.complete'))
+        self.assertStatus(response, 302)
+        response = self.client.post(url_for('donations.complete'))
+        self.assertStatus(response, 302)
 
     def test_cancelled(self):
-        self.assert200(self.client.get(url_for('donations.cancelled')))
+        response = self.client.get(url_for('donations.cancelled'))
+        self.assertStatus(response, 302)
 
     def test_error(self):
-        self.assert200(self.client.get(url_for('donations.error')))
+        response = self.client.get(url_for('donations.error'))
+        self.assertStatus(response, 302)
