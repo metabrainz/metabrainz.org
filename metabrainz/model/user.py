@@ -60,6 +60,8 @@ class User(db.Model, UserMixin):
             tier_id=kwargs.pop('tier_id', None),
             payment_method=kwargs.pop('payment_method', None),
         )
+        if kwargs:
+            raise TypeError('Unexpected **kwargs: %r' % kwargs)
         db.session.add(new_user)
         db.session.commit()
         return new_user
