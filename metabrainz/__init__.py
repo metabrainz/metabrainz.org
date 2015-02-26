@@ -21,6 +21,12 @@ def create_app():
     from metabrainz.model import db
     db.init_app(app)
 
+    # MusicBrainz OAuth
+    from metabrainz.users import login_manager, musicbrainz_login
+    login_manager.init_app(app)
+    musicbrainz_login.init(app.config['MUSICBRAINZ_CLIENT_ID'],
+                           app.config['MUSICBRAINZ_CLIENT_SECRET'])
+
     from metabrainz.utils import reformat_datetime
     app.jinja_env.filters['datetime'] = reformat_datetime
 
@@ -32,7 +38,7 @@ def create_app():
     from metabrainz.views import index_bp
     from metabrainz.reports.financial_reports.views import financial_reports_bp
     from metabrainz.reports.annual_reports.views import annual_reports_bp
-    from metabrainz.customers.views import customers_bp
+    from metabrainz.users.views import users_bp
     from metabrainz.donations.views import donations_bp
     from metabrainz.donations.paypal.views import donations_paypal_bp
     from metabrainz.donations.wepay.views import donations_wepay_bp
@@ -41,7 +47,7 @@ def create_app():
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
-    app.register_blueprint(customers_bp, url_prefix='/customers')
+    app.register_blueprint(users_bp, url_prefix='/users')
     app.register_blueprint(donations_bp, url_prefix='/donate')
     app.register_blueprint(donations_paypal_bp, url_prefix='/donations/paypal')
     app.register_blueprint(donations_wepay_bp, url_prefix='/donations/wepay')
@@ -52,11 +58,11 @@ def create_app():
     admin = Admin(app, name='BDFLs only!')
 
     from metabrainz.model.tier import TierAdminView
-    from metabrainz.model.organization import OrganizationAdminView
+    from metabrainz.model.user import UserAdminView
     from metabrainz.model.donation import DonationAdminView
 
     admin.add_view(TierAdminView(db.session))
-    admin.add_view(OrganizationAdminView(db.session))
+    admin.add_view(UserAdminView(db.session))
     admin.add_view(DonationAdminView(db.session))
 
     return app

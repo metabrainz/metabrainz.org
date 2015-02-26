@@ -1,10 +1,10 @@
 from metabrainz.model import db
 from metabrainz.model.admin_view import AdminView
-from metabrainz.model.organization import Organization
+from metabrainz.model.user import User
 
 
 class Tier(db.Model):
-    """This model defines tier of support that people can sign up to."""
+    """This model defines tier of support that commercial users can sign up to."""
     __tablename__ = 'tier'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -12,22 +12,22 @@ class Tier(db.Model):
     short_desc = db.Column(db.Unicode)
     long_desc = db.Column(db.Unicode)
     price = db.Column(db.Numeric(11, 2), nullable=False)  # per month
-    available = db.Column(db.Boolean, nullable=False, default=False)  # Indicates if orgs can sign up to that on their own
+
+    # Indicates if orgs can sign up to that on their own
+    available = db.Column(db.Boolean, nullable=False, default=False)
 
     # Primary tiers are shown on the signup page. Secondary plans (along with
     # repeating primary plans) are listed on the "view all tiers" page that
     # lists everything.
     primary = db.Column(db.Boolean, nullable=False, default=False)
 
-    organizations = db.relationship(Organization, backref='tier',
-                                    order_by=Organization.name,
-                                    lazy="dynamic")
+    organizations = db.relationship("User", backref='tier', lazy="dynamic")
 
     def __unicode__(self):
         return self.name
 
     @classmethod
-    def get_tier(cls, id):
+    def get(cls, id):
         return cls.query.filter(cls.id == id).first()
 
     @classmethod
@@ -35,8 +35,13 @@ class Tier(db.Model):
         """Returns list of all tiers sorted by price."""
         return cls.query.order_by(cls.price).all()
 
+    @classmethod
+    def get_available(cls):
+        """Returns list of tiers that are available for sign up."""
+        return cls.query.filter(cls.available == True).all()
+
     def get_featured_orgs(self):
-        return self.organizations.filter(Organization.featured == True).all()
+        return self.organizations.filter(User.featured == True).all()
 
 
 class TierAdminView(AdminView):

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign up - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1>Sign up</h1>
+
+  First you need to log in with your MusicBrainz account.
+  <a href="{{ url_for('users.musicbrainz', next=request.args.get('next')) }}">Go!</a>
+{% endblock %}

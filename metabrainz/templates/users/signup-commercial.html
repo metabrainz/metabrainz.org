@@ -3,12 +3,7 @@
 {% block title %}Sign up - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1>Sign up</h1>
-
-  <p><em class="text-muted">
-    This form is meant for organizations that use our projects. If you want to
-    donate, please go to <a href="{{ url_for('donations.index') }}">donations page</a>.
-  </em></p>
+  <h1>Sign up <small>Commercial</small></h1>
 
   {% for field in form.errors %}
     {% for error in form.errors[field] %}

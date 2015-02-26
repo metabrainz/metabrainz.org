@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign up - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1>Select account type</h1>
+
+  <a href="{{ url_for('users.signup_tier_selection') }}">Commercial</a>
+  <br /><a href="{{ url_for('users.signup_non_commercial') }}">Non-commercial</a>
+
+{% endblock %}

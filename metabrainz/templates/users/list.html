@@ -9,7 +9,7 @@
 
   <p><b>
     You can sign up to one of the tiers listed below at
-    <a href="{{ url_for('customers.tiers') }}">the tiers page</a>.
+    <a href="{{ url_for('users.tiers') }}">the tiers page</a>.
   </b></p>
 
   <p>
@@ -30,17 +30,17 @@
             <td>
               {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}
                 {% if org.logo_url %}
-                  <img src="{{ org.logo_url }}"/>
+                  <img src="{{ org.org_logo_url }}"/>
                 {% else %}
                   {{ org.name }}
                 {% endif %}
               {% if org.website_url %}</a>{% endif %}
             </td>
             <td>
-              {{ org.get_description_html()|safe }}
+              {{ org.description }}
               {% if not org.good_standing %}
                 <p class="text-danger">
-                  <em>This organization has a <a href="{{ url_for('customers.bad_standing') }}">bad standing</a>.</em>
+                  <em>This organization has a <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
                 </p>
               {% endif %}
             </td>
@@ -49,7 +49,7 @@
 
       </table>
 
-      <p><em><a href="{{ url_for('customers.tier', tier_id=tier.id) }}">
+      <p><em><a href="{{ url_for('users.tier', tier_id=tier.id) }}">
         View {{ 'other organizations and ' if tier.organizations.count() > feautred_orgs|length }}additional info about this tier
       </a></em></p>
     {% endif %}
