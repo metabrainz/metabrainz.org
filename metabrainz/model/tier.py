@@ -27,8 +27,8 @@ class Tier(db.Model):
         return self.name
 
     @classmethod
-    def get(cls, id):
-        return cls.query.filter(cls.id == id).first()
+    def get(cls, **kwargs):
+        return cls.query.filter_by(**kwargs).first()
 
     @classmethod
     def get_all(cls):
