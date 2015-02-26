@@ -28,7 +28,7 @@ def tiers():
 
 @users_bp.route('/tiers/<tier_id>')
 def tier(tier_id):
-    t = Tier.get(tier_id)
+    t = Tier.get(id=tier_id)
     if t is None:
         raise NotFound("Can't find tier with a specified ID.")
     return render_template('users/tier.html', tier=t)
@@ -68,7 +68,7 @@ def signup_commercial():
     if not tier_id:
         flash.warn("You need to choose support tier before signing up!")
         return redirect(url_for('.signup_tier_selection'))
-    tier = Tier.get(tier_id)
+    tier = Tier.get(id=tier_id)
     if not tier:
         flash.error("You need to choose existing support tier before signing up!")
         return redirect(url_for(".signup_tier_selection"))
