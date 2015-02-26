@@ -13,7 +13,7 @@ class Tier(db.Model):
     long_desc = db.Column(db.Unicode)
     price = db.Column(db.Numeric(11, 2), nullable=False)  # per month
 
-    # Indicates if orgs can sign up to that on their own
+    # Indicates if users can sign up to that on their own
     available = db.Column(db.Boolean, nullable=False, default=False)
 
     # Primary tiers are shown on the signup page. Secondary plans (along with

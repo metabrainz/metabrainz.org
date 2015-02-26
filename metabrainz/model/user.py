@@ -5,7 +5,6 @@ from flask_login import UserMixin
 
 
 class User(db.Model, UserMixin):
-    # TODO: Write docstring explaining who's a user.
     __tablename__ = 'user'
 
     # Common columns used by both commercial and non-commercial users:
