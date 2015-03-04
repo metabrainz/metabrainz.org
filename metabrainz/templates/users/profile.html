@@ -15,31 +15,39 @@
     </span>
   </p>
 
-  <h2>Access token</h2>
-  <p>
-    <code id="token">{{ current_user.token.value }}</code>
-    <a id="btn-generate-token" class="btn btn-default btn-xs" href="#" role="button">Generate new token</a>
-  </p>
+  {% if current_user.state == 'active' %}
+    <h2>Access token</h2>
+    <p>
+      <code id="token">{{ current_user.token.value }}</code>
+      <a id="btn-generate-token" class="btn btn-default btn-xs" href="#" role="button">Generate new token</a>
+    </p>
+    <p class="text-muted" style="font-style: italic;">
+      This access token should be considered private. Don't check this token
+      into any publicly visible version control systems and similar places.
+      If token has been exposed, you should immediately generate a new one!
+    </p>
+  {% endif %}
 {% endblock %}
 
 {% block scripts %}
   {{ super() }}
-  <script>
-    $(document).ready(function() {
-      var token = $("#token");
+  {% if current_user.state == 'active' %}
+    <script>
+      $(document).ready(function () {
+        var token = $("#token");
 
-      $("#btn-generate-token").click(function(){
-        if (confirm('Are you sure you want to generate new access token?\n' +
-                    'Current token will be revoked!')) {
-          $.ajax({
-            type: "POST",
-            url: "{{ url_for('users.regenerate_token') }}",
-            success: function(data) { token.html(data.token); },
-            error: function() { alert('Failed to generate new access token!') }
-          });
-        }
+        $("#btn-generate-token").click(function () {
+          if (confirm('Are you sure you want to generate new access token?\n' +
+                      'Current token will be revoked!')) {
+            $.ajax({
+              type: "POST",
+              url: "{{ url_for('users.regenerate_token') }}",
+              success: function (data) { token.html(data.token); },
+              error: function () { alert('Failed to generate new access token!'); }
+            });
+          }
+        });
       });
-
-    });
-  </script>
+    </script>
+  {% endif %}
 {% endblock %}
