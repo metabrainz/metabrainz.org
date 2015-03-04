@@ -1,16 +1,31 @@
 from metabrainz.model import db
 from metabrainz.model.admin_view import AdminView
+from metabrainz.model.token import Token
 from sqlalchemy.sql.expression import func
+from sqlalchemy.dialects import postgres
 from flask_login import UserMixin
 
 
+STATE_ACTIVE = "active"
+STATE_PENDING = "pending"
+STATE_REJECTED = "rejected"
+
+
 class User(db.Model, UserMixin):
+    """User model is used for users of MetaBrainz services like Live Data Feed.
+
+    Users are ether commercial or non-commercial (see `is_commercial`). Their access to the API is
+    determined by their `state` (active, pending, or rejected). All non-commercial users have
+    active state by default, but commercial users need to be approved by one of the admins first.
+    """
     __tablename__ = 'user'
 
     # Common columns used by both commercial and non-commercial users:
     id = db.Column(db.Integer, primary_key=True)
     is_commercial = db.Column(db.Boolean, nullable=False)
     musicbrainz_id = db.Column(db.Unicode, unique=True)  # MusicBrainz account that manages this user
+    state = db.Column(postgres.ENUM(STATE_ACTIVE, STATE_PENDING, STATE_REJECTED, name='state_types'),
+                      nullable=False)
     contact_name = db.Column(db.Unicode, nullable=False)
     contact_email = db.Column(db.Unicode, nullable=False)
     description = db.Column(db.Unicode)  # Description of how data is being used by this user
@@ -33,8 +48,11 @@ class User(db.Model, UserMixin):
     is_approved = db.Column(db.Boolean, nullable=False, default=False)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __unicode__(self):
-        return self.name
+    tokens = db.relationship("Token", backref='user', lazy="dynamic")
+
+    @property
+    def token(self):
+        return Token.get(owner=self.id, is_active=True)
 
     @classmethod
     def add(cls, **kwargs):
@@ -59,10 +77,15 @@ class User(db.Model, UserMixin):
             tier_id=kwargs.pop('tier_id', None),
             payment_method=kwargs.pop('payment_method', None),
         )
+        new_user.state = STATE_ACTIVE if not new_user.is_commercial else STATE_PENDING
         if kwargs:
             raise TypeError('Unexpected **kwargs: %r' % kwargs)
         db.session.add(new_user)
         db.session.commit()
+
+        if not new_user.is_commercial:
+            new_user.generate_token()
+
         return new_user
 
     @classmethod
@@ -77,6 +100,17 @@ class User(db.Model, UserMixin):
     @classmethod
     def get_featured(cls, limit=4):
         return cls.query.filter(cls.featured).order_by(func.random()).limit(limit).all()
+
+    def generate_token(self):
+        """Generates new access token for this user."""
+        if self.state == STATE_ACTIVE:
+            return Token.generate_token(self.id)
+        else:
+            raise InactiveUserException
+
+
+class InactiveUserException(Exception):
+    pass
 
 
 class UserAdminView(AdminView):
@@ -98,12 +132,15 @@ class UserAdminView(AdminView):
     column_descriptions = dict(
         description='How organization uses MetaBrainz projects',
     )
-    column_list = ('is_commercial', 'musicbrainz_id', 'org_name', 'tier', 'featured', 'good_standing')
+    column_list = (
+        'is_commercial', 'musicbrainz_id', 'org_name', 'tier', 'featured',
+        'good_standing', 'state',
+    )
     form_columns = (
         'org_name', 'tier', 'good_standing', 'featured', 'org_logo_url', 'website_url',
         'description', 'api_url', 'contact_name', 'contact_email', 'address_street',
         'address_city', 'address_state', 'address_postcode', 'address_country',
-        'is_commercial', 'musicbrainz_id',
+        'is_commercial', 'musicbrainz_id', 'state',
     )
 
     def __init__(self, session, **kwargs):

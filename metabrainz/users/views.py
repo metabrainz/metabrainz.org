@@ -1,8 +1,8 @@
-from flask import Blueprint, request, redirect, render_template, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask import Blueprint, request, redirect, render_template, url_for, jsonify
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 from metabrainz.model.tier import Tier
-from metabrainz.model.user import User
+from metabrainz.model.user import User, InactiveUserException
 from metabrainz.users import musicbrainz_login, login_forbidden
 from metabrainz.users.forms import UserSignUpForm, CommercialSignUpForm
 from metabrainz.users.notifications import send_user_signup_notification
@@ -165,6 +165,15 @@ def musicbrainz_post():
 @login_required
 def profile():
     return render_template("users/profile.html")
+
+
+@users_bp.route('/profile/regenerate-token', methods=['POST'])
+@login_required
+def regenerate_token():
+    try:
+        return jsonify({'token': current_user.generate_token()})
+    except InactiveUserException:
+        raise BadRequest("Can't generate new token unless account is active.")
 
 
 @users_bp.route('/login/')

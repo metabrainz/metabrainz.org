@@ -5,5 +5,41 @@
 {% block content %}
   <h1>Profile</h1>
 
-  {# TODO: Implement. #}
+  <p>
+    <strong>State:</strong>
+    <span class="{{ 'text-success' if current_user.state == 'active'   else
+                    'text-danger'  if current_user.state == 'rejected' else
+                    'text-primary' if current_user.state == 'pending'  else
+                    'text-warning' }}">
+        {{ current_user.state|upper }}
+    </span>
+  </p>
+
+  <h2>Access token</h2>
+  <p>
+    <code id="token">{{ current_user.token.value }}</code>
+    <a id="btn-generate-token" class="btn btn-default btn-xs" href="#" role="button">Generate new token</a>
+  </p>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    $(document).ready(function() {
+      var token = $("#token");
+
+      $("#btn-generate-token").click(function(){
+        if (confirm('Are you sure you want to generate new access token?\n' +
+                    'Current token will be revoked!')) {
+          $.ajax({
+            type: "POST",
+            url: "{{ url_for('users.regenerate_token') }}",
+            success: function(data) { token.html(data.token); },
+            error: function() { alert('Failed to generate new access token!') }
+          });
+        }
+      });
+
+    });
+  </script>
 {% endblock %}
