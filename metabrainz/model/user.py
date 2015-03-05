@@ -145,3 +145,7 @@ class UserAdminView(AdminView):
 
     def __init__(self, session, **kwargs):
         super(UserAdminView, self).__init__(User, session, name='Users', **kwargs)
+
+    def after_model_change(self, form, user, is_created):
+        if user.state != STATE_ACTIVE:
+            Token.revoke_tokens(user.id)
