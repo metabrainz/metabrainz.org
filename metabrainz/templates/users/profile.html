@@ -18,7 +18,7 @@
   {% if current_user.state == 'active' %}
     <h2>Access token</h2>
     <p>
-      <code id="token">{{ current_user.token.value }}</code>
+      <code id="token" style="margin-right:4px; {{ 'display:none;' if not current_user.token }}">{{ current_user.token.value }}</code>
       <a id="btn-generate-token" class="btn btn-default btn-xs" href="#" role="button">Generate new token</a>
     </p>
     <p class="text-muted" style="font-style: italic;">
@@ -35,14 +35,20 @@
     <script>
       $(document).ready(function () {
         var token = $("#token");
+        {# Not showing confirmation dialog if there's no active token. #}
+        var ignoreConfirmation = {{ 'false' if current_user.token else 'true' }};
 
         $("#btn-generate-token").click(function () {
-          if (confirm('Are you sure you want to generate new access token?\n' +
-                      'Current token will be revoked!')) {
+          if (ignoreConfirmation || confirm('Are you sure you want to generate new access token?\n' +
+                                            'Current token will be revoked!')) {
             $.ajax({
               type: "POST",
               url: "{{ url_for('users.regenerate_token') }}",
-              success: function (data) { token.html(data.token); },
+              success: function (data) {
+                token.html(data.token);
+                token.show();
+                ignoreConfirmation = true;
+              },
               error: function () { alert('Failed to generate new access token!'); }
             });
           }
