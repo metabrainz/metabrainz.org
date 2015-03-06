@@ -4,7 +4,7 @@ from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
 from metabrainz.users import musicbrainz_login, login_forbidden
-from metabrainz.users.forms import UserSignUpForm, CommercialSignUpForm
+from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm
 from metabrainz.users.notifications import send_user_signup_notification
 from metabrainz import flash, session
 
@@ -124,7 +124,7 @@ def signup_non_commercial():
         return render_template('users/signup.html')
     mb_email = session.fetch_data('mb_email')
 
-    form = UserSignUpForm(default_email=mb_email)
+    form = NonCommercialSignUpForm(default_email=mb_email)
     if form.validate_on_submit():
         new_user = User.add(
             is_commercial=False,

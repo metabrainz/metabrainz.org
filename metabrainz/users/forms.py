@@ -1,5 +1,5 @@
 from flask_wtf import Form, RecaptchaField
-from wtforms import StringField, TextAreaField, RadioField
+from wtforms import StringField, TextAreaField, RadioField, BooleanField
 from wtforms.fields.html5 import EmailField, URLField
 from wtforms.validators import DataRequired
 
@@ -14,7 +14,6 @@ class UserSignUpForm(Form):
     contact_email = EmailField(validators=[DataRequired("Email address is required!")])
     description = TextAreaField("How are you using our data?",
                                 validators=[DataRequired("Please, tell us how you (will) use our data.")])
-    # TODO: Add agreement field.
     recaptcha = RecaptchaField()
 
     def __init__(self, default_email=None, **kwargs):
@@ -22,8 +21,13 @@ class UserSignUpForm(Form):
         Form.__init__(self, **kwargs)
 
 
+class NonCommercialSignUpForm(UserSignUpForm):
+    """Sign up form for non-commercial users."""
+    agreement = BooleanField(validators=[DataRequired(message="You need to accept the agreement!")])
+
+
 class CommercialSignUpForm(UserSignUpForm):
-    """Sign up form specifically for commercial users."""
+    """Sign up form for commercial users."""
     org_name = StringField("Organization name", validators=[DataRequired("You need to specify the name of your organization.")])
 
     website_url = URLField("Website URL", validators=[DataRequired("You need to specify website of the organization.")])
