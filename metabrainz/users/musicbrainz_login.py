@@ -20,14 +20,18 @@ def init(client_id, client_secret):
 
 
 def get_user(authorization_code):
-    """Fetches current user's MusicBrainz ID."""
+    """Fetches info about current user.
+
+    Returns:
+        MusicBrainz username and email address.
+    """
     s = _musicbrainz_service.get_auth_session(data={
         'code': authorization_code,
         'grant_type': 'authorization_code',
         'redirect_uri': url_for('users.musicbrainz_post', _external=True)
     }, decoder=json.loads)
     data = s.get('oauth2/userinfo').json()
-    return data.get('sub')
+    return data.get('sub'), data.get('email')
 
 
 def get_authentication_uri():
@@ -37,7 +41,7 @@ def get_authentication_uri():
     params = {
         'response_type': 'code',
         'redirect_uri': url_for('users.musicbrainz_post', _external=True),
-        'scope': 'profile',
+        'scope': 'profile email',
         'state': csrf,
     }
     return _musicbrainz_service.get_authorize_url(**params)

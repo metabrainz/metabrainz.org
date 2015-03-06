@@ -77,12 +77,15 @@ def signup_commercial():
                     "contact us if you want to do that.")
         return redirect(url_for('.tier', tier_id=tier_id))
 
-    form = CommercialSignUpForm()
+
+    mb_username = session.fetch_data('mb_username')
+    if not mb_username:
+        flash.warn("You need to sign in with your MusicBrainz account first!")
+        return render_template('users/signup.html')
+    mb_email = session.fetch_data('mb_email')
+
+    form = CommercialSignUpForm(default_email=mb_email)
     if form.validate_on_submit():
-        mb_username = session.fetch_data('mb_username')
-        if not mb_username:
-            flash.warn("You need to sign in with your MusicBrainz account first!")
-            return render_template('users/signup.html')
         new_user = User.add(
             is_commercial=True,
             musicbrainz_id=mb_username,
@@ -115,12 +118,14 @@ def signup_commercial():
 @login_forbidden
 def signup_non_commercial():
     """Sign up endpoint for non-commercial users."""
-    form = UserSignUpForm()
+    mb_username = session.fetch_data('mb_username')
+    if not mb_username:
+        flash.warn("You need to sign in with your MusicBrainz account first!")
+        return render_template('users/signup.html')
+    mb_email = session.fetch_data('mb_email')
+
+    form = UserSignUpForm(default_email=mb_email)
     if form.validate_on_submit():
-        mb_username = session.fetch_data('mb_username')
-        if not mb_username:
-            flash.warn("You need to sign in with your MusicBrainz account first!")
-            return render_template('users/signup.html')
         new_user = User.add(
             is_commercial=False,
             musicbrainz_id=mb_username,
@@ -150,8 +155,8 @@ def musicbrainz_post():
     code = request.args.get('code')
     if not code:
         raise InternalServerError("Authorization code is missing!")
-    mb_username = musicbrainz_login.get_user(code)
-    session.persist_data(mb_username=mb_username)
+    mb_username, mb_email = musicbrainz_login.get_user(code)
+    session.persist_data(mb_username=mb_username, mb_email=mb_email)
     user = User.get(musicbrainz_id=mb_username)
     if user:  # Checking if user is already signed up
         login_user(user)
