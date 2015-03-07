@@ -83,9 +83,6 @@ class User(db.Model, UserMixin):
         db.session.add(new_user)
         db.session.commit()
 
-        if not new_user.is_commercial:
-            new_user.generate_token()
-
         return new_user
 
     @classmethod
