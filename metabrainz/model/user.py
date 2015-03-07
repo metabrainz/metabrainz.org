@@ -40,7 +40,7 @@ class User(db.Model, UserMixin):
     address_state = db.Column(db.Unicode)
     address_postcode = db.Column(db.Unicode)
     address_country = db.Column(db.Unicode)
-    tier_id = db.Column(db.Integer, db.ForeignKey('tier.id'))
+    tier_id = db.Column(db.Integer, db.ForeignKey('tier.id', ondelete="SET NULL", onupdate="CASCADE"))
     payment_method = db.Column(db.Unicode)
 
     # Administrative columns:
