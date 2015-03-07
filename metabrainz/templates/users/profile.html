@@ -50,7 +50,7 @@
               success: function (data) {
                 token.html(data.token);
                 token.show();
-                ignoreConfirmation = true;
+                ignoreConfirmation = false;
               },
               error: function () { alert('Failed to generate new access token!'); }
             });
