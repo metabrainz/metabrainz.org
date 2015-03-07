@@ -6,6 +6,9 @@
   <h1>Profile</h1>
 
   <p>
+    <strong>Type:</strong>
+    {{ 'Commercial' if current_user.is_commercial else 'Non-commercial' }}
+    <br />
     <strong>State:</strong>
     <span class="{{ 'text-success' if current_user.state == 'active'   else
                     'text-danger'  if current_user.state == 'rejected' else
