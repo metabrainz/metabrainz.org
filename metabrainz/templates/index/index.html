@@ -23,10 +23,15 @@
     </div>
 
     <div id="projects" class="row">
-      <div class="col-sm-6 with-img">
+      <div class="col-sm-offset-3 col-sm-6 with-img">
         <img src="{{ url_for('static', filename='img/logos/musicbrainz.png') }}" />
         <h3><a href="https://musicbrainz.org/">MusicBrainz</a></h3>
         <em>Open music encyclopedia that collects music metadata and makes it available to the public</em>
+      </div>
+      <div class="col-sm-6 with-img">
+        <img src="{{ url_for('static', filename='img/logos/picard.png') }}" />
+        <h3><a href="http://picard.musicbrainz.org/">Picard</a></h3>
+        <em>Cross-platform music tagger</em>
       </div>
       <div class="col-sm-6 with-img">
         <img src="{{ url_for('static', filename='img/logos/acousticbrainz.png') }}" />
