@@ -2,7 +2,7 @@ from metabrainz.testing import FlaskTestCase
 from flask import url_for
 
 
-class CustomersViewsTestCase(FlaskTestCase):
+class UsersViewsTestCase(FlaskTestCase):
 
     def test_index(self):
         self.assert200(self.client.get(url_for('users.index')))
