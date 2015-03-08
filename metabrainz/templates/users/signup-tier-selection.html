@@ -3,12 +3,12 @@
 {% block title %}Sign up - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-<h1>Select tier</h1>
+  <h1>Sign up <small>Commercial</small></h1>
 
-<ul>
-  {% for tier in tiers %}
-    <li><a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}">{{ tier }}</a></li>
-  {% endfor %}
-</ul>
-
+  <h3>Select tier</h3>
+  <ul>
+    {% for tier in tiers %}
+      <li><a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}">{{ tier }}</a></li>
+    {% endfor %}
+  </ul>
 {% endblock %}

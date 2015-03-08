@@ -5,6 +5,10 @@
 {% block content %}
   <h1>Sign up</h1>
 
-  First you need to log in with your MusicBrainz account.
-  <a href="{{ url_for('users.musicbrainz', next=request.args.get('next')) }}">Go!</a>
+  <p>To sign up you need to have a <a href="https://musicbrainz.org/">MusicBrainz</a> account.</p>
+
+  <div class="well" style="max-width: 600px; margin: 0 auto;">
+    <a href="{{ url_for('users.musicbrainz', next=request.args.get('next')) }}"
+       class="btn btn-primary btn-lg btn-block">Sign in with MusicBrainz</a>
+  </div>
 {% endblock %}
