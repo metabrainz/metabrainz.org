@@ -14,6 +14,7 @@ class UserSignUpForm(Form):
     contact_email = EmailField(validators=[DataRequired("Email address is required!")])
     description = TextAreaField("How are you using our data?",
                                 validators=[DataRequired("Please, tell us how you (will) use our data.")])
+    agreement = BooleanField(validators=[DataRequired(message="You need to accept the agreement!")])
     recaptcha = RecaptchaField()
 
     def __init__(self, default_email=None, **kwargs):
@@ -23,7 +24,7 @@ class UserSignUpForm(Form):
 
 class NonCommercialSignUpForm(UserSignUpForm):
     """Sign up form for non-commercial users."""
-    agreement = BooleanField(validators=[DataRequired(message="You need to accept the agreement!")])
+    pass
 
 
 class CommercialSignUpForm(UserSignUpForm):
