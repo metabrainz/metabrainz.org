@@ -44,3 +44,8 @@ class Token(db.Model):
         db.session.query(cls).filter(cls.owner == owner) \
             .update({'is_active': False})
         db.session.commit()
+
+    @classmethod
+    def is_valid(cls, token_value):
+        """Checks if token exists and is active."""
+        raise NotImplementedError
