@@ -192,4 +192,4 @@ def login():
 def logout():
     logout_user()
     session.clear()
-    return redirect(url_for('index.index'))
+    return redirect(url_for('index.home'))
