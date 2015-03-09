@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_from_directory, current_app
 from werkzeug.exceptions import BadRequest, Forbidden
 from metabrainz.model.token import Token
+from metabrainz.model.access_log import AccessLog
 
 api_bp = Blueprint('api', __name__)
 
@@ -14,7 +15,7 @@ def last_replication_packet():
     })
 
 
-@api_bp.route('/get/<int:packet_number>')
+@api_bp.route('/get/replication-<int:packet_number>.tar.bz2')
 def get_replication_packet(packet_number):
     """This function provides a way to fetch replication packets.
 
@@ -22,9 +23,18 @@ def get_replication_packet(packet_number):
     """
     access_token = request.args.get('token')
     if not access_token:
-        raise BadRequest("You need to provide access token.")
+        raise BadRequest("You need to provide an access token.")
     if not Token.is_valid(access_token):
         raise Forbidden("Provided access token is invalid.")
 
-    # TODO: Check if packet is there, fetch it, and log this request in a DB.
-    raise NotImplementedError
+    resposnse = send_from_directory(
+        current_app.config['REPLICATION_PACKETS_DIR'],
+        'replication-%s.tar.bz2' % packet_number,
+        # explicitly specifying mimetype because detection is not working:    )
+        mimetype='application/x-tar-bz2',
+    )
+
+    if resposnse.status_code == 200:
+        AccessLog.create_record(access_token, packet_number)
+
+    return resposnse

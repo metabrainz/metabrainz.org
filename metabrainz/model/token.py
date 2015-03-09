@@ -48,4 +48,5 @@ class Token(db.Model):
     @classmethod
     def is_valid(cls, token_value):
         """Checks if token exists and is active."""
-        raise NotImplementedError
+        token = cls.get(value=token_value)
+        return token and token.is_active
