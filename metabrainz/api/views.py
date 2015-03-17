@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request, send_from_directory, current_app, render_template
 from flask_login import login_required
-from metabrainz.model.access_log import AccessLog
-from metabrainz.api.decorators import token_required
+from metabrainz.api.decorators import token_required, tracked
 
 api_bp = Blueprint('api', __name__)
 
@@ -27,6 +26,7 @@ def last_replication_packets():
 
 @api_bp.route('/replication/replication-<int:packet_number>.tar.bz2')
 @token_required
+@tracked
 def get_replication_packet(packet_number):
     response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_DIR'],
@@ -34,13 +34,12 @@ def get_replication_packet(packet_number):
         # explicitly specifying mimetype because detection is not working:
         mimetype='application/x-tar-bz2',
     )
-    if response.status_code == 200:
-        AccessLog.create_record(request.args.get('token'))
     return response
 
 
 @api_bp.route('/replication/daily/replication-daily-<int:packet_number>.tar.bz2')
 @token_required
+@tracked
 def get_daily_replication_packet(packet_number):
     response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_DAILY_DIR'],
@@ -48,13 +47,12 @@ def get_daily_replication_packet(packet_number):
         # explicitly specifying mimetype because detection is not working:
         mimetype='application/x-tar-bz2',
     )
-    if response.status_code == 200:
-        AccessLog.create_record(request.args.get('token'))
     return response
 
 
 @api_bp.route('/replication/weekly/replication-weekly-<int:packet_number>.tar.bz2')
 @token_required
+@tracked
 def get_weekly_replication_packet(packet_number):
     response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_WEEKLY_DIR'],
@@ -62,6 +60,4 @@ def get_weekly_replication_packet(packet_number):
         # explicitly specifying mimetype because detection is not working:
         mimetype='application/x-tar-bz2',
     )
-    if response.status_code == 200:
-        AccessLog.create_record(request.args.get('token'))
     return response
