@@ -26,7 +26,7 @@ class Donation(db.Model):
     address_country = db.Column(db.Unicode)
 
     # Transaction details
-    payment_date = db.Column(db.DateTime, default=datetime.utcnow)
+    payment_date = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
     method = db.Column(db.Unicode)  # Payment method
     transaction_id = db.Column(db.Unicode)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
