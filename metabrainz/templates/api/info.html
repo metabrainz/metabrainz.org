@@ -15,16 +15,19 @@
   <p>
     There are three endpoints for fetching replication packets:
     <ul>
-      <li><code>{{ url_for('api.get_replication_packet', packet_number=42, _external=True) }}</code></li>
-      <li><code>{{ url_for('api.get_daily_replication_packet', packet_number=42, _external=True) }}</code></li>
-      <li><code>{{ url_for('api.get_weekly_replication_packet', packet_number=42, _external=True) }}</code></li>
+      <li><code>{{ url_for('api.get_replication_packet', _external=True,
+                           packet_number=42, token="ACCESS_TOKEN") }}</code></li>
+      <li><code>{{ url_for('api.get_daily_replication_packet', _external=True,
+                           packet_number=42, token="ACCESS_TOKEN") }}</code></li>
+      <li><code>{{ url_for('api.get_weekly_replication_packet', _external=True,
+                           packet_number=42, token="ACCESS_TOKEN") }}</code></li>
     </ul>
     where <code>42</code> is a number of the replication packet that you need.
   </p>
 
   <p>
     You can get info about latest replication packets from
-    <code>{{ url_for('api.last_replication_packets', _external=True) }}</code>.
+    <code>{{ url_for('api.last_replication_packets', _external=True, token="ACCESS_TOKEN") }}</code>.
   </p>
 
 {% endblock %}
