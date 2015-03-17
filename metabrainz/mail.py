@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-This module provides different ways to send emails.
-"""
+"""This module provides a way to send emails."""
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
