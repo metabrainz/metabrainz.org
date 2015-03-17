@@ -4,7 +4,7 @@ from werkzeug.exceptions import BadRequest, Forbidden
 from metabrainz.model.token import Token
 
 
-def require_token(f):
+def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         access_token = request.args.get('token')

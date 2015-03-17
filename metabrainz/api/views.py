@@ -1,14 +1,14 @@
 from flask import Blueprint, jsonify, request, send_from_directory, current_app
 from metabrainz.model.access_log import AccessLog
-from metabrainz.api.decorators import require_token
+from metabrainz.api.decorators import token_required
 
 api_bp = Blueprint('api', __name__)
 
 
-@api_bp.route('/last')
-@require_token
-def last_replication_packet():
-    """This endpoint returns number of the last available replication packet."""
+@api_bp.route('/replication/info')
+@token_required
+def last_replication_packets():
+    """This endpoint returns numbers of the last available replication packets."""
     return jsonify({
         # TODO: Implement this:
         'last_packet': 0,
@@ -18,7 +18,7 @@ def last_replication_packet():
 
 
 @api_bp.route('/replication/replication-<int:packet_number>.tar.bz2')
-@require_token
+@token_required
 def get_replication_packet(packet_number):
     response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_DIR'],
@@ -32,7 +32,7 @@ def get_replication_packet(packet_number):
 
 
 @api_bp.route('/replication/daily/replication-daily-<int:packet_number>.tar.bz2')
-@require_token
+@token_required
 def get_daily_replication_packet(packet_number):
     response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_DAILY_DIR'],
@@ -46,7 +46,7 @@ def get_daily_replication_packet(packet_number):
 
 
 @api_bp.route('/replication/weekly/replication-weekly-<int:packet_number>.tar.bz2')
-@require_token
+@token_required
 def get_weekly_replication_packet(packet_number):
     response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_WEEKLY_DIR'],
