@@ -7,8 +7,7 @@ HOURLY_ALERT_THRESHOLD = 10  # Max number of requests that can be done before ad
 
 
 class AccessLog(db.Model):
-    """Access log is used for tracking requests to the API. In particular live
-    data feed replication packet downloads.
+    """Access log is used for tracking requests to the API.
 
     Each request needs to be logged. Logging is done to keep track of number of
     requests in a fixed time frame. If there is an unusual number of requests
@@ -19,26 +18,21 @@ class AccessLog(db.Model):
 
     token = db.Column(db.String, db.ForeignKey('token.value'), primary_key=True)
     timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=datetime.utcnow)
-    packet_number = db.Column(db.Integer, nullable=False)
 
     @classmethod
-    def create_record(cls, access_token, packet_number):
+    def create_record(cls, access_token):
         """Creates new access log record with a current timestamp.
 
         It also checks if `HOURLY_ALERT_THRESHOLD` is exceeded, alerts admins if
         that's the case.
 
         Args:
-            access_token: Access token used to access.
-            packet_number: Number of the replication packet that has been requested.
+            access_token: Access token used to access the API.
 
         Returns:
             New access log record.
         """
-        new_record = cls(
-            token=access_token,
-            packet_number=packet_number,
-        )
+        new_record = cls(token=access_token)
         db.session.add(new_record)
         db.session.commit()
 
