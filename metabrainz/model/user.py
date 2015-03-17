@@ -141,7 +141,7 @@ def send_user_signup_notification(user):
 
             ('Usage description', user.description),
         ]),
-        recipients=[current_app.config['MANAGER_EMAIL']],
+        recipients=current_app.config['ADMINS'],
     )
 
 

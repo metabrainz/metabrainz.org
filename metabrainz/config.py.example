@@ -76,10 +76,10 @@ RECAPTCHA_PRIVATE_KEY = ""
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin"
 
-# Name and email address of the person who will receive notifications
-# about new organizations that sign up
-MANAGER_NAME = "Jonnie Doe"
-MANAGER_EMAIL = "jonnie@example.org"
+# List of email addresses
+ADMINS = [
+    "admin@metabrainz.org",
+]
 
 #USE_COMPILED_STYLING = True
 

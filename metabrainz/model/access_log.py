@@ -47,7 +47,7 @@ class AccessLog(db.Model):
             send_mail(
                 subject="[MetaBrainz] Hourly access limit exceeded",
                 text="Hourly access limit exceeded for token %s" % access_token,
-                recipients=[current_app.config['MANAGER_EMAIL']],
+                recipients=current_app.config['ADMINS'],
             )
 
         return new_record
