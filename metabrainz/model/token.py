@@ -1,5 +1,6 @@
 from metabrainz.model import db
 from metabrainz.utils import generate_string
+from datetime import datetime
 
 TOKEN_LENGTH = 40
 
@@ -10,6 +11,7 @@ class Token(db.Model):
     value = db.Column(db.String, primary_key=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     owner = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL", onupdate="CASCADE"))
+    created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
 
     @classmethod
     def get(cls, **kwargs):
