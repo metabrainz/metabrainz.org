@@ -20,40 +20,40 @@ def last_replication_packet():
 @api_bp.route('/replication/replication-<int:packet_number>.tar.bz2')
 @require_token
 def get_replication_packet(packet_number):
-    resposnse = send_from_directory(
+    response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_DIR'],
         'replication-%s.tar.bz2' % packet_number,
         # explicitly specifying mimetype because detection is not working:
         mimetype='application/x-tar-bz2',
     )
-    if resposnse.status_code == 200:
+    if response.status_code == 200:
         AccessLog.create_record(request.args.get('token'))
-    return resposnse
+    return response
 
 
 @api_bp.route('/replication/daily/replication-daily-<int:packet_number>.tar.bz2')
 @require_token
 def get_daily_replication_packet(packet_number):
-    resposnse = send_from_directory(
+    response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_DAILY_DIR'],
         'replication-daily-%s.tar.bz2' % packet_number,
         # explicitly specifying mimetype because detection is not working:
         mimetype='application/x-tar-bz2',
     )
-    if resposnse.status_code == 200:
+    if response.status_code == 200:
         AccessLog.create_record(request.args.get('token'))
-    return resposnse
+    return response
 
 
 @api_bp.route('/replication/weekly/replication-weekly-<int:packet_number>.tar.bz2')
 @require_token
 def get_weekly_replication_packet(packet_number):
-    resposnse = send_from_directory(
+    response = send_from_directory(
         current_app.config['REPLICATION_PACKETS_WEEKLY_DIR'],
         'replication-weekly-%s.tar.bz2' % packet_number,
         # explicitly specifying mimetype because detection is not working:
         mimetype='application/x-tar-bz2',
     )
-    if resposnse.status_code == 200:
+    if response.status_code == 200:
         AccessLog.create_record(request.args.get('token'))
-    return resposnse
+    return response
