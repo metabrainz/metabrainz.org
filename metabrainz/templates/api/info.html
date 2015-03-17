@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}API - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1>MetaBrainz API</h1>
+
+  <em>
+    All endpoints require an access token which you can get from your
+    <a href="{{ url_for('users.profile') }}">profile page</a>.
+  </em>
+
+  <h2>Live Data Feed</h2>
+
+  <p>
+    There are three endpoints for fetching replication packets:
+    <ul>
+      <li><code>{{ url_for('api.get_replication_packet', packet_number=42, _external=True) }}</code></li>
+      <li><code>{{ url_for('api.get_daily_replication_packet', packet_number=42, _external=True) }}</code></li>
+      <li><code>{{ url_for('api.get_weekly_replication_packet', packet_number=42, _external=True) }}</code></li>
+    </ul>
+    where <code>42</code> is a number of the replication packet that you need.
+  </p>
+
+  <p>
+    You can get info about latest replication packets from
+    <code>{{ url_for('api.last_replication_packets', _external=True) }}</code>.
+  </p>
+
+{% endblock %}
