@@ -1,6 +1,5 @@
 from metabrainz.model import db
 from metabrainz.model.admin_view import AdminView
-from metabrainz.model.user import User
 
 
 class Tier(db.Model):
@@ -21,7 +20,7 @@ class Tier(db.Model):
     # lists everything.
     primary = db.Column(db.Boolean, nullable=False, default=False)
 
-    organizations = db.relationship("User", backref='tier', lazy="dynamic")
+    users = db.relationship("User", backref='tier', lazy="dynamic")
 
     def __unicode__(self):
         return self.name
@@ -40,8 +39,8 @@ class Tier(db.Model):
         """Returns list of tiers that are available for sign up."""
         return cls.query.filter(cls.available == True).all()
 
-    def get_featured_orgs(self):
-        return self.organizations.filter(User.featured == True).all()
+    def get_featured_users(self):
+        return self.users.filter("User.featured" == True).all()
 
 
 class TierAdminView(AdminView):

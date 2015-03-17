@@ -19,7 +19,7 @@
   <div id="customers">
   {% for tier in tiers|reverse %}
 
-    {% set featured_orgs = tier.get_featured_orgs() %}
+    {% set featured_orgs = tier.get_featured_users() %}
     {% if featured_orgs|length > 0 %}
       <h2>{{ tier.name }} tier</h2>
       <p class="text-muted"><em>{{ tier.short_desc }}</em></p>
