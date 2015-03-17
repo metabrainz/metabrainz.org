@@ -7,6 +7,7 @@ from metabrainz.model.admin_view import AdminView
 from metabrainz.model.token import Token
 from metabrainz.model.tier import Tier
 from metabrainz.mail import send_mail
+from datetime import datetime
 
 
 STATE_ACTIVE = "active"
@@ -27,6 +28,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     is_commercial = db.Column(db.Boolean, nullable=False)
     musicbrainz_id = db.Column(db.Unicode, unique=True)  # MusicBrainz account that manages this user
+    created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
     state = db.Column(postgres.ENUM(STATE_ACTIVE, STATE_PENDING, STATE_REJECTED, name='state_types'),
                       nullable=False)
     contact_name = db.Column(db.Unicode, nullable=False)
