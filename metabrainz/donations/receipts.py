@@ -1,56 +1,40 @@
 # -*- coding: utf-8 -*-
-"""Receipt generation stuff."""
+"""
+This module contains functions for donation receipt generation and receipt
+sending via email.
+"""
 from reportlab.platypus import SimpleDocTemplate, Spacer
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
-
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
+from metabrainz.mail import send_mail
 from flask import current_app
-import smtplib
 import tempfile
-
-
-def send_receipt(email, date, amount, name, editor_name):
-    if current_app.config['TESTING']:  # Not sending any emails during the testing process
-        return
-
-    from_addr = 'donations@' + current_app.config['MAIL_FROM_DOMAIN']
-
-    message = MIMEMultipart('mixed')
-    message['Subject'] = 'Receipt for your donation to the MetaBrainz Foundation'
-    message['From'] = "Donation Manager <%s>" % from_addr
-    message['To'] = "%s <%s>" % (name, email)
-    message.attach(MIMEText(
-        "Dear %s:\n\n"
-        "Thank you very much for your donation to the MetaBrainz Foundation!\n\n"
-        "Your donation will allow the MetaBrainz Foundation to continue operating "
-        "and improving the MusicBrainz project and its related projects. The "
-        "foundation depends on donations from the community and therefore deeply "
-        "appreciates your support.\n\n"
-        "The MetaBrainz Foundation is a United States 501(c)(3) tax-exempt public charity. This "
-        "allows US taxpayers to deduct this donation from their taxes under section 170 of the "
-        "Internal Revenue Service code.\n\n"
-        "Please save a printed copy of the attached PDF receipt for your records." % name,
-        _charset='utf-8'
-    ))
-
-    receipt_file = _generate_recript(email, date, amount, name, editor_name)
-    receipt_attachment = MIMEApplication(receipt_file.read(), _subtype="pdf")
-    receipt_file.close()
-    receipt_attachment.add_header('content-disposition', 'attachment',
-                                  filename='metabrainz_donation.pdf')
-    message.attach(receipt_attachment)
-
-    server = smtplib.SMTP(current_app.config['SMTP_SERVER'], current_app.config['SMTP_PORT'])
-    server.sendmail(from_addr, [email], message.as_string())
-    server.quit()
-
 
 _PRIMARY_FONT = 'Helvetica'
 _PRIMARY_FONT_BOLD = 'Helvetica-Bold'
+
+
+def send_receipt(email, date, amount, name, editor_name):
+    text = """Dear %s:\n\n
+Thank you very much for your donation to the MetaBrainz Foundation!\n\n"
+Your donation will allow the MetaBrainz Foundation to continue operating "
+and improving the MusicBrainz project and its related projects. The "
+foundation depends on donations from the community and therefore deeply "
+appreciates your support.\n\n"
+The MetaBrainz Foundation is a United States 501(c)(3) tax-exempt public charity. This "
+allows US taxpayers to deduct this donation from their taxes under section 170 of the "
+Internal Revenue Service code.\n\n"
+Please save a printed copy of the attached PDF receipt for your records.""" % name
+    send_mail(
+        subject='Receipt for your donation to the MetaBrainz Foundation',
+        text=text,
+        attachments=[(generate_recript(email, date, amount, name, editor_name),
+                      'pdf', 'metabrainz_donation.pdf')],
+        recipients=[email],
+        from_addr='donations@'+current_app.config['MAIL_FROM_DOMAIN'],
+        from_name='Donation Manager',
+    )
 
 
 def _create_header(canvas, document):
@@ -68,7 +52,7 @@ def _create_header(canvas, document):
     canvas.line(52, 695, 550, 695)
 
 
-def _generate_recript(email, date, amount, name, editor_name):
+def generate_recript(email, date, amount, name, editor_name):
     """This function generates PDF file with a receipt.
 
     Returns:

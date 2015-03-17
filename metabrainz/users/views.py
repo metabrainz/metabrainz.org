@@ -5,7 +5,6 @@ from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
 from metabrainz.users import musicbrainz_login, login_forbidden
 from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm
-from metabrainz.users.notifications import send_user_signup_notification
 from metabrainz import flash, session
 
 users_bp = Blueprint('users', __name__)
@@ -108,7 +107,6 @@ def signup_commercial():
             payment_method=form.payment_method.data,
         )
         login_user(new_user)
-        send_user_signup_notification(new_user)
         return render_template('users/signup-success.html')
 
     return render_template("users/signup-commercial.html", form=form, tier=tier)

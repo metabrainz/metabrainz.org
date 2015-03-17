@@ -1,9 +1,12 @@
-from metabrainz.model import db
-from metabrainz.model.admin_view import AdminView
-from metabrainz.model.token import Token
 from sqlalchemy.sql.expression import func
 from sqlalchemy.dialects import postgres
 from flask_login import UserMixin
+from flask import current_app
+from metabrainz.model import db
+from metabrainz.model.admin_view import AdminView
+from metabrainz.model.token import Token
+from metabrainz.model.tier import Tier
+from metabrainz.mail import send_mail
 
 
 STATE_ACTIVE = "active"
@@ -83,6 +86,9 @@ class User(db.Model, UserMixin):
         db.session.add(new_user)
         db.session.commit()
 
+        if new_user.is_commercial:
+            send_user_signup_notification(new_user)
+
         return new_user
 
     @classmethod
@@ -104,6 +110,37 @@ class User(db.Model, UserMixin):
             return Token.generate_token(self.id)
         else:
             raise InactiveUserException
+
+
+def send_user_signup_notification(user):
+    """Send notification to admin about new signed up commercial user."""
+    pairs_list_to_string = lambda pairs_list: '\n'.join([
+        '%s: %s' % (pair[0], pair[1]) for pair in pairs_list
+    ])
+    send_mail(
+        subject="[MetaBrainz] New commercial user signed up",
+        text=pairs_list_to_string([
+            ('Organization name', user.org_name),
+            ('Contact name', user.contact_name),
+            ('Contact email', user.contact_email),
+
+            ('Website URL', user.website_url),
+            ('Logo image URL', user.org_logo_url),
+            ('API URL', user.api_url),
+
+            ('Street', user.address_street),
+            ('City', user.address_city),
+            ('State', user.address_state),
+            ('Postal code', user.address_postcode),
+            ('Country', user.address_country),
+
+            ('Tier', '#%s - %s' % (user.tier_id, Tier.get(id=user.tier_id))),
+            ('Payment method', user.payment_method),
+
+            ('Usage description', user.description),
+        ]),
+        recipients=[current_app.config['MANAGER_EMAIL']],
+    )
 
 
 class InactiveUserException(Exception):
