@@ -107,7 +107,8 @@ def signup_commercial():
             payment_method=form.payment_method.data,
         )
         login_user(new_user)
-        return render_template('users/signup-success.html')
+        flash.success("Thanks for signing up! Your application will be reviewed soon.")
+        return redirect(url_for('.profile'))
 
     return render_template("users/signup-commercial.html", form=form, tier=tier)
 
@@ -132,7 +133,8 @@ def signup_non_commercial():
             description=form.description.data,
         )
         login_user(new_user)
-        return render_template('users/signup-success.html')
+        flash.success("Thanks for signing up!")
+        return redirect(url_for('.profile'))
 
     return render_template("users/signup-non-commercial.html", form=form)
 
@@ -159,9 +161,9 @@ def musicbrainz_post():
     if user:  # Checking if user is already signed up
         login_user(user)
         next = session.session.get('next')
-        return redirect(next) if next else redirect(url_for('users.profile'))
+        return redirect(next) if next else redirect(url_for('.profile'))
     else:
-        return redirect(url_for('users.signup'))
+        return redirect(url_for('.signup'))
 
 
 @users_bp.route('/profile/')
