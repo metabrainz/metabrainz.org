@@ -9,7 +9,7 @@ import smtplib
 
 def send_mail(subject, text, recipients, attachments=None,
               from_name="MetaBrainz Notifications",
-              from_addr='noreply@'+current_app.config['MAIL_FROM_DOMAIN']):
+              from_addr=None):
     """This function can be used as a foundation for sending email.
 
     Args:
@@ -23,6 +23,8 @@ def send_mail(subject, text, recipients, attachments=None,
     """
     if attachments is None:
         attachments = []
+    if from_addr is None:
+        from_addr = 'noreply@' + current_app.config['MAIL_FROM_DOMAIN']
 
     if current_app.config['TESTING']:  # Not sending any emails during the testing process
         return
