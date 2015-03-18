@@ -9,7 +9,7 @@ def init_loggers(app):
     if 'LOG_EMAIL_ENABLED' in app.config and app.config['LOG_EMAIL_ENABLED']:
         _add_email_handler(app, logging.ERROR)
     if 'LOG_SENTRY_ENABLED' in app.config and app.config['LOG_SENTRY_ENABLED']:
-        _add_sentry(app)
+        _add_sentry(app, logging.INFO)
 
 
 def _add_file_handler(app, filename, max_bytes=512 * 1024, backup_count=100):
@@ -46,7 +46,7 @@ def _add_email_handler(app, level=logging.NOTSET):
     app.logger.addHandler(mail_handler)
 
 
-def _add_sentry(app):
+def _add_sentry(app, level=logging.NOTSET):
     """Adds Sentry error monitoring.
 
     Sentry is a realtime event logging and aggregation platform. Additional
@@ -54,4 +54,4 @@ def _add_sentry(app):
     We use Raven as a client for Sentry. More info about Raven is available at
     https://raven.readthedocs.org/.
     """
-    Sentry(app)
+    Sentry(app, logging=True, level=level)
