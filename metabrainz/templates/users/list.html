@@ -40,7 +40,7 @@
               {{ org.description }}
               {% if not org.good_standing %}
                 <p class="text-danger">
-                  <em>This organization has a <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
+                  <em>This organization is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
                 </p>
               {% endif %}
             </td>
