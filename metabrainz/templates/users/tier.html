@@ -26,7 +26,7 @@
           <tr {{ 'class=danger' if not org.good_standing }}>
             <td>
               {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}
-              {% if org.logo_url %}
+              {% if org.org_logo_url %}
                 <img src="{{ org.org_logo_url }}"/>
               {% else %}
                 {{ org.name }}
