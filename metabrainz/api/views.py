@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, send_from_directory, current_app, render_template
-from flask_login import login_required
 from metabrainz.api.decorators import token_required, tracked
 import logging
 import re
@@ -9,7 +8,6 @@ api_bp = Blueprint('api', __name__)
 
 
 @api_bp.route('/')
-@login_required
 def info():
     """This view provides information about using the API."""
     return render_template('api/info.html')
