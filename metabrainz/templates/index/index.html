@@ -59,19 +59,21 @@
       </p>
     </div>
 
-    <div id="featured-organizations" class="row">
-      {% for org in featured_orgs %}
-        <div class="col-sm-3">
-        <span>
-          {% if org.logo_url %}
-            <img src="{{ org.org_logo_url }}" />
-          {% else %}
-            {{ org.name }}
-          {% endif %}
-        </span>
-        </div>
-      {% endfor %}
-    </div>
+    {% if featured_orgs %}
+      <div id="featured-organizations" class="row">
+        {% for org in featured_orgs %}
+          <div class="col-sm-3">
+            <span>
+              {% if org.logo_url %}
+                <img src="{{ org.org_logo_url }}"/>
+              {% else %}
+                {{ org.name }}
+              {% endif %}
+            </span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
 
     <div id="additional-intro">
       To get more information about the foundation go to <a href="{{ url_for('index.about') }}">
