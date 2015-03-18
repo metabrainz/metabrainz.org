@@ -14,6 +14,11 @@ def about():
     return render_template('index/about.html')
 
 
+@index_bp.route('/contact')
+def contact():
+    return render_template('index/contact.html')
+
+
 @index_bp.route('/sponsors')
 def sponsors():
     return render_template('index/sponsors.html')
