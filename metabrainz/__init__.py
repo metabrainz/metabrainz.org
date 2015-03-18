@@ -21,6 +21,13 @@ def create_app():
     from metabrainz.model import db
     db.init_app(app)
 
+    # Memcached
+    if 'MEMCACHED_SERVERS' in app.config:
+        from metabrainz import cache
+        cache.init(app.config['MEMCACHED_SERVERS'],
+                   app.config['MEMCACHED_NAMESPACE'],
+                   debug=1 if app.debug else 0)
+
     # MusicBrainz OAuth
     from metabrainz.users import login_manager, musicbrainz_login
     login_manager.init_app(app)

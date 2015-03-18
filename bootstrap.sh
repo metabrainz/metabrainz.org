@@ -2,7 +2,7 @@
 
 apt-get update
 apt-get -y upgrade
-apt-get install -y python-virtualenv python-dev
+apt-get install -y python-virtualenv python-dev memcached
 
 
 # Setting up PostgreSQL

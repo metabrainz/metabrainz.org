@@ -14,7 +14,9 @@ of Linux.**
 
 4. Git
 
-5. Standard Development Tools™ (``sudo apt-get install build-essential``)
+5. Memcached
+
+6. Standard Development Tools™ (``sudo apt-get install build-essential``)
 
 ### Server configuration
 
