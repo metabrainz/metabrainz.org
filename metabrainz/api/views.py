@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, send_from_directory, current_app, render_template
 from flask_login import login_required
 from metabrainz.api.decorators import token_required, tracked
+import logging
 import re
 import os
 
@@ -20,7 +21,11 @@ def last_replication_packets():
     """This endpoint returns numbers of the last available replication packets."""
 
     def _get_last_packet_name(location, pattern):
-        entries = [os.path.join(location, e) for e in os.listdir(location)]
+        try:
+            entries = [os.path.join(location, e) for e in os.listdir(location)]
+        except OSError as e:
+            logging.warning(e)
+            return None
         pattern = re.compile(pattern)
         entries = filter(lambda x: pattern.search(x), entries)
         entries = filter(os.path.isfile, entries)
