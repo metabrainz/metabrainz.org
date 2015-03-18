@@ -50,7 +50,7 @@ class TierAdminView(AdminView):
         short_desc='Short description',
         long_desc='Long description',
         price='Monthly price',
-        primary='Is primary',
+        primary='Primary',
     )
     column_descriptions = dict(
         price='USD',
