@@ -5,7 +5,6 @@ from flask import current_app
 from metabrainz.model import db
 from metabrainz.model.admin_view import AdminView
 from metabrainz.model.token import Token
-from metabrainz.model.tier import Tier
 from metabrainz.mail import send_mail
 from datetime import datetime
 
@@ -136,7 +135,7 @@ def send_user_signup_notification(user):
             ('Postal code', user.address_postcode),
             ('Country', user.address_country),
 
-            ('Tier', '#%s - %s' % (user.tier_id, Tier.get(id=user.tier_id))),
+            ('Tier', '#%s' % user.tier_id),  # TODO: Send name of the tier as well
             ('Payment method', user.payment_method),
 
             ('Usage description', user.description),

@@ -1,5 +1,6 @@
 from metabrainz.model import db
 from metabrainz.model.admin_view import AdminView
+from metabrainz.model.user import User
 
 
 class Tier(db.Model):
@@ -40,7 +41,7 @@ class Tier(db.Model):
         return cls.query.filter(cls.available == True).all()
 
     def get_featured_users(self):
-        return self.users.filter("User.featured" == True).all()
+        return self.users.filter(User.featured == True).all()
 
 
 class TierAdminView(AdminView):
