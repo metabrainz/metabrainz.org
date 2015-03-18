@@ -16,7 +16,7 @@
     {% endif %}
   </p>
 
-  {% set organizations = tier.organizations.all() %}
+  {% set organizations = tier.users.all() %}
   {% if organizations|length > 0 %}
     <h3>Organizations on this tier</h3>
     <div id="customers">

@@ -50,7 +50,7 @@
       </table>
 
       <p><em><a href="{{ url_for('users.tier', tier_id=tier.id) }}">
-        View {{ 'other organizations and ' if tier.organizations.count() > feautred_orgs|length }}additional info about this tier
+        View {{ 'other organizations and ' if tier.users.count() > feautred_orgs|length }}additional info about this tier
       </a></em></p>
     {% endif %}
 
