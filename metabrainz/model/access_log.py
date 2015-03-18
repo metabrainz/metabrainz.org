@@ -1,7 +1,9 @@
 from metabrainz.model import db
 from metabrainz.mail import send_mail
+from metabrainz import cache
 from datetime import datetime, timedelta
 from flask import current_app
+import logging
 
 HOURLY_ALERT_THRESHOLD = 10  # Max number of requests that can be done before admins get an alert
 
@@ -37,17 +39,20 @@ class AccessLog(db.Model):
         db.session.commit()
 
         # Checking if HOURLY_ALERT_THRESHOLD is exceeded
-        # FIXME(roman): There's a way to abuse this checking by creating new
-        # token. Maybe we should limit token creation to only one per hour or longer?
         count = cls.query.filter(cls.timestamp > datetime.now() - timedelta(hours=1),
                                  cls.token == access_token).count()
         if count > HOURLY_ALERT_THRESHOLD:
-            # FIXME(roman): There's probably no need to send an email notification
-            # about every request after the first one.
-            send_mail(
-                subject="[MetaBrainz] Hourly access limit exceeded",
-                text="Hourly access limit exceeded for token %s" % access_token,
-                recipients=current_app.config['ADMINS'],
-            )
+            msg = "Hourly access threshold exceeded for token %s" % access_token
+            logging.info(msg)
+            # Checking if notification for admins about this token abuse has
+            # been sent in the last hour. This info is kept in memcached.
+            key = "notif_sentt_%s" % access_token
+            if not cache.get(key):
+                send_mail(
+                    subject="[MetaBrainz] Hourly access threshold exceeded",
+                    recipients=current_app.config['ADMINS'],
+                    text=msg,
+                )
+                cache.set(key, True, 3600)  # 1 hour
 
         return new_record

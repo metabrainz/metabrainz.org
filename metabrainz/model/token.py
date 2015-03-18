@@ -26,7 +26,7 @@ class Token(db.Model):
             Value of the new token.
         """
         cls.revoke_tokens(owner)
-
+        # TODO: Allow to generate only one token per hour.
         new_token = cls(
             value=generate_string(TOKEN_LENGTH),
             owner=owner,
