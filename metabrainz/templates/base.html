@@ -40,17 +40,23 @@
         <hr />
         <div class="footer">
           <div class="row">
-            <div class="col-sm-2">
-              <strong>Foundation</strong>
+            <div class="col-sm-3">
+              <div class="title"><a href="{{ url_for('index.about') }}">Foundation</a></div>
               <ul>
                 <li><a href="{{ url_for('index.privacy_policy') }}">Privacy Policy</a></li>
-                <li><a href="http://blog.musicbrainz.org/category/metabrainz/">Blog</a></li>
-                <li><a href="https://twitter.com/MetaBrainz">Twitter</a></li>
+                <li><a href="{{ url_for('index.sponsors') }}">Sponsors</a></li>
+                <li><a href="{{ url_for('users.index') }}">Customers</a></li>
               </ul>
             </div>
-            {# Last block should fill up the rest of this row. #}
-            <div class="col-sm-10">
-              <strong>Users</strong>
+            <div class="col-sm-3">
+              <div class="title"><a href="{{ url_for('financial_reports.index') }}">Finances</a></div>
+              <ul>
+                <li><a href="{{ url_for('annual_reports.index') }}">Annual Reports</a></li>
+                <li><a href="{{ url_for('donations.donors') }}">Donors</a></li>
+              </ul>
+            </div>
+            <div class="col-sm-3">
+              <div class="title"><a href="{{ url_for('users.index') }}">Users</a></div>
               <ul>
                 {% if not current_user or current_user.is_anonymous() %}
                   <li><a href="{{ url_for('users.signup') }}">Sign up</a></li>
@@ -61,8 +67,16 @@
                 <li><a href="{{ url_for('api.info') }}">API</a></li>
               </ul>
             </div>
+            {# Last block should fill up the rest of this row. #}
+            <div class="col-sm-3">
+              <div class="title"><a href="{{ url_for('index.contact') }}">Contact us</a></div>
+              <ul>
+                <li><a href="http://blog.musicbrainz.org/category/metabrainz/">Blog</a></li>
+                <li><a href="https://twitter.com/MetaBrainz">Twitter</a></li>
+              </ul>
+            </div>
           </div>
-          <div>
+          <div class="lower-footer">
             Hosted by <a href="http://digitalwest.net/">Digital West</a>.
             Sponsored by: <a href="http://www.google.com/">Google</a>,
             <a href="http://osuosl.org/">OSUOSL</a> and
