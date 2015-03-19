@@ -102,8 +102,11 @@ class User(db.Model, UserMixin):
         return cls.query.all()
 
     @classmethod
-    def get_featured(cls, limit=4):
-        return cls.query.filter(cls.featured).order_by(func.random()).limit(limit).all()
+    def get_featured(cls, limit=4, with_logos=False):
+        query = cls.query.filter(cls.featured)
+        if with_logos:
+            query = query.filter(cls.org_logo_url != None)
+        return query.order_by(func.random()).limit(limit).all()
 
     def generate_token(self):
         """Generates new access token for this user."""
