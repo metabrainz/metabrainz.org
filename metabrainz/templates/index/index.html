@@ -59,15 +59,15 @@
       </p>
     </div>
 
-    {% if featured_orgs %}
-      <div id="featured-organizations" class="row">
-        {% for org in featured_orgs %}
+    {% if featured_users %}
+      <div id="featured-users" class="row">
+        {% for user in featured_users %}
           <div class="col-sm-3">
             <span>
-              {% if org.org_logo_url %}
-                <img src="{{ org.org_logo_url }}"/>
+              {% if user.org_logo_url %}
+                <img src="{{ user.org_logo_url }}"/>
               {% else %}
-                {{ org.name }}
+                {{ user.name }}
               {% endif %}
             </span>
           </div>

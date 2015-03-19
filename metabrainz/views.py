@@ -6,7 +6,7 @@ index_bp = Blueprint('index', __name__)
 
 @index_bp.route('/')
 def home():
-    return render_template('index/index.html', featured_orgs=User.get_featured(4))
+    return render_template('index/index.html', featured_users=User.get_featured(4))
 
 
 @index_bp.route('/about')

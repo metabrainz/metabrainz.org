@@ -13,34 +13,38 @@
   </b></p>
 
   <p>
-    The following organizations license our data and use <a href="http://musicbrainz.org/doc/MusicBrainz_Identifier">MusicBrainz Identifiers</a> (MBIDs) for their own operations. This list does not include any individuals/companies that are using our Public Domain/Creative Commons data snapshots -- there are many users of this data beyond the licensees listed here:
+    The following customers license our data and use
+    <a href="http://musicbrainz.user/doc/MusicBrainz_Identifier">MusicBrainz Identifiers</a>
+    (MBIDs) for their own operations. This list does not include any individuals/companies
+    that are using our Public Domain/Creative Commons data snapshots – there are many users
+    of this data beyond the licensees listed here:
   </p>
 
   <div id="customers">
   {% for tier in tiers|reverse %}
 
-    {% set featured_orgs = tier.get_featured_users() %}
-    {% if featured_orgs|length > 0 %}
+    {% set featured_users = tier.get_featured_users() %}
+    {% if featured_users|length > 0 %}
       <h2>{{ tier.name }} tier</h2>
       <p class="text-muted"><em>{{ tier.short_desc }}</em></p>
       <table class="table">
 
-        {% for org in featured_orgs %}
-          <tr {{ 'class=danger' if not org.good_standing }}>
+        {% for user in featured_users %}
+          <tr {{ 'class=danger' if not user.good_standing }}>
             <td>
-              {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}
-                {% if org.org_logo_url %}
-                  <img src="{{ org.org_logo_url }}"/>
+              {% if user.website_url %}<a href="{{ user.website_url }}">{% endif %}
+                {% if user.org_logo_url %}
+                  <img src="{{ user.org_logo_url }}"/>
                 {% else %}
-                  {{ org.name }}
+                  {{ user.name }}
                 {% endif %}
-              {% if org.website_url %}</a>{% endif %}
+              {% if user.website_url %}</a>{% endif %}
             </td>
             <td>
-              {{ org.description }}
-              {% if not org.good_standing %}
+              {{ user.description }}
+              {% if not user.good_standing %}
                 <p class="text-danger">
-                  <em>This organization is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
+                  <em>This user is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
                 </p>
               {% endif %}
             </td>
@@ -50,7 +54,7 @@
       </table>
 
       <p><em><a href="{{ url_for('users.tier', tier_id=tier.id) }}">
-        View {{ 'other organizations and ' if tier.users.count() > feautred_orgs|length }}additional info about this tier
+        View {{ 'other users and ' if tier.users.count() > featured_users|length }}additional info about this tier
       </a></em></p>
     {% endif %}
 

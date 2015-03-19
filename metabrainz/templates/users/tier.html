@@ -16,28 +16,28 @@
     {% endif %}
   </p>
 
-  {% set organizations = tier.users.all() %}
-  {% if organizations|length > 0 %}
-    <h3>Organizations on this tier</h3>
+  {% set users = tier.users.all() %}
+  {% if users|length > 0 %}
+    <h3>Users on this tier</h3>
     <div id="customers">
       <table class="table">
 
-        {% for org in organizations %}
-          <tr {{ 'class=danger' if not org.good_standing }}>
+        {% for user in users %}
+          <tr {{ 'class=danger' if not user.good_standing }}>
             <td>
-              {% if org.website_url %}<a href="{{ org.website_url }}">{% endif %}
-              {% if org.org_logo_url %}
-                <img src="{{ org.org_logo_url }}"/>
+              {% if user.website_url %}<a href="{{ user.website_url }}">{% endif %}
+              {% if user.org_logo_url %}
+                <img src="{{ user.org_logo_url }}"/>
               {% else %}
-                {{ org.name }}
+                {{ user.name }}
               {% endif %}
-              {% if org.website_url %}</a>{% endif %}
+              {% if user.website_url %}</a>{% endif %}
             </td>
             <td>
-              {{ org.description|safe }}
-              {% if not org.good_standing %}
+              {{ user.description }}
+              {% if not user.good_standing %}
                 <p class="text-danger">
-                  <em>This organization is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
+                  <em>This user is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
                 </p>
               {% endif %}
             </td>
