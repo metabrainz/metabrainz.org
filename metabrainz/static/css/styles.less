@@ -170,6 +170,34 @@ img.pull-right { padding-left: 15px; }
 
 #tiers {
   margin-top: 40px;
+  #primary-tiers {
+    .tier {
+      .thumbnail {
+        height: 240px;
+        h3 {
+          margin-top: 8px;
+          font-size: 20px;
+        }
+        .price {
+          margin-bottom: 14px;
+          font-size: 20px;
+          font-weight: 300;
+        }
+        .description {
+          margin-bottom: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          height: 38px; // fallback
+          -webkit-line-clamp: 2; // number of lines to show
+          -webkit-box-orient: vertical;
+        }
+        .buttons :last-child {
+          margin-bottom: 0px;
+        }
+      }
+    }
+  }
 }
 
 #customers {
