@@ -8,6 +8,10 @@ class IndexViewsTestCase(FlaskTestCase):
         response = self.client.get(url_for('index.home'))
         self.assert200(response)
 
+    def test_contact(self):
+        response = self.client.get(url_for('index.contact'))
+        self.assert200(response)
+
     def test_about(self):
         response = self.client.get(url_for('index.about'))
         self.assert200(response)
