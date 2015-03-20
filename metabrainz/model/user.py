@@ -97,9 +97,9 @@ class User(db.Model, UserMixin):
         return cls.query.filter_by(**kwargs).first()
 
     @classmethod
-    def get_all(cls):
+    def get_all(cls, **kwargs):
         """Returns list of all organizations."""
-        return cls.query.all()
+        return cls.query.filter_by(**kwargs).all()
 
     @classmethod
     def get_featured(cls, limit=4, with_logos=False):

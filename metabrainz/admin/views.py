@@ -1,13 +1,13 @@
 from flask_admin import Admin, BaseView, expose
+from metabrainz.model.user import User, STATE_PENDING
 
 
 class UsersView(BaseView):
 
     @expose('/')
     def index(self):
-        # TODO: Show list of users that are pending approval
-        # (with links to user details page).
-        return self.render('admin/users/index.html')
+        users = User.get_all(state=STATE_PENDING)
+        return self.render('admin/users/index.html', users=users)
 
     @expose('/<int:user_id>')
     def details(self, user_id):

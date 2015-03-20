@@ -1,4 +1,32 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  {# TODO: Implement. #}
+  <h1>Users</h1>
+
+  <h3>Commercial users pending approval</h3>
+  {% if users %}
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contact name</th>
+        <th>Contact email</th>
+        <th>MusicBrainz ID</th>
+        <th>Tier ID</th>
+        <th>Applied on</th>
+      </tr>
+      </thead>
+      {% for user in users %}
+        <tr>
+          <td><a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.org_name }}</a></td>
+          <td>{{ user.contact_name }}</td>
+          <td>{{ user.contact_email }}</td>
+          <td>{{ user.musicbrainz_id }}</td>
+          <td>{{ user.tier_id }}</td>{# TODO: Show name of the tier as well. #}
+          <td>{{ user.created }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    None! Go take a break. :)
+  {% endif %}
 {% endblock %}
