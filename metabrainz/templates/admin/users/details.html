@@ -1,4 +1,40 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  {# TODO: Implement. #}
+  <h1>Users</h1>
+
+  <h3>Details</h3>
+  
+  {# TODO: Show status update buttons. #}
+
+  <dl class="dl-horizontal">
+    <dt>ID</dt><dd>{{ user.id }}</dd>
+    <dt>State</dt><dd>{{ user.state }}</dd>
+    <dt>Commercial</dt><dd>{{ user.is_commercial }}</dd>
+    <dt>MusicBrainz ID</dt><dd>{{ user.musicbrainz_id }}</dd>
+    <dt>Creation time</dt><dd>{{ user.created }}</dd>
+
+    <dt>Contact name</dt><dd>{{ user.contact_name }}</dd>
+    <dt>Contact email</dt><dd>{{ user.contact_email }}</dd>
+
+    <dt>Organization name</dt><dd>{{ user.org_name }}</dd>
+    <dt>Organization website</dt><dd>{{ user.website_url }}</dd>
+    <dt>Organization logo URL</dt><dd>{{ user.org_logo_url }}</dd>
+    <dt>Organization API URL</dt><dd>{{ user.api_url }}</dd>
+
+    <dt>Address</dt><dd>{{ user.address_street }}</dd>
+    <dt>City</dt><dd>{{ user.address_city }}</dd>
+    <dt>State</dt><dd>{{ user.address_state }}</dd>
+    <dt>Postal code</dt><dd>{{ user.address_postcode }}</dd>
+    <dt>Country</dt><dd>{{ user.address_country }}</dd>
+
+    <dt>Tier ID</dt><dd>{{ user.tier_id }}</dd>
+    <dt>Payment method</dt><dd>{{ user.payment_method }}</dd>
+
+    <dt>Good</dt><dd>{{ user.good_standing }}</dd>
+    <dt>Approved</dt><dd>{{ user.is_approved }}</dd>
+    <dt>Featured</dt><dd>{{ user.featured }}</dd>
+
+    <dt>Usage description</dt><dd>{{ user.description }}</dd>
+  </dl>
+
 {% endblock %}

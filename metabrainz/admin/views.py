@@ -11,8 +11,8 @@ class UsersView(BaseView):
 
     @expose('/<int:user_id>')
     def details(self, user_id):
-        # TODO: Show info about user and status update buttons.
-        return self.render('admin/users/details.html')
+        return self.render('admin/users/details.html',
+                           user=User.get(id=user_id))
 
 
 class TokensView(BaseView):
