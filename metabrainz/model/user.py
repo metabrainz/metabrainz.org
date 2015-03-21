@@ -49,7 +49,6 @@ class User(db.Model, UserMixin):
 
     # Administrative columns:
     good_standing = db.Column(db.Boolean, nullable=False, default=True)
-    is_approved = db.Column(db.Boolean, nullable=False, default=False)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 
     tokens = db.relationship("Token", backref='user', lazy="dynamic")
