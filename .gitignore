@@ -20,3 +20,6 @@ nosetests.xml
 
 # Vagrant
 .vagrant
+
+# Project-specific stuff
+replication_packets
