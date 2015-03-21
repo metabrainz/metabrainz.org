@@ -22,6 +22,10 @@ class Token(db.Model):
         return cls.query.filter_by(**kwargs).all()
 
     @classmethod
+    def search_by_value(cls, value):
+        return cls.query.filter(cls.value.like('%'+value+'%')).all()
+
+    @classmethod
     def generate_token(cls, owner):
         """Generates new token for a specified user and revokes all other
         tokens owned by this user.

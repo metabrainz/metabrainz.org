@@ -46,7 +46,7 @@ class TokensView(BaseView):
 
     @expose('/')
     def index(self):
-        # TODO: Implement token search (search results should have
-        # "revoke" button and a lit to user if token is associated
-        # with one.
-        return self.render('admin/tokens/index.html')
+        value = request.args.get('value')
+        results = Token.search_by_value(value) if value else []
+        return self.render('admin/tokens/search.html',
+                           value=value, results=results)
