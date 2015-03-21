@@ -18,6 +18,10 @@ class Token(db.Model):
         return cls.query.filter_by(**kwargs).first()
 
     @classmethod
+    def get_all(cls, **kwargs):
+        return cls.query.filter_by(**kwargs).all()
+
+    @classmethod
     def generate_token(cls, owner):
         """Generates new token for a specified user and revokes all other
         tokens owned by this user.
@@ -52,3 +56,7 @@ class Token(db.Model):
         """Checks if token exists and is active."""
         token = cls.get(value=token_value)
         return token and token.is_active
+
+    def revoke(self):
+        self.is_active = False
+        db.session.commit()

@@ -3,38 +3,82 @@
   <h1>Users</h1>
 
   <h3>Details</h3>
-  
-  {# TODO: Show status update buttons. #}
 
-  <dl class="dl-horizontal">
-    <dt>ID</dt><dd>{{ user.id }}</dd>
-    <dt>State</dt><dd>{{ user.state }}</dd>
-    <dt>Commercial</dt><dd>{{ user.is_commercial }}</dd>
-    <dt>MusicBrainz ID</dt><dd>{{ user.musicbrainz_id }}</dd>
-    <dt>Creation time</dt><dd>{{ user.created }}</dd>
+  <div>
+    <dl class="dl-horizontal">
+      <dt>ID</dt><dd>{{ user.id }}</dd>
+      <dt>State</dt><dd>{{ user.state }}</dd>
+      <dt>Commercial</dt><dd>{{ user.is_commercial }}</dd>
+      <dt>MusicBrainz ID</dt><dd>{{ user.musicbrainz_id }}</dd>
+      <dt>Creation time</dt><dd>{{ user.created }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>Contact name</dt><dd>{{ user.contact_name }}</dd>
+      <dt>Contact email</dt><dd>{{ user.contact_email }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>Organization name</dt><dd>{{ user.org_name }}</dd>
+      <dt>Organization website</dt><dd>{{ user.website_url }}</dd>
+      <dt>Organization logo URL</dt><dd>{{ user.org_logo_url }}</dd>
+      <dt>Organization API URL</dt><dd>{{ user.api_url }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>Address</dt><dd>{{ user.address_street }}</dd>
+      <dt>City</dt><dd>{{ user.address_city }}</dd>
+      <dt>State</dt><dd>{{ user.address_state }}</dd>
+      <dt>Postal code</dt><dd>{{ user.address_postcode }}</dd>
+      <dt>Country</dt><dd>{{ user.address_country }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>Tier ID</dt><dd>{{ user.tier_id }}</dd>
+      <dt>Payment method</dt><dd>{{ user.payment_method }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>Good</dt><dd>{{ user.good_standing }}</dd>
+      <dt>Approved</dt><dd>{{ user.is_approved }}</dd>
+      <dt>Featured</dt><dd>{{ user.featured }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>Usage description</dt><dd>{{ user.description }}</dd>
+    </dl>
+  </div>
 
-    <dt>Contact name</dt><dd>{{ user.contact_name }}</dd>
-    <dt>Contact email</dt><dd>{{ user.contact_email }}</dd>
+  {% if user.state == 'pending' %}
+    <div>
+      <a href="{{ url_for('usersview.approve', user_id=user.id) }}"
+         class="btn btn-success" role="button">Approve</a>
+      <a href="{{ url_for('usersview.reject', user_id=user.id) }}"
+         class="btn btn-danger" role="button">Reject</a>
+    </div>
+  {% endif %}
 
-    <dt>Organization name</dt><dd>{{ user.org_name }}</dd>
-    <dt>Organization website</dt><dd>{{ user.website_url }}</dd>
-    <dt>Organization logo URL</dt><dd>{{ user.org_logo_url }}</dd>
-    <dt>Organization API URL</dt><dd>{{ user.api_url }}</dd>
-
-    <dt>Address</dt><dd>{{ user.address_street }}</dd>
-    <dt>City</dt><dd>{{ user.address_city }}</dd>
-    <dt>State</dt><dd>{{ user.address_state }}</dd>
-    <dt>Postal code</dt><dd>{{ user.address_postcode }}</dd>
-    <dt>Country</dt><dd>{{ user.address_country }}</dd>
-
-    <dt>Tier ID</dt><dd>{{ user.tier_id }}</dd>
-    <dt>Payment method</dt><dd>{{ user.payment_method }}</dd>
-
-    <dt>Good</dt><dd>{{ user.good_standing }}</dd>
-    <dt>Approved</dt><dd>{{ user.is_approved }}</dd>
-    <dt>Featured</dt><dd>{{ user.featured }}</dd>
-
-    <dt>Usage description</dt><dd>{{ user.description }}</dd>
-  </dl>
-
+  <h4>Active tokens</h4>
+  {% if active_tokens %}
+    <p class="text-muted">
+      <em>
+        If you need to revoke existing tokens <b>and</b> prevent user from
+        generating new ones, set their status to <code>rejected</code>.
+      </em>
+    </p>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Value</th>
+        <th>Created on</th>
+        <th>{# Controls #}</th>
+      </tr>
+      </thead>
+      {% for token in active_tokens %}
+        <tr>
+          <td>{{ token.value }}</td>
+          <td>{{ token.created }}</td>
+          <td><a href="{{ url_for('usersview.revoke_token', token_value=token.value) }}"
+                 class="btn btn-warning" role="button"
+                 title="Revoke this access token">Revoke</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    This user has no active access tokens.
+  {% endif %}
 {% endblock %}

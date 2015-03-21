@@ -1,5 +1,8 @@
 from flask_admin import Admin, BaseView, expose
-from metabrainz.model.user import User, STATE_PENDING
+from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED
+from metabrainz.model.token import Token
+from metabrainz import flash
+from flask import request, redirect, url_for
 
 
 class UsersView(BaseView):
@@ -11,8 +14,32 @@ class UsersView(BaseView):
 
     @expose('/<int:user_id>')
     def details(self, user_id):
-        return self.render('admin/users/details.html',
-                           user=User.get(id=user_id))
+        user = User.get(id=user_id)
+        active_tokens = Token.get_all(owner=user.id, is_active=True)
+        return self.render('admin/users/details.html', user=user,
+                           active_tokens=active_tokens)
+
+    @expose('/approve')
+    def approve(self):
+        user_id = request.args.get('user_id')
+        User.get(id=user_id).set_state(STATE_ACTIVE)
+        flash.info("User #%s has been approved." % user_id)
+        return redirect(url_for('.details', user_id=user_id))
+
+    @expose('/reject')
+    def reject(self):
+        user_id = request.args.get('user_id')
+        User.get(id=user_id).set_state(STATE_REJECTED)
+        flash.warn("User #%s has been rejected." % user_id)
+        return redirect(url_for('.details', user_id=user_id))
+
+    @expose('/revoke-token')
+    def revoke_token(self):
+        token_value = request.args.get('token_value')
+        token = Token.get(value=token_value)
+        token.revoke()
+        flash.info("Token %s has been revoked." % token_value)
+        return redirect(url_for('.details', user_id=token.owner))
 
 
 class TokensView(BaseView):

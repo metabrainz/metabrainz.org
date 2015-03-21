@@ -115,6 +115,14 @@ class User(db.Model, UserMixin):
         else:
             raise InactiveUserException
 
+    def set_state(self, state):
+        old_state = self.state
+        self.state = state
+        db.session.commit()
+        if old_state != self.state:
+            # TODO: Send this user email notification about state changes.
+            pass
+
 
 def send_user_signup_notification(user):
     """Send notification to admin about new signed up commercial user."""
