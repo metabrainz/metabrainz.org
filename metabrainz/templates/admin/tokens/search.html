@@ -1,0 +1,39 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h1>Tokens</h1>
+
+  <h3>Search</h3>
+  <form method="GET" class="form-horizontal" role="form">
+    <input id="input-value" name="value" class="form-control" placeholder="Value" {{ 'value='+value if value }}>
+    <button type="submit" class="btn btn-default">Search</button>
+  </form>
+
+  {% if value %}
+    <hr />
+    {% if results %}
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Value</th>
+          <th>Active</th>
+          <th>Owner ID</th>
+          <th>Created on</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for token in results %}
+          <tr>
+            <td>{{ token.value }}</td>
+            <td>{{ token.is_active }}</td>
+            <td><a href="{{ url_for('usersview.details', user_id=token.owner) }}">{{ token.owner }}</a></td>
+            <td>{{ token.created }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      No tokens found.
+    {% endif %}
+  {% endif %}
+
+{% endblock %}
