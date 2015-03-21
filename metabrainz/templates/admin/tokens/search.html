@@ -14,8 +14,8 @@
       <table class="table table-hover">
         <thead>
         <tr>
+          <th>{# is_active #}</th>
           <th>Value</th>
-          <th>Active</th>
           <th>Owner ID</th>
           <th>Created on</th>
         </tr>
@@ -23,8 +23,14 @@
         <tbody>
         {% for token in results %}
           <tr>
+            <td>
+              {% if token.is_active %}
+                <span class="label label-success">active</span>
+              {% else %}
+                <span class="label label-danger">revoked</span>
+              {% endif %}
+            </td>
             <td>{{ token.value }}</td>
-            <td>{{ token.is_active }}</td>
             <td><a href="{{ url_for('usersview.details', user_id=token.owner) }}">{{ token.owner }}</a></td>
             <td>{{ token.created }}</td>
           </tr>
