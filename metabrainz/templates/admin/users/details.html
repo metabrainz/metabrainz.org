@@ -44,10 +44,18 @@
 
   {% if user.state == 'pending' %}
     <div>
-      <a href="{{ url_for('usersview.approve', user_id=user.id) }}"
-         class="btn btn-success" role="button">Approve</a>
-      <a href="{{ url_for('usersview.reject', user_id=user.id) }}"
-         class="btn btn-danger" role="button">Reject</a>
+      <p>
+        <a href="{{ url_for('usersview.approve', user_id=user.id) }}"
+           class="btn btn-success" role="button">Approve</a>
+        <a href="{{ url_for('usersview.reject', user_id=user.id) }}"
+           class="btn btn-danger" role="button">Reject</a>
+      </p>
+      <p class="text-muted">
+        <em>
+          You will be redirected to the next pending user after approving
+          or rejecting this one.
+        </em>
+      </p>
     </div>
   {% endif %}
 
