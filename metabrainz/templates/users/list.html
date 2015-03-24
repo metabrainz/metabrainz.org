@@ -44,7 +44,7 @@
               {{ user.description }}
               {% if not user.good_standing %}
                 <p class="text-danger">
-                  <em>This user is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
+                  <em>This customer is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
                 </p>
               {% endif %}
             </td>
@@ -54,7 +54,7 @@
       </table>
 
       <p><em><a href="{{ url_for('users.tier', tier_id=tier.id) }}">
-        View {{ 'other users and ' if tier.users.count() > featured_users|length }}additional info about this tier
+        View {{ 'other customers and ' if tier.users.count() > featured_users|length }}additional info about this tier
       </a></em></p>
     {% endif %}
 
