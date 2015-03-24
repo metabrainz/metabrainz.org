@@ -24,14 +24,27 @@ class UsersView(BaseView):
         user_id = request.args.get('user_id')
         User.get(id=user_id).set_state(STATE_ACTIVE)
         flash.info("User #%s has been approved." % user_id)
-        return redirect(url_for('.details', user_id=user_id))
+
+        # Redirecting to the next pending user
+        next_user = User.get(state=STATE_PENDING)
+        if next_user:
+            return redirect(url_for('.details', user_id=next_user.id))
+        else:
+            return redirect(url_for('.index'))
+
 
     @expose('/reject')
     def reject(self):
         user_id = request.args.get('user_id')
         User.get(id=user_id).set_state(STATE_REJECTED)
         flash.warn("User #%s has been rejected." % user_id)
-        return redirect(url_for('.details', user_id=user_id))
+
+        # Redirecting to the next pending user
+        next_user = User.get(state=STATE_PENDING)
+        if next_user:
+            return redirect(url_for('.details', user_id=next_user.id))
+        else:
+            return redirect(url_for('.index'))
 
     @expose('/revoke-token')
     def revoke_token(self):
