@@ -4,6 +4,12 @@
 
   <h3>Details</h3>
 
+  {% if user.org_logo_url %}
+    <div class="pull-right">
+      <img src="{{ user.org_logo_url }}" style="max-width: 104px" />
+    </div>
+  {% endif %}
+
   <div>
     <dl class="dl-horizontal">
       <dt>ID</dt><dd>{{ user.id }}</dd>
