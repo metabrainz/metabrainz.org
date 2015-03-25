@@ -10,7 +10,7 @@ class Token(db.Model):
 
     value = db.Column(db.String, primary_key=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
-    owner = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL", onupdate="CASCADE"))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL", onupdate="CASCADE"))
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
 
     @classmethod
@@ -45,13 +45,13 @@ class Token(db.Model):
         return new_token.value
 
     @classmethod
-    def revoke_tokens(cls, owner):
+    def revoke_tokens(cls, owner_id):
         """Revokes all tokens owned by a specified user.
 
         Args:
-            owner: ID of a user.
+            owner_id: ID of a user.
         """
-        db.session.query(cls).filter(cls.owner == owner) \
+        db.session.query(cls).filter(cls.owner_id == owner_id) \
             .update({'is_active': False})
         db.session.commit()
 

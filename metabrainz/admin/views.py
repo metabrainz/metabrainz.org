@@ -15,7 +15,7 @@ class UsersView(BaseView):
     @expose('/<int:user_id>')
     def details(self, user_id):
         user = User.get(id=user_id)
-        active_tokens = Token.get_all(owner=user.id, is_active=True)
+        active_tokens = Token.get_all(owner_id=user.id, is_active=True)
         return self.render('admin/users/details.html', user=user,
                            active_tokens=active_tokens)
 
@@ -51,7 +51,7 @@ class UsersView(BaseView):
         token = Token.get(value=token_value)
         token.revoke()
         flash.info("Token %s has been revoked." % token_value)
-        return redirect(url_for('.details', user_id=token.owner))
+        return redirect(url_for('.details', user_id=token.owner_id))
 
 
 class TokensView(BaseView):

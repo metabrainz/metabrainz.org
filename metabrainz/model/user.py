@@ -51,11 +51,20 @@ class User(db.Model, UserMixin):
     good_standing = db.Column(db.Boolean, nullable=False, default=True)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 
-    tokens = db.relationship("Token", backref='user', lazy="dynamic")
+    tokens = db.relationship("Token", backref='owner', lazy="dynamic")
+
+    def __unicode__(self):
+        if self.is_commercial:
+            return "%s (#%s)" % (self.org_name, self.id)
+        else:
+            if self.musicbrainz_id:
+                return "#%s (MBID: %s)" % (self.id, self.musicbrainz_id)
+            else:
+                return str(self.id)
 
     @property
     def token(self):
-        return Token.get(owner=self.id, is_active=True)
+        return Token.get(owner_id=self.id, is_active=True)
 
     @classmethod
     def add(cls, **kwargs):
