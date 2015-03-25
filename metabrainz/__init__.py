@@ -68,17 +68,17 @@ def create_app():
     admin = Admin(app, name='BDFLs only!')
 
     # Models
-    from metabrainz.model.tier import TierAdminView
     from metabrainz.model.user import UserAdminView
     from metabrainz.model.donation import DonationAdminView
-    admin.add_view(TierAdminView(db.session, category='Database'))
-    admin.add_view(UserAdminView(db.session, category='Database'))
-    admin.add_view(DonationAdminView(db.session, category='Database'))
+    from metabrainz.model.tier import TierAdminView
+    admin.add_view(UserAdminView(db.session))
+    admin.add_view(DonationAdminView(db.session))
+    admin.add_view(TierAdminView(db.session))
 
     # Custom stuff
     from metabrainz.admin.views import UsersView
     from metabrainz.admin.views import TokensView
-    admin.add_view(UsersView(name='Users'))
+    admin.add_view(UsersView(name='Pending users'))
     admin.add_view(TokensView(name='Access tokens'))
 
     return app
