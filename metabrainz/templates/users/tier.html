@@ -34,7 +34,7 @@
               {% if user.website_url %}</a>{% endif %}
             </td>
             <td>
-              {{ user.description }}
+              {{ user.long_descr }}
               {% if not user.good_standing %}
                 <p class="text-danger">
                   <em>This user is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>

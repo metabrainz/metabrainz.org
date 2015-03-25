@@ -32,7 +32,10 @@ class User(db.Model, UserMixin):
                       nullable=False)
     contact_name = db.Column(db.Unicode, nullable=False)
     contact_email = db.Column(db.Unicode, nullable=False)
-    description = db.Column(db.Unicode)  # Description of how data is being used by this user
+
+    # Description of how data is being used by this user
+    short_descr = db.Column(db.Unicode)
+    long_descr = db.Column(db.Unicode)
 
     # Columns specific to commercial users:
     org_name = db.Column(db.Unicode)
@@ -165,7 +168,7 @@ def send_user_signup_notification(user):
             ('Tier', '#%s' % user.tier),
             ('Payment method', user.payment_method),
 
-            ('Usage description', user.description),
+            ('Usage description', user.short_descr),
         ]),
         recipients=current_app.config['ADMINS'],
     )
@@ -180,6 +183,8 @@ class UserAdminView(AdminView):
         id='ID',
         is_commercial='Commercial',
         musicbrainz_id='MusicBrainz ID',
+        short_descr='Short description',
+        long_descr='Long description',
         org_logo_url='Logo URL',
         website_url='Homepage URL',
         api_url='API page URL',
@@ -192,7 +197,7 @@ class UserAdminView(AdminView):
         address_country='Country',
     )
     column_descriptions = dict(
-        description='How organization uses MetaBrainz projects',
+        short_descr='How organization uses MetaBrainz projects',
     )
     column_list = (
         'is_commercial', 'musicbrainz_id', 'org_name', 'tier', 'featured',
@@ -200,8 +205,8 @@ class UserAdminView(AdminView):
     )
     form_columns = (
         'org_name', 'tier', 'good_standing', 'featured', 'org_logo_url', 'website_url',
-        'description', 'api_url', 'contact_name', 'contact_email', 'address_street',
-        'address_city', 'address_state', 'address_postcode', 'address_country',
+        'short_descr', 'long_descr', 'api_url', 'contact_name', 'contact_email',
+        'address_street', 'address_city', 'address_state', 'address_postcode', 'address_country',
         'is_commercial', 'musicbrainz_id', 'state',
     )
 

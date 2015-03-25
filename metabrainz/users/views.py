@@ -90,7 +90,7 @@ def signup_commercial():
             musicbrainz_id=mb_username,
             contact_name=form.contact_name.data,
             contact_email=form.contact_email.data,
-            description=form.description.data,
+            short_descr=form.description.data,
 
             org_name=form.org_name.data,
             website_url=form.website_url.data,
@@ -130,7 +130,7 @@ def signup_non_commercial():
             musicbrainz_id=mb_username,
             contact_name=form.contact_name.data,
             contact_email=form.contact_email.data,
-            description=form.description.data,
+            short_descr=form.description.data,
         )
         login_user(new_user)
         flash.success("Thanks for signing up!")
