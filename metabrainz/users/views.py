@@ -10,22 +10,22 @@ from metabrainz import flash, session
 users_bp = Blueprint('users', __name__)
 
 
-@users_bp.route('/')
-def index():
+@users_bp.route('/customers')
+def customers_list():
     return render_template('users/list.html', tiers=Tier.get_all())
 
 
-@users_bp.route('/bad')
+@users_bp.route('/customers/bad')
 def bad_standing():
     return render_template('users/bad-standing.html')
 
 
-@users_bp.route('/tiers/')
+@users_bp.route('/customers/tiers/')
 def tiers():
     return render_template('users/tiers.html', tiers=Tier.get_all())
 
 
-@users_bp.route('/tiers/<tier_id>')
+@users_bp.route('/customers/tiers/<tier_id>')
 def tier(tier_id):
     t = Tier.get(id=tier_id)
     if t is None:
@@ -33,7 +33,7 @@ def tier(tier_id):
     return render_template('users/tier.html', tier=t)
 
 
-@users_bp.route('/signup/')
+@users_bp.route('/signup')
 @login_forbidden
 def signup():
     mb_username = session.fetch_data('mb_username')
@@ -55,7 +55,7 @@ def signup_tier_selection():
         return render_template('users/signup.html')
 
 
-@users_bp.route('/signup/commercial/', methods=('GET', 'POST'))
+@users_bp.route('/signup/commercial', methods=('GET', 'POST'))
 @login_forbidden
 def signup_commercial():
     """Sign up endpoint for commercial users.
@@ -113,7 +113,7 @@ def signup_commercial():
     return render_template("users/signup-commercial.html", form=form, tier=tier)
 
 
-@users_bp.route('/signup/non-commercial/', methods=('GET', 'POST'))
+@users_bp.route('/signup/non-commercial', methods=('GET', 'POST'))
 @login_forbidden
 def signup_non_commercial():
     """Sign up endpoint for non-commercial users."""
@@ -166,7 +166,7 @@ def musicbrainz_post():
         return redirect(url_for('.signup'))
 
 
-@users_bp.route('/profile/')
+@users_bp.route('/profile')
 @login_required
 def profile():
     return render_template("users/profile.html")
@@ -181,13 +181,13 @@ def regenerate_token():
         raise BadRequest("Can't generate new token unless account is active.")
 
 
-@users_bp.route('/login/')
+@users_bp.route('/login')
 @login_forbidden
 def login():
     return render_template('users/login.html')
 
 
-@users_bp.route('/logout/')
+@users_bp.route('/logout')
 @login_required
 def logout():
     logout_user()

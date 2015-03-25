@@ -45,7 +45,7 @@
               <ul>
                 <li><a href="{{ url_for('index.privacy_policy') }}">Privacy Policy</a></li>
                 <li><a href="{{ url_for('index.sponsors') }}">Sponsors</a></li>
-                <li><a href="{{ url_for('users.index') }}">Customers</a></li>
+                <li><a href="{{ url_for('users.customers_list') }}">Customers</a></li>
               </ul>
             </div>
             <div class="col-sm-3">
@@ -56,7 +56,7 @@
               </ul>
             </div>
             <div class="col-sm-3">
-              <div class="title"><a href="{{ url_for('users.index') }}">Users</a></div>
+              <div class="title"><a href="{{ url_for('users.customers_list') }}">Users</a></div>
               <ul>
                 {% if not current_user or current_user.is_anonymous() %}
                   <li><a href="{{ url_for('users.signup') }}">Sign up</a></li>
