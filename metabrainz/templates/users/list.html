@@ -5,62 +5,44 @@
 {% block content %}
   <h1>Customers</h1>
 
-  {# TODO: Update text on this page. #}
-
-  <p><b>
-    You can sign up to one of the tiers listed below at
-    <a href="{{ url_for('users.tiers') }}">the tiers page</a>.
-  </b></p>
-
   <p>
     The following customers license our data and use
     <a href="http://musicbrainz.user/doc/MusicBrainz_Identifier">MusicBrainz Identifiers</a>
-    (MBIDs) for their own operations. This list does not include any individuals/companies
-    that are using our Public Domain/Creative Commons data snapshots – there are many users
-    of this data beyond the licensees listed here:
+    for their own operations. This list does not include any individuals/companies that are
+    using our Public Domain/Creative Commons data snapshots – there are many users of this data
+    beyond the licensees listed here:
   </p>
 
-  <div id="customers">
-  {% for tier in tiers|reverse %}
-
-    {% set featured_users = tier.get_featured_users() %}
-    {% if featured_users|length > 0 %}
-      <h2>{{ tier.name }} tier</h2>
-      <p class="text-muted"><em>{{ tier.short_desc }}</em></p>
-      <table class="table">
-
-        {% for user in featured_users %}
-          <tr {{ 'class=danger' if not user.good_standing }}>
-            <td>
-              {% if user.website_url %}<a href="{{ user.website_url }}">{% endif %}
-                {% if user.org_logo_url %}
-                  <img src="{{ user.org_logo_url }}"/>
-                {% else %}
-                  {{ user.org_name }}
+  <div id="customers-list">
+    {% for tier in tiers|reverse %}
+      {% set featured_users = tier.get_featured_users() %}
+      {% if featured_users|length > 0 %}
+        <h2>{{ tier.name }} tier</h2>
+        <div class="row">
+          {% for user in featured_users %}
+            <div class="col-md-3 customer">
+              <a href="{{ url_for('users.tier', tier_id=tier.id) }}">
+                <div class="logo">
+                  {% if user.org_logo_url %}
+                    <img src="{{ user.org_logo_url }}"/>
+                  {% else %}
+                    {{ user.org_name }}
+                  {% endif %}
+                </div>
+                {% if user.short_descr %}
+                  <div class="description">{{ user.short_descr }}</div>
                 {% endif %}
-              {% if user.website_url %}</a>{% endif %}
-            </td>
-            <td>
-              {{ user.description }}
-              {% if not user.good_standing %}
-                <p class="text-danger">
-                  <em>This customer is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
-                </p>
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-
-      </table>
-
-      <p><em><a href="{{ url_for('users.tier', tier_id=tier.id) }}">
-        View {{ 'other customers and ' if tier.users.count() > featured_users|length }}additional info about this tier
-      </a></em></p>
-    {% endif %}
-
-  {% endfor %}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
   </div>
 
-  <br /><p>Do you know of others using the MusicBrainz data? If so please, contact us and let us know.</p>
+  <p class="text-muted">
+    Do you know of others using the MusicBrainz data?
+    If so please, contact us and let us know.
+  </p>
 
 {% endblock %}
