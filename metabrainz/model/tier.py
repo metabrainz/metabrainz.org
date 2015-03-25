@@ -9,8 +9,8 @@ class Tier(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode, nullable=False)
-    short_desc = db.Column(db.Unicode)
-    long_desc = db.Column(db.Unicode)
+    short_desc = db.Column(db.UnicodeText)
+    long_desc = db.Column(db.UnicodeText)
     price = db.Column(db.Numeric(11, 2), nullable=False)  # per month
 
     # Indicates if users can sign up to that on their own

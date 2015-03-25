@@ -34,8 +34,8 @@ class User(db.Model, UserMixin):
     contact_email = db.Column(db.Unicode, nullable=False)
 
     # Description of how data is being used by this user
-    short_descr = db.Column(db.Unicode)
-    long_descr = db.Column(db.Unicode)
+    short_descr = db.Column(db.UnicodeText)
+    long_descr = db.Column(db.UnicodeText)
 
     # Columns specific to commercial users:
     org_name = db.Column(db.Unicode)
