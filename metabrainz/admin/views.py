@@ -1,4 +1,4 @@
-from flask_admin import Admin, BaseView, expose
+from flask_admin import BaseView, expose
 from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED
 from metabrainz.model.token import Token
 from metabrainz import flash
@@ -31,7 +31,6 @@ class UsersView(BaseView):
             return redirect(url_for('.details', user_id=next_user.id))
         else:
             return redirect(url_for('.index'))
-
 
     @expose('/reject')
     def reject(self):
