@@ -65,7 +65,7 @@ def create_app():
     # ADMIN SECTION
 
     from flask_admin import Admin
-    admin = Admin(app, name='BDFLs only!')
+    admin = Admin(app, name='BDFL Zone - MetaBrainz')
 
     # Models
     from metabrainz.model.user import UserAdminView
