@@ -153,7 +153,7 @@ def send_user_signup_notification(user):
             ('Postal code', user.address_postcode),
             ('Country', user.address_country),
 
-            ('Tier', '#%s' % user.tier_id),  # TODO: Send name of the tier as well
+            ('Tier', '#%s' % user.tier),
             ('Payment method', user.payment_method),
 
             ('Usage description', user.description),

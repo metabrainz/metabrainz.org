@@ -24,7 +24,7 @@ class Tier(db.Model):
     users = db.relationship("User", backref='tier', lazy="dynamic")
 
     def __unicode__(self):
-        return self.name
+        return "%s (#%s)" % (self.name, self.id)
 
     @classmethod
     def get(cls, **kwargs):
