@@ -119,8 +119,16 @@ class User(db.Model, UserMixin):
         self.state = state
         db.session.commit()
         if old_state != self.state:
-            # TODO: Send this user email notification about state changes.
-            pass
+            # TODO: Send additional info about new state.
+            state_name = "ACTIVE" if self.state == STATE_ACTIVE else \
+                         "REJECTED" if self.state == STATE_REJECTED else \
+                         "PENDING" if self.state == STATE_PENDING else \
+                         self.state
+            send_mail(
+                subject="[MetaBrainz] Your account has been updated",
+                text='State of your MetaBrainz account has been changed to "%s".' % state_name,
+                recipients=[self.contact_email],
+            )
 
 
 def send_user_signup_notification(user):
