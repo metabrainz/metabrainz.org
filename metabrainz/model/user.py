@@ -76,7 +76,7 @@ class User(db.Model, UserMixin):
             musicbrainz_id=kwargs.pop('musicbrainz_id'),
             contact_name=kwargs.pop('contact_name'),
             contact_email=kwargs.pop('contact_email'),
-            description=kwargs.pop('description'),
+            long_descr=kwargs.pop('long_descr'),
 
             org_name=kwargs.pop('org_name', None),
             org_logo_url=kwargs.pop('org_logo_url', None),
