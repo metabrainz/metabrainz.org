@@ -9,8 +9,7 @@
 
   <p class="text-center">
     {% if tier.available %}
-    <a href="{{ url_for('users.signup') }}"
-       class="btn btn-primary btn-lg" role="button">Sign up</a>
+      <a href="{{ url_for('users.signup') }}">Sign up for this tier</a>
     {% else %}
       <em class="text-muted">You need to contact us if you want to sign up to this tier.</em>
     {% endif %}
@@ -18,12 +17,11 @@
 
   {% set users = tier.users.all() %}
   {% if users|length > 0 %}
-    <h3>Users on this tier</h3>
-    <div id="customers">
+    <h3>Customers on this tier</h3>
+     <div id="customers">
       <table class="table">
-
         {% for user in users %}
-          <tr {{ 'class=danger' if not user.good_standing }}>
+          <tr>
             <td>
               {% if user.website_url %}<a href="{{ user.website_url }}">{% endif %}
               {% if user.org_logo_url %}
@@ -34,18 +32,31 @@
               {% if user.website_url %}</a>{% endif %}
             </td>
             <td>
-              {{ user.long_descr }}
+              <p>
+                {% if user.long_descr %}
+                  {{ user.long_descr }}
+                {% else %}
+                  {{ user.short_descr }}
+                {% endif %}
+              </p>
               {% if not user.good_standing %}
                 <p class="text-danger">
-                  <em>This user is in <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
+                  <em>This user is has a <a href="{{ url_for('users.bad_standing') }}">bad standing</a>.</em>
                 </p>
               {% endif %}
             </td>
           </tr>
         {% endfor %}
-
       </table>
     </div>
   {% endif %}
+
+  <p class="text-center">
+    {% if tier.available %}
+      <a href="{{ url_for('users.signup') }}">Sign up for this tier</a>
+    {% else %}
+      <em class="text-muted">You need to contact us if you want to sign up to this tier.</em>
+    {% endif %}
+  </p>
 
 {% endblock %}
