@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Profile - MetaBrainz Foundation{% endblock %}
+{% block title %}Your Profile - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1>Profile</h1>
+  <h1>Your Profile</h1>
 
   <p>
     <strong>Type:</strong>
@@ -16,6 +16,17 @@
                     'text-warning' }}">
         {{ current_user.state|upper }}
     </span>
+  </p>
+
+  <h3>Contact information</h3>
+  <p>
+    <strong>Name:</strong> {{ current_user.contact_name }}<br />
+    <strong>Email:</strong> {{ current_user.contact_email }}<br />
+  </p>
+  <p>
+    <a href="{{ url_for('users.profile_edit') }}" class="btn btn-xs btn-primary">
+      Edit contact information
+    </a>
   </p>
 
   {% if current_user.state == 'active' %}

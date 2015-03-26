@@ -1,5 +1,5 @@
 from flask_wtf import Form, RecaptchaField
-from wtforms import StringField, TextAreaField, RadioField, BooleanField
+from wtforms import StringField, BooleanField, TextAreaField, RadioField, validators
 from wtforms.fields.html5 import EmailField, URLField
 from wtforms.validators import DataRequired
 
@@ -50,3 +50,15 @@ class CommercialSignUpForm(UserSignUpForm):
             ("bitcoin", "Bitcoin"),
         ],
         validators=[DataRequired(message="You need to choose a payment method!")])
+
+
+class UserEditForm(Form):
+    """User profile editing form."""
+    contact_name = StringField("Name", [
+        validators.DataRequired(message="Contact name field is empty."),
+    ])
+    contact_email = EmailField("Email", [
+        validators.Optional(strip_whitespace=False),
+        validators.Email(message="Email field is not a valid email address."),
+        validators.DataRequired(message="Contact email field is empty."),
+    ])

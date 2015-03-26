@@ -4,7 +4,7 @@ from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
 from metabrainz.users import musicbrainz_login, login_forbidden
-from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm
+from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, UserEditForm
 from metabrainz import flash, session
 
 users_bp = Blueprint('users', __name__)
@@ -170,6 +170,23 @@ def musicbrainz_post():
 @login_required
 def profile():
     return render_template("users/profile.html")
+
+
+@users_bp.route('/profile/edit', methods=['GET', 'POST'])
+@login_required
+def profile_edit():
+    form = UserEditForm()
+    if form.validate_on_submit():
+        current_user.update(
+            contact_name=form.contact_name.data,
+            contact_email=form.contact_email.data,
+        )
+        flash.success("Profile updated.")
+        return redirect(url_for('.profile'))
+    else:
+        form.contact_name.data = current_user.contact_name
+        form.contact_email.data = current_user.contact_email
+    return render_template('users/edit.html', form=form)
 
 
 @users_bp.route('/profile/regenerate-token', methods=['POST'])

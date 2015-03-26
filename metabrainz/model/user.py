@@ -126,6 +126,17 @@ class User(db.Model, UserMixin):
         else:
             raise InactiveUserException
 
+    def update(self, **kwargs):
+        contact_name = kwargs.pop('contact_name')
+        if contact_name is not None:
+            self.contact_name = contact_name
+        contact_email = kwargs.pop('contact_email')
+        if contact_email is not None:
+            self.contact_email = contact_email
+        if kwargs:
+            raise TypeError('Unexpected **kwargs: %r' % kwargs)
+        db.session.commit()
+
     def set_state(self, state):
         old_state = self.state
         self.state = state
