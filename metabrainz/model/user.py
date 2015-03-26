@@ -185,11 +185,13 @@ class UserAdminView(AdminView):
         musicbrainz_id='MusicBrainz ID',
         short_descr='Short description',
         long_descr='Long description',
-        org_logo_url='Logo URL',
-        website_url='Homepage URL',
-        api_url='API page URL',
+        good_standing='Good standing',
+        org_name='Organization name',
+        org_logo_url='Organization logo URL',
+        website_url='Organization homepage URL',
+        api_url='Organization API page URL',
         contact_name='Contact name',
-        email='Email',
+        contact_email='Email',
         address_street='Street',
         address_city='City',
         address_state='State',
@@ -197,17 +199,38 @@ class UserAdminView(AdminView):
         address_country='Country',
     )
     column_descriptions = dict(
-        short_descr='How organization uses MetaBrainz projects',
+        featured='Indicates if this user is publicly displayed on the website. '
+                 'If this is set, make sure to fill up information like '
+                 'organization name, logo URL, descriptions, etc.',
+        short_descr='Short description of how our products are being used by '
+                    'this user. Usually one sentence.',
+        long_descr='Long description if how our products are being used by this user.',
+        tier='Optional tier that is used only for commercial users.',
     )
     column_list = (
         'is_commercial', 'musicbrainz_id', 'org_name', 'tier', 'featured',
         'good_standing', 'state',
     )
     form_columns = (
-        'org_name', 'tier', 'good_standing', 'featured', 'org_logo_url', 'website_url',
-        'short_descr', 'long_descr', 'api_url', 'contact_name', 'contact_email',
-        'address_street', 'address_city', 'address_state', 'address_postcode', 'address_country',
-        'is_commercial', 'musicbrainz_id', 'state',
+        'musicbrainz_id',
+        'contact_name',
+        'contact_email',
+        'state',
+        'is_commercial',
+        'good_standing',
+        'tier',
+        'org_name',
+        'org_logo_url',
+        'website_url',
+        'api_url',
+        'short_descr',
+        'long_descr',
+        'featured',
+        'address_street',
+        'address_city',
+        'address_state',
+        'address_postcode',
+        'address_country',
     )
 
     def __init__(self, session, **kwargs):
