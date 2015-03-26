@@ -64,11 +64,13 @@
         {% for user in featured_users %}
           <div class="col-sm-3">
             <span>
-              {% if user.org_logo_url %}
-                <img src="{{ user.org_logo_url }}"/>
-              {% else %}
-                {{ user.org_name }}
-              {% endif %}
+              <a href="{{ url_for('users.tier', tier_id=user.tier_id) }}">
+                {% if user.org_logo_url %}
+                  <img src="{{ user.org_logo_url }}"/>
+                {% else %}
+                  {{ user.org_name }}
+                {% endif %}
+              </a>
             </span>
           </div>
         {% endfor %}
