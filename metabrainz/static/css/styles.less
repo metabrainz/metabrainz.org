@@ -218,20 +218,32 @@ img.pull-right { padding-left: 15px; }
 
 #customers-list {
   margin-bottom: 30px;
-  .customer {
-    .logo {
-      height: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      img { max-height: 98px; }
-    }
-    .description {
-      font-size: 12px;
-    }
-    a:hover {
-      text-decoration: none;
+  .customers-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    .customer {
+      width: 180px;
+      padding-left: 15px;
+      padding-right: 15px;
+      .logo-container {
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        .name {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+        }
+        .logo {
+          max-height: 98px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+      .description { font-size: 12px; }
+      a:hover { text-decoration: none; }
     }
   }
 }

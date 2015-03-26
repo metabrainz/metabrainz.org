@@ -18,15 +18,15 @@
       {% set featured_users = tier.get_featured_users() %}
       {% if featured_users|length > 0 %}
         <h2>{{ tier.name }} tier</h2>
-        <div class="row">
+        <div class="customers-container">
           {% for user in featured_users %}
-            <div class="col-md-3 customer">
+            <div class="customer">
               <a href="{{ url_for('users.tier', tier_id=tier.id) }}">
-                <div class="logo">
+                <div class="logo-container">
                   {% if user.org_logo_url %}
-                    <img src="{{ user.org_logo_url }}"/>
+                    <img class="logo" src="{{ user.org_logo_url }}"/>
                   {% else %}
-                    {{ user.org_name }}
+                    <div class="name">{{ user.org_name }}</div>
                   {% endif %}
                 </div>
                 {% if user.short_descr %}
