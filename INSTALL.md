@@ -28,10 +28,15 @@ of Linux.**
 2. Modify the server configuration file
 
     $ cp metabrainz/config.py.example metabrainz/config.py
+    
+#### Database
 
 First modify the URI of your primary database (*SQLALCHEMY_DATABASE_URI*).
 It should be similar to the provided example. We tested this application with
 PostgreSQL and there's no guarantee that it will work with some other DBMS.
+
+
+#### Payments
 
 Next is configuration of the payment systems. We use PayPal and WePay to accept
 donations to our foundation. For WePay you need to set your access token
@@ -43,6 +48,15 @@ payments sent there will be ignored.
 After these settings have been set and you are sure that your configuration
 is working properly with in test mode, you can flip the switch (set *DEBUG* to
 ``False`` and *PAYMENT_PRODUCTION* to ``True``.
+
+#### MusicBrainz OAuth
+
+To allow users to log in, you'll need to set two keys: ``MUSICBRAINZ_CLIENT_ID``
+and ``MUSICBRAINZ_CLIENT_SECRET``. To obtain these keys, you need to register
+your instance of MetaBrainz.org on MusicBrainz at
+https://musicbrainz.org/account/applications/register.  Set Callback URL field
+to ``http://<your domain>/login/musicbrainz/post``. If you run server locally,
+replace ``<your domain>`` with ``127.0.0.1:8080``.
 
 ### Python dependencies
 
