@@ -13,12 +13,13 @@ class Tier(db.Model):
     long_desc = db.Column(db.UnicodeText)
     price = db.Column(db.Numeric(11, 2), nullable=False)  # per month
 
-    # Indicates if users can sign up to that on their own
+    # Users can sign up only to available tiers on their own. If tier is not
+    # available, it should be hiden from the website.
     available = db.Column(db.Boolean, nullable=False, default=False)
 
-    # Primary tiers are shown on the signup page. Secondary plans (along with
-    # repeating primary plans) are listed on the "view all tiers" page that
-    # lists everything.
+    # Primary tiers are shown first on the signup page. Secondary plans (along
+    # with repeating primary plans) are listed on the "view all tiers" page
+    # that lists all available tiers.
     primary = db.Column(db.Boolean, nullable=False, default=False)
 
     users = db.relationship("User", backref='tier', lazy="dynamic")
@@ -31,14 +32,15 @@ class Tier(db.Model):
         return cls.query.filter_by(**kwargs).first()
 
     @classmethod
-    def get_all(cls):
-        """Returns list of all tiers sorted by price."""
-        return cls.query.order_by(cls.price).all()
+    def get_available(cls, sort=False):
+        """Returns list of tiers that are available for sign up.
 
-    @classmethod
-    def get_available(cls):
-        """Returns list of tiers that are available for sign up."""
-        return cls.query.filter(cls.available == True).all()
+        You can also sort returned list by price of the tier.
+        """
+        query = cls.query.filter(cls.available == True)
+        if sort:
+            query = query.order_by(cls.price)
+        return query.all()
 
     def get_featured_users(self):
         return self.users.filter(User.featured == True).all()
@@ -54,8 +56,9 @@ class TierAdminView(AdminView):
     )
     column_descriptions = dict(
         price='USD',
-        primary='Primary tiers are displayed first',
-        available='Indicates if organizations can sign up to that tier on their own',
+        primary="Primary tiers are displayed first on tier selection pages.",
+        available="Indicates if users can sign up to that tier on their own. "
+                  "Tier will be hidden from the website if it's not available.",
     )
     column_list = ('id', 'name', 'price', 'primary', 'available',)
     form_columns = ('name', 'price', 'short_desc', 'long_desc', 'primary', 'available',)

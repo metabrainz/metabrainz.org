@@ -7,13 +7,7 @@
 
   <p>{{ tier.long_desc }}</p>
 
-  <p class="text-center">
-    {% if tier.available %}
-      <a href="{{ url_for('users.signup') }}">Sign up for this tier</a>
-    {% else %}
-      <em class="text-muted">You need to contact us if you want to sign up to this tier.</em>
-    {% endif %}
-  </p>
+  <p class="text-center"><a href="{{ url_for('users.signup') }}">Sign up for this tier</a></p>
 
   {% set users = tier.users.all() %}
   {% if users|length > 0 %}
@@ -51,12 +45,6 @@
     </div>
   {% endif %}
 
-  <p class="text-center">
-    {% if tier.available %}
-      <a href="{{ url_for('users.signup') }}">Sign up for this tier</a>
-    {% else %}
-      <em class="text-muted">You need to contact us if you want to sign up to this tier.</em>
-    {% endif %}
-  </p>
+  <p class="text-center"><a href="{{ url_for('users.signup') }}">Sign up for this tier</a></p>
 
 {% endblock %}

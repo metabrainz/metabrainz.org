@@ -22,10 +22,8 @@
                   <div class="buttons">
                     <p><a href="{{ url_for('users.tier', tier_id=tier.id) }}"
                           class="btn btn-default btn-block" role="button">More info</a></p>
-                    {% if tier.available %}
-                      <p><a href="{{ url_for('users.signup', tier_id=tier.id) }}"
-                            class="btn btn-primary btn-block" role="button">Sign up</a></p>
-                    {% endif %}
+                    <p><a href="{{ url_for('users.signup', tier_id=tier.id) }}"
+                          class="btn btn-primary btn-block" role="button">Sign up</a></p>
                   </div>
                 </div>
               </div>
@@ -47,11 +45,9 @@
             <td>${{ tier.price }}/mo</td>
             <td>
               <a href="{{ url_for('users.tier', tier_id=tier.id) }}"
-                   class="btn btn-default btn-xs" role="button">More info</a>
-              {% if tier.available %}
-                <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
-                   class="btn btn-primary btn-xs" role="button">Sign up</a>
-              {% endif %}
+                 class="btn btn-default btn-xs" role="button">More info</a>
+              <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
+                 class="btn btn-primary btn-xs" role="button">Sign up</a>
             </td>
           </tr>
         {% endfor %}

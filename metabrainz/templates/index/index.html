@@ -64,7 +64,8 @@
         {% for user in featured_users %}
           <div class="col-sm-3">
             <span>
-              <a href="{{ url_for('users.tier', tier_id=user.tier_id) }}">
+              <a href="{{ url_for('users.tier', tier_id=user.tier_id) if user.tier and user.tier.available
+                          else url_for('users.customers_list') }}">
                 {% if user.org_logo_url %}
                   <img src="{{ user.org_logo_url }}"/>
                 {% else %}

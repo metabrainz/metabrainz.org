@@ -12,7 +12,7 @@ users_bp = Blueprint('users', __name__)
 
 @users_bp.route('/customers')
 def customers_list():
-    return render_template('users/list.html', tiers=Tier.get_all())
+    return render_template('users/list.html', tiers=Tier.get_available())
 
 
 @users_bp.route('/customers/bad')
@@ -22,13 +22,13 @@ def bad_standing():
 
 @users_bp.route('/customers/tiers/')
 def tiers():
-    return render_template('users/tiers.html', tiers=Tier.get_all())
+    return render_template('users/tiers.html', tiers=Tier.get_available(sort=True))
 
 
 @users_bp.route('/customers/tiers/<tier_id>')
 def tier(tier_id):
     t = Tier.get(id=tier_id)
-    if t is None:
+    if not t or not t.available:
         raise NotFound("Can't find tier with a specified ID.")
     return render_template('users/tier.html', tier=t)
 
@@ -68,14 +68,9 @@ def signup_commercial():
         flash.warn("You need to choose support tier before signing up!")
         return redirect(url_for('.signup_tier_selection'))
     tier = Tier.get(id=tier_id)
-    if not tier:
+    if not tier or not tier.available:
         flash.error("You need to choose existing support tier before signing up!")
         return redirect(url_for(".signup_tier_selection"))
-    if not tier.available:
-        flash.error("You can't sign up for this tier on your own. Please "
-                    "contact us if you want to do that.")
-        return redirect(url_for('.tier', tier_id=tier_id))
-
 
     mb_username = session.fetch_data('mb_username')
     if not mb_username:
