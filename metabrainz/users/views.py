@@ -12,7 +12,7 @@ users_bp = Blueprint('users', __name__)
 
 @users_bp.route('/customers')
 def customers_list():
-    return render_template('users/list.html', tiers=Tier.get_available())
+    return render_template('users/list.html', tiers=Tier.get_available(sort=True, sort_desc=True))
 
 
 @users_bp.route('/customers/bad')

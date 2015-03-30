@@ -32,14 +32,15 @@ class Tier(db.Model):
         return cls.query.filter_by(**kwargs).first()
 
     @classmethod
-    def get_available(cls, sort=False):
+    def get_available(cls, sort=False, sort_desc=False):
         """Returns list of tiers that are available for sign up.
 
         You can also sort returned list by price of the tier.
         """
         query = cls.query.filter(cls.available == True)
         if sort:
-            query = query.order_by(cls.price)
+            query = query.order_by(cls.price.desc()) if sort_desc else \
+                    query.order_by(cls.price.asc())
         return query.all()
 
     def get_featured_users(self):

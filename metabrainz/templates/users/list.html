@@ -14,7 +14,7 @@
   </p>
 
   <div id="customers-list">
-    {% for tier in tiers|reverse %}
+    {% for tier in tiers %}
       {% set featured_users = tier.get_featured_users() %}
       {% if featured_users|length > 0 %}
         <h2>{{ tier.name }} tier</h2>
