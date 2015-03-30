@@ -11,7 +11,7 @@
         <th>Contact name</th>
         <th>Contact email</th>
         <th>MusicBrainz ID</th>
-        <th>Tier ID</th>
+        <th>Tier</th>
         <th>Applied on</th>
       </tr>
       </thead>
@@ -21,7 +21,7 @@
           <td>{{ user.contact_name }}</td>
           <td>{{ user.contact_email }}</td>
           <td>{{ user.musicbrainz_id }}</td>
-          <td>{{ user.tier_id }}</td>{# TODO: Show name of the tier as well. #}
+          <td>{{ user.tier }}</td>
           <td>{{ user.created }}</td>
         </tr>
       {% endfor %}
