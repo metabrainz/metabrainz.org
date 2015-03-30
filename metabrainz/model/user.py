@@ -124,7 +124,7 @@ class User(db.Model, UserMixin):
         if self.state == STATE_ACTIVE:
             return Token.generate_token(self.id)
         else:
-            raise InactiveUserException
+            raise InactiveUserException("Can't generate token for inactive user.")
 
     def update(self, **kwargs):
         contact_name = kwargs.pop('contact_name')

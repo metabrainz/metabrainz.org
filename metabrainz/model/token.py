@@ -1,6 +1,6 @@
 from metabrainz.model import db
 from metabrainz.utils import generate_string
-from datetime import datetime
+from datetime import datetime, timedelta
 
 TOKEN_LENGTH = 40
 
@@ -26,18 +26,25 @@ class Token(db.Model):
         return cls.query.filter(cls.value.like('%'+value+'%')).all()
 
     @classmethod
-    def generate_token(cls, owner):
+    def generate_token(cls, owner_id):
         """Generates new token for a specified user and revokes all other
         tokens owned by this user.
 
         Returns:
             Value of the new token.
         """
-        cls.revoke_tokens(owner)
-        # TODO: Allow to generate only one token per hour.
+        last_hour_q = cls.query.filter(
+            cls.owner_id == owner_id,
+            cls.created > datetime.utcnow() - timedelta(hours=1),
+        )
+        if last_hour_q.count() > 0:
+            raise TokenGenerationLimitException("Can't generate more than one token per hour.")
+
+        cls.revoke_tokens(owner_id)
+
         new_token = cls(
             value=generate_string(TOKEN_LENGTH),
-            owner=owner,
+            owner_id=owner_id,
         )
         db.session.add(new_token)
         db.session.commit()
@@ -64,3 +71,7 @@ class Token(db.Model):
     def revoke(self):
         self.is_active = False
         db.session.commit()
+
+
+class TokenGenerationLimitException(Exception):
+    pass

@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
+from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.users import musicbrainz_login, login_forbidden
 from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, UserEditForm
 from metabrainz import flash, session
@@ -191,6 +192,8 @@ def regenerate_token():
         return jsonify({'token': current_user.generate_token()})
     except InactiveUserException:
         raise BadRequest("Can't generate new token unless account is active.")
+    except TokenGenerationLimitException as e:
+        return jsonify({'error': e.message}), 429  # https://tools.ietf.org/html/rfc6585#page-3
 
 
 @users_bp.route('/login')

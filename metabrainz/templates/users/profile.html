@@ -64,7 +64,13 @@
                 token.show();
                 ignoreConfirmation = false;
               },
-              error: function () { alert('Failed to generate new access token!'); }
+              error: function (jqXHR, textStatus, errorThrown) {
+                var msg = 'Failed to generate new access token!';
+                if (jqXHR.status == 429) {
+                  msg += '\n' + JSON.parse(jqXHR.responseText).error
+                }
+                alert(msg);
+              }
             });
           }
         });
