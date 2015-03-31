@@ -46,7 +46,7 @@ class AccessLog(db.Model):
             logging.info(msg)
             # Checking if notification for admins about this token abuse has
             # been sent in the last hour. This info is kept in memcached.
-            key = "notif_sentt_%s" % access_token
+            key = "notif_sent_%s" % access_token
             if not cache.get(key):
                 send_mail(
                     subject="[MetaBrainz] Hourly access threshold exceeded",
