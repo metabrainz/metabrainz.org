@@ -14,7 +14,7 @@ class Tier(db.Model):
     price = db.Column(db.Numeric(11, 2), nullable=False)  # per month
 
     # Users can sign up only to available tiers on their own. If tier is not
-    # available, it should be hiden from the website.
+    # available, it should be hidden from the website.
     available = db.Column(db.Boolean, nullable=False, default=False)
 
     # Primary tiers are shown first on the signup page. Secondary plans (along
