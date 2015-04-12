@@ -8,6 +8,5 @@ def reformat_datetime(value, format='%x %X %Z'):
 
 def generate_string(length):
     """Generates random string with a specified length."""
-    return ''.join([random.choice(string.ascii_letters.decode('ascii')
-                                  + string.digits.decode('ascii'))
-                    for _ in xrange(length)])
+    return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits)
+                   for _ in range(length))

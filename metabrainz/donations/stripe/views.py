@@ -38,7 +38,7 @@ def donate():
                 'can_contact': form.can_contact.data,
             },
         )
-    except stripe.CardError, e:
+    except stripe.CardError:
         # The card has been declined
         return redirect(url_for('donations.error'))
 

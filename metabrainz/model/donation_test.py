@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from metabrainz.testing import FlaskTestCase
-import donation
-from donation import Donation
-from stripe import convert_to_stripe_object
+from metabrainz.model import donation
+from metabrainz.model.donation import Donation
 from metabrainz.model import db
+from stripe import convert_to_stripe_object
 from flask import url_for, current_app
 
 

@@ -38,7 +38,7 @@ def create_app():
     app.jinja_env.filters['datetime'] = reformat_datetime
 
     # Error handling
-    from errors import init_error_handlers
+    from metabrainz.errors import init_error_handlers
     init_error_handlers(app)
 
     # Blueprints

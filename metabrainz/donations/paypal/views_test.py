@@ -1,7 +1,7 @@
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model.donation import Donation
 from flask import current_app, url_for
-import views
+from metabrainz.donations.paypal import views
 
 
 class FakeResponse(object):

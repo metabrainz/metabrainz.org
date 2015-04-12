@@ -1,6 +1,6 @@
 from flask_testing import TestCase
 from metabrainz import create_app
-from model import db
+from metabrainz.model import db
 
 
 class FlaskTestCase(TestCase):
