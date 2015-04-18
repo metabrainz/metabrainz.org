@@ -13,7 +13,7 @@ def compile_styling():
     found at http://lesscss.org/.
     """
     style_path = "metabrainz/static/css/"
-    local("lessc --clean-css %sstyles.less > %sstyles.css" % (style_path, style_path))
+    local("lessc --clean-css %smain.less > %smain.css" % (style_path, style_path))
     print(green("Style sheets have been compiled successfully.", bold=True))
 
 

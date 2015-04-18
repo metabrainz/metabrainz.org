@@ -10,12 +10,11 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-      <link href="https://fonts.googleapis.com/css?family=Bitter:700" rel="stylesheet" type="text/css" />
 
       {% if config.USE_COMPILED_STYLING %}
-        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen" />
       {% else %}
-        <link rel="stylesheet/less" type="text/css" href="{{ url_for('static', filename='css/styles.less') }}" />
+        <link rel="stylesheet/less" type="text/css" href="{{ url_for('static', filename='css/main.less') }}" />
         <script src="{{ url_for('static', filename='js/less-1.7.5.min.js') }}"></script>
       {% endif %}
     {% endblock %}

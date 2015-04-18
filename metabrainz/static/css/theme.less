@@ -1,0 +1,224 @@
+@import "bootstrap.less";
+@import "variables.less";
+
+// Add CSS Customizations to your theme here.
+
+@import url(http://fonts.googleapis.com/css?family=Dosis:200,300,400,600|Signika+Negative:300,400,600|Exo:300,400,600|Roboto:100,400,300,700|Sintony:400,700);
+
+// @font-family-sans-serif: 'Dosis', sans-serif;
+// @font-family-sans-serif: 'Signika Negative', sans-serif;
+// @font-family-sans-serif: 'Exo', sans-serif;
+// @font-family-sans-serif: 'Roboto', sans-serif;
+@font-family-sans-serif: 'Sintony', sans-serif;
+
+@headings-font-family:    'Roboto';
+@headings-font-weight:    300;
+@headings-line-height:    1.3;
+
+
+body{
+  background: url(/static/img/background_tile.jpg) fade(@gray-light,60%);
+  background-blend-mode: screen;
+}
+
+.hexagon-container {
+  margin: 0 auto;
+  text-align:center;
+  .hexagon {
+    display: inline-block;
+    position: relative;
+    width: 130px;
+    height: 75.06px;
+    background-color: #64C7CC;
+    margin: 37.53px 1em;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      border-left: 65px solid transparent;
+      border-right: 65px solid transparent;
+      left: 0;
+    }
+    &:before {
+      bottom: 100%;
+      border-bottom: 37.53px solid #64C7CC;
+    }
+    &:after {
+      top: 100%;
+      width: 0;
+      border-top: 37.53px solid #64C7CC;
+    }
+    &.small {
+      width: 65px;
+      height: 37.53px;
+      margin: 18.76px 0.3em;
+
+      &:nth-child(2n+3){
+        margin-left:1em;
+      }
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        border-left: 32.5px solid transparent;
+        border-right: 32.5px solid transparent;
+      }
+      &:before {
+        bottom: 100%;
+        border-bottom: 18.76px solid #a90000;
+      }
+      &:after {
+        top: 100%;
+        width: 0;
+        border-top: 18.76px solid #a90000;
+      }
+    }
+    &.orange{
+      .colour-palette(@orange,15%,17%);
+    }
+    &.purple{
+      .colour-palette(@purple,10%);
+    }
+    &.red{
+      .colour-palette(@red,10%,15%);
+    }
+    &.yellow{
+      .colour-palette(@yellow,13%,9%);
+    }
+    &.green{
+      .colour-palette(@green,10%);
+    }
+    &.blue{
+      .colour-palette(@blue,15%,12%);
+    }
+  }
+}
+
+.colour-palette(@color,@darken:15%,@lighten:@darken){
+  .hexagon-color(@color);
+  &.dark{
+    .hexagon-color(darken(@color,@darken));
+  }
+  &.light{
+    .hexagon-color(lighten(@color,@lighten));
+  }
+}
+
+.hexagon-color(@color){
+  background-color: @color;
+  &:before{
+    border-bottom-color: @color;
+  }
+  &:after {
+    border-top-color: @color;
+  }
+}
+
+//
+// Buttons
+// --------------------------------------------------
+
+.btn {
+  border: 0;
+  border-radius: @btn-border-radius;
+  position: relative;
+  transition: padding 0.2s;
+  &:before{
+    transition: border 0.2s;
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid @brand-primary;
+  }
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    &:not(.btn-link){
+      padding-right: 1.1em;
+      padding-left: 1.1em;
+      &:before{
+        border-width:  3px;
+      }
+    }
+  }
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    background-image: none;
+  }
+}
+
+
+// Button variants
+// -------------------------
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+.button-variant(@color; @background:transparent; @border:@color) {
+  color: @color;
+  background: @background;
+  &:before{
+    border-color: @border;
+  }
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    color: @color;
+    background: @background;
+    &:before{
+      border-color: @border;
+    }
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      color: lighten(@color,10%);
+      background-color: @background;
+      border: 3px solid lighten(desaturate(@border,15%),10%);
+    }
+  }
+}
+
+// Apply the mixin to the buttons
+.btn-default { .button-variant(@btn-default-color); }
+.btn-primary { .button-variant(@btn-primary-color); }
+.btn-success { .button-variant(@btn-success-color); }
+.btn-warning { .button-variant(@btn-warning-color); }
+.btn-danger  { .button-variant(@btn-danger-color); }
+.btn-info    { .button-variant(@btn-info-color); }
+
+.btn-link:before{
+  border-color: transparent;
+  &:hover,&:focus,&:active{
+    border-color:@btn-primary-border
+  }
+}
+
+//
+// Headings
+// --------------------------------------------------
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: @headings-font-color;
+  small {
+    font-size: 0.65em;
+    font-weight: @headings-small-font-weight;
+  }
+}
