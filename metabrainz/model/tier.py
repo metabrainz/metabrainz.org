@@ -28,6 +28,20 @@ class Tier(db.Model):
         return "%s (#%s)" % (self.name, self.id)
 
     @classmethod
+    def create(cls, **kwargs):
+        new_tier = cls(
+            name=kwargs.pop('name'),
+            short_desc=kwargs.pop('short_desc', None),
+            long_desc=kwargs.pop('long_desc', None),
+            price=kwargs.pop('price'),
+            available=kwargs.pop('available', False),
+            primary=kwargs.pop('primary', False),
+        )
+        db.session.add(new_tier)
+        db.session.commit()
+        return new_tier
+
+    @classmethod
     def get(cls, **kwargs):
         return cls.query.filter_by(**kwargs).first()
 

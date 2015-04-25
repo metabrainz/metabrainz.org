@@ -30,6 +30,7 @@ apt-get install -y nodejs
 npm install -g less less-plugin-clean-css
 
 cd /vagrant
+easy_install -U pip
 pip install -r requirements.txt
 python manage.py create_db
 python manage.py create_tables

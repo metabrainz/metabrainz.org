@@ -53,6 +53,7 @@ def validate_post_login():
     """
     if request.args.get('error'):
         return False
+    # TODO(roman): Maybe check if both are there:
     if session.fetch_data('csrf') != request.args.get('state'):
         return False
     return True

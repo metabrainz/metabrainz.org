@@ -47,7 +47,7 @@ class DonationModelTestCase(FlaskTestCase):
 
     def setUp(self):
         super(DonationModelTestCase, self).setUp()
-        donation.WePay = lambda production=True, access_token=None, api_version=None:\
+        donation.WePay = lambda production=True, access_token=None, api_version=None: \
             FakeWePay(production, access_token, api_version)
 
     def test_get_by_transaction_id(self):
@@ -67,7 +67,8 @@ class DonationModelTestCase(FlaskTestCase):
         self.assertIsNone(bad_result)
 
     def test_process_paypal_ipn(self):
-        good_form = {  # This is not a complete list
+        # This is not a complete list:
+        good_form = {
             'first_name': 'Tester',
             'last_name': 'Testing',
             'custom': 'tester',  # MusicBrainz username
@@ -124,65 +125,69 @@ class DonationModelTestCase(FlaskTestCase):
 
     def test_log_stripe_charge(self):
         # Function should execute without any exceptions
-        charge = convert_to_stripe_object({
-            "id": u"ch_129uK7F21qH57QtHKDVLKgzw",
-            "object": u"charge",
-            "created": 1418632523,
-            "livemode": False,
-            "paid": True,
-            "amount": 422,  # cents
-            "currency": u"usd",
-            "refunded": False,
-            "captured": True,
-            "refunds": {
-                "object": u"list",
-                "total_count": 0,
-                "has_more": False,
-                "url": u"/v1/charges/ch_129uK7F21qH57QtHKDVLKgzw/refunds",
-                "data": []
+        charge = convert_to_stripe_object(
+            {
+                "id": u"ch_129uK7F21qH57QtHKDVLKgzw",
+                "object": u"charge",
+                "created": 1418632523,
+                "livemode": False,
+                "paid": True,
+                "amount": 422,  # cents
+                "currency": u"usd",
+                "refunded": False,
+                "captured": True,
+                "refunds": {
+                    "object": u"list",
+                    "total_count": 0,
+                    "has_more": False,
+                    "url": u"/v1/charges/ch_129uK7F21qH57QtHKDVLKgzw/refunds",
+                    "data": []
+                },
+                "card": {
+                    "id": u"card_129uK7F21qH57QtHKDVLKgzw",
+                    "object": u"card",
+                    "last4": u"4242",
+                    "brand": u"Visa",
+                    "funding": u"credit",
+                    "exp_month": 11,
+                    "exp_year": 2016,
+                    "fingerprint": u"aN68e7DfeDQozGLZ",
+                    "country": u"US",
+                    "name": u"Тестовый Покупатель",
+                    "address_line1": u"Тестовая улица 21",
+                    "address_line2": None,
+                    "address_city": u"Благовещенск",
+                    "address_state": None,
+                    "address_zip": u"675000",
+                    "address_country": u"Russian Federation",
+                    "cvc_check": u"pass",
+                    "address_line1_check": u"pass",
+                    "address_zip_check": u"pass",
+                    "dynamic_last4": None,
+                    "customer": None
+                },
+                "balance_transaction": u"txn_129uK7F21qH57QtHKDVLKgzw",
+                "failure_message": None,
+                "failure_code": None,
+                "amount_refunded": 0,
+                "customer": None,
+                "invoice": None,
+                "description": u"Donation to MetaBrainz Foundation",
+                "dispute": None,
+                "metadata": {
+                    "anonymous": u"False",  # passed as a string
+                    "can_contact": u"True",  # passed as a string
+                    "email": u"tsukanovroman@gmail.com",
+                    "editor": u"tester123"
+                },
+                "statement_description": None,
+                "fraud_details": {
+                },
+                "receipt_email": None,
+                "receipt_number": None,
+                "shipping": None
             },
-            "card": {
-                "id": u"card_129uK7F21qH57QtHKDVLKgzw",
-                "object": u"card",
-                "last4": u"4242",
-                "brand": u"Visa",
-                "funding": u"credit",
-                "exp_month": 11,
-                "exp_year": 2016,
-                "fingerprint": u"aN68e7DfeDQozGLZ",
-                "country": u"US",
-                "name": u"Тестовый Покупатель",
-                "address_line1": u"Тестовая улица 21",
-                "address_line2": None,
-                "address_city": u"Благовещенск",
-                "address_state": None,
-                "address_zip": u"675000",
-                "address_country": u"Russian Federation",
-                "cvc_check": u"pass",
-                "address_line1_check": u"pass",
-                "address_zip_check": u"pass",
-                "dynamic_last4": None,
-                "customer": None
-            },
-            "balance_transaction": u"txn_129uK7F21qH57QtHKDVLKgzw",
-            "failure_message": None,
-            "failure_code": None,
-            "amount_refunded": 0,
-            "customer": None,
-            "invoice": None,
-            "description": u"Donation to MetaBrainz Foundation",
-            "dispute": None,
-            "metadata": {
-                "anonymous": u"False",  # passed as a string
-                "can_contact": u"True",  # passed as a string
-                "email": u"tsukanovroman@gmail.com",
-                "editor": u"tester123"
-            },
-            "statement_description": None,
-            "fraud_details": {
-            },
-            "receipt_email": None,
-            "receipt_number": None,
-            "shipping": None
-        }, None)
+            api_key=None,
+            account=None
+        )
         Donation.log_stripe_charge(charge)

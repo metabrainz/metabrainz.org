@@ -8,6 +8,7 @@ class FlaskTestCase(TestCase):
     def create_app(self):
         app = create_app()
         app.config['TESTING'] = True
+        app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False  # otherwise redirects aren't going to return right status
         app.config['SQLALCHEMY_DATABASE_URI'] = app.config['TEST_SQLALCHEMY_DATABASE_URI']
         return app
 

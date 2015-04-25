@@ -1,8 +1,13 @@
 from unittest import TestCase
 from metabrainz import utils
+from datetime import datetime
 
 
 class UtilsTestCase(TestCase):
+
+    def test_reformat_datetime(self):
+        d = datetime(2000, 1, 11, 12, 30)
+        self.assertEqual(utils.reformat_datetime(d), '01/11/00 12:30:00 ')
 
     def test_generate_string(self):
         length = 42
