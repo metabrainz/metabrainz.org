@@ -1,13 +1,15 @@
 # metabrainz.org
 
-Modern version of the [MetaBrainz Foundation](http://metabrainz.org/) website.
-This is a Flask-based web application that is meant to provide info about the
-foundation and accept donations from users and organizations.
+Website for the [MetaBrainz Foundation](http://metabrainz.org/). This is
+a Flask-based web application that is meant to provide info about the
+foundation, accept donations from users and organizations, and provide
+access to [replication packets](https://musicbrainz.org/doc/Replication_Mechanics)
+for MusicBrainz.
 
 ## Development
 
 Before starting the application copy `config.py.example` into `config.py` and
-tweak the configuration.
+tweak the configuration. You need to make sure that all API keys are set.
 
 The easiest way to set up a development environment is to use [Vagrant](https://www.vagrantup.com/).
 This command will create and configure virtual machine that you will be able to
@@ -51,8 +53,8 @@ reachable from payment processors.
 
 ## Deployment
 
-If you want to do development you should use instructions above. It is much
-easier way to start.
+*If you want to do development you should use instructions above. It is much
+easier way to start.*
 
 For more detailed installation instructions see [INSTALL.md](https://github.com/metabrainz/metabrainz.org/blob/master/INSTALL.md)
 file.
