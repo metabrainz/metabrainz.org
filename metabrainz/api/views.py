@@ -35,15 +35,15 @@ def last_replication_packets():
     return jsonify({
         'last_packet': _get_last_packet_name(
             current_app.config['REPLICATION_PACKETS_DIR'],
-            "replication-[0-9]+.tar.bz2"
+            "replication-[0-9]+.tar.bz2$"
         ),
         'last_packet_daily': _get_last_packet_name(
             current_app.config['REPLICATION_PACKETS_DAILY_DIR'],
-            "replication-daily-[0-9]+.tar.bz2"
+            "replication-daily-[0-9]+.tar.bz2$"
         ),
         'last_packet_weekly': _get_last_packet_name(
             current_app.config['REPLICATION_PACKETS_WEEKLY_DIR'],
-            "replication-weekly-[0-9]+.tar.bz2"
+            "replication-weekly-[0-9]+.tar.bz2$"
         ),
     })
 
