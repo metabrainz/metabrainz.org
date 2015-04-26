@@ -120,8 +120,7 @@ def get_weekly_replication_packet(packet_number):
 
 
 def _redirect_to_nginx(location):
-    response = Response(status=307, mimetype='text/html')
+    response = Response(status=200)
     location = iri_to_uri(location, safe_conversion=True)
     response.headers['X-Accel-Redirect'] = location
-    response.headers['Location'] = location
     return response
