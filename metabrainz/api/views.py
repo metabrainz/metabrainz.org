@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, send_from_directory, current_app, render_template
 from metabrainz.api.decorators import token_required, tracked
+from metabrainz.model.access_log import HOURLY_ALERT_THRESHOLD
 import logging
 import re
 import os
@@ -10,7 +11,7 @@ api_bp = Blueprint('api', __name__)
 @api_bp.route('/')
 def info():
     """This view provides information about using the API."""
-    return render_template('api/info.html')
+    return render_template('api/info.html', rate_limit=HOURLY_ALERT_THRESHOLD)
 
 
 @api_bp.route('/musicbrainz/replication/info')

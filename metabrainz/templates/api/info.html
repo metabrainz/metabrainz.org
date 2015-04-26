@@ -3,31 +3,65 @@
 {% block title %}API - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1>MetaBrainz API</h1>
+  <div id="api">
 
-  <em>
+    <h1>MetaBrainz API</h1>
+
+    <em>
     All endpoints require an access token which you can get from your
     <a href="{{ url_for('users.profile') }}">profile page</a>.
-  </em>
+    </em>
 
-  <h2>Live Data Feed</h2>
+    <h2>MusicBrainz Live Data Feed</h2>
 
-  <p>
-    There are three endpoints for fetching replication packets:
-    <ul>
-      <li><code>{{ url_for('api.get_replication_packet', _external=True,
-                           packet_number=42, token="ACCESS_TOKEN") }}</code></li>
-      <li><code>{{ url_for('api.get_daily_replication_packet', _external=True,
-                           packet_number=42, token="ACCESS_TOKEN") }}</code></li>
-      <li><code>{{ url_for('api.get_weekly_replication_packet', _external=True,
-                           packet_number=42, token="ACCESS_TOKEN") }}</code></li>
-    </ul>
-    where <code>42</code> is a number of the replication packet that you need.
-  </p>
+    <p>There are three endpoints for fetching replication packets:</p>
 
-  <p>
-    You can get info about latest replication packets from
-    <code>{{ url_for('api.last_replication_packets', _external=True, token="ACCESS_TOKEN") }}</code>.
-  </p>
+    <p>
+      <strong>Hourly:</strong>
+      <code>
+        GET {{ url_for('api.get_replication_packet', _external=True, packet_number=42, token="TOKEN")
+                  | replace("42", "<PACKET_NUMBER>")
+                  | replace("TOKEN", "<ACCESS_TOKEN>")
+            }}
+      </code>
+    </p>
 
+    <p>
+      <strong>Daily:</strong>
+      <code>
+        GET {{ url_for('api.get_daily_replication_packet', _external=True, packet_number=42, token="TOKEN")
+                  | replace("42", "<PACKET_NUMBER>")
+                  | replace("TOKEN", "<ACCESS_TOKEN>")
+            }}
+      </code>
+    </p>
+
+    <p>
+      <strong>Weekly:</strong>
+      <code>
+        GET {{ url_for('api.get_weekly_replication_packet', _external=True, packet_number=42, token="TOKEN")
+                  | replace("42", "<PACKET_NUMBER>")
+                  | replace("TOKEN", "<ACCESS_TOKEN>")
+            }}
+      </code>
+    </p>
+
+    <p>
+      <em>
+        Please note that these endpoints are rate-limited. You can only fetch
+        {{ rate_limit }} replication packets per hour. Only successful requests
+        are counted.
+      </em>
+    </p>
+
+    <p>
+      You can get info about latest replication packets from this endpoint:<br />
+      <code>
+        GET {{ url_for('api.last_replication_packets', _external=True, token="TOKEN")
+                  | replace("TOKEN", "<ACCESS_TOKEN>")
+            }}
+        </code>
+    </p>
+
+  </div>
 {% endblock %}
