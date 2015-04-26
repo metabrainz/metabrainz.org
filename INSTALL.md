@@ -18,6 +18,8 @@ of Linux.**
 
 6. Standard Development Tools™ (``sudo apt-get install build-essential``)
 
+7. Nginx (optional, but *recommended*)
+
 ### Server configuration
 
 1. Download the source code
@@ -34,7 +36,6 @@ of Linux.**
 First modify the URI of your primary database (*SQLALCHEMY_DATABASE_URI*).
 It should be similar to the provided example. We tested this application with
 PostgreSQL and there's no guarantee that it will work with some other DBMS.
-
 
 #### Payments
 
@@ -57,6 +58,22 @@ your instance of MetaBrainz.org on MusicBrainz at
 https://musicbrainz.org/account/applications/register.  Set Callback URL field
 to ``http://<your domain>/login/musicbrainz/post``. If you run server locally,
 replace ``<your domain>`` with ``127.0.0.1:8080``.
+
+#### Serving replication packets using nginx
+
+If you use nginx, there's an option to serve replication packets through it
+using [X-accel](http://wiki.nginx.org/X-accel). Add this to your configuration
+(don't forget to change location of the application):
+
+    location ~* ^/internal/replication {
+        internal;
+	    root /var/www/metabrainz.org/replication_packets;
+    }
+
+Don't forget to set path of the root directory to be the same as
+``REPLICATION_PACKETS_DIR`` value in configuration file. 
+
+Set ``USE_NGINX_X_ACCEL`` to ``True``.
 
 ### Python dependencies
 

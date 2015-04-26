@@ -49,9 +49,10 @@ MUSICBRAINZ_CLIENT_SECRET = ""
 
 
 # REPLICATION PACKETS
-REPLICATION_PACKETS_DIR = "replication_packets"
-REPLICATION_PACKETS_DAILY_DIR = REPLICATION_PACKETS_DIR + "/daily"
-REPLICATION_PACKETS_WEEKLY_DIR = REPLICATION_PACKETS_DIR + "/weekly"
+# Hourly replication packets must be located in this directory. Daily
+# replication packets must be located in subdirectory called "daily"
+# in REPLICATION_PACKETS_DIR. Weekly packets in subdirectory "weekly".
+REPLICATION_PACKETS_DIR = "/vagrant/replication_packets"
 
 
 # CACHE
@@ -92,3 +93,7 @@ ADMINS = [
 SMTP_SERVER = "localhost"
 SMTP_PORT = 25
 MAIL_FROM_DOMAIN = "metabrainz.org"
+
+# If you use nginx, there's an option to use it to serve replication packets.
+# See installation instructions for more info.
+#USE_NGINX_X_ACCEL = True

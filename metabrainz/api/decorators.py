@@ -22,7 +22,7 @@ def tracked(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         response = f(*args, **kwargs)
-        if response.status_code == 200:
+        if response.status_code in (200, 307):
             AccessLog.create_record(request.args.get('token'))
         return response
 
