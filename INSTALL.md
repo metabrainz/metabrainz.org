@@ -65,9 +65,9 @@ If you use nginx, there's an option to serve replication packets through it
 using [X-accel](http://wiki.nginx.org/X-accel). Add this to your configuration
 (don't forget to change location of the application):
 
-    location ~* ^/internal/replication {
+    location ^~ /internal/replication {
         internal;
-	    root /var/www/metabrainz.org/replication_packets;
+	    alias /var/www/metabrainz.org/replication_packets;
     }
 
 Don't forget to set path of the root directory to be the same as
