@@ -120,6 +120,11 @@ def get_weekly_replication_packet(packet_number):
 
 
 def _redirect_to_nginx(location):
+    """This creates an internal redirection to a specified location.
+
+    This feature is only supported by nginx. See http://wiki.nginx.org/X-accel
+    for more information about it.
+    """
     response = Response(status=200)
     location = iri_to_uri(location, safe_conversion=True)
     response.headers['X-Accel-Redirect'] = location
