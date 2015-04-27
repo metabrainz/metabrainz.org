@@ -103,7 +103,7 @@ def get_daily_replication_packet(packet_number):
 @tracked
 def get_weekly_replication_packet(packet_number):
     directory = current_app.config['REPLICATION_PACKETS_DIR'] + WEEKLY_SUBDIR
-    filename = 'replication-daily-%s.tar.bz2' % packet_number
+    filename = 'replication-weekly-%s.tar.bz2' % packet_number
     path = safe_join(directory, filename)
     if not os.path.isfile(path):
         raise NotFound("Can't find specified replication packet.")
