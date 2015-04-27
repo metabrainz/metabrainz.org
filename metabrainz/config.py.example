@@ -87,9 +87,6 @@ REPLICATION_PACKETS_DIR = "/vagrant/replication_packets"
 RECAPTCHA_PUBLIC_KEY = ""
 RECAPTCHA_PRIVATE_KEY = ""
 
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin"
-
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [
     "admin@metabrainz.org",
