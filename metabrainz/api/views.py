@@ -88,7 +88,7 @@ def get_daily_replication_packet(packet_number):
         raise NotFound("Can't find specified replication packet.")
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx('/internal/replication%s/%s' % (filename, DAILY_SUBDIR))
+        return _redirect_to_nginx('/internal/replication%s/%s' % (DAILY_SUBDIR, filename))
     else:
         return send_from_directory(
             directory,
@@ -109,7 +109,7 @@ def get_weekly_replication_packet(packet_number):
         raise NotFound("Can't find specified replication packet.")
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx('/internal/replication%s/%s' % (filename, WEEKLY_SUBDIR))
+        return _redirect_to_nginx('/internal/replication%s/%s' % (WEEKLY_SUBDIR, filename))
     else:
         return send_from_directory(
             directory,
