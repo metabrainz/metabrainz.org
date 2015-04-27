@@ -1,6 +1,6 @@
 from metabrainz.model import db
-from metabrainz.model.admin_view import AdminView
 from metabrainz.model.user import User
+from metabrainz.admin import AdminModelView
 
 
 class Tier(db.Model):
@@ -61,7 +61,7 @@ class Tier(db.Model):
         return self.users.filter(User.featured == True).all()
 
 
-class TierAdminView(AdminView):
+class TierAdminView(AdminModelView):
     column_labels = dict(
         id='ID',
         short_desc='Short description',

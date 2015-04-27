@@ -1,11 +1,19 @@
-from flask_admin import BaseView, expose
+from flask_admin import expose
+from metabrainz.admin import AdminIndexView, AdminBaseView
 from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED
 from metabrainz.model.token import Token
 from metabrainz import flash
 from flask import request, redirect, url_for
 
 
-class UsersView(BaseView):
+class HomeView(AdminIndexView):
+
+    @expose('/')
+    def index(self):
+        return self.render('admin/home.html')
+
+
+class UsersView(AdminBaseView):
 
     @expose('/')
     def index(self):
@@ -54,7 +62,7 @@ class UsersView(BaseView):
         return redirect(url_for('.details', user_id=token.owner_id))
 
 
-class TokensView(BaseView):
+class TokensView(AdminBaseView):
 
     @expose('/')
     def index(self):

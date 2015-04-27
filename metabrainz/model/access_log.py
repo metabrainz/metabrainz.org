@@ -50,7 +50,7 @@ class AccessLog(db.Model):
             if not cache.get(key):
                 send_mail(
                     subject="[MetaBrainz] Hourly access threshold exceeded",
-                    recipients=current_app.config['ADMINS'],
+                    recipients=current_app.config['NOTIFICATION_RECIPIENTS'],
                     text=msg,
                 )
                 cache.set(key, True, 3600)  # 1 hour

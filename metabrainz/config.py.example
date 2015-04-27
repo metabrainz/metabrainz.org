@@ -48,6 +48,14 @@ MUSICBRAINZ_CLIENT_ID = ""
 MUSICBRAINZ_CLIENT_SECRET = ""
 
 
+# ADMIN SECTION
+# This is a list of MusicBrainz usernames of people that are allowed to access
+# admin section of the website. Usernames are case-sensetive!
+ADMINS = [
+    'rob',
+]
+
+
 # REPLICATION PACKETS
 # Hourly replication packets must be located in this directory. Daily
 # replication packets must be located in subdirectory called "daily"
@@ -83,7 +91,7 @@ ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin"
 
 # List of email addresses
-ADMINS = [
+NOTIFICATION_RECIPIENTS = [
     "admin@metabrainz.org",
 ]
 

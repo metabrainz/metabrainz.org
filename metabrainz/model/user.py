@@ -1,11 +1,11 @@
+from metabrainz.model import db
+from metabrainz.mail import send_mail
+from metabrainz.model.token import Token
+from metabrainz.admin import AdminModelView
 from sqlalchemy.sql.expression import func
 from sqlalchemy.dialects import postgres
 from flask_login import UserMixin
 from flask import current_app
-from metabrainz.model import db
-from metabrainz.model.admin_view import AdminView
-from metabrainz.model.token import Token
-from metabrainz.mail import send_mail
 from datetime import datetime
 
 
@@ -181,7 +181,7 @@ def send_user_signup_notification(user):
 
             ('Usage description', user.short_descr),
         ]),
-        recipients=current_app.config['ADMINS'],
+        recipients=current_app.config['NOTIFICATION_RECIPIENTS'],
     )
 
 
@@ -189,7 +189,7 @@ class InactiveUserException(Exception):
     pass
 
 
-class UserAdminView(AdminView):
+class UserAdminView(AdminModelView):
     column_labels = dict(
         id='ID',
         is_commercial='Commercial',

@@ -1,10 +1,10 @@
 from __future__ import division
 from metabrainz.model import db
-from metabrainz.model.admin_view import AdminView
 from metabrainz.donations.receipts import send_receipt
+from metabrainz.admin import AdminModelView
 from flask import current_app
-from wepay import WePay
 from datetime import datetime
+from wepay import WePay
 
 
 class Donation(db.Model):
@@ -309,7 +309,7 @@ class Donation(db.Model):
         )
 
 
-class DonationAdminView(AdminView):
+class DonationAdminView(AdminModelView):
     column_labels = dict(
         id='ID',
         editor_name='MusicBrainz username',
