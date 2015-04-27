@@ -23,6 +23,19 @@
   <body>
     {% include 'navbar.html' %}
 
+    {# TODO: Remove this: #}
+    <div class="construction">
+      <div class="container">
+        <img src="//in.roman.zone/construction.gif" class="pull-left" />
+        <span class="text">
+          <strong>This is a test version of the new website.</strong> Please report any issues
+          <a href="https://github.com/metabrainz/metabrainz.org/issues">on GitHub</a> or
+          <a href="https://wiki.musicbrainz.org/Communication">contact us</a>. Thank you!
+        </span>
+        <img src="//in.roman.zone/construction.gif" class="pull-right" />
+      </div>
+    </div>
+
     <div class="container">
 
       {% with messages = get_flashed_messages(with_categories=true) %}
