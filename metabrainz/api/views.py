@@ -22,7 +22,7 @@ def info():
     return render_template('api/info.html', rate_limit=HOURLY_ALERT_THRESHOLD)
 
 
-@api_bp.route('/musicbrainz/replication/info')
+@api_bp.route('/musicbrainz/replication-info')
 @token_required
 def last_replication_packets():
     """This endpoint returns numbers of the last available replication packets."""
@@ -56,7 +56,7 @@ def last_replication_packets():
     })
 
 
-@api_bp.route('/musicbrainz/replication/replication-<int:packet_number>.tar.bz2')
+@api_bp.route('/musicbrainz/replication-<int:packet_number>.tar.bz2')
 @token_required
 @tracked
 def get_replication_packet(packet_number):
@@ -77,7 +77,7 @@ def get_replication_packet(packet_number):
         )
 
 
-@api_bp.route('/musicbrainz/replication/daily/replication-daily-<int:packet_number>.tar.bz2')
+@api_bp.route('/musicbrainz/replication-daily-<int:packet_number>.tar.bz2')
 @token_required
 @tracked
 def get_daily_replication_packet(packet_number):
@@ -98,7 +98,7 @@ def get_daily_replication_packet(packet_number):
         )
 
 
-@api_bp.route('/musicbrainz/replication/weekly/replication-weekly-<int:packet_number>.tar.bz2')
+@api_bp.route('/musicbrainz/replication-weekly-<int:packet_number>.tar.bz2')
 @token_required
 @tracked
 def get_weekly_replication_packet(packet_number):
