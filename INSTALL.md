@@ -24,12 +24,12 @@ of Linux.**
 
 1. Download the source code
 
-    $ git clone git://github.com/metabrainz/metabrianz.org.git
-    $ cd musicbrainz.org
+        $ git clone git://github.com/metabrainz/metabrianz.org.git
+        $ cd musicbrainz.org
 
 2. Modify the server configuration file
 
-    $ cp metabrainz/config.py.example metabrainz/config.py
+        $ cp metabrainz/config.py.example metabrainz/config.py
     
 #### Database
 
