@@ -47,7 +47,7 @@ all the payments. *PAYPAL_BUSINESS* is an address for non-donations; all
 payments sent there will be ignored.
 
 After these settings have been set and you are sure that your configuration
-is working properly with in test mode, you can flip the switch (set *DEBUG* to
+is working properly with in test mode, you can flip the switch. Set *DEBUG* to
 ``False`` and *PAYMENT_PRODUCTION* to ``True``.
 
 #### MusicBrainz OAuth
