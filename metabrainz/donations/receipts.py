@@ -16,16 +16,18 @@ _PRIMARY_FONT_BOLD = 'Helvetica-Bold'
 
 
 def send_receipt(email, date, amount, name, editor_name):
-    text = """Dear %s:\n\n
-Thank you very much for your donation to the MetaBrainz Foundation!\n\n"
-Your donation will allow the MetaBrainz Foundation to continue operating "
-and improving the MusicBrainz project and its related projects. The "
-foundation depends on donations from the community and therefore deeply "
-appreciates your support.\n\n"
-The MetaBrainz Foundation is a United States 501(c)(3) tax-exempt public charity. This "
-allows US taxpayers to deduct this donation from their taxes under section 170 of the "
-Internal Revenue Service code.\n\n"
-Please save a printed copy of the attached PDF receipt for your records.""" % name
+    text = (
+        "Dear %s:\n\n"
+        "Thank you very much for your donation to the MetaBrainz Foundation!\n\n"
+        "Your donation will allow the MetaBrainz Foundation to continue operating "
+        "and improving the MusicBrainz project and its related projects. The "
+        "foundation depends on donations from the community and therefore deeply "
+        "appreciates your support.\n\n"
+        "The MetaBrainz Foundation is a United States 501(c)(3) tax-exempt public "
+        "charity. This allows US taxpayers to deduct this donation from their "
+        "taxes under section 170 of the Internal Revenue Service code.\n\n"
+        "Please save a printed copy of the attached PDF receipt for your records."
+    ) % name
     send_mail(
         subject='Receipt for your donation to the MetaBrainz Foundation',
         text=text,
