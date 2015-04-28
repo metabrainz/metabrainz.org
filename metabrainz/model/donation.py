@@ -276,17 +276,17 @@ class Donation(db.Model):
         current_app.logger.debug('Processing Stripe charge...')
 
         new_donation = cls(
-            first_name=charge.card.name,
+            first_name=charge.source.name,
             last_name='',
             amount=charge.amount / 100,  # cents should be converted
             transaction_id=charge.id,
             method='stripe',
 
-            address_street=charge.card.address_line1,
-            address_city=charge.card.address_city,
-            address_state=charge.card.address_state,
-            address_postcode=charge.card.address_zip,
-            address_country=charge.card.address_country,
+            address_street=charge.source.address_line1,
+            address_city=charge.source.address_city,
+            address_state=charge.source.address_state,
+            address_postcode=charge.source.address_zip,
+            address_country=charge.source.address_country,
 
             email=charge.metadata.email,
             can_contact=charge.metadata.can_contact == u'True',

@@ -127,46 +127,40 @@ class DonationModelTestCase(FlaskTestCase):
         # Function should execute without any exceptions
         charge = convert_to_stripe_object(
             {
-                "id": u"ch_129uK7F21qH57QtHKDVLKgzw",
+                "id": u"ch_15AjX1F21qH57QtHT6avvqrM",
                 "object": u"charge",
-                "created": 1418632523,
+                "created": 1418829367,
                 "livemode": False,
                 "paid": True,
-                "amount": 422,  # cents
+                "status": u"succeeded",
+                "amount": 99999900,
                 "currency": u"usd",
                 "refunded": False,
-                "captured": True,
-                "refunds": {
-                    "object": u"list",
-                    "total_count": 0,
-                    "has_more": False,
-                    "url": u"/v1/charges/ch_129uK7F21qH57QtHKDVLKgzw/refunds",
-                    "data": []
-                },
-                "card": {
-                    "id": u"card_129uK7F21qH57QtHKDVLKgzw",
+                "source": {
+                    "id": u"card_15AjWxF21qH57QtHHVNgaHOP",
                     "object": u"card",
                     "last4": u"4242",
                     "brand": u"Visa",
                     "funding": u"credit",
                     "exp_month": 11,
                     "exp_year": 2016,
-                    "fingerprint": u"aN68e7DfeDQozGLZ",
                     "country": u"US",
-                    "name": u"Тестовый Покупатель",
-                    "address_line1": u"Тестовая улица 21",
+                    "name": u"Uh Oh",
+                    "address_line1": u"test 12",
                     "address_line2": None,
-                    "address_city": u"Благовещенск",
-                    "address_state": None,
-                    "address_zip": u"675000",
-                    "address_country": u"Russian Federation",
+                    "address_city": u"Schenectady",
+                    "address_state": u"NY",
+                    "address_zip": u"12345",
+                    "address_country": u"United States",
                     "cvc_check": u"pass",
                     "address_line1_check": u"pass",
                     "address_zip_check": u"pass",
                     "dynamic_last4": None,
+                    "metadata": {},
                     "customer": None
                 },
-                "balance_transaction": u"txn_129uK7F21qH57QtHKDVLKgzw",
+                "captured": True,
+                "balance_transaction": u"txn_159qthF21qH57QtHBksXX3tN",
                 "failure_message": None,
                 "failure_code": None,
                 "amount_refunded": 0,
@@ -175,17 +169,24 @@ class DonationModelTestCase(FlaskTestCase):
                 "description": u"Donation to MetaBrainz Foundation",
                 "dispute": None,
                 "metadata": {
-                    "anonymous": u"False",  # passed as a string
-                    "can_contact": u"True",  # passed as a string
-                    "email": u"tsukanovroman@gmail.com",
-                    "editor": u"tester123"
+                    "anonymous": u"True",  # passed as a string
+                    "can_contact": u"False",  # passed as a string
+                    "email": u"mail@example.com",
+                    "editor": u"null"
                 },
-                "statement_description": None,
-                "fraud_details": {
-                },
+                "statement_descriptor": None,
+                "fraud_details": {},
                 "receipt_email": None,
                 "receipt_number": None,
-                "shipping": None
+                "shipping": None,
+                "application_fee": None,
+                "refunds": {
+                    "object": "list",
+                    "total_count": 0,
+                    "has_more": False,
+                    "url": "/v1/charges/ch_15AjX1F21qH57QtHT6avvqrM/refunds",
+                    "data": []
+                }
             },
             api_key=None,
             account=None
