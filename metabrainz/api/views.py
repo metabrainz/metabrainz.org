@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, send_from_directory, current_app, render_t
 from flask.helpers import safe_join
 from werkzeug.wrappers import Response
 from werkzeug.urls import iri_to_uri
-from werkzeug.exceptions import NotFound
 from metabrainz.api.decorators import token_required, tracked
 from metabrainz.model.access_log import HOURLY_ALERT_THRESHOLD
 import logging
@@ -62,9 +61,8 @@ def last_replication_packets():
 def get_replication_packet(packet_number):
     directory = current_app.config['REPLICATION_PACKETS_DIR']
     filename = 'replication-%s.tar.bz2' % packet_number
-    path = safe_join(directory, filename)
-    if not os.path.isfile(path):
-        raise NotFound("Can't find specified replication packet.")
+    if not os.path.isfile(safe_join(directory, filename)):
+        return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx('/internal/replication/%s' % filename)
@@ -83,9 +81,8 @@ def get_replication_packet(packet_number):
 def get_daily_replication_packet(packet_number):
     directory = current_app.config['REPLICATION_PACKETS_DIR'] + DAILY_SUBDIR
     filename = 'replication-daily-%s.tar.bz2' % packet_number
-    path = safe_join(directory, filename)
-    if not os.path.isfile(path):
-        raise NotFound("Can't find specified replication packet.")
+    if not os.path.isfile(safe_join(directory, filename)):
+        return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx('/internal/replication%s/%s' % (DAILY_SUBDIR, filename))
@@ -104,9 +101,8 @@ def get_daily_replication_packet(packet_number):
 def get_weekly_replication_packet(packet_number):
     directory = current_app.config['REPLICATION_PACKETS_DIR'] + WEEKLY_SUBDIR
     filename = 'replication-weekly-%s.tar.bz2' % packet_number
-    path = safe_join(directory, filename)
-    if not os.path.isfile(path):
-        raise NotFound("Can't find specified replication packet.")
+    if not os.path.isfile(safe_join(directory, filename)):
+        return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx('/internal/replication%s/%s' % (WEEKLY_SUBDIR, filename))
