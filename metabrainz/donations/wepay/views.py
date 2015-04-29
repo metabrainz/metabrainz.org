@@ -33,7 +33,11 @@ def donate():
     params = {
         'account_id': current_app.config['WEPAY_ACCOUNT_ID'],
         'amount': float(form.amount.data),
-        'redirect_uri': url_for('donations.complete', _external=True),
+        'redirect_uri': url_for(
+            'donations.complete',
+            _external=True,
+            _scheme=current_app.config['PREFERRED_URL_SCHEME'],
+        ),
         'mode': 'regular',
         'require_shipping': True,
     }
@@ -41,10 +45,14 @@ def donate():
     # Setting callback_uri that will receive IPNs if endpoint is not local
     if not (request.headers['Host'].startswith('localhost') or request.headers['Host'].startswith('127.0.0.1')):
         # Also passing arguments that will be returned with IPNs
-        params['callback_uri'] = url_for('.ipn', _external=True,
-                                         editor=form.editor.data,
-                                         anonymous=form.anonymous.data,
-                                         can_contact=form.can_contact.data)
+        params['callback_uri'] = url_for(
+            '.ipn',
+            _external=True,
+            _scheme=current_app.config['PREFERRED_URL_SCHEME'],
+            editor=form.editor.data,
+            anonymous=form.anonymous.data,
+            can_contact=form.can_contact.data,
+        )
 
     # Setting parameters that are specific for selected type of donation
     if form.recurring.data is True:

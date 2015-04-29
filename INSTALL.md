@@ -55,9 +55,11 @@ is working properly with in test mode, you can flip the switch. Set *DEBUG* to
 To allow users to log in, you'll need to set two keys: ``MUSICBRAINZ_CLIENT_ID``
 and ``MUSICBRAINZ_CLIENT_SECRET``. To obtain these keys, you need to register
 your instance of MetaBrainz.org on MusicBrainz at
-https://musicbrainz.org/account/applications/register.  Set Callback URL field
-to ``http://<your domain>/login/musicbrainz/post``. If you run server locally,
-replace ``<your domain>`` with ``127.0.0.1:8080``.
+https://musicbrainz.org/account/applications/register. Set Callback URL field
+to ``http://<your host>/login/musicbrainz/post`` (if ``PREFERRED_URL_SCHEME``
+in the config file is set to ``https``, make sure that you specify the same
+protocol for callback URL). If you run server locally, replace ``<your host>``
+with ``127.0.0.1:8080``.
 
 #### Serving replication packets using nginx
 

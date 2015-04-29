@@ -1,5 +1,5 @@
 from rauth import OAuth2Service
-from flask import request, url_for
+from flask import request, url_for, current_app
 from metabrainz import session
 from metabrainz.utils import generate_string
 import json
@@ -28,7 +28,11 @@ def get_user(authorization_code):
     s = _musicbrainz_service.get_auth_session(data={
         'code': authorization_code,
         'grant_type': 'authorization_code',
-        'redirect_uri': url_for('users.musicbrainz_post', _external=True)
+        'redirect_uri': url_for(
+            'users.musicbrainz_post',
+            _external=True,
+            _scheme=current_app.config['PREFERRED_URL_SCHEME'],
+        )
     }, decoder=json.loads)
     data = s.get('oauth2/userinfo').json()
     return data.get('sub'), data.get('email')
@@ -40,7 +44,11 @@ def get_authentication_uri():
     session.persist_data(csrf=csrf)
     params = {
         'response_type': 'code',
-        'redirect_uri': url_for('users.musicbrainz_post', _external=True),
+        'redirect_uri': url_for(
+            'users.musicbrainz_post',
+            _external=True,
+            _scheme=current_app.config['PREFERRED_URL_SCHEME'],
+        ),
         'scope': 'profile email',
         'state': csrf,
     }

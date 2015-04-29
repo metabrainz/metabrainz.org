@@ -293,9 +293,9 @@
 
         $('<input>').attr({type: 'hidden', name: 'business', value: 'donations@metabrainz.org'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('donations.complete', _external=True) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('donations.cancelled', _external=True) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('donations_paypal.ipn', _external=True) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('donations.complete', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('donations.cancelled', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('donations_paypal.ipn', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'currency_code', value: 'USD'}).appendTo(form);
 
         if ($('#recurring-flag').is(":checked")) { // Recurring donations

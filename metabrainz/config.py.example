@@ -92,6 +92,9 @@ NOTIFICATION_RECIPIENTS = [
     "admin@metabrainz.org",
 ]
 
+# See http://flask.pocoo.org/docs/0.10/config/#builtin-configuration-values
+#PREFERRED_URL_SCHEME = "https"
+
 #USE_COMPILED_STYLING = True
 
 # Mail server
