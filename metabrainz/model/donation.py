@@ -7,6 +7,11 @@ from datetime import datetime
 from wepay import WePay
 
 
+PAYMENT_METHOD_STRIPE = 'stripe'
+PAYMENT_METHOD_PAYPAL = 'paypal'
+PAYMENT_METHOD_WEPAY = 'wepay'
+
+
 class Donation(db.Model):
     __tablename__ = 'donation'
 
@@ -27,7 +32,12 @@ class Donation(db.Model):
 
     # Transaction details
     payment_date = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
-    method = db.Column(db.Unicode)  # Payment method
+    payment_method = db.Column(db.Enum(
+        PAYMENT_METHOD_STRIPE,
+        PAYMENT_METHOD_PAYPAL,
+        PAYMENT_METHOD_WEPAY,
+        name='payment_method_types'
+    ))
     transaction_id = db.Column(db.Unicode)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
@@ -159,7 +169,7 @@ class Donation(db.Model):
             amount=float(form['mc_gross']) - float(form['mc_fee']),
             fee=float(form['mc_fee']),
             transaction_id=form['txn_id'],
-            method='paypal',
+            payment_method=PAYMENT_METHOD_PAYPAL,
         )
 
         if 'option_name1' in form and 'option_name2' in form:
@@ -220,7 +230,7 @@ class Donation(db.Model):
                 amount=details['gross'] - details['fee'],
                 fee=details['fee'],
                 transaction_id=checkout_id,
-                method='wepay',
+                payment_method=PAYMENT_METHOD_WEPAY,
             )
 
             if 'shipping_address' in details:
@@ -280,7 +290,7 @@ class Donation(db.Model):
             last_name='',
             amount=charge.amount / 100,  # cents should be converted
             transaction_id=charge.id,
-            method='stripe',
+            payment_method=PAYMENT_METHOD_STRIPE,
 
             address_street=charge.source.address_line1,
             address_city=charge.source.address_city,
