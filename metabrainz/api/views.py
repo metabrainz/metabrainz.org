@@ -15,8 +15,8 @@ NGINX_INTERNAL_LOCATION = '/internal/replication'
 MIMETYPE_ARCHIVE = 'application/x-tar-bz2'
 MIMETYPE_SIGNATURE = 'text/plain'
 
-DAILY_SUBDIR = '/daily'
-WEEKLY_SUBDIR = '/weekly'
+DAILY_SUBDIR = 'daily'
+WEEKLY_SUBDIR = 'weekly'
 
 
 @api_bp.route('/')
@@ -49,11 +49,11 @@ def replication_info():
             "replication-[0-9]+.tar.bz2$"
         ),
         'last_packet_daily': _get_last_packet_name(
-            current_app.config['REPLICATION_PACKETS_DIR'] + DAILY_SUBDIR,
+            os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR),
             "replication-daily-[0-9]+.tar.bz2$"
         ),
         'last_packet_weekly': _get_last_packet_name(
-            current_app.config['REPLICATION_PACKETS_DIR'] + WEEKLY_SUBDIR,
+            os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR),
             "replication-weekly-[0-9]+.tar.bz2$"
         ),
     })
@@ -69,7 +69,7 @@ def replication_hourly(packet_number):
         return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx('%s/%s' % (NGINX_INTERNAL_LOCATION, filename))
+        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, filename))
     else:
         return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
 
@@ -83,7 +83,7 @@ def replication_hourly_signature(packet_number):
         return Response("Can't find signature for a specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx('%s/%s' % (NGINX_INTERNAL_LOCATION, filename))
+        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, filename))
     else:
         return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
 
@@ -92,13 +92,13 @@ def replication_hourly_signature(packet_number):
 @token_required
 @tracked
 def replication_daily(packet_number):
-    directory = current_app.config['REPLICATION_PACKETS_DIR'] + DAILY_SUBDIR
+    directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR)
     filename = 'replication-daily-%s.tar.bz2' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
         return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx('%s/%s' % (NGINX_INTERNAL_LOCATION + DAILY_SUBDIR, filename))
+        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, DAILY_SUBDIR, filename))
     else:
         return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
 
@@ -106,13 +106,13 @@ def replication_daily(packet_number):
 @api_bp.route('/musicbrainz/replication-daily-<int:packet_number>.tar.bz2.asc')
 @token_required
 def replication_daily_signature(packet_number):
-    directory = current_app.config['REPLICATION_PACKETS_DIR'] + DAILY_SUBDIR
+    directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR)
     filename = 'replication-daily-%s.tar.bz2.asc' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
         return Response("Can't find signature for a specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx('%s/%s' % (NGINX_INTERNAL_LOCATION + DAILY_SUBDIR, filename))
+        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, DAILY_SUBDIR, filename))
     else:
         return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
 
@@ -121,13 +121,13 @@ def replication_daily_signature(packet_number):
 @token_required
 @tracked
 def replication_weekly(packet_number):
-    directory = current_app.config['REPLICATION_PACKETS_DIR'] + WEEKLY_SUBDIR
+    directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR)
     filename = 'replication-weekly-%s.tar.bz2' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
         return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx('%s/%s' % (NGINX_INTERNAL_LOCATION + WEEKLY_SUBDIR, filename))
+        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, WEEKLY_SUBDIR, filename))
     else:
         return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
 
@@ -135,13 +135,13 @@ def replication_weekly(packet_number):
 @api_bp.route('/musicbrainz/replication-weekly-<int:packet_number>.tar.bz2.asc')
 @token_required
 def replication_weekly_signature(packet_number):
-    directory = current_app.config['REPLICATION_PACKETS_DIR'] + WEEKLY_SUBDIR
+    directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR)
     filename = 'replication-weekly-%s.tar.bz2.asc' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
         return Response("Can't find signature for a specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx('%s/%s' % (NGINX_INTERNAL_LOCATION + WEEKLY_SUBDIR, filename))
+        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, WEEKLY_SUBDIR, filename))
     else:
         return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
 
