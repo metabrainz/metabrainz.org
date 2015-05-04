@@ -18,6 +18,9 @@
       {% set featured_users = tier.get_featured_users() %}
       {% if featured_users|length > 0 %}
         <h2>{{ tier.name }} tier</h2>
+        {% if tier.short_desc %}
+          <div class="tier-description">{{ tier.short_desc }}</div>
+        {% endif %}
         <div class="supporters-container">
           {% for user in featured_users %}
             <div class="supporter">
