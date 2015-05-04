@@ -7,7 +7,9 @@
 
   <p>{{ tier.long_desc }}</p>
 
-  <p class="text-center"><a href="{{ url_for('users.signup') }}">Sign up for this tier</a></p>
+  {% if not current_user or current_user.is_anonymous() %}
+    <p class="text-center"><a class="btn btn-primary" href="{{ url_for('users.signup') }}">Sign up for this tier</a></p>
+  {% endif %}
 
   {% set users = tier.users.all() %}
   {% if users|length > 0 %}
@@ -44,7 +46,5 @@
       </table>
     </div>
   {% endif %}
-
-  <p class="text-center"><a href="{{ url_for('users.signup') }}">Sign up for this tier</a></p>
 
 {% endblock %}
