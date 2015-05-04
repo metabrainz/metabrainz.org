@@ -17,7 +17,7 @@
     <p>
       <strong>Hourly:</strong>
       <code>
-        GET {{ url_for('api.get_replication_packet',
+        GET {{ url_for('api.replication_hourly',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        packet_number=42, token="TOKEN")
                   | replace("42", "<PACKET_NUMBER>")
@@ -28,7 +28,7 @@
     <p>
       <strong>Daily:</strong>
       <code>
-        GET {{ url_for('api.get_daily_replication_packet',
+        GET {{ url_for('api.replication_daily',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        packet_number=42, token="TOKEN")
                   | replace("42", "<PACKET_NUMBER>")
@@ -39,7 +39,7 @@
     <p>
       <strong>Weekly:</strong>
       <code>
-        GET {{ url_for('api.get_weekly_replication_packet',
+        GET {{ url_for('api.replication_weekly',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        packet_number=42, token="TOKEN")
                   | replace("42", "<PACKET_NUMBER>")
@@ -50,7 +50,7 @@
     <p>
       You can get info about latest replication packets from this endpoint:<br />
       <code>
-        GET {{ url_for('api.last_replication_packets',
+        GET {{ url_for('api.replication_info',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        token="TOKEN")
                   | replace("TOKEN", "<ACCESS_TOKEN>")
