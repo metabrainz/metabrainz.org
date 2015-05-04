@@ -29,6 +29,25 @@
         <li><a href="{{ url_for('donations.index') }}">Donate</a></li>
         <li><a href="http://blog.musicbrainz.org/category/metabrainz/">Blog</a></li>
       </ul>
+
+      {# Not showing user stuff on error pages. If attempt to load user info fails there, page will not render. #}
+      {% if not error %}
+        <ul class="nav navbar-nav navbar-right">
+          {% if not current_user or current_user.is_anonymous() %}
+            <li><a class="support-link" href="{{ url_for('users.signup') }}">Support us</a></li>
+          {% else %}
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                {{ current_user.musicbrainz_id }} <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ url_for('users.profile', musicbrainz_id=current_user.musicbrainz_id) }}">Your profile</a></li>
+                <li><a href="{{ url_for('users.logout') }}">Sign out</a></li>
+              </ul>
+            </li>
+          {% endif %}
+        </ul>
+      {%- endif -%}
     </div>
 
   </div>
