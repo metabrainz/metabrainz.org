@@ -8,8 +8,9 @@ for MusicBrainz.
 
 ## Development
 
-Before starting the application copy `config.py.example` into `config.py` and
-tweak the configuration. You need to make sure that all API keys are set.
+Before starting the application copy `config.py.example` into `config.py` 
+(in the metabrainz directory) and tweak the configuration. You need to make sure 
+that all API keys are set.
 
 The easiest way to set up a development environment is to use [Vagrant](https://www.vagrantup.com/).
 This command will create and configure virtual machine that you will be able to
