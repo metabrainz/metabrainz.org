@@ -39,8 +39,13 @@ img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
 
 
-a.support-link {
-  color: lighten(@green, 30%) !important;
+.support-link {
+  > a {
+    background-color: @orange;
+    &:hover, &:focus {
+      background-color: lighten(@orange, 6.5%) !important;
+    }
+  }
 }
 
 
