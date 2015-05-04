@@ -38,6 +38,17 @@ body {
 img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
 
+
+.support-link {
+  > a {
+    background-color: @orange;
+    &:hover, &:focus {
+      background-color: lighten(@orange, 6.5%) !important;
+    }
+  }
+}
+
+
 // Home page
 #homepage {
   @section-margin: 40px;
