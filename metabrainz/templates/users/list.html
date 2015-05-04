@@ -1,26 +1,26 @@
 {% extends 'base.html' %}
 
-{% block title %}Customers - MetaBrainz Foundation{% endblock %}
+{% block title %}Supporters - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1>Customers</h1>
+  <h1>Supporters</h1>
 
   <p>
-    The following customers license our data and use
+    The following supporters license our data and use
     <a href="http://musicbrainz.user/doc/MusicBrainz_Identifier">MusicBrainz Identifiers</a>
     for their own operations. This list does not include any individuals/companies that are
     using our Public Domain/Creative Commons data snapshots – there are many users of this data
     beyond the licensees listed here:
   </p>
 
-  <div id="customers-list">
+  <div id="supporters-list">
     {% for tier in tiers %}
       {% set featured_users = tier.get_featured_users() %}
       {% if featured_users|length > 0 %}
         <h2>{{ tier.name }} tier</h2>
-        <div class="customers-container">
+        <div class="supporters-container">
           {% for user in featured_users %}
-            <div class="customer">
+            <div class="supporter">
               <a href="{{ url_for('users.tier', tier_id=tier.id) }}">
                 <div class="logo-container">
                   {% if user.org_logo_url %}

@@ -11,22 +11,22 @@ from metabrainz import flash, session
 users_bp = Blueprint('users', __name__)
 
 
-@users_bp.route('/customers')
-def customers_list():
+@users_bp.route('/supporters')
+def supporters_list():
     return render_template('users/list.html', tiers=Tier.get_available(sort=True, sort_desc=True))
 
 
-@users_bp.route('/customers/bad')
+@users_bp.route('/supporters/bad')
 def bad_standing():
     return render_template('users/bad-standing.html')
 
 
-@users_bp.route('/customers/tiers/')
+@users_bp.route('/supporters/tiers/')
 def tiers():
     return render_template('users/tiers.html', tiers=Tier.get_available(sort=True))
 
 
-@users_bp.route('/customers/tiers/<tier_id>')
+@users_bp.route('/supporters/tiers/<tier_id>')
 def tier(tier_id):
     t = Tier.get(id=tier_id)
     if not t or not t.available:
