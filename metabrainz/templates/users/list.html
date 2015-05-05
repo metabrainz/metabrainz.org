@@ -6,11 +6,11 @@
   <h1>Supporters</h1>
 
   <p>
-    The following supporters license our data and use
-    <a href="http://musicbrainz.user/doc/MusicBrainz_Identifier">MusicBrainz Identifiers</a>
-    for their own operations. This list does not include any individuals/companies that are
-    using our Public Domain/Creative Commons data snapshots – there are many users of this data
-    beyond the licensees listed here:
+    The following organizations make use of the data-sets published by MetaBrainz and
+    are supporting us financially or through some other reciprocal agreement. There are also
+    organizations that make use of our data that have explicitly declined to support us. There
+    may also be other organizations making use of our data that we don't know about yet. If you
+    know of a company using our data, please <a href="{{ url_for("index.contact") }}">contact us</a>.
   </p>
 
   <div id="supporters-list">
@@ -42,10 +42,5 @@
       {% endif %}
     {% endfor %}
   </div>
-
-  <p class="text-muted">
-    Do you know of others using the MusicBrainz data?
-    If so please, contact us and let us know.
-  </p>
 
 {% endblock %}
