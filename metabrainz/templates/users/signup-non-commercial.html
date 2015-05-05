@@ -5,6 +5,13 @@
 {% block content %}
   <h1>Sign up <small>non-commercial</small></h1>
 
+  <p>
+  Please be aware that misuse of the non-commercial service for commercial purposes will
+  result in us revoking your access token and the billing you for your commercial use of our
+  Live Data Feed.
+  </p>
+  <br/>
+
   {% for field in form.errors %}
     {% for error in form.errors[field] %}
       <div class="alert alert-danger">{{ field }}: {{ error }}</div>
@@ -43,8 +50,8 @@
         <div class="checkbox">
           <label id="agreement">
             {{ form.agreement(required="required") }}
-            I agree to use the Live Data Feed for non-commercial/private uses
-            only. I also agree to treat my access token as a secret and will
+            I agree to use the Live Data Feed for non-commercial (less than $500 income per year) or
+            private uses only. I also agree to treat my access token as a secret and will
             not share this token publicly or commit it to a source code repository.
           </label>
         </div>

@@ -5,11 +5,35 @@
 {% block content %}
   <h1>Sign up</h1>
 
-  <h3>Select account type</h3>
-  <div class="btn-group" role="group">
-    <a href="{{ url_for('users.signup_tier_selection') }}"
-       class="btn btn-default" role="button">Commercial</a>
-    <a href="{{ url_for('users.signup_non_commercial') }}"
-       class="btn btn-default" role="button">Non-commercial</a>
-  </div>
+  <p>
+  Please select the type of account for which you wish to sign up:
+  </p>
+
+  <h3>Non-commercial</h3>
+
+  <p>
+  Non-commercial use includes private use of our data sets and companies that
+  don't anticipate earning more than $500 in a given year. If you are a pre-revenue start-up and expect to have
+  more than $500 of revenue in the future, please sign up with a commercial account -- see below for more details.
+  </p>
+
+  <p>
+  <a href="{{ url_for('users.signup_non_commercial') }}" class="btn btn-default" role="button">Non-commercial</a>
+  </p>
+
+  <h3>Commercial</h3>
+
+  <p>
+  <strong>Commercial:</strong> If you are a company with more than $500 income in a year, please sign up with
+  this type of account. You'll be able to select a support tier that fits your current financial situation. We 
+  welcome working with companies that are just getting started and we're happy for your support for MetaBrainz
+  to grow as you grow. If you would like to use our data, but are not ready to state this publicly yet, please
+  sign up for the <i>Stealth start up</i> tier; we will keep your data-usage confidential and contact you to 
+  discuss your future plans.
+  </p>
+
+  <p>
+  <a href="{{ url_for('users.signup_tier_selection') }}" class="btn btn-default" role="button">Commercial</a>
+  </p>
+
 {% endblock %}
