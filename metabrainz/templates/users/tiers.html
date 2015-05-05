@@ -7,15 +7,17 @@
 
   <p>
   If you make commercial use of any of the data sets offered by the MetaBrainz Foundation, we
-  ask that you please support us. Please select a tier that is appropriate for your organization.
+  ask that you please support us. We define commercial use as <strong>any use by any individual or company
+  that has income of $500 or more per year</strong>. If you have questions if your organization is subject
+  to this rule, please <a href="{{ url_for("index.contact") }}">contact us</a>. 
   </p>
+
   <p>
   <strong>Note</strong>: As part of our transparency policy, your level of support will be publicly visible. However
   none of your private details will be public.
   </p>
 
   <div id="tiers">
-
     <div id="primary-tiers">
       <div class="row">
         {% for tier in tiers %}
