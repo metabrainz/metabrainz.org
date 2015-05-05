@@ -5,6 +5,12 @@
 {% block content %}
   <h1>Sign up <small>Commercial</small></h1>
 
+  <p>
+  <strong>Note:</strong> Signing up for any tier other than the <i>Stealth startup</i> tier
+  will publicly list your company on this web site. However, we will not publish any of 
+  your private details.
+  </p>
+
   {% for field in form.errors %}
     {% for error in form.errors[field] %}
       <div class="alert alert-danger">{{ field }}: {{ error }}</div>
@@ -18,7 +24,7 @@
       <label class="col-sm-4 control-label">Selected tier</label>
       <div class="col-sm-5" style="padding-top: 7px">
         <b>{{ tier.name }}</b>
-        <em class="text-muted">${{ tier.price }}/mo</em>
+        <em class="text-muted">${{ tier.price }}/month and up</em>
       </div>
     </div>
 

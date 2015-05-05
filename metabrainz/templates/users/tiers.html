@@ -5,16 +5,28 @@
 {% block content %}
   <h1>Support us</h1>
 
-  <p>
-  If you make commercial use of any of the data sets offered by the MetaBrainz Foundation, we
-  ask that you please support us. We define commercial use as <strong>any use by any individual or company
-  that has income of $500 or more per year</strong>. If you have questions if your organization is subject
-  to this rule, please <a href="{{ url_for("index.contact") }}">contact us</a>. 
-  </p>
+  <h3>Non-commercial</h3>
 
   <p>
-  <strong>Note</strong>: As part of our transparency policy, your level of support will be publicly visible. However
-  none of your private details will be public.
+  Non-commercial use includes private use of our data sets and companies that
+  don't anticipate earning more than $500 in a given year. If you are a pre-revenue start-up and expect to have
+  more than $500 of revenue in the future, please sign up with a commercial account -- see below for more details.
+  Please <a href="{{ url_for('donations.index') }}">consider making a donation</a> to support our efforts!
+  </p>
+
+
+  <p>
+  <a href="{{ url_for('users.signup_non_commercial') }}" class="btn btn-default" role="button">Non-commercial</a>
+  </p>
+
+  <h3>Commercial</h3>
+
+  <p>
+  If you are a company with more than $500 income in a year, please select a support tier below that fits your 
+  current situation. We welcome working with companies that are just getting started and we're happy for your support 
+  for MetaBrainz to grow as you grow. If you would like to use our data, but are not ready to state this publicly yet, 
+  please sign up for the <i>Stealth start up</i> tier; we will keep your data-usage confidential and contact you to 
+  discuss your future plans.
   </p>
 
   <div id="tiers">
@@ -31,7 +43,7 @@
                   <div class="buttons">
                     <p><a href="{{ url_for('users.tier', tier_id=tier.id) }}"
                           class="btn btn-default btn-block" role="button">More info</a></p>
-                    <p><a href="{{ url_for('users.signup', tier_id=tier.id) }}"
+                    <p><a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
                           class="btn btn-primary btn-block" role="button">Sign up</a></p>
                   </div>
                 </div>
