@@ -57,8 +57,11 @@ class Tier(db.Model):
                     query.order_by(cls.price.asc())
         return query.all()
 
-    def get_featured_users(self):
-        return self.users.filter(User.featured == True).all()
+    def get_featured_users(self, in_deadbeat_club=False):
+        return self.users.filter(
+            User.featured == True,
+            User.in_deadbeat_club == in_deadbeat_club,
+        ).all()
 
 
 class TierAdminView(AdminModelView):

@@ -52,6 +52,7 @@ class User(db.Model, UserMixin):
 
     # Administrative columns:
     good_standing = db.Column(db.Boolean, nullable=False, default=True)
+    in_deadbeat_club = db.Column(db.Boolean, nullable=False, default=False)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 
     tokens = db.relationship("Token", backref='owner', lazy="dynamic")
@@ -113,10 +114,11 @@ class User(db.Model, UserMixin):
         return cls.query.filter_by(**kwargs).all()
 
     @classmethod
-    def get_featured(cls, limit=4, with_logos=False):
+    def get_featured(cls, limit=4, with_logos=False, in_deadbeat_club=False):
         query = cls.query.filter(cls.featured)
         if with_logos:
             query = query.filter(cls.org_logo_url != None)
+        query = query.filter(cls.in_deadbeat_club == in_deadbeat_club)
         return query.order_by(func.random()).limit(limit).all()
 
     def generate_token(self):
@@ -208,6 +210,7 @@ class UserAdminView(AdminModelView):
         address_state='State',
         address_postcode='Postal code',
         address_country='Country',
+        in_deadbeat_club='In Deadbeat Club',
     )
     column_descriptions = dict(
         featured='Indicates if this user is publicly displayed on the website. '
@@ -217,6 +220,7 @@ class UserAdminView(AdminModelView):
                     'this user. Usually one sentence.',
         long_descr='Long description if how our products are being used by this user.',
         tier='Optional tier that is used only for commercial users.',
+        in_deadbeat_club='Indicates if this user refuses to support us.',
     )
     column_list = (
         'is_commercial', 'musicbrainz_id', 'org_name', 'tier', 'featured',
@@ -236,6 +240,7 @@ class UserAdminView(AdminModelView):
         'api_url',
         'short_descr',
         'long_descr',
+        'in_deadbeat_club',
         'featured',
         'address_street',
         'address_city',
