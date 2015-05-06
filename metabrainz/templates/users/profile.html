@@ -18,10 +18,50 @@
     </span>
   </p>
 
+  {% if current_user.is_commercial %}
+      {% if current_user.state == 'active' and current_user.good_standing %}
+         <h3>Data use permission granted</h3>
+            <p>
+                You have permission to use any of the data published by the MetaBrainz Foundation. This
+                includes data dumps released under a Creative Commons non-commercial license. Thank you for your support!
+            </p>
+            <p>
+                Please note that if your support falls behind by more than 60 days, this permission may be withdrawn.
+                You can always check your current permission status on this page.
+            </p>
+      {% else %}
+         <h3>No data use permission granted</h3>
+            <p>
+                You <strong>DO NOT</strong> currently have permission to use data released under a Creative Commons 
+                non-commercial license. 
+            </p>
+            <p>
+                Reason:
+                {% if not current_user.good_standing %}
+                   Your account is in bad standing, which means that you are more than 60 days behind in support payments.
+                   If you think this is a mistake, please <a href="{{ url_for("index.contact") }}">contact us</a>.
+                {% elif current_user.state == 'rejected' %}
+                   Your application for using the Live Data Feed has been rejected.
+                {% elif current_user.state == 'pending' %}
+                   Your application for using the Live Data Feed is still pending.
+                {% else %}
+                   Unknown. :(
+                {% endif %}
+            </p>
+      {% endif %}
+  {% endif %}
+
   <h3>Contact information</h3>
   <p>
     <strong>Name:</strong> {{ current_user.contact_name }}<br />
     <strong>Email:</strong> {{ current_user.contact_email }}<br />
+    <strong>Company:</strong> {{ current_user.org_name }}<br />
+    <strong>Logo URL:</strong> {{ current_user.org_logo_url }}<br />
+    <strong>Website URL:</strong> {{ current_user.website_url }}<br />
+    <strong>API URL:</strong> {{ current_user.api_url }}<br />
+    <p>
+      Please <a href="{{ url_for("index.contact") }}">contact us</a> if you wish for us to update this information.
+    </p>
   </p>
   <p>
     <a href="{{ url_for('users.profile_edit') }}" class="btn btn-xs btn-primary">
