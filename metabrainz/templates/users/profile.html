@@ -29,6 +29,35 @@
     </a>
   </p>
 
+  {% if current_user.is_commercial %}
+      {% if current_user.state == 'active' and current_user.good_standing %}
+         <h2>Data use permission granted</h2>
+            <p>
+                You have permission to use any of the data published by the MetaBrainz Foundation. This
+                includes data dumps released under a Creative Commons non-commercial license. Thank you for your support!
+            </p>
+            <p>
+                Please note that if your support falls behind by more than 60 days, this permission may be withdrawn.
+                You can always check your current permission status on this page.
+            </p>
+      {% else %}
+         <h2>No data use permission granted</h2>
+            <p>
+                You <strong>DO NOT</strong> currently have permission to use data released under a Creative Commons 
+                non-commercial license. 
+            </p>
+            <p>
+                Reason:
+                {% if current_user.state != 'active' %}
+                   Your account has not been actived yet.
+                {% else %}
+                   Your account is in bad standing, which means that you are more than 60 days behind in support payments.
+                   If you think this is a mistake, please <a href="{{ url_for("index.contact") }}">contact us</a>.
+                {% endblock %}
+            </p>
+      {% endblock %}
+  {% endblock %}
+
   {% if current_user.state == 'active' %}
     <h2>Access token</h2>
     <p>
