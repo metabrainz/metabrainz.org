@@ -29,6 +29,9 @@ def send_mail(subject, text, recipients, attachments=None,
     if current_app.config['TESTING']:  # Not sending any emails during the testing process
         return
 
+    if not recipients:
+        return
+
     message = MIMEMultipart('mixed')
     message['Subject'] = subject
     message['From'] = "%s <%s>" % (from_name, from_addr)
