@@ -5,6 +5,11 @@
 {% block content %}
   <h1>Support us</h1>
 
+  <p>
+  To get access to the <a href="https://musicbrainz.org/doc/Live_Data_Feed">MusicBrainz Live Data Feed</a>, 
+  please choose between non-commercial and commercial use below:
+  </p>
+
   <h3>Non-commercial</h3>
 
   <p>
@@ -15,7 +20,7 @@
   </p>
 
 
-  <p>
+  <p class="text-center">
   <a href="{{ url_for('users.signup_non_commercial') }}" class="btn btn-default" role="button">Non-commercial</a>
   </p>
 
@@ -78,6 +83,9 @@
       </p>
     </div>
 
+  </div>
+  <div>
+     If you are not sure which tier to pick, please <a href="{{ url_for("index.contact") }}">contact us</a>.
   </div>
 
 {% endblock %}
