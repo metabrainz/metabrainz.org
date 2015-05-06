@@ -89,7 +89,7 @@ RECAPTCHA_PRIVATE_KEY = ""
 
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [
-    "admin@metabrainz.org",
+#    "admin@example.org",
 ]
 
 # See http://flask.pocoo.org/docs/0.10/config/#builtin-configuration-values
