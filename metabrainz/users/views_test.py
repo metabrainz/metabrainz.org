@@ -8,8 +8,8 @@ class UsersViewsTestCase(FlaskTestCase):
     def test_supporters_list(self):
         self.assert200(self.client.get(url_for('users.supporters_list')))
 
-    def test_tiers(self):
-        self.assert200(self.client.get(url_for('users.tiers')))
+    def test_account_type(self):
+        self.assert200(self.client.get(url_for('users.account_type')))
 
         Tier.create(
             name="Test tier",
@@ -17,7 +17,7 @@ class UsersViewsTestCase(FlaskTestCase):
             available=True,
             primary=False,
         )
-        self.assert200(self.client.get(url_for('users.tiers')))
+        self.assert200(self.client.get(url_for('users.account_type')))
 
     def test_tier(self):
         t = Tier.create(
@@ -32,12 +32,9 @@ class UsersViewsTestCase(FlaskTestCase):
     def test_signup(self):
         self.assert200(self.client.get(url_for('users.signup')))
 
-    def test_signup_tier_selection(self):
-        self.assert200(self.client.get(url_for('users.signup_tier_selection')))
-
     def test_signup_commercial(self):
         resp = self.client.get(url_for('users.signup_commercial'))
-        self.assertRedirects(resp, url_for('users.signup_tier_selection'))
+        self.assertRedirects(resp, url_for('users.account_type'))
 
         unavailable_tier = Tier.create(
             name="Unavailable tier",
@@ -45,21 +42,11 @@ class UsersViewsTestCase(FlaskTestCase):
             available=False,
         )
         resp = self.client.get(url_for('users.signup_commercial', tier_id=unavailable_tier.id))
-        self.assertRedirects(resp, url_for('users.signup_tier_selection'))
+        self.assertRedirects(resp, url_for('users.account_type'))
 
         # With missing tier
         resp = self.client.get(url_for('users.signup_commercial', tier_id=unavailable_tier.id + 1))
-        self.assertRedirects(resp, url_for('users.signup_tier_selection'))
-
-        available_tier = Tier.create(
-            name="Available tier",
-            price=42,
-            available=True,
-        )
-        self.assert200(self.client.get(url_for('users.signup_commercial', tier_id=available_tier.id)))
-
-    def test_signup_non_commercial(self):
-        self.assert200(self.client.get(url_for('users.signup_non_commercial')))
+        self.assertRedirects(resp, url_for('users.account_type'))
 
     def test_musicbrainz(self):
         self.assertStatus(self.client.get(url_for('users.musicbrainz')), 302)

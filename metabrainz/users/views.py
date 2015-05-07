@@ -10,10 +10,18 @@ from metabrainz import flash, session
 
 users_bp = Blueprint('users', __name__)
 
+SESSION_KEY_ACCOUNT_TYPE = 'account_type'
+SESSION_KEY_TIER_ID = 'account_tier'
+SESSION_KEY_MB_USERNAME = 'mb_username'
+SESSION_KEY_MB_EMAIL = 'mb_email'
+
+ACCOUNT_TYPE_COMMERCIAL = 'commercial'
+ACCOUNT_TYPE_NONCOMMERCIAL = 'noncommercial'
+
 
 @users_bp.route('/supporters')
 def supporters_list():
-    return render_template('users/list.html', tiers=Tier.get_available(sort=True, sort_desc=True))
+    return render_template('users/supporters-list.html', tiers=Tier.get_available(sort=True, sort_desc=True))
 
 
 @users_bp.route('/supporters/bad')
@@ -21,9 +29,9 @@ def bad_standing():
     return render_template('users/bad-standing.html')
 
 
-@users_bp.route('/supporters/tiers/')
-def tiers():
-    return render_template('users/tiers.html', tiers=Tier.get_available(sort=True))
+@users_bp.route('/supporters/account-type')
+def account_type():
+    return render_template('users/account-type.html', tiers=Tier.get_available(sort=True))
 
 
 @users_bp.route('/supporters/tiers/<tier_id>')
@@ -37,23 +45,24 @@ def tier(tier_id):
 @users_bp.route('/signup')
 @login_forbidden
 def signup():
-    mb_username = session.fetch_data('mb_username')
-    if mb_username:
-        return render_template('users/signup-selection.html')
-    else:
-        return render_template('users/signup.html')
+    mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
+    if mb_username is None:
+        # Show template with a link to MusicBrainz OAuth page
+        return render_template('users/mb-signup.html')
 
+    account_type = session.fetch_data(SESSION_KEY_ACCOUNT_TYPE)
+    if not account_type:
+        flash.info("Please select account type to sign up.")
+        return redirect(url_for(".account_type"))
 
-@users_bp.route('/signup/tier')
-@login_forbidden
-def signup_tier_selection():
-    """Tier selection page for commercial users."""
-    mb_username = session.fetch_data('mb_username')
-    if mb_username:
-        return render_template('users/signup-tier-selection.html', tiers=Tier.get_available())
+    if account_type == ACCOUNT_TYPE_COMMERCIAL:
+        tier_id = session.fetch_data(SESSION_KEY_TIER_ID)
+        if not tier_id:
+            flash.info("Please select account type to sign up.")
+            return redirect(url_for(".account_type"))
+        return redirect(url_for(".signup_commercial", tier_id=tier_id))
     else:
-        flash.warn("You need to sign in with your MusicBrainz account first!")
-        return render_template('users/signup.html')
+        return redirect(url_for(".signup_noncommercial"))
 
 
 @users_bp.route('/signup/commercial', methods=('GET', 'POST'))
@@ -67,17 +76,20 @@ def signup_commercial():
     tier_id = request.args.get('tier_id')
     if not tier_id:
         flash.warn("You need to choose support tier before signing up!")
-        return redirect(url_for('.signup_tier_selection'))
-    tier = Tier.get(id=tier_id)
-    if not tier or not tier.available:
-        flash.error("You need to choose existing support tier before signing up!")
-        return redirect(url_for(".signup_tier_selection"))
+        return redirect(url_for('.account_type'))
+    selected_tier = Tier.get(id=tier_id)
+    if not selected_tier or not selected_tier.available:
+        flash.error("You need to choose existing tier before signing up!")
+        return redirect(url_for(".account_type"))
 
-    mb_username = session.fetch_data('mb_username')
+    mb_username = session.fetch_data(SESSION_KEY_MB_EMAIL)
     if not mb_username:
-        flash.warn("You need to sign in with your MusicBrainz account first!")
-        return render_template('users/signup.html')
-    mb_email = session.fetch_data('mb_email')
+        session.persist_data(**{
+            SESSION_KEY_ACCOUNT_TYPE: ACCOUNT_TYPE_COMMERCIAL,
+            SESSION_KEY_TIER_ID: selected_tier.id,
+        })
+        return redirect(url_for(".signup"))
+    mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
 
     form = CommercialSignUpForm(default_email=mb_email)
     if form.validate_on_submit():
@@ -106,18 +118,20 @@ def signup_commercial():
         flash.success("Thanks for signing up! Your application will be reviewed soon.")
         return redirect(url_for('.profile'))
 
-    return render_template("users/signup-commercial.html", form=form, tier=tier)
+    return render_template("users/signup-commercial.html", form=form, tier=selected_tier)
 
 
-@users_bp.route('/signup/non-commercial', methods=('GET', 'POST'))
+@users_bp.route('/signup/noncommercial', methods=('GET', 'POST'))
 @login_forbidden
-def signup_non_commercial():
+def signup_noncommercial():
     """Sign up endpoint for non-commercial users."""
-    mb_username = session.fetch_data('mb_username')
+    mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
     if not mb_username:
-        flash.warn("You need to sign in with your MusicBrainz account first!")
-        return render_template('users/signup.html')
-    mb_email = session.fetch_data('mb_email')
+        session.persist_data(**{
+            SESSION_KEY_ACCOUNT_TYPE: ACCOUNT_TYPE_NONCOMMERCIAL,
+        })
+        return redirect(url_for(".signup"))
+    mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
 
     form = NonCommercialSignUpForm(default_email=mb_email)
     if form.validate_on_submit():
@@ -152,7 +166,10 @@ def musicbrainz_post():
     if not code:
         raise InternalServerError("Authorization code is missing!")
     mb_username, mb_email = musicbrainz_login.get_user(code)
-    session.persist_data(mb_username=mb_username, mb_email=mb_email)
+    session.persist_data(**{
+        SESSION_KEY_MB_USERNAME: mb_username,
+        SESSION_KEY_MB_EMAIL: mb_email,
+    })
     user = User.get(musicbrainz_id=mb_username)
     if user:  # Checking if user is already signed up
         login_user(user)
@@ -182,7 +199,7 @@ def profile_edit():
     else:
         form.contact_name.data = current_user.contact_name
         form.contact_email.data = current_user.contact_email
-    return render_template('users/edit.html', form=form)
+    return render_template('users/profile-edit.html', form=form)
 
 
 @users_bp.route('/profile/regenerate-token', methods=['POST'])
@@ -199,7 +216,7 @@ def regenerate_token():
 @users_bp.route('/login')
 @login_forbidden
 def login():
-    return render_template('users/login.html')
+    return render_template('users/mb-login.html')
 
 
 @users_bp.route('/logout')

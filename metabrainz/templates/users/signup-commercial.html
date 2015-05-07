@@ -21,12 +21,19 @@
     {{ form.csrf_token }}
 
     <div class="form-group">
+      <label class="col-sm-4 control-label">Account type</label>
+      <div class="col-sm-5" style="padding-top: 7px">Commercial</div>
       <label class="col-sm-4 control-label">Selected tier</label>
       <div class="col-sm-5" style="padding-top: 7px">
         <b>{{ tier.name }}</b>
         <em class="text-muted">${{ tier.price }}/month and up</em>
       </div>
+      <div class="col-sm-6 col-sm-offset-4" style="padding-top: 7px">
+        <a href="{{ url_for(".account_type") }}">Change account type or tier</a>
+      </div>
     </div>
+
+    <hr />
 
     <div class="form-group">
       <label class="col-sm-4 control-label">
@@ -112,7 +119,8 @@
         {% endfor %}
       </div>
     </div>
-    <br />
+
+    <hr />
 
     <div class="form-group">
       <div class="col-sm-offset-4 col-sm-8">
@@ -125,7 +133,6 @@
         </div>
       </div>
     </div>
-    <br />
 
     <div class="form-group">
       <div class="col-sm-offset-4 col-sm-8">{{ form.recaptcha }}</div>
