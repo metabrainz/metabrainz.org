@@ -82,7 +82,7 @@ def signup_commercial():
         flash.error("You need to choose existing tier before signing up!")
         return redirect(url_for(".account_type"))
 
-    mb_username = session.fetch_data(SESSION_KEY_MB_EMAIL)
+    mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
     if not mb_username:
         session.persist_data(**{
             SESSION_KEY_ACCOUNT_TYPE: ACCOUNT_TYPE_COMMERCIAL,
