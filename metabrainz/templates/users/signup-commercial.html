@@ -130,14 +130,15 @@
         {% endfor %}
       </div>
     </div>
-    <br />
-
-    <p class="small">
-      <em>
-        The following information will be shown publicly: organization name,
-        logo, website and API URLs, data usage description.
-      </em>
-    </p>
+    <div class="form-group">
+      <label class="col-sm-offset-4 col-sm-5">
+        If you would like to support us with more than ${{ tier.price }},
+        please enter the actual amount here:
+      </label>
+      <div class="col-sm-offset-4 col-sm-5">
+        {{ form.amount_pledged(class="form-control", min=tier.price, value=form.amount_pledged.data or tier.price) }}
+      </div>
+    </div>
 
     <hr />
 
@@ -151,6 +152,13 @@
           </label>
         </div>
       </div>
+    </div>
+
+    <div class="col-sm-offset-4 col-sm-8 small">
+      <em>
+        The following information will be shown publicly: organization name,
+        logo, website and API URLs, data usage description.<br /><br />
+      </em>
     </div>
 
     <div class="form-group">

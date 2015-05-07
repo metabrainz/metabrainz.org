@@ -47,6 +47,7 @@ class User(db.Model, UserMixin):
     address_country = db.Column(db.Unicode)
     tier_id = db.Column(db.Integer, db.ForeignKey('tier.id', ondelete="SET NULL", onupdate="CASCADE"))
     payment_method = db.Column(db.Unicode)
+    amount_pledged = db.Column(db.Numeric(11, 2))
 
     # Administrative columns:
     good_standing = db.Column(db.Boolean, nullable=False, default=True)
@@ -91,6 +92,7 @@ class User(db.Model, UserMixin):
 
             tier_id=kwargs.pop('tier_id', None),
             payment_method=kwargs.pop('payment_method', None),
+            amount_pledged=kwargs.pop('amount_pledged', None),
         )
         new_user.state = STATE_ACTIVE if not new_user.is_commercial else STATE_PENDING
         if kwargs:
@@ -180,6 +182,7 @@ def send_user_signup_notification(user):
 
             ('Tier', str(user.tier)),
             ('Payment method', user.payment_method),
+            ('Amount pledged', '$%s' % str(user.amount_pledged)),
 
             ('Data usage description', user.data_usage_desc),
         ]),
@@ -199,6 +202,7 @@ class UserAdminView(AdminModelView):
         data_usage_desc='Data usage description',
         org_desc='Organization description',
         good_standing='Good standing',
+        amount_pledged='Amount pledged',
         org_name='Organization name',
         org_logo_url='Organization logo URL',
         website_url='Organization homepage URL',
@@ -220,6 +224,7 @@ class UserAdminView(AdminModelView):
                         'by this user. Usually one sentence.',
         org_desc='Description of the organization (private).',
         tier='Optional tier that is used only for commercial users.',
+        amount_pledged='USD',
         in_deadbeat_club='Indicates if this user refuses to support us.',
     )
     column_list = (
@@ -234,6 +239,7 @@ class UserAdminView(AdminModelView):
         'is_commercial',
         'good_standing',
         'tier',
+        'amount_pledged',
         'org_name',
         'org_logo_url',
         'website_url',

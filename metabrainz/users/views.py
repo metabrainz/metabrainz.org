@@ -92,7 +92,15 @@ def signup_commercial():
     mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
 
     form = CommercialSignUpForm(default_email=mb_email)
-    if form.validate_on_submit():
+
+    def custom_validation(f):
+        if f.amount_pledged.data < selected_tier.price:
+            flash.warning("Custom amount must be more than threshold amount"
+                          "for selected tier or equal to it!")
+            return False
+        return True
+
+    if form.validate_on_submit() and custom_validation(form):
         new_user = User.add(
             is_commercial=True,
             musicbrainz_id=mb_username,
@@ -114,6 +122,7 @@ def signup_commercial():
 
             tier_id=tier_id,
             payment_method=form.payment_method.data,
+            amount_pledged=form.amount_pledged.data,
         )
         login_user(new_user)
         flash.success("Thanks for signing up! Your application will be reviewed soon.")

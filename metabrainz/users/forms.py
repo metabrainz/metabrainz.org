@@ -1,6 +1,6 @@
 from flask_wtf import Form, RecaptchaField
 from wtforms import StringField, BooleanField, TextAreaField, RadioField, validators
-from wtforms.fields.html5 import EmailField, URLField
+from wtforms.fields.html5 import EmailField, URLField, DecimalField
 from wtforms.validators import DataRequired, Length
 
 
@@ -31,7 +31,9 @@ class NonCommercialSignUpForm(UserSignUpForm):
 
 class CommercialSignUpForm(UserSignUpForm):
     """Sign up form for commercial users."""
-    org_name = StringField("Organization name", validators=[DataRequired("You need to specify the name of your organization.")])
+    org_name = StringField("Organization name", validators=[
+        DataRequired("You need to specify the name of your organization.")
+    ])
     org_desc = TextAreaField("Organization description", validators=[
         DataRequired("You need to provide description of your organization."),
     ])
@@ -60,6 +62,7 @@ class CommercialSignUpForm(UserSignUpForm):
         ],
         validators=[DataRequired(message="You need to choose a payment method!")],
     )
+    amount_pledged = DecimalField()
 
 
 class UserEditForm(Form):
