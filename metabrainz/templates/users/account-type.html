@@ -6,32 +6,35 @@
   <h1>Support us</h1>
 
   <p>
-  To get access to the <a href="https://musicbrainz.org/doc/Live_Data_Feed">MusicBrainz Live Data Feed</a>, 
-  please choose between non-commercial and commercial use below:
+    To get access to the <a href="https://musicbrainz.org/doc/Live_Data_Feed">MusicBrainz Live Data Feed</a>,
+    please choose between non-commercial and commercial use below:
   </p>
 
   <h3>Non-commercial</h3>
 
   <p>
-  Non-commercial use includes private use of our data sets and use by companies that
-  don't anticipate earning more than $500 in a given year. If you are a pre-revenue start-up and expect to have
-  more than $500 of revenue in the future, please sign up with a commercial account -- see below for more details.
-  Please <a href="{{ url_for('donations.index') }}">consider making a donation</a> to support our efforts!
+    Non-commercial use includes private use of our data sets and use by companies that
+    don't anticipate earning more than $500 in a given year. If you are a pre-revenue
+    start-up and expect to have more than $500 of revenue in the future, please sign up
+    with a commercial account &mdash; see below for more details. Please
+    <a href="{{ url_for('donations.index') }}">consider making a donation</a> to support
+    our efforts!
   </p>
 
-
   <p class="text-center">
-  <a href="{{ url_for('users.signup_noncommercial') }}" class="btn btn-default" role="button">Non-commercial</a>
+    <a href="{{ url_for('users.signup_noncommercial') }}"
+       class="btn btn-default" role="button">Non-commercial</a>
   </p>
 
   <h3>Commercial</h3>
 
   <p>
-  If you are a company with more than $500 income in a year, please select a support tier below that fits your 
-  current situation. We welcome working with companies that are just getting started and we're happy for your support 
-  for MetaBrainz to grow as you grow. If you would like to use our data, but are not ready to state this publicly yet, 
-  please sign up for the <i>Stealth start up</i> tier; we will keep your data-usage confidential and contact you to 
-  discuss your future plans.
+    If you are a company with more than $500 income in a year, please select a support
+    tier below that fits your current situation. We welcome working with companies that
+    are just getting started and we're happy for your support for MetaBrainz to grow as
+    you grow. If you would like to use our data, but are not ready to state this publicly
+    yet, please sign up for the <em>Stealth start up</em> tier; we will keep your
+    data-usage confidential and contact you to discuss your future plans.
   </p>
 
   <div id="tiers">
@@ -84,8 +87,10 @@
     </div>
 
   </div>
+
   <div>
-     If you are not sure which tier to pick, please <a href="{{ url_for("index.contact") }}">contact us</a>.
+     If you are not sure which tier to pick, please
+     <a href="{{ url_for("index.contact") }}">contact us</a>.
   </div>
 
 {% endblock %}

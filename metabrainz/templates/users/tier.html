@@ -8,7 +8,10 @@
   <p>{{ tier.long_desc }}</p>
 
   {% if not current_user or current_user.is_anonymous() %}
-    <p class="text-center"><a class="btn btn-primary" href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}">Sign up for this tier</a></p>
+    <p class="text-center">
+      <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
+         class="btn btn-primary">Sign up for this tier</a>
+    </p>
   {% endif %}
 
   {% set users = tier.get_featured_users() %}

@@ -12,11 +12,10 @@ class UserSignUpForm(Form):
     """
     contact_name = StringField(validators=[DataRequired("Contact name is required!")])
     contact_email = EmailField(validators=[DataRequired("Email address is required!")])
-    usage_desc = TextAreaField("How are you using our data?",
-                               validators=[
-                                   DataRequired("Please, tell us how you (will) use our data."),
-                                   Length(max=150, message="Please, limit usage description to 150 characters.")
-                               ])
+    usage_desc = TextAreaField("How are you using our data?", validators=[
+        DataRequired("Please, tell us how you (will) use our data."),
+        Length(max=150, message="Please, limit usage description to 150 characters."),
+    ])
     agreement = BooleanField(validators=[DataRequired(message="You need to accept the agreement!")])
     recaptcha = RecaptchaField()
 
@@ -34,10 +33,12 @@ class CommercialSignUpForm(UserSignUpForm):
     """Sign up form for commercial users."""
     org_name = StringField("Organization name", validators=[DataRequired("You need to specify the name of your organization.")])
     org_desc = TextAreaField("Organization description", validators=[
-        DataRequired("You need to provide description of your organization.")
+        DataRequired("You need to provide description of your organization."),
     ])
 
-    website_url = URLField("Website URL", validators=[DataRequired("You need to specify website of the organization.")])
+    website_url = URLField("Website URL", validators=[
+        DataRequired("You need to specify website of the organization."),
+    ])
     logo_url = URLField("Logo image URL")
     api_url = URLField("API URL")
 
@@ -57,7 +58,8 @@ class CommercialSignUpForm(UserSignUpForm):
             ("invoicing", "Invoicing"),
             ("bitcoin", "Bitcoin"),
         ],
-        validators=[DataRequired(message="You need to choose a payment method!")])
+        validators=[DataRequired(message="You need to choose a payment method!")],
+    )
 
 
 class UserEditForm(Form):
