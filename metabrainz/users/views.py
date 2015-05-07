@@ -101,6 +101,7 @@ def signup_commercial():
             data_usage_desc=form.usage_desc.data,
 
             org_name=form.org_name.data,
+            org_desc=form.org_desc.data,
             website_url=form.website_url.data,
             org_logo_url=form.logo_url.data,
             api_url=form.api_url.data,

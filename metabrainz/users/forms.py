@@ -33,6 +33,9 @@ class NonCommercialSignUpForm(UserSignUpForm):
 class CommercialSignUpForm(UserSignUpForm):
     """Sign up form for commercial users."""
     org_name = StringField("Organization name", validators=[DataRequired("You need to specify the name of your organization.")])
+    org_desc = TextAreaField("Organization description", validators=[
+        DataRequired("You need to provide description of your organization.")
+    ])
 
     website_url = URLField("Website URL", validators=[DataRequired("You need to specify website of the organization.")])
     logo_url = URLField("Logo image URL")
