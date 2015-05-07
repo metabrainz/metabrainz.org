@@ -51,7 +51,8 @@
         {{ form.usage_desc.label.text }}
         <span style="color: red">*</span>
       </label>
-      <div class="col-sm-5">{{ form.usage_desc(class="form-control", required="required", maxlength=150) }}</div>
+      <div class="col-sm-5">{{ form.usage_desc(class="form-control", required="required",
+                                   maxlength=150, placeholder="(max 150 characters)") }}</div>
     </div>
 
     <hr />
