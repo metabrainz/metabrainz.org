@@ -33,8 +33,7 @@ class User(db.Model, UserMixin):
     contact_name = db.Column(db.Unicode, nullable=False)
     contact_email = db.Column(db.Unicode, nullable=False)
 
-    # Description of how data is being used by this user
-    short_descr = db.Column(db.UnicodeText)
+    data_usage_desc = db.Column(db.UnicodeText)
     long_descr = db.Column(db.UnicodeText)
 
     # Columns specific to commercial users:
@@ -77,7 +76,8 @@ class User(db.Model, UserMixin):
             musicbrainz_id=kwargs.pop('musicbrainz_id'),
             contact_name=kwargs.pop('contact_name'),
             contact_email=kwargs.pop('contact_email'),
-            long_descr=kwargs.pop('long_descr'),
+            data_usage_desc=kwargs.pop('data_usage_desc'),
+            long_descr=kwargs.pop('long_descr', None),
 
             org_name=kwargs.pop('org_name', None),
             org_logo_url=kwargs.pop('org_logo_url', None),
@@ -181,7 +181,7 @@ def send_user_signup_notification(user):
             ('Tier', str(user.tier)),
             ('Payment method', user.payment_method),
 
-            ('Usage description', user.short_descr),
+            ('Data usage description', user.data_usage_desc),
         ]),
         recipients=current_app.config['NOTIFICATION_RECIPIENTS'],
     )
@@ -196,7 +196,7 @@ class UserAdminView(AdminModelView):
         id='ID',
         is_commercial='Commercial',
         musicbrainz_id='MusicBrainz ID',
-        short_descr='Short description',
+        data_usage_desc='Data usage description',
         long_descr='Long description',
         good_standing='Good standing',
         org_name='Organization name',
@@ -216,8 +216,8 @@ class UserAdminView(AdminModelView):
         featured='Indicates if this user is publicly displayed on the website. '
                  'If this is set, make sure to fill up information like '
                  'organization name, logo URL, descriptions, etc.',
-        short_descr='Short description of how our products are being used by '
-                    'this user. Usually one sentence.',
+        data_usage_desc='Short description of how our products are being used '
+                        'by this user. Usually one sentence.',
         long_descr='Long description if how our products are being used by this user.',
         tier='Optional tier that is used only for commercial users.',
         in_deadbeat_club='Indicates if this user refuses to support us.',
@@ -238,7 +238,7 @@ class UserAdminView(AdminModelView):
         'org_logo_url',
         'website_url',
         'api_url',
-        'short_descr',
+        'data_usage_desc',
         'long_descr',
         'in_deadbeat_club',
         'featured',

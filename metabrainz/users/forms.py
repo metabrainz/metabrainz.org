@@ -1,7 +1,7 @@
 from flask_wtf import Form, RecaptchaField
 from wtforms import StringField, BooleanField, TextAreaField, RadioField, validators
 from wtforms.fields.html5 import EmailField, URLField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 
 
 class UserSignUpForm(Form):
@@ -12,8 +12,11 @@ class UserSignUpForm(Form):
     """
     contact_name = StringField(validators=[DataRequired("Contact name is required!")])
     contact_email = EmailField(validators=[DataRequired("Email address is required!")])
-    description = TextAreaField("How are you using our data?",
-                                validators=[DataRequired("Please, tell us how you (will) use our data.")])
+    usage_desc = TextAreaField("How are you using our data?",
+                               validators=[
+                                   DataRequired("Please, tell us how you (will) use our data."),
+                                   Length(max=150, message="Please, limit usage description to 150 characters.")
+                               ])
     agreement = BooleanField(validators=[DataRequired(message="You need to accept the agreement!")])
     recaptcha = RecaptchaField()
 
