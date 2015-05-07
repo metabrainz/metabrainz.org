@@ -31,7 +31,11 @@
               {% endif %}
             </td>
             <td>{{ token.value }}</td>
-            <td><a href="{{ url_for('usersview.details', user_id=token.owner_id) }}">{{ token.owner }}</a></td>
+            <td>
+              {% if token.owner_id %}
+                <a href="{{ url_for('usersview.details', user_id=token.owner_id) }}">{{ token.owner }}</a>
+              {% endif %}
+            </td>
             <td>{{ token.created }}</td>
           </tr>
         {% endfor %}
