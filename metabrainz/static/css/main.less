@@ -207,36 +207,32 @@ img.pull-right { padding-left: 15px; }
       }
 
       #buttons {
-        .btn-row {
-          text-align: center;
-          margin: 0 auto;
-          margin-bottom: 4px;
+        margin-bottom: 4px;
 
-          button {
-            height: 38px;
-            font-weight: bold;
-            img { display: inline; }
-          }
+        button {
+          height: 38px;
+          font-weight: bold;
+          img { display: inline; }
+        }
 
-          #btn-stripe {
-            @btn-stripe-bg: #1d9ae1;
-            .button-variant(#fff; @btn-stripe-bg; darken(@btn-stripe-bg, 5%));
-          }
+        #btn-stripe {
+          @btn-stripe-bg: #1d9ae1;
+          .button-variant(#fff; @btn-stripe-bg; darken(@btn-stripe-bg, 5%));
+        }
 
-          #btn-paypal {
-            @btn-paypal-bg: #ffc95f;
-            .button-variant(@text-color; @btn-paypal-bg; darken(@btn-paypal-bg, 5%));
-            img {
-              height: 82%;
-              margin-bottom: 2px;
-            }
+        #btn-paypal {
+          @btn-paypal-bg: #ffc95f;
+          .button-variant(@text-color; @btn-paypal-bg; darken(@btn-paypal-bg, 5%));
+          img {
+            height: 82%;
+            margin-bottom: 2px;
           }
+        }
 
-          #btn-wepay {
-            @btn-wepay-bg: #0077a1;
-            .button-variant(#fff; @btn-wepay-bg; lighten(@btn-wepay-bg, 5%));
-            img { height: 100%; }
-          }
+        #btn-wepay {
+          @btn-wepay-bg: #0077a1;
+          .button-variant(#fff; @btn-wepay-bg; lighten(@btn-wepay-bg, 5%));
+          img { height: 100%; }
         }
       }
 
