@@ -45,7 +45,9 @@ class CommercialSignUpForm(UserSignUpForm):
     address_city = StringField("City")
     address_state = StringField("State")
     address_postcode = StringField("Postcode")
-    address_country = StringField("Country")
+    address_country = StringField("Country", validators=[
+        DataRequired("You need to specify country.")
+    ])
 
     payment_method = RadioField(
         "Choose a payment method:",
