@@ -92,17 +92,13 @@
 
         <div id="buttons" class="form-group">
           <div class="col-sm-offset-3 col-sm-6">
-            <div class="btn-row">
-              <button id="btn-stripe" type="button" class="btn">Donate with Credit Card</button>
-            </div>
-            <div class="btn-row">
-              <button id="btn-paypal" type="button" class="btn">
-                <img src="{{ url_for('static', filename='img/donations/paypal.svg') }}" />
-              </button>
-              <button id="btn-wepay" type="button" class="btn">
-                <img src="{{ url_for('static', filename='img/donations/wepay.png') }}" />
-              </button>
-            </div>
+            <button id="btn-stripe" type="button" class="btn">Donate with Credit Card</button>
+            <button id="btn-paypal" type="button" class="btn">
+              <img src="{{ url_for('static', filename='img/donations/paypal.svg') }}" />
+            </button>
+            <button id="btn-wepay" type="button" class="btn">
+              <img src="{{ url_for('static', filename='img/donations/wepay.png') }}" />
+            </button>
           </div>
         </div>
 

@@ -27,6 +27,9 @@ class Tier(db.Model):
     def __unicode__(self):
         return "%s (#%s)" % (self.name, self.id)
 
+    def __str__(self):
+        return unicode(self).encode('utf-8')
+
     @classmethod
     def create(cls, **kwargs):
         new_tier = cls(
