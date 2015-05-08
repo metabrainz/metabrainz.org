@@ -3,7 +3,7 @@ Flask-Testing == 0.4.2
 Flask-WTF == 0.11
 Flask-Login == 0.2.11
 Flask-SQLAlchemy == 2.0
-SQLAlchemy == 1.0.3
+SQLAlchemy == 1.0.4
 psycopg2 == 2.6
 wepay == 0.3.1
 stripe == 1.22.2
