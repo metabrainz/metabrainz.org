@@ -1,11 +1,14 @@
 from metabrainz.model import db
 from metabrainz.mail import send_mail
 from metabrainz import cache
+from sqlalchemy.dialects import postgres
 from datetime import datetime, timedelta
 from flask import current_app
 import logging
+import pytz
 
-HOURLY_ALERT_THRESHOLD = 10  # Max number of requests that can be done before admins get an alert
+CLEANUP_RANGE_MINUTES = 60
+DIFFERENT_IP_LIMIT = 10
 
 
 class AccessLog(db.Model):
@@ -13,40 +16,53 @@ class AccessLog(db.Model):
 
     Each request needs to be logged. Logging is done to keep track of number of
     requests in a fixed time frame. If there is an unusual number of requests
-    being made in this time frame, some kind of action is taken. See
-    implementation of this model for more details.
+    being made from different IP addresses in this time frame, action is taken.
+    See implementation of this model for more details.
     """
     __tablename__ = 'access_log'
 
     token = db.Column(db.String, db.ForeignKey('token.value'), primary_key=True)
     timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=datetime.utcnow)
+    ip_address = db.Column(postgres.INET)
 
     @classmethod
-    def create_record(cls, access_token):
+    def create_record(cls, access_token, ip_address):
         """Creates new access log record with a current timestamp.
 
-        It also checks if `HOURLY_ALERT_THRESHOLD` is exceeded, alerts admins if
-        that's the case.
+        It also checks if `DIFFERENT_IP_LIMIT` is exceeded within current time
+        and `CLEANUP_RANGE_MINUTES`, alerts admins if that's the case.
 
         Args:
             access_token: Access token used to access the API.
+            ip_address: IP access used to access the API.
 
         Returns:
             New access log record.
         """
-        new_record = cls(token=access_token)
+        new_record = cls(
+            token=access_token,
+            ip_address=ip_address,
+        )
         db.session.add(new_record)
         db.session.commit()
 
+        cls.remove_old_ip_addr_records()
+
         # Checking if HOURLY_ALERT_THRESHOLD is exceeded
-        count = cls.query.filter(cls.timestamp > datetime.now() - timedelta(hours=1),
-                                 cls.token == access_token).count()
-        if count > HOURLY_ALERT_THRESHOLD:
-            msg = "Hourly access threshold exceeded for token %s" % access_token
+        count = cls.query \
+            .distinct(cls.ip_address) \
+            .filter(cls.timestamp > datetime.now(pytz.utc) - timedelta(minutes=CLEANUP_RANGE_MINUTES),
+                    cls.token == access_token) \
+            .count()
+        if count > DIFFERENT_IP_LIMIT:
+            msg = ("Hourly access threshold exceeded for token %s\n\n"
+                   "This token has been used from more than %s different IP "
+                   "addresses during the last %s minutes.") % \
+                  (access_token, DIFFERENT_IP_LIMIT, CLEANUP_RANGE_MINUTES)
             logging.info(msg)
             # Checking if notification for admins about this token abuse has
             # been sent in the last hour. This info is kept in memcached.
-            key = "notif_sent_%s" % access_token
+            key = "alert_sent_%s" % access_token
             if not cache.get(key):
                 send_mail(
                     subject="[MetaBrainz] Hourly access threshold exceeded",
@@ -56,3 +72,10 @@ class AccessLog(db.Model):
                 cache.set(key, True, 3600)  # 1 hour
 
         return new_record
+
+    @classmethod
+    def remove_old_ip_addr_records(cls):
+        cls.query. \
+            filter(cls.timestamp < datetime.now(pytz.utc) - timedelta(minutes=CLEANUP_RANGE_MINUTES)). \
+            update({cls.ip_address: None})
+        db.session.commit()

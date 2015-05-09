@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import request
+from flask import request, current_app
 from werkzeug.wrappers import Response
 from metabrainz.model.token import Token
 from metabrainz.model.access_log import AccessLog
@@ -23,7 +23,11 @@ def tracked(f):
     def decorated(*args, **kwargs):
         response = f(*args, **kwargs)
         if response.status_code in (200, 307):
-            AccessLog.create_record(request.args.get('token'))
+            if 'BEHIND_GATEWAY' in current_app.config and current_app.config['BEHIND_GATEWAY']:
+                ip_addr = request.headers.get(current_app.config['REMOTE_ADDR_HEADER'])
+            else:
+                ip_addr = request.remote_addr
+            AccessLog.create_record(request.args.get('token'), ip_addr)
         return response
 
     return decorated

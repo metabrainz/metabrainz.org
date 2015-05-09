@@ -5,6 +5,7 @@ Flask-Login == 0.2.11
 Flask-SQLAlchemy == 2.0
 SQLAlchemy == 1.0.4
 psycopg2 == 2.6
+pytz == 2015.2
 wepay == 0.3.1
 stripe == 1.22.2
 requests == 2.7.0
