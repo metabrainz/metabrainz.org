@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Bad customers - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <div id="bad-customers">
+
+    <h1>Bad customers</h1>
+
+    {# TODO: Add text describing who these cusomers are and why they are so bad. #}
+
+    <div class="users-grid">
+      {% for user in bad_users %}
+        <div class="user">
+          <div class="logo-container">
+            {% if user.org_logo_url %}
+              <img class="logo" src="{{ user.org_logo_url }}"/>
+            {% else %}
+              <div class="name">{{ user.org_name }}</div>
+            {% endif %}
+          </div>
+          {% if user.data_usage_desc %}
+            <div class="description">{{ user.data_usage_desc }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {# TODO: Maybe add links to "Support us" page there in case they change their mind. #}
+
+  </div>
+{% endblock %}
