@@ -21,9 +21,9 @@
         {% if tier.short_desc %}
           <div class="tier-description">{{ tier.short_desc }}</div>
         {% endif %}
-        <div class="supporters-container">
+        <div class="users-grid">
           {% for user in featured_users %}
-            <div class="supporter">
+            <div class="user">
               <a href="{{ url_for('users.tier', tier_id=tier.id) }}">
                 <div class="logo-container">
                   {% if user.org_logo_url %}

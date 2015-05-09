@@ -82,8 +82,15 @@
     {% endif %}
 
     <div id="additional-intro">
-      To get more information about the foundation go to <a href="{{ url_for('index.about') }}">
-      about</a> page.
+      <p>
+        Unfortunately some customers use data that we provide without contributing back.
+        <a href="{{ url_for('index.bad_customers') }}">Find out more about them</a>.
+      </p>
+
+      <p>
+        To get more information about the foundation go to
+        <a href="{{ url_for('index.about') }}">about</a> page.
+      </p>
     </div>
 
   </div>

@@ -20,6 +20,10 @@ class IndexViewsTestCase(FlaskTestCase):
         response = self.client.get(url_for('index.sponsors'))
         self.assert200(response)
 
+    def test_bad_customers(self):
+        response = self.client.get(url_for('index.bad_customers'))
+        self.assert200(response)
+
     def test_privacy_policy(self):
         response = self.client.get(url_for('index.privacy_policy'))
         self.assert200(response)

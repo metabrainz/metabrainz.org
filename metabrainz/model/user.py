@@ -116,7 +116,7 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def get_featured(cls, limit=4, with_logos=False, in_deadbeat_club=False):
-        query = cls.query.filter(cls.featured)
+        query = cls.query.filter(cls.featured == True)
         if with_logos:
             query = query.filter(cls.org_logo_url != None)
         query = query.filter(cls.in_deadbeat_club == in_deadbeat_club)

@@ -27,6 +27,14 @@ def sponsors():
     return render_template('index/sponsors.html')
 
 
+@index_bp.route('/bad-customers')
+def bad_customers():
+    return render_template(
+        'index/bad-customers.html',
+        bad_users=User.get_featured(in_deadbeat_club=True)
+    )
+
+
 @index_bp.route('/privacy')
 def privacy_policy():
     return render_template('index/privacy.html')

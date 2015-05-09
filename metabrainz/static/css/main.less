@@ -158,35 +158,37 @@ img.pull-right { padding-left: 15px; }
     .text-muted();
     font-style: italic;
   }
-  .supporters-container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: left;
-    .supporter {
-      width: 188px;
-      padding-left: 15px;
-      padding-right: 15px;
-      .logo-container {
-        height: 100px;
-        line-height: 100px;
-        text-align: center;
-        .name {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-weight: bold;
-        }
-        .logo {
-          max-height: 98px;
-          display: inline-block;
-          vertical-align: middle;
-        }
+}
+
+.users-grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  .user {
+    width: 188px;
+    padding-left: 15px;
+    padding-right: 15px;
+    .logo-container {
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      .name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
       }
-      .description { font-size: 12px; }
-      a:hover { text-decoration: none; }
+      .logo {
+        max-height: 98px;
+        display: inline-block;
+        vertical-align: middle;
+      }
     }
+    .description { font-size: 12px; }
+    a:hover { text-decoration: none; }
   }
 }
+
 
 
 // Sponsors page
