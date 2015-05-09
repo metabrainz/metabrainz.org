@@ -5,7 +5,8 @@ from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
 from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.users import musicbrainz_login, login_forbidden
-from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, UserEditForm
+from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, \
+    UserEditForm, PAYMENT_METHOD_INVOICING
 from metabrainz import flash, session
 
 users_bp = Blueprint('users', __name__)
@@ -98,6 +99,16 @@ def signup_commercial():
             flash.warning("Custom amount must be more than threshold amount"
                           "for selected tier or equal to it!")
             return False
+        # Complete address is required if payment method is invoicing
+        if f.payment_method.data == PAYMENT_METHOD_INVOICING:
+            if not (form.address_street.data and
+                    form.address_city.data and
+                    form.address_state.data and
+                    form.address_postcode.data and
+                    form.address_country.data):
+                flash.warning("You need to fill in all address fields if your "
+                              "selected payment method is invoicing!")
+                return False
         return True
 
     if form.validate_on_submit() and custom_validation(form):

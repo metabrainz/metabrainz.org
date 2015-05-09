@@ -3,6 +3,11 @@ from wtforms import StringField, BooleanField, TextAreaField, RadioField, valida
 from wtforms.fields.html5 import EmailField, URLField, DecimalField
 from wtforms.validators import DataRequired, Length
 
+PAYMENT_METHOD_PAYPAL = 'paypal'
+PAYMENT_METHOD_STRIPE = 'stripe'
+PAYMENT_METHOD_INVOICING = 'invoicing'
+PAYMENT_METHOD_BITCOIN = 'bitcoin'
+
 
 class UserSignUpForm(Form):
     """Base sign up form for new users.
@@ -55,10 +60,10 @@ class CommercialSignUpForm(UserSignUpForm):
     payment_method = RadioField(
         "Choose a payment method:",
         choices=[
-            ("paypal", "PayPal"),
-            ("stripe", "Stripe"),
-            ("invoicing", "Invoicing"),
-            ("bitcoin", "Bitcoin"),
+            (PAYMENT_METHOD_PAYPAL, "PayPal"),
+            (PAYMENT_METHOD_STRIPE, "Stripe"),
+            (PAYMENT_METHOD_INVOICING, "Invoicing"),
+            (PAYMENT_METHOD_BITCOIN, "Bitcoin"),
         ],
         validators=[DataRequired(message="You need to choose a payment method!")],
     )
