@@ -97,6 +97,9 @@ NOTIFICATION_RECIPIENTS = [
 
 #USE_COMPILED_STYLING = True
 
+#BEHIND_GATEWAY = True
+#REMOTE_ADDR_HEADER = "X-MB-Remote-Addr"
+
 # Mail server
 SMTP_SERVER = "localhost"
 SMTP_PORT = 25

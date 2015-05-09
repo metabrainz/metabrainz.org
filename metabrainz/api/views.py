@@ -3,7 +3,6 @@ from flask.helpers import safe_join
 from werkzeug.wrappers import Response
 from werkzeug.urls import iri_to_uri
 from metabrainz.api.decorators import token_required, tracked
-from metabrainz.model.access_log import HOURLY_ALERT_THRESHOLD
 import logging
 import re
 import os
@@ -22,7 +21,7 @@ WEEKLY_SUBDIR = 'weekly'
 @api_bp.route('/')
 def info():
     """This view provides information about using the API."""
-    return render_template('api/info.html', rate_limit=HOURLY_ALERT_THRESHOLD)
+    return render_template('api/info.html')
 
 
 @api_bp.route('/musicbrainz/replication-info')
