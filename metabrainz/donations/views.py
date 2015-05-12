@@ -58,7 +58,8 @@ def check_editor():
         return jsonify({'error': 'Editor not specified.'}), 400
 
     try:
-        resp = requests.get('https://musicbrainz.org/ws/js/editor/?q=' + request.args.get('q')).json()
+        resp = requests.get(current_app.config['MUSICBRAINZ_BASE_URL'] +
+                            'ws/js/editor/?q=' + request.args.get('q')).json()
     except RequestException as e:
         return jsonify({'error': e})
 

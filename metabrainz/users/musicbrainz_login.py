@@ -7,13 +7,13 @@ import json
 _musicbrainz_service = None
 
 
-def init(client_id, client_secret):
+def init(base_url, client_id, client_secret):
     global _musicbrainz_service
     _musicbrainz_service = OAuth2Service(
         name='musicbrainz',
-        base_url="https://musicbrainz.org/",
-        authorize_url="https://musicbrainz.org/oauth2/authorize",
-        access_token_url="https://musicbrainz.org/oauth2/token",
+        base_url=base_url,
+        authorize_url=base_url+"oauth2/authorize",
+        access_token_url=base_url+"oauth2/token",
         client_id=client_id,
         client_secret=client_secret,
     )
