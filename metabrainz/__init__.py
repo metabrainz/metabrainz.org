@@ -34,8 +34,10 @@ def create_app():
     musicbrainz_login.init(app.config['MUSICBRAINZ_CLIENT_ID'],
                            app.config['MUSICBRAINZ_CLIENT_SECRET'])
 
+    # Templates
     from metabrainz.utils import reformat_datetime
     app.jinja_env.filters['datetime'] = reformat_datetime
+    app.jinja_env.filters['nl2br'] = lambda val: val.replace('\n', '<br />')
 
     # Error handling
     from metabrainz.errors import init_error_handlers

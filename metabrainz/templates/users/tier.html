@@ -5,7 +5,7 @@
 {% block content %}
   <h1>{{ tier.name }} tier</h1>
 
-  <p>{{ tier.long_desc }}</p>
+  <p>{{ tier.long_desc | nl2br | safe }}</p>
 
   {% if not current_user or current_user.is_anonymous() %}
     <p class="text-center">
