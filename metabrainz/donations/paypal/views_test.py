@@ -49,9 +49,13 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
             'option_name2': 'contact',
             'option_selection2': 'yes',
         }
-        resp = self.client.post(url_for('donations_paypal.ipn'), data=ipn_data)
+        resp = self.client.post(
+            url_for('donations_paypal.ipn'),
+            headers=[('Content-Type', 'application/x-www-form-urlencoded')],
+            data=ipn_data,
+        )
         self.assert200(resp)
 
         # Donation should be in the DB now
         self.assertEqual(len(Donation.query.all()), 1)
-        self.assertEqual(Donation.query.all()[0].transaction_id, 'RANDOM-ID')
+        self.assertEqual(Donation.query.all()[0].transaction_id, u'RANDOM-ID')
