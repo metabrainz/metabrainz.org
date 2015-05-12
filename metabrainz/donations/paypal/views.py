@@ -22,7 +22,7 @@ def ipn():
 
     # Checking if data is legit
     paypal_url = PAYPAL_URL_PRIMARY if current_app.config['PAYMENT_PRODUCTION'] else PAYPAL_URL_SANDBOX
-    verify_args = chain(request.form.iteritems(), IPN_VERIFY_EXTRA_PARAMS)
+    verify_args = chain(IPN_VERIFY_EXTRA_PARAMS, request.form.iteritems())
     verify_string = '&'.join(('%s=%s' % (param, value) for param, value in verify_args))
     verification_response = requests.post(paypal_url, data=verify_string)
 
