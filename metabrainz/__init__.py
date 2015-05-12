@@ -37,7 +37,7 @@ def create_app():
     # Templates
     from metabrainz.utils import reformat_datetime
     app.jinja_env.filters['datetime'] = reformat_datetime
-    app.jinja_env.filters['nl2br'] = lambda val: val.replace('\n', '<br />')
+    app.jinja_env.filters['nl2br'] = lambda val: val.replace('\n', '<br />') if val else ''
 
     # Error handling
     from metabrainz.errors import init_error_handlers
