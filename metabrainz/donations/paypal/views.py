@@ -1,8 +1,15 @@
 from flask import Blueprint, request, current_app
+from werkzeug.datastructures import ImmutableOrderedMultiDict
 from metabrainz.model.donation import Donation
+from itertools import chain
 import requests
 
 donations_paypal_bp = Blueprint('donations_paypal', __name__)
+
+PAYPAL_URL_PRIMARY = 'https://www.paypal.com/cgi-bin/webscr'
+PAYPAL_URL_SANDBOX = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
+
+IPN_VERIFY_EXTRA_PARAMS = (('cmd', '_notify-validate'),)
 
 
 @donations_paypal_bp.route('/ipn', methods=['POST'])
@@ -11,13 +18,14 @@ def ipn():
 
     Specifications are available at https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNImplementation/.
     """
-    if current_app.config['PAYMENT_PRODUCTION']:
-        paypal_url = 'https://www.paypal.com/cgi-bin/webscr'
-    else:
-        paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
+    request.parameter_storage_class = ImmutableOrderedMultiDict
 
     # Checking if data is legit
-    verification_response = requests.post(paypal_url, data='cmd=_notify-validate&'+str(request.get_data()))
+    paypal_url = PAYPAL_URL_PRIMARY if current_app.config['PAYMENT_PRODUCTION'] else PAYPAL_URL_SANDBOX
+    verify_args = chain(request.form.iteritems(), IPN_VERIFY_EXTRA_PARAMS)
+    verify_string = '&'.join(('%s=%s' % (param, value) for param, value in verify_args))
+    verification_response = requests.post(paypal_url, data=verify_string)
+
     if verification_response.text == 'VERIFIED':
         Donation.process_paypal_ipn(request.form)
 
