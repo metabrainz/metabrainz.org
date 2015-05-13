@@ -19,17 +19,17 @@ class FakeWePay(object):
             return {
                 'checkout_id': params['checkout_id'],
                 'account_id': 54321,
-                'state': 'captured',
-                'soft_descriptor': 'MetaBrainz Donation',
-                'short_description': 'Donation to MetaBrainz Foundation',
-                'currency': 'USD',
+                'state': u'captured',
+                'soft_descriptor': u'MetaBrainz Donation',
+                'short_description': u'Donation to MetaBrainz Foundation',
+                'currency': u'USD',
                 'amount': 100,
                 'fee': 3.2,
                 'gross': 108.2,
                 'app_fee': 5,
                 'shipping_fee': 5,
-                'fee_payer': 'payer',
-                'reference_id': 'abc123',
+                'fee_payer': u'payer',
+                'reference_id': u'abc123',
                 'redirect_uri': url_for(
                     'donations.complete',
                     _external=True,
@@ -39,12 +39,12 @@ class FakeWePay(object):
                     'donations_wepay.ipn',
                     _scheme=current_app.config['PREFERRED_URL_SCHEME'],
                     _external=True,
-                    editor='Tester',
+                    editor=u'Tester',
                     anonymous=False,
                     can_contact=True,
                 ),
-                'payer_email': 'test@example.org',
-                'payer_name': 'Tester Testing',
+                'payer_email': u'test@example.org',
+                'payer_name': u'Tester Testing',
                 'auto_capture': True,
             }
         else:
@@ -60,18 +60,18 @@ class DonationModelTestCase(FlaskTestCase):
 
     def test_get_by_transaction_id(self):
         new = Donation()
-        new.first_name = 'Tester'
-        new.last_name = 'Testing'
-        new.email = 'test@example.org'
-        new.transaction_id = 'TEST'
+        new.first_name = u'Tester'
+        new.last_name = u'Testing'
+        new.email = u'test@example.org'
+        new.transaction_id = u'TEST'
         new.amount = 42.50
         db.session.add(new)
         db.session.commit()
 
-        result = Donation.get_by_transaction_id('TEST')
+        result = Donation.get_by_transaction_id(u'TEST')
         self.assertIsNotNone(result)
 
-        bad_result = Donation.get_by_transaction_id('MISSING')
+        bad_result = Donation.get_by_transaction_id(u'MISSING')
         self.assertIsNone(bad_result)
 
     def test_process_paypal_ipn(self):
@@ -83,7 +83,7 @@ class DonationModelTestCase(FlaskTestCase):
             'payer_email': u'test@example.org',
             'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
             'business': u'donations@metabrainz.org',
-            'address_street': '1 Main St',
+            'address_street': u'1 Main St',
             'address_city': u'San Jose',
             'address_state': u'CA',
             'address_country': u'United States',

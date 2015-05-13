@@ -27,27 +27,27 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
     def test_paypal_ipn(self):
         ipn_data = {
             # This is not a complete list
-            'first_name': 'Tester',
-            'last_name': 'Testing',
-            'custom': 'tester',  # MusicBrainz username
-            'payer_email': 'test@example.org',
+            'first_name': u'Tester',
+            'last_name': u'Testing',
+            'custom': u'tester',  # MusicBrainz username
+            'payer_email': u'test@example.org',
             'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
-            'business': 'donations@metabrainz.org',
-            'address_street': '1 Main St',
-            'address_city': 'San Jose',
-            'address_state': 'CA',
-            'address_country': 'United States',
-            'address_zip': '95131',
-            'mc_gross': '42.50',
-            'mc_fee': '1',
-            'txn_id': 'RANDOM-ID',
-            'payment_status': 'Completed',
+            'business': u'donations@metabrainz.org',
+            'address_street': u'1 Main St',
+            'address_city': u'San Jose',
+            'address_state': u'CA',
+            'address_country': u'United States',
+            'address_zip': u'95131',
+            'mc_gross': u'42.50',
+            'mc_fee': u'1',
+            'txn_id': u'RANDOM-ID',
+            'payment_status': u'Completed',
 
             # Additional variables:
-            'option_name1': 'anonymous',
-            'option_selection1': 'yes',
-            'option_name2': 'contact',
-            'option_selection2': 'yes',
+            'option_name1': u'anonymous',
+            'option_selection1': u'yes',
+            'option_name2': u'contact',
+            'option_selection2': u'yes',
         }
         resp = self.client.post(
             url_for('donations_paypal.ipn'),
