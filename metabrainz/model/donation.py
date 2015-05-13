@@ -5,6 +5,7 @@ from metabrainz.admin import AdminModelView
 from flask import current_app
 from datetime import datetime
 from wepay import WePay
+import logging
 
 
 PAYMENT_METHOD_STRIPE = 'stripe'
@@ -129,31 +130,31 @@ class Donation(db.Model):
                 See https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNandPDTVariables/
                 for more info about them.
         """
-        current_app.logger.debug('Processing PayPal IPN...')
+        logging.debug('Processing PayPal IPN...')
 
         # Only processing completed donations
         if form['payment_status'] != 'Completed':
-            current_app.logger.debug('PayPal: Payment not completed. Status: "%s".', form['payment_status'])
+            logging.debug('PayPal: Payment not completed. Status: "%s".', form['payment_status'])
             return
 
         # We shouldn't process transactions to address for payments
         # TODO: Clarify what this address is
         if form['business'] == current_app.config['PAYPAL_BUSINESS']:
-            current_app.logger.debug('PayPal: Recieved payment to address for payments.')
+            logging.debug('PayPal: Recieved payment to address for payments.')
             return
 
         if form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
-            current_app.logger.debug('PayPal: Not primary email. Got "%s".', form['receiver_email'])
+            logging.debug('PayPal: Not primary email. Got "%s".', form['receiver_email'])
             return
 
         if float(form['mc_gross']) < 0.50:
             # Tiny donation
-            current_app.logger.debug('PayPal: Tiny donation ($%s).', form['mc_gross'])
+            logging.debug('PayPal: Tiny donation ($%s).', form['mc_gross'])
             return
 
         # Checking that txn_id has not been previously processed
         if cls.get_by_transaction_id(form['txn_id']) is not None:
-            current_app.logger.debug('PayPal: Transaction ID %s has been used before.', form['txn_id'])
+            logging.debug('PayPal: Transaction ID %s has been used before.', form['txn_id'])
             return
 
         new_donation = cls(
@@ -184,7 +185,7 @@ class Donation(db.Model):
 
         db.session.add(new_donation)
         db.session.commit()
-        current_app.logger.debug('PayPal: Payment added. ID: %s.', new_donation.id)
+        logging.debug('PayPal: Payment added. ID: %s.', new_donation.id)
 
         send_receipt(
             new_donation.email,
@@ -196,7 +197,7 @@ class Donation(db.Model):
 
     @classmethod
     def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):
-        current_app.logger.debug('Processing WePay checkout...')
+        logging.debug('Processing WePay checkout...')
 
         # Looking up updated information about the object
         wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],
@@ -204,12 +205,12 @@ class Donation(db.Model):
         details = wepay.call('/checkout', {'checkout_id': checkout_id})
 
         if 'error' in details:
-            current_app.logger.debug('WePay: Error: %s', details['error_description'])
+            logging.debug('WePay: Error: %s', details['error_description'])
             return False
 
         if details['gross'] < 0.50:
             # Tiny donation
-            current_app.logger.debug('WePay: Tiny donation ($%s).', details['gross'])
+            logging.debug('WePay: Tiny donation ($%s).', details['gross'])
             return True
 
         if details['state'] in ['settled', 'captured']:
@@ -217,7 +218,7 @@ class Donation(db.Model):
 
             # Checking that txn_id has not been previously processed
             if cls.get_by_transaction_id(details['checkout_id']) is not None:
-                current_app.logger.debug('WePay: Transaction ID %s has been used before.', details['checkout_id'])
+                logging.debug('WePay: Transaction ID %s has been used before.', details['checkout_id'])
                 return
 
             new_donation = cls(
@@ -248,7 +249,7 @@ class Donation(db.Model):
 
             db.session.add(new_donation)
             db.session.commit()
-            current_app.logger.debug('WePay: Payment added. ID: %s.', new_donation.id)
+            logging.debug('WePay: Payment added. ID: %s.', new_donation.id)
 
             send_receipt(
                 new_donation.email,
@@ -260,17 +261,17 @@ class Donation(db.Model):
 
         elif details['state'] in ['authorized', 'reserved']:
             # Payment is pending
-            current_app.logger.debug('WePay: Payment is pending. State: "%s".', details['state'])
+            logging.debug('WePay: Payment is pending. State: "%s".', details['state'])
             pass
 
         elif details['state'] in ['expired', 'cancelled', 'failed', 'refunded', 'chargeback']:
             # Payment has failed
-            current_app.logger.debug('WePay: Payment has failed. State: "%s".', details['state'])
+            logging.debug('WePay: Payment has failed. State: "%s".', details['state'])
             pass
 
         else:
             # Unknown status
-            current_app.logger.debug('WePay: Unknown status.')
+            logging.debug('WePay: Unknown status.')
             return False
 
         return True
@@ -283,7 +284,7 @@ class Donation(db.Model):
             charge: The charge object from Stripe. More information about it is
                 available at https://stripe.com/docs/api/python#charge_object.
         """
-        current_app.logger.debug('Processing Stripe charge...')
+        logging.debug('Processing Stripe charge...')
 
         new_donation = cls(
             first_name=charge.source.name,
@@ -308,7 +309,7 @@ class Donation(db.Model):
 
         db.session.add(new_donation)
         db.session.commit()
-        current_app.logger.debug('Stripe: Payment added. ID: %s.', new_donation.id)
+        logging.debug('Stripe: Payment added. ID: %s.', new_donation.id)
 
         send_receipt(
             new_donation.email,
