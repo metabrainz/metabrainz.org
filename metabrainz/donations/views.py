@@ -82,7 +82,8 @@ def check_editor():
 def complete():
     """Endpoint for successful donations."""
     flash("Thank you for making a donation to the MetaBrainz Foundation. Your "
-          "support is greatly appreciated!", 'success')
+          "support is greatly appreciated! It may take some time before your "
+          "donation appears in the list due to processing delays.", 'success')
     return redirect(url_for('donations.donors'))
 
 @donations_bp.route('/cancelled')
