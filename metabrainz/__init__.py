@@ -5,6 +5,7 @@ def create_app():
     app = Flask(__name__)
 
     # Configuration
+    app.config.from_object('metabrainz.default_config')
     app.config.from_object('metabrainz.config')
 
     # Logging
