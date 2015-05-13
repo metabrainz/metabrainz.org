@@ -82,7 +82,9 @@ def ipn():
     if 'checkout_id' in request.form:
         checkout_id = request.form['checkout_id']
     else:
-        raise BadRequest('Invalid object_id.')
+        # No need to return any errors in this case
+        # TODO: Add logging there.
+        return 'Invalid object_id.', 200
 
     # Getting additional info that was passed with callback_uri during payment creation
     editor = request.args['editor']
@@ -92,5 +94,5 @@ def ipn():
     result = Donation.verify_and_log_wepay_checkout(checkout_id, editor, anonymous, can_contact)
     if result is True:
         return "Recorded."
-    else:
-        raise InternalServerError()
+
+    return '', 200
