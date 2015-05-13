@@ -43,7 +43,9 @@ STRIPE_TEST_KEYS = {
 }
 
 
-# MUSICBRAINZ OAUTH
+# MUSICBRAINZ
+# MusicBrainz Base URL must have a trailing slash.
+MUSICBRAINZ_BASE_URL = "https://musicbrainz.org/"
 MUSICBRAINZ_CLIENT_ID = ""
 MUSICBRAINZ_CLIENT_SECRET = ""
 

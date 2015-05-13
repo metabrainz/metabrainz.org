@@ -31,8 +31,11 @@ def create_app():
     # MusicBrainz OAuth
     from metabrainz.users import login_manager, musicbrainz_login
     login_manager.init_app(app)
-    musicbrainz_login.init(app.config['MUSICBRAINZ_CLIENT_ID'],
-                           app.config['MUSICBRAINZ_CLIENT_SECRET'])
+    musicbrainz_login.init(
+        app.config['MUSICBRAINZ_BASE_URL'],
+        app.config['MUSICBRAINZ_CLIENT_ID'],
+        app.config['MUSICBRAINZ_CLIENT_SECRET']
+    )
 
     # Templates
     from metabrainz.utils import reformat_datetime
