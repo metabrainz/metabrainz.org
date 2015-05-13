@@ -41,7 +41,7 @@ class Donation(db.Model):
     ))
     transaction_id = db.Column(db.Unicode)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
-    fee = db.Column(db.Numeric(11, 2), nullable=False, default=0)
+    fee = db.Column(db.Numeric(11, 2))
     memo = db.Column(db.Unicode)
 
     def __unicode__(self):

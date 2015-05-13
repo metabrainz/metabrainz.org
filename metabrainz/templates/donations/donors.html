@@ -43,7 +43,7 @@
             {% endif %}
           </td>
           <td>${{ donation.amount }}</td>
-          <td>${{ donation.fee }}</td>
+          <td>{{ '$' + donation.fee|string if donation.fee else '-' }}</td>
         </tr>
       {% endfor %}
       </tbody>
