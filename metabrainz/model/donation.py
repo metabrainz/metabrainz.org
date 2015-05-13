@@ -134,27 +134,27 @@ class Donation(db.Model):
 
         # Only processing completed donations
         if form['payment_status'] != 'Completed':
-            logging.debug('PayPal: Payment not completed. Status: "%s".', form['payment_status'])
+            logging.info('PayPal: Payment not completed. Status: "%s".', form['payment_status'])
             return
 
         # We shouldn't process transactions to address for payments
         # TODO: Clarify what this address is
         if form['business'] == current_app.config['PAYPAL_BUSINESS']:
-            logging.debug('PayPal: Recieved payment to address for payments.')
+            logging.info('PayPal: Recieved payment to address for payments.')
             return
 
         if form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
-            logging.debug('PayPal: Not primary email. Got "%s".', form['receiver_email'])
+            logging.warning('PayPal: Not primary email. Got "%s".', form['receiver_email'])
             return
 
         if float(form['mc_gross']) < 0.50:
             # Tiny donation
-            logging.debug('PayPal: Tiny donation ($%s).', form['mc_gross'])
+            logging.info('PayPal: Tiny donation ($%s).', form['mc_gross'])
             return
 
         # Checking that txn_id has not been previously processed
         if cls.get_by_transaction_id(form['txn_id']) is not None:
-            logging.debug('PayPal: Transaction ID %s has been used before.', form['txn_id'])
+            logging.info('PayPal: Transaction ID %s has been used before.', form['txn_id'])
             return
 
         new_donation = cls(
@@ -185,7 +185,7 @@ class Donation(db.Model):
 
         db.session.add(new_donation)
         db.session.commit()
-        logging.debug('PayPal: Payment added. ID: %s.', new_donation.id)
+        logging.info('PayPal: Payment added. ID: %s.', new_donation.id)
 
         send_receipt(
             new_donation.email,
@@ -205,12 +205,12 @@ class Donation(db.Model):
         details = wepay.call('/checkout', {'checkout_id': checkout_id})
 
         if 'error' in details:
-            logging.debug('WePay: Error: %s', details['error_description'])
+            logging.warning('WePay: Error: %s', details['error_description'])
             return False
 
         if details['gross'] < 0.50:
             # Tiny donation
-            logging.debug('WePay: Tiny donation ($%s).', details['gross'])
+            logging.info('WePay: Tiny donation ($%s).', details['gross'])
             return True
 
         if details['state'] in ['settled', 'captured']:
@@ -218,7 +218,7 @@ class Donation(db.Model):
 
             # Checking that txn_id has not been previously processed
             if cls.get_by_transaction_id(details['checkout_id']) is not None:
-                logging.debug('WePay: Transaction ID %s has been used before.', details['checkout_id'])
+                logging.info('WePay: Transaction ID %s has been used before.', details['checkout_id'])
                 return
 
             new_donation = cls(
@@ -249,7 +249,7 @@ class Donation(db.Model):
 
             db.session.add(new_donation)
             db.session.commit()
-            logging.debug('WePay: Payment added. ID: %s.', new_donation.id)
+            logging.info('WePay: Payment added. ID: %s.', new_donation.id)
 
             send_receipt(
                 new_donation.email,
@@ -261,17 +261,17 @@ class Donation(db.Model):
 
         elif details['state'] in ['authorized', 'reserved']:
             # Payment is pending
-            logging.debug('WePay: Payment is pending. State: "%s".', details['state'])
+            logging.info('WePay: Payment is pending. State: "%s".', details['state'])
             pass
 
         elif details['state'] in ['expired', 'cancelled', 'failed', 'refunded', 'chargeback']:
             # Payment has failed
-            logging.debug('WePay: Payment has failed. State: "%s".', details['state'])
+            logging.warning('WePay: Payment has failed. State: "%s".', details['state'])
             pass
 
         else:
             # Unknown status
-            logging.debug('WePay: Unknown status.')
+            logging.warning('WePay: Unknown status.')
             return False
 
         return True
@@ -309,7 +309,7 @@ class Donation(db.Model):
 
         db.session.add(new_donation)
         db.session.commit()
-        logging.debug('Stripe: Payment added. ID: %s.', new_donation.id)
+        logging.info('Stripe: Payment added. ID: %s.', new_donation.id)
 
         send_receipt(
             new_donation.email,
