@@ -26,8 +26,8 @@ def _add_file_handler(app, filename, max_bytes=512 * 1024, backup_count=100):
 def _add_email_handler(app, level=logging.NOTSET):
     """Adds email notifications about captured logs."""
     mail_handler = SMTPHandler(
-        (app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-        "logs@" + app.config['MAIL_FROM_HOST'],
+        (app.config['SMTP_SERVER'], app.config['SMTP_PORT']),
+        "logs@" + app.config['MAIL_FROM_DOMAIN'],
         app.config['LOG_EMAIL_RECIPIENTS'],
         app.config['LOG_EMAIL_TOPIC']
     )
