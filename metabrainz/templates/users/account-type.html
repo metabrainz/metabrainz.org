@@ -70,13 +70,13 @@
           <div class="tier col-sm-6">
             <div class="thumbnail">
               <div class="caption">
-                <h3>Some of our supporters</h3>
                 {# Last tier should be the most expensive. Exactly what we need! #}
                 {% set featured_users = tiers[-1].get_featured_users(limit=4, with_logos=True) %}
                 <div id="featured-users">
+                  <h3>Some of our supporters</h3>
                   {% for user in featured_users %}
                     <div class="logo-container">
-                      <img src="{{ user.org_logo_url }}" />
+                      <span><img src="{{ user.org_logo_url }}" /></span>
                     </div>
                   {% endfor %}
                 </div>
