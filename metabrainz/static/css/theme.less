@@ -14,7 +14,10 @@
 
 // Add CSS Customizations to your theme here.
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:100,400,300,700|Sintony:400,700&subset=latin,cyrillic-ext,cyrillic,latin-ext);
+@font-subsets: "latin,cyrillic-ext,cyrillic,latin-ext";
+// @import url(http://fonts.googleapis.com/css?family=Dosis:200,300,400,600|Signika+Negative:300,400,600|Exo:300,400,600|Roboto:100,400,300,700|Sintony:400,700);
+// @import ~"url(http://fonts.googleapis.com/css?family=Roboto:100,400,300,700|Sintony:400,700&subset=@{font-subsets})"; // For some reason, this is failing in lessc 2.4.0
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,400,300,700|Sintony:200,400,700&subset=latin,latin-ext,cyrillic,cyrillic-ext);
 
 // @font-family-sans-serif: 'Dosis', sans-serif;
 // @font-family-sans-serif: 'Signika Negative', sans-serif;
@@ -28,7 +31,7 @@
 
 
 .corporate-background{
-  background: url(/static/img/background_tile.jpg) fade(@gray-light,60%);
+  background: url(../assets/background_tile.jpg) fade(@gray-light,60%);
   background-blend-mode: screen;
 }
 
@@ -63,7 +66,7 @@ a{
 }
 
 .hexagon-container {
-  margin: 0 auto;
+  margin: -2px;
   text-align:center;
   .hexagon {
     display: inline-block;
@@ -165,58 +168,166 @@ a{
 
 .btn {
   border: 0;
-  border-radius: @btn-border-radius;
-  position: relative;
-  // transition: all 0.2s;
-  &:before{
-    transition: border 0.25s;
-    content: " ";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 1px solid @brand-primary;
-    border-bottom-width: 0.15em;
-  }
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  .open .dropdown-toggle& {
-    &:not(.btn-link):before{
-      border-top-width:  0.2em;
-      border-bottom-width:  1px;
+  border-radius:0;
+  transition: all 0.35s;
+  outline: 2px solid transparent;
+  margin: 0.15em;
+  .button-size(@padding-small-vertical; @padding-small-horizontal * 3 ; @font-size-small; @line-height-small; 0px);
+  &.innerBorder {
+    position: relative;
+    background: transparent;
+    z-index: 1;
+    &:after {
+      position: absolute;
+      content: '';
+      border-style: solid;
+      border-color: lighten(@btn-success-bg, 19%);
+      border-width: 0;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      padding: 2px;
+      z-index: -1;
+      background: @btn-success-bg;
+      transition: transform .2s, opacity .2s, border-width .2s;
     }
-  }
-  &:active,
-  &.active,
-  .open .dropdown-toggle& {
-    background-image: none;
+    &:hover{
+      color:@white;
+      &:after {
+        border-width: 3px;
+      }
+      &.triple{
+        outline: none;
+        &:after{
+          border-width: 4px;
+          border-style: double;
+          border-color: lighten(@btn-success-bg, 42%);
+        }
+      }
+    }
+  } /* .style3 */
+  &.diamond{
+    position: relative;
+    background: @btn-info-bg;
+    color:@white;
+    &:before {
+      left: 0;
+      border-right: 0px solid transparent;
+    }
+    &:after {
+      right: 0;
+      border-left: 0px solid transparent;
+    }
+    &:hover:before{
+      border-right-width: 13px;
+    }
+    &:hover:after{
+      border-left-width: 13px;
+    }
+    &:before, &:after {
+      content:"";
+      position: absolute;
+      width: 0;
+      height: 0;
+      top:0;
+      border-top: 22px solid @panel-bg;
+      border-bottom: 22px solid @panel-bg;
+      transition: all .15s;
+    }
   }
 }
 
+// Hexagonal button
+.hb-flickr, .hb-flickr:after, .hb-flickr:before {
+  background: #ff1981;
+  border-color: #ff1981;
+  color: #fff;
+}
+.hb, .hb:after, .hb:before {
+  background-color: @btn-primary-bg;
+  border-left: 1px solid @btn-primary-bg;
+  border-right: 1px solid @btn-primary-bg;
+  color: @white;
+  box-sizing: border-box;
+  transition: all .05s;
+}
+.hb i {
+  top:-2px;
+  z-index: 9;
+  //   -webkit-transition: all .25s ease;
+  //   -moz-transition: all .25s ease;
+  //   -ms-transition: all .25s ease;
+  //   -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+.hb-sm, .hb-sm:after, .hb-sm:before {
+  height: 37px;
+  width: 64px;
+}
+.hb-sm {
+  line-height: 37px;
+  font-size: 37px;
+  margin: 18.5px 0;
+}
+.hb {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  z-index: 0;
+  cursor: pointer;
+}
+.hb:before {
+  -webkit-transform: rotate(60deg);
+  -moz-transform: rotate(60deg);
+  -ms-transform: rotate(60deg);
+  -o-transform: rotate(60deg);
+  transform: rotate(60deg);
+}
+.hb:after, .hb:before {
+  position: absolute;
+  content: "";
+  left: -1px;
+  top: 0;
+  z-index: -1;
+}
+.hb:after {
+  -webkit-transform: rotate(-60deg);
+  -moz-transform: rotate(-60deg);
+  -ms-transform: rotate(-60deg);
+  -o-transform: rotate(-60deg);
+  transform: rotate(-60deg);
+}
+.hb-flickr-inv, .hb-flickr-inv:after, .hb-flickr-inv:before, .hb-flickr:hover, .hb-flickr:hover:after, .hb-flickr:hover:before {
+  background: 0 0;
+  border-color: #ff1981;
+  color: #ff1981;
+}
+.hb:hover, .hb:hover:after, .hb:hover:before {
+  background: 0 0;
+  border-left: 1px solid @btn-primary-bg;
+  border-right: 1px solid @btn-primary-bg;
+  color: @btn-primary-bg;
+}
 
 // Button variants
 // -------------------------
 // Easily pump out default styles, as well as :hover, :focus, :active,
 // and disabled options for all buttons
-.button-variant(@color; @background:transparent; @border:@color) {
+.button-variant(@color; @background:transparent; @border:@background) {
   color: @color;
   background: @background;
-  &:before{
-    border-color: @border;
-  }
+
   &:hover,
   &:focus,
   &:active,
   &.active,
   .open .dropdown-toggle& {
-    color: @color;
-    background: @background;
-    &:before{
-      border-color: @border;
-    }
+    color: @background;
+    background: transparent;
+    outline: 2px solid @background;
+    // font-weight: 700;
+    // outline-width: 1px;
   }
 
   &.disabled,
@@ -228,25 +339,41 @@ a{
     &:active,
     &.active {
       color: lighten(@color,10%);
-      background-color: @background;
-      border: 3px solid lighten(desaturate(@border,15%),10%);
+      background: desaturate(@background, 15%);
     }
   }
 }
 
-// Apply the mixin to the buttons
-.btn-default { .button-variant(@btn-default-color); }
-.btn-primary { .button-variant(@btn-primary-color); }
-.btn-success { .button-variant(@btn-success-color); }
-.btn-warning { .button-variant(@btn-warning-color); }
-.btn-danger  { .button-variant(@btn-danger-color); }
-.btn-info    { .button-variant(@btn-info-color); }
+// // Apply the mixin to the buttons
+// .btn-default { .button-variant(@btn-default-color,@btn-default-bg); }
+// .btn-primary { .button-variant(@btn-primary-color,@btn-primary-bg); }
+// .btn-success { .button-variant(@btn-success-color,@btn-success-bg); }
+// .btn-warning { .button-variant(@btn-warning-color,@btn-warning-bg); }
+// .btn-danger  { .button-variant(@btn-danger-color,@btn-danger-bg); }
+// .btn-info    { .button-variant(@btn-info-color,@btn-info-bg); }
 
 .btn-link:before{
   border-color: transparent;
   &:hover,&:focus,&:active{
     border-color:@btn-primary-border
   }
+}
+
+
+// Button Sizes
+// --------------------------------------------------
+
+.btn-lg {
+  // line-height: ensure even-numbered height of button next to large input
+  .button-size(@padding-large-vertical ; @padding-large-horizontal * 3; @font-size-large; @line-height-large; 0px);
+}
+.btn-sm,
+.btn-xs {
+  // line-height: ensure proper height of button next to small input
+  .button-size(@padding-small-vertical; @padding-small-horizontal * 1.5; @font-size-small; @line-height-small; 0px);
+}
+.btn-xs {
+  padding: 1px 5px;
 }
 
 //
@@ -262,13 +389,71 @@ h1, h2, h3, h4, h5, h6,
   }
 }
 
-
-
-.navbar-default-alt{
-  background-color: lighten(desaturate(@brand-primary,30%),14%);
-  border-color: lighten(desaturate(@brand-primary,30%),14%);
+.panel{
+  margin-bottom: @grid-gutter-width;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  .panel-heading {
+    font-size: 1.7em;
+    font-family:  @headings-font-family;
+    font-weight: 	200;
+    line-height:  @headings-line-height;
+    padding: 20px;
+    border-top-width: 0px;
+    border-bottom-width: 2px;
+  }
 }
-.navbar-inverse-alt{
-  background-color: lighten(desaturate(@brand-secondary,55%),14%);
-  border-color: lighten(desaturate(@brand-secondary,55%),14%);
+
+.navbar-transparent{
+  background-color: transparent;
+  color: @brand-primary;
+  border-color: lighten(@brand-primary,25%);
+}
+
+.navbar-fixed-top{
+  transition : min-height 0.35s;
+  .container > *:not(.navbar-header){
+    transition : padding 0.35s;
+  }
+  &.tall {
+    min-height: @navbar-height-tall;
+    .container > *:not(.navbar-header){
+      padding: (@navbar-height-tall - @line-height-computed * 2)/2 0 0;
+    }
+    .navbar-brand  .logo{
+      &.small{
+        opacity: 1;
+        height: 80px;
+        // margin-top: ((@navbar-height-tall - 80px) / 2);
+        // margin-bottom: ((@navbar-height-tall - 80px) / 2);
+      }
+      &.extrasmall{opacity: 0;height: 0;}
+    }
+  }
+  .navbar-brand .logo{
+    transition: opacity .3s, height .3s;
+    &.small{opacity: 0;
+      height: 0;
+    }
+    &.extrasmall{opacity: 1; height: 24px;}
+  }
+}
+
+.panel:not(.panel-default) .panel-heading:before,
+ul.hexagonBullet li:before {
+  content: "\2B22";
+  margin-right: 0.5em;
+  font-size: 0.5em;
+  opacity: 0.42;
+  vertical-align: middle;
+}
+
+ul.hexagonBullet {
+  list-style: none;
+}
+
+@media(min-width:768px) {
+  body {
+    padding-top: @navbar-height-tall + 30px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+  }
 }

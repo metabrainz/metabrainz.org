@@ -1,6 +1,5 @@
 @import "theme";
 
-
 @icon-font-path:"/static/fonts/";
 
 
@@ -10,11 +9,9 @@
 
 @container-lg: @container-md;  // Limiting max width of the page
 
-@mb-blue: #534AD3;
-@mb-green: @green;
 
-@brand-primary: @mb-blue;
-@brand-secondary: @mb-green;
+@brand-primary: @green;
+@brand-secondary: @orange;
 
 body {
   padding-bottom: 25px;
@@ -41,9 +38,9 @@ img.pull-right { padding-left: 15px; }
 
 .support-link {
   > a {
-    background-color: @orange;
+    background-color: @red;
     &:hover, &:focus {
-      background-color: lighten(@orange, 6.5%) !important;
+      background-color: lighten(@red, 6.5%) !important;
     }
   }
 }
@@ -272,7 +269,7 @@ img.pull-right { padding-left: 15px; }
 .construction {
   .clearfix();
   margin-top: -20px;
-  color: #FFFFFF;
+  color: #fff;
   background-color: #94002d;
   .container {
     text-align: center;
@@ -280,10 +277,8 @@ img.pull-right { padding-left: 15px; }
     margin-bottom: 10px;
     .text {
       a {
-        color: #FFFFFF;
+        color: #fff;
         font-weight: normal;
-      }
-      a:hover {
         text-decoration: underline;
       }
     }
