@@ -51,7 +51,7 @@ class CommercialSignUpForm(UserSignUpForm):
 
     address_street = StringField("Street")
     address_city = StringField("City")
-    address_state = StringField("State")
+    address_state = StringField("State / Province")
     address_postcode = StringField("Postcode")
     address_country = StringField("Country", validators=[
         DataRequired("You need to specify country.")
