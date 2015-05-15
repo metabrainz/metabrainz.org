@@ -32,7 +32,11 @@ def bad_standing():
 
 @users_bp.route('/supporters/account-type')
 def account_type():
-    return render_template('users/account-type.html', tiers=Tier.get_available(sort=True))
+    return render_template(
+        'users/account-type.html',
+        tiers=Tier.get_available(sort=True),
+        featured_users=User.get_featured()
+    )
 
 
 @users_bp.route('/supporters/tiers/<tier_id>')
