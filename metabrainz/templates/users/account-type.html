@@ -42,61 +42,83 @@
     data-usage confidential and contact you to discuss your future plans.
   </p>
 
-  <div id="tiers">
-    <div id="primary-tiers">
-      <div class="row">
-        {% for tier in tiers %}
-          {% if tier.primary %}
-            <div class="tier col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <div class="caption">
-                  <h3>{{ tier.name }}</h3>
-                  <div class="price">${{ tier.price }}/month and up</div>
-                  <div class="description">{{ tier.short_desc }}</div>
-                  <div class="buttons">
-                    <p><a href="{{ url_for('users.tier', tier_id=tier.id) }}"
-                          class="btn btn-default btn-block" role="button">More info</a></p>
-                    <p><a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
-                          class="btn btn-primary btn-block" role="button">Sign up</a></p>
+  {% if tiers %}
+
+    <div id="tiers">
+      <div id="primary-tiers">
+        <div class="row">
+          {% for tier in tiers %}
+            {% if tier.primary %}
+              <div class="tier shiny {{ 'col-md-6' if loop.last else 'col-md-4' }}">
+                <div class="thumbnail">
+                  <div class="caption">
+                    <h3>{{ tier.name }}</h3>
+                    <div class="price">${{ tier.price }}/month and up</div>
+                    <div class="description">{{ tier.short_desc }}</div>
+                    <div class="buttons">
+                      <p><a href="{{ url_for('users.tier', tier_id=tier.id) }}"
+                            class="btn btn-default btn-block" role="button">More info</a></p>
+                      <p><a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
+                            class="btn btn-primary btn-block" role="button">Sign up</a></p>
+                    </div>
                   </div>
                 </div>
               </div>
+            {% endif %}
+          {% endfor %}
+
+          <div class="tier col-sm-6">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>Some of our supporters</h3>
+                {# Last tier should be the most expensive. Exactly what we need! #}
+                {% set featured_users = tiers[-1].get_featured_users(limit=4, with_logos=True) %}
+                <div id="featured-users">
+                  {% for user in featured_users %}
+                    <div class="logo-container">
+                      <img src="{{ user.org_logo_url }}" />
+                    </div>
+                  {% endfor %}
+                </div>
+                <em><a href="{{ url_for('users.supporters_list') }}">See all our supporters</a></em>
+              </div>
             </div>
-          {% endif %}
-        {% endfor %}
+          </div>
+        </div>
+        <p class="text-center">
+          <button id="btn-show-all" type="button" class="btn btn-default">View all tiers</button>
+        </p>
       </div>
-      <p class="text-center">
-        <button id="btn-show-all" type="button" class="btn btn-default">View all tiers</button>
-      </p>
+
+      <div id="all-tiers" style="display: none">
+        <table class="table table-condensed">
+          {% for tier in tiers %}
+            <tr>
+              <td><strong>{{ tier.name }}</strong></td>
+              <td>{{ tier.short_desc }}</td>
+              <td>${{ tier.price }}/month and up</td>
+              <td>
+                <a href="{{ url_for('users.tier', tier_id=tier.id) }}"
+                   class="btn btn-default btn-xs" role="button">More info</a>
+                <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
+                   class="btn btn-primary btn-xs" role="button">Sign up</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+        <p class="text-center">
+          <button id="btn-show-less" type="button" class="btn btn-default">View featured tiers</button>
+        </p>
+      </div>
+
     </div>
 
-    <div id="all-tiers" style="display: none">
-      <table class="table table-condensed">
-        {% for tier in tiers %}
-          <tr>
-            <td><strong>{{ tier.name }}</strong></td>
-            <td>{{ tier.short_desc }}</td>
-            <td>${{ tier.price }}/month and up</td>
-            <td>
-              <a href="{{ url_for('users.tier', tier_id=tier.id) }}"
-                 class="btn btn-default btn-xs" role="button">More info</a>
-              <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
-                 class="btn btn-primary btn-xs" role="button">Sign up</a>
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
-      <p class="text-center">
-        <button id="btn-show-less" type="button" class="btn btn-default">View featured tiers</button>
-      </p>
+    <div>
+       If you are not sure which tier to pick, please
+       <a href="{{ url_for("index.contact") }}">contact us</a>.
     </div>
 
-  </div>
-
-  <div>
-     If you are not sure which tier to pick, please
-     <a href="{{ url_for("index.contact") }}">contact us</a>.
-  </div>
+  {% endif %}
 
 {% endblock %}
 

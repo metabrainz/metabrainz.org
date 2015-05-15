@@ -115,11 +115,29 @@ class User(db.Model, UserMixin):
         return cls.query.filter_by(**kwargs).all()
 
     @classmethod
-    def get_featured(cls, limit=4, with_logos=False, in_deadbeat_club=False):
+    def get_featured(cls, limit=4, **kwargs):
+        """Get list of featured users which is randomly sorted.
+
+        Args:
+            limit: Max number of users to return.
+            in_deadbeat_club: Returns only users from deadbeat club if set to True.
+            with_logos: True if need only users with logo URLs specified, False if
+                only users without logo URLs, None if it's irrelevant.
+            tier_id: Returns only users from tier with a specified ID.
+
+        Returns:
+            List of users according to filters described above.
+        """
         query = cls.query.filter(cls.featured == True)
+        query = query.filter(cls.in_deadbeat_club == kwargs.pop('in_deadbeat_club', False))
+        with_logos = kwargs.pop('with_logos', None)
         if with_logos:
             query = query.filter(cls.org_logo_url != None)
-        query = query.filter(cls.in_deadbeat_club == in_deadbeat_club)
+        tier_id = kwargs.pop('tier_id', None)
+        if tier_id:
+            query = query.filter(cls.tier_id == tier_id)
+        if kwargs:
+            raise TypeError('Unexpected **kwargs: %r' % kwargs)
         return query.order_by(func.random()).limit(limit).all()
 
     def generate_token(self):

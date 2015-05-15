@@ -103,6 +103,7 @@ img.pull-right { padding-left: 15px; }
   @media (max-width: @screen-xs-max) { display: none; }
 }
 
+// Account type selection
 #tiers {
   margin-top: 40px;
   #primary-tiers {
@@ -130,6 +131,22 @@ img.pull-right { padding-left: 15px; }
         .buttons :last-child {
           margin-bottom: 0px;
         }
+      }
+    }
+    .tier.shiny {
+      .thumbnail { border-color: fade(@brand-secondary, 40%); }
+    }
+  }
+  #featured-users {
+    .clearfix;
+    .logo-container {
+      .pull-left;
+      height: 66px;
+      width: 195px;
+      margin: 8px;
+      img {
+        display: block;
+        margin: auto;
       }
     }
   }
