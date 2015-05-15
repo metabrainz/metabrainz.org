@@ -115,7 +115,7 @@ class User(db.Model, UserMixin):
         return cls.query.filter_by(**kwargs).all()
 
     @classmethod
-    def get_featured(cls, limit=4, **kwargs):
+    def get_featured(cls, limit=None, **kwargs):
         """Get list of featured users which is randomly sorted.
 
         Args:
