@@ -1,6 +1,7 @@
 from flask import Blueprint, request, redirect, render_template, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
+from metabrainz.mail import send_mail
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
 from metabrainz.model.token import TokenGenerationLimitException
@@ -140,7 +141,15 @@ def signup_commercial():
             amount_pledged=form.amount_pledged.data,
         )
         login_user(new_user)
-        flash.success("Thanks for signing up! Your application will be reviewed soon and we will send you updates via email.")
+        flash.success("Thanks for signing up! Your application will be reviewed "
+                      "soon. We will send you updates via email.")
+        send_mail(
+            subject="[MetaBrainz] Sign up confirmation",
+            text='Dear %s,\n\nThank you for signing up!\n\nYour application'
+                 ' will be reviewed soon. We will send you updates via email.'
+                 % new_user.contact_name,
+            recipients=[new_user.contact_email],
+        )
         return redirect(url_for('.profile'))
 
     return render_template("users/signup-commercial.html", form=form, tier=selected_tier)
@@ -169,6 +178,13 @@ def signup_noncommercial():
         )
         login_user(new_user)
         flash.success("Thanks for signing up!")
+        send_mail(
+            subject="[MetaBrainz] Sign up confirmation",
+            text='Dear %s,\n\nThank you for signing up!\n\nYou can now generate '
+                 'an access token for the MetaBrainz API on your profile page.'
+                 % new_user.contact_name,
+            recipients=[new_user.contact_email],
+        )
         return redirect(url_for('.profile'))
 
     return render_template("users/signup-non-commercial.html", form=form)
