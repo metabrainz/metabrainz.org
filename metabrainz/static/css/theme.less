@@ -11,6 +11,10 @@
 
 @import "bootstrap.less";
 @import "variables.less";
+@import "colorPalette.less";
+@import "links.less";
+@import "lobes-buttons.less";
+@import "lobes-navbars.less";
 
 // Add CSS Customizations to your theme here.
 
@@ -31,350 +35,10 @@
 
 
 .corporate-background{
-  background: url(../assets/background_tile.jpg) fade(@gray-light,60%);
-  background-blend-mode: screen;
+	background: url(../assets/background_tile.jpg) fade(@gray-light,60%);
+	background-blend-mode: screen;
 }
 
-a{
-  font-weight: 700;
-  &:visited{
-    color: @brand-secondary;
-    &:hover{
-      color: @link-hover-color;
-    }
-  }
-  .nabvar &,
-  .list-group &,
-  .dropdown-menu &,
-  .pagination &,
-  &.btn
-  {
-    &:visited{
-      color: @link-color;
-    }
-  }
-  &.list-group-item:visited{
-    color: @list-group-link-color
-  }
-  &.list-group-item.active:visited,
-  &.list-group-item:active:visited{
-    color: @list-group-active-color;
-  }
-  &:hover, &:focus{
-    text-decoration: none;
-  }
-}
-
-.hexagon-container {
-  margin: -2px;
-  text-align:center;
-  .hexagon {
-    display: inline-block;
-    position: relative;
-    width: 130px;
-    height: 75.06px;
-    background-color: #64C7CC;
-    margin: 37.53px 1em;
-
-    &:before,
-    &:after {
-      content: "";
-      position: absolute;
-      width: 0;
-      border-left: 65px solid transparent;
-      border-right: 65px solid transparent;
-      left: 0;
-    }
-    &:before {
-      bottom: 100%;
-      border-bottom: 37.53px solid #64C7CC;
-    }
-    &:after {
-      top: 100%;
-      width: 0;
-      border-top: 37.53px solid #64C7CC;
-    }
-    &.small {
-      width: 65px;
-      height: 37.53px;
-      margin: 18.76px 0.3em;
-
-      &:nth-child(2n+3){
-        margin-left:1em;
-      }
-
-      &:before,
-      &:after {
-        content: "";
-        position: absolute;
-        width: 0;
-        border-left: 32.5px solid transparent;
-        border-right: 32.5px solid transparent;
-      }
-      &:before {
-        bottom: 100%;
-        border-bottom: 18.76px solid #a90000;
-      }
-      &:after {
-        top: 100%;
-        width: 0;
-        border-top: 18.76px solid #a90000;
-      }
-    }
-    &.orange{
-      .colour-palette(@orange,15%,17%);
-    }
-    &.purple{
-      .colour-palette(@purple,10%);
-    }
-    &.red{
-      .colour-palette(@red,10%,15%);
-    }
-    &.yellow{
-      .colour-palette(@yellow,13%,9%);
-    }
-    &.green{
-      .colour-palette(@green,10%);
-    }
-    &.blue{
-      .colour-palette(@blue,15%,12%);
-    }
-  }
-}
-
-.colour-palette(@color,@darken:15%,@lighten:@darken){
-  .hexagon-color(@color);
-  &.dark{
-    .hexagon-color(darken(@color,@darken));
-  }
-  &.light{
-    .hexagon-color(lighten(@color,@lighten));
-  }
-}
-
-.hexagon-color(@color){
-  background-color: @color;
-  &:before{
-    border-bottom-color: @color;
-  }
-  &:after {
-    border-top-color: @color;
-  }
-}
-
-//
-// Buttons
-// --------------------------------------------------
-
-.btn {
-  border: 0;
-  border-radius:0;
-  transition: all 0.35s;
-  outline: 2px solid transparent;
-  margin: 0.15em;
-  .button-size(@padding-small-vertical; @padding-small-horizontal * 3 ; @font-size-small; @line-height-small; 0px);
-  &.innerBorder {
-    position: relative;
-    background: transparent;
-    z-index: 1;
-    &:after {
-      position: absolute;
-      content: '';
-      border-style: solid;
-      border-color: lighten(@btn-success-bg, 19%);
-      border-width: 0;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      padding: 2px;
-      z-index: -1;
-      background: @btn-success-bg;
-      transition: transform .2s, opacity .2s, border-width .2s;
-    }
-    &:hover{
-      color:@white;
-      &:after {
-        border-width: 3px;
-      }
-      &.triple{
-        outline: none;
-        &:after{
-          border-width: 4px;
-          border-style: double;
-          border-color: lighten(@btn-success-bg, 42%);
-        }
-      }
-    }
-  } /* .style3 */
-  &.diamond{
-    position: relative;
-    background: @btn-info-bg;
-    color:@white;
-    &:before {
-      left: 0;
-      border-right: 0px solid transparent;
-    }
-    &:after {
-      right: 0;
-      border-left: 0px solid transparent;
-    }
-    &:hover:before{
-      border-right-width: 13px;
-    }
-    &:hover:after{
-      border-left-width: 13px;
-    }
-    &:before, &:after {
-      content:"";
-      position: absolute;
-      width: 0;
-      height: 0;
-      top:0;
-      border-top: 22px solid @panel-bg;
-      border-bottom: 22px solid @panel-bg;
-      transition: all .15s;
-    }
-  }
-}
-
-// Hexagonal button
-.hb-flickr, .hb-flickr:after, .hb-flickr:before {
-  background: #ff1981;
-  border-color: #ff1981;
-  color: #fff;
-}
-.hb, .hb:after, .hb:before {
-  background-color: @btn-primary-bg;
-  border-left: 1px solid @btn-primary-bg;
-  border-right: 1px solid @btn-primary-bg;
-  color: @white;
-  box-sizing: border-box;
-  transition: all .05s;
-}
-.hb i {
-  top:-2px;
-  z-index: 9;
-  //   -webkit-transition: all .25s ease;
-  //   -moz-transition: all .25s ease;
-  //   -ms-transition: all .25s ease;
-  //   -o-transition: all .25s ease;
-  transition: all .25s ease;
-}
-.hb-sm, .hb-sm:after, .hb-sm:before {
-  height: 37px;
-  width: 64px;
-}
-.hb-sm {
-  line-height: 37px;
-  font-size: 37px;
-  margin: 18.5px 0;
-}
-.hb {
-  display: inline-block;
-  position: relative;
-  text-align: center;
-  z-index: 0;
-  cursor: pointer;
-}
-.hb:before {
-  -webkit-transform: rotate(60deg);
-  -moz-transform: rotate(60deg);
-  -ms-transform: rotate(60deg);
-  -o-transform: rotate(60deg);
-  transform: rotate(60deg);
-}
-.hb:after, .hb:before {
-  position: absolute;
-  content: "";
-  left: -1px;
-  top: 0;
-  z-index: -1;
-}
-.hb:after {
-  -webkit-transform: rotate(-60deg);
-  -moz-transform: rotate(-60deg);
-  -ms-transform: rotate(-60deg);
-  -o-transform: rotate(-60deg);
-  transform: rotate(-60deg);
-}
-.hb-flickr-inv, .hb-flickr-inv:after, .hb-flickr-inv:before, .hb-flickr:hover, .hb-flickr:hover:after, .hb-flickr:hover:before {
-  background: 0 0;
-  border-color: #ff1981;
-  color: #ff1981;
-}
-.hb:hover, .hb:hover:after, .hb:hover:before {
-  background: 0 0;
-  border-left: 1px solid @btn-primary-bg;
-  border-right: 1px solid @btn-primary-bg;
-  color: @btn-primary-bg;
-}
-
-// Button variants
-// -------------------------
-// Easily pump out default styles, as well as :hover, :focus, :active,
-// and disabled options for all buttons
-.button-variant(@color; @background:transparent; @border:@background) {
-  color: @color;
-  background: @background;
-
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  .open .dropdown-toggle& {
-    color: @background;
-    background: transparent;
-    outline: 2px solid @background;
-    // font-weight: 700;
-    // outline-width: 1px;
-  }
-
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &,
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-      color: lighten(@color,10%);
-      background: desaturate(@background, 15%);
-    }
-  }
-}
-
-// // Apply the mixin to the buttons
-// .btn-default { .button-variant(@btn-default-color,@btn-default-bg); }
-// .btn-primary { .button-variant(@btn-primary-color,@btn-primary-bg); }
-// .btn-success { .button-variant(@btn-success-color,@btn-success-bg); }
-// .btn-warning { .button-variant(@btn-warning-color,@btn-warning-bg); }
-// .btn-danger  { .button-variant(@btn-danger-color,@btn-danger-bg); }
-// .btn-info    { .button-variant(@btn-info-color,@btn-info-bg); }
-
-.btn-link:before{
-  border-color: transparent;
-  &:hover,&:focus,&:active{
-    border-color:@btn-primary-border
-  }
-}
-
-
-// Button Sizes
-// --------------------------------------------------
-
-.btn-lg {
-  // line-height: ensure even-numbered height of button next to large input
-  .button-size(@padding-large-vertical ; @padding-large-horizontal * 3; @font-size-large; @line-height-large; 0px);
-}
-.btn-sm,
-.btn-xs {
-  // line-height: ensure proper height of button next to small input
-  .button-size(@padding-small-vertical; @padding-small-horizontal * 1.5; @font-size-small; @line-height-small; 0px);
-}
-.btn-xs {
-  padding: 1px 5px;
-}
 
 //
 // Headings
@@ -384,63 +48,31 @@ h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   color: @headings-font-color;
   small {
-    font-size: 0.65em;
+  	font-size: 0.65em;
     font-weight: @headings-small-font-weight;
   }
 }
 
 .panel{
+  color:@text-color;
   margin-bottom: @grid-gutter-width;
-  border-top-width: 0px;
-  border-bottom-width: 0px;
+  -webkit-box-shadow: none;
+	box-shadow: none;
+  border-bottom-color: @panel-inner-border;
   .panel-heading {
-    font-size: 1.7em;
-    font-family:  @headings-font-family;
-    font-weight: 	200;
-    line-height:  @headings-line-height;
-    padding: 20px;
-    border-top-width: 0px;
-    border-bottom-width: 2px;
-  }
+		font-size: 1.7em;
+	  font-family:  @headings-font-family;
+	  font-weight: 	200;
+	  line-height:  @headings-line-height;
+	  padding: 20px;
+    outline: 1px solid @panel-inner-border;
+    border-bottom-width: 2px; 
+	}
 }
 
-.navbar-transparent{
-  background-color: transparent;
-  color: @brand-primary;
-  border-color: lighten(@brand-primary,25%);
-}
 
-.navbar-fixed-top{
-  transition : min-height 0.35s;
-  .container > *:not(.navbar-header){
-    transition : padding 0.35s;
-  }
-  &.tall {
-    min-height: @navbar-height-tall;
-    .container > *:not(.navbar-header){
-      padding: (@navbar-height-tall - @line-height-computed * 2)/2 0 0;
-    }
-    .navbar-brand  .logo{
-      &.small{
-        opacity: 1;
-        height: 80px;
-        // margin-top: ((@navbar-height-tall - 80px) / 2);
-        // margin-bottom: ((@navbar-height-tall - 80px) / 2);
-      }
-      &.extrasmall{opacity: 0;height: 0;}
-    }
-  }
-  .navbar-brand .logo{
-    transition: opacity .3s, height .3s;
-    &.small{opacity: 0;
-      height: 0;
-    }
-    &.extrasmall{opacity: 1; height: 24px;}
-  }
-}
-
-.panel:not(.panel-default) .panel-heading:before,
-ul.hexagonBullet li:before {
+ul.hexagonBullet li:before,
+.hexagonBullet:not(ul):before{
   content: "\2B22";
   margin-right: 0.5em;
   font-size: 0.5em;
@@ -450,10 +82,4 @@ ul.hexagonBullet li:before {
 
 ul.hexagonBullet {
   list-style: none;
-}
-
-@media(min-width:768px) {
-  body {
-    padding-top: @navbar-height-tall + 30px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
-  }
 }

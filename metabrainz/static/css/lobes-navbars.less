@@ -1,0 +1,203 @@
+@logo-height: 24px;
+
+.navbar-variant(@color; @background:@brand-primary; @link-color:@color; @active-color:lighten(@color,15%);) {
+  @active-bg: fadeout(@background, 10%);
+  @disabled-color: desaturate(@color,42%);
+  @disabled-bg: desaturate(@background,42%);
+  color: @color;
+  background: fade(@background,80%);
+  border:none;
+
+  .navbar-nav {
+    > li > a {
+      color: @link-color;
+
+      &:hover,
+      &:focus {
+        color: @active-color;
+        background-color: @active-bg;
+      }
+    }
+    > .active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @navbar-default-link-active-color;
+        background-color: @active-bg;
+      }
+    }
+    > .disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @disabled-color;
+        background-color: @disabled-bg;
+      }
+    }
+
+  // Dropdowns
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: @active-bg;
+        color: @active-color;
+      }
+    }
+    > .dropdown > a:hover .caret {
+      border-top-color: @active-color;
+      border-bottom-color: @active-color;
+    }
+    > .dropdown > a .caret {
+      border-top-color: @active-color;
+      border-bottom-color: @active-color;
+    }
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        .caret {
+          border-top-color: @active-color;
+          border-bottom-color: @active-color;
+        }
+      }
+    }
+
+    @media (max-width: @screen-xs-max) {
+      // Dropdowns get custom display
+      .open .dropdown-menu {
+        > .dropdown-header {
+          border-color: @background;
+        }
+        > li > a {
+          color: @color;
+          &:hover,
+          &:focus {
+            color: @active-color;
+            background-color: @active-bg;
+          }
+        }
+        > .active > a {
+          &,
+          &:hover,
+          &:focus {
+            color: @active-color;
+            background-color: @active-bg;
+          }
+        }
+        > .disabled > a {
+          &,
+          &:hover,
+          &:focus {
+            color:@disabled-color;
+            background-color: @disabled-bg;
+          }
+        }
+      }
+    }
+  }
+  .navbar-collapse{
+    border-color: @background;
+  }
+  .navbar-brand {
+    color: @navbar-default-brand-color;
+    &.logo{
+      padding-top: ((@navbar-height - @logo-height) / 2);
+      padding-bottom: ((@navbar-height - @logo-height) / 2);
+      // background-color: mix(@background,@cream, 15%);
+      background-color: fade(@cream, 60%);
+    }
+    &:hover,
+    &:focus {
+      color: @active-color;
+      // background-color: @active-bg;
+    }
+  }
+
+  .navbar-text {
+    color: @color;
+  }
+  // Links in navbars
+  //
+  // Add a class to ensure links outside the navbar nav are colored correctly.
+
+  .navbar-link {
+    color: @link-color;
+    &:hover {
+      color: @active-color;
+    }
+  }
+  .support-link > a{
+      background-color: fadein(@background,100%);
+  }
+}
+
+.navbar-default{
+  .navbar-variant(white,@orange);
+}
+body.MetaBrainz .navbar,
+.navbar.MetaBrainz{
+  .navbar-variant(white,@green);
+}
+body.MusicBrainz .navbar,
+.navbar.MusicBrainz{
+  .navbar-variant(white,@purple);
+}
+body.CritiqueBrainz .navbar,
+.navbar.CritiqueBrainz{
+  .navbar-variant(white,@turquoise);
+}
+body.AcousticBrainz .navbar,
+.navbar.AcousticBrainz{
+  .navbar-variant(white,@blue);
+}
+
+
+
+// Animated Navbar
+.navbar:not(.animated){
+  .navbar-brand .small.logo{
+    opacity: 0;
+    height: 0;
+  }
+}
+.navbar-fixed-top{
+  &.animated{
+    transition : min-height 0.35s;
+    .container > *:not(.navbar-header){
+      transition : padding 0.35s;
+    }
+    &.tall {
+      min-height: @navbar-height-tall;
+      .container > *:not(.navbar-header){
+          padding: (@navbar-height-tall - @line-height-computed * 2)/2 0 0;
+      }
+      .navbar-brand  .logo{
+        &.small{
+          opacity: 1;
+          height: 80px;
+          // margin-top: ((@navbar-height-tall - 80px) / 2);
+          // margin-bottom: ((@navbar-height-tall - 80px) / 2);
+        }
+        &.extrasmall{opacity: 0;height: 0;}
+      }
+    }
+    .navbar-brand .logo{
+        transition: opacity .3s, height .3s;
+        &.small{opacity: 0;
+          height: 0;
+        }
+        &.extrasmall{opacity: 1; height: 24px;}
+    }
+  }
+}
+@media(min-width:768px) {
+    body{
+      & > .container {
+        padding-top: @navbar-height + 30px;
+      }
+      &.withTallNavbar {
+          padding-top: @navbar-height-tall + 30px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+      }
+    }
+}

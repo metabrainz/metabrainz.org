@@ -17,6 +17,19 @@ body {
   padding-bottom: 25px;
 }
 
+// Navbar
+.navbar {
+  .support-link {
+    > a {
+      background-color: @red !important;
+      &:hover, &:focus {
+        background-color: darken(@red, 6.5%) !important;
+      }
+    }
+  }
+}
+
+
 // Footer
 .footer {
   font-size: 12px;
@@ -35,15 +48,6 @@ body {
 img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
 
-
-.support-link {
-  > a {
-    background-color: @red;
-    &:hover, &:focus {
-      background-color: lighten(@red, 6.5%) !important;
-    }
-  }
-}
 
 
 // Home page
