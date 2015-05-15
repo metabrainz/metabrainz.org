@@ -100,6 +100,7 @@ img.pull-right { padding-left: 15px; }
   @media (max-width: @screen-xs-max) { display: none; }
 }
 
+// Account type selection
 #tiers {
   margin-top: 40px;
   #primary-tiers {
@@ -126,6 +127,35 @@ img.pull-right { padding-left: 15px; }
         }
         .buttons :last-child {
           margin-bottom: 0px;
+        }
+      }
+    }
+    .tier.shiny {
+      .thumbnail { border-color: fade(@brand-secondary, 40%); }
+    }
+  }
+  #featured-users {
+    .clearfix;
+    margin-bottom: 12px;
+    h3 { margin-bottom: 0px; }
+    @featured-user-height: 83px;
+    @featured-user-width: 171px;
+    .logo-container {
+      .pull-left;
+      height: @featured-user-height;
+      width: @featured-user-width;
+      margin-left: 21px;
+      margin-right: 21px;
+      line-height: @featured-user-height;
+      > span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        img {
+          max-height: @featured-user-height;
+          max-width: @featured-user-width;
+          display: block;
+          margin: auto;
         }
       }
     }
