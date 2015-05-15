@@ -140,7 +140,7 @@ def signup_commercial():
             amount_pledged=form.amount_pledged.data,
         )
         login_user(new_user)
-        flash.success("Thanks for signing up! Your application will be reviewed soon.")
+        flash.success("Thanks for signing up! Your application will be reviewed soon and we will send you updates via email.")
         return redirect(url_for('.profile'))
 
     return render_template("users/signup-commercial.html", form=form, tier=selected_tier)

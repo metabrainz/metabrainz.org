@@ -57,13 +57,26 @@
       </label>
       <div class="col-sm-5">{{ form.website_url(class="form-control", required="required") }}</div>
     </div>
+
     <div class="form-group">
       <label class="col-sm-4 control-label">{{ form.logo_url.label.text }}</label>
-      <div class="col-sm-5">{{ form.logo_url(class="form-control") }}</div>
+      <div class="col-sm-5">{{ form.logo_url(class="form-control", placeholder="(preferably in SVG format)") }}</div>
+      <div class="col-sm-offset-4 col-sm-5" style="padding-top: 7px">
+        <em class="text-muted">
+          Image should be about 250 pixels wide on a white or transparent
+          background. We will host it on our site.
+        </em>
+      </div>
     </div>
+
     <div class="form-group">
       <label class="col-sm-4 control-label">{{ form.api_url.label.text }}</label>
       <div class="col-sm-5">{{ form.api_url(class="form-control") }}</div>
+      <div class="col-sm-offset-4 col-sm-5" style="padding-top: 7px">
+        <em class="text-muted">
+           URL to where developers can use your APIs using MusicBrainz IDs, if available.
+        </em>
+      </div>
     </div>
 
     <div class="form-group">
@@ -101,6 +114,15 @@
     <br />
 
     <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-5">
+        <p><strong>Billing address</strong></p>
+        <em class="text-muted">      
+        <span style="color: gray">*</span> - full address is required if selected
+          payment method is invoicing
+        </em>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-4 control-label">
         {{ form.address_street.label.text }}
         <span style="color: gray">*</span>
@@ -135,12 +157,6 @@
       </label>
       <div class="col-sm-5">{{ form.address_country(class="form-control", required="required") }}</div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-offset-4 col-sm-5">
-        <span style="color: gray">*</span> - full address is required if selected
-        payment method is invoicing.
-      </div>
-    </div>
     <br />
 
     <div class="form-group">
@@ -167,7 +183,7 @@
           <label id="agreement">
             {{ form.agreement(required="required") }}
             I agree to treat my access token as a secret and will not share
-            this token publicly or commit it to a source code repository.
+            this token publicly or commit it to a publicly visible source code repository.
           </label>
         </div>
       </div>
