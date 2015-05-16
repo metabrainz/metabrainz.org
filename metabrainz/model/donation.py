@@ -11,6 +11,8 @@ import logging
 PAYMENT_METHOD_STRIPE = 'stripe'
 PAYMENT_METHOD_PAYPAL = 'paypal'
 PAYMENT_METHOD_WEPAY = 'wepay'
+PAYMENT_METHOD_BITCOIN = 'bitcoin'
+PAYMENT_METHOD_CHECK = 'check'
 
 
 class Donation(db.Model):
@@ -37,6 +39,8 @@ class Donation(db.Model):
         PAYMENT_METHOD_STRIPE,
         PAYMENT_METHOD_PAYPAL,
         PAYMENT_METHOD_WEPAY,
+        PAYMENT_METHOD_BITCOIN,
+        PAYMENT_METHOD_CHECK,
         name='payment_method_types'
     ))
     transaction_id = db.Column(db.Unicode)
