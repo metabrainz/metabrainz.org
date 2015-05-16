@@ -7,76 +7,72 @@
 .btn {
   border: 0;
   border-radius:0;
-  transition: all 0.35s;
-  outline: 2px solid transparent;
+  transition: all 0.2s;
   margin: 0.15em;
-  .button-size(@padding-small-vertical; @padding-small-horizontal * 3 ; @font-size-small; @line-height-small; 0px);
-  &.innerBorder {
-     position: relative;
-     background: transparent;
-     z-index: 1;
-     &:after {
-       position: absolute;
-       content: '';
-       border-style: solid;
-       border-color: lighten(@btn-success-bg, 19%);
-       border-width: 0;
-       width: 100%;
-       height: 100%;
-       top: 0;
-       left: 0;
-       padding: 2px;
-       z-index: -1;
-       background: @btn-success-bg;
-       transition: transform .2s, opacity .2s, border-width .2s;
-     }
-     &:hover{
-      color:@white;
-        &:after {
-          border-width: 3px;
-        }
-        &.triple{
-          outline: none;
-          &:after{
-            border-width: 4px;
-            border-style: double;
-           border-color: lighten(@btn-success-bg, 42%);
-          }
-        }
-      }
-   } /* .style3 */
-   &.diamond{
-    position: relative;
-    background: @btn-info-bg;
-    color:@white;
-     &:before {
-      left: 0;
-      border-right: 0px solid transparent;
-     }
-     &:after {
-      right: 0;
-      border-left: 0px solid transparent;
-     }
-      &:hover:before{
-        border-right-width: 13px;
-      }
-      &:hover:after{
-        border-left-width: 13px;
-      }
-     &:before, &:after {
-       content:"";
-       position: absolute;
-       width: 0;
-       height: 0;
-       top:0;
-       border-top: 22px solid @panel-bg;
-       border-bottom: 22px solid @panel-bg;
-       transition: all .15s;
-     }
-   }
+  .button-size(@padding-small-vertical; @padding-small-horizontal * 2 ; @font-size-small; @line-height-small; 0px);
 }
 
+// Button variants
+// -------------------------
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+.button-variant(@color; @background:transparent; @border:@background) {
+  color: @color;
+  background: @background;
+  
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    // color: white;
+    background: lighten(@background, 7%);
+    // outline: 2px solid @background;
+  }
+  
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      color: lighten(@color,10%);
+      background: desaturate(@background, 15%);
+    }
+  }
+}
+
+.btn-link:before{
+  border-color: transparent;
+  &:hover,&:focus,&:active{
+    border-color:@btn-primary-border
+  }
+}
+
+
+// Button Sizes
+// --------------------------------------------------
+
+.btn-lg {
+  // line-height: ensure even-numbered height of button next to large input
+  .button-size(@padding-large-vertical ; @padding-large-horizontal * 3; @font-size-large; @line-height-large; 0px);
+}
+.btn-sm,
+.btn-xs {
+  // line-height: ensure proper height of button next to small input
+  .button-size(@padding-small-vertical; @padding-small-horizontal * 1.5; @font-size-small; @line-height-small; 0px);
+}
+.btn-xs {
+  padding: 1px 5px;
+}
+
+
+
 // Hexagonal button
+// --------------------------------------------------
+
 .hb-flickr, .hb-flickr:after, .hb-flickr:before {
   background: #ff1981;
   border-color: #ff1981;
@@ -93,10 +89,10 @@
 .hb i {
   top:-2px;
   z-index: 9;
-//   -webkit-transition: all .25s ease;
-//   -moz-transition: all .25s ease;
-//   -ms-transition: all .25s ease;
-//   -o-transition: all .25s ease;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
   transition: all .25s ease;
 }
 .hb-sm, .hb-sm:after, .hb-sm:before {
@@ -146,70 +142,4 @@
   border-left: 1px solid @btn-primary-bg;
   border-right: 1px solid @btn-primary-bg;
   color: @btn-primary-bg;
-}
-
-// Button variants
-// -------------------------
-// Easily pump out default styles, as well as :hover, :focus, :active,
-// and disabled options for all buttons
-.button-variant(@color; @background:transparent; @border:@background) {
-  color: @color;
-  background: @background;
-  
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  .open .dropdown-toggle& {
-    color: @background;
-    background: transparent;
-    outline: 2px solid @background;
-    // font-weight: 700;
-    // outline-width: 1px;
-  }
-  
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &,
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-      color: lighten(@color,10%);
-      background: desaturate(@background, 15%);
-    }
-  }
-}
-
-// // Apply the mixin to the buttons
-// .btn-default { .button-variant(@btn-default-color,@btn-default-bg); }
-// .btn-primary { .button-variant(@btn-primary-color,@btn-primary-bg); }
-// .btn-success { .button-variant(@btn-success-color,@btn-success-bg); }
-// .btn-warning { .button-variant(@btn-warning-color,@btn-warning-bg); }
-// .btn-danger  { .button-variant(@btn-danger-color,@btn-danger-bg); }
-// .btn-info    { .button-variant(@btn-info-color,@btn-info-bg); }
-
-.btn-link:before{
-  border-color: transparent;
-  &:hover,&:focus,&:active{
-  	border-color:@btn-primary-border
-  }
-}
-
-
-// Button Sizes
-// --------------------------------------------------
-
-.btn-lg {
-  // line-height: ensure even-numbered height of button next to large input
-  .button-size(@padding-large-vertical ; @padding-large-horizontal * 3; @font-size-large; @line-height-large; 0px);
-}
-.btn-sm,
-.btn-xs {
-  // line-height: ensure proper height of button next to small input
-  .button-size(@padding-small-vertical; @padding-small-horizontal * 1.5; @font-size-small; @line-height-small; 0px);
-}
-.btn-xs {
-  padding: 1px 5px;
 }

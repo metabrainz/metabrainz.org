@@ -9,7 +9,11 @@ a{
     }
     &:visited:not(.btn){
         color: @link-visited-color;
+        &:hover{
+            color: @link-visited-hover-color;
+        }
     }
+
     // Exceptions to :visited state
     &.list-group-item:visited{
         color:@list-group-link-color;
@@ -17,6 +21,9 @@ a{
         &.active:hover,
         &.active:focus {
             color: @list-group-active-color;
+        }
+        &:hover{  
+            color:@list-group-link-color;
         }
     }
     .navbar-default &.navbar-brand:visited{
@@ -74,5 +81,8 @@ a{
         &:focus {
             color: @pagination-disabled-color;
         }
+    }
+    &.alert-link:visited{
+        color: inherit;
     }
 }

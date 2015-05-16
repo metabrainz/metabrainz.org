@@ -61,6 +61,7 @@
 @link-color:            @blue;
 @link-hover-color:      lighten(@link-color, 12%);
 @link-visited-color:      darken(@purple, 10%);
+@link-visited-hover-color:      @purple;
 
 // Typography
 // -------------------------
@@ -85,7 +86,7 @@
 @headings-font-color:	  @asphalt;
 @headings-small-font-weight:   300;
 @headings-small-color:        @brand-secondary;
-
+@headings-font-size:	  1.7em;
 
 // Iconography
 // -------------------------
@@ -271,6 +272,7 @@
 
 // Basics of a navbar
 @navbar-height:                    42px;
+@navbar-height:                    64px;
 @navbar-height-tall:               100px;
 @navbar-margin-bottom:             @line-height-computed;
 @navbar-default-color:             @white;
@@ -293,8 +295,8 @@
 @navbar-default-link-disabled-bg:          transparent;
 
 // Navbar brand label
-@navbar-default-brand-color:               @cream;
-@navbar-default-brand-hover-color:         @navbar-default-link-hover-color;
+@navbar-default-brand-color:               @brand-primary;
+@navbar-default-brand-hover-color:         @brand-primary;
 @navbar-default-brand-hover-bg:            transparent;
 
 // Navbar toggle
@@ -400,7 +402,7 @@
 // Form states and alerts
 // -------------------------
 
-@state-warning-text:             @brand-warning;
+@state-warning-text:             darken(@brand-warning,15%);
 @state-warning-bg:               @panel-bg;
 @state-warning-border:           @brand-warning;
 
@@ -629,7 +631,7 @@
 
 // Type
 // ------------------------
-@text-muted:                  @gray;
+@text-muted:                  lighten(desaturate(@gray,100%),30%);
 @abbr-border-color:           @gray-light;
 @blockquote-small-color:      @gray;
 @blockquote-border-color:     @gray-light;

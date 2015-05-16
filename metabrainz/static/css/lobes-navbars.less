@@ -1,17 +1,25 @@
-@logo-height: 24px;
+@logo-height: 30px; // Unfortunately necessary for accurate logo padding
 
-.navbar-variant(@color; @background:@brand-primary; @link-color:@color; @active-color:lighten(@color,15%);) {
-  @active-bg: fadeout(@background, 10%);
+.navbar-variant(@color; @logo-width:150px; @active-color:@white) {
+  @active-bg: @color;
   @disabled-color: desaturate(@color,42%);
-  @disabled-bg: desaturate(@background,42%);
-  color: @color;
-  background: fade(@background,80%);
+  @disabled-bg: @disabled-color;
+  @link-color:@color;
+
+  background: none;
   border:none;
 
   .navbar-nav {
     > li > a {
       color: @link-color;
-
+      font-size: 1.1em;
+      font-family: @headings-font-family;
+      // font-weight: @headings-font-weight;
+      @media (min-width: @grid-float-breakpoint) {
+        // margin: @padding-large-vertical 0;
+        padding-top: @padding-large-vertical;
+        padding-bottom: @padding-large-vertical;
+      }
       &:hover,
       &:focus {
         color: @active-color;
@@ -49,8 +57,8 @@
       border-bottom-color: @active-color;
     }
     > .dropdown > a .caret {
-      border-top-color: @active-color;
-      border-bottom-color: @active-color;
+      border-top-color: @link-color;
+      border-bottom-color: @link-color;
     }
     > .open > a {
       &,
@@ -67,7 +75,7 @@
       // Dropdowns get custom display
       .open .dropdown-menu {
         > .dropdown-header {
-          border-color: @background;
+          border-color: @color;
         }
         > li > a {
           color: @color;
@@ -96,21 +104,38 @@
       }
     }
   }
+
   .navbar-collapse{
-    border-color: @background;
+    border-color: @color;
+    border-bottom: 2px solid @color;
+
+    @media (min-width: @grid-float-breakpoint) {
+      padding: 14px 0 0; // Figure out why 14px
+      width: 75%; //Fallback overriden by magic just below:
+      width: ~"calc(100% - @{logo-width} - @{navbar-padding-horizontal})";
+      float: right;
+      // Resets first and last children spacing
+      .navbar-nav.navbar-left:first-child {
+        margin-left: 0;
+      }
+      .navbar-nav.navbar-right:last-child {
+        margin-right: 0;
+      }
+    }
   }
   .navbar-brand {
-    color: @navbar-default-brand-color;
+    color: @color;
     &.logo{
       padding-top: ((@navbar-height - @logo-height) / 2);
       padding-bottom: ((@navbar-height - @logo-height) / 2);
-      // background-color: mix(@background,@cream, 15%);
-      background-color: fade(@cream, 60%);
     }
     &:hover,
     &:focus {
       color: @active-color;
       // background-color: @active-bg;
+    }
+    &:visited{
+      color: @color;
     }
   }
 
@@ -118,86 +143,72 @@
     color: @color;
   }
   // Links in navbars
-  //
   // Add a class to ensure links outside the navbar nav are colored correctly.
-
   .navbar-link {
     color: @link-color;
     &:hover {
       color: @active-color;
     }
   }
+  .navbar-form{
+    margin: 0;
+  }
   .support-link > a{
-      background-color: fadein(@background,100%);
+    color: @active-color !important;
+    background-color: @color;
+    font-weight: bold !important;
   }
 }
 
+// Apply navbar variants
+// ----------------------------------------------
+
 .navbar-default{
-  .navbar-variant(white,@orange);
+  .navbar-variant(@orange);
 }
 body.MetaBrainz .navbar,
 .navbar.MetaBrainz{
-  .navbar-variant(white,@green);
+  @logo-width:170px;
+  .navbar-variant(@green,@logo-width);
+  
+  // Custom size adjustments as MeB has lots of navbar items
+  // The other option is to change the breakpoints in the variables.less and recompile, but -> meh. 
+  @media (min-width: @screen-tablet) and (max-width: @screen-desktop){
+    .navbar-collapse{
+      width: ~"calc(100% - @{logo-width} - @{padding-small-horizontal})";
+    }
+    .navbar-nav >li>a{
+      padding-right: @padding-small-horizontal;
+      padding-left: @padding-small-horizontal;
+    }
+    .navbar-brand{
+      padding-right: @padding-small-horizontal;
+      padding-left: @padding-small-horizontal;
+    }
+    > .container {
+      max-width: @container-desktop;
+    }
+  }
 }
 body.MusicBrainz .navbar,
 .navbar.MusicBrainz{
-  .navbar-variant(white,@purple);
+  @logo-width:170px; 
+  .navbar-variant(@purple,@logo-width);
 }
 body.CritiqueBrainz .navbar,
 .navbar.CritiqueBrainz{
-  .navbar-variant(white,@turquoise);
+  @logo-width:170px;
+  .navbar-variant(@turquoise,@logo-width);
 }
 body.AcousticBrainz .navbar,
 .navbar.AcousticBrainz{
-  .navbar-variant(white,@blue);
+  @logo-width:170px;
+  .navbar-variant(@blue,@logo-width);
 }
 
-
-
-// Animated Navbar
-.navbar:not(.animated){
-  .navbar-brand .small.logo{
-    opacity: 0;
-    height: 0;
+// Adding just a bit of whitespace between the navbar and the content
+@media(min-width:@screen-tablet) {
+  body > .container {
+    padding-top: @padding-large-vertical*4;
   }
-}
-.navbar-fixed-top{
-  &.animated{
-    transition : min-height 0.35s;
-    .container > *:not(.navbar-header){
-      transition : padding 0.35s;
-    }
-    &.tall {
-      min-height: @navbar-height-tall;
-      .container > *:not(.navbar-header){
-          padding: (@navbar-height-tall - @line-height-computed * 2)/2 0 0;
-      }
-      .navbar-brand  .logo{
-        &.small{
-          opacity: 1;
-          height: 80px;
-          // margin-top: ((@navbar-height-tall - 80px) / 2);
-          // margin-bottom: ((@navbar-height-tall - 80px) / 2);
-        }
-        &.extrasmall{opacity: 0;height: 0;}
-      }
-    }
-    .navbar-brand .logo{
-        transition: opacity .3s, height .3s;
-        &.small{opacity: 0;
-          height: 0;
-        }
-        &.extrasmall{opacity: 1; height: 24px;}
-    }
-  }
-}
-@media(min-width:768px) {
-    body{
-      & > .container {
-        padding-top: @navbar-height + 30px;
-      }
-      &.withTallNavbar {
-          padding-top: @navbar-height-tall + 30px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
-      }
-    }
 }
