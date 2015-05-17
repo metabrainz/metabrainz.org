@@ -51,12 +51,52 @@ class FakeWePay(object):
             raise NotImplementedError()
 
 
+class FakeStripeBalanceTransaction(object):
+    @classmethod
+    def retrieve(cls, bt_id):
+        return convert_to_stripe_object(
+            {
+                "id": u"txn_161MS22eZvKYlo2CD20DfbfM",
+                "object": u"balance_transaction",
+                "amount": 4995,
+                "currency": u"usd",
+                "net": 4820,
+                "type": u"charge",
+                "created": 1431372030,
+                "available_on": 1431907200,
+                "status": u"pending",
+                "fee": 175,
+                "fee_details": [
+                    {
+                        "amount": 175,
+                        "currency": u"usd",
+                        "type": u"stripe_fee",
+                        "description": u"Stripe processing fees",
+                        "application": None
+                    }
+                ],
+                "source": u"ch_161MS22eZvKYlo2CcuXkbZS8",
+                "description": u"Donation to MetaBrainz Foundation",
+                "sourced_transfers": {
+                    "object": "list",
+                    "total_count": 0,
+                    "has_more": None,
+                    "url": u"/v1/transfers?source_transaction=ch_161MS22eZvKYlo2CcuXkbZS8",
+                    "data": []
+                }
+            },
+            api_key=None,
+            account=None
+        )
+
+
 class DonationModelTestCase(FlaskTestCase):
 
     def setUp(self):
         super(DonationModelTestCase, self).setUp()
         donation.WePay = lambda production=True, access_token=None, api_version=None: \
             FakeWePay(production, access_token, api_version)
+        donation.stripe.BalanceTransaction = FakeStripeBalanceTransaction
 
     def test_get_by_transaction_id(self):
         new = Donation()

@@ -6,6 +6,7 @@ from sqlalchemy.sql import func, desc
 from flask import current_app
 from datetime import datetime
 from wepay import WePay
+import stripe
 import logging
 
 
@@ -302,10 +303,13 @@ class Donation(db.Model):
         """
         logging.debug('Processing Stripe charge...')
 
+        bt = stripe.BalanceTransaction.retrieve(charge.balance_transaction)
+
         new_donation = cls(
             first_name=charge.source.name,
             last_name='',
-            amount=charge.amount / 100,  # cents should be converted
+            amount=bt.net / 100,  # cents should be converted
+            fee=bt.fee / 100,  # cents should be converted
             transaction_id=charge.id,
             payment_method=PAYMENT_METHOD_STRIPE,
 
