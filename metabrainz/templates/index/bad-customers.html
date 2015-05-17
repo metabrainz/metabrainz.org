@@ -6,61 +6,52 @@
   <div id="bad-customers">
 
     <h1>Our not-so-favorite commercial data users</h1>
-
     <p>
-    The following companies use our data, but have declined to support us on an ongoing basis. 
+      The following companies use our data, but have declined to support us on an ongoing basis.
     </p>
-    
     <p>
-    All of our projects require support from end-user donations and commercial support. Our free 
-    data-sets provide incredible value to these companies giving them a business advantage.
-    We believe that companies that use our data to conduct their business should provide financial 
-    support so that we may continue to cover our expenses and pay our staff.
+      All of our projects require support from end-user donations and commercial support. Our free
+      data-sets provide incredible value to these companies giving them a business advantage.
+      We believe that companies that use our data to conduct their business should provide financial
+      support so that we may continue to cover our expenses and pay our staff.
     </p>
-
     <p>
-    If a company you like appears on this list, please contact that company and ask them why
-    they have declined to support us. If you are with a company listed below and would like to
-    get off this list, you can do so by <a href="{{ url_for("users.account_type") }}">signing up
-    for support</a>.
+      If a company you like appears on this list, please contact that company and ask them why
+      they have declined to support us. If you are with a company listed below and would like to
+      get off this list, you can do so by <a href="{{ url_for("users.account_type") }}">signing up
+      for support</a>.
     </p>
-
     <p>
-    Do you know of other companies using our data? We'd love to know and ask them for support!
-    Please <a href="{{ url_for('index.contact') }}">let us know</a>!
+      Do you know of other companies using our data? We'd love to know and ask them for support!
+      Please <a href="{{ url_for('index.contact') }}">let us know</a>!
     </p>
-
 
     {% if bad_users %}
-        <div class="users-grid">
-          {% for user in bad_users %}
-            <div class="user">
-              <div class="logo-container">
-                {% if user.org_logo_url %}
-                  <img class="logo" src="{{ user.org_logo_url }}"/>
-                {% else %}
-                  <div class="name">{{ user.org_name }}</div>
-                {% endif %}
-              </div>
-              {% if user.data_usage_desc %}
-                <div class="description">{{ user.data_usage_desc }}</div>
+      <div class="users-grid">
+        {% for user in bad_users %}
+          <div class="user">
+            <div class="logo-container">
+              {% if user.org_logo_url %}
+                <img class="logo" src="{{ user.org_logo_url }}"/>
+              {% else %}
+                <div class="name">{{ user.org_name }}</div>
               {% endif %}
             </div>
-          {% endfor %}
-        </div>
+            {% if user.data_usage_desc %}
+              <div class="description">{{ user.data_usage_desc }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
     {% else %}
-        <div class="well well-lg">
-            <p>
-              <strong>Nice!!</strong>
-            </p>
-            <p>
-              There are currently no not-so-favorite commercial data users!
-            </p>
-            <p>
-              ... either that, or maybe we're working to convicen some companies to do the
-              "right thing"... :)
-            </p>
-        </div>
+      <div class="well well-lg">
+        <p><strong>Nice!!</strong></p>
+        <p>There are currently no not-so-favorite commercial data users!</p>
+        <p>
+          ... either that, or maybe we're working to convince some companies to do the
+          "right thing"... :)
+        </p>
+      </div>
     {% endif %}
 
   </div>
