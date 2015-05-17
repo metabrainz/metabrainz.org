@@ -2,6 +2,7 @@ from __future__ import division
 from metabrainz.model import db
 from metabrainz.donations.receipts import send_receipt
 from metabrainz.admin import AdminModelView
+from sqlalchemy.sql import func
 from flask import current_app
 from datetime import datetime
 from wepay import WePay
@@ -106,6 +107,8 @@ class Donation(db.Model):
     def get_biggest_donations(cls, limit=None, offset=None):
         """Getter for biggest donations.
 
+        Donations from the same person are grouped.
+
         Args:
             limit: Maximum number of donations to be returned.
             offset: Offset of the result.
@@ -114,7 +117,16 @@ class Donation(db.Model):
             Tuple with two items. First is total number if donations. Second
             is a list of donations sorted by amount with a specified offset.
         """
-        query = cls.query.order_by(-cls.amount)
+        query = db.session.query(
+            cls.first_name.label("first_name"),
+            cls.last_name.label("last_name"),
+            cls.editor_name.label("editor_name"),
+            func.max(cls.payment_date).label("payment_date"),
+            func.sum(cls.amount).label("amount"),
+            func.sum(cls.fee).label("fee"),
+        )
+        query = query.group_by(cls.first_name, cls.last_name, cls.editor_name)
+        query = query.order_by("amount")
         count = query.count()  # Total count should be calculated before limits
         if limit is not None:
             query = query.limit(limit)
