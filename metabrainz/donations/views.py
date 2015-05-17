@@ -9,7 +9,7 @@ from requests.exceptions import RequestException
 donations_bp = Blueprint('donations', __name__)
 
 
-@donations_bp.route('/')
+@donations_bp.route('/donate')
 def index():
     if current_app.config['PAYMENT_PRODUCTION']:
         stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
@@ -44,13 +44,13 @@ def donors():
                            page=page, last_page=last_page, order=order)
 
 
-@donations_bp.route('/nag-check/<editor>')
+@donations_bp.route('/donations/nag-check/<editor>')
 def nag_check(editor):
     a, b = Donation.get_nag_days(editor)
     return '%s,%s\n' % (a, b)
 
 
-@donations_bp.route('/check-editor/')
+@donations_bp.route('/donate/check-editor/')
 def check_editor():
     """Endpoint for checking if editor exists."""
     editor = request.args.get('q')
@@ -78,7 +78,7 @@ def check_editor():
 
 # DONATION RESULTS
 
-@donations_bp.route('/complete', methods=['GET', 'POST'])
+@donations_bp.route('/donate/complete', methods=['GET', 'POST'])
 def complete():
     """Endpoint for successful donations."""
     flash("Thank you for making a donation to the MetaBrainz Foundation. Your "
@@ -86,14 +86,14 @@ def complete():
           "donation appears in the list due to processing delays.", 'success')
     return redirect(url_for('donations.donors'))
 
-@donations_bp.route('/cancelled')
+@donations_bp.route('/donate/cancelled')
 def cancelled():
     """Endpoint for cancelled donations."""
     flash("We're sorry to see that you won't be donating today. We hope that "
           "you'll change your mind!")
     return redirect(url_for('donations.index'))
 
-@donations_bp.route('/error')
+@donations_bp.route('/donate/error')
 def error():
     """Error page for donations.
 
