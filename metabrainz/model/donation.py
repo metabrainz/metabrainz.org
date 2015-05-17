@@ -2,7 +2,7 @@ from __future__ import division
 from metabrainz.model import db
 from metabrainz.donations.receipts import send_receipt
 from metabrainz.admin import AdminModelView
-from sqlalchemy.sql import func
+from sqlalchemy.sql import func, desc
 from flask import current_app
 from datetime import datetime
 from wepay import WePay
@@ -126,7 +126,7 @@ class Donation(db.Model):
             func.sum(cls.fee).label("fee"),
         )
         query = query.group_by(cls.first_name, cls.last_name, cls.editor_name)
-        query = query.order_by("amount")
+        query = query.order_by(desc("amount"))
         count = query.count()  # Total count should be calculated before limits
         if limit is not None:
             query = query.limit(limit)
