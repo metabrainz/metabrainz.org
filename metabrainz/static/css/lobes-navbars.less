@@ -126,7 +126,7 @@
   .navbar-brand {
     color: @color;
     &.logo{
-      padding-top: ((@navbar-height - @logo-height) / 2)+4px;
+      padding-top: ((@navbar-height - @logo-height) / 2);
       padding-bottom: ((@navbar-height - @logo-height) / 2);
     }
     &:hover,
@@ -204,4 +204,11 @@ body.AcousticBrainz .navbar,
 .navbar.AcousticBrainz{
   @logo-width:170px;
   .navbar-variant(@blue,@logo-width);
+}
+
+// Adding just a bit of whitespace between the navbar and the content
+@media(min-width:@screen-tablet) {
+  body > .container {
+    padding-top: @padding-large-vertical*4;
+  }
 }
