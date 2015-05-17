@@ -74,7 +74,7 @@
                 {# Last tier should be the most expensive. Exactly what we need! #}
                 {% set featured_users = tiers[-1].get_featured_users(limit=4, with_logos=True) %}
                 <div id="featured-users">
-                  <h3>Some of our supporters</h3>
+                  <h3>Some of our Unicorn members</h3>
                   {% for user in featured_users %}
                     <div class="logo-container">
                       <span><img src="{{ user.org_logo_url }}" /></span>
