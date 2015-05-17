@@ -1,6 +1,5 @@
 @import "theme";
 
-
 @icon-font-path:"/static/fonts/";
 
 
@@ -10,15 +9,26 @@
 
 @container-lg: @container-md;  // Limiting max width of the page
 
-@mb-blue: #534AD3;
-@mb-green: @green;
 
-@brand-primary: @mb-blue;
-@brand-secondary: @mb-green;
+@brand-primary: @green;
+@brand-secondary: @orange;
 
 body {
   padding-bottom: 25px;
 }
+
+// Navbar
+.navbar {
+  .support-link {
+    > a {
+      background-color: @orange !important;
+      &:hover, &:focus {
+        background-color: darken(@orange, 6.5%) !important;
+      }
+    }
+  }
+}
+
 
 // Footer
 .footer {
@@ -38,15 +48,6 @@ body {
 img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
 
-
-.support-link {
-  > a {
-    background-color: @orange;
-    &:hover, &:focus {
-      background-color: lighten(@orange, 6.5%) !important;
-    }
-  }
-}
 
 
 // Home page
@@ -295,30 +296,5 @@ img.pull-right { padding-left: 15px; }
 #api {
   code {
     font-weight: bold;
-  }
-}
-
-// TODO: Remove this if not needed:
-.construction {
-  .clearfix();
-  margin-top: -20px;
-  color: #FFFFFF;
-  background-color: #94002d;
-  .container {
-    text-align: center;
-    margin-top: 16px;
-    margin-bottom: 10px;
-    .text {
-      a {
-        color: #FFFFFF;
-        font-weight: normal;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-    }
-    img {
-      margin-top: -8px;
-    }
   }
 }
