@@ -52,19 +52,20 @@
         <span style="color: red">*</span>
       </label>
       <div class="col-sm-5">{{ form.usage_desc(class="form-control", required="required",
-                                   maxlength=150, placeholder="(max 150 characters)") }}</div>
+                               maxlength=150, placeholder="(max 150 characters)") }}</div>
     </div>
 
     <hr />
-    
+
     <div class="form-group">
       <div class="col-sm-offset-4 col-sm-8">
         <div class="checkbox">
           <label id="agreement">
             {{ form.agreement(required="required") }}
-            I agree to use the Live Data Feed for non-commercial (less than $500 income per year) or
-            private uses only. I also agree to treat my access token as a secret and will
-            not share this token publicly or commit it to a source code repository.
+            I agree to use the Live Data Feed for non-commercial (less than $500
+            income per year) or private uses only. I also agree to treat my access
+            token as a secret and will not share this token publicly or commit it
+            to a source code repository.
           </label>
         </div>
       </div>
