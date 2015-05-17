@@ -67,7 +67,7 @@ class Donation(db.Model):
         """
         days_per_dollar = 7.5
         result = db.session.execute(
-            "SELECT ((amount + fee) * :days_per_dollar) - "
+            "SELECT ((amount + COALESCE(fee, 0)) * :days_per_dollar) - "
             "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
             "FROM donation "
             "WHERE lower(editor_name) = lower(:editor) "
