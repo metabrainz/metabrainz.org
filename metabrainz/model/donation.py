@@ -126,6 +126,7 @@ class Donation(db.Model):
             func.sum(cls.amount).label("amount"),
             func.sum(cls.fee).label("fee"),
         )
+        query = query.filter(cls.anonymous == False)
         query = query.group_by(cls.first_name, cls.last_name, cls.editor_name)
         query = query.order_by(desc("amount"))
         count = query.count()  # Total count should be calculated before limits
