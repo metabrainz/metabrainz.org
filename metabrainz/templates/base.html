@@ -9,7 +9,7 @@
       <title>{% block title %}MetaBrainz Foundation{% endblock %}</title>
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+      <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
 
       {% if config.USE_COMPILED_STYLING %}
         <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen" />
