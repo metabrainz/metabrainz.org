@@ -22,8 +22,12 @@
 		perspective: 1000;
 		 .item {
 		  	width: 100%;
-			img{
-				transition: @animation-speed;
+		  	transform:none; //Override Boostrap 3.2
+			> img {
+				padding: 0;
+				padding-top: 25px;
+				margin: 0 auto;
+				transition: transform @animation-speed;
 				transform-style: preserve-3d;
 				position: relative;
 				transform-origin: 100% 75px; /* half of height */
@@ -40,38 +44,45 @@
 				  text-align: center;
 				  transition: opacity @animation-speed;
 			}
-		}
-		.active,
-		.next.left,
-		.prev.right    { 
-			left: initial;
-			img{
-				transform: rotateX(0deg);
-				z-index: 2;
+			&.active,
+			&.next.left,
+			&.prev.right    { 
+				left: initial;
+				transform:none; //Override Boostrap 3.2
+				img{
+					transform: rotateX(0deg);
+					z-index: 2;
+				}
+				.caption{opacity: 1;}
 			}
-			.caption{opacity: 1;}
-		}
-		.next,
-		.active.right  {
-			left: initial;
-			img{
-				position: absolute;
-				transform: rotateX(-180deg);
+			&.next,
+			&.active.right  {
+				left: initial;
+				transform:none; //Override Boostrap 3.2
+				img{
+					transform: rotateX(-180deg);
+				}
+				.caption{opacity: 0;}
 			}
-			.caption{opacity: 0;}
-		}
-		.prev,
-		.active.left   {
-			left: initial;
-			img{
-				transform: rotateX(180deg);
+			&.prev,
+			&.active.left   {
+				left: initial;
+				transform:none; //Override Boostrap 3.2
+				img{
+					transform: rotateX(180deg);
+				}
+				.caption{opacity: 0;}
 			}
-			.caption{opacity: 0;}
 		}
 	}
 	.carousel-control{
 		background: none;
-		span{ color: @asphalt;}
+		&,& >* {color: @asphalt;}
+		@media (max-width:@screen-md){
+			width: 20px;
+			// &.right{margin-right: -10px;}
+			&.left{margin-left: -20px;}
+		}
 	}
 	.carousel-inner{
 		  min-height: @min-height;
@@ -80,10 +91,6 @@
 		min-height: @min-height;
 		.carousel-caption{
 			margin-top: 160px;
-		}
-		> img {
-			padding-top: 25px;
-			padding-left: 15%;
 		}
 	}
 
