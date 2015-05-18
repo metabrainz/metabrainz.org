@@ -9,7 +9,7 @@ donations_paypal_bp = Blueprint('donations_paypal', __name__)
 PAYPAL_URL_PRIMARY = 'https://www.paypal.com/cgi-bin/webscr'
 PAYPAL_URL_SANDBOX = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
 
-IPN_VERIFY_EXTRA_PARAMS = (('cmd', '_notify-validate'),)
+IPN_VERIFY_EXTRA_PARAMS = ((u'cmd', u'_notify-validate'),)
 
 
 @donations_paypal_bp.route('/ipn', methods=['POST'])
@@ -23,8 +23,8 @@ def ipn():
     # Checking if data is legit
     paypal_url = PAYPAL_URL_PRIMARY if current_app.config['PAYMENT_PRODUCTION'] else PAYPAL_URL_SANDBOX
     verify_args = chain(IPN_VERIFY_EXTRA_PARAMS, request.form.iteritems())
-    verify_string = '&'.join(('%s=%s' % (param, value) for param, value in verify_args))
-    verification_response = requests.post(paypal_url, data=verify_string)
+    verify_string = u'&'.join((u'%s=%s' % (param, value) for param, value in verify_args))
+    verification_response = requests.post(paypal_url, data=verify_string.encode('utf-8'))
 
     if verification_response.text == 'VERIFIED':
         Donation.process_paypal_ipn(request.form)

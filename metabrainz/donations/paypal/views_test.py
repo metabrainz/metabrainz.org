@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model.donation import Donation
 from flask import current_app, url_for
@@ -33,10 +34,10 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
             'payer_email': u'test@example.org',
             'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
             'business': u'donations@metabrainz.org',
-            'address_street': u'1 Main St',
-            'address_city': u'San Jose',
+            'address_street': u'1 Главная улица',
+            'address_city': u'Сан Хозе',
             'address_state': u'CA',
-            'address_country': u'United States',
+            'address_country': u'США',
             'address_zip': u'95131',
             'mc_gross': u'42.50',
             'mc_fee': u'1',
