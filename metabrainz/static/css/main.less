@@ -62,11 +62,34 @@ img.pull-right { padding-left: 15px; }
 
   #more-intro { margin-bottom: @section-margin; }
 
-  #featured-users .logo img {
-    height: 50px;
-    line-height: 50px;
-    margin: 0 auto;
+  #featured-users {
+    .users-block .logo img {
+      height: 50px;
+      line-height: 50px;
+      margin: 0 auto;
+    }
+    @featured-org-height: 50px;
+    .user.col-sm-3 {
+      height: @featured-org-height;
+      line-height: @featured-org-height;
+      text-align: center;
+      @media (max-width: @screen-xs-max) { margin-top: 10px; }
+
+      > span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        img {
+          display: block;
+          margin: auto;
+          max-height: @featured-org-height;
+          max-width: 145px;
+        }
+      }
+    }
   }
+
+  .homepage-section { margin-bottom: @section-margin; }
 
 }
 
