@@ -1,4 +1,5 @@
-@import "theme";
+@import "theme/theme.less";
+@import "carousel.less";
 
 @icon-font-path:"/static/fonts/";
 
@@ -8,7 +9,6 @@
 // -------------
 
 @container-lg: @container-md;  // Limiting max width of the page
-
 
 @brand-primary: @green;
 @brand-secondary: @orange;
@@ -35,7 +35,6 @@ body {
   }
 }
 
-
 // Footer
 .footer {
   font-size: 12px;
@@ -55,6 +54,9 @@ img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
 
 
+// ---------------
+// Different pages
+// ---------------
 
 // Home page
 #homepage {
@@ -90,12 +92,6 @@ img.pull-right { padding-left: 15px; }
   }
 
   .homepage-section { margin-bottom: @section-margin; }
-
-}
-
-
-#metabrainz-logo {
-  @media (max-width: @screen-xs-max) { display: none; }
 }
 
 // Account type selection
@@ -213,7 +209,6 @@ img.pull-right { padding-left: 15px; }
     a:hover { text-decoration: none; }
   }
 }
-
 
 
 // Sponsors page

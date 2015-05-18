@@ -2,21 +2,19 @@
 
 .navbar-variant(@color; @logo-width:150px; @active-color:@white) {
   @active-bg: @color;
-  @disabled-color: desaturate(@color,42%);
+  @disabled-color: desaturate(@color, 42%);
   @disabled-bg: @disabled-color;
-  @link-color:@color;
+  @link-color: @color;
 
   background: none;
-  border:none;
+  border: none;
 
   .navbar-nav {
     > li > a {
       color: @link-color;
       font-size: 1.1em;
       font-family: @headings-font-family;
-      // font-weight: @headings-font-weight;
       @media (min-width: @grid-float-breakpoint) {
-        // margin: @padding-large-vertical 0;
         padding-top: @padding-large-vertical;
         padding-bottom: @padding-large-vertical;
       }
@@ -43,7 +41,7 @@
       }
     }
 
-  // Dropdowns
+    // Dropdowns
     > .open > a {
       &,
       &:hover,
@@ -97,7 +95,7 @@
           &,
           &:hover,
           &:focus {
-            color:@disabled-color;
+            color: @disabled-color;
             background-color: @disabled-bg;
           }
         }
@@ -105,7 +103,7 @@
     }
   }
 
-  .navbar-collapse{
+  .navbar-collapse {
     border-color: @color;
     border-bottom: 2px solid @color;
 
@@ -114,6 +112,7 @@
       width: 75%; //Fallback overriden by magic just below:
       width: ~"calc(100% - @{logo-width} - @{navbar-padding-horizontal})";
       float: right;
+
       // Resets first and last children spacing
       .navbar-nav.navbar-left:first-child {
         margin-left: 0;
@@ -125,16 +124,15 @@
   }
   .navbar-brand {
     color: @color;
-    &.logo{
+    &.logo {
       padding-top: ((@navbar-height - @logo-height) / 2);
       padding-bottom: ((@navbar-height - @logo-height) / 2);
     }
     &:hover,
     &:focus {
       color: @active-color;
-      // background-color: @active-bg;
     }
-    &:visited{
+    &:visited {
       color: @color;
     }
   }
@@ -150,10 +148,10 @@
       color: @active-color;
     }
   }
-  .navbar-form{
+  .navbar-form {
     margin: 0;
   }
-  .support-link > a{
+  .support-link > a {
     color: @active-color !important;
     background-color: @color;
     font-weight: bold !important;
@@ -163,45 +161,52 @@
 // Apply navbar variants
 // ----------------------------------------------
 
-.navbar-default{
+.navbar-default {
   .navbar-variant(@orange);
 }
+
 body.MetaBrainz .navbar,
-.navbar.MetaBrainz{
-  @logo-width:170px;
-  .navbar-variant(@green,@logo-width);
-  
+.navbar.MetaBrainz {
+  @logo-width: 170px;
+  .navbar-variant(@green, @logo-width);
+
   // Custom size adjustments as MeB has lots of navbar items
   // The other option is to change the breakpoints in the variables.less and recompile, but -> meh. 
-  @media (min-width: @screen-tablet) and (max-width: @screen-desktop){
-    .navbar-collapse{
+  @media (min-width: @screen-tablet) and (max-width: @screen-desktop) {
+    .navbar-collapse {
       width: ~"calc(100% - @{logo-width} - @{padding-small-horizontal})";
     }
-    .navbar-nav >li>a{
+
+    .navbar-nav > li > a {
       padding-right: @padding-small-horizontal;
       padding-left: @padding-small-horizontal;
     }
-    .navbar-brand{
+
+    .navbar-brand {
       padding-right: @padding-small-horizontal;
       padding-left: @padding-small-horizontal;
     }
+
     > .container {
       max-width: @container-desktop;
     }
   }
 }
+
 body.MusicBrainz .navbar,
-.navbar.MusicBrainz{
-  @logo-width:170px; 
-  .navbar-variant(@purple,@logo-width);
+.navbar.MusicBrainz {
+  @logo-width: 170px;
+  .navbar-variant(@purple, @logo-width);
 }
+
 body.CritiqueBrainz .navbar,
-.navbar.CritiqueBrainz{
-  @logo-width:170px;
-  .navbar-variant(@turquoise,@logo-width);
+.navbar.CritiqueBrainz {
+  @logo-width: 170px;
+  .navbar-variant(@turquoise, @logo-width);
 }
+
 body.AcousticBrainz .navbar,
-.navbar.AcousticBrainz{
-  @logo-width:170px;
-  .navbar-variant(@blue,@logo-width);
+.navbar.AcousticBrainz {
+  @logo-width: 170px;
+  .navbar-variant(@blue, @logo-width);
 }
