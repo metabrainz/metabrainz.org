@@ -46,8 +46,6 @@ class AccessLog(db.Model):
         db.session.add(new_record)
         db.session.commit()
 
-        cls.remove_old_ip_addr_records()
-
         # Checking if HOURLY_ALERT_THRESHOLD is exceeded
         count = cls.query \
             .distinct(cls.ip_address) \
