@@ -99,13 +99,7 @@
 
       <div class="col-sm-6">
         <div class="panel panel-success goodguys">
-          <div class="panel-heading">
-            The good guys
-            <a href="{{ url_for('users.account_type') }}" style="margin-top:-5px"
-               class="btn btn-success btn-lg pull-right visible-md visible-lg">Support us!</a>
-            <a href="{{ url_for('users.account_type') }}"
-               class="btn btn-success pull-right visible-xs visible-sm">Support us!</a>
-          </div>
+          <div class="panel-heading">The Good Companies</div>
           <div class="panel-body">
             <div class="">
               <div class="col-sm-2" style="text-align: center;">
@@ -131,21 +125,20 @@
 
       <div class="col-sm-6">
         <div class="panel panel-danger badguys">
-          <div class="panel-heading">
-            Bringing tupperwares to a free buffet
-          </div>
+          <div class="panel-heading">The Bad Companies</div>
           <div class="panel-body">
             <div class="">
               <div class="col-sm-2" style="text-align: center;">
                 <h1 class="text-danger glyphicon glyphicon-thumbs-down"></h1>
               </div>
               <div class="col-sm-10">
-                Unfortunately some customers use data that we provide without contributing back.
-                <a href="{{ url_for('index.bad_customers') }}">Find out more about them</a>.
+                Unfortunately some companies use data we provide without contributing back.
+                <a href="{{ url_for('index.bad_customers') }}">Find out more</a> or
+                <a href="{{ url_for('users.account_type') }}">Sign up</a>!
               </div>
               <div class="clearfix"></div>
             </div>
-            <hr>
+            <hr />
             <div class="row">
               {% for user in bad_users %}
                 <div class="col-sm-12 logo">
