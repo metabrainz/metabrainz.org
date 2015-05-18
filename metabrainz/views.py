@@ -8,7 +8,8 @@ index_bp = Blueprint('index', __name__)
 def home():
     return render_template(
         'index/index.html',
-        featured_users=User.get_featured(limit=4, with_logos=True)
+        good_users=User.get_featured(limit=2, with_logos=True),
+        bad_users=User.get_featured(in_deadbeat_club=True, limit=1, with_logos=True),
     )
 
 
@@ -31,7 +32,7 @@ def sponsors():
 def bad_customers():
     return render_template(
         'index/bad-customers.html',
-        bad_users=User.get_featured(in_deadbeat_club=True)
+        bad_users=User.get_featured(in_deadbeat_club=True),
     )
 
 

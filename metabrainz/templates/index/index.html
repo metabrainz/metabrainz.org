@@ -91,38 +91,77 @@
         donations</a> and a number of <a href="{{ url_for('index.sponsors') }}">sponsors</a>
         who provide funds in order for the foundation to accomplish its goals. The foundation also
         has several <a href="{{ url_for('users.supporters_list') }}"> commercial supporters</a>
-        who make use of our data sets:
+        who make use of our data sets.
       </p>
     </div>
 
-    {% if featured_users %}
-      <div id="featured-users" class="row">
-        {% for user in featured_users %}
-          <div class="col-sm-3">
-            <span>
-              <a href="{{ url_for('users.tier', tier_id=user.tier_id) if user.tier and user.tier.available
-                          else url_for('users.supporters_list') }}">
-                {% if user.org_logo_url %}
-                  <img src="{{ user.org_logo_url }}"/>
-                {% else %}
-                  {{ user.org_name }}
-                {% endif %}
-              </a>
-            </span>
+    <div id="featured-users" class="row">
+
+      <div class="col-sm-6">
+        <div class="panel panel-success goodguys">
+          <div class="panel-heading">
+            The good guys
+            <a href="{{ url_for('users.account_type') }}" style="margin-top:-5px"
+               class="btn btn-success btn-lg pull-right visible-md visible-lg">Support us!</a>
+            <a href="{{ url_for('users.account_type') }}"
+               class="btn btn-success pull-right visible-xs visible-sm">Support us!</a>
           </div>
-        {% endfor %}
+          <div class="panel-body">
+            <div class="">
+              <div class="col-sm-2" style="text-align: center;">
+                <h1 class="text-success glyphicon glyphicon-thumbs-up"></h1>
+              </div>
+              <div class="col-sm-10">
+                Some people do it right! Have a look at our
+                <a href="{{ url_for('users.supporters_list') }}">list of supporters</a>.
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <hr />
+            <div class="row">
+              {% for user in good_users %}
+                <div class="col-sm-6 logo">
+                  <span><img src="{{ user.org_logo_url }}" /></span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
       </div>
-    {% endif %}
+
+      <div class="col-sm-6">
+        <div class="panel panel-danger badguys">
+          <div class="panel-heading">
+            Bringing tupperwares to a free buffet
+          </div>
+          <div class="panel-body">
+            <div class="">
+              <div class="col-sm-2" style="text-align: center;">
+                <h1 class="text-danger glyphicon glyphicon-thumbs-down"></h1>
+              </div>
+              <div class="col-sm-10">
+                Unfortunately some customers use data that we provide without contributing back.
+                <a href="{{ url_for('index.bad_customers') }}">Find out more about them</a>.
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <hr>
+            <div class="row">
+              {% for user in bad_users %}
+                <div class="col-sm-12 logo">
+                  <span><img src="{{ user.org_logo_url }}" /></span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
     <div id="additional-intro">
-      <p>
-        Unfortunately some customers use data that we provide without contributing back.
-        <a href="{{ url_for('index.bad_customers') }}">Find out more about them</a>.
-      </p>
-      <p>
-        To get more information about the foundation go to
-        <a href="{{ url_for('index.about') }}">about</a> page.
-      </p>
+      To get more information about the foundation go to
+      <a href="{{ url_for('index.about') }}">about</a> page.
     </div>
 
   </div>
