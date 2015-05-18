@@ -225,6 +225,10 @@ class Donation(db.Model):
             logging.warning('WePay: Error: %s', details['error_description'])
             return False
 
+        if 'gross' not in details:
+            logging.warning('WePay: The total dollar amount paid is missing')
+            return False
+
         if details['gross'] < 0.50:
             # Tiny donation
             logging.info('WePay: Tiny donation ($%s).', details['gross'])
