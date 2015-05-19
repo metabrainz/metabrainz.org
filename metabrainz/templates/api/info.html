@@ -48,11 +48,11 @@
       </code>
     </p>
     <p>
-      It is possible to get signature for each replication packet. Just replace
+      It is possible to get a signature for each replication packet. Just replace
       <code>.tar.bz2</code> with <code>.asc</code>.
     </p>
     <p>
-      You can get info about latest replication packets from this endpoint:<br />
+      You can get find the latest replication packet numbers from this endpoint:<br />
       <code>
         GET {{ url_for('api.replication_info',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
