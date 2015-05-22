@@ -20,22 +20,25 @@ WEEKLY_SUBDIR = 'weekly'
 
 # These durations are used to create nagios compatible status codes so we can monitor
 # the replication packet stream.
-MAX_PACKET_AGE_WARNING = 60 * 60 * 2 # 4 hours
-MAX_PACKET_AGE_CRITICAL = 60 * 60 * 6 # 4 hours
+MAX_PACKET_AGE_WARNING = 60 * 60 * 2  # 4 hours
+MAX_PACKET_AGE_CRITICAL = 60 * 60 * 6  # 4 hours
+
 
 @api_bp.route('/')
 def info():
     """This view provides information about using the API."""
     return render_template('api/info.html')
 
+
 @api_bp.route('/musicbrainz/replication-check')
 def replication_check():
-    """Check that all the replication packets are contiguous and that no packet is more than a 
-       few hours old. Output a Nagios compatible line of text."""
+    """Check that all the replication packets are contiguous and that no packet
+    is more than a few hours old. Output a Nagios compatible line of text.
+    """
 
     try:
-        entries = [os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], e) 
-                     for e in os.listdir(current_app.config['REPLICATION_PACKETS_DIR'])]
+        entries = [os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], e)
+                   for e in os.listdir(current_app.config['REPLICATION_PACKETS_DIR'])]
     except OSError as e:
         logging.warning(e)
         return Response("UNKNOWN " + str(e), mimetype='text/plain')
@@ -59,10 +62,8 @@ def replication_check():
         num = int(m.groups()[0])
         if last < 0:
             last = num - 1
-
         if last != num - 1:
-            resp = "CRITICAL Replication packet %d is missing" % (num -1)
-
+            resp = "CRITICAL Replication packet %d is missing" % (num - 1)
         last = num
 
     if resp != "OK":
@@ -109,6 +110,7 @@ def replication_info():
             "replication-weekly-[0-9]+.tar.bz2$"
         ),
     })
+
 
 @api_bp.route('/musicbrainz/replication-<int:packet_number>.tar.bz2')
 @token_required
