@@ -1,10 +1,12 @@
 from metabrainz.testing import FlaskTestCase
-from metabrainz.api.views import DAILY_SUBDIR, WEEKLY_SUBDIR
+from metabrainz.api.views import DAILY_SUBDIR, WEEKLY_SUBDIR, MAX_PACKET_AGE_CRITICAL
 from metabrainz.model.token import Token
 from flask import url_for, current_app
 import tempfile
 import shutil
 import os
+import time
+
 
 
 class APIViewsTestCase(FlaskTestCase):
@@ -45,6 +47,27 @@ class APIViewsTestCase(FlaskTestCase):
             'last_packet_daily': 'replication-daily-1.tar.bz2',
             'last_packet_weekly': 'replication-weekly-1.tar.bz2',
         })
+
+    def test_replication_check(self):
+        resp = self.client.get(url_for('api.replication_check'))
+        self.assert200(resp)
+        self.assertEquals(resp.data, "UNKNOWN no replication packets available")
+
+        open(os.path.join(self.path, 'replication-1.tar.bz2'), 'a').close()
+        resp = self.client.get(url_for('api.replication_check'))
+        self.assert200(resp)
+        self.assertEquals(resp.data, "OK")
+
+        open(os.path.join(self.path, 'replication-3.tar.bz2'), 'a').close()
+        resp = self.client.get(url_for('api.replication_check'))
+        self.assert200(resp)
+        self.assertEquals(resp.data, "CRITICAL Replication packet 2 is missing")
+
+        open(os.path.join(self.path, 'replication-2.tar.bz2'), 'a').close()
+        os.utime(os.path.join(self.path, 'replication-3.tar.bz2'), (0, 0))
+        resp = self.client.get(url_for('api.replication_check'))
+        self.assert200(resp)
+        self.assertTrue(str(resp.data).startswith("CRITICAL"))
 
     def test_replication_hourly(self):
         self.assert400(self.client.get(url_for('api.replication_hourly', packet_number=1)))

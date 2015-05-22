@@ -44,19 +44,19 @@ def replication_check():
     entries = filter(lambda x: pattern.search(x), entries)
     entries = filter(os.path.isfile, entries)
     entries.sort()
-    print entries
+
+    if len(entries) == 0:
+        return Response("UNKNOWN no replication packets available", mimetype='text/plain')
 
     resp = "OK"
     last = -1
     pattern = re.compile("replication-([0-9]+).tar.bz2$")
     for entry in entries:
-        print entry
         m = pattern.search(entry)
         if not m:
             resp = "UNKNOWN Unkown files in the replication directory"
             break
         num = int(m.groups()[0])
-        print num
         if last < 0:
             last = num - 1
 
@@ -65,15 +65,14 @@ def replication_check():
 
         last = num
 
-    print resp
     if resp != "OK":
         return Response(resp, mimetype='text/plain')
         
-    last_packet_age = time.time() - os.path.getctime(entries[-1]) 
+    last_packet_age = time.time() - os.path.getmtime(entries[-1]) 
     if last_packet_age > MAX_PACKET_AGE_CRITICAL:
-        resp = "CRITICAL Latest replication packet is %.1f hours old" % (latest_packet_page / 3600)
+        resp = "CRITICAL Latest replication packet is %.1f hours old" % (last_packet_age / 3600)
     elif last_packet_age > MAX_PACKET_AGE_WARNING:
-        resp = "WARNING Latest replication packet is %.1f hours old" % (latest_packet_page / 3600)
+        resp = "WARNING Latest replication packet is %.1f hours old" % (last_packet_age / 3600)
 
     return Response(resp, mimetype='text/plain')
 
