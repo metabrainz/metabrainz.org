@@ -40,7 +40,7 @@ def account_type():
     )
 
 
-@users_bp.route('/supporters/tiers/<tier_id>')
+@users_bp.route('/supporters/tiers/<int:tier_id>')
 def tier(tier_id):
     t = Tier.get(id=tier_id)
     if not t or not t.available:
