@@ -157,29 +157,8 @@ h1.page-title, h2.page-title {
   }
 }
 
-#supporters {
-  table {
-    margin-bottom: 0px;
-    td { vertical-align: middle !important; }
-    td:first-child { // Logo or name
-      width: 160px;
-      text-align: center;
-      img {
-        margin: 0 auto;
-        max-width: 150px;
-        max-height: 64px;
-      }
-    }
-    td:nth-child(2) { // Description
-      padding-left: 30px;
-      text-align: left;
-    }
-  }
-}
-
 #supporters-list {
   margin-bottom: 30px;
-  a { font-weight: inherit; }
   .tier-description {
     .text-muted();
     font-style: italic;
@@ -217,7 +196,17 @@ h1.page-title, h2.page-title {
         vertical-align: middle;
       }
     }
-    .description { font-size: 12px; }
+    .description {
+      font-size: 12px;
+      color: @link-color;
+    }
+
+    &.bad-standing {
+      a { color: @red; }
+      .description { color: @red; }
+    }
+
+    a { font-weight: inherit; }
     a:hover { text-decoration: none; }
   }
 }
