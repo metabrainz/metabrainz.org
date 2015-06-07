@@ -3,7 +3,7 @@
 {% block title %}Your Profile - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1>Your Profile</h1>
+  <h1 class="page-title">Your Profile</h1>
 
   {% if current_user.is_commercial %}
     {% if current_user.state == 'active' and current_user.good_standing %}

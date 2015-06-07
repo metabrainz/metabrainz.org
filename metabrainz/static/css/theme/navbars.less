@@ -135,6 +135,11 @@
     &:visited {
       color: @color;
     }
+
+    img {
+      height: 26px;
+      margin-top: 3px;
+    }
   }
 
   .navbar-text {
@@ -158,55 +163,11 @@
   }
 }
 
-// Apply navbar variants
-// ----------------------------------------------
-
 .navbar-default {
   .navbar-variant(@orange);
 }
 
-body.MetaBrainz .navbar,
-.navbar.MetaBrainz {
-  @logo-width: 170px;
-  .navbar-variant(@green, @logo-width);
 
-  // Custom size adjustments as MeB has lots of navbar items
-  // The other option is to change the breakpoints in the variables.less and recompile, but -> meh. 
-  @media (min-width: @screen-tablet) and (max-width: @screen-desktop) {
-    .navbar-collapse {
-      width: ~"calc(100% - @{logo-width} - @{padding-small-horizontal})";
-    }
-
-    .navbar-nav > li > a {
-      padding-right: @padding-small-horizontal;
-      padding-left: @padding-small-horizontal;
-    }
-
-    .navbar-brand {
-      padding-right: @padding-small-horizontal;
-      padding-left: @padding-small-horizontal;
-    }
-
-    > .container {
-      max-width: @container-desktop;
-    }
-  }
-}
-
-body.MusicBrainz .navbar,
-.navbar.MusicBrainz {
-  @logo-width: 170px;
-  .navbar-variant(@purple, @logo-width);
-}
-
-body.CritiqueBrainz .navbar,
-.navbar.CritiqueBrainz {
-  @logo-width: 170px;
-  .navbar-variant(@turquoise, @logo-width);
-}
-
-body.AcousticBrainz .navbar,
-.navbar.AcousticBrainz {
-  @logo-width: 170px;
-  .navbar-variant(@blue, @logo-width);
+.navbar-form {
+  padding-top: 4px;
 }

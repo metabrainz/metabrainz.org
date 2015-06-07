@@ -18,13 +18,10 @@ body {
 }
 
 // Navbar
+@grid-float-breakpoint: @screen-md-min; // Point at which the navbar becomes uncollapsed
 .navbar {
-  .navbar-brand {
-    img {
-      height: 26px;
-      margin-top: 2px;
-    }
-  }
+  @logo-width: 166px + 15px;
+  .navbar-variant(@green, @logo-width);
   .support-link {
     > a {
       background-color: @orange !important;
@@ -52,6 +49,10 @@ body {
 
 img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
+
+h1.page-title, h2.page-title {
+  @media (max-width: @grid-float-breakpoint) { margin-top: 0px; }
+}
 
 
 // ---------------
