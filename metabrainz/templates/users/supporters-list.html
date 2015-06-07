@@ -24,7 +24,7 @@
         <div class="users-grid">
           {% for user in featured_users %}
             <div class="user">
-              <a href="{{ url_for('users.tier', tier_id=tier.id) }}">
+              {% if user.website_url %}<a href="{{ user.website_url }}">{% endif %}
                 <div class="logo-container">
                   {% if user.org_logo_url %}
                     <img class="logo" src="{{ user.org_logo_url }}"/>
@@ -35,7 +35,7 @@
                 {% if user.data_usage_desc %}
                   <div class="description">{{ user.data_usage_desc }}</div>
                 {% endif %}
-              </a>
+              {% if user.website_url %}</a>{% endif %}
             </div>
           {% endfor %}
         </div>
