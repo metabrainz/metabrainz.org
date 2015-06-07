@@ -190,12 +190,19 @@ h1.page-title, h2.page-title {
   display: flex;
   flex-flow: row wrap;
   justify-content: left;
+  @user-width: 158px;
   .user {
-    width: 188px;
-    padding-left: 15px;
-    padding-right: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    @media (min-width: @grid-float-breakpoint) { width: @user-width; }
+    @media (max-width: @grid-float-breakpoint) {
+      padding-bottom: 12px;
+      margin: 0 auto;
+    }
     .logo-container {
+      margin: 0 auto;
       height: 100px;
+      width: @user-width;
       line-height: 100px;
       text-align: center;
       .name {
