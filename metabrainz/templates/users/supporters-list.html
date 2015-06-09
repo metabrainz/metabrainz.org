@@ -23,8 +23,13 @@
         {% endif %}
         <div class="users-grid">
           {% for user in featured_users %}
-            <div class="user">
-              {% if user.website_url %}<a href="{{ user.website_url }}">{% endif %}
+            <div class="user {{ 'bad-standing' if not user.good_standing }}">
+              {% if not user.good_standing %}
+                <a href="{{ url_for('users.bad_standing') }}"
+                   title="This user has bad standing">
+              {% elif user.website_url %}
+                <a href="{{ user.website_url }}">
+              {% endif %}
                 <div class="logo-container">
                   {% if user.org_logo_url %}
                     <img class="logo" src="{{ user.org_logo_url }}"/>
@@ -35,7 +40,9 @@
                 {% if user.data_usage_desc %}
                   <div class="description">{{ user.data_usage_desc }}</div>
                 {% endif %}
-              {% if user.website_url %}</a>{% endif %}
+              {% if not user.good_standing or (user.good_standing and user.website_url) %}
+                </a>
+              {% endif %}
             </div>
           {% endfor %}
         </div>
