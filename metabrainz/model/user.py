@@ -2,7 +2,7 @@ from metabrainz.model import db
 from metabrainz.mail import send_mail
 from metabrainz.model.token import Token
 from metabrainz.admin import AdminModelView
-from sqlalchemy.sql.expression import func
+from sqlalchemy.sql.expression import func, or_
 from sqlalchemy.dialects import postgres
 from flask_login import UserMixin
 from flask import current_app
@@ -148,6 +148,13 @@ class User(db.Model, UserMixin):
         if kwargs:
             raise TypeError('Unexpected **kwargs: %r' % kwargs)
         return query.order_by(func.random()).limit(limit).all()
+
+    @classmethod
+    def search(cls, value):
+        """Search users by their musicbrainz_id or org_name."""
+        query = cls.query.filter(or_(cls.musicbrainz_id.ilike('%'+value+'%'),
+                                     cls.org_name.ilike('%'+value+'%')))
+        return query.limit(20).all()
 
     def generate_token(self):
         """Generates new access token for this user."""

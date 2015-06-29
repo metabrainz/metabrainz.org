@@ -20,8 +20,10 @@ class UsersView(AdminBaseView):
 
     @expose('/')
     def index(self):
-        # TODO(roman): Implement user search there.
-        return self.render('admin/users/index.html')
+        value = request.args.get('value')
+        results = User.search(value) if value else []
+        return self.render('admin/users/index.html',
+                           value=value, results=results)
 
     @expose('/<int:user_id>')
     def details(self, user_id):
