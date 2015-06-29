@@ -26,6 +26,17 @@
         </tr>
       {% endfor %}
     </table>
+
+    {% if count > limit %}
+      <ul class="pager">
+        {% if page > 1 %}
+          <li class="previous"><a href="{{ url_for('commercialusersview.index', page=page-1) }}">&larr; Previous</a></li>
+        {% endif %}
+        {% if page-1 < count//limit %}
+          <li class="next"><a href="{{ url_for('commercialusersview.index', page=page+1) }}">Next &rarr;</a></li>
+        {% endif %}
+      </ul>
+    {% endif %}
   {% else %}
     None!
   {% endif %}

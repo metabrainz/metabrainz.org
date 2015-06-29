@@ -64,13 +64,19 @@ class UsersView(AdminBaseView):
         flash.info("Token %s has been revoked." % token_value)
         return redirect(url_for('.details', user_id=token.owner_id))
 
+
 class CommercialUsersView(AdminBaseView):
 
     @expose('/')
     def index(self):
-        # TODO(roman): Implement pagination.
-        users = User.get_all_commercial()
-        return self.render('admin/commercial-users/index.html', users=users)
+        page = int(request.args.get('page', default=1))
+        if page < 1:
+            return redirect(url_for('.index'))
+        limit = 20
+        offset = (page - 1) * limit
+        users, count = User.get_all_commercial(limit=limit, offset=offset)
+        return self.render('admin/commercial-users/index.html', users=users,
+                           page=page, limit=limit, count=count)
 
 
 class TokensView(AdminBaseView):

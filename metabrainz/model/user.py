@@ -114,10 +114,14 @@ class User(db.Model, UserMixin):
         return cls.query.filter_by(**kwargs).all()
 
     @classmethod
-    def get_all_commercial(cls):
-        return cls.query.filter(cls.is_commercial==True) \
-            .order_by(cls.org_name) \
-            .all()
+    def get_all_commercial(cls, limit=None, offset=None):
+        query = cls.query.filter(cls.is_commercial==True).order_by(cls.org_name)
+        count = query.count()  # Total count should be calculated before limits
+        if limit is not None:
+            query = query.limit(limit)
+        if offset is not None:
+            query = query.offset(offset)
+        return query.all(), count
 
     @classmethod
     def get_featured(cls, limit=None, **kwargs):
