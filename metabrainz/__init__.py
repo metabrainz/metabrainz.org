@@ -72,20 +72,22 @@ def create_app():
 
     from flask_admin import Admin
     from metabrainz.admin.views import HomeView
-    admin = Admin(app, index_view=HomeView())
+    admin = Admin(app, index_view=HomeView(name='Pending users'))
 
     # Models
     from metabrainz.model.user import UserAdminView
     from metabrainz.model.donation import DonationAdminView
     from metabrainz.model.tier import TierAdminView
-    admin.add_view(UserAdminView(db.session))
+    admin.add_view(UserAdminView(db.session, category='Users'))
     admin.add_view(DonationAdminView(db.session))
     admin.add_view(TierAdminView(db.session))
 
     # Custom stuff
+    from metabrainz.admin.views import CommercialUsersView
     from metabrainz.admin.views import UsersView
     from metabrainz.admin.views import TokensView
-    admin.add_view(UsersView(name='Pending users'))
-    admin.add_view(TokensView(name='Access tokens'))
+    admin.add_view(CommercialUsersView(name='Commercial users', category='Users'))
+    admin.add_view(UsersView(name='Search', category='Users'))
+    admin.add_view(TokensView(name='Access tokens', category='Users'))
 
     return app

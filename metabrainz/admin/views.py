@@ -10,15 +10,18 @@ class HomeView(AdminIndexView):
 
     @expose('/')
     def index(self):
-        return self.render('admin/home.html')
+        return self.render(
+            'admin/home.html',
+            pending_users=User.get_all(state=STATE_PENDING),
+        )
 
 
 class UsersView(AdminBaseView):
 
     @expose('/')
     def index(self):
-        users = User.get_all(state=STATE_PENDING)
-        return self.render('admin/users/index.html', users=users)
+        # TODO(roman): Implement user search there.
+        return self.render('admin/users/index.html')
 
     @expose('/<int:user_id>')
     def details(self, user_id):
@@ -60,6 +63,14 @@ class UsersView(AdminBaseView):
         token.revoke()
         flash.info("Token %s has been revoked." % token_value)
         return redirect(url_for('.details', user_id=token.owner_id))
+
+class CommercialUsersView(AdminBaseView):
+
+    @expose('/')
+    def index(self):
+        # TODO(roman): Implement pagination.
+        users = User.get_all_commercial()
+        return self.render('admin/commercial-users/index.html', users=users)
 
 
 class TokensView(AdminBaseView):

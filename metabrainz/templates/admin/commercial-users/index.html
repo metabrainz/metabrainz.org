@@ -1,6 +1,8 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h3>Commercial users pending approval</h3>
+  <h1>Users</h1>
+
+  <h2>Commercial users</h2>
   {% if users %}
     <table class="table table-striped">
       <thead>
@@ -13,7 +15,7 @@
         <th>Applied on</th>
       </tr>
       </thead>
-      {% for user in pending_users %}
+      {% for user in users %}
         <tr>
           <td><a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.org_name }}</a></td>
           <td>{{ user.contact_name }}</td>
@@ -25,6 +27,6 @@
       {% endfor %}
     </table>
   {% else %}
-    None! Go take a break. :)
+    None!
   {% endif %}
 {% endblock %}

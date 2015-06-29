@@ -111,8 +111,13 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def get_all(cls, **kwargs):
-        """Returns list of all organizations."""
         return cls.query.filter_by(**kwargs).all()
+
+    @classmethod
+    def get_all_commercial(cls):
+        return cls.query.filter(cls.is_commercial==True) \
+            .order_by(cls.org_name) \
+            .all()
 
     @classmethod
     def get_featured(cls, limit=None, **kwargs):
@@ -274,7 +279,7 @@ class UserAdminView(AdminModelView):
     )
 
     def __init__(self, session, **kwargs):
-        super(UserAdminView, self).__init__(User, session, name='Users', **kwargs)
+        super(UserAdminView, self).__init__(User, session, name='All users', **kwargs)
 
     def after_model_change(self, form, user, is_created):
         if user.state != STATE_ACTIVE:
