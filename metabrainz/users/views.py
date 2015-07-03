@@ -145,10 +145,9 @@ def signup_commercial():
                       "soon. We will send you updates via email.")
         send_mail(
             subject="[MetaBrainz] Sign up confirmation",
-            text="Dear %s,\n\nThank you for signing up!\n\nCurrently everyone is on "
-                 "a summer vacation until July 14. Your application will be reviewed "
-                 "as soon as we get back. We will send you updates via email. Sorry "
-                 "for the inconvenience."
+            text="Dear %s,\n\nThank you for signing up!\n\nWe're on vacation until "
+                 "14 July and will be slower to respond to your requests than usual. "
+                 "We will send you updates via email. Sorry for the inconvenience."
                  % new_user.contact_name,
             recipients=[new_user.contact_email],
         )
