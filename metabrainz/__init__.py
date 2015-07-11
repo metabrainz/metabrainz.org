@@ -86,8 +86,10 @@ def create_app():
     from metabrainz.admin.views import CommercialUsersView
     from metabrainz.admin.views import UsersView
     from metabrainz.admin.views import TokensView
+    from metabrainz.admin.views import StatsView
     admin.add_view(CommercialUsersView(name='Commercial users', category='Users'))
     admin.add_view(UsersView(name='Search', category='Users'))
     admin.add_view(TokensView(name='Access tokens', category='Users'))
+    admin.add_view(StatsView(name='Statistics'))
 
     return app

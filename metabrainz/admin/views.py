@@ -1,9 +1,13 @@
+from flask import jsonify, Response
 from flask_admin import expose
 from metabrainz.admin import AdminIndexView, AdminBaseView
 from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED
 from metabrainz.model.token import Token
+from metabrainz.model.access_log import AccessLog
 from metabrainz import flash
 from flask import request, redirect, url_for
+import time
+import json
 
 
 class HomeView(AdminIndexView):
@@ -89,3 +93,19 @@ class TokensView(AdminBaseView):
         results = Token.search_by_value(value) if value else []
         return self.render('admin/tokens/search.html',
                            value=value, results=results)
+
+
+class StatsView(AdminBaseView):
+
+    @expose('/')
+    def overview(self):
+        return self.render('admin/stats/overview.html')
+
+    @expose('/usage')
+    def hourly_usage_data(self):
+        stats = AccessLog.get_hourly_usage()
+        return Response(json.dumps([{'data': [[
+                time.mktime(i[0].utctimetuple()) * 1000,
+                i[1]
+            ] for i in stats]}]),
+            content_type='application/json; charset=utf-8')

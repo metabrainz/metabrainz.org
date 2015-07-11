@@ -77,3 +77,27 @@ class AccessLog(db.Model):
             filter(cls.timestamp < datetime.now(pytz.utc) - timedelta(minutes=CLEANUP_RANGE_MINUTES)). \
             update({cls.ip_address: None})
         db.session.commit()
+
+    @classmethod
+    def get_hourly_usage(cls):
+        """Get information about API usage.
+
+        Returns:
+            List of <datetime, request count> tuples for every hour.
+        """
+        rows = db.engine.execute(
+            'SELECT max("timestamp") as ts, count(*) '
+            'FROM access_log '
+            'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
+            '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
+            'ORDER BY ts'
+        )
+        return [(
+            r[0].replace(
+                minute=0,
+                second=0,
+                microsecond=0,
+                tzinfo=None,
+            ),
+            r[1]
+        ) for r in rows]
