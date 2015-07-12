@@ -99,7 +99,11 @@ class StatsView(AdminBaseView):
 
     @expose('/')
     def overview(self):
-        return self.render('admin/stats/overview.html')
+        return self.render(
+            'admin/stats/overview.html',
+            active_user_count=AccessLog.active_user_count(),
+            top_downloaders=AccessLog.top_downloaders(10),
+        )
 
     @expose('/usage')
     def hourly_usage_data(self):

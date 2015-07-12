@@ -1,6 +1,9 @@
 from metabrainz.model import db
+from metabrainz.model.token import Token
+from metabrainz.model.user import User
 from metabrainz.mail import send_mail
 from metabrainz import cache
+from sqlalchemy import func
 from sqlalchemy.dialects import postgres
 from datetime import datetime, timedelta
 from flask import current_app
@@ -101,3 +104,31 @@ class AccessLog(db.Model):
             ),
             r[1]
         ) for r in rows]
+
+    @classmethod
+    def active_user_count(cls):
+        """Returns number of different users whose access has been logged in
+        the last 24 hours.
+        """
+        return cls.query.join(Token).join(User) \
+            .filter(cls.timestamp > datetime.now() - timedelta(days=1)) \
+            .distinct(User.id).count()
+
+    @classmethod
+    def top_downloaders(cls, limit=None):
+        """Generates list of most active users in the last 24 hours.
+
+        Args:
+            limit: Max number of items to return.
+
+        Returns:
+            List of <User, request count> pairs
+        """
+        query = db.session.query(User).join(Token).join(AccessLog) \
+            .filter(cls.timestamp > datetime.now() - timedelta(days=1)) \
+            .add_columns(func.count("AccessLog.*").label("count")).group_by(User.id) \
+            .order_by("count DESC")
+        if limit:
+            query = query.limit(limit)
+        return query.all()
+
