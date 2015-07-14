@@ -32,7 +32,7 @@
   <script src="{{ url_for('static', filename="js/highstock.js") }}"></script>
   <script>
     $(function () {
-      $.getJSON('{{ url_for('usersview.details_stats') }}', function (data) {
+      $.getJSON('{{ url_for('statsview.hourly_usage_data') }}', function (data) {
         $("#chart").highcharts("StockChart", {
           rangeSelector: { selected: 1 },
           series: data,

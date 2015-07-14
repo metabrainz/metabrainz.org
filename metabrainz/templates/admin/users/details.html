@@ -107,7 +107,7 @@
   <script src="{{ url_for('static', filename="js/highstock.js") }}"></script>
   <script>
     $(function () {
-      $.getJSON('{{ url_for('statsview.hourly_usage_data') }}', function (data) {
+      $.getJSON('{{ url_for('usersview.details_stats', user_id=user.id) }}', function (data) {
         $("#chart").highcharts("StockChart", {
           rangeSelector: { selected: 1 },
           series: data,
