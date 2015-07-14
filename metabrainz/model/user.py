@@ -46,7 +46,6 @@ class User(db.Model, UserMixin):
     address_postcode = db.Column(db.Unicode)
     address_country = db.Column(db.Unicode)
     tier_id = db.Column(db.Integer, db.ForeignKey('tier.id', ondelete="SET NULL", onupdate="CASCADE"))
-    payment_method = db.Column(db.Unicode)
     amount_pledged = db.Column(db.Numeric(11, 2))
 
     # Administrative columns:
@@ -91,7 +90,6 @@ class User(db.Model, UserMixin):
             address_country=kwargs.pop('address_country', None),
 
             tier_id=kwargs.pop('tier_id', None),
-            payment_method=kwargs.pop('payment_method', None),
             amount_pledged=kwargs.pop('amount_pledged', None),
         )
         new_user.state = STATE_ACTIVE if not new_user.is_commercial else STATE_PENDING
@@ -215,7 +213,6 @@ def send_user_signup_notification(user):
             ('Country', user.address_country),
 
             ('Tier', str(user.tier)),
-            ('Payment method', user.payment_method),
             ('Amount pledged', '$%s' % str(user.amount_pledged)),
 
             ('Data usage description', user.data_usage_desc),

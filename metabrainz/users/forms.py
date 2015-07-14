@@ -3,11 +3,6 @@ from wtforms import StringField, BooleanField, TextAreaField, RadioField, valida
 from wtforms.fields.html5 import EmailField, URLField, DecimalField
 from wtforms.validators import DataRequired, Length
 
-PAYMENT_METHOD_PAYPAL = 'paypal'
-PAYMENT_METHOD_STRIPE = 'stripe'
-PAYMENT_METHOD_INVOICING = 'invoicing'
-PAYMENT_METHOD_BITCOIN = 'bitcoin'
-
 
 class UserSignUpForm(Form):
     """Base sign up form for new users.
@@ -49,24 +44,22 @@ class CommercialSignUpForm(UserSignUpForm):
     logo_url = URLField("Logo image URL")
     api_url = URLField("API URL")
 
-    address_street = StringField("Street")
-    address_city = StringField("City")
-    address_state = StringField("State / Province")
-    address_postcode = StringField("Postcode")
+    address_street = StringField("Street", validators=[
+        DataRequired("You need to specify street.")
+    ])
+    address_city = StringField("City", validators=[
+        DataRequired("You need to specify city.")
+    ])
+    address_state = StringField("State / Province", validators=[
+        DataRequired("You need to specify state/province.")
+    ])
+    address_postcode = StringField("Postcode", validators=[
+        DataRequired("You need to specify postcode.")
+    ])
     address_country = StringField("Country", validators=[
         DataRequired("You need to specify country.")
     ])
 
-    payment_method = RadioField(
-        "Choose a payment method:",
-        choices=[
-            (PAYMENT_METHOD_PAYPAL, "PayPal"),
-            (PAYMENT_METHOD_STRIPE, "Stripe"),
-            (PAYMENT_METHOD_INVOICING, "Invoicing"),
-            (PAYMENT_METHOD_BITCOIN, "Bitcoin"),
-        ],
-        validators=[DataRequired(message="You need to choose a payment method!")],
-    )
     amount_pledged = DecimalField()
 
 
