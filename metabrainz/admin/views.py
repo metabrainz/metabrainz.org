@@ -39,7 +39,7 @@ class UsersView(AdminBaseView):
             active_tokens=active_tokens,
         )
 
-    @expose('/<int:user_id>')
+    @expose('/<int:user_id>/stats')
     def details_stats(self, user_id):
         stats = AccessLog.get_hourly_usage(user_id=user_id)
         return Response(json.dumps([{'data': [[
