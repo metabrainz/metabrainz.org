@@ -131,4 +131,3 @@ class AccessLog(db.Model):
         if limit:
             query = query.limit(limit)
         return query.all()
-
