@@ -82,19 +82,35 @@ class AccessLog(db.Model):
         db.session.commit()
 
     @classmethod
-    def get_hourly_usage(cls):
+    def get_hourly_usage(cls, user_id=None):
         """Get information about API usage.
+
+        Args:
+            user_id: User ID that can be specified to get stats only for that account.
 
         Returns:
             List of <datetime, request count> tuples for every hour.
         """
-        rows = db.engine.execute(
-            'SELECT max("timestamp") as ts, count(*) '
-            'FROM access_log '
-            'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
-            '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
-            'ORDER BY ts'
-        )
+        if not user_id:
+            rows = db.engine.execute(
+                'SELECT max("timestamp") as ts, count(*) '
+                'FROM access_log '
+                'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
+                '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
+                'ORDER BY ts'
+            )
+        else:
+            rows = db.engine.execute(
+                'SELECT max("timestamp") as ts, count(*) '
+                'JOIN token ON access_log.token = token.value '
+                'JOIN "user" ON token.owner_id = user.id '
+                'FROM access_log '
+                'WHERE user.id = %s '
+                'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
+                '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
+                'ORDER BY ts',
+                (user_id,)
+            )
         return [(
             r[0].replace(
                 minute=0,

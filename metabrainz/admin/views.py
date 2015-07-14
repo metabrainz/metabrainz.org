@@ -33,8 +33,20 @@ class UsersView(AdminBaseView):
     def details(self, user_id):
         user = User.get(id=user_id)
         active_tokens = Token.get_all(owner_id=user.id, is_active=True)
-        return self.render('admin/users/details.html', user=user,
-                           active_tokens=active_tokens)
+        return self.render(
+            'admin/users/details.html',
+            user=user,
+            active_tokens=active_tokens,
+        )
+
+    @expose('/<int:user_id>')
+    def details_stats(self, user_id):
+        stats = AccessLog.get_hourly_usage(user_id=user_id)
+        return Response(json.dumps([{'data': [[
+                time.mktime(i[0].utctimetuple()) * 1000,
+                i[1]
+            ] for i in stats]}]),
+            content_type='application/json; charset=utf-8')
 
     @expose('/approve')
     def approve(self):

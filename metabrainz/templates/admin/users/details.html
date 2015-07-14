@@ -97,4 +97,26 @@
   {% else %}
     This user has no active access tokens.
   {% endif %}
+
+  <h4>Hourly API usage</h4>
+  <div id="chart"><svg style="height:500px; width:100%;"></svg></div>
+{% endblock %}
+
+{% block tail_js %}
+  {{ super() }}
+
+  <script src="{{ url_for('static', filename="js/highstock.js") }}"></script>
+  <script>
+    $(function () {
+      $.getJSON('{{ url_for('statsview.hourly_usage_data') }}', function (data) {
+        $("#chart").highcharts("StockChart", {
+          rangeSelector: { selected: 1 },
+          series: data,
+          yAxis: { min: 0 },
+          tooltip: { enabled: false },
+          credits: { enabled: false }
+        });
+      });
+    });
+  </script>
 {% endblock %}
