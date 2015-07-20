@@ -149,9 +149,15 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def search(cls, value):
-        """Search users by their musicbrainz_id or org_name."""
-        query = cls.query.filter(or_(cls.musicbrainz_id.ilike('%'+value+'%'),
-                                     cls.org_name.ilike('%'+value+'%')))
+        """Search users by their musicbrainz_id, org_name, contact_name,
+        or contact_email.
+        """
+        query = cls.query.filter(or_(
+            cls.musicbrainz_id.ilike('%'+value+'%'),
+            cls.org_name.ilike('%'+value+'%'),
+            cls.contact_name.ilike('%'+value+'%'),
+            cls.contact_email.ilike('%'+value+'%'),
+        ))
         return query.limit(20).all()
 
     def generate_token(self):
