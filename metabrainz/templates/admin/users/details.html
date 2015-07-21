@@ -4,6 +4,11 @@
 
   <h3>Details</h3>
 
+  <p>
+    <a href="{{ url_for('user_model.edit_view', id=user.id) }}"
+       class="btn btn-primary" role="button">Edit this user</a>
+  </p>
+
   {% if user.org_logo_url %}
     <div class="pull-right">
       <img src="{{ user.org_logo_url }}" style="max-width: 104px" />
@@ -37,7 +42,6 @@
     </dl>
     <dl class="dl-horizontal">
       <dt>Tier</dt><dd>{{ user.tier }}</dd>
-      <dt>Payment method</dt><dd>{{ user.payment_method }}</dd>
       <dt>Amount pledged</dt><dd>${{ user.amount_pledged }}</dd>
     </dl>
     <dl class="dl-horizontal">
@@ -72,7 +76,8 @@
     <p class="text-muted">
       <em>
         If you need to revoke existing tokens <b>and</b> prevent user from
-        generating new ones, set their status to <code>rejected</code>.
+        generating new ones, <a href="{{ url_for('user_model.edit_view', id=user.id) }}">
+        set their status</a> to <code>rejected</code>.
       </em>
     </p>
     <table class="table table-striped">
@@ -96,4 +101,26 @@
   {% else %}
     This user has no active access tokens.
   {% endif %}
+
+  <h4>Hourly API usage</h4>
+  <div id="chart"><svg style="height:500px; width:100%;"></svg></div>
+{% endblock %}
+
+{% block tail_js %}
+  {{ super() }}
+
+  <script src="{{ url_for('static', filename="js/highstock.js") }}"></script>
+  <script>
+    $(function () {
+      $.getJSON('{{ url_for('usersview.details_stats', user_id=user.id) }}', function (data) {
+        $("#chart").highcharts("StockChart", {
+          rangeSelector: { selected: 1 },
+          series: data,
+          yAxis: { min: 0 },
+          tooltip: { enabled: false },
+          credits: { enabled: false }
+        });
+      });
+    });
+  </script>
 {% endblock %}

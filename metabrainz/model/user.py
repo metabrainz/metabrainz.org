@@ -2,7 +2,7 @@ from metabrainz.model import db
 from metabrainz.mail import send_mail
 from metabrainz.model.token import Token
 from metabrainz.admin import AdminModelView
-from sqlalchemy.sql.expression import func
+from sqlalchemy.sql.expression import func, or_
 from sqlalchemy.dialects import postgres
 from flask_login import UserMixin
 from flask import current_app
@@ -46,7 +46,6 @@ class User(db.Model, UserMixin):
     address_postcode = db.Column(db.Unicode)
     address_country = db.Column(db.Unicode)
     tier_id = db.Column(db.Integer, db.ForeignKey('tier.id', ondelete="SET NULL", onupdate="CASCADE"))
-    payment_method = db.Column(db.Unicode)
     amount_pledged = db.Column(db.Numeric(11, 2))
 
     # Administrative columns:
@@ -91,7 +90,6 @@ class User(db.Model, UserMixin):
             address_country=kwargs.pop('address_country', None),
 
             tier_id=kwargs.pop('tier_id', None),
-            payment_method=kwargs.pop('payment_method', None),
             amount_pledged=kwargs.pop('amount_pledged', None),
         )
         new_user.state = STATE_ACTIVE if not new_user.is_commercial else STATE_PENDING
@@ -111,8 +109,17 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def get_all(cls, **kwargs):
-        """Returns list of all organizations."""
         return cls.query.filter_by(**kwargs).all()
+
+    @classmethod
+    def get_all_commercial(cls, limit=None, offset=None):
+        query = cls.query.filter(cls.is_commercial==True).order_by(cls.org_name)
+        count = query.count()  # Total count should be calculated before limits
+        if limit is not None:
+            query = query.limit(limit)
+        if offset is not None:
+            query = query.offset(offset)
+        return query.all(), count
 
     @classmethod
     def get_featured(cls, limit=None, **kwargs):
@@ -139,6 +146,19 @@ class User(db.Model, UserMixin):
         if kwargs:
             raise TypeError('Unexpected **kwargs: %r' % kwargs)
         return query.order_by(func.random()).limit(limit).all()
+
+    @classmethod
+    def search(cls, value):
+        """Search users by their musicbrainz_id, org_name, contact_name,
+        or contact_email.
+        """
+        query = cls.query.filter(or_(
+            cls.musicbrainz_id.ilike('%'+value+'%'),
+            cls.org_name.ilike('%'+value+'%'),
+            cls.contact_name.ilike('%'+value+'%'),
+            cls.contact_email.ilike('%'+value+'%'),
+        ))
+        return query.limit(20).all()
 
     def generate_token(self):
         """Generates new access token for this user."""
@@ -199,7 +219,6 @@ def send_user_signup_notification(user):
             ('Country', user.address_country),
 
             ('Tier', str(user.tier)),
-            ('Payment method', user.payment_method),
             ('Amount pledged', '$%s' % str(user.amount_pledged)),
 
             ('Data usage description', user.data_usage_desc),
@@ -274,7 +293,7 @@ class UserAdminView(AdminModelView):
     )
 
     def __init__(self, session, **kwargs):
-        super(UserAdminView, self).__init__(User, session, name='Users', **kwargs)
+        super(UserAdminView, self).__init__(User, session, name='All users', **kwargs)
 
     def after_model_change(self, form, user, is_created):
         if user.state != STATE_ACTIVE:

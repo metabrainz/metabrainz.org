@@ -1,0 +1,46 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h1>Statistics</h1>
+
+  <p>
+    <strong>Active users:  {{ active_user_count }}</strong>
+    <em class="text-muted">(used API in the last 24 hours)</em>
+  </p>
+
+  {% if top_downloaders %}
+  <p>
+    <strong>Top downloaders:</strong>
+    <ol>
+    {% for user, req_count in top_downloaders %}
+      <li>
+        <a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.musicbrainz_id }}</a>
+      {{ '('+user.org_name+')' if user.is_commercial }}
+      - {{ req_count }} requests
+      </li>
+    {% endfor %}
+    </ol>
+  </p>
+  {% endif %}
+
+  <h3>Hourly API usage</h3>
+  <div id="chart"><svg style="height:500px; width:100%;"></svg></div>
+{% endblock %}
+
+{% block tail_js %}
+  {{ super() }}
+
+  <script src="{{ url_for('static', filename="js/highstock.js") }}"></script>
+  <script>
+    $(function () {
+      $.getJSON('{{ url_for('statsview.hourly_usage_data') }}', function (data) {
+        $("#chart").highcharts("StockChart", {
+          rangeSelector: { selected: 1 },
+          series: data,
+          yAxis: { min: 0 },
+          tooltip: { enabled: false },
+          credits: { enabled: false }
+        });
+      });
+    });
+  </script>
+{% endblock %}
