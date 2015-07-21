@@ -4,6 +4,11 @@
 
   <h3>Details</h3>
 
+  <p>
+    <a href="{{ url_for('user_model.edit_view', id=user.id) }}"
+       class="btn btn-primary" role="button">Edit this user</a>
+  </p>
+
   {% if user.org_logo_url %}
     <div class="pull-right">
       <img src="{{ user.org_logo_url }}" style="max-width: 104px" />

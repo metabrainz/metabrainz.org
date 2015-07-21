@@ -29,13 +29,14 @@
           <th>Stanging</th>
           <th>Tier</th>
           <th>Featured</th>
+          <th>{# Buttons #}</th>
         </tr>
         </thead>
         {% for user in results %}
           <tr>
             <td>
               <a href="{{ url_for('usersview.details', user_id=user.id) }}">
-                {{ user.musicbrainz_id }}
+                <strong>{{ user.musicbrainz_id }}</strong>
                 {{ '('+user.org_name+')' if user.org_name }}
               </a>
             </td>
@@ -71,6 +72,10 @@
               {% else %}
                 <span class="label label-default">Not featured</span>
               {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('user_model.edit_view', id=user.id) }}"
+                 class="btn btn-mini btn-primary" role="button">Edit</a>
             </td>
           </tr>
         {% endfor %}
