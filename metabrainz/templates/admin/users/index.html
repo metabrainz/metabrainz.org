@@ -21,28 +21,57 @@
       <table class="table table-striped">
         <thead>
         <tr>
-          <th>MusicBrainz ID</th>
-          <th>Organization</th>
+          <th>MusicBrainz ID (Organization)</th>
+          <th>State</th>
           <th>Contact name</th>
           <th>Contact email</th>
           <th>Commercial</th>
+          <th>Stanging</th>
           <th>Tier</th>
+          <th>Featured</th>
         </tr>
         </thead>
         {% for user in results %}
           <tr>
-            <td><a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.musicbrainz_id }}</a></td>
-            <td><a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.org_name }}</a></td>
+            <td>
+              <a href="{{ url_for('usersview.details', user_id=user.id) }}">
+                {{ user.musicbrainz_id }}
+                {{ '('+user.org_name+')' if user.org_name }}
+              </a>
+            </td>
+            <td>
+              {% if user.state == 'active' %}
+                <span class="label label-success">Active</span>
+              {% elif user.state == 'pending' %}
+                <span class="label label-warning">Pending</span>
+              {% else %}
+                <span class="label label-important">Rejected</span>
+              {% endif %}
+            </td>
             <td>{{ user.contact_name }}</td>
             <td>{{ user.contact_email }}</td>
             <td>
               {% if user.is_commercial %}
                 <span class="label label-success">Commercial</span>
               {% else %}
-                <span class="label label-danger">Non-commercial</span>
+                <span class="label label-default">Non-commercial</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if user.good_standing %}
+                <span class="label label-success">Good standing</span>
+              {% else %}
+                <span class="label label-important">Bad standing</span>
               {% endif %}
             </td>
             <td>{{ user.tier }}</td>
+            <td>
+              {% if user.featured %}
+                <span class="label label-success">Featured</span>
+              {% else %}
+                <span class="label label-default">Not featured</span>
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </table>
