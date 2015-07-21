@@ -23,3 +23,6 @@ nosetests.xml
 
 # Project-specific stuff
 replication_packets
+
+# Mac sillyness
+.DS_Store
