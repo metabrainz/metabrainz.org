@@ -4,7 +4,8 @@
 
   <h3>Search</h3>
   <form method="GET" class="form-horizontal" role="form">
-    <input id="input-value" name="value" class="form-control" placeholder="Value" {{ 'value='+value if value }}>
+    <input id="input-value" name="value" class="form-control" autofocus
+           placeholder="Value" {{ 'value='+value if value }}>
     <button type="submit" class="btn btn-default">Search</button>
   </form>
 
