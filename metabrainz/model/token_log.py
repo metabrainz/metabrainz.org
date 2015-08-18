@@ -10,7 +10,7 @@ class TokenLog(db.Model):
     """TokenLog class is used for logging changes to access tokens."""
     __tablename__ = 'token_log'
 
-    token = db.Column(
+    token_value = db.Column(
         db.String,
         db.ForeignKey('token.value'),
         primary_key=True,
@@ -37,7 +37,7 @@ class TokenLog(db.Model):
     @classmethod
     def create_record(cls, access_token, action):
         new_record = cls(
-            token=access_token,
+            token_value=access_token,
             action=action,
             user_id=current_user.id,
         )
