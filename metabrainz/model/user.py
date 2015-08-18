@@ -53,7 +53,8 @@ class User(db.Model, UserMixin):
     in_deadbeat_club = db.Column(db.Boolean, nullable=False, default=False)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 
-    tokens = db.relationship("Token", backref='owner', lazy="dynamic")
+    tokens = db.relationship("Token", backref="owner", lazy="dynamic")
+    token_log_records = db.relationship("TokenLog", backref="user", lazy="dynamic")
 
     def __unicode__(self):
         if self.is_commercial:

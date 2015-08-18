@@ -15,6 +15,8 @@ class Token(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL", onupdate="CASCADE"))
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
 
+    log_records = db.relationship(TokenLog, backref="token", lazy="dynamic")
+
     @classmethod
     def get(cls, **kwargs):
         return cls.query.filter_by(**kwargs).first()

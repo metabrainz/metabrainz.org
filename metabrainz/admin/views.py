@@ -3,6 +3,7 @@ from flask_admin import expose
 from metabrainz.admin import AdminIndexView, AdminBaseView
 from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED
 from metabrainz.model.token import Token
+from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
 from metabrainz import flash
 from flask import request, redirect, url_for
@@ -115,6 +116,7 @@ class StatsView(AdminBaseView):
             'admin/stats/overview.html',
             active_user_count=AccessLog.active_user_count(),
             top_downloaders=AccessLog.top_downloaders(10),
+            token_actions=TokenLog.list(10),
         )
 
     @expose('/usage')

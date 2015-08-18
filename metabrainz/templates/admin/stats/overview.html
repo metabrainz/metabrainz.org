@@ -8,18 +8,46 @@
   </p>
 
   {% if top_downloaders %}
-  <p>
-    <strong>Top downloaders (last 24 hours):</strong>
-    <ol>
-    {% for user, req_count in top_downloaders %}
-      <li>
-        <a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.musicbrainz_id }}</a>
-      {{ '('+user.org_name+')' if user.is_commercial }}
-      - {{ req_count }} requests
-      </li>
-    {% endfor %}
-    </ol>
-  </p>
+    <p>
+      <strong>Top downloaders (last 24 hours):</strong>
+      <ol>
+        {% for user, req_count in top_downloaders %}
+          <li>
+            <a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.musicbrainz_id }}</a>
+            {{ '('+user.org_name+')' if user.is_commercial }}
+            - {{ req_count }} requests
+          </li>
+        {% endfor %}
+      </ol>
+    </p>
+  {% endif %}
+
+  {% if token_actions %}
+    <p>
+      <strong>Last access token changes:</strong>
+      <ol>
+        {% for action in token_actions %}
+          <li>
+            <a href="{{ url_for('usersview.details', user_id=action.user.id) }}">{{ action.user.musicbrainz_id }}</a>
+            {% if action.user.id == action.token.owner.id %}
+              {% if action.action == "create" %}
+                generated their token:
+              {% elif action.action == "deactivate" %}
+                revoked their token:
+              {% endif %}
+            {% else %}
+              {% if action.action == "create" %}
+                generated new token for user
+              {% elif action.action == "deactivate" %}
+                revoked token owned by user
+              {% endif %}
+              <a href="{{ url_for('usersview.details', user_id=action.token.owner.id) }}">{{ action.token.owner }}</a>:
+            {% endif %}
+            <code class="text-muted">{{ action.token_value }}</code>
+          </li>
+        {% endfor %}
+      </ol>
+    </p>
   {% endif %}
 
   <h3>Hourly API usage</h3>
