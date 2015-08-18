@@ -23,69 +23,70 @@
       </p>
     </div>
 
-  <div class="metaCarousel">
-    <div id="projects-carousel" class="carousel slide" data-pause="hover" data-ride="carousel">
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <a href="https://musicbrainz.org/">
-            <img src="{{ url_for('static', filename='img/logos/musicbrainz.svg') }}" />
-          </a>
-          <div class="caption">
-            An open music encyclopedia that collects music metadata and makes it
-            available to the public<br />
-            <em>Sign up to use the <a href="{{ url_for("users.account_type") }}">Live Data Feed</a></em>
+    <div class="metaCarousel">
+      <div id="projects-carousel" class="carousel slide" data-pause="hover" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <a href="https://musicbrainz.org/">
+              <img src="{{ url_for('static', filename='img/logos/musicbrainz.svg') }}" />
+            </a>
+            <div class="caption">
+              An open music encyclopedia that collects music metadata and makes it
+              available to the public<br />
+              <em>Sign up to use the <a href="{{ url_for("users.account_type") }}">Live Data Feed</a></em>
+            </div>
+          </div>
+          <div class="item">
+            <a href="https://picard.musicbrainz.org/">
+              <img src="{{ url_for('static', filename='img/logos/picard.svg') }}" />
+            </a>
+            <div class="caption">
+              Cross-platform music tagger
+            </div>
+          </div>
+          <div class="item">
+            <a href="http://acousticbrainz.org/">
+              <img src="{{ url_for('static', filename='img/logos/acousticbrainz.svg') }}" />
+            </a>
+            <div class="caption">
+              Crowdsourced collection of acoustic information
+            </div>
+          </div>
+          <div class="item">
+            <a href="https://critiquebrainz.org/">
+              <img src="{{ url_for('static', filename='img/logos/critiquebrainz.svg') }}" />
+            </a>
+            <div class="caption">
+              Repository for Creative Commons licensed music reviews
+            </div>
+          </div>
+          <div class="item">
+            <a href="https://bookbrainz.org/">
+              <img src="{{ url_for('static', filename='img/logos/bookbrainz.svg') }}" />
+            </a>
+            <div class="caption">
+              An open encyclopedia which contains information about published literature
+            </div>
+          </div>
+          <div class="item">
+            <a href="https://coverartarchive.org/">
+              <img src="{{ url_for('static', filename='img/logos/coverartarchive.svg') }}" />
+            </a>
+            <div class="caption">
+              Repository of music cover art that is freely and easily accessible
+            </div>
           </div>
         </div>
-        <div class="item">
-          <a href="https://picard.musicbrainz.org/">
-            <img src="{{ url_for('static', filename='img/logos/picard.svg') }}" />
-          </a>
-          <div class="caption">
-            Cross-platform music tagger
-          </div>
-        </div>
-        <div class="item">
-          <a href="http://acousticbrainz.org/">
-            <img src="{{ url_for('static', filename='img/logos/acousticbrainz.svg') }}" />
-          </a>
-          <div class="caption">
-            Crowdsourced collection of acoustic information
-          </div>
-        </div>
-        <div class="item">
-          <a href="https://critiquebrainz.org/">
-            <img src="{{ url_for('static', filename='img/logos/critiquebrainz.svg') }}" />
-          </a>
-          <div class="caption">
-            Repository for Creative Commons licensed music reviews
-          </div>
-        </div>
-        <div class="item">
-          <a href="https://bookbrainz.org/">
-            <img src="{{ url_for('static', filename='img/logos/bookbrainz.svg') }}" />
-          </a>
-          <div class="caption">
-            An open encyclopedia which contains information about published literature
-          </div>
-        </div>
-        <div class="item">
-          <a href="https://coverartarchive.org/">
-            <img src="{{ url_for('static', filename='img/logos/coverartarchive.svg') }}" />
-          </a>
-          <div class="caption">
-            Repository of music cover art that is freely and easily accessible
-          </div>
-        </div>
+        {# Controls #}
+        <a class="left carousel-control" href="#projects-carousel" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#projects-carousel" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
       </div>
-      {# Controls #}
-      <a class="left carousel-control" href="#projects-carousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#projects-carousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
     </div>
 
     <div id="more-intro">
