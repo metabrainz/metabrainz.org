@@ -11,15 +11,17 @@ from datetime import datetime
 
 STATE_ACTIVE = "active"
 STATE_PENDING = "pending"
+STATE_WAITING = "waiting"
 STATE_REJECTED = "rejected"
 
 
 class User(db.Model, UserMixin):
     """User model is used for users of MetaBrainz services like Live Data Feed.
 
-    Users are ether commercial or non-commercial (see `is_commercial`). Their access to the API is
-    determined by their `state` (active, pending, or rejected). All non-commercial users have
-    active state by default, but commercial users need to be approved by one of the admins first.
+    Users are ether commercial or non-commercial (see `is_commercial`). Their
+    access to the API is determined by their `state` (active, pending, waiting,
+    or rejected). All non-commercial users have active state by default, but
+    commercial users need to be approved by one of the admins first.
     """
     __tablename__ = 'user'
 
@@ -28,8 +30,13 @@ class User(db.Model, UserMixin):
     is_commercial = db.Column(db.Boolean, nullable=False)
     musicbrainz_id = db.Column(db.Unicode, unique=True)  # MusicBrainz account that manages this user
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
-    state = db.Column(postgres.ENUM(STATE_ACTIVE, STATE_PENDING, STATE_REJECTED, name='state_types'),
-                      nullable=False)
+    state = db.Column(postgres.ENUM(
+        STATE_ACTIVE,
+        STATE_PENDING,
+        STATE_WAITING,
+        STATE_REJECTED,
+        name='state_types'
+    ), nullable=False)
     contact_name = db.Column(db.Unicode, nullable=False)
     contact_email = db.Column(db.Unicode, nullable=False)
     data_usage_desc = db.Column(db.UnicodeText)
@@ -188,6 +195,7 @@ class User(db.Model, UserMixin):
             state_name = "ACTIVE" if self.state == STATE_ACTIVE else \
                          "REJECTED" if self.state == STATE_REJECTED else \
                          "PENDING" if self.state == STATE_PENDING else \
+                         "WAITING" if self.state == STATE_WAITING else \
                          self.state
             send_mail(
                 subject="[MetaBrainz] Your account has been updated",

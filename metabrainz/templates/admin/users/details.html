@@ -58,11 +58,15 @@
     </dl>
   </div>
 
-  {% if user.state == 'pending' %}
+  {% if user.state == 'pending' or user.state == 'waiting' %}
     <div>
       <p>
         <a href="{{ url_for('usersview.approve', user_id=user.id) }}"
            class="btn btn-success" role="button">Approve</a>
+        {% if user.state != 'waiting' %}
+          <a href="{{ url_for('usersview.wait', user_id=user.id) }}"
+             class="btn btn-warning" role="button">Put into waiting list</a>
+        {% endif %}
         <a href="{{ url_for('usersview.reject', user_id=user.id) }}"
            class="btn btn-danger" role="button">Reject</a>
       </p>

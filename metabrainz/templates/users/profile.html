@@ -34,6 +34,8 @@
           Your application for using the Live Data Feed has been rejected.
         {% elif current_user.state == 'pending' %}
           Your application for using the Live Data Feed is still pending.
+        {% elif current_user.state == 'waiting' %}
+          Your application for using the Live Data Feed is in the waiting list.
         {% else %}
           Unknown. :(
         {% endif %}

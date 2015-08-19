@@ -30,6 +30,8 @@
               <span class="label label-success">Active</span>
             {% elif user.state == 'pending' %}
               <span class="label label-warning">Pending</span>
+            {% elif user.state == 'waiting' %}
+              <span class="label label-warning">Waiting</span>
             {% else %}
               <span class="label label-important">Rejected</span>
             {% endif %}

@@ -1,7 +1,7 @@
-from flask import jsonify, Response
+from flask import Response
 from flask_admin import expose
 from metabrainz.admin import AdminIndexView, AdminBaseView
-from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED
+from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
@@ -18,6 +18,7 @@ class HomeView(AdminIndexView):
         return self.render(
             'admin/home.html',
             pending_users=User.get_all(state=STATE_PENDING),
+            waiting_users=User.get_all(state=STATE_WAITING),
         )
 
 
@@ -60,6 +61,7 @@ class UsersView(AdminBaseView):
         if next_user:
             return redirect(url_for('.details', user_id=next_user.id))
         else:
+            flash.info("No more pending users.")
             return redirect(url_for('.index'))
 
     @expose('/reject')
@@ -73,6 +75,21 @@ class UsersView(AdminBaseView):
         if next_user:
             return redirect(url_for('.details', user_id=next_user.id))
         else:
+            flash.info("No more pending users.")
+            return redirect(url_for('.index'))
+
+    @expose('/wait')
+    def wait(self):
+        user_id = request.args.get('user_id')
+        User.get(id=user_id).set_state(STATE_WAITING)
+        flash.info("User #%s has been put into the waiting list." % user_id)
+
+        # Redirecting to the next pending user
+        next_user = User.get(state=STATE_PENDING)
+        if next_user:
+            return redirect(url_for('.details', user_id=next_user.id))
+        else:
+            flash.info("No more pending users.")
             return redirect(url_for('.index'))
 
     @expose('/revoke-token')

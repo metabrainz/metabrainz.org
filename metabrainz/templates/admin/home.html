@@ -1,7 +1,8 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h3>Commercial users pending approval</h3>
-  {% if pending_users %}
+  <h2>Welcome!</h2>
+
+  {% macro print_table(users) %}
     <table class="table table-striped">
       <thead>
       <tr>
@@ -13,7 +14,7 @@
         <th>Applied on</th>
       </tr>
       </thead>
-      {% for user in pending_users %}
+      {% for user in users %}
         <tr>
           <td><a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.org_name }}</a></td>
           <td>{{ user.contact_name }}</td>
@@ -24,6 +25,19 @@
         </tr>
       {% endfor %}
     </table>
+{% endmacro %}
+
+
+  <h3>Commercial users pending approval</h3>
+  {% if pending_users %}
+    {{ print_table(pending_users) }}
+  {% else %}
+    None! Go take a break. :)
+  {% endif %}
+
+  <h3>Commercial users in the waiting list</h3>
+  {% if waiting_users %}
+    {{ print_table(waiting_users) }}
   {% else %}
     None! Go take a break. :)
   {% endif %}
