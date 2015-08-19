@@ -46,8 +46,11 @@ class TokenLog(db.Model):
         return new_record
 
     @classmethod
-    def list(cls, limit=None):
+    def list(cls, limit=None, offset=None):
         query = cls.query.order_by(cls.timestamp.desc())
-        if limit:
+        count = query.count()  # Total count should be calculated before limits
+        if limit is not None:
             query = query.limit(limit)
-        return query.all()
+        if offset is not None:
+            query = query.offset(offset)
+        return query.all(), count

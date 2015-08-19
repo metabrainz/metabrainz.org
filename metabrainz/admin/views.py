@@ -116,7 +116,23 @@ class StatsView(AdminBaseView):
             'admin/stats/overview.html',
             active_user_count=AccessLog.active_user_count(),
             top_downloaders=AccessLog.top_downloaders(10),
-            token_actions=TokenLog.list(10),
+            token_actions=TokenLog.list(10)[0],
+        )
+
+    @expose('/token-log')
+    def token_log(self):
+        page = int(request.args.get('page', default=1))
+        if page < 1:
+            return redirect(url_for('.token_log'))
+        limit = 20
+        offset = (page - 1) * limit
+        token_actions, count = TokenLog.list(limit=limit, offset=offset)
+        return self.render(
+            'admin/stats/token-log.html',
+            token_actions=token_actions,
+            page=page,
+            limit=limit,
+            count=count,
         )
 
     @expose('/usage')

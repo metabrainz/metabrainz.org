@@ -1,0 +1,53 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h1>Statistics</h1>
+
+  <h2>Access token changes</h2>
+  {% if token_actions %}
+    <table class="table table-striped table-condensed">
+      <thead>
+      <tr>
+        <th>Action</th>
+        <th>Timestamp</th>
+        <th>Token</th>
+      </tr>
+      </thead>
+      {% for action in token_actions %}
+        <tr>
+          <td>
+            <a href="{{ url_for('usersview.details', user_id=action.user.id) }}">{{ action.user.musicbrainz_id }}</a>
+            {% if action.user.id == action.token.owner.id %}
+              {% if action.action == "create" %}
+                generated their token
+              {% elif action.action == "deactivate" %}
+                revoked their token
+              {% endif %}
+            {% else %}
+              {% if action.action == "create" %}
+                generated new token for user
+              {% elif action.action == "deactivate" %}
+                revoked token owned by user
+              {% endif %}
+              <a href="{{ url_for('usersview.details', user_id=action.token.owner.id) }}">{{ action.token.owner }}</a>
+            {% endif %}
+          </td>
+          <td>{{ action.timestamp }}</td>
+          <td><code class="text-muted">{{ action.token_value }}</code></td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    {% if count > limit %}
+      <ul class="pager">
+        {% if page > 1 %}
+          <li class="previous"><a href="{{ url_for('statsview.token_log', page=page-1) }}">&larr; Previous</a></li>
+        {% endif %}
+        {% if page-1 < count//limit %}
+          <li class="next"><a href="{{ url_for('statsview.token_log', page=page+1) }}">Next &rarr;</a></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+  {% else %}
+    None!
+  {% endif %}
+{% endblock %}
