@@ -37,14 +37,14 @@ class Token(db.Model):
         Returns:
             Value of the new token.
         """
-        last_hour_q = cls.query.filter(
-            cls.owner_id == owner_id,
-            cls.created > datetime.utcnow() - timedelta(hours=1),
-        )
-        if last_hour_q.count() > 0:
-            raise TokenGenerationLimitException("Can't generate more than one token per hour.")
-
-        cls.revoke_tokens(owner_id)
+        if owner_id is not None:
+            last_hour_q = cls.query.filter(
+                cls.owner_id == owner_id,
+                cls.created > datetime.utcnow() - timedelta(hours=1),
+            )
+            if last_hour_q.count() > 0:
+                raise TokenGenerationLimitException("Can't generate more than one token per hour.")
+            cls.revoke_tokens(owner_id)
 
         new_token = cls(
             value=generate_string(TOKEN_LENGTH),
