@@ -18,7 +18,7 @@ STATE_REJECTED = "rejected"
 class User(db.Model, UserMixin):
     """User model is used for users of MetaBrainz services like Live Data Feed.
 
-    Users are ether commercial or non-commercial (see `is_commercial`). Their
+    Users are either commercial or non-commercial (see `is_commercial`). Their
     access to the API is determined by their `state` (active, pending, waiting,
     or rejected). All non-commercial users have active state by default, but
     commercial users need to be approved by one of the admins first.
