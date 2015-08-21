@@ -22,7 +22,8 @@ echo "client_encoding = utf8" >> "$PG_CONF"
 
 service postgresql restart
 
-# TODO: Install mail server for sending receipts
+# Mail server
+DEBIAN_FRONTEND=noninteractive apt-get install -y postfix   
 
 # Less compiler
 curl -sL https://deb.nodesource.com/setup | sudo bash -
