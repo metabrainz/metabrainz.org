@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE "user" ADD COLUMN amount_pledged NUMERIC(11,2);
+
+COMMIT;

@@ -7,7 +7,7 @@
     <em>Find users by organization name, MusicBrainz username, contact name or email.</em>
   </p>
   <form method="GET" class="form-horizontal" role="form">
-    <input id="input-value" name="value" class="form-control"
+    <input id="input-value" name="value" class="form-control" autofocus
         {{ 'value='+value if value }} style="width: 300px;" />
     <button type="submit" class="btn btn-default">Search</button>
   </form>
@@ -26,7 +26,7 @@
           <th>Contact name</th>
           <th>Contact email</th>
           <th>Commercial</th>
-          <th>Stanging</th>
+          <th>Standing</th>
           <th>Tier</th>
           <th>Featured</th>
           <th>{# Buttons #}</th>
@@ -45,6 +45,8 @@
                 <span class="label label-success">Active</span>
               {% elif user.state == 'pending' %}
                 <span class="label label-warning">Pending</span>
+              {% elif user.state == 'waiting' %}
+                <span class="label label-warning">Waiting</span>
               {% else %}
                 <span class="label label-important">Rejected</span>
               {% endif %}

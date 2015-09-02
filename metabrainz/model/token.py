@@ -1,4 +1,6 @@
 from metabrainz.model import db
+from metabrainz.model import token_log
+from metabrainz.model.token_log import TokenLog
 from metabrainz.utils import generate_string
 from datetime import datetime, timedelta
 
@@ -12,6 +14,8 @@ class Token(db.Model):
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL", onupdate="CASCADE"))
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
+
+    log_records = db.relationship(TokenLog, backref="token", lazy="dynamic")
 
     @classmethod
     def get(cls, **kwargs):
@@ -33,14 +37,14 @@ class Token(db.Model):
         Returns:
             Value of the new token.
         """
-        last_hour_q = cls.query.filter(
-            cls.owner_id == owner_id,
-            cls.created > datetime.utcnow() - timedelta(hours=1),
-        )
-        if last_hour_q.count() > 0:
-            raise TokenGenerationLimitException("Can't generate more than one token per hour.")
-
-        cls.revoke_tokens(owner_id)
+        if owner_id is not None:
+            last_hour_q = cls.query.filter(
+                cls.owner_id == owner_id,
+                cls.created > datetime.utcnow() - timedelta(hours=1),
+            )
+            if last_hour_q.count() > 0:
+                raise TokenGenerationLimitException("Can't generate more than one token per hour.")
+            cls.revoke_tokens(owner_id)
 
         new_token = cls(
             value=generate_string(TOKEN_LENGTH),
@@ -48,6 +52,8 @@ class Token(db.Model):
         )
         db.session.add(new_token)
         db.session.commit()
+
+        TokenLog.create_record(new_token.value, token_log.ACTION_CREATE)
 
         return new_token.value
 
@@ -58,9 +64,12 @@ class Token(db.Model):
         Args:
             owner_id: ID of a user.
         """
-        db.session.query(cls).filter(cls.owner_id == owner_id) \
-            .update({'is_active': False})
-        db.session.commit()
+        tokens = db.session.query(cls).filter(
+            cls.owner_id == owner_id,
+            cls.is_active == True
+        )
+        for token in tokens:
+            token.revoke()
 
     @classmethod
     def is_valid(cls, token_value):
@@ -71,6 +80,7 @@ class Token(db.Model):
     def revoke(self):
         self.is_active = False
         db.session.commit()
+        TokenLog.create_record(self.value, token_log.ACTION_DEACTIVATE)
 
 
 class TokenGenerationLimitException(Exception):

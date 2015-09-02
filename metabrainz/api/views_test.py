@@ -1,12 +1,10 @@
 from metabrainz.testing import FlaskTestCase
-from metabrainz.api.views import DAILY_SUBDIR, WEEKLY_SUBDIR, MAX_PACKET_AGE_CRITICAL
+from metabrainz.api.views import DAILY_SUBDIR, WEEKLY_SUBDIR
 from metabrainz.model.token import Token
 from flask import url_for, current_app
 import tempfile
 import shutil
 import os
-import time
-
 
 
 class APIViewsTestCase(FlaskTestCase):

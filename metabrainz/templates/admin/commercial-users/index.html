@@ -7,22 +7,56 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>Name</th>
+        <th>Organization (MusicBrainz ID)</th>
+        <th>State</th>
         <th>Contact name</th>
         <th>Contact email</th>
-        <th>MusicBrainz ID</th>
+        <th>Standing</th>
         <th>Tier</th>
-        <th>Applied on</th>
+        <th>Featured</th>
+        <th>{# Buttons #}</th>
       </tr>
       </thead>
       {% for user in users %}
         <tr>
-          <td><a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.org_name }}</a></td>
+          <td>
+            <a href="{{ url_for('usersview.details', user_id=user.id) }}">
+              <strong>{{ user.org_name }}</strong>
+              ({{ user.musicbrainz_id }})
+            </a>
+          </td>
+          <td>
+            {% if user.state == 'active' %}
+              <span class="label label-success">Active</span>
+            {% elif user.state == 'pending' %}
+              <span class="label label-warning">Pending</span>
+            {% elif user.state == 'waiting' %}
+              <span class="label label-warning">Waiting</span>
+            {% else %}
+              <span class="label label-important">Rejected</span>
+            {% endif %}
+          </td>
           <td>{{ user.contact_name }}</td>
           <td>{{ user.contact_email }}</td>
-          <td>{{ user.musicbrainz_id }}</td>
+          <td>
+            {% if user.good_standing %}
+              <span class="label label-success">Good standing</span>
+            {% else %}
+              <span class="label label-important">Bad standing</span>
+            {% endif %}
+          </td>
           <td>{{ user.tier }}</td>
-          <td>{{ user.created }}</td>
+          <td>
+            {% if user.featured %}
+              <span class="label label-success">Featured</span>
+            {% else %}
+              <span class="label label-default">Not featured</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('user_model.edit_view', id=user.id) }}"
+               class="btn btn-mini btn-primary" role="button">Edit</a>
+          </td>
         </tr>
       {% endfor %}
     </table>
