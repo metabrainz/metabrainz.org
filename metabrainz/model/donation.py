@@ -361,11 +361,30 @@ class DonationAdminView(AdminModelView):
         amount='USD',
         fee='USD',
     )
-    column_list = ('id', 'email', 'first_name', 'last_name', 'amount', 'fee',)
+    column_list = (
+        'id',
+        'email',
+        'first_name',
+        'last_name',
+        'editor_name'
+        'amount',
+        'fee',
+    )
     form_columns = (
-        'first_name', 'last_name', 'email', 'address_street', 'address_city',
-        'address_state', 'address_postcode', 'address_country', 'amount', 'fee',
-        'memo', 'can_contact', 'anonymous',
+        'first_name',
+        'last_name',
+        'email',
+        'address_street',
+        'address_city',
+        'address_state',
+        'address_postcode',
+        'address_country',
+        'editor_name',
+        'amount',
+        'fee',
+        'memo',
+        'can_contact',
+        'anonymous',
     )
 
     def __init__(self, session, **kwargs):
