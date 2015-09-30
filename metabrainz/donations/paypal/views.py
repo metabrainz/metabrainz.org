@@ -3,6 +3,7 @@ from werkzeug.datastructures import ImmutableOrderedMultiDict
 from metabrainz.model.donation import Donation
 from itertools import chain
 import requests
+import logging
 
 donations_paypal_bp = Blueprint('donations_paypal', __name__)
 
@@ -25,6 +26,11 @@ def ipn():
     verify_args = chain(IPN_VERIFY_EXTRA_PARAMS, request.form.iteritems())
     verify_string = u'&'.join((u'%s=%s' % (param, value) for param, value in verify_args))
     verification_response = requests.post(paypal_url, data=verify_string.encode('utf-8'))
+
+    # Some payment options don't return payment_status value.
+    if 'payment_status' not in request.form:
+        logging.warn('PayPal IPN: payment_status is missing.')
+        return '', 200
 
     if verification_response.text == 'VERIFIED':
         Donation.process_paypal_ipn(request.form)
