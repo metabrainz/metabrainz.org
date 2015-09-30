@@ -164,7 +164,6 @@ class Donation(db.Model):
         if form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
             logging.warning('PayPal: Not primary email. Got "%s".', form['receiver_email'])
             return
-
         if float(form['mc_gross']) < 0.50:
             # Tiny donation
             logging.info('PayPal: Tiny donation ($%s).', form['mc_gross'])
@@ -180,11 +179,11 @@ class Donation(db.Model):
             last_name=form['last_name'],
             email=form['payer_email'],
             editor_name=form['custom'],
-            address_street=form['address_street'],
-            address_city=form['address_city'],
-            address_state=form['address_state'],
-            address_postcode=form['address_zip'],
-            address_country=form['address_country'],
+            address_street=form.get('address_street'),
+            address_city=form.get('address_city'),
+            address_state=form.get('address_state'),
+            address_postcode=form.get('address_zip'),
+            address_country=form.get('address_country'),
             amount=float(form['mc_gross']) - float(form['mc_fee']),
             fee=float(form['mc_fee']),
             transaction_id=form['txn_id'],
