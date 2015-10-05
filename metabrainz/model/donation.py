@@ -178,7 +178,7 @@ class Donation(db.Model):
             first_name=form['first_name'],
             last_name=form['last_name'],
             email=form['payer_email'],
-            editor_name=form['custom'],
+            editor_name=form.get('custom'),
             address_street=form.get('address_street'),
             address_city=form.get('address_city'),
             address_state=form.get('address_state'),
