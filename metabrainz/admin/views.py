@@ -55,10 +55,9 @@ class UsersView(AdminBaseView):
         user_id = request.args.get('user_id')
         if request.args.get('limited'):
             User.get(id=user_id).set_state(STATE_LIMITED)
-            flash.warn("User #%s has been approved (with limited access)." % user_id)
         else:
             User.get(id=user_id).set_state(STATE_ACTIVE)
-            flash.info("User #%s has been approved." % user_id)
+        flash.info("User #%s has been approved." % user_id)
 
         # Redirecting to the next pending user
         next_user = User.get(state=STATE_PENDING)
