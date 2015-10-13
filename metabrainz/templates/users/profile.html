@@ -18,6 +18,11 @@
         permission may be withdrawn. You can always check your current permission
         status on this page.
       </p>
+    {% elif current_user.state == 'limited' %}
+      <h3>No data use permission granted</h3>
+      <p>
+        You have a limited account.
+      </p>
     {% else %}
       <h3>No data use permission granted</h3>
       <p>
