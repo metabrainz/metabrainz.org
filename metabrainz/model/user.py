@@ -13,6 +13,7 @@ STATE_ACTIVE = "active"
 STATE_PENDING = "pending"
 STATE_WAITING = "waiting"
 STATE_REJECTED = "rejected"
+STATE_LIMITED = "limited"
 
 
 class User(db.Model, UserMixin):
@@ -35,6 +36,7 @@ class User(db.Model, UserMixin):
         STATE_PENDING,
         STATE_WAITING,
         STATE_REJECTED,
+        STATE_LIMITED,
         name='state_types'
     ), nullable=False)
     contact_name = db.Column(db.Unicode, nullable=False)
@@ -196,6 +198,7 @@ class User(db.Model, UserMixin):
                          "REJECTED" if self.state == STATE_REJECTED else \
                          "PENDING" if self.state == STATE_PENDING else \
                          "WAITING" if self.state == STATE_WAITING else \
+                         "LIMITED" if self.state == STATE_LIMITED else \
                          self.state
             send_mail(
                 subject="[MetaBrainz] Your account has been updated",

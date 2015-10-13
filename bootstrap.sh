@@ -30,6 +30,9 @@ curl -sL https://deb.nodesource.com/setup | sudo bash -
 apt-get install -y nodejs
 npm install -g less less-plugin-clean-css
 
+# Required libraries for Python packages
+apt-get install -y libtiff5-dev
+
 cd /vagrant
 easy_install -U pip
 pip install -r requirements.txt
