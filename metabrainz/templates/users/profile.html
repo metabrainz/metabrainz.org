@@ -57,7 +57,7 @@
   </div>
 
   {% if current_user.is_commercial %}
-    {% if current_user.state == 'active' and current_user.good_standing %}
+    {% if current_user.state in ('active', 'limited') and current_user.good_standing %}
       <h3>Data use permission granted</h3>
       <p>
         You have permission to use any of the data published by the MetaBrainz
@@ -68,11 +68,6 @@
         Please note that if your support falls behind by more than 60 days, this
         permission may be withdrawn. You can always check your current permission
         status on this page.
-      </p>
-    {% elif current_user.state == 'limited' %}
-      <h3>No data use permission granted</h3>
-      <p>
-        You have a limited account.
       </p>
     {% else %}
       <h3>No data use permission granted</h3>
