@@ -47,8 +47,12 @@
                 <span class="label label-warning">Pending</span>
               {% elif user.state == 'waiting' %}
                 <span class="label label-warning">Waiting</span>
-              {% else %}
+              {% elif user.state == 'limited' %}
+                <span class="label label-default">Limited</span>
+              {% elseif user.state == 'rejected' %}
                 <span class="label label-important">Rejected</span>
+              {% else %}
+                <span class="label label-default">UNKNOWN</span>
               {% endif %}
             </td>
             <td>{{ user.contact_name }}</td>
