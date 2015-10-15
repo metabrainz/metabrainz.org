@@ -1,6 +1,6 @@
 Flask == 0.10.1
 Flask-Testing == 0.4.2
-Flask-WTF == 0.11
+Flask-WTF == 0.12
 Flask-Login == 0.2.11
 Flask-SQLAlchemy == 2.0
 SQLAlchemy == 1.0.4

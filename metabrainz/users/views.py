@@ -157,13 +157,16 @@ def signup_noncommercial():
 
     form = NonCommercialSignUpForm(default_email=mb_email)
     if form.validate_on_submit():
-        new_user = User.add(
-            is_commercial=False,
-            musicbrainz_id=mb_username,
-            contact_name=form.contact_name.data,
-            contact_email=form.contact_email.data,
-            data_usage_desc=form.usage_desc.data,
-        )
+        # Checking if this user already exists
+        new_user = User.get(musicbrainz_id=mb_username)
+        if not new_user:
+            new_user = User.add(
+                is_commercial=False,
+                musicbrainz_id=mb_username,
+                contact_name=form.contact_name.data,
+                contact_email=form.contact_email.data,
+                data_usage_desc=form.usage_desc.data,
+            )
         login_user(new_user)
         flash.success("Thanks for signing up!")
         send_mail(

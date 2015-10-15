@@ -1,7 +1,7 @@
 from flask import Response
 from flask_admin import expose
 from metabrainz.admin import AdminIndexView, AdminBaseView
-from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING
+from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
@@ -53,7 +53,10 @@ class UsersView(AdminBaseView):
     @expose('/approve')
     def approve(self):
         user_id = request.args.get('user_id')
-        User.get(id=user_id).set_state(STATE_ACTIVE)
+        if request.args.get('limited'):
+            User.get(id=user_id).set_state(STATE_LIMITED)
+        else:
+            User.get(id=user_id).set_state(STATE_ACTIVE)
         flash.info("User #%s has been approved." % user_id)
 
         # Redirecting to the next pending user

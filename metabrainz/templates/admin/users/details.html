@@ -63,6 +63,9 @@
       <p>
         <a href="{{ url_for('usersview.approve', user_id=user.id) }}"
            class="btn btn-success" role="button">Approve</a>
+        <a href="{{ url_for('usersview.approve', user_id=user.id, limited=True) }}"
+           title="This user is not going to have access to the API."
+           class="btn btn-warning" role="button">Approve (limited)</a>
         {% if user.state != 'waiting' %}
           <a href="{{ url_for('usersview.wait', user_id=user.id) }}"
              class="btn btn-warning" role="button">Put into waiting list</a>
