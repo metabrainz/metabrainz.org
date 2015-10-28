@@ -5,45 +5,94 @@
 {% block content %}
   <h1 class="page-title">Contact</h1>
 
-  <div class="row">
-    <div class="col-sm-6">
-      <h3>Advertising & product offers</h3>
-      <p>
-      <strong>IMPORTANT:</strong> 
-      We are not interested in having advertising on this or any of our sites.
-      We are also not interested in whatever products you have to offer us. Period.
-      If you disregard this message and spam us anyway, we reserve the right to make
-      fun of you and report you as a spammer.
-      </p>
-    </div>
-  </div>
+  <h3>Found a bug in one of our projects?</h3>
+  <p>
+    Found a broken link or something that doesn't work as you expect it to? You can report issues in our
+    <a href="http://tickets.musicbrainz.org/secure/BrowseProjects.jspa">bug tracker</a>, or let us know on IRC or
+    by email. Contact details are provided below. Please include details such as what happened, what you expected
+    to happen, and the URLs of any pages involved.
+  </p>
 
-  <div class="row">
-    <div class="col-sm-6">
-      <h3>E-mail us</h3>
-      <p>
-        General inquiries: <a href="mailto:nonprofit@metabrainz.org">nonprofit@metabrainz.org</a><br />
-        Donations: <a href="mailto:donations@metabrainz.org">donations@metabrainz.org</a><br />
-        Sponsorship inquiries: <a href="mailto:sponsors@metabrainz.org">sponsors@metabrainz.org</a>
-      </p>
-    </div>
-    <div class="col-sm-6">
-      <h3>IRC</h3>
-      <p>
-        The MetaBrainz/MusicBrainz team, as well as MusicBrainz users, hang
-        out in the <a href="irc://irc.freenode.net/musicbrainz">#musicbrainz</a>
-        channel on IRC chat at irc.freenode.net. Please feel free to browse the
-        <a href="http://chatlogs.musicbrainz.org/">IRC log archives</a>.
-      </p>
-    </div>
-    <div class="col-sm-6">
-      <h3>Mailing address</h3>
-      <p>
-        MetaBrainz Foundation<br />
-        3565 South Higuera St, Suite B<br />
-        San Luis Obispo, CA 93401<br />
-        United States
-      </p>
-    </div>
+  <h3>Have a question about MusicBrainz?</h3>
+  <p>
+    Please check the <a href="https://musicbrainz.org/doc/General_FAQ">General FAQ</a>, or one of the other pages
+    of <a href="https://musicbrainz.org/doc/Frequently_Asked_Questions">frequently asked questions</a>, to see if
+    your question has already been answered. If you're using <a href="https://picard.musicbrainz.org/">MusicBrainz
+    Picard</a>, check its <a href="https://picard.musicbrainz.org/docs/troubleshooting/">troubleshooting page</a>.
+  </p>
+  <h4>Data removal requests</h4>
+  <p>
+    MusicBrainz does not edit or remove factual data upon request. Please read our
+    <a href="https://beta.musicbrainz.org/doc/Data_Removal_Policy">data removal policy</a> for more information.
+  </p>
+  <h4>Copyright issues</h4>
+  <p>
+    If you believe that MusicBrainz violates your copyright, you may
+    <a href="https://musicbrainz.org/doc/Copyright_Violation_Notice">report a copyright violation</a>. Please note
+    that MusicBrainz provides data about recordings, <i>not the music itself</i>. If you find your music listed in
+    MusicBrainz <b>it does not mean that we have access to or provide access to the music files themselves</b>. If
+    you still think that we're infringing your copyright, you must provide us with a link to where you can download
+    the infringing material from our website. If you cannot provide us a link, we cannot help you.
+  </p>
+
+  <h3>Contact details</h3>
+  <p>
+    <strong>Please do not contact us with the following topics, since we cannot help you with that:</strong>
+    <ul>
+      <li>We cannot license any of the music listed in MusicBrainz, since we have neither the music itself nor the
+        rights to license the music.</li>
+      <li>We are not distributing any of the music listed in MusicBrainz.</li>
+      <li>We are not interested in your advertising, SEO optimization, or software monetization services. Please
+        do not offer us <b>any</b> services!</li>
+    </ul>
+    <button id="agree-btn" class="btn btn-default btn-success">
+      I agree that I will not contact you regarding the topics above
+    </button>
+  </p>
+
+  <div id="contact-details" style="display: none;">
+    <p>
+      <em>
+        If you disregard this agreement and contact us about one of the
+        disallowed topics, we reserve the right to make fun of you.
+      </em>
+    </p>
+
+    <h3>E-mail us</h3>
+    <p>You can reach the MetaBrainz staff directly at the following address:</p>
+    <p>
+      <span style="font-size: 110%">
+        <strong><a href="mailto:support@metabrainz.org">support@metabrainz.org</a></strong>
+      </span>
+    </p>
+
+    <h3>IRC</h3>
+    <p>
+      The MetaBrainz/MusicBrainz team, as well as MusicBrainz users, hang out in the
+      <strong><a href="irc://irc.freenode.net/metabrainz">#metabrainz</a></strong>
+      channel on IRC chat at irc.freenode.net. Please feel free to browse the
+      <a href="http://chatlogs.metabrainz.org/">IRC log archives</a>.
+    </p>
+
+    <h3>Mailing address</h3>
+    <p>
+      MetaBrainz Foundation<br />
+      3565 South Higuera St, Suite B<br />
+      San Luis Obispo, CA 93401<br />
+      United States
+    </p>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+    <script>
+      $(document).ready(function () {
+        var agreeBtn = $("#agree-btn");
+        agreeBtn.click(function () {
+          agreeBtn.hide();
+          $("#contact-details").show();
+        });
+      });
+    </script>
 {% endblock %}
