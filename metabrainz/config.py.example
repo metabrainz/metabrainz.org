@@ -10,8 +10,8 @@ SECRET_KEY = "CHANGE_THIS"
 
 # Primary database
 # Example:
-# SQLALCHEMY_DATABASE_URI = "postgresql://mb:mb@localhost:5432/metabrainz"
-SQLALCHEMY_DATABASE_URI = "postgresql://<user>:<pass>@<host>:<port>/<db>"
+# SQLALCHEMY_DATABASE_URI = "postgresql://<user>:<pass>@<host>:<port>/<db>"
+SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@localhost:5432/metabrainz"
 
 # Database for testing
 TEST_SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz_test:metabrainz_test@localhost:5432/metabrainz_test"
