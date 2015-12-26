@@ -24,7 +24,7 @@ class TokenLog(db.Model):
 
     @classmethod
     def create_record(cls, access_token, action):
-        user_id = current_user.id if current_user.is_authenticated() else None
+        user_id = current_user.id if current_user.is_authenticated else None
         new_record = cls(
             token_value=access_token,
             action=action,
