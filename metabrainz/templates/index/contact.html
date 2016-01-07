@@ -52,36 +52,33 @@
       disallowed topics, we reserve the right to make fun of you.
     </em>
   </p>
+
+  <h3>E-mail us</h3>
   <button id="agree-btn" class="btn btn-default btn-success">
-    I agree that I will not contact you regarding the topics above
+    I agree with the rules above, show me the email address
   </button>
-
-  <div id="contact-details" style="display: none;">
-
-    <h3>E-mail us</h3>
+  <div id="email-address" style="display: none;">
     <p>You can reach the MetaBrainz staff directly at the following address:</p>
-    <p>
-      <span style="font-size: 110%">
-        <strong><a href="mailto:support@metabrainz.org">support@metabrainz.org</a></strong>
-      </span>
-    </p>
-
-    <h3>IRC</h3>
-    <p>
-      The MetaBrainz/MusicBrainz team, as well as MusicBrainz users, hang out in the
-      <strong><a href="irc://irc.freenode.net/metabrainz">#metabrainz</a></strong>
-      channel on IRC chat at irc.freenode.net. Please feel free to browse the
-      <a href="http://chatlogs.metabrainz.org/">IRC log archives</a>.
-    </p>
-
-    <h3>Mailing address</h3>
-    <p>
-      MetaBrainz Foundation<br />
-      3565 South Higuera St, Suite B<br />
-      San Luis Obispo, CA 93401<br />
-      United States
+    <p style="font-size: 110%">
+      <strong><a href="mailto:support@metabrainz.org">support@metabrainz.org</a></strong>
     </p>
   </div>
+
+  <h3>IRC</h3>
+  <p>
+    The MetaBrainz/MusicBrainz team, as well as MusicBrainz users, hang out in the
+    <strong><a href="irc://irc.freenode.net/metabrainz">#metabrainz</a></strong>
+    channel on IRC chat at irc.freenode.net. Please feel free to browse the
+    <a href="http://chatlogs.metabrainz.org/">IRC log archives</a>.
+  </p>
+
+  <h3>Mailing address</h3>
+  <p>
+    MetaBrainz Foundation<br/>
+    3565 South Higuera St, Suite B<br/>
+    San Luis Obispo, CA 93401<br/>
+    United States
+  </p>
 {% endblock %}
 
 {% block scripts %}
@@ -91,7 +88,7 @@
         var agreeBtn = $("#agree-btn");
         agreeBtn.click(function () {
           agreeBtn.hide();
-          $("#contact-details").show();
+          $("#email-address").show();
         });
       });
     </script>

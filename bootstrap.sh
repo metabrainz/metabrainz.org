@@ -23,7 +23,7 @@ echo "client_encoding = utf8" >> "$PG_CONF"
 service postgresql restart
 
 # Mail server
-DEBIAN_FRONTEND=noninteractive apt-get install -y postfix   
+DEBIAN_FRONTEND=noninteractive apt-get install -y postfix
 
 # Less compiler
 curl -sL https://deb.nodesource.com/setup | sudo bash -
