@@ -18,6 +18,11 @@ def about():
     return render_template('index/about.html')
 
 
+@index_bp.route('/projects')
+def projects():
+    return render_template('index/projects.html')
+    
+
 @index_bp.route('/contact')
 def contact():
     return render_template('index/contact.html')

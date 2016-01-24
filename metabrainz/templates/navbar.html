@@ -17,7 +17,13 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="mb-navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="{{ url_for('index.about') }}">About</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">About <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ url_for('index.about') }}">The Foundation</a></li>
+            <li><a href="{{ url_for('index.projects') }}">Projects</a></li>
+          </ul>
+        </li>
         <li><a href="{{ url_for('users.supporters_list') }}">Supporters</a></li>
         <li><a href="{{ url_for('index.sponsors') }}">Sponsors</a></li>
         <li class="dropdown">
