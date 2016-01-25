@@ -213,16 +213,25 @@ h1.page-title, h2.page-title {
 
 // Projects page
 #projects {
-  .logo { 
-    width: 80px;
-    float: left;
-    padding-top: 20px;
-    margin-right: 10px;
-    padding-bottom: 5px;
+  #projects-list > div {
+    padding: 10px;
+    .clearfix;
+    .logo-container {
+      .pull-left;
+      padding-top: 4px;
+      padding-right: 10px;
+      img {
+        width: 80px;
+      }
+    }
+    .title {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 2px;
+    }
   }
-  h4 { font-weight: bold; }
-  .project { padding: 10px; }
 }
+
 
 // Sponsors page
 #sponsors.table {
