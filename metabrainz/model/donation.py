@@ -365,7 +365,7 @@ class DonationAdminView(AdminModelView):
         'email',
         'first_name',
         'last_name',
-        'editor_name'
+        'editor_name',
         'amount',
         'fee',
     )
