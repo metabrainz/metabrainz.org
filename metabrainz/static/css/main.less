@@ -234,10 +234,13 @@ h1.page-title, h2.page-title {
 
 // Team page 
 #team {
-  .title { color: @orange; }
   .person {
     .clearfix;
     padding-bottom: 20px;
+    span.name {
+      font-weight: bold;
+      color: @orange;
+    }
     img.pic {
       width: 120px;
       .pull-left;
@@ -247,6 +250,9 @@ h1.page-title, h2.page-title {
     .bio {
       @media (min-width: @grid-float-breakpoint) {
         margin-left: 142px;
+      }
+      ul.links {
+        .list-unstyled;
       }
     }
   }
