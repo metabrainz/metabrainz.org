@@ -235,17 +235,21 @@ h1.page-title, h2.page-title {
 // Team page 
 #team {
   .title { color: @orange; }
-  .person { 
-    padding-bottom: 20px; 
-    min-height: 150px;
+  .person {
+    .clearfix;
+    padding-bottom: 20px;
+    img.pic {
+      width: 120px;
+      .pull-left;
+      margin-right: 10px;
+      margin-top: 15px;
+    }
+    .bio {
+      @media (min-width: @grid-float-breakpoint) {
+        margin-left: 142px;
+      }
+    }
   }
-  .pic {
-    width: 150px;
-    float: left;
-    padding-right: 10px;
-    padding-top: 5px;
-  }
-  .bio { margin-left: 150px; }
 }
 
 // Sponsors page

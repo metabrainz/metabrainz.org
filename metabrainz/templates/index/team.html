@@ -3,198 +3,180 @@
 {% block title %}Team - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-<h1 class="page-title">The MetaBrainz Team</h1>
-<div id="team"> 
- 
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/robert_kaye.jpg') }}">
-    </div>
-    <div class="bio">
-      <h4><strong class="title">Executive Director</strong> - Robert Kaye | ruaok</h4>
-      <p>
-        Robert is the founder and lead geek for <a href="https://musicbrainz.org/">MusicBrainz</a>, and Executive Director of 
-        the MetaBrainz Foundation, the non-profit organization that pays the bills for MusicBrainz. After studying Computer 
-        Engineering at Cal Poly, San Luis Obispo, he joined Xing Technology where he shaped the MP3 efforts and then spent 
-        time for the dot com boom on EMusic’s FreeAmp team. While at EMusic he started working on MusicBrainz, the open music 
-        encyclopedia, and fell in love with Open Source software.
-      </p>
-      <p>
-        Robert is also an active hardware hacker, creating art projects for Burning Man and Nowhere. He is the co-founder of 
-        <a href="http://partyrobotics.com">Party Robotics</a> where he co-created Bartendro the open source cocktail robot.
-      </p>
-      <p>
-        He lives in Barcelona, Spain. Follow Robert on Twitter: <a href="https://twitter.com/mayhembcn"> @mayhemBCN</a>
-      </p>
-    </div>
-  </div>
-  
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/michael_wiencek.jpg') }}"/>
-    </div>
-    <div class="bio">
-      <h4><strong class="title">Senior Developer</strong> - Michael Wiencek | bitmap</h4>
-      <p>
-        A bitmap is a type of memory organization or image file format used to store digital images. The term bitmap comes 
-        from the computer programming terminology, meaning just a map of bits, a spatially mapped array of bits. Now, along 
-        with pixmap, it commonly refers to the similar concept of a spatially mapped array of pixels. Raster images in general
-        may be referred to as bitmaps or pixmaps, whether synthetic or photographic, in files or memory. 
-        Content <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>, 
-        from <a href="https://en.wikipedia.org/wiki/Bitmap">Wikipedia</a>
-      </p>
-    </div>
-  </div>
-  
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/frederik_olesen.jpg') }}"/>
-    </div>
-    <div class="bio">
-      <h4><strong class="title">Community Manager</strong> - Frederik S. Olesen | Freso</h4>
-      <p>
-        Hired in the fall of 2015 as the MetaBrainz Community Manager, Freso is in charge of most of the public communication 
-        channels (IRC, forums, blog, etc.) and various community projects (like the Google Code-in). He has been a 
-        <a href="https://musicbrainz.org/user/Freso">MusicBrainz contributor since 2006</a> and an open source enthusiast for 
-        even longer.
-      </p>
-      <p>
-        On the rare occasions that he is not found in front of a monitor of some sort, Freso can be found 
-        <a href="https://musicbrainz.org/artist/d112e7ac-3811-4773-abe3-f06c5e697ff4">playing music</a> or (far more commonly)
-        dancing to it. He has even taught some dance classes and workshops in 
-        <a href="https://en.wikipedia.org/wiki/B-boying">b-boying</a>!
-      </p>
-      <p>
-        Freso was born, raised, and is still living in Copenhagen, Denmark but is currently working toward moving to 
-        Barcelona.
-      </p>
-    </div>
-  </div>
-  
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/christina_smith.jpg') }}"/>
-    </div>
-    <div class="bio">
-      <h4><strong class="title">Business Relations Guru</strong> - Christina Smith | chrisskye</h4>
-      <p>
-        Christina joined MetaBrainz in 2016 to relieve the team of the boredom related to execution of daily business 
-        administration tasks, and to consult with Robert Kaye on cake recipes.
-      </p>
-      <p>
-        Christina is a Canadian designer and problem solver, with a background in project management, conflict resolution, 
-        and contract administration.  She has professional degrees in architecture from the <a href="https://uwaterloo.ca/">
-        University of Waterloo</a>, and law from the <a href="http://www.ucalgary.ca/">University of Calgary</a>.
-      </p>
-      <p>
-        Operating in the area of Business Relations, and as the Treasurer for the Board of Directors, Christina’s role at 
-        MetaBrainz is to coordinate with outside business entities and to support and liaise with the Brainz’ project 
-        supporters.
-      </p>
-    </div>
-  </div>
-  
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/nicolas_tamargo.jpg') }}"/>
-    </div>
-    <div class="bio">
-      <h4><strong class="title">Style Leader/Customer Support</strong> - Nicolás Tamargo | reosarevok</h4>
-      <p>
-        Nicolás is the leader of everything style-related in MusicBrainz (all except for fashion), and is in charge of 
-        answering (or delegating!) support requests. When he's not actively working for MetaBrainz, he's busy 
-        <a href="https://musicbrainz.org/statistics/editors">editing MusicBrainz</a>, devouring ice cream, and following 
-        the <a href="https://en.wikipedia.org/wiki/Tartu_JK_Tammeka">world's best football team</a> around the country.
-      </p>
-      <p>He lives in Tartu, Estonia.</p>
-    </div>
-  </div>
-  
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/roman_tsukanov.jpg') }}"/>
-    </div>
-    <div class="bio">
-      <h4><strong class="title">Software Developer</strong> - Roman Tsukanov | Gentlecat</h4>
-      <p>
-        Roman first became associated with MetaBrainz through Google Summer of Code, where he was instrumental in the birth 
-        of <a href="https://critiquebrainz.org/" >CritiqueBrainz</a>. He also wrote the updated MetaBrainz website.
-      </p>
-      <p>
-        Roman joined the MetaBrainz team as a software engineer in 2015 and is now the project leader of CritiqueBrainz. 
-        Roman has studied at <a href=http://www.amursu.ru/index.php?lang=en>Amur State University</a> in his native Russia, 
-        and currently lives in Barcelona, Spain.
-      </p>
-    </div>
-  </div>
-  
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/laurent_monin.jpg') }}"/>
-    </div>
-    <div class="bio">
-      <h4><strong class="title">System Administrator</strong> - Laurent Monin | zas</h4>
-      <p>
-        A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz and Picard in attempts to codify his vast 
-        collection of over 1500 CDs. In addition to being a music fanatic, Laurent has been programming on anything with 
-        more than 1 bit since 1982 and has been an esteemed Linux system administrator since 1998.
-      </p>
-      <p>
-        With his extensive repertoire of skills and passions, Laurent has actively contributed to a myriad of open source 
-        projects, notably <a href="https://en.wikipedia.org/wiki/ELinks">ELinks</a> and 
-        <a href="https://en.wikipedia.org/wiki/Geeqie">Geeqie</a>, and loves to tinker with the hardware of various audio 
-        gadgets, including amplifiers and loudspeakers. However, Laurent's contributions do not end there. He currently 
-        sustains the MetaBrainz servers while residing near Besançon, France.
-      </p>
-    </div>
-  </div>
+  <h1 class="page-title">The MetaBrainz Team</h1>
+  <div id="team">
 
-  <h2>Voluntary Project Leaders</h2>
-  
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/ben_ockmore.jpg') }}"/>
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/robert_kaye.jpg') }}">
+      <div class="bio">
+        <h4><strong class="title">Executive Director</strong> - Robert Kaye | ruaok</h4>
+        <p>
+          Robert is the founder and lead geek for <a href="https://musicbrainz.org/">MusicBrainz</a>, and Executive Director of
+          the MetaBrainz Foundation, the non-profit organization that pays the bills for MusicBrainz. After studying Computer
+          Engineering at Cal Poly, San Luis Obispo, he joined Xing Technology where he shaped the MP3 efforts and then spent
+          time for the dot com boom on EMusic’s FreeAmp team. While at EMusic he started working on MusicBrainz, the open music
+          encyclopedia, and fell in love with Open Source software.
+        </p>
+        <p>
+          Robert is also an active hardware hacker, creating art projects for Burning Man and Nowhere. He is the co-founder of
+          <a href="http://partyrobotics.com">Party Robotics</a> where he co-created Bartendro the open source cocktail robot.
+        </p>
+        <p>
+          He lives in Barcelona, Spain. Follow Robert on Twitter: <a href="https://twitter.com/mayhembcn"> @mayhemBCN</a>
+        </p>
+      </div>
     </div>
-    <div class="bio">
-      <h4><strong class="title">BookBrainz</strong> - Ben Ockmore | LordSputnik</h4>
-      <p>
-        Ben is one of the two project leads and the main programmer for <a href="https://bookbrainz.org">BookBrainz</a>, 
-        a volunteer project doing for books what MusicBrainz does for music. He started programming C++ 9 years ago, and now 
-        knows Python and Node.js too, although he is currently studying for a degree in Electronics Engineering at the
-        <a href="http://www.surrey.ac.uk/"> University of Surrey</a>. Ben has been editing MusicBrainz for the past 4 years, 
-        attending the last three summits, and has contributed code to<a href="https://bitbucket.org/lazka/mutagen"> 
-        mutagen</a> and <a href="http://beets.io/">beets</a> besides BookBrainz.
-      </p>
-      <p>
-        In his spare time, Ben likes to design quadrotors,
-        <a href="http://www.surrey.ac.uk/mes/study/ug/projects/teamsurtes/about/index.htm"> racing cars</a>, 
-        artificial intelligence, <a href="http://sourceforge.net/projects/opengrow/">vegetation simulators</a> and music 
-        software. However, none of them are finished yet!
-      </p>
-      <p>
-        Check out his GitHub profile: <a href="https://github.com/LordSputnik">https://github.com/LordSputnik</a>
-      </p>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/michael_wiencek.jpg') }}"/>
+      <div class="bio">
+        <h4><strong class="title">Senior Developer</strong> - Michael Wiencek | bitmap</h4>
+        <p>
+          A bitmap is a type of memory organization or image file format used to store digital images. The term bitmap comes
+          from the computer programming terminology, meaning just a map of bits, a spatially mapped array of bits. Now, along
+          with pixmap, it commonly refers to the similar concept of a spatially mapped array of pixels. Raster images in general
+          may be referred to as bitmaps or pixmaps, whether synthetic or photographic, in files or memory.
+          Content <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>,
+          from <a href="https://en.wikipedia.org/wiki/Bitmap">Wikipedia</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/frederik_olesen.jpg') }}"/>
+      <div class="bio">
+        <h4><strong class="title">Community Manager</strong> - Frederik S. Olesen | Freso</h4>
+        <p>
+          Hired in the fall of 2015 as the MetaBrainz Community Manager, Freso is in charge of most of the public communication
+          channels (IRC, forums, blog, etc.) and various community projects (like the Google Code-in). He has been a
+          <a href="https://musicbrainz.org/user/Freso">MusicBrainz contributor since 2006</a> and an open source enthusiast for
+          even longer.
+        </p>
+        <p>
+          On the rare occasions that he is not found in front of a monitor of some sort, Freso can be found
+          <a href="https://musicbrainz.org/artist/d112e7ac-3811-4773-abe3-f06c5e697ff4">playing music</a> or (far more commonly)
+          dancing to it. He has even taught some dance classes and workshops in
+          <a href="https://en.wikipedia.org/wiki/B-boying">b-boying</a>!
+        </p>
+        <p>
+          Freso was born, raised, and is still living in Copenhagen, Denmark but is currently working toward moving to
+          Barcelona.
+        </p>
+      </div>
+    </div>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/christina_smith.jpg') }}"/>
+      <div class="bio">
+        <h4><strong class="title">Business Relations Guru</strong> - Christina Smith | chrisskye</h4>
+        <p>
+          Christina joined MetaBrainz in 2016 to relieve the team of the boredom related to execution of daily business
+          administration tasks, and to consult with Robert Kaye on cake recipes.
+        </p>
+        <p>
+          Christina is a Canadian designer and problem solver, with a background in project management, conflict resolution,
+          and contract administration.  She has professional degrees in architecture from the <a href="https://uwaterloo.ca/">
+          University of Waterloo</a>, and law from the <a href="http://www.ucalgary.ca/">University of Calgary</a>.
+        </p>
+        <p>
+          Operating in the area of Business Relations, and as the Treasurer for the Board of Directors, Christina’s role at
+          MetaBrainz is to coordinate with outside business entities and to support and liaise with the Brainz’ project
+          supporters.
+        </p>
+      </div>
+    </div>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/nicolas_tamargo.jpg') }}"/>
+      <div class="bio">
+        <h4><strong class="title">Style Leader/Customer Support</strong> - Nicolás Tamargo | reosarevok</h4>
+        <p>
+          Nicolás is the leader of everything style-related in MusicBrainz (all except for fashion), and is in charge of
+          answering (or delegating!) support requests. When he's not actively working for MetaBrainz, he's busy
+          <a href="https://musicbrainz.org/statistics/editors">editing MusicBrainz</a>, devouring ice cream, and following
+          the <a href="https://en.wikipedia.org/wiki/Tartu_JK_Tammeka">world's best football team</a> around the country.
+        </p>
+        <p>He lives in Tartu, Estonia.</p>
+      </div>
+    </div>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/roman_tsukanov.jpg') }}"/>
+      <div class="bio">
+        <h4><strong class="title">Software Engineer</strong> - Roman Tsukanov | Gentlecat</h4>
+        <p>
+          Roman first became associated with MetaBrainz through Google Summer of Code program, where he was instrumental
+          in the birth of <a href="https://critiquebrainz.org/" >CritiqueBrainz</a>. He wrote the updated MetaBrainz
+          website. Currently works on MusicBrainz, AcousticBrainz, and other projects.
+        </p>
+        <p>
+          Roman joined the MetaBrainz team as a software engineer in 2015. He currently lives and studies music technology
+          in Barcelona, Spain.
+        </p>
+      </div>
+    </div>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/laurent_monin.jpg') }}"/>
+      <div class="bio">
+        <h4><strong class="title">System Administrator</strong> - Laurent Monin | zas</h4>
+        <p>
+          A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz and Picard in attempts to codify his vast
+          collection of over 1500 CDs. In addition to being a music fanatic, Laurent has been programming on anything with
+          more than 1 bit since 1982 and has been an esteemed Linux system administrator since 1998.
+        </p>
+        <p>
+          With his extensive repertoire of skills and passions, Laurent has actively contributed to a myriad of open source
+          projects, notably <a href="https://en.wikipedia.org/wiki/ELinks">ELinks</a> and
+          <a href="https://en.wikipedia.org/wiki/Geeqie">Geeqie</a>, and loves to tinker with the hardware of various audio
+          gadgets, including amplifiers and loudspeakers. However, Laurent's contributions do not end there. He currently
+          sustains the MetaBrainz servers while residing near Besançon, France.
+        </p>
+      </div>
+    </div>
+
+    <h2>Voluntary Project Leaders</h2>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/ben_ockmore.jpg') }}"/>
+      <div class="bio">
+        <h4><strong class="title">BookBrainz</strong> - Ben Ockmore | LordSputnik</h4>
+        <p>
+          Ben is one of the two project leads and the main programmer for <a href="https://bookbrainz.org">BookBrainz</a>,
+          a volunteer project doing for books what MusicBrainz does for music. He started programming C++ 9 years ago, and now
+          knows Python and Node.js too, although he is currently studying for a degree in Electronics Engineering at the
+          <a href="http://www.surrey.ac.uk/"> University of Surrey</a>. Ben has been editing MusicBrainz for the past 4 years,
+          attending the last three summits, and has contributed code to<a href="https://bitbucket.org/lazka/mutagen">
+          mutagen</a> and <a href="http://beets.io/">beets</a> besides BookBrainz.
+        </p>
+        <p>
+          In his spare time, Ben likes to design quadrotors,
+          <a href="http://www.surrey.ac.uk/mes/study/ug/projects/teamsurtes/about/index.htm"> racing cars</a>,
+          artificial intelligence, <a href="http://sourceforge.net/projects/opengrow/">vegetation simulators</a> and music
+          software. However, none of them are finished yet!
+        </p>
+        <p>
+          Check out his GitHub profile: <a href="https://github.com/LordSputnik">https://github.com/LordSputnik</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/sean_burke.jpg') }}"/>
+      <div class="bio">
+        <h4><strong class="title">BookBrainz</strong> - Sean Burke | Leftmost</h4>
+        <p>
+          Sean is the other of the two project leaders for <a href="https://bookbrainz.org">BookBrainz</a>. He speaks Irish and is
+          currently trying to learn to play the bodhrán.
+        </p>
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="bio">
+        <h4><strong class="title">AcousticBrainz</strong> - Alastair Porter | alastairp</h4>
+        <p>Alastair is a project leader for AcousticBrainz.</p>
+      </div>
     </div>
   </div>
-  
-  <div class="person">
-    <div class="pic">
-      <img src="{{ url_for('static', filename='img/team/sean_burke.jpg') }}"/>
-    </div>
-    <div class="bio">
-      <h4><strong class="title">BookBrainz</strong> - Sean Burke | Leftmost</h4>
-      <p>
-        Sean is the other of the two project leaders for <a href="https://bookbrainz.org">BookBrainz</a>. He speaks Irish and is 
-        currently trying to learn to play the bodhrán.
-      </p>
-    </div>
-  </div>
-  
-  <div class="person">
-    <div class="bio">
-      <h4><strong class="title">AcousticBrainz</strong> - Alastair Porter | alastairp</h4>
-      <p>Project leader for AcousticBrainz.</p>
-    </div>
-  </div>
-</div>   
 {% endblock %}
