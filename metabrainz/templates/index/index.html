@@ -15,9 +15,9 @@
       <p>
         Our data is mostly gathered by volunteers and verified
         by peer review to ensure it is consistent and correct. All
-        <a href="{{ url_for("users.account_type") }}">non-commercial use</a> of this data is free,
-        but <a href="{{ url_for("users.account_type") }}">commercial users</a> are asked to
-        <a href="{{ url_for("users.account_type") }}">support us</a> in order to help fund the
+        <a href="{{ url_for('users.account_type') }}">non-commercial use</a> of this data is free,
+        but <a href="{{ url_for('users.account_type') }}">commercial users</a> are asked to
+        <a href="{{ url_for('users.account_type') }}">support us</a> in order to help fund the
         project. We encourage all data users to contribute to the data gathering process so
         that our data can be as comprehensive as possible.
       </p>
@@ -33,7 +33,7 @@
             <div class="caption">
               An open music encyclopedia that collects music metadata and makes it
               available to the public<br />
-              <em>Sign up to use the <a href="{{ url_for("users.account_type") }}">Live Data Feed</a></em>
+              <em>Sign up to use the <a href="{{ url_for('users.account_type') }}">Live Data Feed</a></em>
             </div>
           </div>
           <div class="item">
@@ -87,11 +87,11 @@
         </div>
         {# Controls #}
         <a class="left carousel-control" href="#projects-carousel" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="icon-prev" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>
         </a>
         <a class="right carousel-control" href="#projects-carousel" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="icon-next" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
       </div>
