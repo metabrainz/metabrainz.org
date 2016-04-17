@@ -8,4 +8,4 @@ from .token import Token
 from .token_log import TokenLog
 from .access_log import AccessLog
 from .tier import Tier
-from .donation import Donation
+from .payment import Payment

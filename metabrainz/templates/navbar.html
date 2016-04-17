@@ -32,10 +32,10 @@
           <ul class="dropdown-menu" role="menu">
             <li><a href="{{ url_for('annual_reports.index') }}">Annual Reports</a></li>
             <li><a href="{{ url_for('financial_reports.index') }}">Financial Reports</a></li>
-            <li><a href="{{ url_for('donations.donors') }}">Donors</a></li>
+            <li><a href="{{ url_for('payments.donors') }}">Donors</a></li>
           </ul>
         </li>
-        <li><a href="{{ url_for('donations.index') }}">Donate</a></li>
+        <li><a href="{{ url_for('payments.donate') }}">Donate</a></li>
       </ul>
 
       {# Not showing user stuff on error pages. If attempt to load user info fails there, page will not render. #}

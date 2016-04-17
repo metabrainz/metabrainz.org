@@ -1,11 +1,11 @@
 from flask import Blueprint, request, current_app
 from werkzeug.datastructures import ImmutableOrderedMultiDict
-from metabrainz.model.donation import Donation
+from metabrainz.model.payment import Payment
 from itertools import chain
 import requests
 import logging
 
-donations_paypal_bp = Blueprint('donations_paypal', __name__)
+payments_paypal_bp = Blueprint('payments_paypal', __name__)
 
 PAYPAL_URL_PRIMARY = 'https://www.paypal.com/cgi-bin/webscr'
 PAYPAL_URL_SANDBOX = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
@@ -13,9 +13,15 @@ PAYPAL_URL_SANDBOX = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
 IPN_VERIFY_EXTRA_PARAMS = ((u'cmd', u'_notify-validate'),)
 
 
-@donations_paypal_bp.route('/ipn', methods=['POST'])
+@payments_paypal_bp.route('/ipn', methods=['POST'])
 def ipn():
     """Endpoint that receives Instant Payment Notifications (IPNs) from PayPal.
+
+    Options that we use are:
+    0 - can contact flag
+    1 - anonymous flag
+    2 - is donation flag
+    4 - invoice number
 
     Specifications are available at https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNImplementation/.
     """
@@ -33,6 +39,6 @@ def ipn():
         return '', 200
 
     if verification_response.text == 'VERIFIED':
-        Donation.process_paypal_ipn(request.form)
+        Payment.process_paypal_ipn(request.form)
 
     return '', 200

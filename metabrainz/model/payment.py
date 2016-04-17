@@ -1,6 +1,6 @@
 from __future__ import division
 from metabrainz.model import db
-from metabrainz.donations.receipts import send_receipt
+from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
 from sqlalchemy.sql import func, desc
 from flask import current_app
@@ -17,23 +17,29 @@ PAYMENT_METHOD_BITCOIN = 'bitcoin'
 PAYMENT_METHOD_CHECK = 'check'
 
 
-class Donation(db.Model):
-    __tablename__ = 'donation'
+class Payment(db.Model):
+    __tablename__ = 'payment'
 
     id = db.Column(db.Integer, primary_key=True)
 
     # Personal details
     first_name = db.Column(db.Unicode, nullable=False)
     last_name = db.Column(db.Unicode, nullable=False)
+    is_donation = db.Column(db.Boolean, nullable=False)
     email = db.Column(db.Unicode, nullable=False)
-    editor_name = db.Column(db.Unicode)  # MusicBrainz username
-    can_contact = db.Column(db.Boolean, nullable=False, default=True)
-    anonymous = db.Column(db.Boolean, nullable=False, default=False)
     address_street = db.Column(db.Unicode)
     address_city = db.Column(db.Unicode)
     address_state = db.Column(db.Unicode)
     address_postcode = db.Column(db.Unicode)
     address_country = db.Column(db.Unicode)
+
+    # Donation-specific columns
+    editor_name = db.Column(db.Unicode)  # MusicBrainz username
+    can_contact = db.Column(db.Boolean)
+    anonymous = db.Column(db.Boolean)
+
+    # Organization-specific columns
+    invoice_number = db.Column(db.Integer)
 
     # Transaction details
     payment_date = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
@@ -51,7 +57,7 @@ class Donation(db.Model):
     memo = db.Column(db.Unicode)
 
     def __unicode__(self):
-        return 'Donation #%s' % self.id
+        return 'Payment #%s' % self.id
 
     @classmethod
     def get_by_transaction_id(cls, transaction_id):
@@ -97,6 +103,7 @@ class Donation(db.Model):
             is a list of donations sorted by payment_date with a specified offset.
         """
         query = cls.query.order_by(cls.payment_date.desc())
+        query = query.filter(cls.is_donation == True)
         count = query.count()  # Total count should be calculated before limits
         if limit is not None:
             query = query.limit(limit)
@@ -126,6 +133,7 @@ class Donation(db.Model):
             func.sum(cls.amount).label("amount"),
             func.sum(cls.fee).label("fee"),
         )
+        query = query.filter(cls.is_donation == True)
         query = query.filter(cls.anonymous == False)
         query = query.group_by(cls.first_name, cls.last_name, cls.editor_name)
         query = query.order_by(desc("amount"))
@@ -174,11 +182,19 @@ class Donation(db.Model):
             logging.info('PayPal: Transaction ID %s has been used before.', form['txn_id'])
             return
 
-        new_donation = cls(
+        if 'option_name3' in form and form['option_name3'] == "is_donation" \
+                and form['option_selection3'] != 'yes':
+            is_donation = False
+        else:
+            # If third option (whether it is donation or not) is not specified, assuming
+            # that it is donation. This is done to support old IPN messages.
+            is_donation = True
+
+        new_payment = cls(
+            is_donation=is_donation,
             first_name=form['first_name'],
             last_name=form['last_name'],
             email=form['payer_email'],
-            editor_name=form.get('custom'),
             address_street=form.get('address_street'),
             address_city=form.get('address_city'),
             address_state=form.get('address_state'),
@@ -190,30 +206,40 @@ class Donation(db.Model):
             payment_method=PAYMENT_METHOD_PAYPAL,
         )
 
-        if 'option_name1' in form and 'option_name2' in form:
-            if (form['option_name1'] == 'anonymous' and form['option_selection1'] == 'yes') or \
-                    (form['option_name2'] == 'anonymous' and form['option_selection2'] == 'yes') or \
-                            form['option_name2'] == 'yes':
-                new_donation.anonymous = True
-            if (form['option_name1'] == 'contact' and form['option_selection1'] == 'yes') or \
-                    (form['option_name2'] == 'contact' and form['option_selection2'] == 'yes') or \
-                            form['option_name2'] == 'yes':
-                new_donation.can_contact = True
+        if is_donation:
+            new_payment.editor_name = form.get('custom')
+            if 'option_name1' in form and 'option_name2' in form:
+                if (form['option_name1'] == 'anonymous' and form['option_selection1'] == 'yes') or \
+                        (form['option_name2'] == 'anonymous' and form['option_selection2'] == 'yes') or \
+                                form['option_name2'] == 'yes':
+                    new_payment.anonymous = True
+                if (form['option_name1'] == 'contact' and form['option_selection1'] == 'yes') or \
+                        (form['option_name2'] == 'contact' and form['option_selection2'] == 'yes') or \
+                                form['option_name2'] == 'yes':
+                    new_payment.can_contact = True
+        else:
+            if 'option_name4' in form and form['option_name4'] == 'invoice_number':
+                new_payment.invoice_number = int(form.get("option_selection4"))
+            else:
+                logging.warning("PayPal: Can't find invoice number if organization payment.")
 
-        db.session.add(new_donation)
+        db.session.add(new_payment)
         db.session.commit()
-        logging.info('PayPal: Payment added. ID: %s.', new_donation.id)
+        logging.info('PayPal: Payment added. ID: %s.', new_payment.id)
 
         send_receipt(
-            new_donation.email,
-            new_donation.payment_date,
-            new_donation.amount,
-            '%s %s' % (new_donation.first_name, new_donation.last_name),
-            new_donation.editor_name,
+            email=new_payment.email,
+            date=new_payment.payment_date,
+            amount=new_payment.amount,
+            name='%s %s' % (new_payment.first_name, new_payment.last_name),
+            is_donation=new_payment.is_donation,
+            editor_name=new_payment.editor_name,
         )
 
     @classmethod
-    def verify_and_log_wepay_checkout(cls, checkout_id, editor, anonymous, can_contact):
+    def verify_and_log_wepay_checkout(cls, checkout_id, is_donation,
+                                      editor=None, anonymous=None, can_contact=None,
+                                      invoice_number=None):
         logging.debug('Processing WePay checkout...')
 
         # Looking up updated information about the object
@@ -231,7 +257,7 @@ class Donation(db.Model):
 
         if details['gross'] < 0.50:
             # Tiny donation
-            logging.info('WePay: Tiny donation ($%s).', details['gross'])
+            logging.info('WePay: Tiny payment ($%s).', details['gross'])
             return True
 
         if details['state'] in ['settled', 'captured']:
@@ -242,42 +268,48 @@ class Donation(db.Model):
                 logging.info('WePay: Transaction ID %s has been used before.', details['checkout_id'])
                 return
 
-            new_donation = cls(
+            new_payment = cls(
+                is_donation=is_donation,
                 first_name=details['payer_name'],
                 last_name='',
                 email=details['payer_email'],
-                editor_name=editor,
-                can_contact=can_contact,
-                anonymous=anonymous,
                 amount=details['gross'] - details['fee'],
                 fee=details['fee'],
                 transaction_id=checkout_id,
                 payment_method=PAYMENT_METHOD_WEPAY,
             )
 
+            if is_donation:
+                new_payment.editor_name = editor
+                new_payment.can_contact = can_contact
+                new_payment.anonymous = anonymous
+            else:
+                new_payment.invoice_number = invoice_number
+
             if 'shipping_address' in details:
                 address = details['shipping_address']
-                new_donation.address_street = "%s\n%s" % (address['address1'], address['address2'])
-                new_donation.address_city = address['city']
+                new_payment.address_street = "%s\n%s" % (address['address1'], address['address2'])
+                new_payment.address_city = address['city']
                 if 'state' in address:  # US address
-                    new_donation.address_state = address['state']
+                    new_payment.address_state = address['state']
                 else:
-                    new_donation.address_state = address['region']
+                    new_payment.address_state = address['region']
                 if 'zip' in address:  # US address
-                    new_donation.address_postcode = address['zip']
+                    new_payment.address_postcode = address['zip']
                 else:
-                    new_donation.address_postcode = address['postcode']
+                    new_payment.address_postcode = address['postcode']
 
-            db.session.add(new_donation)
+            db.session.add(new_payment)
             db.session.commit()
-            logging.info('WePay: Payment added. ID: %s.', new_donation.id)
+            logging.info('WePay: Payment added. ID: %s.', new_payment.id)
 
             send_receipt(
-                new_donation.email,
-                new_donation.payment_date,
-                new_donation.amount,
-                '%s %s' % (new_donation.first_name, new_donation.last_name),
-                new_donation.editor_name,
+                email=new_payment.email,
+                date=new_payment.payment_date,
+                amount=new_payment.amount,
+                name='%s %s' % (new_payment.first_name, new_payment.last_name),
+                is_donation=new_payment.is_donation,
+                editor_name=new_payment.editor_name,
             )
 
         elif details['state'] in ['authorized', 'reserved']:
@@ -317,36 +349,43 @@ class Donation(db.Model):
             transaction_id=charge.id,
             payment_method=PAYMENT_METHOD_STRIPE,
 
+            is_donation=charge.metadata.is_donation,
+
+            email=charge.metadata.email,
             address_street=charge.source.address_line1,
             address_city=charge.source.address_city,
             address_state=charge.source.address_state,
             address_postcode=charge.source.address_zip,
             address_country=charge.source.address_country,
-
-            email=charge.metadata.email,
-            can_contact=charge.metadata.can_contact == u'True',
-            anonymous=charge.metadata.anonymous == u'True',
         )
 
-        if 'editor' in charge.metadata:
-            new_donation.editor_name = charge.metadata.editor
+        if charge.metadata.is_donation is True:
+            new_donation.can_contact = charge.metadata.can_contact == u'True'
+            new_donation.anonymous = charge.metadata.anonymous == u'True'
+            if 'editor' in charge.metadata:
+                new_donation.editor_name = charge.metadata.editor
+        else:  # Organization payment
+            new_donation.invoice_number = charge.metadata.invoice_number
 
         db.session.add(new_donation)
         db.session.commit()
         logging.info('Stripe: Payment added. ID: %s.', new_donation.id)
 
         send_receipt(
-            new_donation.email,
-            new_donation.payment_date,
-            new_donation.amount,
-            new_donation.first_name,  # Last name is not used with Stripe
-            new_donation.editor_name,
+            email=new_donation.email,
+            date=new_donation.payment_date,
+            amount=new_donation.amount,
+            name=new_donation.first_name,  # Last name is not used with Stripe
+            is_donation=new_donation.is_donation,
+            editor_name=new_donation.editor_name,
         )
 
 
-class DonationAdminView(AdminModelView):
+class PaymentAdminView(AdminModelView):
     column_labels = dict(
         id='ID',
+        is_donation='Donation',
+        invoice_number='Invoice number',
         editor_name='MusicBrainz username',
         address_street='Street',
         address_city='City',
@@ -365,7 +404,7 @@ class DonationAdminView(AdminModelView):
         'email',
         'first_name',
         'last_name',
-        'editor_name',
+        'is_donation',
         'amount',
         'fee',
     )
@@ -378,23 +417,26 @@ class DonationAdminView(AdminModelView):
         'address_state',
         'address_postcode',
         'address_country',
-        'editor_name',
         'amount',
         'fee',
         'memo',
+        'is_donation',
+        'invoice_number',
+        'editor_name',
         'can_contact',
         'anonymous',
     )
 
     def __init__(self, session, **kwargs):
-        super(DonationAdminView, self).__init__(Donation, session, name='Donations', **kwargs)
+        super(PaymentAdminView, self).__init__(Payment, session, name='Payments', **kwargs)
 
     def after_model_change(self, form, new_donation, is_created):
         if is_created:
             send_receipt(
-                new_donation.email,
-                new_donation.payment_date,
-                new_donation.amount,
-                '%s %s' % (new_donation.first_name, new_donation.last_name),
-                new_donation.editor_name,
+                email=new_donation.email,
+                date=new_donation.payment_date,
+                amount=new_donation.amount,
+                name='%s %s' % (new_donation.first_name, new_donation.last_name),
+                is_donation=new_donation.is_donation,
+                editor_name=new_donation.editor_name,
             )

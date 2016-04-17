@@ -3,7 +3,7 @@
 {% block title %}Make a Donation - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <div id="donation">
+  <div id="payment">
     <h1 class="page-title">Make a Donation</h1>
 
     <p>
@@ -21,7 +21,7 @@
     </p>
 
     <p>Where has my contribution gone? See our <a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>
-    <p>Who else is contributing? See our list of <a href="{{ url_for('donations.donors') }}">donors</a>.</p>
+    <p>Who else is contributing? See our list of <a href="{{ url_for('payments.donors') }}">donors</a>.</p>
 
     {% if config.PAYMENT_PRODUCTION != True %}
       <div class="alert alert-warning" role="alert">
@@ -31,8 +31,8 @@
       </div>
     {% endif %}
 
-    <div id="donation-panel" class="panel panel-default">
-      <form id="donation-form" method="POST" class="panel-body form-horizontal" role="form">
+    <div id="payment-panel" class="panel panel-default">
+      <form id="payment-form" method="POST" class="panel-body form-horizontal" role="form">
         {{ form.hidden_tag() }}
 
         <div class="form-group">
@@ -91,10 +91,10 @@
           <div class="col-sm-offset-3 col-sm-6">
             <button id="btn-stripe" type="button" class="btn">Donate with Credit Card</button>
             <button id="btn-paypal" type="button" class="btn">
-              <img src="{{ url_for('static', filename='img/donations/paypal.svg') }}" />
+              <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
             </button>
             <button id="btn-wepay" type="button" class="btn">
-              <img src="{{ url_for('static', filename='img/donations/wepay.png') }}" />
+              <img src="{{ url_for('static', filename='img/payments/wepay.png') }}" />
             </button>
           </div>
         </div>
@@ -146,12 +146,12 @@
   <script>
     $(document).ready(function () {
 
-      var form = $("#donation-form");
+      var form = $("#payment-form");
 
 
-      ///////////////////
-      // DONATION BUTTONS
-      ///////////////////
+      //////////////////
+      // PAYMENT BUTTONS
+      //////////////////
 
       var buttons = {
         stripe: $('#btn-stripe'),
@@ -219,7 +219,7 @@
           setEditorTooltip(defaultEditorTooltipText, null);
         } else {
           $.ajax({
-            url: "{{ url_for('donations.check_editor') }}",
+            url: "{{ url_for('payments.check_editor') }}",
             data: {q: value},
             dataType: "json",
             success: function (response) {
@@ -259,11 +259,11 @@
       var stripeHandler = StripeCheckout.configure({
         key: "{{ stripe_public_key }}",
         name: "MetaBrainz Foundation",
-        description: "Donation to MetaBrainz Foundation",
+        description: "Donation to the MetaBrainz Foundation",
         address: "true",
 
         token: function(token) {
-          form.attr("action", "{{ url_for('donations_stripe.donate') }}");
+          form.attr("action", "{{ url_for('payments_stripe.pay') }}");
           $('<input>').attr({type: 'hidden', name: 'stripeToken', value: token.id}).appendTo(form);
           $('<input>').attr({type: 'hidden', name: 'stripeEmail', value: token.email}).appendTo(form);
           form.submit();
@@ -295,14 +295,14 @@
 
         $('<input>').attr({type: 'hidden', name: 'business', value: '{{ config.PAYPAL_PRIMARY_EMAIL }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('donations.complete', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('donations.cancelled', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('donations_paypal.ipn', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('payments.complete', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('payments.cancelled', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('payments_paypal.ipn', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'currency_code', value: 'USD'}).appendTo(form);
 
         if ($('#recurring-flag').is(":checked")) { // Recurring donations
           $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick-subscriptions'}).appendTo(form);
-          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Recurring donation to MetaBrainz Foundation'}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Recurring donation to the MetaBrainz Foundation'}).appendTo(form);
           $('<input>').attr({type: 'hidden', name: 't3', value: 'M'}).appendTo(form); {# units of duration ('M' is month) #}
           $('<input>').attr({type: 'hidden', name: 'p3', value: '1'}).appendTo(form); {# subscription duration #}
           $('<input>').attr({type: 'hidden', name: 'src', value: '1'}).appendTo(form); {# recurring payments #}
@@ -310,7 +310,7 @@
 
         } else {  // One-time donation
           $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick'}).appendTo(form);
-          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Donation to MetaBrainz Foundation'}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Donation to the MetaBrainz Foundation'}).appendTo(form);
         }
 
         {# Reconfiguring inputs for PayPal #}
@@ -321,6 +321,9 @@
         }
 
         editor.attr('name', 'custom');
+
+        $('<input>').attr({type: 'hidden', name: 'on3', value: 'is_donation'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'os3', value: 'yes'}).appendTo(form);
 
         $('<input>').attr({type: 'hidden', name: 'on0', value: 'contact'}).appendTo(form);
         $("#can-contact-flag").attr('name', 'os0');
@@ -337,7 +340,7 @@
       // WePay
       buttons.wepay.on('click', function(e) {
         setButtonsState(false);
-        form.attr("action", "{{ url_for('donations_wepay.donate') }}");
+        form.attr("action", "{{ url_for('payments_wepay.pay', is_donation=True) }}");
         form.submit();
         return false;
       });

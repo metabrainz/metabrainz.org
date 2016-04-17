@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+
+{% block title %}Make a Payment - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <div id="payment">
+    <h1 class="page-title">Make a Payment</h1>
+
+    <div class="alert alert-info" role="alert">
+      <b>This page is for organizations!</b> Payments made here will not show up
+      in the list of donations. If you want to make a donation instead, go to
+      <a href="{{ url_for('payments.donate') }}">donation page</a>.
+    </div>
+
+    <p>
+      Your payments will be used to operate projects of the MetaBrainz Foundation. This includes paying
+      for ongoing expenses like hosting, hardware, maintaining a modest office, and paying a minimal
+      salary for MetaBrainz employees.
+    </p>
+
+    <p>Where has your contribution gone? See our <a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>
+
+    {% if config.PAYMENT_PRODUCTION != True %}
+      <div class="alert alert-warning" role="alert">
+        <b>Be careful!</b> This is a development version of the website. Do NOT
+        use your real credit card credentials! If you want to send an actual
+        payment, go to <a href="https://metabrainz.org/">metabrainz.org</a>.
+      </div>
+    {% endif %}
+
+    <div id="payment-panel" class="panel panel-default">
+      <form id="payment-form" method="POST" class="panel-body form-horizontal" role="form">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">Amount</label>
+          <div class="col-sm-4">
+            <div id="input-amount-fg" class="input-group">
+              <span class="input-group-addon">$</span>
+              {{ form.amount(id="input-amount", class="form-control") | safe }}</div>
+          </div>
+          <div id="big-amount-info" class="col-sm-offset-3 col-sm-6" style="display:none">
+            If you would like to make a large payment, please contact us at
+            <a href="mailto:payments@metabrainz.org">payments@metabrainz.org</a>
+            before you do.
+          </div>
+        </div>
+
+        <div id="input-invoice-number-fg" class="form-group">
+          <div class="col-sm-offset-3 col-sm-6">
+            {{ form.invoice_number(id="input-invoice-number", class="form-control", placeholder="Invoice number") | safe }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-6">
+            <div class="checkbox">
+              <label>
+                {{ form.recurring(id="recurring-flag") | safe }}
+                Make this a recurring monthly payment
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div id="buttons" class="form-group">
+          <div class="col-sm-offset-3 col-sm-6">
+            <button id="btn-stripe" type="button" class="btn">Pay with Credit Card</button>
+            <button id="btn-paypal" type="button" class="btn">
+              <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
+            </button>
+            <button id="btn-wepay" type="button" class="btn">
+              <img src="{{ url_for('static', filename='img/payments/wepay.png') }}" />
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+    <p>
+      <small>
+        The personal information provided to the MetaBrainz Foundation during the
+        payment process will not be shared with anyone. For more information,
+        please take a look at our <a href="{{ url_for('index.privacy_policy') }}">
+        privacy policy</a>.
+      </small>
+    </p>
+
+    <h2>Other ways to pay</h2>
+
+    <h3>Bitcoin</h3>
+    <p>If you would like to make a payment in bitcoins, please use this address:</p>
+    <p><em style="margin-left: 2em">1Pc7sFnuRfDQ2rGoNwRA3nBX1Pqjjqb15v</em></p>
+
+    <h3>Cash</h3>
+    <p>If you would like to pay cash using a check or a bank draft, please send them to:</p>
+    <p>
+      MetaBrainz Foundation<br/>
+      3565 South Higuera St, Suite B<br/>
+      San Luis Obispo, CA 93401<br/>
+      United States
+    </p>
+    <p>Please make checks payable to the <strong>MetaBrainz Foundation</strong>.</p>
+
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script>
+    $(document).ready(function () {
+
+      var form = $("#payment-form");
+
+
+      //////////////////
+      // PAYMENT BUTTONS
+      //////////////////
+
+      var buttons = {
+        stripe: $('#btn-stripe'),
+        paypal: $('#btn-paypal'),
+        wepay: $('#btn-wepay')
+      };
+
+      function setButtonsState(enabled) {
+        if (enabled === true) {
+          $.each(buttons, function( index, button ) {
+            button.removeAttr('disabled');
+          });
+          updateRecurringState();
+
+        } else { // Disabled
+          $.each(buttons, function( index, button ) {
+            button.attr('disabled', 'disabled');
+          });
+        }
+      }
+
+
+      ///////////////
+      // AMOUNT INPUT
+      ///////////////
+      var MAX_AMOUNT = 900000;
+      var amount = $("#input-amount");
+      var bigAmountInfo = $("#big-amount-info");
+      amount.on('input', function () {
+        var value = amount.val();
+        if (value > MAX_AMOUNT) {
+          bigAmountInfo.show();
+          setButtonsState(false);
+        } else {
+          bigAmountInfo.hide();
+          setButtonsState(true);
+        }
+      });
+
+
+      ///////////
+      // PAYMENTS
+      ///////////
+
+      function updateRecurringState() {
+        // We don't support recurring payments via Stripe
+        if ($('#recurring-flag').is(":checked")) {
+          buttons.stripe.attr('disabled', 'disabled');
+        } else {
+          buttons.stripe.removeAttr('disabled');
+        }
+      }
+
+      $('#recurring-flag').change(function() {
+        updateRecurringState();
+      });
+
+
+      // Stripe
+      var stripeHandler = StripeCheckout.configure({
+        key: "{{ stripe_public_key }}",
+        name: "MetaBrainz Foundation",
+        description: "Payment to the MetaBrainz Foundation",
+        address: "true",
+
+        token: function(token) {
+          form.attr("action", "{{ url_for('payments_stripe.pay', donation=False) }}");
+          $('<input>').attr({type: 'hidden', name: 'stripeToken', value: token.id}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'stripeEmail', value: token.email}).appendTo(form);
+          form.submit();
+        },
+
+        closed: function() {
+          setButtonsState(true);
+        }
+      });
+      buttons.stripe.on('click', function(e) {
+        setButtonsState(false);
+        stripeHandler.open({
+          amount: amount.val() * 100 // cents
+        });
+        e.preventDefault();
+      });
+      $(window).on('popstate', function() { stripeHandler.close(); });
+
+      // PayPal
+      buttons.paypal.on('click', function(e) {
+        setButtonsState(false);
+        {% if config.PAYMENT_PRODUCTION %}
+          form.attr("action", "https://www.paypal.com/cgi-bin/webscr");
+        {% else %}
+          form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
+        {% endif %}
+
+        {# Info about variables can be found at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/ #}
+
+        $('<input>').attr({type: 'hidden', name: 'business', value: '{{ config.PAYPAL_PRIMARY_EMAIL }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('payments.complete', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('payments.cancelled', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('payments_paypal.ipn', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'currency_code', value: 'USD'}).appendTo(form);
+
+        if ($('#recurring-flag').is(":checked")) { // Recurring payments
+          $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick-subscriptions'}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Recurring payment to the MetaBrainz Foundation'}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 't3', value: 'M'}).appendTo(form); {# units of duration ('M' is month) #}
+          $('<input>').attr({type: 'hidden', name: 'p3', value: '1'}).appendTo(form); {# subscription duration #}
+          $('<input>').attr({type: 'hidden', name: 'src', value: '1'}).appendTo(form); {# recurring payments #}
+          $('<input>').attr({type: 'hidden', name: 'sra', value: '1'}).appendTo(form); {# reattempt on failure #}
+
+        } else {  // One-time payment
+          $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick'}).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Payment to the MetaBrainz Foundation'}).appendTo(form);
+        }
+
+        {# Reconfiguring inputs for PayPal #}
+        if ($('#recurring-flag').is(":checked")) { // Recurring payments
+          amount.attr('name', 'a3');
+        } else {  // One-time payment
+          amount.attr('name', 'amount');
+        }
+
+        {# `on0` and `on1` are used for donation metadata #}
+
+        $('<input>').attr({type: 'hidden', name: 'on2', value: 'is_donation'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'os2', value: 'no'}).appendTo(form);
+
+        $('<input>').attr({type: 'hidden', name: 'on3', value: 'invoice_number'}).appendTo(form);
+        $("#input-invoice-number").attr('name', 'os3');
+
+        form.submit();
+        return false;
+      });
+
+      // WePay
+      buttons.wepay.on('click', function(e) {
+        setButtonsState(false);
+        form.attr("action", "{{ url_for('payments_wepay.pay', is_donation=False) }}");
+        form.submit();
+        return false;
+      });
+
+    });
+  </script>
+{% endblock %}

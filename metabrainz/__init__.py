@@ -52,20 +52,22 @@ def create_app():
     from metabrainz.reports.financial_reports.views import financial_reports_bp
     from metabrainz.reports.annual_reports.views import annual_reports_bp
     from metabrainz.users.views import users_bp
-    from metabrainz.donations.views import donations_bp
-    from metabrainz.donations.paypal.views import donations_paypal_bp
-    from metabrainz.donations.wepay.views import donations_wepay_bp
-    from metabrainz.donations.stripe.views import donations_stripe_bp
+    from metabrainz.payments.views import payments_bp
+    from metabrainz.payments.paypal.views import payments_paypal_bp
+    from metabrainz.payments.wepay.views import payments_wepay_bp
+    from metabrainz.payments.stripe.views import payments_stripe_bp
     from metabrainz.api.views import api_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
     app.register_blueprint(users_bp)
-    app.register_blueprint(donations_bp)
-    app.register_blueprint(donations_paypal_bp, url_prefix='/donations/paypal')
-    app.register_blueprint(donations_wepay_bp, url_prefix='/donations/wepay')
-    app.register_blueprint(donations_stripe_bp, url_prefix='/donations/stripe')
+    app.register_blueprint(payments_bp)
+    # FIXME(roman): These URLs aren't named very correct since they receive payments
+    # from organizations as well as regular donations:
+    app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')
+    app.register_blueprint(payments_wepay_bp, url_prefix='/donations/wepay')
+    app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
     app.register_blueprint(api_bp, url_prefix='/api')
 
     # ADMIN SECTION
@@ -76,10 +78,10 @@ def create_app():
 
     # Models
     from metabrainz.model.user import UserAdminView
-    from metabrainz.model.donation import DonationAdminView
+    from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
     admin.add_view(UserAdminView(db.session, category='Users', endpoint="user_model"))
-    admin.add_view(DonationAdminView(db.session, endpoint="donation_model"))
+    admin.add_view(PaymentAdminView(db.session, endpoint="donation_model"))
     admin.add_view(TierAdminView(db.session, endpoint="tier_model"))
 
     # Custom stuff

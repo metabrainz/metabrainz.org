@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from metabrainz.testing import FlaskTestCase
-from metabrainz.model import donation
-from metabrainz.model.donation import Donation
+from metabrainz.model import payment
+from metabrainz.model.payment import Payment
 from metabrainz.model import db
 from stripe import convert_to_stripe_object
 from flask import url_for, current_app
@@ -31,12 +31,12 @@ class FakeWePay(object):
                 'fee_payer': u'payer',
                 'reference_id': u'abc123',
                 'redirect_uri': url_for(
-                    'donations.complete',
+                    'payments.complete',
                     _external=True,
                     _scheme=current_app.config['PREFERRED_URL_SCHEME'],
                 ),
                 'callback_uri': url_for(
-                    'donations_wepay.ipn',
+                    'payments_wepay.ipn',
                     _scheme=current_app.config['PREFERRED_URL_SCHEME'],
                     _external=True,
                     editor=u'Tester',
@@ -90,16 +90,17 @@ class FakeStripeBalanceTransaction(object):
         )
 
 
-class DonationModelTestCase(FlaskTestCase):
+class PaymentModelTestCase(FlaskTestCase):
 
     def setUp(self):
-        super(DonationModelTestCase, self).setUp()
-        donation.WePay = lambda production=True, access_token=None, api_version=None: \
+        super(PaymentModelTestCase, self).setUp()
+        payment.WePay = lambda production=True, access_token=None, api_version=None: \
             FakeWePay(production, access_token, api_version)
-        donation.stripe.BalanceTransaction = FakeStripeBalanceTransaction
+        payment.stripe.BalanceTransaction = FakeStripeBalanceTransaction
 
     def test_get_by_transaction_id(self):
-        new = Donation()
+        new = Payment()
+        new.is_donation = True
         new.first_name = u'Tester'
         new.last_name = u'Testing'
         new.email = u'test@example.org'
@@ -108,10 +109,10 @@ class DonationModelTestCase(FlaskTestCase):
         db.session.add(new)
         db.session.commit()
 
-        result = Donation.get_by_transaction_id(u'TEST')
+        result = Payment.get_by_transaction_id(u'TEST')
         self.assertIsNotNone(result)
 
-        bad_result = Donation.get_by_transaction_id(u'MISSING')
+        bad_result = Payment.get_by_transaction_id(u'MISSING')
         self.assertIsNone(bad_result)
 
     def test_process_paypal_ipn(self):
@@ -139,39 +140,57 @@ class DonationModelTestCase(FlaskTestCase):
             'option_name2': u'contact',
             'option_selection2': u'yes',
         }
-        Donation.process_paypal_ipn(good_form)
+        Payment.process_paypal_ipn(good_form)
         # Donation should be in the DB now
-        self.assertEqual(len(Donation.query.all()), 1)
-        self.assertEqual(Donation.query.all()[0].transaction_id, 'TEST1')
+        self.assertEqual(len(Payment.query.all()), 1)
+        self.assertEqual(Payment.query.all()[0].transaction_id, 'TEST1')
 
         relatively_bad_form = good_form
         relatively_bad_form['txn_id'] = 'TEST2'
         relatively_bad_form['mc_gross'] = '0.49'
-        Donation.process_paypal_ipn(relatively_bad_form)
+        Payment.process_paypal_ipn(relatively_bad_form)
         # There should still be one recorded donation
-        self.assertEqual(len(Donation.query.all()), 1)
+        self.assertEqual(len(Payment.query.all()), 1)
 
         bad_form = good_form
         relatively_bad_form['txn_id'] = 'TEST3'
         bad_form['business'] = current_app.config['PAYPAL_BUSINESS']
-        Donation.process_paypal_ipn(bad_form)
+        Payment.process_paypal_ipn(bad_form)
         # There should still be one recorded donation
-        self.assertEqual(len(Donation.query.all()), 1)
+        self.assertEqual(len(Payment.query.all()), 1)
 
         super_bad_form = good_form
         relatively_bad_form['txn_id'] = 'TEST4'
         super_bad_form['payment_status'] = 'Refunded'  # What kind of monster would do that?!
-        Donation.process_paypal_ipn(super_bad_form)
+        Payment.process_paypal_ipn(super_bad_form)
         # There should still be one recorded donation
-        self.assertEqual(len(Donation.query.all()), 1)
+        self.assertEqual(len(Payment.query.all()), 1)
 
-    def test_verify_and_log_wepay_checkout(self):
-        self.assertTrue(Donation.verify_and_log_wepay_checkout(12345, 'Tester', False, True))
+    def test_verify_and_log_wepay_checkout_donation(self):
+        checkout_id = 12345
+        self.assertTrue(Payment.verify_and_log_wepay_checkout(
+            checkout_id=12345,
+            is_donation=True,
+            editor='Tester',
+            anonymous=False,
+            can_contact=True,
+        ))
 
         # Donation should be in the DB now
-        self.assertEqual(Donation.query.all()[0].transaction_id, str(12345))
+        self.assertEqual(Payment.query.all()[0].transaction_id, str(checkout_id))
 
-    def test_log_stripe_charge(self):
+    def test_verify_and_log_wepay_checkout_payment(self):
+        checkout_id = 12345
+        self.assertTrue(Payment.verify_and_log_wepay_checkout(
+            checkout_id=12345,
+            is_donation=False,
+            invoice_number=42,
+        ))
+
+        # Donation should be in the DB now
+        self.assertEqual(Payment.query.all()[0].transaction_id, str(checkout_id))
+
+    def test_log_stripe_charge_donation(self):
         # Function should execute without any exceptions
         charge = convert_to_stripe_object(
             {
@@ -217,6 +236,7 @@ class DonationModelTestCase(FlaskTestCase):
                 "description": u"Donation to MetaBrainz Foundation",
                 "dispute": None,
                 "metadata": {
+                    "is_donation": True,
                     "anonymous": u"True",  # passed as a string
                     "can_contact": u"False",  # passed as a string
                     "email": u"mail@example.com",
@@ -239,4 +259,73 @@ class DonationModelTestCase(FlaskTestCase):
             api_key=None,
             account=None
         )
-        Donation.log_stripe_charge(charge)
+        Payment.log_stripe_charge(charge)
+
+    def test_log_stripe_charge_payment(self):
+        # Function should execute without any exceptions
+        charge = convert_to_stripe_object(
+            {
+                "id": u"ch_15AjX1F21qH57QtHT6avvqrM",
+                "object": u"charge",
+                "created": 1418829367,
+                "livemode": False,
+                "paid": True,
+                "status": u"succeeded",
+                "amount": 99999900,
+                "currency": u"usd",
+                "refunded": False,
+                "source": {
+                    "id": u"card_15AjWxF21qH57QtHHVNgaHOP",
+                    "object": u"card",
+                    "last4": u"4242",
+                    "brand": u"Visa",
+                    "funding": u"credit",
+                    "exp_month": 11,
+                    "exp_year": 2016,
+                    "country": u"US",
+                    "name": u"Uh Oh",
+                    "address_line1": u"test 12",
+                    "address_line2": None,
+                    "address_city": u"Schenectady",
+                    "address_state": u"NY",
+                    "address_zip": u"12345",
+                    "address_country": u"United States",
+                    "cvc_check": u"pass",
+                    "address_line1_check": u"pass",
+                    "address_zip_check": u"pass",
+                    "dynamic_last4": None,
+                    "metadata": {},
+                    "customer": None
+                },
+                "captured": True,
+                "balance_transaction": u"txn_159qthF21qH57QtHBksXX3tN",
+                "failure_message": None,
+                "failure_code": None,
+                "amount_refunded": 0,
+                "customer": None,
+                "invoice": None,
+                "description": u"Donation to MetaBrainz Foundation",
+                "dispute": None,
+                "metadata": {
+                    "is_donation": False,
+                    "email": u"mail@example.com",
+                    "invoice_number": 42,
+                },
+                "statement_descriptor": None,
+                "fraud_details": {},
+                "receipt_email": None,
+                "receipt_number": None,
+                "shipping": None,
+                "application_fee": None,
+                "refunds": {
+                    "object": "list",
+                    "total_count": 0,
+                    "has_more": False,
+                    "url": "/v1/charges/ch_15AjX1F21qH57QtHT6avvqrM/refunds",
+                    "data": []
+                }
+            },
+            api_key=None,
+            account=None
+        )
+        Payment.log_stripe_charge(charge)
