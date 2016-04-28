@@ -22,7 +22,7 @@ After VM is created and running, access it via SSH and start the application:
 
     $ vagrant ssh
     $ cd /vagrant
-    $ python run.py
+    $ python manage.py runserver -d
 
 Web server should be accessible at http://localhost:8080/.
 

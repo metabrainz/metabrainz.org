@@ -96,7 +96,7 @@ The development server is a lightweight HTTP server that gives good debug
 output and is much more convenient than having to set up a standalone server.
 Just run:
 
-    $ python run.py
+    $ python manage.py runserver -d
 
 Visiting http://127.0.0.1:5000 should now present you with your own running
 instance of the MetaBrainz Foundation.
