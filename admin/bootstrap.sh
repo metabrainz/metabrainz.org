@@ -27,8 +27,8 @@ sed -i "s/local\s*all\s*all\s*peer/local all all trust/" "$PG_HBA"
 # Allow vagrant and postgres to access postgres user
 sed -i "s/local\s*all\s*postgres\s*peer/local all postgres peer map=vagrant/" "$PG_HBA"
 echo "vagrant vagrant postgres" >> "$PG_IDENT"
+echo "vagrant root postgres" >> "$PG_IDENT"
 echo "vagrant postgres postgres" >> "$PG_IDENT"
-echo "root postgres postgres" >> "$PG_IDENT"
 # Remote psql from host
 echo "host all all all trust" >> "$PG_HBA"
 

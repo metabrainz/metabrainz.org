@@ -8,9 +8,10 @@ Flask-Login == 0.3.2
 Flask-SQLAlchemy == 2.1
 Flask-Testing == 0.4.2
 Flask-WTF == 0.12
-nose == 1.3.7
 psycopg2 == 2.6
 python-memcached == 1.57
+pytest == 2.9.1
+pytest-cov == 2.2.1
 pytz == 2015.7
 rauth == 0.7.2
 raven[flask] == 5.9.2
