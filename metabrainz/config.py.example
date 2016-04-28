@@ -16,6 +16,14 @@ SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@localhost:5432/met
 # Database for testing
 TEST_SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz_test:metabrainz_test@localhost:5432/metabrainz_test"
 
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# The name of a postgres user who has superuser privileges. Your local user should
+# be able to connect to the database with this user.
+PG_SUPER_USER = "postgres"
+# The port that postgres is running on
+PG_PORT = "5432"
+
 
 # PAYMENTS
 
