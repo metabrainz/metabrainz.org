@@ -30,11 +30,11 @@ Web server should be accessible at http://localhost:8080/.
 
 To run all tests use:
 
-    $ fab test
+    $ py.test
 
 This command will run all tests and produce a coverage report in HTML format.
-It will be located in cover/index.html file. We use [nose](https://nose.readthedocs.io/)
-package to run test cases.
+It will be located in cover/index.html file. We use [py.test](https://pytest.org)
+library.
 
 ### Testing donations
 
