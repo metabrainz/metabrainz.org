@@ -334,3 +334,31 @@ h1.page-title, h2.page-title {
     font-weight: bold;
   }
 }
+
+
+// OAuth prompt
+#oauth-prompt {
+  .permissions {
+    .permission {
+      .clearfix;
+      border-top: 1px solid @gray-lighter;
+      padding: 12px;
+      &:last-child {
+        border-bottom: 1px solid @gray-lighter;
+      }
+      .icon {
+        .pull-left;
+        margin-right: 12px;
+        > img {
+          width: 28px;
+        }
+      }
+      .description {
+        margin-top: 4px;
+      }
+    }
+  }
+  form {
+    margin-top: 20px;
+  }
+}

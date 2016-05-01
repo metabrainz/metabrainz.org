@@ -11,3 +11,17 @@
 
   <div class="alert {{ alert_class }}">{{ message }}</div>
 {% endmacro %}
+
+{% macro oauth_scope_desc(scope) %}
+  {###
+
+  Define scope description here like this:
+
+  {% if scope == "review" %}
+    <abbr title="Create and modify your reviews.">Reviews</abbr>
+  {% elif scope == "profile" %}
+    <abbr title="Access your profile">Profile</abbr>
+  {% endif %}
+
+  ###}
+{% endmacro %}

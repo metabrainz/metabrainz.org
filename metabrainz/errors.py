@@ -1,4 +1,5 @@
-from flask import render_template
+from flask import render_template, jsonify
+from metabrainz.oauth.exceptions import OAuthError
 
 
 def init_error_handlers(app):
@@ -22,3 +23,7 @@ def init_error_handlers(app):
     @app.errorhandler(503)
     def service_unavailable(error):
         return render_template('errors/503.html', error=error), 503
+
+    @app.errorhandler(OAuthError)
+    def oauth_error_handler(error):
+        return jsonify(error=error.code, description=error.desc), error.status

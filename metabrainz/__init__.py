@@ -19,8 +19,10 @@ def create_app():
         app.config['DEBUG_TB_TEMPLATE_EDITOR_ENABLED'] = True
 
     # Database
-    from metabrainz.model import db
-    db.init_app(app)
+    from metabrainz import db
+    db.init_db_engine(app.config["SQLALCHEMY_DATABASE_URI"])
+    from metabrainz import model
+    model.db.init_app(app)
 
     # Memcached
     if 'MEMCACHED_SERVERS' in app.config:
@@ -48,27 +50,7 @@ def create_app():
     init_error_handlers(app)
 
     # Blueprints
-    from metabrainz.views import index_bp
-    from metabrainz.reports.financial_reports.views import financial_reports_bp
-    from metabrainz.reports.annual_reports.views import annual_reports_bp
-    from metabrainz.users.views import users_bp
-    from metabrainz.payments.views import payments_bp
-    from metabrainz.payments.paypal.views import payments_paypal_bp
-    from metabrainz.payments.wepay.views import payments_wepay_bp
-    from metabrainz.payments.stripe.views import payments_stripe_bp
-    from metabrainz.api.views import api_bp
-
-    app.register_blueprint(index_bp)
-    app.register_blueprint(financial_reports_bp, url_prefix='/finances')
-    app.register_blueprint(annual_reports_bp, url_prefix='/reports')
-    app.register_blueprint(users_bp)
-    app.register_blueprint(payments_bp)
-    # FIXME(roman): These URLs aren't named very correct since they receive payments
-    # from organizations as well as regular donations:
-    app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')
-    app.register_blueprint(payments_wepay_bp, url_prefix='/donations/wepay')
-    app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
-    app.register_blueprint(api_bp, url_prefix='/api')
+    _register_blueprints(app)
 
     # ADMIN SECTION
 
@@ -80,9 +62,9 @@ def create_app():
     from metabrainz.model.user import UserAdminView
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
-    admin.add_view(UserAdminView(db.session, category='Users', endpoint="user_model"))
-    admin.add_view(PaymentAdminView(db.session, endpoint="donation_model"))
-    admin.add_view(TierAdminView(db.session, endpoint="tier_model"))
+    admin.add_view(UserAdminView(model.db.session, category='Users', endpoint="user_model"))
+    admin.add_view(PaymentAdminView(model.db.session, endpoint="donation_model"))
+    admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
 
     # Custom stuff
     from metabrainz.admin.views import CommercialUsersView
@@ -95,3 +77,38 @@ def create_app():
     admin.add_view(StatsView(name='Statistics'))
 
     return app
+
+
+def _register_blueprints(app):
+    from metabrainz.views import index_bp
+    from metabrainz.reports.financial_reports.views import financial_reports_bp
+    from metabrainz.reports.annual_reports.views import annual_reports_bp
+    from metabrainz.users.views import users_bp
+    from metabrainz.payments.views import payments_bp
+    from metabrainz.payments.paypal.views import payments_paypal_bp
+    from metabrainz.payments.wepay.views import payments_wepay_bp
+    from metabrainz.payments.stripe.views import payments_stripe_bp
+
+    app.register_blueprint(index_bp)
+    app.register_blueprint(financial_reports_bp, url_prefix='/finances')
+    app.register_blueprint(annual_reports_bp, url_prefix='/reports')
+    app.register_blueprint(users_bp)
+    app.register_blueprint(payments_bp)
+    # FIXME(roman): These URLs aren't named very correct since they receive payments
+    # from organizations as well as regular donations:
+    app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')
+    app.register_blueprint(payments_wepay_bp, url_prefix='/donations/wepay')
+    app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
+
+    #############
+    # OAuth / API
+    #############
+
+    from metabrainz.oauth.views import oauth_bp
+    app.register_blueprint(oauth_bp, url_prefix='/oauth')
+    from metabrainz.api.views.index import api_index_bp
+    app.register_blueprint(api_index_bp, url_prefix='/api')
+    from metabrainz.api.views.user import api_user_bp
+    app.register_blueprint(api_user_bp, url_prefix='/api/user')
+    from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
+    app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')

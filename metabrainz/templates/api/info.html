@@ -17,7 +17,7 @@
     <p>
       <strong>Hourly:</strong>
       <code>
-        GET {{ url_for('api.replication_hourly',
+        GET {{ url_for('api_musicbrainz.replication_hourly',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        packet_number=42, token="TOKEN")
                   | replace("42", "<PACKET_NUMBER>")
@@ -28,7 +28,7 @@
     <p>
       <strong>Daily:</strong>
       <code>
-        GET {{ url_for('api.replication_daily',
+        GET {{ url_for('api_musicbrainz.replication_daily',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        packet_number=42, token="TOKEN")
                   | replace("42", "<PACKET_NUMBER>")
@@ -39,7 +39,7 @@
     <p>
       <strong>Weekly:</strong>
       <code>
-        GET {{ url_for('api.replication_weekly',
+        GET {{ url_for('api_musicbrainz.replication_weekly',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        packet_number=42, token="TOKEN")
                   | replace("42", "<PACKET_NUMBER>")
@@ -54,7 +54,7 @@
     <p>
       You can find the latest replication packet numbers from this endpoint:<br />
       <code>
-        GET {{ url_for('api.replication_info',
+        GET {{ url_for('api_musicbrainz.replication_info',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        token="TOKEN")
                   | replace("TOKEN", "<ACCESS_TOKEN>")

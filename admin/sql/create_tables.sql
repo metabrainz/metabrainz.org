@@ -39,7 +39,7 @@ CREATE TABLE "user" (
 CREATE TABLE token (
   value     CHARACTER VARYING NOT NULL, -- PK
   is_active BOOLEAN           NOT NULL,
-  owner_id  INTEGER, -- FK
+  owner_id  INTEGER,
   created   TIMESTAMP WITH TIME ZONE
 );
 
@@ -74,9 +74,37 @@ CREATE TABLE donation (
   transaction_id   CHARACTER VARYING,
   amount           NUMERIC(11, 2)    NOT NULL,
   fee              NUMERIC(11, 2),
-  memo             CHARACTER VARYING,
-  is_donation      BOOLEAN           NOT NULL,
-  invoice_number   INTEGER
+  memo             CHARACTER VARYING
+);
+
+CREATE TABLE oauth_client (
+  client_id     CHARACTER VARYING, -- PK
+  client_secret CHARACTER VARYING NOT NULL,
+  redirect_uri  CHARACTER VARYING NOT NULL,
+  user_id       INTEGER           NOT NULL, -- FK, user
+  name          CHARACTER VARYING NOT NULL,
+  description   CHARACTER VARYING NOT NULL,
+  website       CHARACTER VARYING NOT NULL
+);
+
+CREATE TABLE oauth_grant (
+  id           SERIAL                   NOT NULL, -- PK
+  client_id    CHARACTER VARYING        NOT NULL, -- FK, oauth_client
+  user_id      INTEGER                  NOT NULL, -- FK, user
+  redirect_uri CHARACTER VARYING        NOT NULL,
+  code         CHARACTER VARYING        NOT NULL,
+  expires      TIMESTAMP WITH TIME ZONE NOT NULL,
+  scopes       CHARACTER VARYING
+);
+
+CREATE TABLE oauth_token (
+  id            SERIAL                   NOT NULL, -- PK
+  client_id     CHARACTER VARYING        NOT NULL, -- FK, oauth_client
+  access_token  CHARACTER VARYING        NOT NULL,
+  user_id       INT                      NOT NULL, -- FK, user
+  refresh_token CHARACTER VARYING        NOT NULL,
+  expires       TIMESTAMP WITH TIME ZONE NOT NULL,
+  scopes        CHARACTER VARYING
 );
 
 COMMIT;

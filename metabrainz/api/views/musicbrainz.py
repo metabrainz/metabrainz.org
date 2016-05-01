@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, send_from_directory, current_app, render_template
+from flask import Blueprint, jsonify, send_from_directory, current_app
 from flask.helpers import safe_join
 from werkzeug.wrappers import Response
 from werkzeug.urls import iri_to_uri
@@ -8,7 +8,7 @@ import re
 import os
 import time
 
-api_bp = Blueprint('api', __name__)
+api_musicbrainz_bp = Blueprint('api_musicbrainz', __name__)
 
 NGINX_INTERNAL_LOCATION = '/internal/replication'
 
@@ -24,13 +24,7 @@ MAX_PACKET_AGE_WARNING = 60 * 60 * 2  # 4 hours
 MAX_PACKET_AGE_CRITICAL = 60 * 60 * 6  # 4 hours
 
 
-@api_bp.route('/')
-def info():
-    """This view provides information about using the API."""
-    return render_template('api/info.html')
-
-
-@api_bp.route('/musicbrainz/replication-check')
+@api_musicbrainz_bp.route('/replication-check')
 def replication_check():
     """Check that all the replication packets are contiguous and that no packet
     is more than a few hours old. Output a Nagios compatible line of text.
@@ -78,7 +72,7 @@ def replication_check():
     return Response(resp, mimetype='text/plain')
 
 
-@api_bp.route('/musicbrainz/replication-info')
+@api_musicbrainz_bp.route('/replication-info')
 @token_required
 def replication_info():
     """This endpoint returns numbers of the last available replication packets."""
@@ -112,7 +106,7 @@ def replication_info():
     })
 
 
-@api_bp.route('/musicbrainz/replication-<int:packet_number>.tar.bz2')
+@api_musicbrainz_bp.route('/replication-<int:packet_number>.tar.bz2')
 @token_required
 @tracked
 def replication_hourly(packet_number):
@@ -127,7 +121,7 @@ def replication_hourly(packet_number):
         return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
 
 
-@api_bp.route('/musicbrainz/replication-<int:packet_number>.tar.bz2.asc')
+@api_musicbrainz_bp.route('/replication-<int:packet_number>.tar.bz2.asc')
 @token_required
 def replication_hourly_signature(packet_number):
     directory = current_app.config['REPLICATION_PACKETS_DIR']
@@ -141,7 +135,7 @@ def replication_hourly_signature(packet_number):
         return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
 
 
-@api_bp.route('/musicbrainz/replication-daily-<int:packet_number>.tar.bz2')
+@api_musicbrainz_bp.route('/replication-daily-<int:packet_number>.tar.bz2')
 @token_required
 @tracked
 def replication_daily(packet_number):
@@ -156,7 +150,7 @@ def replication_daily(packet_number):
         return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
 
 
-@api_bp.route('/musicbrainz/replication-daily-<int:packet_number>.tar.bz2.asc')
+@api_musicbrainz_bp.route('/replication-daily-<int:packet_number>.tar.bz2.asc')
 @token_required
 def replication_daily_signature(packet_number):
     directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR)
@@ -170,7 +164,7 @@ def replication_daily_signature(packet_number):
         return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
 
 
-@api_bp.route('/musicbrainz/replication-weekly-<int:packet_number>.tar.bz2')
+@api_musicbrainz_bp.route('/replication-weekly-<int:packet_number>.tar.bz2')
 @token_required
 @tracked
 def replication_weekly(packet_number):
@@ -185,7 +179,7 @@ def replication_weekly(packet_number):
         return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
 
 
-@api_bp.route('/musicbrainz/replication-weekly-<int:packet_number>.tar.bz2.asc')
+@api_musicbrainz_bp.route('/replication-weekly-<int:packet_number>.tar.bz2.asc')
 @token_required
 def replication_weekly_signature(packet_number):
     directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR)

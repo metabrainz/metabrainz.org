@@ -25,4 +25,29 @@ ALTER TABLE access_log
   REFERENCES token (value) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION;
 
+ALTER TABLE oauth_client
+  ADD CONSTRAINT oauth_client_user_fkey FOREIGN KEY (user_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE oauth_grant
+  ADD CONSTRAINT oauth_grant_oauth_client_fkey FOREIGN KEY (client_id)
+  REFERENCES oauth_client (client_id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE oauth_grant
+  ADD CONSTRAINT oauth_grant_user_fkey FOREIGN KEY (user_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE oauth_token
+  ADD CONSTRAINT oauth_token_oauth_client_fkey FOREIGN KEY (client_id)
+  REFERENCES oauth_client (client_id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE oauth_token
+  ADD CONSTRAINT oauth_token_user_fkey FOREIGN KEY (user_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE CASCADE;
+
 COMMIT;
