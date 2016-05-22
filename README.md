@@ -1,6 +1,6 @@
 # metabrainz.org
 
-Website for the [MetaBrainz Foundation](http://metabrainz.org/). This is
+Website for the [MetaBrainz Foundation](https://metabrainz.org/). This is
 a Flask-based web application that is meant to provide info about the
 foundation, accept donations from users and organizations, and provide
 access to [replication packets](https://musicbrainz.org/doc/Replication_Mechanics)
