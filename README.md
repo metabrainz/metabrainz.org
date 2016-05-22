@@ -33,7 +33,7 @@ To run all tests use:
     $ fab test
 
 This command will run all tests and produce a coverage report in HTML format.
-It will be located in cover/index.html file. We use [nose](http://readthedocs.org/docs/nose/)
+It will be located in cover/index.html file. We use [nose](https://nose.readthedocs.io/)
 package to run test cases.
 
 ### Testing donations
