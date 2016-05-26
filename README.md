@@ -1,6 +1,6 @@
 # metabrainz.org
 
-Website for the [MetaBrainz Foundation](http://metabrainz.org/). This is
+Website for the [MetaBrainz Foundation](https://metabrainz.org/). This is
 a Flask-based web application that is meant to provide info about the
 foundation, accept donations from users and organizations, and provide
 access to [replication packets](https://musicbrainz.org/doc/Replication_Mechanics)
@@ -33,7 +33,7 @@ To run all tests use:
     $ fab test
 
 This command will run all tests and produce a coverage report in HTML format.
-It will be located in cover/index.html file. We use [nose](http://readthedocs.org/docs/nose/)
+It will be located in cover/index.html file. We use [nose](https://nose.readthedocs.io/)
 package to run test cases.
 
 ### Testing donations
@@ -64,6 +64,6 @@ file.
 
 If you want to discuss something, go to *#metabrainz* IRC channel on
 irc.freenode.net. More info about available methods of getting in touch with
-community is available at https://wiki.musicbrainz.org/Communication.
+community is available at https://musicbrainz.org/doc/Communication.
 
 Good luck! You'll need it.

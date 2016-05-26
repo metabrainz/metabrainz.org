@@ -11,7 +11,7 @@ versions of data saved in the cache. You can invalidate whole namespace using
 invalidate_namespace() function. See its description for more info.
 
 Package python-memcached is available at https://pypi.python.org/pypi/python-memcached/.
-More information about memcached can be found at http://memcached.org/.
+More information about memcached can be found at https://memcached.org/.
 """
 import hashlib
 import memcache

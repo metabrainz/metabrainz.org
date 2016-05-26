@@ -70,7 +70,7 @@ def generate_recript(email, date, amount, name, editor_name):
         "3565 South Higuera St., Suite B<br/>"
         "San Luis Obispo, CA 93401<br/><br/>"
         "donations@metabrainz.org<br/>"
-        "http://metabrainz.org",
+        "https://metabrainz.org",
         address_style)
     story.append(address_par)
 
