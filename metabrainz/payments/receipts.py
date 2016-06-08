@@ -30,11 +30,11 @@ def send_receipt(email, date, amount, name, is_donation, editor_name=None):
             "taxes under section 170 of the Internal Revenue Service code.\n\n"
             "Please save a printed copy of the attached PDF receipt for your records."
         ) % name
-        from_addr = 'donations@' + current_app.config['MAIL_FROM_DOMAIN'],
+        from_addr = 'donations@' + current_app.config['MAIL_FROM_DOMAIN']
         from_name = 'Donation Manager'
         attachment_file_name = 'metabrainz_donation'
     else:
-        subject = "Receipt for your donation to the MetaBrainz Foundation"
+        subject = "Receipt for your payment to the MetaBrainz Foundation"
         text = (
             "Dear %s:\n\n"
             "Thank you very much for your payment to the MetaBrainz Foundation!\n\n"
@@ -44,7 +44,7 @@ def send_receipt(email, date, amount, name, is_donation, editor_name=None):
             "your support.\n\n"
             "Please save a printed copy of the attached PDF receipt for your records."
         ) % name
-        from_addr = 'payments@' + current_app.config['MAIL_FROM_DOMAIN'],
+        from_addr = 'payments@' + current_app.config['MAIL_FROM_DOMAIN']
         from_name = 'Payment Manager'
         attachment_file_name = 'metabrainz_payment'
 
@@ -102,15 +102,15 @@ def generate_recript(email, date, amount, name, is_donation, editor_name):
     address_style.fontSize = 12
     address_style.alignment = TA_RIGHT
     if is_donation:
-        email = "donations@metabrainz.org"
+        from_email = "donations@metabrainz.org"
     else:
-        email = "payments@metabrainz.org"
+        from_email = "payments@metabrainz.org"
     address_par = Paragraph(
         "3565 South Higuera St., Suite B<br/>"
         "San Luis Obispo, CA 93401<br/><br/>"
         "%s<br/>"
         "https://metabrainz.org"
-        % email,
+        % from_email,
         address_style)
     story.append(address_par)
 
@@ -179,11 +179,11 @@ def generate_recript(email, date, amount, name, is_donation, editor_name):
     thanks_par = Paragraph("Thank you for your support!", thanks_style)
     story.append(thanks_par)
 
-    file = tempfile.NamedTemporaryFile()
-    doc = SimpleDocTemplate(file.name, pagesize=(595, 792),
+    f = tempfile.NamedTemporaryFile()
+    doc = SimpleDocTemplate(f.name, pagesize=(595, 792),
                             leftMargin=52, rightMargin=44)
     if is_donation:
         doc.build(story, onFirstPage=_create_header_donation)
     else:
         doc.build(story, onFirstPage=_create_header_payment)
-    return file
+    return f
