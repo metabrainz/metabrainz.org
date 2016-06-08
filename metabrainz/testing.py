@@ -43,7 +43,7 @@ class FlaskTestCase(TestCase):
     def drop_tables(self):
         with db.engine.connect() as connection:
             # TODO(roman): See if there's a better way to drop all tables.
-            connection.execute('DROP TABLE IF EXISTS donation     CASCADE;')
+            connection.execute('DROP TABLE IF EXISTS payment      CASCADE;')
             connection.execute('DROP TABLE IF EXISTS oauth_grant  CASCADE;')
             connection.execute('DROP TABLE IF EXISTS oauth_token  CASCADE;')
             connection.execute('DROP TABLE IF EXISTS oauth_client CASCADE;')

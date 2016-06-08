@@ -56,8 +56,9 @@ CREATE TABLE access_log (
   ip_address  INET
 );
 
-CREATE TABLE donation (
+CREATE TABLE payment (
   id               SERIAL, -- PK
+  is_donation      BOOLEAN NOT NULL,
   first_name       CHARACTER VARYING NOT NULL,
   last_name        CHARACTER VARYING NOT NULL,
   email            CHARACTER VARYING NOT NULL,
@@ -74,7 +75,8 @@ CREATE TABLE donation (
   transaction_id   CHARACTER VARYING,
   amount           NUMERIC(11, 2)    NOT NULL,
   fee              NUMERIC(11, 2),
-  memo             CHARACTER VARYING
+  memo             CHARACTER VARYING,
+  invoice_number   INTEGER
 );
 
 CREATE TABLE oauth_client (
