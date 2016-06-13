@@ -9,7 +9,7 @@ def home():
     return render_template(
         'index/index.html',
         good_users=User.get_featured(limit=4, with_logos=True),
-        bad_users=User.get_featured(in_deadbeat_club=True, limit=1, with_logos=True),
+        bad_users=User.get_featured(in_deadbeat_club=True, limit=1),
     )
 
 

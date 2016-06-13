@@ -114,13 +114,13 @@
         {% if bad_users %}
           <div class="col-sm-6 users-block">
             <div class="panel panel-success goodguys">
-              <div class="panel-heading">The Good Companies</div>
+              <div class="panel-heading"><strong>The Good Companies</strong></div>
               <div class="panel-body">
                 <div class="">
-                  <div class="col-sm-2" style="text-align: center;">
-                    <h1 class="text-success glyphicon glyphicon-thumbs-up"></h1>
+                  <div class="col-sm-2 sign">
+                    <span class="glyphicon glyphicon-thumbs-up text-success"></span>
                   </div>
-                  <div class="col-sm-10">
+                  <div class="col-sm-10 description">
                     Some people do it right! Have a look at our
                     <a href="{{ url_for('users.supporters_list') }}">list of supporters</a>.
                   </div>
@@ -129,8 +129,8 @@
                 <hr />
                 <div class="row">
                   {% for user in good_users[:2] %}
-                    <div class="col-sm-6 logo">
-                      <span><img src="{{ user.org_logo_url }}" /></span>
+                    <div class="col-sm-6 logo-container">
+                      <span><img class="logo" src="{{ user.org_logo_url }}" /></span>
                     </div>
                   {% endfor %}
                 </div>
@@ -139,13 +139,13 @@
           </div>
           <div class="col-sm-6 users-block">
             <div class="panel panel-danger badguys">
-              <div class="panel-heading">The Bad Companies</div>
+              <div class="panel-heading"><strong>The Bad Companies</strong></div>
               <div class="panel-body">
                 <div class="">
-                  <div class="col-sm-2" style="text-align: center;">
-                    <h1 class="text-danger glyphicon glyphicon-thumbs-down"></h1>
+                  <div class="col-sm-2 sign">
+                    <span class="glyphicon glyphicon-thumbs-down text-danger"></span>
                   </div>
-                  <div class="col-sm-10">
+                  <div class="col-sm-10 description">
                     Unfortunately some companies use data we provide without contributing back.
                     <a href="{{ url_for('index.bad_customers') }}">Find out more</a> or
                     <a href="{{ url_for('users.account_type') }}">Sign up</a>!
@@ -155,9 +155,15 @@
                 <hr />
                 <div class="row">
                   {% for user in bad_users %}
-                    <div class="col-sm-12 logo">
-                      <span><img src="{{ user.org_logo_url }}" /></span>
-                    </div>
+                    {% if user.org_logo_url %}
+                      <div class="col-sm-12 logo-container">
+                        <span><img class="logo" src="{{ user.org_logo_url }}" /></span>
+                      </div>
+                    {% else %}
+                      <div class="col-sm-12 logo-container">
+                        <span class="name">{{ user.org_name }}</span>
+                      </div>
+                    {% endif %}
                   {% endfor %}
                 </div>
               </div>
