@@ -1,6 +1,7 @@
 from flask import Blueprint, request, current_app, redirect, url_for
 from metabrainz.payments.forms import DonationForm, PaymentForm
 from metabrainz.model.payment import Payment
+import logging
 import stripe
 
 payments_stripe_bp = Blueprint('payments_stripe', __name__)
@@ -53,8 +54,9 @@ def pay():
             description=charge_description,
             metadata=charge_metadata,
         )
-    except stripe.CardError:
+    except stripe.CardError as e:
         # The card has been declined
+        logging.info(e)
         return redirect(url_for('payments.error', is_donation=is_donation))
 
     Payment.log_stripe_charge(charge)
