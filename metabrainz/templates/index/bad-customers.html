@@ -32,11 +32,13 @@
         {% for user in bad_users %}
           <div class="user">
             <div class="logo-container">
+              {% if user.website_url %}<a href="{{ user.website_url }}" rel="nofollow">{% endif %}
               {% if user.org_logo_url %}
                 <img class="logo" src="{{ user.org_logo_url }}"/>
               {% else %}
                 <div class="name">{{ user.org_name }}</div>
               {% endif %}
+              {% if user.website_url %}</a>{% endif %}
             </div>
             {% if user.data_usage_desc %}
               <div class="description">{{ user.data_usage_desc }}</div>

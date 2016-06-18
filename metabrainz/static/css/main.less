@@ -77,7 +77,14 @@ h1.page-title, h2.page-title {
       line-height: @featured-org-height;
       text-align: center;
       @media (max-width: @screen-xs-max) { margin-top: 10px; }
-
+      a {
+        color: @headings-font-color;
+        text-decoration: none;
+        &:hover {
+          color: @headings-font-color;
+          text-decoration: none;
+        }
+      }
       > span {
         display: inline-block;
         vertical-align: middle;
@@ -196,6 +203,7 @@ h1.page-title, h2.page-title {
         justify-content: center;
         align-items: center;
         font-weight: bold;
+        font-size: 1.8em;
       }
       .logo {
         max-height: 80px;

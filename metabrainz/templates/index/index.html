@@ -113,8 +113,7 @@
         {% for user in good_users %}
           <div class="col-sm-3 user">
             <span>
-              <a href="{{ url_for('users.tier', tier_id=user.tier_id) if user.tier and user.tier.available
-                          else url_for('users.supporters_list') }}">
+              <a href="{{ url_for('index.sponsors') }}">
                 <img src="{{ user.org_logo_url }}"/>
               </a>
             </span>
@@ -134,10 +133,9 @@
         {% for user in bad_users %}
           <div class="col-sm-3 user">
             {% if user.org_logo_url %}
-                <span><img class="logo" src="{{ user.org_logo_url }}"/></span>
-              </div>
+                <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ user.org_logo_url }}"/></a></span>
             {% else %}
-                <span class="name">{{ user.org_name }}</span>
+                <span class="name"><a href="{{ url_for('index.bad_customers') }}">{{ user.org_name }}</a></span>
             {% endif %}
           </div>
         {% endfor %}
