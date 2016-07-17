@@ -1,7 +1,8 @@
 from __future__ import with_statement
 from fabric.api import local
 from fabric.colors import yellow, green
-from metabrainz import create_app, cache
+from brainzutils import cache
+from metabrainz import create_app
 from metabrainz.model.utils import init_postgres
 
 

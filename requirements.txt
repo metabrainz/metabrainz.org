@@ -1,9 +1,8 @@
+git+https://github.com/metabrainz/python-brainzutils.git@596bf8899b7a213f64d09ce7c94a7f25cfd51107
 coverage == 4.0.3
+Fabric == 1.11.1
 click == 6.6
-Fabric == 1.10.2
-Flask == 0.10.1
 Flask-Admin == 1.3.0
-Flask-DebugToolbar == 0.10.0
 Flask-Login == 0.3.2
 Flask-SQLAlchemy == 2.1
 Flask-Testing == 0.4.2

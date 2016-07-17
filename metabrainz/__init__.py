@@ -1,22 +1,30 @@
-from flask import Flask, send_from_directory, request
+from brainzutils.flask import CustomFlask
+from flask import send_from_directory, request
+import os
 
 
 def create_app():
-    app = Flask(__name__)
+    app = CustomFlask(
+        import_name=__name__,
+        use_flask_uuid=True,
+        use_debug_toolbar=True,
+    )
 
-    # Configuration
-    app.config.from_object('metabrainz.default_config')
-    app.config.from_object('metabrainz.config')
+    # Configuration files
+    app.config.from_pyfile(os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        '..', 'default_config.py'
+    ))
+    app.config.from_pyfile(os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        '..', 'config.py'
+    ), silent=True)
 
-    # Logging
-    from metabrainz import loggers
-    loggers.init_loggers(app)
-
-    if app.debug:
-        # Debug toolbar
-        from flask_debugtoolbar import DebugToolbarExtension
-        DebugToolbarExtension(app)
-        app.config['DEBUG_TB_TEMPLATE_EDITOR_ENABLED'] = True
+    app.init_loggers(
+        file_config=app.config.get('LOG_FILE'),
+        email_config=app.config.get('LOG_EMAIL'),
+        sentry_config=app.config.get('LOG_SENTRY'),
+    )
 
     # Database
     from metabrainz import db
@@ -24,12 +32,9 @@ def create_app():
     from metabrainz import model
     model.db.init_app(app)
 
-    # Memcached
-    if 'MEMCACHED_SERVERS' in app.config:
-        from metabrainz import cache
-        cache.init(app.config['MEMCACHED_SERVERS'],
-                   app.config['MEMCACHED_NAMESPACE'],
-                   debug=1 if app.debug else 0)
+    # Redis (cache)
+    from brainzutils import cache
+    cache.init(**app.config['REDIS'])
 
     # MusicBrainz OAuth
     from metabrainz.users import login_manager, musicbrainz_login
