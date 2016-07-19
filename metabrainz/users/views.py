@@ -140,7 +140,7 @@ def signup_commercial():
         )
         return redirect(url_for('.profile'))
 
-    return render_template("users/signup-commercial.html", form=form, tier=selected_tier)
+    return render_template("users/signup-commercial.html", form=form, tier=selected_tier, mb_username=mb_username)
 
 
 @users_bp.route('/signup/noncommercial', methods=('GET', 'POST'))
@@ -178,7 +178,7 @@ def signup_noncommercial():
         )
         return redirect(url_for('.profile'))
 
-    return render_template("users/signup-non-commercial.html", form=form)
+    return render_template("users/signup-non-commercial.html", form=form, mb_username=mb_username)
 
 
 @users_bp.route('/login/musicbrainz')
