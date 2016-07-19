@@ -106,38 +106,43 @@ def signup_commercial():
         return True
 
     if form.validate_on_submit() and custom_validation(form):
-        new_user = User.add(
-            is_commercial=True,
-            musicbrainz_id=mb_username,
-            contact_name=form.contact_name.data,
-            contact_email=form.contact_email.data,
-            data_usage_desc=form.usage_desc.data,
+        # Checking if this user already exists
+        new_user = User.get(musicbrainz_id=mb_username)
+        if not new_user:
+            new_user = User.add(
+                is_commercial=True,
+                musicbrainz_id=mb_username,
+                contact_name=form.contact_name.data,
+                contact_email=form.contact_email.data,
+                data_usage_desc=form.usage_desc.data,
 
-            org_name=form.org_name.data,
-            org_desc=form.org_desc.data,
-            website_url=form.website_url.data,
-            org_logo_url=form.logo_url.data,
-            api_url=form.api_url.data,
+                org_name=form.org_name.data,
+                org_desc=form.org_desc.data,
+                website_url=form.website_url.data,
+                org_logo_url=form.logo_url.data,
+                api_url=form.api_url.data,
 
-            address_street=form.address_street.data,
-            address_city=form.address_city.data,
-            address_state=form.address_state.data,
-            address_postcode=form.address_postcode.data,
-            address_country=form.address_country.data,
+                address_street=form.address_street.data,
+                address_city=form.address_city.data,
+                address_state=form.address_state.data,
+                address_postcode=form.address_postcode.data,
+                address_country=form.address_country.data,
 
-            tier_id=tier_id,
-            amount_pledged=form.amount_pledged.data,
-        )
+                tier_id=tier_id,
+                amount_pledged=form.amount_pledged.data,
+            )
+            flash.success("Thanks for signing up! Your application will be reviewed "
+                          "soon. We will send you updates via email.")
+            send_mail(
+                subject="[MetaBrainz] Sign up confirmation",
+                text='Dear %s,\n\nThank you for signing up!\n\nYour application'
+                     ' will be reviewed soon. We will send you updates via email.'
+                     % new_user.contact_name,
+                recipients=[new_user.contact_email],
+            )
+        else:
+            flash.info("You already have a MetaBrainz account!")
         login_user(new_user)
-        flash.success("Thanks for signing up! Your application will be reviewed "
-                      "soon. We will send you updates via email.")
-        send_mail(
-            subject="[MetaBrainz] Sign up confirmation",
-            text='Dear %s,\n\nThank you for signing up!\n\nYour application'
-                 ' will be reviewed soon. We will send you updates via email.'
-                 % new_user.contact_name,
-            recipients=[new_user.contact_email],
-        )
         return redirect(url_for('.profile'))
 
     return render_template("users/signup-commercial.html", form=form, tier=selected_tier)
@@ -167,15 +172,17 @@ def signup_noncommercial():
                 contact_email=form.contact_email.data,
                 data_usage_desc=form.usage_desc.data,
             )
+            flash.success("Thanks for signing up!")
+            send_mail(
+                subject="[MetaBrainz] Sign up confirmation",
+                text='Dear %s,\n\nThank you for signing up!\n\nYou can now generate '
+                     'an access token for the MetaBrainz API on your profile page.'
+                     % new_user.contact_name,
+                recipients=[new_user.contact_email],
+            )
+        else:
+            flash.info("You already have a MetaBrainz account!")
         login_user(new_user)
-        flash.success("Thanks for signing up!")
-        send_mail(
-            subject="[MetaBrainz] Sign up confirmation",
-            text='Dear %s,\n\nThank you for signing up!\n\nYou can now generate '
-                 'an access token for the MetaBrainz API on your profile page.'
-                 % new_user.contact_name,
-            recipients=[new_user.contact_email],
-        )
         return redirect(url_for('.profile'))
 
     return render_template("users/signup-non-commercial.html", form=form)
