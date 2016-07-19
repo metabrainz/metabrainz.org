@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory, request
 
 
 def create_app():
@@ -46,6 +46,8 @@ def create_app():
     # Error handling
     from metabrainz.errors import init_error_handlers
     init_error_handlers(app)
+
+    add_robots(app)
 
     # Blueprints
     from metabrainz.views import index_bp
@@ -95,3 +97,9 @@ def create_app():
     admin.add_view(StatsView(name='Statistics'))
 
     return app
+
+
+def add_robots(app):
+    @app.route('/robots.txt')
+    def static_from_root():
+        return send_from_directory(app.static_folder, request.path[1:])
