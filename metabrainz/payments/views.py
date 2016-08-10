@@ -58,6 +58,11 @@ def donors():
                            page=page, last_page=last_page, order=order)
 
 
+@payments_bp.route('/cancel-recurring')
+def cancel_recurring():
+    return render_template('payments/cancel_recurring.html')
+
+
 @payments_bp.route('/donations/nag-check/<editor>')
 def nag_check(editor):
     a, b = Payment.get_nag_days(editor)
