@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin
+Disallow: /login
+Disallow: /logout
+Disallow: /signup
+Disallow: /profile
+Disallow: /api/
+Disallow: /static/img
+Disallow: /donors
