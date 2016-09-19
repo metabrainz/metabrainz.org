@@ -27,8 +27,8 @@ def get(client_id, code):
               FROM oauth_grant
              WHERE client_id = :client_id AND code = :code
         """), {
-            "client_id", client_id,
-            "code", code,
+            "client_id": client_id,
+            "code": code,
         })
         row = result.fetchone()
         if row:
@@ -45,6 +45,6 @@ def delete_by_code(client_id, code):
             DELETE FROM oauth_grant
                   WHERE client_id = :client_id AND code = :code
         """), {
-            "client_id", client_id,
-            "code", code,
+            "client_id": client_id,
+            "code": code,
         })
