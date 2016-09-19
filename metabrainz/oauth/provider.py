@@ -65,7 +65,7 @@ class MetaBrainzAuthorizationProvider(object):
         grant = self.fetch_grant(client_id, code)
         if grant is None:
             return False
-        return (datetime.datetime.now(pytz.utc) > grant["expires"]) is False
+        return (datetime.now(pytz.utc) > grant["expires"]) is False
 
     def validate_token_scope(self, client_id, refresh_token, scope):
         token = self.fetch_token(client_id, refresh_token)
