@@ -165,7 +165,7 @@ class MetaBrainzAuthorizationProvider(object):
 
     def generate_grant(self, client_id, user_id, redirect_uri, scope=None):
         code = generate_string(self.token_length)
-        expires = datetime.now() + timedelta(seconds=self.grant_expire)
+        expires = datetime.now(pytz.utc) + timedelta(seconds=self.grant_expire)
         self.persist_grant(client_id, code, scope, expires, redirect_uri, user_id)
         return code
 
@@ -173,7 +173,7 @@ class MetaBrainzAuthorizationProvider(object):
         if not refresh_token:
             refresh_token = generate_string(self.token_length)
         access_token = generate_string(self.token_length)
-        expires = datetime.now() + timedelta(seconds=self.token_expire)
+        expires = datetime.now(pytz.utc) + timedelta(seconds=self.token_expire)
         self.persist_token(client_id, scope, refresh_token, access_token, expires, user_id)
         return access_token, 'Bearer', self.token_expire, refresh_token
 
@@ -187,7 +187,7 @@ class MetaBrainzAuthorizationProvider(object):
         if token is None:
             raise exceptions.InvalidToken
 
-        if token["expires"] < datetime.now():
+        if token["expires"] < datetime.now(pytz.utc):
             raise exceptions.InvalidToken
 
         for scope in scopes:
