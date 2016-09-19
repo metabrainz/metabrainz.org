@@ -112,19 +112,22 @@
       </small>
     </p>
 
+    <p>
+      <small>
+        To find out how to cancel recurring donations take a look at
+        <a href="{{ url_for('payments.cancel_recurring') }}">this page</a>.
+      </small>
+    </p>
+
     <h2>Other ways to donate</h2>
 
-    <h3>Bank transfer</h3>
+    <h3>Non-US Bank transfer</h3>
     <p>You can make a donation, or recurring donations, via bank transfer to the following IBAN:</p>
-    <p><em style="margin-left: 2em">ES65 2013 0614 9902 0060 1916</em></p>
+    <p><em style="margin-left: 2em">ES65 2013 0614 9902 0060 1916 (BIC: CESCESBBXXX)</em></p>
     <p>Please indicate your name and use the word <em>DONATION</em> in the description field.</p>
 
-    <h3>Bitcoin</h3>
-    <p>If you would like to make a donation to us in bitcoins, please use this address:</p>
-    <p><em style="margin-left: 2em">1Pc7sFnuRfDQ2rGoNwRA3nBX1Pqjjqb15v</em></p>
-
-    <h3>Cash</h3>
-    <p>If you would like to donate cash using a check or a bank draft, please send them to:</p>
+    <h3>US Check</h3>
+    <p>If you would like to donate using a check drawn on a US bank, please send them to:</p>
     <p>
       MetaBrainz Foundation<br/>
       3565 South Higuera St, Suite B<br/>
@@ -132,7 +135,7 @@
       United States
     </p>
     <p>Please make checks payable to the <strong>MetaBrainz Foundation</strong>.</p>
-    
+
     <h3>Flattr</h3>
     <p>If you use Flattr to donate to your favourite projects, you can click below to Flattr MetaBrainz:</p>
     <p><a href="https://flattr.com/profile/metabrainz ">https://flattr.com/profile/metabrainz</a></p>
@@ -263,7 +266,7 @@
         address: "true",
 
         token: function(token) {
-          form.attr("action", "{{ url_for('payments_stripe.pay') }}");
+          form.attr("action", "{{ url_for('payments_stripe.pay', donation=True) }}");
           $('<input>').attr({type: 'hidden', name: 'stripeToken', value: token.id}).appendTo(form);
           $('<input>').attr({type: 'hidden', name: 'stripeEmail', value: token.email}).appendTo(form);
           form.submit();

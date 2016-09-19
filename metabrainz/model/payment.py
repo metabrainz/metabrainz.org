@@ -13,7 +13,6 @@ import logging
 PAYMENT_METHOD_STRIPE = 'stripe'
 PAYMENT_METHOD_PAYPAL = 'paypal'
 PAYMENT_METHOD_WEPAY = 'wepay'
-PAYMENT_METHOD_BITCOIN = 'bitcoin'
 PAYMENT_METHOD_CHECK = 'check'
 
 
@@ -47,7 +46,6 @@ class Payment(db.Model):
         PAYMENT_METHOD_STRIPE,
         PAYMENT_METHOD_PAYPAL,
         PAYMENT_METHOD_WEPAY,
-        PAYMENT_METHOD_BITCOIN,
         PAYMENT_METHOD_CHECK,
         name='payment_method_types'
     ))
@@ -359,7 +357,7 @@ class Payment(db.Model):
             address_country=charge.source.address_country,
         )
 
-        if charge.metadata.is_donation is True:
+        if charge.metadata.is_donation is True or charge.metadata.is_donation == "True":
             new_donation.can_contact = charge.metadata.can_contact == u'True'
             new_donation.anonymous = charge.metadata.anonymous == u'True'
             if 'editor' in charge.metadata:

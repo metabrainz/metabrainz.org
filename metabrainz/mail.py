@@ -14,7 +14,7 @@ def send_mail(subject, text, recipients, attachments=None,
 
     Args:
         subject: Subject of the message.
-        message: The message itself.
+        text: The message itself.
         recipients: List of recipients.
         attachments: List of (file object, subtype, name) tuples. For example:
             (<file_obj>, 'pdf', 'receipt.pdf').

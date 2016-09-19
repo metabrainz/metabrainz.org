@@ -109,74 +109,36 @@
     </div>
 
     {% if good_users %}
-      <div id="featured-users" class="row {{ 'homepage-section' if not bad_users }}">
-
-        {% if bad_users %}
-          <div class="col-sm-6 users-block">
-            <div class="panel panel-success goodguys">
-              <div class="panel-heading">The Good Companies</div>
-              <div class="panel-body">
-                <div class="">
-                  <div class="col-sm-2" style="text-align: center;">
-                    <h1 class="text-success glyphicon glyphicon-thumbs-up"></h1>
-                  </div>
-                  <div class="col-sm-10">
-                    Some people do it right! Have a look at our
-                    <a href="{{ url_for('users.supporters_list') }}">list of supporters</a>.
-                  </div>
-                  <div class="clearfix"></div>
-                </div>
-                <hr />
-                <div class="row">
-                  {% for user in good_users[:2] %}
-                    <div class="col-sm-6 logo">
-                      <span><img src="{{ user.org_logo_url }}" /></span>
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 users-block">
-            <div class="panel panel-danger badguys">
-              <div class="panel-heading">The Bad Companies</div>
-              <div class="panel-body">
-                <div class="">
-                  <div class="col-sm-2" style="text-align: center;">
-                    <h1 class="text-danger glyphicon glyphicon-thumbs-down"></h1>
-                  </div>
-                  <div class="col-sm-10">
-                    Unfortunately some companies use data we provide without contributing back.
-                    <a href="{{ url_for('index.bad_customers') }}">Find out more</a> or
-                    <a href="{{ url_for('users.account_type') }}">Sign up</a>!
-                  </div>
-                  <div class="clearfix"></div>
-                </div>
-                <hr />
-                <div class="row">
-                  {% for user in bad_users %}
-                    <div class="col-sm-12 logo">
-                      <span><img src="{{ user.org_logo_url }}" /></span>
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
-          </div>
-
-        {% else %}
-          {% for user in good_users %}
-            <div class="col-sm-3 user">
+      <div id="featured-users" class="row homepage-section">
+        {% for user in good_users %}
+          <div class="col-sm-3 user">
             <span>
-              <a href="{{ url_for('users.tier', tier_id=user.tier_id) if user.tier and user.tier.available
-                          else url_for('users.supporters_list') }}">
-                <img src="{{ user.org_logo_url }}" />
+              <a href="{{ url_for('index.sponsors') }}">
+                <img src="{{ user.org_logo_url }}"/>
               </a>
             </span>
-            </div>
-          {% endfor %}
-        {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
 
+    {% if bad_users %}
+      <div class="homepage-section">
+        Unfortunately, some companies listed below use data we provide without contributing back.
+        <a href="{{ url_for('index.bad_customers') }}">Find out more</a> about them or
+        <a href="{{ url_for('users.account_type') }}">sign up</a>!
+      </div>
+
+      <div id="featured-users" class="row">
+        {% for user in bad_users %}
+          <div class="col-sm-3 user">
+            {% if user.org_logo_url %}
+                <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ user.org_logo_url }}"/></a></span>
+            {% else %}
+                <span class="name"><a href="{{ url_for('index.bad_customers') }}">{{ user.org_name }}</a></span>
+            {% endif %}
+          </div>
+        {% endfor %}
       </div>
     {% endif %}
 
