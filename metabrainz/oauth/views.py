@@ -58,8 +58,8 @@ def oauth_token_handler():
 
     if grant_type == 'authorization_code':
         grant = oauth_provider.fetch_grant(client_id, code)
-        user_id = grant.user.id
-        scope = grant.scopes
+        user_id = grant["user_id"]
+        scope = grant["scopes"]
     elif grant_type == 'refresh_token':
         token = oauth_provider.fetch_token(client_id, refresh_token)
         user_id = token["user_id"]
