@@ -13,7 +13,7 @@ def create(client_id, access_token, user_id, refresh_token, expires, scopes=None
             "client_id": client_id,
             "access_token": access_token,
             "user_id": user_id,
-            "redirect_uri": refresh_token,
+            "refresh_token": refresh_token,
             "expires": expires,
             "scopes": oauth.scopes_list_to_string(scopes),
         })
