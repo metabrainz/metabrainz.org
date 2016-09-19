@@ -17,7 +17,7 @@ def create(client_id, access_token, user_id, refresh_token, expires, scopes=None
             "expires": expires,
             "scopes": oauth.scopes_list_to_string(scopes),
         })
-    return result.fetchone()["id"]
+        return result.fetchone()["id"]
 
 
 def get_by_token(access_token):
