@@ -26,7 +26,7 @@ def get_by_token(access_token):
             SELECT id, client_id, access_token, user_id, refresh_token, expires, scopes
               FROM oauth_token
              WHERE access_token = :access_token
-        """), {"access_token", access_token})
+        """), {"access_token": access_token})
         row = result.fetchone()
         if row:
             out = dict(row)
