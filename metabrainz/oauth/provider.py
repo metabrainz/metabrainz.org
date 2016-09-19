@@ -4,6 +4,7 @@ from functools import wraps
 from metabrainz.utils import generate_string
 from metabrainz.db.oauth import client as db_client, grant as db_grant, token as db_token, AVAILABLE_SCOPES
 from metabrainz.oauth import exceptions
+import pytz
 import six
 
 
@@ -64,7 +65,7 @@ class MetaBrainzAuthorizationProvider(object):
         grant = self.fetch_grant(client_id, code)
         if grant is None:
             return False
-        return (datetime.now() > grant["expires"]) is False
+        return (datetime.datetime.now(pytz.utc) > grant["expires"]) is False
 
     def validate_token_scope(self, client_id, refresh_token, scope):
         token = self.fetch_token(client_id, refresh_token)
