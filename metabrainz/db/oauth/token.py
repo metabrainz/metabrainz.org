@@ -43,8 +43,8 @@ def get_by_client_id_and_refresh_token(client_id, refresh_token):
               FROM oauth_token
              WHERE client_id = :client_id AND refresh_token = :refresh_token
         """), {
-            "client_id", client_id,
-            "refresh_token", refresh_token,
+            "client_id": client_id,
+            "refresh_token": refresh_token,
         })
         row = result.fetchone()
         if row:
@@ -61,8 +61,8 @@ def delete_by_refresh_token(client_id, refresh_token):
             DELETE FROM oauth_grant
                   WHERE client_id = :client_id AND refresh_token = :refresh_token
         """), {
-            "client_id", client_id,
-            "refresh_token", refresh_token,
+            "client_id": client_id,
+            "refresh_token": refresh_token,
         })
 
 
@@ -72,6 +72,6 @@ def delete_by_user_id(client_id, user_id):
             DELETE FROM oauth_grant
                   WHERE client_id = :client_id AND user_id = :user_id
         """), {
-            "client_id", client_id,
-            "user_id", user_id,
+            "client_id": client_id,
+            "user_id": user_id,
         })
