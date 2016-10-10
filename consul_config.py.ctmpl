@@ -1,0 +1,70 @@
+# -*- coding: utf-8 -*-
+
+{{- define "KEY" -}}
+    {{- key (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") .) -}}
+{{- end -}}
+{{- define "KEY_OR_NONE" -}}
+    {{- key_or_default (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") .) "None" -}}
+{{- end -}}
+{{- define "KEY_ARRAY" -}}
+    {{- range $index, $element := (key (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") .) | parseJSON) -}}
+        "{{.}}",
+    {{- end -}}
+{{- end -}}
+
+SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
+
+{{if service "postgres-master"}}
+{{with index (service "postgres-master") 0}}
+SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@{{.Address}}:{{.Port}}/metabrainz_db"
+{{end}}
+{{end}}
+
+# PAYMENTS
+PAYMENT_PRODUCTION = {{template "KEY_OR_NONE" "payments/production"}}  # Must be `True` or `False`
+
+WEPAY_ACCOUNT_ID = '''{{template "KEY" "payments/wepay/account_id"}}'''
+WEPAY_ACCESS_TOKEN = '''{{template "KEY" "payments/wepay/account_token"}}'''
+
+PAYPAL_PRIMARY_EMAIL = '''{{template "KEY" "payments/paypal/primary_email"}}'''
+PAYPAL_BUSINESS = '''{{template "KEY" "payments/paypal/business_email"}}'''
+
+STRIPE_KEYS = {
+    "SECRET": '''{{template "KEY" "payments/stripe/prod/secret"}}''',
+    "PUBLISHABLE": '''{{template "KEY" "payments/stripe/prod/publishable"}}''',
+}
+STRIPE_TEST_KEYS = {
+    "SECRET": '''{{template "KEY" "payments/stripe/test/secret"}}''',
+    "PUBLISHABLE": '''{{template "KEY" "payments/stripe/test/publishable"}}''',
+}
+
+# MusicBrainz Base URL must have a trailing slash.
+MUSICBRAINZ_BASE_URL = '''{{template "KEY" "musicbrainz/base_url"}}'''
+MUSICBRAINZ_CLIENT_ID = '''{{template "KEY" "musicbrainz/client_id"}}'''
+MUSICBRAINZ_CLIENT_SECRET = '''{{template "KEY" "musicbrainz/client_secret"}}'''
+
+LOG_SENTRY = {
+    'dsn': '''{{template "KEY" "sentry_dsn_private"}}''',
+}
+
+# reCAPTCHA (https://www.google.com/recaptcha/)
+RECAPTCHA_PUBLIC_KEY = '''{{template "KEY" "recaptcha/public_key"}}'''
+RECAPTCHA_PRIVATE_KEY = '''{{template "KEY" "recaptcha/private_key"}}'''
+
+MAIL_FROM_DOMAIN = '''{{template "KEY" "mail_from_domain"}}'''
+
+# See http://flask.pocoo.org/docs/0.10/config/#builtin-configuration-values
+PREFERRED_URL_SCHEME = '''{{template "KEY" "preferred_url_scheme"}}'''
+
+# List of email addresses
+NOTIFICATION_RECIPIENTS = [
+    {{template "KEY_ARRAY" "notification_recipients"}}
+]
+
+# List of MusicBrainz usernames of people that are allowed to access
+# admin section of the website. Usernames are case-sensetive!
+ADMINS = [
+    {{template "KEY_ARRAY" "admins"}}
+]
+
+

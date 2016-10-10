@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # DEFAULT CONFIGURATION
 
+SECRET_KEY = "CHANGE_THIS"
+
 
 # DATABASE
 SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@db:5432/metabrainz"
@@ -53,8 +55,9 @@ MUSICBRAINZ_CLIENT_SECRET = ""
 # MISC
 
 # Mail server
-SMTP_SERVER = "localhost"
+SMTP_SERVER = "metabrainz-mail"
 SMTP_PORT = 25
+MAIL_FROM_DOMAIN = "metabrainz.org"
 
 ADMINS = []
 
@@ -63,6 +66,9 @@ RECAPTCHA_PRIVATE_KEY = ""
 
 NOTIFICATION_RECIPIENTS = []
 
-PREFERRED_URL_SCHEME = "http"
+USE_COMPILED_STYLING = True
+
+BEHIND_GATEWAY = True
+REMOTE_ADDR_HEADER = "X-MB-Remote-Addr"
 
 USE_NGINX_X_ACCEL = True

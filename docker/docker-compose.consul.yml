@@ -1,0 +1,44 @@
+# This compose file replicates a configuration that will be used in production
+# environment. Both Consul agent and git2consul should already be running on
+# the server.
+version: "2"
+services:
+
+  consulagent:
+    command: -server -bootstrap
+    image: progrium/consul
+    ports:
+      - "8500:8500"
+
+  git2consul:
+    command: --endpoint consulagent --port 8500 --config-file /etc/git2consul.d/config.json
+    image: cimpress/git2consul
+    restart: always
+    environment:
+      DEPLOY_ENV: prod
+    links:
+      - consulagent
+    volumes:
+      - ../:/tmp/metabrainz.git
+      - ./git2consul:/etc/git2consul.d
+
+  metabrainz:
+    build:
+        context: ..
+        dockerfile: ./Dockerfile
+    environment:
+      DEPLOY_ENV: prod
+    volumes:
+      - ../:/tmp/metabrainz.git
+      - ../:/code
+    ports:
+      - "13031:3031"
+
+  metabrainz-nginx:
+    build:
+        context: ./nginx_custom
+        dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
+
+

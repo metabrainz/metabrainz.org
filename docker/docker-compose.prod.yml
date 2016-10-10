@@ -1,0 +1,56 @@
+# Compose file for use on production servers.
+version: "2"
+services:
+
+  metabrainz:
+    build:
+      context: ..
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      DEPLOY_ENV: "prod"
+      SERVICE_13031_NAME: "metabrainz"
+      SERVICE_13031_CHECK_TCP: "true"
+      SERVICE_13031_CHECK_INTERVAL: "15s"
+      SERVICE_13031_CHECK_TIMEOUT: "3s"
+    links:
+      - redis
+      - metabrainz-mail
+    network_mode: bridge
+    ports:
+      - "13031:13031"
+
+  metabrainz-nginx:
+    build:
+      context: ./nginx_custom
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      DEPLOY_ENV: "prod"
+      SERVICE_64080_NAME: "metabrainz-nginx"
+      SERVICE_64080_CHECK_HTTP: "/"
+      SERVICE_64080_CHECK_INTERVAL: "15s"
+      SERVICE_64080_CHECK_TIMEOUT: "3s"
+    links:
+      - metabrainz
+    network_mode: bridge
+    ports:
+      - "63080:63080"
+
+  redis:
+    image: redis:3.2.1
+    restart: always
+    network_mode: bridge
+
+  metabrainz-mail:
+    build:
+      context: ./postfix
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      MAILDOMAIN: metabrainz.org
+    network_mode: bridge
+
+volumes:
+  critiquebrainz-data:
+    external: true

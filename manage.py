@@ -1,15 +1,40 @@
-﻿from metabrainz import db
+﻿from __future__ import print_function
+from werkzeug.serving import run_simple
+from metabrainz import db
+from metabrainz import create_app
+from metabrainz.model.access_log import AccessLog
+from metabrainz.model.utils import init_postgres, create_tables as db_create_tables
 import subprocess
 import os
 import click
-from metabrainz import config
-from metabrainz import create_app
-from metabrainz.model.access_log import AccessLog
 
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'admin', 'sql')
 
 cli = click.Group()
+application = create_app()
 
+
+@cli.command()
+@click.option("--host", "-h", default="0.0.0.0", show_default=True)
+@click.option("--port", "-p", default=8080, show_default=True)
+@click.option("--debug", "-d", is_flag=True,
+              help="Turns debugging mode on or off. If specified, overrides "
+                   "'DEBUG' value in the config file.")
+def runserver(host, port, debug=False):
+    run_simple(
+        hostname=host,
+        port=port,
+        application=application,
+        use_debugger=debug,
+        use_reloader=debug,
+    )
+
+
+@cli.command()
+def create_db():
+    """Create and configure the database."""
+    with application.app_context():
+        init_postgres(application.config['SQLALCHEMY_DATABASE_URI'])
 
 @cli.command()
 @click.option("--host", "-h", default="0.0.0.0", show_default=True)
@@ -20,14 +45,22 @@ cli = click.Group()
 def runserver(host, port, debug):
     create_app().run(host=host, port=port, debug=debug)
 
+@cli.command()
+def create_tables():
+    with application.app_context():
+        db_create_tables(application.config['SQLALCHEMY_DATABASE_URI'])
 
 def _run_psql(script, database=None):
     script = os.path.join(ADMIN_SQL_DIR, script)
-    command = ['psql', '-p', str(config.PG_PORT), '-U', config.PG_SUPER_USER, '-f', script]
+    command = ['psql', '-p', str(application.config["PG_PORT"]), '-U', application.config["PG_SUPER_USER"], '-f', script]
     if database:
         command.extend(['-d', database])
     return subprocess.call(command)
 
+@cli.command()
+def cleanup_logs():
+    with create_app().app_context():
+        AccessLog.remove_old_ip_addr_records()
 
 @cli.command()
 @click.option("--force", "-f", is_flag=True, help="Drop existing database and user.")
@@ -47,7 +80,7 @@ def init_db(force):
     if exit_code != 0:
         raise Exception('Failed to create database extensions! Exit code: %i' % exit_code)
 
-    db.init_db_engine(config.SQLALCHEMY_DATABASE_URI)
+    db.init_db_engine(application.config["SQLALCHEMY_DATABASE_URI"])
 
     print('Creating types...')
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_types.sql'))
@@ -87,7 +120,7 @@ def init_test_db(force=False):
     if exit_code != 0:
         raise Exception('Failed to create database extensions! Exit code: %i' % exit_code)
 
-    db.init_db_engine(config.TEST_SQLALCHEMY_DATABASE_URI)
+    db.init_db_engine(application.config["TEST_SQLALCHEMY_DATABASE_URI"])
 
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_types.sql'))
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_tables.sql'))
@@ -96,12 +129,6 @@ def init_test_db(force=False):
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_indexes.sql'))
 
     print("Done!")
-
-
-@cli.command
-def cleanup_logs():
-    with create_app().app_context():
-        AccessLog.remove_old_ip_addr_records()
 
 
 if __name__ == '__main__':
