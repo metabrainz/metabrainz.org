@@ -15,9 +15,6 @@ pip-delete-this-directory.txt
 htmlcov/
 .coverage
 
-
-# Mac sillyness
-.DS_Store
 # Application data
 /data
 

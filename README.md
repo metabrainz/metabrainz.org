@@ -1,40 +1,79 @@
 # metabrainz.org
 
-Website for the [MetaBrainz Foundation](https://metabrainz.org/). This is
+**Website for the [MetaBrainz Foundation](https://metabrainz.org/).** This is
 a Flask-based web application that is meant to provide info about the
 foundation, accept donations from users and organizations, and provide
 access to [replication packets](https://musicbrainz.org/doc/Replication_Mechanics)
 for MusicBrainz.
 
-## Development
+
+## Setup
+
+The easiest way to set up MetaBrainz website is to use [Docker](https://www.docker.com/).
+
+### Configuration
 
 Before starting the application copy `config.py.example` into `config.py` 
-(in the metabrainz directory) and tweak the configuration. You need to make sure 
-that all API keys are set.
+and tweak the configuration. You need to make sure that all API keys are set.
 
-The easiest way to set up a development environment is to use [Vagrant](https://www.vagrantup.com/).
-This command will create and configure virtual machine that you will be able to
+#### Payments
+
+Next is configuration of the payment systems. We use PayPal and WePay to accept
+donations to our foundation. For WePay you need to set your access token
+(*WEPAY_ACCESS_TOKEN*) and account ID (*WEPAY_ACCESS_TOKEN*). PayPal is a
+bit more complicated. *PAYPAL_PRIMARY_EMAIL* is an address that should receive
+all the payments. *PAYPAL_BUSINESS* is an address for non-donations; all
+payments sent there will be ignored.
+
+After these settings have been set and you are sure that your configuration
+is working properly with in test mode, you can flip the switch. Set *DEBUG* to
+``False`` and *PAYMENT_PRODUCTION* to ``True``.
+
+#### MusicBrainz OAuth
+
+To allow users to log in, you'll need to set two keys: ``MUSICBRAINZ_CLIENT_ID``
+and ``MUSICBRAINZ_CLIENT_SECRET``. To obtain these keys, you need to register
+your instance of MetaBrainz.org on MusicBrainz at
+https://musicbrainz.org/account/applications/register. Set Callback URL field
+to ``http://<your host>/login/musicbrainz/post`` (if ``PREFERRED_URL_SCHEME``
+in the config file is set to ``https``, make sure that you specify the same
+protocol for callback URL). If you run server locally, replace ``<your host>``
+with ``127.0.0.1:8080``.
+
+#### Serving replication packets
+
+Replication packets must be copied into ``./data/replication_packets`` directory.
+It must have the following structure:
+```
+./data/replication_packets/
+    - hourly replication packets
+
+./data/replication_packets/daily/
+    - daily replication packets
+
+./data/replication_packets/weekly/
+    - weekly replication packets
+```
+
+### Startup
+
+This command will build and start all the services that you will be able to
 use for development:
 
-    $ vagrant up
+    $ docker-compose -f docker/docker-compose.yml up --build -d
 
-After VM is created and running, access it via SSH and start the application: 
+The first time you set up the application, database tables need to be created:
 
-    $ vagrant ssh
-    $ cd /vagrant
-    $ python manage.py runserver -d
+    $ docker-compose -f docker/docker-compose.yml run web python manage.py create_tables
 
-Web server should be accessible at http://localhost:8080/.
+Web server should now be accessible at **http://localhost:80/**.
 
-### Testing
+
+## Testing
 
 To run all tests use:
 
     $ py.test
-
-This command will run all tests and produce a coverage report in HTML format.
-It will be located in cover/index.html file. We use [py.test](https://pytest.org)
-library.
 
 ### Testing donations
 
@@ -51,19 +90,3 @@ Please note that in order for [IPNs](https://en.wikipedia.org/wiki/Instant_payme
 to work, application MUST be publicly available. If you are doing development
 on your local machine it is likely that your callback endpoints will not be
 reachable from payment processors.
-
-## Deployment
-
-*If you want to do development you should use instructions above. It is much
-easier way to start.*
-
-For more detailed installation instructions see [INSTALL.md](https://github.com/metabrainz/metabrainz.org/blob/master/INSTALL.md)
-file.
-
-## Community
-
-If you want to discuss something, go to *#metabrainz* IRC channel on
-irc.freenode.net. More info about available methods of getting in touch with
-community is available at https://musicbrainz.org/doc/Communication.
-
-Good luck! You'll need it.
