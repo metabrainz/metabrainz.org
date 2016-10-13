@@ -104,7 +104,7 @@ def init_test_db(force=False):
     """Same as `init_db` command, but creates a database that will be used to
     run tests.
 
-    `TEST_SQLALCHEMY_DATABASE_URI` must be defined in the config file.
+    `SQLALCHEMY_DATABASE_URI` must be defined in the config file.
     """
     if force:
         exit_code = _run_psql('drop_test_db.sql')
@@ -120,7 +120,7 @@ def init_test_db(force=False):
     if exit_code != 0:
         raise Exception('Failed to create database extensions! Exit code: %i' % exit_code)
 
-    db.init_db_engine(application.config["TEST_SQLALCHEMY_DATABASE_URI"])
+    db.init_db_engine(application.config["SQLALCHEMY_DATABASE_URI"])
 
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_types.sql'))
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_tables.sql'))

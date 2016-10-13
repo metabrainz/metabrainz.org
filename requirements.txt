@@ -9,8 +9,8 @@ Flask-Testing == 0.4.2
 Flask-WTF == 0.12
 click == 6.6
 psycopg2 == 2.6
-pytest == 2.9.2
-pytest-cov == 2.2.1
+pytest == 3.0.1
+pytest-cov == 2.3.1
 python-memcached == 1.57
 six == 1.10.0
 pytz == 2015.7

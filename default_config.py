@@ -6,7 +6,6 @@ SECRET_KEY = "CHANGE_THIS"
 
 # DATABASE
 SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@db:5432/metabrainz"
-TEST_SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz_test:metabrainz_test@db:5432/metabrainz_test"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 

@@ -3,18 +3,20 @@ from metabrainz import create_app
 from metabrainz import model
 from metabrainz import db
 import os.path
+import os
 
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'admin', 'sql')
+
 
 
 class FlaskTestCase(TestCase):
 
     def create_app(self):
-        app = create_app()
-        app.config['TESTING'] = True
-        app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False  # otherwise redirects aren't going to return right status
-        app.config['SQLALCHEMY_DATABASE_URI'] = app.config['TEST_SQLALCHEMY_DATABASE_URI']
-        db.init_db_engine(app.config['TEST_SQLALCHEMY_DATABASE_URI'])
+        app = create_app(config_path=os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            'test_config.py'
+        ))
+        db.init_db_engine(app.config['SQLALCHEMY_DATABASE_URI'])
         return app
 
     def setUp(self):

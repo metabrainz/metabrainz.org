@@ -3,7 +3,7 @@ from flask import send_from_directory, request
 import os
 
 
-def create_app():
+def create_app(config_path=None):
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
@@ -23,6 +23,8 @@ def create_app():
         os.path.dirname(os.path.realpath(__file__)),
         '..', 'custom_config.py'
     ), silent=True)
+    if config_path:
+        app.config.from_pyfile(config_path)
 
     app.init_loggers(
         file_config=app.config.get('LOG_FILE'),

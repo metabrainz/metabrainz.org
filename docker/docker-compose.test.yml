@@ -1,0 +1,23 @@
+# Docker Compose file for testing
+version: "2"
+services:
+
+  web_test:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile.test
+    depends_on:
+      - db
+      - redis
+
+  db:
+    build:
+      context: ./pg_custom/
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: metabrainz
+      POSTGRES_PASSWORD: metabrainz
+      POSTGRES_DB: metabrainz
+
+  redis:
+    image: redis:3.2.1
