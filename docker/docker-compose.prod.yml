@@ -44,11 +44,9 @@ services:
 
   metabrainz-mail:
     build:
-      context: ./postfix
+      context: ./smtp
       dockerfile: Dockerfile
     restart: always
-    environment:
-      MAILDOMAIN: metabrainz.org
     network_mode: bridge
 
 volumes:

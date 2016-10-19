@@ -33,7 +33,7 @@ services:
 
   mail:
     build:
-      context: ./postfix/
+      context: ./smtp/
       dockerfile: Dockerfile
     environment:
       MAILDOMAIN: metabrainz.org
