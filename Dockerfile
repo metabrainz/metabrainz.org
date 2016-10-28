@@ -4,6 +4,7 @@ COPY ./docker/prod/docker-helpers/install_consul_template.sh \
      ./docker/prod/docker-helpers/install_runit.sh \
      /usr/local/bin/
 RUN chmod 755 /usr/local/bin/install_consul_template.sh /usr/local/bin/install_runit.sh && \
+    sync && \
     install_consul_template.sh && \
     rm -f \
         /usr/local/bin/install_consul_template.sh \
