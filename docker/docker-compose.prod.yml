@@ -9,6 +9,7 @@ services:
     restart: always
     environment:
       DEPLOY_ENV: "prod"
+      CONSUL_HOST: "10.2.2.23"
       SERVICE_13031_NAME: "metabrainz"
       SERVICE_13031_CHECK_TCP: "true"
       SERVICE_13031_CHECK_INTERVAL: "15s"
@@ -26,7 +27,6 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     environment:
-      DEPLOY_ENV: "prod"
       SERVICE_64080_NAME: "metabrainz-nginx"
       SERVICE_64080_CHECK_HTTP: "/"
       SERVICE_64080_CHECK_INTERVAL: "15s"
