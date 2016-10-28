@@ -20,6 +20,16 @@ SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@{{.Address}}:{{.Po
 {{end}}
 {{end}}
 
+{{if service "metabrainz-redis"}}
+{{with index (service "metabrainz-redis") 0}}
+REDIS = {
+    "host": '''{{.Address}}''',
+    "port": {{.Port}},
+    "namespace": "MEB",
+}
+{{end}}
+{{end}}
+
 # PAYMENTS
 PAYMENT_PRODUCTION = {{template "KEY_OR_NONE" "payments/production"}}  # Must be `True` or `False`
 
@@ -51,6 +61,12 @@ LOG_SENTRY = {
 RECAPTCHA_PUBLIC_KEY = '''{{template "KEY" "recaptcha/public_key"}}'''
 RECAPTCHA_PRIVATE_KEY = '''{{template "KEY" "recaptcha/private_key"}}'''
 
+{{if service "metabrainz-mail"}}
+{{with index (service "metabrainz-mail") 0}}
+SMTP_SERVER = '''{{.Address}}'''
+SMTP_PORT = {{.Port}}
+{{end}}
+{{end}}
 MAIL_FROM_DOMAIN = '''{{template "KEY" "mail_from_domain"}}'''
 
 # See http://flask.pocoo.org/docs/0.10/config/#builtin-configuration-values
