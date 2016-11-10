@@ -29,10 +29,7 @@
     {% include 'navbar.html' %}
 
     <div class="container">
-
-      <div class="alert alert-warning"><strong>We are in the process of migrating to a new hosting provider!</strong> Some things like customer logos and OAuth aren't working yet.
-        We have top men working on it right now. Check <a href="https://twitter.com/metabrainz">our Twitter</a> for updates.</div>
-
+      
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, message in messages %}
           {{ print_message(message, category) }}
