@@ -21,3 +21,5 @@ htmlcov/
 # Configuration
 /consul_config.py
 /custom_config.py
+
+/node_modules

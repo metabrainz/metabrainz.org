@@ -24,13 +24,14 @@ RUN apt-get update \
 # Specifying password so that client doesn't ask scripts for it...
 ENV PGPASSWORD "metabrainz"
 
-# Node and Less compiler
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install -g less less-plugin-clean-css
-
 RUN mkdir /code
 WORKDIR /code
+
+# Node and dependencies
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN apt-get install -y nodejs
+COPY ./package.json /code/
+RUN npm install
 
 # Python dependencies
 RUN apt-get update && \
@@ -47,7 +48,7 @@ RUN pip install -r requirements.txt
 RUN pip install uWSGI==2.0.13.1
 
 COPY . /code/
-RUN lessc --clean-css metabrainz/static/css/main.less > metabrainz/static/css/main.css
+RUN ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/static/css/main.css
 
 ############
 # Services #

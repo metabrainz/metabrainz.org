@@ -10,13 +10,14 @@ RUN apt-get update \
 # Specifying password so that client doesn't ask scripts for it...
 ENV PGPASSWORD "metabrainz"
 
-# Node and Less compiler
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install -g less less-plugin-clean-css
-
 RUN mkdir /code
 WORKDIR /code
+
+# Node and dependencies
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN apt-get install -y nodejs
+COPY ./package.json /code/
+RUN npm install
 
 # Python dependencies
 RUN apt-get update && \
@@ -32,6 +33,6 @@ COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 
 COPY . /code/
-RUN fab compile_styling
+RUN ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/static/css/main.css
 
 CMD python manage.py runserver -h 0.0.0.0 -p 80 -d
