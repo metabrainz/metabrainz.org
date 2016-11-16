@@ -4,9 +4,10 @@ from werkzeug.wrappers import Response
 from werkzeug.urls import iri_to_uri
 from metabrainz.api.decorators import token_required, tracked
 import logging
+import copy
+import time
 import re
 import os
-import time
 
 api_musicbrainz_bp = Blueprint('api_musicbrainz', __name__)
 
@@ -40,7 +41,7 @@ def replication_check():
     pattern = re.compile("replication-[0-9]+.tar.bz2$")
     entries = filter(lambda x: pattern.search(x), entries)
     entries = filter(os.path.isfile, entries)
-    entries.sort()
+    entries = _sort_natural(entries)
 
     if len(entries) == 0:
         return Response("UNKNOWN no replication packets available", mimetype='text/plain')
@@ -86,7 +87,7 @@ def replication_info():
         pattern = re.compile(pattern)
         entries = filter(lambda x: pattern.search(x), entries)
         entries = filter(os.path.isfile, entries)
-        entries.sort(reverse=True)  # latest first
+        entries = _sort_natural(entries, reverse=True)  # latest first
         return os.path.split(entries[0])[-1] if entries else None
 
     # TODO(roman): Cache this response:
@@ -203,3 +204,16 @@ def _redirect_to_nginx(location):
     location = iri_to_uri(location, safe_conversion=True)
     response.headers['X-Accel-Redirect'] = location
     return response
+
+
+def _sort_natural(names_list, reverse=False):
+    """Sort list using a natural sort order.
+
+    https://en.wikipedia.org/wiki/Natural_sort_order
+    """
+    def sort_key(val):
+        return [int(s) if s.isdigit() else s for s in re.split(r'(\d+)', val)]
+
+    list_copy = copy.copy(names_list)
+    list_copy.sort(key=sort_key, reverse=reverse)
+    return list_copy
