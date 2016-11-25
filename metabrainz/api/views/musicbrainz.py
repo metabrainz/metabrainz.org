@@ -214,6 +214,4 @@ def _sort_natural(names_list, reverse=False):
     def sort_key(val):
         return [int(s) if s.isdigit() else s for s in re.split(r'(\d+)', val)]
 
-    list_copy = copy.copy(names_list)
-    list_copy.sort(key=sort_key, reverse=reverse)
-    return list_copy
+    return sorted(names_list, key=sort_key, reverse=reverse)

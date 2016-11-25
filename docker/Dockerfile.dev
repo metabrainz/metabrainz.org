@@ -1,4 +1,4 @@
-FROM python:2.7.12
+FROM metabrainz/python:3.5
 
 # PostgreSQL client
 ENV PG_MAJOR 9.5
@@ -20,15 +20,17 @@ COPY ./package.json /code/
 RUN npm install
 
 # Python dependencies
-RUN apt-get update && \
-    apt-get install -y \
-                    build-essential \
-                    libtiff5-dev \
-                    libffi-dev \
-                    libxml2-dev \
-                    libxslt1-dev \
-                    libssl-dev && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+     && apt-get install -y --no-install-recommends \
+                        build-essential \
+                        git \
+                        libpq-dev \
+                        libtiff5-dev \
+                        libffi-dev \
+                        libxml2-dev \
+                        libxslt1-dev \
+                        libssl-dev \
+     && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 

@@ -1,5 +1,4 @@
-import urlparse
-import urllib
+from urllib.parse import urlparse, parse_qsl, urlunparse, urlencode
 import string
 import random
 
@@ -15,15 +14,16 @@ def generate_string(length):
 
 
 def build_url(base, additional_params=None):
-    url = urlparse.urlparse(base)
+    url = urlparse(base)
     query_params = {}
-    query_params.update(urlparse.parse_qsl(url.query, True))
+    query_params.update(parse_qsl(url.query, True))
     if additional_params is not None:
         query_params.update(additional_params)
-        for key, val in additional_params.iteritems():
+        for key, val in additional_params.items():
             if val is None:
                 query_params.pop(key)
 
-    return urlparse.urlunparse(
+    return urlunparse(
         (url.scheme, url.netloc, url.path, url.params,
-         urllib.urlencode(query_params), url.fragment))
+         urlencode(query_params), url.fragment)
+    )

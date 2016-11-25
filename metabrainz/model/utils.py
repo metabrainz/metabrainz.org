@@ -1,4 +1,4 @@
-from urlparse import urlsplit
+from urllib.parse import urlsplit
 from sqlalchemy import create_engine
 from metabrainz.model import db
 import subprocess

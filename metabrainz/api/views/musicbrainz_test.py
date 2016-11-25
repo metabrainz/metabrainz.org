@@ -60,23 +60,24 @@ class MusicBrainzViewsTestCase(FlaskTestCase):
     def test_replication_check(self):
         resp = self.client.get('/api/musicbrainz/replication-check')
         self.assert200(resp)
-        self.assertEquals(resp.data, "UNKNOWN no replication packets available")
+        self.assertEquals(resp.data, b"UNKNOWN no replication packets available")
 
         open(os.path.join(self.path, 'replication-1.tar.bz2'), 'a').close()
         resp = self.client.get('/api/musicbrainz/replication-check')
         self.assert200(resp)
-        self.assertEquals(resp.data, "OK")
+        self.assertEquals(resp.data, b"OK")
 
         open(os.path.join(self.path, 'replication-3.tar.bz2'), 'a').close()
         resp = self.client.get('/api/musicbrainz/replication-check')
         self.assert200(resp)
-        self.assertEquals(resp.data, "CRITICAL Replication packet 2 is missing")
+        self.assertEquals(resp.data, b"CRITICAL Replication packet 2 is missing")
 
         open(os.path.join(self.path, 'replication-2.tar.bz2'), 'a').close()
         os.utime(os.path.join(self.path, 'replication-3.tar.bz2'), (0, 0))
         resp = self.client.get('/api/musicbrainz/replication-check')
         self.assert200(resp)
-        self.assertTrue(str(resp.data).startswith("CRITICAL"))
+        print(resp.data)
+        self.assertTrue(resp.data.startswith(b"CRITICAL"))
 
     def test_replication_hourly(self):
         self.assert400(self.client.get(url_for('api_musicbrainz.replication_hourly', packet_number=1)))
