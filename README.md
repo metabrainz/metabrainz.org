@@ -1,20 +1,39 @@
 # metabrainz.org
 
 **Website for the [MetaBrainz Foundation](https://metabrainz.org/).** This is
-a Flask-based web application that is meant to provide info about the
-foundation, accept donations from users and organizations, and provide
-access to [replication packets](https://musicbrainz.org/doc/Replication_Mechanics)
+a Flask-based web application that provides info about the foundation and its
+supporters, accepts donations from users and organizations, and provides
+access to the [replication packets](https://musicbrainz.org/doc/Replication_Mechanics)
 for MusicBrainz.
 
 
-## Setup
+## Development setup
 
-The easiest way to set up MetaBrainz website is to use [Docker](https://www.docker.com/).
+The easiest way to set up MetaBrainz website for development is to use
+[Docker](https://www.docker.com/). Make sure that it is installed on your
+machine before following the instructions.
 
 ### Configuration
 
-Before starting the application copy `custom_config.py.example` into `custom_config.py` 
-and tweak the configuration. You need to make sure that all the API keys are set.
+Custom configuration must be stored in the file called `custom_config.py`.
+You can use an example one (`custom_config.py.example`) and tweak the
+configuration:
+
+    $ cp custom_config.py.example custom_config.py
+    $ vim custom_config.py
+
+You need to make sure that required variables are set.
+
+#### MusicBrainz OAuth
+
+To allow users to log in, you'll need to set two keys: ``MUSICBRAINZ_CLIENT_ID``
+and ``MUSICBRAINZ_CLIENT_SECRET``. To obtain these keys, you need to register
+your instance of MetaBrainz.org on MusicBrainz at
+https://musicbrainz.org/account/applications/register. Set Callback URL field
+to ``http://<your host>/login/musicbrainz/post`` (if ``PREFERRED_URL_SCHEME``
+in the config file is set to ``https``, make sure that you specify the same
+protocol for callback URL). If you run server locally, replace ``<your host>``
+with ``localhost``.
 
 #### Payments
 
@@ -29,17 +48,6 @@ After these settings have been set and you are sure that your configuration
 is working properly with in test mode, you can flip the switch. Set *DEBUG* to
 ``False`` and *PAYMENT_PRODUCTION* to ``True``. **WARNING! For development
 purposes you should only use payments in debug mode.**
-
-#### MusicBrainz OAuth
-
-To allow users to log in, you'll need to set two keys: ``MUSICBRAINZ_CLIENT_ID``
-and ``MUSICBRAINZ_CLIENT_SECRET``. To obtain these keys, you need to register
-your instance of MetaBrainz.org on MusicBrainz at
-https://musicbrainz.org/account/applications/register. Set Callback URL field
-to ``http://<your host>/login/musicbrainz/post`` (if ``PREFERRED_URL_SCHEME``
-in the config file is set to ``https``, make sure that you specify the same
-protocol for callback URL). If you run server locally, replace ``<your host>``
-with ``localhost:80``.
 
 #### Serving replication packets
 
