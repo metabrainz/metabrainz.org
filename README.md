@@ -14,11 +14,11 @@ The easiest way to set up MetaBrainz website is to use [Docker](https://www.dock
 ### Configuration
 
 Before starting the application copy `custom_config.py.example` into `custom_config.py` 
-and tweak the configuration. You need to make sure that all API keys are set.
+and tweak the configuration. You need to make sure that all the API keys are set.
 
 #### Payments
 
-Next is configuration of the payment systems. We use PayPal and WePay to accept
+Next is the configuration of the payment systems. We use PayPal and WePay to accept
 donations to our foundation. For WePay you need to set your access token
 (*WEPAY_ACCESS_TOKEN*) and account ID (*WEPAY_ACCESS_TOKEN*). PayPal is a
 bit more complicated. *PAYPAL_PRIMARY_EMAIL* is an address that should receive
@@ -27,7 +27,8 @@ payments sent there will be ignored.
 
 After these settings have been set and you are sure that your configuration
 is working properly with in test mode, you can flip the switch. Set *DEBUG* to
-``False`` and *PAYMENT_PRODUCTION* to ``True``.
+``False`` and *PAYMENT_PRODUCTION* to ``True``. **WARNING! For development
+purposes you should only use payments in debug mode.**
 
 #### MusicBrainz OAuth
 
@@ -38,7 +39,7 @@ https://musicbrainz.org/account/applications/register. Set Callback URL field
 to ``http://<your host>/login/musicbrainz/post`` (if ``PREFERRED_URL_SCHEME``
 in the config file is set to ``https``, make sure that you specify the same
 protocol for callback URL). If you run server locally, replace ``<your host>``
-with ``127.0.0.1:8080``.
+with ``localhost:80``.
 
 #### Serving replication packets
 
@@ -74,6 +75,10 @@ Web server should now be accessible at **http://localhost:80/**.
 To run all tests use:
 
     $ py.test
+    
+or with Docker:
+
+    $ docker-compose -f docker/docker-compose.test.yml up --build --remove-orphans
 
 ### Testing donations
 
