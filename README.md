@@ -13,7 +13,7 @@ The easiest way to set up MetaBrainz website is to use [Docker](https://www.dock
 
 ### Configuration
 
-Before starting the application copy `config.py.example` into `config.py` 
+Before starting the application copy `custom_config.py.example` into `custom_config.py` 
 and tweak the configuration. You need to make sure that all API keys are set.
 
 #### Payments
@@ -60,11 +60,11 @@ It must have the following structure:
 This command will build and start all the services that you will be able to
 use for development:
 
-    $ docker-compose -f docker/docker-compose.yml up --build -d
+    $ docker-compose -f docker/docker-compose.dev.yml up --build -d
 
 The first time you set up the application, database tables need to be created:
 
-    $ docker-compose -f docker/docker-compose.yml run web python manage.py create_tables
+    $ docker-compose -f docker/docker-compose.dev.yml run web python manage.py create_tables
 
 Web server should now be accessible at **http://localhost:80/**.
 
