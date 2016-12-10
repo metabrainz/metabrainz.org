@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 from metabrainz.model.user import User
 
 index_bp = Blueprint('index', __name__)
@@ -49,3 +49,8 @@ def bad_customers():
 @index_bp.route('/privacy')
 def privacy_policy():
     return render_template('index/privacy.html')
+
+
+@index_bp.route('/about/customers.html')
+def about_customers_redirect():
+    return redirect(url_for('users.supporters_list') , 301)
