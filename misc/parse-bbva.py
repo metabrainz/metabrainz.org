@@ -7,6 +7,7 @@ print "Date,Description,Amount"
 
 lines = sys.stdin.readlines()
 for line in lines:
+    line = line.decode('iso-8859-1').encode('utf8')
     stripped = line.strip()
     if len(stripped) == 0 or not stripped[0].isdigit():
         continue
