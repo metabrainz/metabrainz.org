@@ -4,26 +4,16 @@ from metabrainz.model import db
 import subprocess
 
 
-def explode_db_url(url):
-    """Extracts database connection info from the URL.
-
-    Returns:
-        hostname, database name, username and password
-    """
-    url = urlsplit(url)
-    return url.hostname, url.path[1:], url.username, url.password
-
-
 def create_tables(db_uri):
     engine = create_engine(db_uri)
     db.metadata.create_all(engine)
 
 
-def init_postgres(uri):
+def init_postgres(db_uri):
     """Initializes PostgreSQL database from provided URI.
-    New user and database will be created, if needed.
+    New user and database will be created, if needed. It also creates uuid-ossp extension.
     """
-    hostname, db, username, password = explode_db_url(uri)
+    hostname, port, db, username, password = _split_db_uri(db_uri)
     if hostname not in ['localhost', '127.0.0.1']:
         raise Exception('Cannot configure a remote database')
 
@@ -40,3 +30,13 @@ def init_postgres(uri):
         exit_code = subprocess.call('sudo -u postgres createdb -O %s %s' % (username, db), shell=True)
         if exit_code != 0:
             raise Exception('Failed to create PostgreSQL database!')
+
+
+def _split_db_uri(uri):
+    """Extracts database connection info from the URI.
+
+    Returns:
+        Tuple: hostname, port, database name, username and password.
+    """
+    uri = urlsplit(uri)
+    return uri.hostname, uri.port, uri.path[1:], uri.username, uri.password

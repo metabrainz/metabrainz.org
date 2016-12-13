@@ -109,14 +109,18 @@
     </div>
 
     {% if good_users %}
-      <div id="featured-users" class="row homepage-section">
+      <div class="featured-users homepage-section">
         {% for user in good_users %}
-          <div class="col-sm-3 user">
-            <span>
+          <div class="user">
               <a href="{{ url_for('users.supporters_list') }}">
-                <img src="{{ user.org_logo_url }}"/>
+                <div class="logo-container">
+                  {% if user.org_logo_url %}
+                    <img class="logo" src="{{ user.org_logo_url }}" />
+                  {% else %}
+                    <div class="name">{{ user.org_name }}</div>
+                  {% endif %}
+                </div>
               </a>
-            </span>
           </div>
         {% endfor %}
       </div>
@@ -143,7 +147,7 @@
     {% endif %}
 
     <div id="additional-intro">
-      To get more information about the foundation go to the
+      To get more information about the foundation, go to the
       <a href="{{ url_for('index.about') }}">about</a> page.
     </div>
 

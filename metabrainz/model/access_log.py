@@ -2,7 +2,7 @@ from metabrainz.model import db
 from metabrainz.model.token import Token
 from metabrainz.model.user import User
 from metabrainz.mail import send_mail
-from metabrainz import cache
+from brainzutils import cache
 from sqlalchemy import func
 from sqlalchemy.dialects import postgres
 from datetime import datetime, timedelta
@@ -62,7 +62,7 @@ class AccessLog(db.Model):
                   (access_token, count, CLEANUP_RANGE_MINUTES)
             logging.info(msg)
             # Checking if notification for admins about this token abuse has
-            # been sent in the last hour. This info is kept in memcached.
+            # been sent in the last hour. This info is kept in cache.
             key = "alert_sent_%s" % access_token
             if not cache.get(key):
                 send_mail(

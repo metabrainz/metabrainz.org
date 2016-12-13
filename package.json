@@ -1,0 +1,14 @@
+{
+  "name": "metabrainz.org",
+  "version": "0.0.0",
+  "description": "package.json for keeping track of nodejs dependencies for MetaBrainz website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metabrainz/metabrainz.org.git"
+  },
+  "dependencies": {
+    "less": "2.7.1",
+    "less-plugin-clean-css": "1.5.0"
+  },
+  "private": true
+}

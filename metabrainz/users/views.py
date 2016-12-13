@@ -1,13 +1,14 @@
 from flask import Blueprint, request, redirect, render_template, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
-from metabrainz.mail import send_mail
+from metabrainz.mail import send_mail, MailException
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
 from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.users import musicbrainz_login, login_forbidden
 from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, UserEditForm
 from metabrainz import flash, session
+import logging
 
 users_bp = Blueprint('users', __name__)
 
@@ -133,13 +134,18 @@ def signup_commercial():
             )
             flash.success("Thanks for signing up! Your application will be reviewed "
                           "soon. We will send you updates via email.")
-            send_mail(
-                subject="[MetaBrainz] Sign up confirmation",
-                text='Dear %s,\n\nThank you for signing up!\n\nYour application'
-                     ' will be reviewed soon. We will send you updates via email.'
-                     % new_user.contact_name,
-                recipients=[new_user.contact_email],
-            )
+            try:
+                send_mail(
+                    subject="[MetaBrainz] Sign up confirmation",
+                    text='Dear %s,\n\nThank you for signing up!\n\nYour application'
+                         ' will be reviewed soon. We will send you updates via email.'
+                         % new_user.contact_name,
+                    recipients=[new_user.contact_email],
+                )
+            except MailException as e:
+                logging.error(e)
+                flash.warn("Failed to send welcome email to you. We are looking into it. "
+                           "Sorry for inconvenience!")
         else:
             flash.info("You already have a MetaBrainz account!")
         login_user(new_user)
@@ -173,13 +179,18 @@ def signup_noncommercial():
                 data_usage_desc=form.usage_desc.data,
             )
             flash.success("Thanks for signing up!")
-            send_mail(
-                subject="[MetaBrainz] Sign up confirmation",
-                text='Dear %s,\n\nThank you for signing up!\n\nYou can now generate '
-                     'an access token for the MetaBrainz API on your profile page.'
-                     % new_user.contact_name,
-                recipients=[new_user.contact_email],
-            )
+            try:
+                send_mail(
+                    subject="[MetaBrainz] Sign up confirmation",
+                    text='Dear %s,\n\nThank you for signing up!\n\nYou can now generate '
+                         'an access token for the MetaBrainz API on your profile page.'
+                         % new_user.contact_name,
+                    recipients=[new_user.contact_email],
+                )
+            except MailException as e:
+                logging.error(e)
+                flash.warn("Failed to send welcome email to you. We are looking into it. "
+                           "Sorry for inconvenience!")
         else:
             flash.info("You already have a MetaBrainz account!")
         login_user(new_user)

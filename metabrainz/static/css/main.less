@@ -65,46 +65,33 @@ h1.page-title, h2.page-title {
 
   #more-intro { margin-bottom: @section-margin; }
 
-  #featured-users {
-    .users-block .logo img {
-      height: 65px;
-      line-height: 50px;
-      margin: 0 auto;
-    }
-    @featured-org-height: 65px;
-    .user.col-sm-3 {
-      height: @featured-org-height;
-      line-height: @featured-org-height;
-      text-align: center;
-      @media (max-width: @screen-xs-max) { margin-top: 10px; }
-      a {
-        color: @headings-font-color;
-        text-decoration: none;
-        &:hover {
-          color: @headings-font-color;
-          text-decoration: none;
-        }
+  .featured-users {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+    .user {
+      width: 199px;
+      height: 100px;
+      margin-left: 18px;
+      margin-right: 18px;
+      @media (max-width: @grid-float-breakpoint) {
+        padding-bottom: 12px;
+        margin: 0 auto;
       }
-      > span {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: normal;
-        img {
-          display: block;
-          margin: auto;
-          max-height: @featured-org-height;
-          max-width: 145px;
-        }
-        &.name {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-weight: bold;
-          font-size: 1.8em;
+      .logo-container {
+        margin: 0 auto;
+        line-height: 100px;
+        text-align: center;
+        .logo {
+          max-width: 160px;
+          max-height: 70px;
+          display: inline-block;
+          vertical-align: middle;
         }
       }
     }
   }
+
 
   .homepage-section { margin-bottom: @section-margin; }
 }

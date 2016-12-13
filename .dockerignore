@@ -1,3 +1,5 @@
+.git
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -6,20 +8,20 @@ __pycache__/
 env
 venv
 
+# Node
+node_modules
+
 # Logs
 *.log
 pip-log.txt
 pip-delete-this-directory.txt
 
 # Test results
-htmlcov/
+htmlcov
 .coverage
 
-# Application data
-/data
+data
 
 # Configuration
-/consul_config.py
-/custom_config.py
-
-/node_modules
+consul_config.py
+custom_config.py

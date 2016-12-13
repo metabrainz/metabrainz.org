@@ -5,6 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from flask import current_app
 import smtplib
+import socket
 
 
 def send_mail(subject, text, recipients, attachments=None,
@@ -44,6 +45,13 @@ def send_mail(subject, text, recipients, attachments=None,
         attachment.add_header('content-disposition', 'attachment', filename=name)
         message.attach(attachment)
 
-    smtp_server = smtplib.SMTP(current_app.config['SMTP_SERVER'], current_app.config['SMTP_PORT'])
+    try:
+        smtp_server = smtplib.SMTP(current_app.config['SMTP_SERVER'], current_app.config['SMTP_PORT'])
+    except socket.error as e:
+        raise MailException(e)
     smtp_server.sendmail(from_addr, recipients, message.as_string())
     smtp_server.quit()
+
+
+class MailException(Exception):
+    pass

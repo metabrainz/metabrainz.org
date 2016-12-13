@@ -29,7 +29,7 @@
     {% include 'navbar.html' %}
 
     <div class="container">
-
+      
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, message in messages %}
           {{ print_message(message, category) }}
@@ -83,8 +83,7 @@
             </div>
           </div>
           <div class="lower-footer">
-            Hosted by <a href="http://digitalwest.net/">Digital West</a>.
-            Sponsored by: <a href="https://www.google.com/">Google</a>,
+            Sponsored by <a href="https://www.google.com/">Google</a>,
             <a href="https://osuosl.org/">OSUOSL</a> and
             <a href="{{ url_for('index.sponsors') }}">others&hellip;</a>
           </div>

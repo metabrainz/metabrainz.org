@@ -43,6 +43,20 @@ class MusicBrainzViewsTestCase(FlaskTestCase):
             'last_packet_weekly': 'replication-weekly-1.tar.bz2',
         })
 
+        open(os.path.join(self.path, 'replication-99999.tar.bz2'), 'a').close()
+        open(os.path.join(self.path, 'replication-100000.tar.bz2'), 'a').close()
+        open(os.path.join(self.path, DAILY_SUBDIR, 'replication-daily-99999.tar.bz2'), 'a').close()
+        open(os.path.join(self.path, DAILY_SUBDIR, 'replication-daily-100000.tar.bz2'), 'a').close()
+        open(os.path.join(self.path, WEEKLY_SUBDIR, 'replication-weekly-99999.tar.bz2'), 'a').close()
+        open(os.path.join(self.path, WEEKLY_SUBDIR, 'replication-weekly-100000.tar.bz2'), 'a').close()
+        resp = self.client.get(url_for('api_musicbrainz.replication_info', token=self.token))
+        self.assert200(resp)
+        self.assertEquals(resp.json, {
+            'last_packet': 'replication-100000.tar.bz2',
+            'last_packet_daily': 'replication-daily-100000.tar.bz2',
+            'last_packet_weekly': 'replication-weekly-100000.tar.bz2',
+        })
+
     def test_replication_check(self):
         resp = self.client.get('/api/musicbrainz/replication-check')
         self.assert200(resp)

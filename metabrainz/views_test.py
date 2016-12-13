@@ -35,3 +35,7 @@ class IndexViewsTestCase(FlaskTestCase):
     def test_privacy_policy(self):
         response = self.client.get(url_for('index.privacy_policy'))
         self.assert200(response)
+
+    def test_about_customers(self):
+        response = self.client.get(url_for('index.about_customers_redirect'))
+        self.assertRedirects(response, url_for('users.supporters_list'))

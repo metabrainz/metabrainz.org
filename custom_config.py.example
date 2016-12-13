@@ -8,16 +8,6 @@ SECRET_KEY = "CHANGE_THIS"
 
 # DATABASES
 
-# Primary database
-# Example:
-# SQLALCHEMY_DATABASE_URI = "postgresql://<user>:<pass>@<host>:<port>/<db>"
-SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@localhost:5432/metabrainz"
-
-# Database for testing
-TEST_SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz_test:metabrainz_test@localhost:5432/metabrainz_test"
-
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-
 # The name of a postgres user who has superuser privileges. Your local user should
 # be able to connect to the database with this user.
 PG_SUPER_USER = "postgres"
@@ -36,8 +26,8 @@ WEPAY_ACCOUNT_ID = ""
 WEPAY_ACCESS_TOKEN = ""
 
 # PayPal
-PAYPAL_PRIMARY_EMAIL = "paypal@metabrainz.org"
-PAYPAL_BUSINESS = "payment@metabrainz.org"
+PAYPAL_PRIMARY_EMAIL = "paypal@example.org"
+PAYPAL_BUSINESS = "payment@example.org"
 
 # Stripe
 # https://stripe.com/docs/tutorials/dashboard#api-keys
@@ -62,33 +52,34 @@ MUSICBRAINZ_CLIENT_SECRET = ""
 # This is a list of MusicBrainz usernames of people that are allowed to access
 # admin section of the website. Usernames are case-sensetive!
 ADMINS = [
-    'rob',
+    #"Example",
 ]
-
-
-# REPLICATION PACKETS
-# Hourly replication packets must be located in this directory. Daily
-# replication packets must be located in subdirectory called "daily"
-# in REPLICATION_PACKETS_DIR. Weekly packets in subdirectory "weekly".
-REPLICATION_PACKETS_DIR = "/vagrant/replication_packets"
-
-
-# CACHE
-#MEMCACHED_SERVERS = ["127.0.0.1:11211"]
-#MEMCACHED_NAMESPACE = "MeB"
 
 
 # LOGGING
 
-#LOG_FILE_ENABLED = True
-#LOG_FILE = "server.log"
+#LOG_FILE = {
+#    "filename": "./logs/log.txt",
+#    "max_bytes": 512 * 1024,  # optional
+#    "backup_count": 100,      # optional
+#}
 
-#LOG_EMAIL_ENABLED = True
-#LOG_EMAIL_TOPIC = "MetaBrainz Website Failure"
-#LOG_EMAIL_RECIPIENTS = []  # Array with email addresses (strings)
+#LOG_EMAIL = {
+#    "mail_server": "localhost",
+#    "mail_port": 25,
+#    "mail_from_host": "example.org",
+#    "log_email_recipients": [
+#        "user1@example.org",
+#        "user2@example.org",
+#    ],
+#    "log_email_topic": "MetaBrainz Failure",
+#    "level": "ERROR",  # optional
+#}
 
-#LOG_SENTRY_ENABLED = True
-#SENTRY_DSN = ""
+#LOG_SENTRY = {
+#    "dsn": "YOUR_SENTRY_DSN",
+#    "level": "WARNING",  # optional
+#}
 
 
 # OTHER STUFF
@@ -110,11 +101,4 @@ NOTIFICATION_RECIPIENTS = [
 #BEHIND_GATEWAY = True
 #REMOTE_ADDR_HEADER = "X-MB-Remote-Addr"
 
-# Mail server
-SMTP_SERVER = "localhost"
-SMTP_PORT = 25
-MAIL_FROM_DOMAIN = "metabrainz.org"
-
-# If you use nginx, there's an option to use it to serve replication packets.
-# See installation instructions for more info.
-#USE_NGINX_X_ACCEL = True
+MAIL_FROM_DOMAIN = "example.org"
