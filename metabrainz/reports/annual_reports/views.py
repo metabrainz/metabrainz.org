@@ -11,7 +11,7 @@ def index():
     years = list_years()
     if years:
         # Redirecting to the latest report
-        return redirect(url_for('.view', year=years[-1]))
+        return redirect(url_for('.view', year=years[0]))
     else:
         raise NotFound('No reports created.')
 
