@@ -69,7 +69,7 @@ def create_app(config_path=None):
 
     from flask_admin import Admin
     from metabrainz.admin.views import HomeView
-    admin = Admin(app, index_view=HomeView(name='Pending users'))
+    admin = Admin(app, index_view=HomeView(name='Pending users'), template_mode='bootstrap3')
 
     # Models
     from metabrainz.model.user import UserAdminView

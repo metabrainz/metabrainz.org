@@ -1,6 +1,16 @@
 {% extends admin_base_template %}
+
+{% block head_css %}
+  <link href="{{ url_for('static', filename='css/theme/boostrap/boostrap.css') }}" rel="stylesheet" media="screen" />
+  <style>
+    body {
+      padding-top: 20px;
+    }
+  </style>
+{% endblock %}
+
 {% block brand %}
-  <span class="brand">
+  <span class="navbar-brand">
     <a href="/">MetaBrainz</a>
     ::
     <a href="/admin/">BDFL Zone</a>
