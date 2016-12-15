@@ -114,7 +114,9 @@
           <div class="user">
               <a href="{{ url_for('users.supporters_list') }}">
                 <div class="logo-container">
-                  {% if user.org_logo_url %}
+                  {% if user.logo_filename %}
+                    <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}"/>
+                  {% elif user.org_logo_url %}
                     <img class="logo" src="{{ user.org_logo_url }}" />
                   {% else %}
                     <div class="name">{{ user.org_name }}</div>
@@ -136,10 +138,12 @@
       <div id="featured-users" class="row">
         {% for user in bad_users %}
           <div class="col-sm-3 user">
-            {% if user.org_logo_url %}
-                <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ user.org_logo_url }}"/></a></span>
+            {% if user.logo_filename %}
+              <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}"/></a></span>
+            {% elif user.org_logo_url %}
+              <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ user.org_logo_url }}"/></a></span>
             {% else %}
-                <span class="name"><a href="{{ url_for('index.bad_customers') }}">{{ user.org_name }}</a></span>
+              <span class="name"><a href="{{ url_for('index.bad_customers') }}">{{ user.org_name }}</a></span>
             {% endif %}
           </div>
         {% endfor %}

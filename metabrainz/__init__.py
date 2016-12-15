@@ -62,6 +62,12 @@ def create_app(config_path=None):
 
     add_robots(app)
 
+    from flask_uploads import configure_uploads
+    from metabrainz.admin.forms import LOGO_UPLOAD_SET
+    configure_uploads(app, upload_sets=[
+        LOGO_UPLOAD_SET,
+    ])
+
     # Blueprints
     _register_blueprints(app)
 

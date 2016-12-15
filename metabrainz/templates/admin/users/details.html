@@ -7,13 +7,17 @@
   <form method="POST" action="{{ url_for('user_model.delete_view') }}">
     <input id="id" name="id" type="hidden" value="{{ user.id }}">
     <input id="url" name="url" type="hidden" value="{{ url_for('user_model.index_view') }}">
-    <a href="{{ url_for('user_model.edit_view', id=user.id) }}"
+    <a href="{{ url_for('usersview.edit', user_id=user.id) }}"
        class="btn btn-primary" role="button">Edit user</a>
     <button onclick="return confirm('Are you sure you want to delete this user?');"
             class="btn btn-danger">Delete user</button>
   </form>
 
-  {% if user.org_logo_url %}
+  {% if user.logo_filename %}
+    <div class="pull-right">
+      <img src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}" style="max-width: 104px" />
+    </div>
+  {% elif user.org_logo_url %}
     <div class="pull-right">
       <img src="{{ user.org_logo_url }}" style="max-width: 104px" />
     </div>
@@ -35,6 +39,7 @@
       <dt>Organization name</dt><dd>{{ user.org_name }}</dd>
       <dt>Organization website</dt><dd>{{ user.website_url }}</dd>
       <dt>Organization logo URL</dt><dd>{{ user.org_logo_url }}</dd>
+      <dt>Logo image filename</dt><dd>{{ user.logo_filename }}</dd>
       <dt>Organization API URL</dt><dd>{{ user.api_url }}</dd>
     </dl>
     <dl class="dl-horizontal">

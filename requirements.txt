@@ -3,6 +3,7 @@ coverage == 4.0.3
 Fabric == 1.11.1
 click == 6.6
 Flask-Admin == 1.4.2
+Flask-Uploads == 0.2.1
 Flask-Login == 0.3.2
 Flask-SQLAlchemy == 2.1
 Flask-Testing == 0.4.2

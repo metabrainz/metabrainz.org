@@ -20,6 +20,7 @@ CREATE TABLE "user" (
   contact_email    CHARACTER VARYING NOT NULL,
   data_usage_desc  TEXT,
   org_name         CHARACTER VARYING,
+  logo_filename    CHARACTER VARYING,
   org_logo_url     CHARACTER VARYING,
   website_url      CHARACTER VARYING,
   api_url          CHARACTER VARYING,

@@ -28,8 +28,6 @@
         <p>
           <strong>Name:</strong> {{ current_user.org_name or
                                     '<em class="text-muted">Unspecified</em>'|safe }}<br />
-          <strong>Logo URL:</strong> {{ current_user.org_logo_url or
-                                        '<em class="text-muted">Unspecified</em>'|safe }}<br />
           <strong>Website URL:</strong> {{ current_user.website_url or
                                            '<em class="text-muted">Unspecified</em>'|safe }}<br />
           <strong>API URL:</strong> {{ current_user.api_url or

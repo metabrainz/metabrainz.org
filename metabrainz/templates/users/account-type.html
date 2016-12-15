@@ -78,7 +78,11 @@
                   <h3>Some of our Unicorn members</h3>
                   {% for user in featured_users %}
                     <div class="logo-container">
-                      <span><img src="{{ user.org_logo_url }}" /></span>
+                      {% if user.logo_filename %}
+                        <span><img src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}" /></span>
+                      {% else %}
+                        <span><img src="{{ user.org_logo_url }}" /></span>
+                      {% endif %}
                     </div>
                   {% endfor %}
                 </div>

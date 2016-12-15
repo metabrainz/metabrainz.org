@@ -30,7 +30,8 @@ services:
       DEPLOY_ENV: prod
     volumes:
       - ../:/tmp/metabrainz.git
-      - ../:/code
+      - ../data/logos:/code/metabrainz/static/img/user_logos
+      - ../data/replication_packets:/data/replication_packets
     ports:
       - "13031:3031"
 

@@ -15,6 +15,14 @@ STATE_WAITING = "waiting"
 STATE_REJECTED = "rejected"
 STATE_LIMITED = "limited"
 
+USER_STATES = [
+    STATE_ACTIVE,
+    STATE_PENDING,
+    STATE_WAITING,
+    STATE_REJECTED,
+    STATE_LIMITED,
+]
+
 
 class User(db.Model, UserMixin):
     """User model is used for users of MetaBrainz services like Live Data Feed.
@@ -45,6 +53,7 @@ class User(db.Model, UserMixin):
 
     # Columns specific to commercial users:
     org_name = db.Column(db.Unicode)
+    logo_filename = db.Column(db.Unicode)
     org_logo_url = db.Column(db.Unicode)
     website_url = db.Column(db.Unicode)
     api_url = db.Column(db.Unicode)

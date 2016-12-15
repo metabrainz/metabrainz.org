@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE "user" ADD COLUMN logo_filename CHARACTER VARYING;
+
+COMMIT;

@@ -54,8 +54,8 @@
             {% endif %}
           </td>
           <td>
-            <a href="{{ url_for('user_model.edit_view', id=user.id) }}"
-               class="btn btn-mini btn-primary" role="button">Edit</a>
+            <a href="{{ url_for('usersview.edit', user_id=user.id) }}"
+               class="btn btn-xs btn-primary" role="button">Edit</a>
           </td>
         </tr>
       {% endfor %}

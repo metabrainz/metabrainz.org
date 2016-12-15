@@ -33,7 +33,9 @@
           <div class="user">
             <div class="logo-container">
               {% if user.website_url %}<a href="{{ user.website_url }}" rel="nofollow">{% endif %}
-              {% if user.org_logo_url %}
+              {% if user.logo_filename %}
+                <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}"/>
+              {% elif user.org_logo_url %}
                 <img class="logo" src="{{ user.org_logo_url }}"/>
               {% else %}
                 <div class="name">{{ user.org_name }}</div>
