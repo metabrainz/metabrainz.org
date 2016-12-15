@@ -1,0 +1,362 @@
+<h2>Preface</h2> 
+
+<p>
+This report is over a year late -- mea culpa. 2014 and 2015 were challenging years for MetaBrainz where we struggled with 
+wanting to do too many things, while still being severely resource constrained. Many things fell between the cracks as a 
+result of this. However, now that our efforts from 2015 are bearing fruit, we have more capacity overall to focus on catching 
+up on all the things that remain incomplete from the past few years.
+</p>
+
+<h2>Year in review</h2>
+
+<p>
+In January we completed the hand-off of duties from Oliver Charles to Michael Wiencek (Bitmap) to fully bring Bitmap on 
+board, Nikki, Ian, Bitmap and myself met up in Chicago to do some planning for the future. We rented a dingy AirBnB 
+apartment in Chicago in the middle of the polar vortex. -23C is a great temperature for keeping everyone indoors and 
+focused on the tasks at hand!
+</p>
+
+<p>
+In February we officially deprecated the embedded RDFa in our pages, only to have Google come and ask us to add JSON-LD 
+markup to our pages two weeks later.  In March we started planning for our upcoming schema change in May, setting ourselves 
+off on a less than ideal pattern of having too many schema change features. We would put too many features on our plate and 
+then had to spend too much time cleaning up the schema change release. Sometimes this process would take us all the way to the 
+next schema change process.
+</p>
+
+<p>
+Our schema work would take large chunks of April when we also participated in the next round of Summer of Code. In 2014 we 
+<a href="https://blog.musicbrainz.org/2014/04/22/summer-of-code-weve-accepted-these-projects/">accepted projects</a> to finish CritiqueBrainz ( https://critiquebrainz.org ), start work on a new SOLR based search infrastructure, 
+MusicBrainz UI improvements and a new site for Picard.
+
+<p>
+In May we carried out our schema change and amazingly we released CritiqueBrainz at the beginning of Summer of Code! This is when 
+Roman Tsukanov (Gentlecat) became an important contributor -- he carried out most of the tasks he set out to do over the course 
+of the summer before summer even got underway. We even cooperated with Google on a blog post 
+<a href="http://google-opensource.blogspot.com.es/2015/03/critiquebrainz-and-rocking-google.html">about our success</a>.
+</p>
+
+
+<p>
+The summer was quieter for us as we finished up the last bits of the schema change release. This quiet period showed the first 
+visible signs some members of our team were hiding from the public to carry out their duties. Many discussions took place behind 
+the scenes to try and resolve these issues, with very little progress being made.
+</p>
+
+
+<p>
+In September many members of the core team met up in Copenhagen for our annual summit. This is where we met Laurent Monin (zas), 
+a long time Picard contributor, for the first time. While we had a lot of fun during this summit (we had rented a family home 
+complete with back-yard) team divisions became more clear. 
+</p>
+
+<p>
+At the summit we also agreed to reform the style process and to appoint Nicolás Tamargo (reosarevok) as our style BDFL in order to 
+try and streamline the style process. We also started preparing for the fall schema change, which in 2014 was scheduled to happen in November.
+</p>
+
+<p>
+Besides working on the schema change, both Alastair Porter (alastairp) and Robert Kaye (ruaok) started working the 
+<a href="https://acousticbrainz.org">AcousticBrainz</a> project which aims to collect acoustic information about music. The project
+was soft launched after a massive <a href="https://blog.musicbrainz.org/2014/11/21/what-do-650000-files-look-like-anyway/">
+2-day hacking sprint</a>. 
+</p>
+
+<p>
+The rest of the year was mostly spent working on finishing the bumpy schema change release and getting AcousticBrainz ready for a 
+wider audience. In December Robert Kaye met with a pro-bono brand consultant whose goal was to guide us on our journey to create a 
+consistent brand for all of our projects.
+</p>
+
+<p>
+Finally, we should mention the Geordi project that aimed to be a repository for 3rd party music metadata provided to us from partners. 
+We worked on this project on and off in 2014, but the overall goal remained elusive and we never really made much progress on the 
+project at all.
+</p>
+
+
+<h2>New Customers</h2>
+
+In 2014 we added two customers: <a href="http://senzari.com/">Senzari</a> with its <a href="http://musicgraph.com/">MusicGraph</a>
+project joined in February and <a href="https://www.7digital.com/">7digital</a>, a company that powers many mobile operators’ music 
+stores, joined in December.
+  
+
+<h2>Traffic</h2>
+
+
+<p>
+As part of our situation in 2014 where we struggled for resources to even keep existing infrastructure running, we had our traffic 
+analysis system break as it was outdated and overloaded by our traffic logs. This proved to be a significant project to fix and 
+even in 2016 we have not addressed this. This means that we cannot provide an interesting traffic graph that shows how our traffic 
+changed over the course of the year. We aim to have these traffic stats return at some point.
+</p>
+
+<p>
+Our traffic can be broadly described as being steady over the course of 2014. We would routinely get 20M requests per day and we 
+were able to honor about 16M of those requests. The remainder of the requests we could not honor (and resulted in a 503 error) due to 
+bandwidth and hosting capacity limitations.
+</p>
+
+<p>
+The need for a new hosting solution became clear in 2014 and we started examining the various options for moving to a new hosting provider.
+</p>
+
+<h2>Finances</h2>
+<p>Our finances in 2014 are summarized by our Profit &amp; Loss statement:</p>
+    
+<table class="table table-condensed table-bordered table-striped">
+  <tbody>
+  <tr><th colspan="2">Income</th></tr>
+    <tr><td>Web Service Access</td><td>420.00</td></tr>
+    <tr><td>Donations - PayPal</td><td>5,776.82</td></tr>
+    <tr><td>Donations - General</td><td>55,874.04</td></tr>
+    <tr><td>Consulting - General</td><td>2,500.00</td></tr>
+    <tr><td>Live Data Feed</td><td>171,210.00</td></tr>
+    <tr><td>Bank - Interest</td><td>60.53</td></tr>
+    <tr><td>Affiliate - Amazon</td><td>989.71</td></tr>
+    <tr><td>Affiliate - Tagger</td><td>14,213.23</td></tr>
+    <tr><td>Licenses - CC data</td><td>6,000.00</td></tr>
+    <tr><td>Affiliate - CD baby</td><td>11.50</td></tr>
+    <tr><td><b>Total Income</b></td><td><b>$257,055.83</b></td>
+  </tr>
+  </tbody>
+</table>
+    
+<table class="table table-condensed table-bordered table-striped">
+  <tbody>
+  <tr><th colspan="2">Expenses</th></tr>
+    <tr><td>  Hosting - Hetzner</td><td>420.49</td></tr>
+    <tr><td>  Development - 1099</td><td>75,760.38</td></tr>
+    <tr><td>  Community management</td><td>10,000.00</td></tr>
+    <tr><td>  Bank - WePay</td><td>53.65       </td></tr>
+    <tr><td>  Officer Salary</td><td>79,999.26</td></tr>
+    <tr><td>  Depreciation</td><td>12,689.00</td></tr>
+    <tr><td>  Bank - General</td><td>745.31</td></tr>
+    <tr><td>  Bank - PayPal</td><td>1,029.03</td></tr>
+    <tr><td>  Rent - Higuera Office</td><td>2,400.00</td></tr>
+    <tr><td>  Utilities</td><td>100.00</td></tr>
+    <tr><td>  Hardware</td><td>1,087.15</td></tr>
+    <tr><td>  Travel</td><td>9,079.02</td></tr>
+    <tr><td>  Internet</td><td>487.95</td></tr>
+    <tr><td>  Development - Contractors</td><td>1,231.62</td></tr>
+    <tr><td>  Events</td><td>5,849.24</td></tr>
+    <tr><td>  Hosting - DWNI</td><td>20,700.00</td></tr>
+    <tr><td>  Filing Fees</td><td>75.00</td></tr>
+    <tr><td>  Software</td><td>109.00</td></tr>
+    <tr><td>  Insurance</td><td>2,325.00</td></tr>
+    <tr><td>  Accounting</td><td>1,750.00</td></tr>
+  <tr><td><b>Total Expenses</b></td><td><b>$225,891.10</b></td></tr>
+  </tbody>
+</table>
+
+After a turbulent 2013 we managed to keep our finances on an even keel this year. Income was fairly steady and most of our 
+customers paid on time, so we didn’t see any payment backlog like we did in 2013. While 2014 wasn’t as good for us as 2013, 
+we did have an excess income of $31,164.73 on $257,055.83 of income.
+</p>
+
+<p>
+In the course of 2014 we spent $1,087.15 on hardware and $20,700.00 on hosting costs for a total of $21,787.15. This compares 
+to $24,756.65 in 2013, which means that our costs were a little less in 2014. Sadly, we will not be able to compute the cost per 
+1M web or web service requests until we get our traffic stats system running again. In 2014 we spent $86,992 in salaries for 
+developers/community management and our costs for administration was $79,999.26. 
+</p>
+
+<p>
+We earned $171,210.00 from our Live Data Feed and $6,000.00 from Creative Commons licensed data for a total of $177,210.00, which 
+is a 6.5% decrease over 2013. Towards the end of 2013 AOL Music stopped operating and in 2014 Intertech Media stopped using our 
+data and Zvooq stopped paying us. However, the BBC decided to pay 3 years ahead on their Live Data Feed costs, which made up for 
+most of the other lost customers. Overall, our Live Data Feed income decreased by $8300.55 in 2014, which is effectively flat for 
+the year. Many thanks to the BBC for saving our income stream! Our web service access income in 2013 was $660.00 and only in 
+$420.00 in 2014, which suggests that charging for our web service may not work as well as we had hoped.
+</p>
+
+<p>
+Our end user donations via PayPal came to $6,035.07, which is up 4.5% from 2013, but still far less than 2012. Direct/large donations 
+added up to $55,874.04, including $40,000 from Google for our annual support and a $10,000 non tax deductible donation to allow us to 
+utilize Google Cloud services. Also, Spotify once again supported our summit with a $3,000 donation.
+</p>
+    
+
+<h2>Top contributors</h2>
+
+<table class="table table-condensed table-bordered table-striped">
+  <tbody>
+  <tr><th colspan="6">Top voters</th></tr>
+  <tr>
+    <th>1</th><td><a href="http://musicbrainz.org/user/pankkake">pankkake</a></td><td>232,056</td>
+    <th>13</th><td><a href="http://musicbrainz.org/user/Hawke">Hawke</a></td><td>25,048</td>
+  </tr>
+  <tr>
+    <th>2</th><td><a href="http://musicbrainz.org/user/muddipanda">muddipanda</a></td><td>130,614</td>
+    <th>14</th><td><a href="http://musicbrainz.org/user/ListMyCDs.com">ListMyCDs.com</a></td><td>19,165</td>
+  </tr>
+  <tr>
+    <th>3</th><td><a href="http://musicbrainz.org/user/chabreyflint">chabreyflint</a></td><td>99,095</td>
+    <th>15</th><td><a href="http://musicbrainz.org/user/portik">portik</a></td><td>19,085</td>
+  </tr>
+  <tr>
+    <th>4</th><td><a href="http://musicbrainz.org/user/fmera">fmera</a></td><td>77,737</td>
+    <th>16</th><td><a href="http://musicbrainz.org/user/nikki">nikki</a></td><td>11,830</td>
+  </tr>
+  <tr>
+    <th>5</th><td><a href="http://musicbrainz.org/user/Jazzy+Jarilith">Jazzy Jarilith</a></td><td>66,901</td>
+    <th>17</th><td><a href="http://musicbrainz.org/user/jesus2099">jesus2099</a></td><td>11,622</td>
+  </tr>
+  <tr>
+    <th>6</th><td><a href="http://musicbrainz.org/user/reosarevok">reosarevok</a></td><td>66,631</td>
+    <th>18</th><td><a href="http://musicbrainz.org/user/KRSCuan">KRSCuan</a></td><td>11,041</td>
+  </tr>
+  <tr>
+    <th>7</th><td><a href="http://musicbrainz.org/user/Zas">Zas</a></td><td>46,597</td>
+    <th>19</th><td><a href="http://musicbrainz.org/user/vanoccupanther">vanoccupanther</a></td><td>10,221</td>
+  </tr>
+  <tr>
+    <th>8</th><td><a href="http://musicbrainz.org/user/ProfChris">ProfChris</a></td><td>39,848</td>
+    <th>20</th><td><a href="http://musicbrainz.org/user/Mineo">Mineo</a></td><td>9,165</td>
+  </tr>
+  <tr>
+    <th>9</th><td><a href="http://musicbrainz.org/user/Ataki">Ataki</a></td><td>33,239</td>
+    <th>21</th><td><a href="http://musicbrainz.org/user/MeinDummy">MeinDummy</a></td><td>8,878</td>
+  </tr>
+  <tr>
+    <th>10</th><td><a href="http://musicbrainz.org/user/JJLvK">JJLvK</a></td><td>31,903</td>
+    <th>22</th><td><a href="http://musicbrainz.org/user/monxton">monxton</a></td><td>8,705</td>
+  </tr>
+  <tr>
+    <th>11</th><td><a href="http://musicbrainz.org/user/sbontrager">sbontrager</a></td><td>30,676</td>
+    <th>23</th><td><a href="http://musicbrainz.org/user/MrH">MrH</a></td><td>8,530</td>
+  </tr>
+  <tr>
+    <th>12</th><td><a href="http://musicbrainz.org/user/salo.rock">salo.rock</a></td><td>26,166</td>
+    <th>24</th><td><a href="http://musicbrainz.org/user/Spidra">Spidra</a></td><td>7,869</td>
+  </tr>
+  </tbody>
+</table>
+
+<table class="table table-condensed table-bordered table-striped">
+  <tbody>
+  <tr><th colspan="6">Top editors</th></tr>
+  <tr>
+    <th>1</th><td><a href="http://musicbrainz.org/user/ListMyCDs.com">ListMyCDs.com</a></td><td>214,645</td>
+    <th>13</th><td>Kaik</td><td>74,935</td>
+  </tr>
+  <tr>
+    <th>2</th><td><a href="http://musicbrainz.org/user/m___ah">m___ah</a></td><td>196,055</td>
+    <th>14</th><td><a href="http://musicbrainz.org/user/fmera">fmera</a></td><td>73,297</td>
+  </tr>
+  <tr>
+    <th>3</th><td><a href="http://musicbrainz.org/user/reosarevok">reosarevok</a></td><td>158,026</td>
+    <th>15</th><td><a href="http://musicbrainz.org/user/rochusw">rochusw</a></td><td>70,564</td>
+  </tr>
+  <tr>
+    <th>4</th><td><a href="http://musicbrainz.org/user/HibiscusKazeneko">HibiscusKazeneko</a></td><td>132,728</td>
+    <th>16</th><td><a href="http://musicbrainz.org/user/loujin">loujin</a></td><td>59,291</td>
+  </tr>
+  <tr>
+    <th>5</th><td><a href="http://musicbrainz.org/user/nikki">nikki</a></td><td>116,408</td>
+    <th>17</th><td><a href="http://musicbrainz.org/user/monxton">monxton</a></td><td>51,482</td>
+  </tr>
+  <tr>
+    <th>6</th><td><a href="http://musicbrainz.org/user/Senax">Senax</a></td><td>111,492</td>
+    <th>18</th><td><a href="http://musicbrainz.org/user/boggob">boggob</a></td><td>47,169</td>
+  </tr>
+  <tr>
+    <th>7</th><td><a href="http://musicbrainz.org/user/CyberSkull">CyberSkull</a></td><td>99,307</td>
+    <th>19</th><td><a href="http://musicbrainz.org/user/MajorLurker">MajorLurker</a></td><td>42,913</td>
+  </tr>
+  <tr>
+    <th>8</th><td><a href="http://musicbrainz.org/user/drsaunde">drsaunde</a></td><td>94,411</td>
+    <th>20</th><td><a href="http://musicbrainz.org/user/Hawke">Hawke</a></td><td>41797</td>
+  </tr>
+  <tr>
+    <th>9</th><td><a href="http://musicbrainz.org/user/ProfChris">ProfChris</a></td><td>90,436</td>
+    <th>21</th><td><a href="http://musicbrainz.org/user/stupidname">stupidname</a></td><td>40,538</td>
+  </tr>
+  <tr>
+    <th>10</th><td><a href="http://musicbrainz.org/user/tityron">tityron</a></td><td>81,204</td>
+    <th>22</th><td><a href="http://musicbrainz.org/user/MrH">MrH</a></td><td>37,600</td>
+  </tr>
+  <tr>
+    <th>11</th><td><a href="http://musicbrainz.org/user/wonder_al">wonder_al</a></td><td>76,706</td>
+    <th>23</th><td><a href="http://musicbrainz.org/user/yindesu">yindesu</a></td><td>34,772</td>
+  </tr>
+  <tr>
+    <th>12</th><td><a href="http://musicbrainz.org/user/pankkake">pankkake</a></td><td>75,260</td>
+    <th>24</th><td><a href="http://musicbrainz.org/user/jesus2099">jesus2099</a></td><td>32,394</td>
+  </tr>
+  </tbody>
+</table>
+
+<p>
+In 2014, 19,397 editors made a total of 5,234,229 edits. The total number of active editors is up from 18,710 in 
+2013, and the total number of edits has increased by 186,622 edits. 
+</p>
+
+<p>
+In 2014 we received 1,235,995 edit votes, which is up 230,049 votes from 2013. These votes came from 1187 editors, 
+down from 1243 editors in 2013. 
+</p>
+
+<h2>Server farm</h2>
+<img class="pull-right" height="473" width="350" src="files/2013/servers.jpg">
+<p>At the end of 2014, MusicBrainz had 20 machines in service, largely unchanged from 2013. From the top, going down:</p>
+<ul>
+  <li>rika: User sandbox machine (mbsandbox.org)</li>
+  <li>lolo: Web server</li>
+  <li>scooby: ftp, system statistics, blog</li>
+  <li>pino: MetaBrainz, MusicBrainz Classic, Cover Art Archive</li>
+  <li>baron: Database failover server</li>
+  <li>hoser: VM host (forums, blog)</li>
+  <li>dagon: Web server</li>
+  <li>rocko: Web server</li>
+  <li>cartman: Classic search server, index builder</li>
+  <li>wiley: Catch all server: SVN, git, jira, wiki, trac, mail, backups</li>
+  <li>dib: Network router, takes up a slot, but only visible from the back.</li>
+  <li>carl: Redundant network gateway</li>
+  <li>lenny: Redundant network gateway</li>
+  <li>sakura: Web server</li>
+  <li>asterix: web server</li>
+  <li>astro: web server</li>
+  <li>roobarb: search server</li>
+  <li>pingu: web server</li>
+  <li>dora: search server, memcached server</li>
+  <li>totoro: database server</li>
+</ul>
+<p>Not shown:</p>
+<ol>
+   <li>Hobbes (Mac mini, tucked away in the back), continuous integration (jenkins).</li>
+   <li>Spike (server at Hetzner in germany), running AcousticBrainz.</li>
+</ol>
+
+<p>
+MusicBrainz uses 15Mbps of bandwidth per second on average and draws 35 Amps of current for a power consumption of about 
+3,850 Watts. MusicBrainz physically occupies 20 Us of space (half of a rack) at Digital West in San Luis Obispo, CA.
+</p>
+
+<h2>Words of appreciation</h2>
+
+<p>
+Many thanks to our editors, voters, peer reviewers, bug watchers and other members of our community -- without you MusicBrainz 
+would not be what it is today!
+</p>
+
+<p>
+We'd like to also thank our developers that pushed out dozens of releases of the site, Picard and our numerous client 
+libraries. All of your work is critical to enabling the MusicBrainz community to do its job.
+</p>
+
+<p>
+We'd also like to thank our awesome <a href="https://metabrainz.org/about">Board of Directors</a> and all of the 
+<a href="https://metabrainz.org/donors">donors who contributed money</a> 
+and all of our <a href="https://metabrainz.org/supporters">customers</a>.
+</p>
+
+<p>
+In particular we'd like to thank Google and Spotify for their large donations made in 2014. We’d like to also thank the BBC for 
+pre-paying its license fees! These large contributions/payments allow us to carry on with our goal of making MusicBrainz the most comprehensive music encyclopedia out there!
+</p>
+
+<p>
+Thank you to everyone who contributed in 2014!
+</p>

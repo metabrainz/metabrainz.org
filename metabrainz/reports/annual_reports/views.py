@@ -30,7 +30,7 @@ def list_years():
     # Getting list of directories with reports for each year
     dirs = os.walk(annual_reports_bp.static_folder).next()[1]
     years = map(int, dirs)
-    years.sort()
+    years.sort(reverse=True)
     return years
 
 
