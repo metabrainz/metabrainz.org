@@ -50,8 +50,8 @@ RUN ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/s
 # Just need to copy the configuration.
 COPY ./docker/prod/consul-template.conf /etc/consul-template.conf
 
-COPY ./docker/prod/uwsgi/uwsgi.service /etc/service/uwsgi/run
+COPY ./docker/prod/uwsgi.service /etc/service/uwsgi/run
 RUN chmod 755 /etc/service/uwsgi/run
-COPY ./docker/prod/uwsgi/uwsgi.ini /etc/uwsgi/uwsgi.ini
+COPY ./docker/prod/uwsgi.ini /etc/uwsgi/uwsgi.ini
 
 EXPOSE 13031
