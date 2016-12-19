@@ -74,7 +74,7 @@ class User(db.Model, UserMixin):
     tokens = db.relationship("Token", backref="owner", lazy="dynamic")
     token_log_records = db.relationship("TokenLog", backref="user", lazy="dynamic")
 
-    def __unicode__(self):
+    def __str__(self):
         if self.is_commercial:
             return "%s (#%s)" % (self.org_name, self.id)
         else:

@@ -54,7 +54,7 @@ class Payment(db.Model):
     fee = db.Column(db.Numeric(11, 2))
     memo = db.Column(db.Unicode)
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Payment #%s' % self.id
 
     @classmethod

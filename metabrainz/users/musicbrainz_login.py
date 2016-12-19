@@ -33,7 +33,7 @@ def get_user(authorization_code):
             _external=True,
             _scheme=current_app.config['PREFERRED_URL_SCHEME'],
         )
-    }, decoder=json.loads)
+    }, decoder=lambda content: json.loads(content.decode("utf-8")))
     data = s.get('oauth2/userinfo').json()
     return data.get('sub'), data.get('email')
 

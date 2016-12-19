@@ -24,11 +24,8 @@ class Tier(db.Model):
 
     users = db.relationship("User", backref='tier', lazy="dynamic")
 
-    def __unicode__(self):
-        return "%s (#%s)" % (self.name, self.id)
-
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        return "%s (#%s)" % (self.name, self.id)
 
     @classmethod
     def create(cls, **kwargs):
