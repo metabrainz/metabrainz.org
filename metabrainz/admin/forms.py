@@ -2,7 +2,6 @@ from flask_wtf import Form
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, BooleanField, SelectField, TextAreaField
 from wtforms.fields.html5 import EmailField, URLField, DecimalField
-from wtforms.validators import DataRequired
 from metabrainz.model import user
 from metabrainz.db import tier as db_tier
 from flask_uploads import UploadSet, IMAGES
@@ -23,9 +22,9 @@ LOGO_UPLOAD_SET = UploadSet(
 
 class UserEditForm(Form):
     # General info
-    musicbrainz_id = StringField("MusicBrainz Username", validators=[DataRequired("MusicBrainz username is required!")])
-    contact_name = StringField("Name", validators=[DataRequired("Contact name is required!")])
-    contact_email = EmailField("Email", validators=[DataRequired("Email address is required!")])
+    musicbrainz_id = StringField("MusicBrainz Username")
+    contact_name = StringField("Name")
+    contact_email = EmailField("Email")
 
     # Data access
     state = SelectField("State", choices=[
