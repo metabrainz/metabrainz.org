@@ -104,11 +104,12 @@ class UsersView(AdminBaseView):
                 logo_filename = '%s%s' % (uuid.uuid4(), extension)
                 update_data['logo_filename'] = logo_filename
                 image_storage = form.logo.data  # type: werkzeug.datastructures.FileStorage
-                # Deleting old logo
-                try:
-                    os.remove(os.path.join(forms.LOGO_STORAGE_DIR, user.logo_filename))
-                except OSError as e:
-                    logging.warning(e)
+                if user.logo_filename:
+                    # Deleting old logo
+                    try:
+                        os.remove(os.path.join(forms.LOGO_STORAGE_DIR, user.logo_filename))
+                    except OSError as e:
+                        logging.warning(e)
                 # Saving new one
                 image_storage.save(os.path.join(forms.LOGO_STORAGE_DIR, logo_filename))
             db_user.update(user_id=user.id, **update_data)
