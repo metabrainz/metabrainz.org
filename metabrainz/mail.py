@@ -4,6 +4,7 @@ from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from flask import current_app
+import logging
 import smtplib
 import socket
 
@@ -47,7 +48,8 @@ def send_mail(subject, text, recipients, attachments=None,
 
     try:
         smtp_server = smtplib.SMTP(current_app.config['SMTP_SERVER'], current_app.config['SMTP_PORT'])
-    except socket.error as e:
+    except (socket.error, smtplib.SMTPException) as e:
+        logging.warning(e)
         raise MailException(e)
     smtp_server.sendmail(from_addr, recipients, message.as_string())
     smtp_server.quit()
