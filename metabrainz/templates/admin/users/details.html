@@ -1,8 +1,34 @@
 {% extends 'admin/master.html' %}
 {% block body %}
   <h1>Users</h1>
+  <hr />
 
-  <h3>Details</h3>
+  <div class="row">
+    <div class="col-sm-8 pull-left">
+      <h2 style="margin-top:0px;">
+        User
+        {% if user.is_commercial %}
+          <strong>{{ user.org_name }}</strong>
+          ({{ user.musicbrainz_id }})
+        {% else %}
+          {{ user.musicbrainz_id }}
+        {% endif %}
+        <small>
+          #{{ user.id }}
+        </small>
+      </h2>
+      <p class="text-muted"><em>Created on {{ user.created }}.</em></p>
+    </div>
+    {% if user.logo_filename %}
+      <div class="col-sm-4 pull-right">
+        <img src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}" style="max-width:280px;max-height:73px;" />
+      </div>
+    {% elif user.org_logo_url %}
+      <div class="col-sm-4 pull-right">
+        <img src="{{ user.org_logo_url }}" style="max-width:280px;max-height:73px;" />
+      </div>
+    {% endif %}
+  </div>
 
   <form method="POST" action="{{ url_for('user_model.delete_view') }}">
     <input id="id" name="id" type="hidden" value="{{ user.id }}">
@@ -13,81 +39,160 @@
             class="btn btn-danger">Delete user</button>
   </form>
 
-  {% if user.logo_filename %}
-    <div class="pull-right">
-      <img src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}" style="max-width: 104px" />
-    </div>
-  {% elif user.org_logo_url %}
-    <div class="pull-right">
-      <img src="{{ user.org_logo_url }}" style="max-width: 104px" />
-    </div>
-  {% endif %}
+  <h3>General info</h3>
+  <div class="row">
 
-  <div>
-    <dl class="dl-horizontal">
-      <dt>ID</dt><dd>{{ user.id }}</dd>
-      <dt>State</dt><dd>{{ user.state }}</dd>
-      <dt>Commercial</dt><dd>{{ user.is_commercial }}</dd>
-      <dt>MusicBrainz ID</dt><dd>{{ user.musicbrainz_id }}</dd>
-      <dt>Creation time</dt><dd>{{ user.created }}</dd>
-    </dl>
-    <dl class="dl-horizontal">
-      <dt>Contact name</dt><dd>{{ user.contact_name }}</dd>
-      <dt>Contact email</dt><dd>{{ user.contact_email }}</dd>
-    </dl>
-    <dl class="dl-horizontal">
-      <dt>Organization name</dt><dd>{{ user.org_name }}</dd>
-      <dt>Organization website</dt><dd>{{ user.website_url }}</dd>
-      <dt>Organization logo URL</dt><dd>{{ user.org_logo_url }}</dd>
-      <dt>Logo image filename</dt><dd>{{ user.logo_filename }}</dd>
-      <dt>Organization API URL</dt><dd>{{ user.api_url }}</dd>
-    </dl>
-    <dl class="dl-horizontal">
-      <dt>Address</dt><dd>{{ user.address_street }}</dd>
-      <dt>City</dt><dd>{{ user.address_city }}</dd>
-      <dt>State</dt><dd>{{ user.address_state }}</dd>
-      <dt>Postal code</dt><dd>{{ user.address_postcode }}</dd>
-      <dt>Country</dt><dd>{{ user.address_country }}</dd>
-    </dl>
-    <dl class="dl-horizontal">
-      <dt>Tier</dt><dd>{{ user.tier }}</dd>
-      <dt>Amount pledged</dt><dd>${{ user.amount_pledged }}</dd>
-    </dl>
-    <dl class="dl-horizontal">
-      <dt>Good standing</dt><dd>{{ user.good_standing }}</dd>
-      <dt>Featured</dt><dd>{{ user.featured }}</dd>
-    </dl>
-    <dl class="dl-horizontal">
-      <dt>Data usage description</dt><dd>{{ user.data_usage_desc }}</dd>
-      <dt>Organization description</dt><dd>{{ user.org_desc }}</dd>
-    </dl>
+    <div class="form-group col-md-6">
+      <label>MusicBrainz Username</label>
+      <input class="form-control" type="text" value="{{ user.musicbrainz_id }}" readonly>
+      <div style="padding-top: 7px">
+        <em class="text-muted">
+          Determines which MusicBrainz user manages this MetaBrainz account.
+          Can be changed to switch the owner. Only one user can be an owner.
+        </em>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" type="text" value="{{ user.contact_name }}" readonly>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" type="email" value="{{ user.contact_email }}" readonly>
+      </div>
+    </div>
+
   </div>
 
-  {% if user.state == 'pending' or user.state == 'waiting' %}
-    <div>
-      <p>
-        <a href="{{ url_for('usersview.approve', user_id=user.id) }}"
-           class="btn btn-success" role="button">Approve</a>
-        <a href="{{ url_for('usersview.approve', user_id=user.id, limited=True) }}"
-           title="This user is not going to have access to the API."
-           class="btn btn-warning" role="button">Approve (limited)</a>
-        {% if user.state != 'waiting' %}
-          <a href="{{ url_for('usersview.wait', user_id=user.id) }}"
-             class="btn btn-warning" role="button">Put into waiting list</a>
-        {% endif %}
-        <a href="{{ url_for('usersview.reject', user_id=user.id) }}"
-           class="btn btn-danger" role="button">Reject</a>
-      </p>
-      <p class="text-muted">
-        <em>
-          You will be redirected to the next pending user after approving
-          or rejecting this one.
+  <h3>Data access</h3>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label>State</label>
+      <input class="form-control" type="text" value="{{ user.state }}" readonly>
+      <div style="padding-top: 7px">
+        <em class="text-muted">
+          State determines whether this user has access to the MetaBrainz API.
         </em>
-      </p>
+      </div>
     </div>
+    <div class="col-md-6">
+      <ul class="text-muted">
+        <li><code>Active</code> - Full access to the API</li>
+        <li><code>Pending</code> - New user waiting for approval</li>
+        <li><code>Waiting</code> - Old user in the waiting list (for approval)</li>
+        <li><code>Rejected</code> - Rejected access the API</li>
+        <li><code>Limited</code> - Cannot access the API</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Commercial info</h3>
+  <div class="row">
+
+    <div style="font-size:15px;font-weight:bold;margin-bottom:20px" class="col-md-12">
+      {% if user.is_commercial %}
+        This is a commercial user
+      {% else %}
+        This is <u>not</u> a commercial user
+      {% endif %}
+    </div>
+
+    {% if user.is_commercial %}
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Organization name</label>
+          <input class="form-control" type="text" value="{{ user.org_name }}" readonly>
+        </div>
+        <div class="form-group">
+          <label>URL of the organization's API (if exists)</label>
+          <input class="form-control" type="url" value="{{ user.api_url }}" readonly>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label>Description</label>
+        <textarea class="form-control" rows="5" readonly>{{ user.org_desc }}</textarea>
+      </div>
+    {% endif %}
+
+  </div>
+
+  {% if user.is_commercial %}
+
+    <h4>Address</h4>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>Street</label>
+        <input class="form-control" type="text" value="{{ user.address_street }}" readonly>
+      </div>
+      <div class="form-group col-md-6">
+        <label>City</label>
+        <input class="form-control" type="text" value="{{ user.address_city }}" readonly>
+      </div>
+      <div class="form-group col-md-6">
+        <label>Postcode</label>
+        <input class="form-control" type="text" value="{{ user.address_postcode }}" readonly>
+      </div>
+      <div class="form-group col-md-6">
+        <label>State / Province</label>
+        <input class="form-control" type="text" value="{{ user.address_state }}" readonly>
+      </div>
+      <div class="form-group col-md-6">
+        <label>Country</label>
+        <input class="form-control" type="text" value="{{ user.address_country }}" readonly>
+      </div>
+    </div>
+
+    <h4>Financial info</h4>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>Tier</label>
+        <input class="form-control" type="text" value="{{ user.tier }}" readonly>
+      </div>
+      <div class="form-group col-md-6">
+        <label>Amount pledged</label>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input class="form-control" type="number" value="{{ user.amount_pledged }}" readonly>
+        </div>
+      </div>
+    </div>
+
+    <h3>Promotion</h3>
+    <div class="row">
+
+    <div style="font-size:15px;font-weight:bold;margin-bottom:20px" class="col-md-12">
+      {% if user.featured %}
+        This user is featured on the website
+      {% else %}
+        This user is <u>not</u> featured on the website
+      {% endif %}
+    </div>
+
+    {% if user.featured %}
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Website URL</label>
+          <input class="form-control" type="url" value="{{ user.website_url }}" readonly>
+        </div>
+        <dl class="dl-horizontal">
+          <dt class="text-success">Good standing</dt><dd>{{ 'Yes' if user.good_standing else 'No' }}</dd>
+          <dt class="text-warning">In the Deadbeat Club</dt><dd>{{ 'Yes' if user.in_deadbeat_club else 'No' }}</dd>
+        </dl>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label>Data usage description</label>
+        <textarea class="form-control" id="usage_desc" name="usage_desc" rows="4" readonly>{{ user.data_usage_desc }}</textarea>
+      </div>
+
+    {% endif %}
+
   {% endif %}
 
-  <h4>Active tokens</h4>
+  <h3>Active tokens</h3>
   {% if active_tokens %}
     <p class="text-muted">
       <em>
@@ -118,7 +223,7 @@
     This user has no active access tokens.
   {% endif %}
 
-  <h4>Hourly API usage</h4>
+  <h3>Hourly API usage</h3>
   <div id="chart"><svg style="height:500px; width:100%;"></svg></div>
 {% endblock %}
 
