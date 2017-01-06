@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}Log in - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Log in') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
   <h1 class="page-title">Log in</h1>
 
-  <p>To log in you need to have a MusicBrainz account.</p>
+  <p>{{ _('To log in you need to have a MusicBrainz account.') }}</p>
 
   <hr />
   <div class="well" style="max-width: 400px; margin: 0 auto;">
     <a href="{{ url_for('users.musicbrainz', next=request.args.get('next')) }}"
-       class="btn btn-primary btn-lg btn-block">Log in with MusicBrainz</a>
+       class="btn btn-primary btn-lg btn-block">{{ _('Log in with MusicBrainz') }}</a>
   </div>
 {% endblock %}

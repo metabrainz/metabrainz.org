@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Your Profile - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Your Profile') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">Your Profile</h1>
+  <h1 class="page-title">{{ _('Your Profile') }}</h1>
 
   <p>
     <strong>Type:</strong>
@@ -24,31 +24,31 @@
   <div class="row">
     {% if current_user.is_commercial %}
       <div class="col-md-7">
-        <h3>Organization information</h3>
+        <h3>{{ _('Organization information') }}</h3>
         <p>
-          <strong>Name:</strong> {{ current_user.org_name or
+          <strong>{{ _('Name:') }}</strong> {{ current_user.org_name or
                                     '<em class="text-muted">Unspecified</em>'|safe }}<br />
-          <strong>Website URL:</strong> {{ current_user.website_url or
+          <strong>{{ _('Website URL:') }}</strong> {{ current_user.website_url or
                                            '<em class="text-muted">Unspecified</em>'|safe }}<br />
-          <strong>API URL:</strong> {{ current_user.api_url or
+          <strong>{{ _('API URL:') }}</strong> {{ current_user.api_url or
                                        '<em class="text-muted">Unspecified</em>'|safe }}<br />
         </p>
         <p>
-          Please <a href="{{ url_for("index.contact") }}">contact us</a>
-          if you wish for us to update this information.
+          {{ _('Please <a href="{{ url_for("index.contact") }}">contact us</a>
+          if you wish for us to update this information.') }}
         </p>
       </div>
     {% endif %}
 
     <div class="col-md-5">
-      <h3>Contact information</h3>
+      <h3>{{ _('Contact information') }}</h3>
       <p>
-        <strong>Name:</strong> {{ current_user.contact_name }}<br />
-        <strong>Email:</strong> {{ current_user.contact_email }}<br />
+        <strong>{{ _('Name:') }}</strong> {{ current_user.contact_name }}<br />
+        <strong>{{ _('Email:') }}</strong> {{ current_user.contact_email }}<br />
       </p>
       <p>
         <a href="{{ url_for('users.profile_edit') }}" class="btn btn-xs btn-primary">
-          Edit contact information
+          {{ _('Edit contact information') }}
         </a>
       </p>
     </div>
@@ -56,55 +56,55 @@
 
   {% if current_user.is_commercial %}
     {% if current_user.state in ('active', 'limited') and current_user.good_standing %}
-      <h3>Data use permission granted</h3>
+      <h3>{{ _('Data use permission granted') }}</h3>
       <p>
-        You have permission to use any of the data published by the MetaBrainz
+        {{ _('You have permission to use any of the data published by the MetaBrainz
         Foundation. This includes data dumps released under a Creative Commons
-        non-commercial license. Thank you for your support!
+        non-commercial license. Thank you for your support!') }}
       </p>
       <p>
-        Please note that if your support falls behind by more than 60 days, this
+        {{ _('Please note that if your support falls behind by more than 60 days, this
         permission may be withdrawn. You can always check your current permission
-        status on this page.
+        status on this page.') }}
       </p>
     {% else %}
-      <h3>No data use permission granted</h3>
+      <h3>{{ _('No data use permission granted') }}</h3>
       <p>
-        You <strong>DO NOT</strong> currently have permission to use data
-        released under a Creative Commons non-commercial license.
+        {{ _('You <strong>DO NOT</strong> currently have permission to use data
+        released under a Creative Commons non-commercial license.') }}
       </p>
       <p>
-        Reason:
+        {{ _('Reason:') }}
         {% if not current_user.good_standing %}
-          Your account is in bad standing, which means that you are more than
+          {{ _('Your account is in bad standing, which means that you are more than
           60 days behind in support payments. If you think this is a mistake,
-          please <a href="{{ url_for("index.contact") }}">contact us</a>.
+          please <a href="{{ url_for("index.contact") }}">contact us</a>.') }}
         {% elif current_user.state == 'rejected' %}
-          Your application for using the Live Data Feed has been rejected.
+          {{ _('Your application for using the Live Data Feed has been rejected.') }}
         {% elif current_user.state == 'pending' %}
-          Your application for using the Live Data Feed is still pending.
+          {{ _('Your application for using the Live Data Feed is still pending.') }}
         {% elif current_user.state == 'waiting' %}
-          Your application for using the Live Data Feed is in the waiting list.
+          {{ _('Your application for using the Live Data Feed is in the waiting list.') }}
         {% else %}
-          Unknown. :(
+          {{ _('Unknown. :(') }}
         {% endif %}
       </p>
     {% endif %}
   {% endif %}
 
   {% if current_user.state == 'active' %}
-    <h2>Access token</h2>
+    <h2>{{ _('Access token') }}</h2>
     <p>
       <code id="token" style="margin-right:4px; {{ 'display:none;' if not current_user.token }}">{{ current_user.token.value }}</code>
-      <a id="btn-generate-token" class="btn btn-default btn-xs" href="#" role="button">Generate new token</a>
+      <a id="btn-generate-token" class="btn btn-default btn-xs" href="#" role="button">{{ _('Generate new token') }}</a>
     </p>
     <p class="text-muted" style="font-style: italic;">
-      This access token should be considered private. Don't check this token
+      {{ _('This access token should be considered private. Don't check this token
       into any publicly visible version control systems and similar places.
       If the token has been exposed, you should immediately generate a new one!
-      When you generate a new token, your current token is revoked.
+      When you generate a new token, your current token is revoked.') }}
     </p>
-    <p>See the <a href="{{ url_for('api_index.info') }}">API documentation</a> for more information.</p>
+    <p>{{ _('See the <a href="{{ url_for('api_index.info') }}">API documentation</a> for more information.') }}</p>
   {% endif %}
 {% endblock %}
 
@@ -118,8 +118,8 @@
         var ignoreConfirmation = {{ 'false' if current_user.token else 'true' }};
 
         $("#btn-generate-token").click(function () {
-          if (ignoreConfirmation || confirm('Are you sure you want to generate new access token?\n' +
-                                            'Current token will be revoked!')) {
+          if (ignoreConfirmation || confirm({{ _('Are you sure you want to generate new access token?\n') }} +
+                                            {{ _('Current token will be revoked!') }})) {
             $.ajax({
               type: "POST",
               url: "{{ url_for('users.regenerate_token') }}",
@@ -129,7 +129,7 @@
                 ignoreConfirmation = false;
               },
               error: function (jqXHR, textStatus, errorThrown) {
-                var msg = 'Failed to generate new access token!';
+                var msg = {{ _('Failed to generate new access token!') }};
                 if (jqXHR.status == 429) {
                   msg += '\n' + JSON.parse(jqXHR.responseText).error
                 }

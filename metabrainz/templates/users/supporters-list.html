@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}Supporters - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Supporters') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">Supporters</h1>
+  <h1 class="page-title">{{ _('Supporters') }}</h1>
 
   <p>
-    The following organizations make use of the data-sets published by MetaBrainz and
+    {{ _('The following organizations make use of the data-sets published by MetaBrainz and
     are supporting us financially or through some other reciprocal agreement. There are also
     organizations that make use of our data that have explicitly declined to support us. There
     may also be other organizations making use of our data that we don't know about yet. If you
-    know of a company using our data, please <a href="{{ url_for("index.contact") }}">contact us</a>.
+    know of a company using our data, please <a href="{{ url_for("index.contact") }}">contact us</a>.') }}
   </p>
 
   <div id="supporters-list">
     {% for tier in tiers %}
       {% set featured_users = tier.get_featured_users() %}
       {% if featured_users|length > 0 %}
-        <h2><a href="{{ url_for('users.tier', tier_id=tier.id) }}">{{ tier.name }} tier</a></h2>
+        <h2><a href="{{ url_for('users.tier', tier_id=tier.id) }}">{{ tier.name }} {{ _('tier') }}</a></h2>
         {% if tier.short_desc %}
           <div class="tier-description">{{ tier.short_desc }}</div>
         {% endif %}
@@ -26,7 +26,7 @@
             <div class="user {{ 'bad-standing' if not user.good_standing }}">
               {% if not user.good_standing %}
                 <a href="{{ url_for('users.bad_standing') }}"
-                   title="This user has bad standing">
+                   title="{{ _('This user has bad standing') }}">
               {% elif user.website_url %}
                 <a href="{{ user.website_url }}">
               {% endif %}

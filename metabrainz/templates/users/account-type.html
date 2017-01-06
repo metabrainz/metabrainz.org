@@ -1,47 +1,47 @@
 {% extends 'base.html' %}
 
-{% block title %}Support - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Support') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">Support us</h1>
+  <h1 class="page-title">{{ _('Support us') }}</h1>
 
   <p>
-    For commercial use of our data or to get access to the 
+    {{ _('For commercial use of our data or to get access to the
     <a href="https://musicbrainz.org/doc/Live_Data_Feed">MusicBrainz Live Data Feed</a>,
     please choose between non-commercial and commercial use below. You will need a
-    <a href="https://musicbrainz.org/register">MusicBrainz account</a> with a verified email address to sign-up.
+    <a href="https://musicbrainz.org/register">MusicBrainz account</a> with a verified email address to sign-up.') }}
   </p>
   <p>
-    <strong>Open source developers and non-profits</strong>: Please sign up as a
+    {{ _('<strong>Open source developers and non-profits</strong>: Please sign up as a
     commercial user using the free non-profit tier below. This allows us to give you credit
-    for your open source project or your non-profit.
+    for your open source project or your non-profit.') }}
   </p>
 
-  <h3>Non-commercial / Personal</h3>
+  <h3>{{ _('Non-commercial / Personal') }}</h3>
 
   <p>
-    Non-commercial use includes personal use of our data sets and use by companies that
+    {{ _('Non-commercial use includes personal use of our data sets and use by companies that
     don't anticipate earning more than $500 in a given year. If you are a pre-revenue
     start-up and expect to have more than $500 of revenue in the future, please sign up
     with a commercial account &mdash; see below for more details. Please
     <a href="{{ url_for('payments.donate') }}">consider making a donation</a> to support
-    our efforts!
+    our efforts!') }}
   </p>
 
   <p class="text-center">
     <a href="{{ url_for('users.signup_noncommercial') }}"
-       class="btn btn-default" role="button">Non-commercial</a>
+       class="btn btn-default" role="button">{{ _('Non-commercial') }}</a>
   </p>
 
-  <h3>Commercial</h3>
+  <h3>{{ _('Commercial') }}</h3>
 
   <p>
-    If you are a company with more than $500 income in a year, please select a support
+    {{ _('If you are a company with more than $500 income in a year, please select a support
     tier below that fits your current situation. We welcome working with companies that
     are just getting started and we're happy for your support for MetaBrainz to grow as
     you grow. If you would like to use our data, but are not ready to state this publicly
     yet, please sign up for the <em>Stealth start up</em> tier; we will keep your
-    data-usage confidential and contact you to discuss your future plans.
+    data-usage confidential and contact you to discuss your future plans.') }}
   </p>
 
   {% if tiers %}
@@ -55,13 +55,13 @@
                 <div class="thumbnail">
                   <div class="caption">
                     <h3>{{ tier.name }}</h3>
-                    <div class="price">${{ tier.price }}/month and up</div>
+                    <div class="price">${{ tier.price }}/{{ _('month and up') }}</div>
                     <div class="description">{{ tier.short_desc }}</div>
                     <div class="buttons">
                       <p><a href="{{ url_for('users.tier', tier_id=tier.id) }}"
-                            class="btn btn-default btn-block" role="button">More info</a></p>
+                            class="btn btn-default btn-block" role="button">{{ _('More info') }}</a></p>
                       <p><a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
-                            class="btn btn-primary btn-block" role="button">Sign up</a></p>
+                            class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a></p>
                     </div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@
                 {# Last tier should be the most expensive. Exactly what we need! #}
                 {% set featured_users = tiers[-1].get_featured_users(limit=4, with_logos=True) %}
                 <div id="featured-users">
-                  <h3>Some of our Unicorn members</h3>
+                  <h3>{{ _('Some of our Unicorn members') }}</h3>
                   {% for user in featured_users %}
                     <div class="logo-container">
                       {% if user.logo_filename %}
@@ -86,13 +86,13 @@
                     </div>
                   {% endfor %}
                 </div>
-                <em><a href="{{ url_for('users.supporters_list') }}">See all our supporters</a></em>
+                <em><a href="{{ url_for('users.supporters_list') }}">{{ _('See all our supporters') }}</a></em>
               </div>
             </div>
           </div>
         </div>
         <p class="text-center">
-          <button id="btn-show-all" type="button" class="btn btn-default">View all tiers</button>
+          <button id="btn-show-all" type="button" class="btn btn-default">{{ _('View all tiers') }}</button>
         </p>
       </div>
 
@@ -102,26 +102,26 @@
             <tr>
               <td><strong>{{ tier.name }}</strong></td>
               <td>{{ tier.short_desc }}</td>
-              <td>${{ tier.price }}/month and up</td>
+              <td>${{ tier.price }}/{{ _('month and up') }}</td>
               <td>
                 <a href="{{ url_for('users.tier', tier_id=tier.id) }}"
-                   class="btn btn-default btn-xs" role="button">More info</a>
+                   class="btn btn-default btn-xs" role="button">{{ _('More info') }}</a>
                 <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
-                   class="btn btn-primary btn-xs" role="button">Sign up</a>
+                   class="btn btn-primary btn-xs" role="button">{{ _('Sign up') }}</a>
               </td>
             </tr>
           {% endfor %}
         </table>
         <p class="text-center">
-          <button id="btn-show-less" type="button" class="btn btn-default">View featured tiers</button>
+          <button id="btn-show-less" type="button" class="btn btn-default">{{ _('View featured tiers') }}</button>
         </p>
       </div>
 
     </div>
 
     <div>
-      If you are not sure which tier to pick, please
-      <a href="{{ url_for("index.contact") }}">contact us</a>.
+      {{ _('If you are not sure which tier to pick, please
+      <a href="{{ url_for("index.contact") }}">contact us</a>.') }}
     </div>
 
   {% endif %}

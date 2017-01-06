@@ -4,30 +4,30 @@
 
 {% block content %}
   <div id="payment">
-    <h1 class="page-title">Make a Donation</h1>
+    <h1 class="page-title">{{ _('Make a Donation') }}</h1>
 
     <p>
-      If you feel that our projects are a worthwhile effort, please consider contributing money to the
+      {{ _('If you feel that our projects are a worthwhile effort, please consider contributing money to the
       MetaBrainz Foundation, which is a <a href="https://en.wikipedia.org/wiki/Non-profit_organization">
       501(c)(3) tax-exempt non-profit</a> based in California. All of your donations will be tax-deductible
       and you will receive a receipt that you can use to deduct your donation off your taxes if you are a
-      US taxpayer.
+      US taxpayer.') }}
     </p>
 
     <p>
-      Your donations will be used to operate projects of the MetaBrainz Foundation. This includes paying
+      {{ _('Your donations will be used to operate projects of the MetaBrainz Foundation. This includes paying
       for ongoing expenses like hosting, hardware, maintaining a modest office, and paying a minimal
-      salary for MetaBrainz employees.
+      salary for MetaBrainz employees.') }}
     </p>
 
-    <p>Where has my contribution gone? See our <a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>
-    <p>Who else is contributing? See our list of <a href="{{ url_for('payments.donors') }}">donors</a>.</p>
+    <p>{{ _('Where has my contribution gone? See our <a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.') }}</p>
+    <p>{{ _('Who else is contributing? See our list of <a href="{{ url_for('payments.donors') }}">donors</a>.') }}</p>
 
     {% if config.PAYMENT_PRODUCTION != True %}
       <div class="alert alert-warning" role="alert">
-        <b>Be careful!</b> This is a development version of the website. Do NOT
+        {{ _('<b>Be careful!</b> This is a development version of the website. Do NOT
         use your real credit card credentials! If you want to send an actual
-        donation, go to <a href="https://metabrainz.org/">metabrainz.org</a>.
+        donation, go to <a href="https://metabrainz.org/">metabrainz.org</a>.') }}
       </div>
     {% endif %}
 
@@ -36,16 +36,16 @@
         {{ form.hidden_tag() }}
 
         <div class="form-group">
-          <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">Amount</label>
+          <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">{{ _('Amount') }}</label>
           <div class="col-sm-4">
             <div id="input-amount-fg" class="input-group">
               <span class="input-group-addon">$</span>
               {{ form.amount(id="input-amount", class="form-control", value="50.00") | safe }}</div>
           </div>
           <div id="big-amount-info" class="col-sm-offset-3 col-sm-6" style="display:none">
-            If you would like to make a large donation, please contact us at
+            {{ _('If you would like to make a large donation, please contact us at
             <a href="mailto:donations@metabrainz.org">donations@metabrainz.org</a>
-            before you do.
+            before you do.') }}
           </div>
         </div>
 
@@ -54,7 +54,7 @@
             <div class="checkbox">
               <label>
                 {{ form.recurring(id="recurring-flag") | safe }}
-                I want this to be a recurring monthly donation
+                {{ _('I want this to be a recurring monthly donation') }}
               </label>
             </div>
           </div>
@@ -62,7 +62,7 @@
 
         <div id="input-editor-fg" class="form-group">
           <div class="col-sm-offset-3 col-sm-6">
-            {{ form.editor(id="input-editor", class="form-control", placeholder="MusicBrainz username", data_toggle="tooltip", data_placement="bottom") | safe }}
+            {{ form.editor(id="input-editor", class="form-control", placeholder="MusicBrainz {{ _('username') }}", data_toggle="tooltip", data_placement="bottom") | safe }}
           </div>
         </div>
 
@@ -71,8 +71,8 @@
             <div class="checkbox">
               <label>
                 {{ form.can_contact(id="can-contact-flag") | safe }}
-                Email me about future fundraising events
-                <br /><small>This will be very seldom</small>
+                {{ _('Email me about future fundraising events') }}
+                <br /><small>{{ _('This will be very seldom') }}</small>
               </label>
             </div>
           </div>
@@ -80,8 +80,8 @@
             <div class="checkbox">
               <label>
                 {{ form.anonymous(id="anonymous-flag") | safe }}
-                I would like this donation to be anonymous
-                <br /><small>Your name won't appear in the donors list</small>
+                {{ _('I would like this donation to be anonymous') }}
+                <br /><small>{{ _('Your name won't appear in the donors list') }}</small>
               </label>
             </div>
           </div>
@@ -89,7 +89,7 @@
 
         <div id="buttons" class="form-group">
           <div class="col-sm-offset-3 col-sm-6">
-            <button id="btn-stripe" type="button" class="btn">Donate with Credit Card</button>
+            <button id="btn-stripe" type="button" class="btn">{{ _('Donate with Credit Card') }}</button>
             <button id="btn-paypal" type="button" class="btn">
               <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
             </button>
@@ -105,39 +105,39 @@
 
     <p>
       <small>
-        The personal information provided to the MetaBrainz Foundation during the
+        {{ _('The personal information provided to the MetaBrainz Foundation during the
         donation process will not be shared with anyone. For more information,
         please take a look at our <a href="{{ url_for('index.privacy_policy') }}">
-        privacy policy</a>.
+        privacy policy</a>.') }}
       </small>
     </p>
 
     <p>
       <small>
-        To find out how to cancel recurring donations take a look at
-        <a href="{{ url_for('payments.cancel_recurring') }}">this page</a>.
+        {{ _('To find out how to cancel recurring donations take a look at
+        <a href="{{ url_for('payments.cancel_recurring') }}">this page</a>.') }}
       </small>
     </p>
 
-    <h2>Other ways to donate</h2>
+    <h2>{{ _('Other ways to donate') }}</h2>
 
-    <h3>Non-US Bank transfer</h3>
-    <p>You can make a donation, or recurring donations, via bank transfer to the following IBAN:</p>
+    <h3>{{ _('Non-US Bank transfer') }}</h3>
+    <p>{{ _('You can make a donation, or recurring donations, via bank transfer to the following IBAN:') }}</p>
     <p><em style="margin-left: 2em">ES39 0182 6536 7602 0155 8258 (BIC: BBVAESMMXXX)</em></p>
-    <p>Please indicate your name and use the word <em>DONATION</em> in the description field.</p>
+    <p>{{ _('Please indicate your name and use the word <em>DONATION</em> in the description field.') }}</p>
 
-    <h3>US Check</h3>
-    <p>If you would like to donate using a check drawn on a US bank, please send them to:</p>
+    <h3>{{ _('US Cheque') }}</h3>
+    <p>{{ _('If you would like to donate using a cheque drawn on a US bank, please send them to:') }}</p>
     <p>
       MetaBrainz Foundation<br/>
       3565 South Higuera St, Suite B<br/>
       San Luis Obispo, CA 93401<br/>
       United States
     </p>
-    <p>Please make checks payable to the <strong>MetaBrainz Foundation</strong>.</p>
+    <p>{{ _('Please make checks payable to the ') }}<strong>MetaBrainz Foundation</strong>.</p>
 
     <h3>Flattr</h3>
-    <p>If you use Flattr to donate to your favourite projects, you can click below to Flattr MetaBrainz:</p>
+    <p>{{ _('If you use Flattr to donate to your favourite projects, you can click below to') }} Flattr MetaBrainz:</p>
     <p><a href="https://flattr.com/profile/metabrainz ">https://flattr.com/profile/metabrainz</a></p>
 
   </div>
@@ -212,7 +212,7 @@
         }
       }
 
-      var defaultEditorTooltipText = "Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you";
+      var defaultEditorTooltipText = "{{ _('Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you') }}";
       setEditorTooltip(defaultEditorTooltipText, null);
 
       editor.on('input', function () { setEditorTooltip(defaultEditorTooltipText, null); });
@@ -227,12 +227,12 @@
             dataType: "json",
             success: function (response) {
               if (response.error) {
-                setEditorTooltip("MusicBrainz is currently unavailable. " +
-                "Please, make sure that your username is correct.", 'warning');
+                setEditorTooltip("{{ _('MusicBrainz is currently unavailable.') }} " +
+                "{{ _('Please, make sure that your username is correct.') }}", 'warning');
               } else if (response.found == true && response.editor == value) {
-                setEditorTooltip("Your donation will be associated with this account.", 'success');
+                setEditorTooltip({{ _('"Your donation will be associated with this account.') }}", 'success');
               } else {
-                setEditorTooltip("We can't find this account. Please, make sure it's correct", 'error');
+                setEditorTooltip("{{ _('We can't find this account. Please, make sure it's correct') }}", 'error');
               }
             }
           });

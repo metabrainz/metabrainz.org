@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% from 'macros.html' import oauth_scope_desc with context %}
 
-{% block title %}OAuth Authorization - MetaBrainz{% endblock %}
+{% block title %}{{ _('OAuth Authorization') }} - MetaBrainz{% endblock %}
 
 {% block content %}
   <div id="oauth-prompt">
     <h1 class="page-title">{{ client['name'] }}</h1>
 
-    <p style="font-size:1.1em;">This app requested permission to access:</p>
+    <p style="font-size:1.1em;">{{ _('This app requested permission to access:') }}</p>
 
     <div class="permissions">
 
@@ -16,7 +16,7 @@
           <img src="{{ url_for('static', filename='img/oauth/identity.svg') }}"/>
         </div>
         <div class="description">
-          Your identity on MetaBrainz
+          {{ _('Your identity on') }} MetaBrainz
         </div>
       </div>
 
@@ -29,8 +29,8 @@
     </div>
 
     <form action="{{ request.url }}" method="post">
-      <button type="submit" name="confirm" value="yes" class="btn btn-primary">Allow access</button>
-      <a href="{{ cancel_url }}" class="btn btn-default">Cancel</a>
+      <button type="submit" name="confirm" value="yes" class="btn btn-primary">{{ _('Allow access') }}</button>
+      <a href="{{ cancel_url }}" class="btn btn-default">{{ _('Cancel') }}</a>
     </form>
   </div>
 {% endblock %}
