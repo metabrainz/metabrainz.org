@@ -1,4 +1,5 @@
 from flask_wtf import Form, RecaptchaField
+from flask_babel import gettext
 from wtforms import StringField, BooleanField, TextAreaField, RadioField, validators
 from wtforms.fields.html5 import EmailField, URLField, DecimalField
 from wtforms.validators import DataRequired, Length
@@ -10,13 +11,13 @@ class UserSignUpForm(Form):
     Contains common fields required from both commercial and non-commercial
     users.
     """
-    contact_name = StringField(validators=[DataRequired("Contact name is required!")])
-    contact_email = EmailField(validators=[DataRequired("Email address is required!")])
-    usage_desc = TextAreaField("How are you using our data?", validators=[
-        DataRequired("Please, tell us how you (will) use our data."),
-        Length(max=150, message="Please, limit usage description to 150 characters."),
+    contact_name = StringField(validators=[DataRequired(gettext("Contact name is required!"))])
+    contact_email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])
+    usage_desc = TextAreaField(gettext("How are you using our data?"), validators=[
+        DataRequired(gettext("Please, tell us how you (will) use our data.")),
+        Length(max=150, message=gettext("Please, limit usage description to 150 characters.")),
     ])
-    agreement = BooleanField(validators=[DataRequired(message="You need to accept the agreement!")])
+    agreement = BooleanField(validators=[DataRequired(message=gettext("You need to accept the agreement!"))])
     recaptcha = RecaptchaField()
 
     def __init__(self, default_email=None, **kwargs):
@@ -31,33 +32,33 @@ class NonCommercialSignUpForm(UserSignUpForm):
 
 class CommercialSignUpForm(UserSignUpForm):
     """Sign up form for commercial users."""
-    org_name = StringField("Organization name", validators=[
-        DataRequired("You need to specify the name of your organization.")
+    org_name = StringField(gettext("Organization name"), validators=[
+        DataRequired(gettext("You need to specify the name of your organization."))
     ])
-    org_desc = TextAreaField("Organization description", validators=[
-        DataRequired("You need to provide description of your organization."),
+    org_desc = TextAreaField(gettext("Organization description"), validators=[
+        DataRequired(gettext("You need to provide description of your organization.")),
     ])
 
-    website_url = URLField("Website URL", validators=[
-        DataRequired("You need to specify website of the organization."),
+    website_url = URLField(gettext("Website URL"), validators=[
+        DataRequired(gettext("You need to specify website of the organization.")),
     ])
-    logo_url = URLField("Logo image URL")
-    api_url = URLField("API URL")
+    logo_url = URLField(gettext("Logo image URL"))
+    api_url = URLField(gettext("API URL"))
 
-    address_street = StringField("Street", validators=[
-        DataRequired("You need to specify street.")
+    address_street = StringField(gettext("Street"), validators=[
+        DataRequired(gettext("You need to specify street."))
     ])
-    address_city = StringField("City", validators=[
-        DataRequired("You need to specify city.")
+    address_city = StringField(gettext("City"), validators=[
+        DataRequired(gettext("You need to specify city."))
     ])
-    address_state = StringField("State / Province", validators=[
-        DataRequired("You need to specify state/province.")
+    address_state = StringField(gettext("State / Province"), validators=[
+        DataRequired(gettext("You need to specify state/province."))
     ])
-    address_postcode = StringField("Postcode", validators=[
-        DataRequired("You need to specify postcode.")
+    address_postcode = StringField(gettext("Postcode"), validators=[
+        DataRequired(gettext("You need to specify postcode."))
     ])
-    address_country = StringField("Country", validators=[
-        DataRequired("You need to specify country.")
+    address_country = StringField(gettext("Country"), validators=[
+        DataRequired(gettext("You need to specify country."))
     ])
 
     amount_pledged = DecimalField()
@@ -65,11 +66,11 @@ class CommercialSignUpForm(UserSignUpForm):
 
 class UserEditForm(Form):
     """User profile editing form."""
-    contact_name = StringField("Name", [
-        validators.DataRequired(message="Contact name field is empty."),
+    contact_name = StringField(gettext("Name"), [
+        validators.DataRequired(message=gettext("Contact name field is empty.")),
     ])
-    contact_email = EmailField("Email", [
+    contact_email = EmailField(gettext("Email"), [
         validators.Optional(strip_whitespace=False),
-        validators.Email(message="Email field is not a valid email address."),
-        validators.DataRequired(message="Contact email field is empty."),
+        validators.Email(message=gettext("Email field is not a valid email address.")),
+        validators.DataRequired(message=gettext("Contact email field is empty.")),
     ])

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for
+from flask_babel import gettext
 from werkzeug.exceptions import NotFound
 import os
 import codecs
@@ -21,7 +22,7 @@ def view(year):
     """This endpoint handles requests for pages with annual reports."""
     report = load_report(year)
     if report is None:
-        raise NotFound('Requested annual report was not found.')
+        raise NotFound(gettext('Requested annual report was not found.'))
     return render_template('reports/annual_reports/view.html', year=year,
                            all_years=list_years(), report=report)
 

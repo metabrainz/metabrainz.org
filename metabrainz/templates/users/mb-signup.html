@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign up - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Sign up') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">Sign up</h1>
+  <h1 class="page-title">{{ _('Sign up') }}</h1>
 
   <p>
-    Please sign in with the MusicBrainz account that will be associated with
-    your MetaBrainz profile. If you don't have a MusicBrainz account or wish to
-    use a new MusicBrainz account, you can register on the page linked below.
+    {{ _('Please sign in with the MusicBrainz account that will be associated with
+    your MetaBrainz profile. If you don\'t have a MusicBrainz account or wish to
+    use a new MusicBrainz account, you can register on the page linked below.') }}
   </p>
 
   <hr />
   <div class="well" style="max-width: 400px; margin: 0 auto;">
     <a href="{{ url_for('users.musicbrainz', next=request.args.get('next')) }}"
-       class="btn btn-primary btn-lg btn-block">Sign up with MusicBrainz</a>
+       class="btn btn-primary btn-lg btn-block">{{ _('Sign up with MusicBrainz') }}</a>
   </div>
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign up - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Sign up') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">Sign up <small>Commercial</small></h1>
+  <h1 class="page-title">{{ _('Sign up <small>Commercial</small>') }}</h1>
 
   <p>
-    <strong>Note:</strong> Signing up for any tier other than the <i>Stealth startup</i> tier
+    {{ _('<strong>Note:</strong> Signing up for any tier other than the <i>Stealth startup</i> tier
     will publicly list your company on this web site. However, we will not publish any of
-    your private details.
+    your private details.') }}
   </p>
 
   {% for field in form.errors %}
@@ -21,15 +21,15 @@
     {{ form.csrf_token }}
 
     <div class="form-group">
-      <label class="col-sm-4 control-label">Account type</label>
-      <div class="col-sm-5" style="padding-top: 7px">Commercial</div>
-      <label class="col-sm-4 control-label">Selected tier</label>
+      <label class="col-sm-4 control-label">{{ _('Account type') }}</label>
+      <div class="col-sm-5" style="padding-top: 7px">{{ _('Commercial') }}</div>
+      <label class="col-sm-4 control-label">{{ _('Selected tier') }}</label>
       <div class="col-sm-5" style="padding-top: 7px">
         <b>{{ tier.name }}</b>
-        <em class="text-muted">${{ tier.price }}/month and up</em>
+        <em class="text-muted">{{ _('$%(tier_price)s/month and up', tier_price=tier.price) }}</em>
       </div>
       <div class="col-sm-6 col-sm-offset-4" style="padding-top: 7px">
-        <a href="{{ url_for(".account_type") }}">Change account type or tier</a>
+        <a href="{{ url_for(".account_type") }}">{{ _('Change account type or tier') }}</a>
       </div>
     </div>
 
@@ -43,15 +43,16 @@
       <div class="col-sm-5">{{ form.org_name(class="form-control", required="required") }}</div>
       <div class="col-sm-offset-4 col-sm-5" style="padding-top: 7px">
         <em class="text-muted">
-          If you don't have an organization name, you probably want to sign up as a
-          <a href="{{ url_for('users.signup_noncommercial') }}">non-commercial / personal</a> user.
+          {{ _('If you don't have an organization name, you probably want to sign up as a
+          <a href="%(signup_url)s">non-commercial / personal</a> user.',
+          signup_url=url_for('users.signup_noncommercial')) }}
         </em>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-4 control-label">
-        MusicBrainz Account
+        {{ _('MusicBrainz Account') }}
       </label>
       <div class="col-sm-5" style="padding-top: 7px">{{ mb_username }}</div>
     </div>
@@ -74,11 +75,11 @@
 
     <div class="form-group">
       <label class="col-sm-4 control-label">{{ form.logo_url.label.text }}</label>
-      <div class="col-sm-5">{{ form.logo_url(class="form-control", placeholder="(preferably in SVG format)") }}</div>
+      <div class="col-sm-5">{{ form.logo_url(class="form-control", placeholder=_('(preferably in SVG format)')) }}</div>
       <div class="col-sm-offset-4 col-sm-5" style="padding-top: 7px">
         <em class="text-muted">
-          Image should be about 250 pixels wide on a white or transparent
-          background. We will host it on our site.
+          {{ _('Image should be about 250 pixels wide on a white or transparent
+          background. We will host it on our site.') }}
         </em>
       </div>
     </div>
@@ -88,7 +89,7 @@
       <div class="col-sm-5">{{ form.api_url(class="form-control") }}</div>
       <div class="col-sm-offset-4 col-sm-5" style="padding-top: 7px">
         <em class="text-muted">
-          URL to where developers can use your APIs using MusicBrainz IDs, if available.
+          {{ _('URL to where developers can use your APIs using MusicBrainz IDs, if available..') }}
         </em>
       </div>
     </div>
@@ -99,14 +100,14 @@
         <span style="color: red">*</span>
       </label>
       <div class="col-sm-5">{{ form.usage_desc(class="form-control", required="required",
-                                   maxlength=150, placeholder="(max 150 characters)") }}</div>
+                                   maxlength=150, placeholder=_('(max 150 characters)')) }}</div>
     </div>
     <br />
 
     <div class="form-group">
       <label class="col-sm-offset-4 col-sm-5">
-        If you would like to support us with more than ${{ tier.price }},
-        please enter the actual amount here:
+        {{ _('If you would like to support us with more than $%(tier_price)d,
+        please enter the actual amount here:', tier_price=tier.price) }}
       </label>
       <div class="col-sm-offset-4 col-sm-5">
         {{ form.amount_pledged(class="form-control", min=tier.price, value=form.amount_pledged.data or tier.price) }}
@@ -116,7 +117,7 @@
 
     <div class="form-group">
       <div class="col-sm-offset-4 col-sm-5">
-        <strong>Billing address</strong>
+        <strong>{{ _('Billing address') }}</strong>
       </div>
     </div>
     <div class="form-group">
@@ -179,8 +180,8 @@
         <div class="checkbox">
           <label id="agreement">
             {{ form.agreement(required="required") }}
-            I agree to treat my access token as a secret and will not share
-            this token publicly or commit it to a publicly visible source code repository.
+            {{ _('I agree to treat my access token as a secret and will not share
+            this token publicly or commit it to a publicly visible source code repository.') }}
           </label>
         </div>
       </div>
@@ -188,15 +189,15 @@
 
     <div class="col-sm-offset-4 col-sm-8 small">
       <em>
-        The following information will be shown publicly: organization name,
-        logo, website and API URLs, data usage description.<br />
+        {{ _('The following information will be shown publicly: organization name,
+        logo, website and API URLs, data usage description.') }}<br />
       </em>
     </div>
 
     <div class="col-sm-offset-4 col-sm-8 small">
       <em>
-        We'll send you more details about payment process once your application
-        is approved.<br /><br />
+        {{ _('We'll send you more details about payment process once your application
+        is approved.') }}<br /><br />
       </em>
     </div>
 

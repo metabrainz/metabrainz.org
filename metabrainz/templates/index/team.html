@@ -1,28 +1,29 @@
 {% extends 'base.html' %}
 
-{% block title %}Team - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Team') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">The MetaBrainz Team</h1>
+  <h1 class="page-title">{{ _('The MetaBrainz Team') }}</h1>
   <div id="team">
 
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/robert_kaye.jpg') }}">
       <div class="bio">
-        <h4><span class="name">Robert Kaye</span> &mdash; Executive Director</h4>
+        <h4>{{ _('<span class="name">Robert Kaye</span> &mdash; Executive Director') }}</h4>
         <p>
-          Robert is the founder and lead geek for <a href="https://musicbrainz.org/">MusicBrainz</a>, and Executive Director of
+          {{ _('Robert is the founder and lead geek for <a href="%(mb_url)s">MusicBrainz</a>, and Executive Director of
           the MetaBrainz Foundation, the non-profit organization that pays the bills for MusicBrainz. After studying Computer
           Engineering at Cal Poly, San Luis Obispo, he joined Xing Technology where he shaped the MP3 efforts and then spent
           time for the dot com boom on EMusic’s FreeAmp team. While at EMusic he started working on MusicBrainz, the open music
-          encyclopedia, and fell in love with Open Source software.
+          encyclopedia, and fell in love with Open Source software.', mb_url='https://musicbrainz.org/') }}
         </p>
         <p>
-          Robert is also an active hardware hacker, creating art projects for Burning Man and Nowhere. He is the co-founder of
-          <a href="https://partyrobotics.com">Party Robotics</a> where he co-created Bartendro the open source cocktail robot.
+          {{ _('Robert is also an active hardware hacker, creating art projects for Burning Man and Nowhere. He is the co-founder of
+          <a href="%(pr_url)s">Party Robotics</a> where he co-created Bartendro the open source cocktail robot.',
+          pr_url='https://partyrobotics.com') }}
         </p>
         <p>
-          He lives in Barcelona, Spain.
+          {{ _('He lives in Barcelona, Spain.') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> ruaok</li>
@@ -35,12 +36,12 @@
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/michael_wiencek.jpg') }}"/>
       <div class="bio">
-        <h4><span class="name">Michael Wiencek</span> &mdash; Senior Developer</h4>
+        <h4>{{ _('<span class="name">Michael Wiencek</span> &mdash; Senior Developer') }}</h4>
         <p>
-          Michael is the senior developer for MusicBrainz, residing in his hometown of Chicago. He heard about MusicBrainz when
+          {{ _('Michael is the senior developer for MusicBrainz, residing in his hometown of Chicago. He heard about MusicBrainz when
           he was still in grammar school, started editing in high school as his music collection got unwieldy, and participated
           in three GSoC projects during college. In his copious free time he enjoys going to concerts, making music no one will
-          ever hear, binge-watching old TV shows, and being the best drummer in the world on Rock Band 4.
+          ever hear, binge-watching old TV shows, and being the best drummer in the world on Rock Band 4.') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> bitmap</li>
@@ -53,22 +54,24 @@
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/frederik_olesen.jpg') }}"/>
       <div class="bio">
-        <h4><span class="name">Frederik “Freso” S. Olesen</span> &mdash; Community Manager</h4>
+        <h4>{{ _('<span class="name">Frederik “Freso” S. Olesen</span> &mdash; Community Manager') }}</h4>
         <p>
-          Hired in the fall of 2015 as the MetaBrainz Community Manager, Freso is in charge of most of the public communication
+          {{ _('Hired in the fall of 2015 as the MetaBrainz Community Manager, Freso is in charge of most of the public communication
           channels (IRC, forums, blog, etc.) and various community projects (like the Google Code-in). He has been a
-          <a href="https://musicbrainz.org/user/Freso">MusicBrainz contributor since 2006</a> and an open source enthusiast for
-          even longer.
+          <a href="%(mb_freso_url)s">MusicBrainz contributor since 2006</a> and an open source enthusiast for
+          even longer.', mb_freso_url='https://musicbrainz.org/user/Freso') }}
         </p>
         <p>
-          On the rare occasions that he is not found in front of a monitor of some sort, Freso can be found
-          <a href="https://musicbrainz.org/artist/d112e7ac-3811-4773-abe3-f06c5e697ff4">playing music</a> or (far more commonly)
+          {{ _('On the rare occasions that he is not found in front of a monitor of some sort, Freso can be found
+          <a href="%(mb_freso_artist)s">playing music</a> or (far more commonly)
           dancing to it. He has even taught some dance classes and workshops in
-          <a href="https://en.wikipedia.org/wiki/B-boying">b-boying</a>!
+          <a href="%(bboy_url)s">b-boying</a>!',
+          mb_freso_artist='https://musicbrainz.org/artist/d112e7ac-3811-4773-abe3-f06c5e697ff4',
+          bboy_url='https://en.wikipedia.org/wiki/B-boying') }}
         </p>
         <p>
-          Freso was born and raised in Copenhagen, Denmark but has recently moved to Barcelona to be closer to the rest of
-          the MetaBrainz team.
+          {{ _('Freso was born and raised in Copenhagen, Denmark but has recently moved to Barcelona to be closer to the rest of
+          the MetaBrainz team.') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> Freso</li>
@@ -81,14 +84,16 @@
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/nicolas_tamargo.jpg') }}"/>
       <div class="bio">
-        <h4><span class="name">Nicolás Tamargo</span> &mdash; Style Leader/Customer Support</h4>
+        <h4>{{ _('<span class="name">Nicolás Tamargo</span> &mdash; Style Leader/Customer Support') }}</h4>
         <p>
-          Nicolás is the leader of everything style-related in MusicBrainz (all except for fashion), and is in charge of
-          answering (or delegating!) support requests. When he's not actively working for MetaBrainz, he's busy
-          <a href="https://musicbrainz.org/statistics/editors">editing MusicBrainz</a>, devouring ice cream, and following
-          the <a href="https://en.wikipedia.org/wiki/Tartu_JK_Tammeka">world's best football team</a> around the country.
+          {{ _('Nicolás is the leader of everything style-related in MusicBrainz (all except for fashion), and is in charge of
+          answering (or delegating!) support requests. When he\'s not actively working for MetaBrainz, he\'s busy
+          <a href="%(mb_editors_url)s">editing MusicBrainz</a>, devouring ice cream, and following
+          the <a href="%(tartu_url)s">world\'s best football team</a> around the country.',
+          mb_editors_url='https://musicbrainz.org/statistics/editors',
+          tartu_url='https://en.wikipedia.org/wiki/Tartu_JK_Tammeka') }}
         </p>
-        <p>He lives in Tartu, Estonia.</p>
+        <p>{{ _('He lives in Tartu, Estonia.') }}</p>
         <ul class="links">
           <li><strong>IRC:</strong> reosarevok</li>
           <li><strong>MusicBrainz:</strong> <a href="https://musicbrainz.org/user/reosarevok">reosarevok</a></li>
@@ -100,15 +105,15 @@
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/roman_tsukanov.jpg') }}"/>
       <div class="bio">
-        <h4><span class="name">Roman Tsukanov</span> &mdash; Software Engineer</h4>
+        <h4>{{ _('<span class="name">Roman Tsukanov</span> &mdash; Software Engineer') }}</h4>
         <p>
-          Roman first became associated with MetaBrainz through Google Summer of Code program, where he was instrumental
-          in the birth of <a href="https://critiquebrainz.org/">CritiqueBrainz</a>. He wrote the updated MetaBrainz
-          website. Currently works on MusicBrainz, AcousticBrainz, and other projects.
+          {{ _('Roman first became associated with MetaBrainz through Google Summer of Code program, where he was instrumental
+          in the birth of <a href="%(cb_url)s">CritiqueBrainz</a>. He wrote the updated MetaBrainz
+          website. Currently works on MusicBrainz, AcousticBrainz, and other projects.', cb_url='https://critiquebrainz.org/') }}
         </p>
         <p>
-          Roman joined the MetaBrainz team as a software engineer in 2015. He currently lives and studies music technology
-          in Barcelona, Spain.
+          {{ _('Roman joined the MetaBrainz team as a software engineer in 2015. He currently lives and studies music technology
+          in Barcelona, Spain.') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> Gentlecat</li>
@@ -121,18 +126,20 @@
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/laurent_monin.jpg') }}"/>
       <div class="bio">
-        <h4><span class="name">Laurent Monin</span> &mdash; System Administrator</h4>
+        <h4>{{ _('<span class="name">Laurent Monin</span> &mdash; System Administrator') }}</h4>
         <p>
-          A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz and Picard in attempts to codify his vast
+          {{ _('A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz and Picard in attempts to codify his vast
           collection of over 1500 CDs. In addition to being a music fanatic, Laurent has been programming on anything with
-          more than 1 bit since 1982 and has been an esteemed Linux system administrator since 1998.
+          more than 1 bit since 1982 and has been an esteemed Linux system administrator since 1998.') }}
         </p>
         <p>
-          With his extensive repertoire of skills and passions, Laurent has actively contributed to a myriad of open source
-          projects, notably <a href="https://en.wikipedia.org/wiki/ELinks">ELinks</a> and
-          <a href="https://en.wikipedia.org/wiki/Geeqie">Geeqie</a>, and loves to tinker with the hardware of various audio
-          gadgets, including amplifiers and loudspeakers. However, Laurent's contributions do not end there. He currently
-          sustains the MetaBrainz servers while residing near Besançon, France.
+          {{ _('With his extensive repertoire of skills and passions, Laurent has actively contributed to a myriad of open source
+          projects, notably <a href="%(elinks_url)s">ELinks</a> and
+          <a href="%(geeqie_url)s">Geeqie</a>, and loves to tinker with the hardware of various audio
+          gadgets, including amplifiers and loudspeakers. However, Laurent\'s contributions do not end there. He currently
+          sustains the MetaBrainz servers while residing near Besançon, France.',
+          elinks_url='https://en.wikipedia.org/wiki/ELinks',
+          geeqie_url='https://en.wikipedia.org/wiki/Geeqie') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> zas</li>
@@ -140,25 +147,31 @@
       </div>
     </div>
 
-    <h2>Voluntary Project Leaders</h2>
+    <h2>{{ _('Voluntary Project Leaders') }}</h2>
 
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/ben_ockmore.jpg') }}"/>
       <div class="bio">
-        <h4><span class="name">Ben Ockmore</span> &mdash; BookBrainz</h4>
+        <h4>{{ _('<span class="name">Ben Ockmore</span> &mdash; BookBrainz') }}</h4>
         <p>
-          Ben is one of the two project leads and the main programmer for <a href="https://bookbrainz.org">BookBrainz</a>,
+          {{ _('Ben is one of the two project leads and the main programmer for <a href="%(bb_url)s">BookBrainz</a>,
           a volunteer project doing for books what MusicBrainz does for music. He started programming C++ 9 years ago, and now
           knows Python and Node.js too, although he is currently studying for a degree in Electronics Engineering at the
-          <a href="https://www.surrey.ac.uk/"> University of Surrey</a>. Ben has been editing MusicBrainz for the past 4 years,
-          attending the last three summits, and has contributed code to<a href="https://bitbucket.org/lazka/mutagen">
-          mutagen</a> and <a href="http://beets.io/">beets</a> besides BookBrainz.
+          <a href="%(surrey_url)s"> University of Surrey</a>. Ben has been editing MusicBrainz for the past 4 years,
+          attending the last three summits, and has contributed code to<a href="%(mutagen_url)s">
+          mutagen</a> and <a href="%(beets_url)s">beets</a> besides BookBrainz.',
+          bb_url='https://bookbrainz.org',
+          surrey_url='https://www.surrey.ac.uk/',
+          mutagen_url='https://bitbucket.org/lazka/mutagen',
+          beets_url='http://beets.io/') }}
         </p>
         <p>
-          In his spare time, Ben likes to design quadrotors,
-          <a href="https://www.surrey.ac.uk/mes/study/ug/projects/teamsurtes/about/index.htm"> racing cars</a>,
-          artificial intelligence, <a href="https://sourceforge.net/projects/opengrow/">vegetation simulators</a> and music
-          software. However, none of them are finished yet!
+          {{ _('In his spare time, Ben likes to design quadrotors,
+          <a href="%(race_surrey_url)s"> racing cars</a>,
+          artificial intelligence, <a href="%(opengrow_url)s">vegetation simulators</a> and music
+          software. However, none of them are finished yet!',
+          race_surrey_url='https://www.surrey.ac.uk/mes/study/ug/projects/teamsurtes/about/index.htm',
+          opengrow_url='https://sourceforge.net/projects/opengrow/') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> LordSputnik</li>
@@ -170,10 +183,10 @@
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/sean_burke.jpg') }}"/>
       <div class="bio">
-        <h4><span class="name">Sean Burke</span> &mdash; BookBrainz</h4>
+        <h4>{{ _('<span class="name">Sean Burke</span> &mdash; BookBrainz') }}</h4>
         <p>
-          Sean is the other of the two project leaders for <a href="https://bookbrainz.org">BookBrainz</a>. He speaks
-          Irish and is currently trying to learn to play the bodhrán.
+          {{ _('Sean is the other of the two project leaders for <a href="%(bb_url)s">BookBrainz</a>. He speaks
+          Irish and is currently trying to learn to play the bodhrán.', bb_url='https://bookbrainz.org') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> Leftmost</li>
@@ -183,9 +196,9 @@
 
     <div class="person">
       <div class="bio">
-        <h4><span class="name">Alastair Porter</span> &mdash; AcousticBrainz</h4>
+        <h4>{{ _('<span class="name">Alastair Porter</span> &mdash; AcousticBrainz') }}</h4>
         <p>
-          Alastair is the project leader for <a href="https://acousticbrainz.org/">AcousticBrainz</a>.
+          {{ _('Alastair is the project leader for <a href="%(ab_url)s">AcousticBrainz</a>.', ab_url='https://acousticbrainz.org/') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> alastairp</li>

@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ tier.name }} tier - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('%(tier_name)s tier', tier_name=tier.name) }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">{{ tier.name }} tier</h1>
+  <h1 class="page-title">{{ _('%(tier_name)s tier', tier_name=tier.name) }}</h1>
 
   <p>{{ tier.long_desc | nl2br | safe }}</p>
 
   {% if not current_user or current_user.is_anonymous %}
     <p class="text-center">
       <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
-         class="btn btn-primary">Sign up for this tier</a>
+         class="btn btn-primary">{{ _('Sign up for this tier') }}</a>
     </p>
   {% endif %}
 
   {% set users = tier.get_featured_users() %}
   {% if users|length > 0 %}
-    <h3>Supporters on this tier</h3>
+    <h3>{{ _('Supporters on this tier') }}</h3>
     <div class="users-grid">
       {% for user in users %}
         <div class="user {{ 'bad-standing' if not user.good_standing }}">
           {% if not user.good_standing %}
             <a href="{{ url_for('users.bad_standing') }}"
-               title="This user has bad standing">
+               title="{{ _('This user has bad standing') }}">
           {% elif user.website_url %}
             <a href="{{ user.website_url }}">
           {% endif %}

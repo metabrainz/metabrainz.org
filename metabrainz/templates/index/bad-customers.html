@@ -1,30 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}Bad customers - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Bad customers') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
   <div id="bad-customers">
 
-    <h1 class="page-title">Our not-so-favorite commercial data users</h1>
+    <h1 class="page-title">{{ _('Our not-so-favorite commercial data users') }}</h1>
 
     <p>
-      The following companies use our data, but have declined to support us on an ongoing basis.
+      {{ _('The following companies use our data, but have declined to support us on an ongoing basis.') }}
     </p>
     <p>
-      All of our projects require support from end-user donations and commercial support. Our free
+      {{ _('All of our projects require support from end-user donations and commercial support. Our free
       data-sets provide incredible value to these companies giving them a business advantage.
       We believe that companies that use our data to conduct their business should provide financial
-      support so that we may continue to cover our expenses and pay our staff.
+      support so that we may continue to cover our expenses and pay our staff.') }}
     </p>
     <p>
-      If a company you like appears on this list, please contact that company and ask them why
+      {{ _('If a company you like appears on this list, please contact that company and ask them why
       they have declined to support us. If you are with a company listed below and would like to
-      get off this list, you can do so by <a href="{{ url_for("users.account_type") }}">signing up
-      for support</a>.
+      get off this list, you can do so by <a href="%(account_type_url)s">signing up
+      for support</a>.', account_type_url=url_for('users.account_type')) }}
     </p>
     <p>
-      Do you know of other companies using our data? We'd love to know and ask them for support!
-      Please <a href="{{ url_for('index.contact') }}">let us know</a>!
+      {{ _('Do you know of other companies using our data? We\'d love to know and ask them for support!
+      Please <a href="%(contact_url)s">let us know</a>!', contact_url=url_for('index.contact')) }}
     </p>
 
     {% if bad_users %}
@@ -50,11 +50,11 @@
       </div>
     {% else %}
       <div class="well well-lg">
-        <p><strong>Nice!!</strong></p>
-        <p>There are currently no not-so-favorite commercial data users!</p>
+        <p><strong>{{ _('Nice!!') }}</strong></p>
+        <p>{{ _('There are currently no not-so-favorite commercial data users!') }}</p>
         <p>
-          ... either that, or maybe we're working to convince some companies to do the
-          "right thing"... :)
+          {{ _('... either that, or maybe we\'re working to convince some companies to do the
+          "right thing"... :)') }}
         </p>
       </div>
     {% endif %}

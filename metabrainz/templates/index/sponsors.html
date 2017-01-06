@@ -1,100 +1,103 @@
 {% extends 'base.html' %}
 
-{% block title %}Sponsors - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Sponsors') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">Sponsors</h1>
+  <h1 class="page-title">{{ _('Sponsors') }}</h1>
 
   <p>
-    The MetaBrainz Foundation wishes to offer a huge thank you to all of our
-    sponsors and partners for their support in helping MusicBrainz operate.
+    {{ _('The MetaBrainz Foundation wishes to offer a huge thank you to all of our
+    sponsors and partners for their support in helping MusicBrainz operate.') }}
   </p>
   <p>
-    Some of the following organizations and individuals have provided funding,
+    {{ _('Some of the following organizations and individuals have provided funding,
     others have supported us by providing access to tools and technologies that
     have helped us grow. In either case they played a significant role in the
-    success and growth of MusicBrainz.
+    success and growth of MusicBrainz.') }}
   </p>
-  <p>We would not exist without you — <b>Thank You!</b></p>
+  <p>{{ _('We would not exist without you — <b>Thank You!</b>') }}</p>
 
-  <h2>Sponsors</h2>
+  <h2>{{ _('Sponsors') }}</h2>
   <table id="sponsors" class="table table-condensed">
     <tbody>
     <tr>
       <td><img src="{{ url_for('static', filename='img/logos/sponsors/google.svg') }}"></td>
       <td>
-        <b><a href="https://www.google.com/">Google</a></b> has been an extremely supportive
-        sponsor. They've donated over <b>$320,000</b>.
+        {{ _('<b><a href="%(google_url)s">Google</a></b> has been an extremely supportive
+        sponsor. They\'ve donated over <b>$320,000</b>.', google_url='https://www.google.com/') }}
       </td>
     </tr>
 
     <tr>
       <td><img src="{{ url_for('static', filename='img/logos/sponsors/osl.png') }}"></td>
       <td>
-        The <b><a href="https://osuosl.org/">OSU Open Source Lab</a></b> hosts the FTP
+        {{ _('The <b><a href="%(osuosl_url)s">OSU Open Source Lab</a></b> hosts the FTP
         mirror server that handles the distribution of the
-        <a href="https://musicbrainz.org/doc/MusicBrainz_Database">MusicBrainz Database</a>
-        and virtual machines, thus saving us considerable load and bandwidth costs.
+        <a href="%(mb_db_url)s">MusicBrainz Database</a>
+        and virtual machines, thus saving us considerable load and bandwidth costs.', osuosl_url='https://osuosl.org/', mb_db_url='https://musicbrainz.org/doc/MusicBrainz_Database') }}
       </td>
     </tr>
 
     <tr>
       <td><img src="{{ url_for('static', filename='img/logos/sponsors/dotsrc.png') }}"></td>
       <td>
-        <b><a href="http://dotsrc.org/">DotSrc</a></b> hosts an
-        <a href="ftp://mirrors.dotsrc.org/MusicBrainz">EU mirror of our FTP site</a>.
-        This gives better download speeds of our large data sets for users in Europe.
+        {{ _('<b><a href="%(dotsrc_url)s">DotSrc</a></b> hosts an
+        <a href="%(mb_ftp_url)s">EU mirror of our FTP site</a>.
+        This gives better download speeds of our large data sets for users in Europe.', dotsrc_url='http://dotsrc.org/', mb_ftp_url='ftp://mirrors.dotsrc.org/MusicBrainz') }}
       </td>
     </tr>
 
     <tr>
       <td><img src="{{ url_for('static', filename='img/logos/sponsors/layer42.png') }}"></td>
       <td>
-        <b><a href="http://layer42.net/">Layer42</a></b> generously hosts a test server for
-        us, free of charge!
+        {{ _('<b><a href="%(layer42_url)s">Layer42</a></b> generously hosts a test server for
+        us, free of charge!', layer42_url='http://layer42.net/') }}
       </td>
     </tr>
 
     <tr>
       <td><img src="{{ url_for('static', filename='img/logos/sponsors/github.svg') }}"></td>
       <td>
-        <b><a href="https://github.com/">GitHub</a></b> provides us with a free Bronze
-        account for hosting our sysadmin repositories.
+        {{ _('<b><a href="%(github_url)s">GitHub</a></b> provides us with a free Bronze
+        account for hosting our sysadmin repositories.', github_url='https://github.com/') }}
       </td>
     </tr>
 
     <tr>
       <td><img src="{{ url_for('static', filename='img/logos/sponsors/pipedrive.png') }}"></td>
       <td>
-        <b><a href="https://www.pipedrive.com/">Pipedrive</a></b> provides us with a free
-        account to help keep track of commercial users and supporters.
+        {{ _('<b><a href="%(pipedrive_url)s">Pipedrive</a></b> provides us with a free
+        account to help keep track of commercial users and supporters.', pipedrive_url='https://www.pipedrive.com/') }}
       </td>
     </tr>
     </tbody>
   </table>
 
-  <h2>Special thanks</h2>
+  <h2>{{ _('Special thanks') }}</h2>
   <p>
-    In our past, we've had a lot of people support us with many different levels of support:
+    {{ _('In our past, we\'ve had a lot of people support us with many different levels of support:
     Access to conferences, covering travel expenses, large personal donations and countless
     meals. These have become too numerous to list, but we wanted to note a few individuals
-    who have made a big difference for us.
+    who have made a big difference for us.') }}
   </p>
   <p>
-    Richard Jones of <a href="http://last.fm">Last.fm fame</a> donated <b>$50,000</b> in 2010,
-    <a href="https://www.oracle.com/sun">Sun Microsystems</a> &amp; Paul Lamere donated a database
-    server and <a href="http://oreilly.com/">O'Reilly Media</a> gave MusicBrainz $500 to
+    {{ _('Richard Jones of <a href="%(last_fm_url)s">Last.fm fame</a> donated <b>$50,000</b> in 2010,
+    <a href="%(oracle_url)s">Sun Microsystems</a> &amp; Paul Lamere donated a database
+    server and <a href="%(oreilly_url)s">O\'Reilly Media</a> gave MusicBrainz $500 to
     start off a bank account for the project before the MetaBrainz Foundation existed.
-    <a href="https://www.linkedin.com/in/edcavazos">Ed Cavazos</a> periodically provides pro-bono
+    <a href="%(ed_url)s">Ed Cavazos</a> periodically provides pro-bono
     legal advice for the occasional Intellectual Property questions that MetaBrainz faces.
-    <a href="http://www.mh-llp.com/our-people/daniel-appelman">Dan Appleman</a> provides
+    <a href="%(dan_url)s">Dan Appleman</a> provides
     periodic help crafting contracts for licensing our data.
-    <a href="https://www.digitalwest.com/">Digital West Networks Inc.</a> was our main
-    hosting provider between 2006 and 2016 and gave us a discount because of our non-profit status.
+    <a href="%(dw_url)s">Digital West Networks Inc.</a> was our main
+    hosting provider between 2006 and 2016 and gave us a discount because of our non-profit status.',
+    last_fm_url='http://last.fm', oracle_url='https://www.oracle.com/sun', oreilly_url='http://oreilly.com/',
+    ed_url='https://www.linkedin.com/in/edcavazos', dan_url='http://www.mh-llp.com/our-people/daniel-appelman',
+    dw_url='https://www.digitalwest.com/') }}
   </p>
 
   <p>
-    Thanks to everyone who has helped make the MetaBrainz Foundation what it is today!
+    {{ _('Thanks to everyone who has helped make the MetaBrainz Foundation what it is today!') }}
   </p>
 
 {% endblock %}

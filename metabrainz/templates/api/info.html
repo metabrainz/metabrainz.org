@@ -5,17 +5,17 @@
 {% block content %}
   <div id="api">
 
-    <h1 class="page-title">MetaBrainz API</h1>
+    <h1 class="page-title">{{ _('MetaBrainz API') }}</h1>
 
     <em>
-    All endpoints require an access token which you can get from your
-    <a href="{{ url_for('users.profile') }}">profile page</a>.
+    {{ _('All endpoints require an access token which you can get from your
+    <a href="%(profile_url)s">profile page</a>.', profile_url=url_for('users.profile')) }}
     </em>
 
-    <h2>MusicBrainz Live Data Feed</h2>
-    <p>There are three endpoints for fetching replication packets:</p>
+    <h2>{{ _('MusicBrainz Live Data Feed') }}</h2>
+    <p>{{ _('There are three endpoints for fetching replication packets:') }}</p>
     <p>
-      <strong>Hourly:</strong>
+      <strong>{{ _('Hourly:') }}</strong>
       <code>
         GET {{ url_for('api_musicbrainz.replication_hourly',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
@@ -26,7 +26,7 @@
       </code>
     </p>
     <p>
-      <strong>Daily:</strong>
+      <strong>{{ _('Daily:') }}</strong>
       <code>
         GET {{ url_for('api_musicbrainz.replication_daily',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
@@ -37,7 +37,7 @@
       </code>
     </p>
     <p>
-      <strong>Weekly:</strong>
+      <strong>{{ _('Weekly:') }}</strong>
       <code>
         GET {{ url_for('api_musicbrainz.replication_weekly',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
@@ -48,11 +48,11 @@
       </code>
     </p>
     <p>
-      It is possible to get a signature for each replication packet. Just replace
-      <code>.tar.bz2</code> with <code>.asc</code>.
+      {{ _('It is possible to get a signature for each replication packet. Just replace
+      <code>.tar.bz2</code> with <code>.asc</code>.') }}
     </p>
     <p>
-      You can find the latest replication packet numbers from this endpoint:<br />
+      {{ _('You can find the latest replication packet numbers from this endpoint:') }}<br />
       <code>
         GET {{ url_for('api_musicbrainz.replication_info',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,

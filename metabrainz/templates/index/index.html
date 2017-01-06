@@ -3,23 +3,23 @@
 {% block content %}
   <div id="homepage">
 
-    <h2 class="page-title">Welcome to MetaBrainz!</h2>
+    <h2 class="page-title">{{ _('Welcome to MetaBrainz!') }}</h2>
 
     <div id="intro">
       <p>
-        The MetaBrainz Foundation is a non-profit that believes in free, open
+        {{ _('The MetaBrainz Foundation is a non-profit that believes in free, open
         access to data. It has been set up to build community maintained
         databases and make them available in the public domain or under Creative
-        Commons licenses.
+        Commons licenses.') }}
       </p>
       <p>
-        Our data is mostly gathered by volunteers and verified
+        {{ _('Our data is mostly gathered by volunteers and verified
         by peer review to ensure it is consistent and correct. All
-        <a href="{{ url_for('users.account_type') }}">non-commercial use</a> of this data is free,
-        but <a href="{{ url_for('users.account_type') }}">commercial users</a> are asked to
-        <a href="{{ url_for('users.account_type') }}">support us</a> in order to help fund the
+        <a href="%(account_type_url)s">non-commercial use</a> of this data is free,
+        but <a href="%(account_type_url)s">commercial users</a> are asked to
+        <a href="%(account_type_url)s">support us</a> in order to help fund the
         project. We encourage all data users to contribute to the data gathering process so
-        that our data can be as comprehensive as possible.
+        that our data can be as comprehensive as possible.', account_type_url=url_for('users.account_type')) }}
       </p>
     </div>
 
@@ -31,9 +31,10 @@
               <img src="{{ url_for('static', filename='img/logos/musicbrainz.svg') }}" />
             </a>
             <div class="caption">
-              An open music encyclopedia that collects music metadata and makes it
-              available to the public<br />
-              <em>Sign up to use the <a href="{{ url_for('users.account_type') }}">Live Data Feed</a></em>
+              {{ _('An open music encyclopedia that collects music metadata and makes it
+              available to the public') }}<br />
+              <em>{{ _('Sign up to use the <a href="%(account_type_url)s">Live Data Feed</a></em>',
+              account_type_url=url_for('users.account_type')) }}
             </div>
           </div>
           <div class="item">
@@ -41,7 +42,7 @@
               <img src="{{ url_for('static', filename='img/logos/picard.svg') }}" />
             </a>
             <div class="caption">
-              A cross-platform music tagger
+              {{ _('A cross-platform music tagger') }}
             </div>
           </div>
           <div class="item">
@@ -49,7 +50,7 @@
               <img src="{{ url_for('static', filename='img/logos/acousticbrainz.svg') }}" />
             </a>
             <div class="caption">
-              A crowdsourced collection of acoustic information
+              {{ _('A crowdsourced collection of acoustic information') }}
             </div>
           </div>
           <div class="item">
@@ -57,7 +58,7 @@
               <img src="{{ url_for('static', filename='img/logos/listenbrainz.svg') }}" />
             </a>
             <div class="caption">
-                An open record of user listening habits
+                {{ _('An open record of user listening habits') }}
             </div>
           </div>
           <div class="item">
@@ -65,7 +66,7 @@
               <img src="{{ url_for('static', filename='img/logos/critiquebrainz.svg') }}" />
             </a>
             <div class="caption">
-              A repository for Creative Commons licensed music reviews
+              {{ _('A repository for Creative Commons licensed music reviews') }}
             </div>
           </div>
           <div class="item">
@@ -73,7 +74,7 @@
               <img src="{{ url_for('static', filename='img/logos/bookbrainz.svg') }}" />
             </a>
             <div class="caption">
-              An open encyclopedia which contains information about published literature
+              {{ _('An open encyclopedia which contains information about published literature') }}
             </div>
           </div>
           <div class="item">
@@ -81,30 +82,33 @@
               <img src="{{ url_for('static', filename='img/logos/coverartarchive.svg') }}" />
             </a>
             <div class="caption">
-              A repository of music cover art that is freely and easily accessible
+              {{ _('A repository of music cover art that is freely and easily accessible') }}
             </div>
           </div>
         </div>
         {# Controls #}
         <a class="left carousel-control" href="#projects-carousel" role="button" data-slide="prev">
           <span class="icon-prev" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
+          <span class="sr-only">{{ _('Previous') }}</span>
         </a>
         <a class="right carousel-control" href="#projects-carousel" role="button" data-slide="next">
           <span class="icon-next" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
+          <span class="sr-only">{{ _('Next') }}</span>
         </a>
       </div>
     </div>
 
     <div id="more-intro">
       <p>
-        The MetaBrainz Foundation believes in <a href="{{ url_for('financial_reports.index') }}">
-        transparent finances</a> and is supported by <a href="{{ url_for('payments.donate') }}">end user
-        donations</a> and a number of <a href="{{ url_for('index.sponsors') }}">sponsors</a>
+        {{ _('The MetaBrainz Foundation believes in <a href="%(financial_reports_url)s">
+        transparent finances</a> and is supported by <a href="%(donations_url)s">end user
+        donations</a> and a number of <a href="%(sponsors_url)s">sponsors</a>
         who provide funds in order for the foundation to accomplish its goals. The foundation also
-        has several <a href="{{ url_for('users.supporters_list') }}"> commercial supporters</a>
-        who make use of our data sets.
+        has several <a href="%(supporters_url)s"> commercial supporters</a>
+        who make use of our data sets.', financial_reports_url=url_for('financial_reports.index'),
+        donations_url=url_for('payments.donate'),
+        sponsors_url=url_for('index.sponsors'),
+        supporters_url=url_for('users.supporters_list') ) }}
       </p>
     </div>
 
@@ -130,9 +134,11 @@
 
     {% if bad_users %}
       <div class="homepage-section">
-        Unfortunately, some companies listed below use data we provide without contributing back.
-        <a href="{{ url_for('index.bad_customers') }}">Find out more</a> about them or
-        <a href="{{ url_for('users.account_type') }}">sign up</a>!
+        {{ _('Unfortunately, some companies listed below use data we provide without contributing back.
+        <a href="%(bad_customers_url)s">Find out more</a> about them or
+        <a href="%(account_type_url)s">sign up</a>!',
+        bad_customers_url=url_for('index.bad_customers'),
+        account_type_url=url_for('users.account_type')) }}
       </div>
 
       <div id="featured-users" class="row">
@@ -151,8 +157,8 @@
     {% endif %}
 
     <div id="additional-intro">
-      To get more information about the foundation, go to the
-      <a href="{{ url_for('index.about') }}">about</a> page.
+      {{ _('To get more information about the foundation, go to the
+      <a href="%(about_url)s">about</a> page.', about_url=url_for('index.about')) }}
     </div>
 
   </div>
