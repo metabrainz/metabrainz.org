@@ -21,10 +21,10 @@
 
   <p>
     {{ _('Non-commercial use includes personal use of our data sets and use by companies that
-    don't anticipate earning more than $500 in a given year. If you are a pre-revenue
+    don\'t anticipate earning more than $500 in a given year. If you are a pre-revenue
     start-up and expect to have more than $500 of revenue in the future, please sign up
     with a commercial account &mdash; see below for more details. Please
-    <a href="{{ url_for('payments.donate') }}">consider making a donation</a> to support
+    <a href="{{ url_for(\'payments.donate\') }}">consider making a donation</a> to support
     our efforts!') }}
   </p>
 
@@ -38,7 +38,7 @@
   <p>
     {{ _('If you are a company with more than $500 income in a year, please select a support
     tier below that fits your current situation. We welcome working with companies that
-    are just getting started and we're happy for your support for MetaBrainz to grow as
+    are just getting started and we\'re happy for your support for MetaBrainz to grow as
     you grow. If you would like to use our data, but are not ready to state this publicly
     yet, please sign up for the <em>Stealth start up</em> tier; we will keep your
     data-usage confidential and contact you to discuss your future plans.') }}
@@ -121,7 +121,7 @@
 
     <div>
       {{ _('If you are not sure which tier to pick, please
-      <a href="{{ url_for("index.contact") }}">contact us</a>.') }}
+      <a href="{{ url_for(\'index.contact\') }}">contact us</a>.') }}
     </div>
 
   {% endif %}

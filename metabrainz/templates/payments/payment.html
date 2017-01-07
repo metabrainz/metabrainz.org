@@ -9,7 +9,7 @@
     <div class="alert alert-info" role="alert">
       {{ _('<b>This page is for organizations!</b> Payments made here will not show up
       in the list of donations. If you want to make a donation instead, go to
-      <a href="{{ url_for('payments.donate') }}">donation page</a>.') }}
+      <a href="{{ url_for(\'payments.donate\') }}">donation page</a>.') }}
     </div>
 
     <p>
@@ -18,7 +18,7 @@
       salary for MetaBrainz employees.') }}
     </p>
 
-    {{ _('<p>Where has your contribution gone? See our <a href="{{ url_for('financial_reports.index') }}">transparent finances</a>.</p>') }}
+    {{ _('<p>Where has your contribution gone? See our <a href="{{ url_for(\'financial_reports.index\') }}">transparent finances</a>.</p>') }}
 
     {% if config.PAYMENT_PRODUCTION != True %}
       <div class="alert alert-warning" role="alert">
@@ -83,7 +83,7 @@
       <small>
         {{ _('The personal information provided to the MetaBrainz Foundation during the
         payment process will not be shared with anyone. For more information,
-        please take a look at our <a href="{{ url_for('index.privacy_policy') }}">
+        please take a look at our <a href="{{ url_for(\'index.privacy_policy\') }}">
         privacy policy</a>.') }}
       </small>
     </p>
@@ -91,7 +91,7 @@
     <p>
       <small>
         {{ _('To find out how to cancel recurring payments take a look at
-        <a href="{{ url_for('payments.cancel_recurring') }}">this page</a>.') }}
+        <a href="{{ url_for(\'payments.cancel_recurring\') }}">this page</a>.') }}
       </small>
     </p>
 

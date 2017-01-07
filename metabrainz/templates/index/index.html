@@ -15,9 +15,9 @@
       <p>
         {{ _('Our data is mostly gathered by volunteers and verified
         by peer review to ensure it is consistent and correct. All
-        <a href="{{ url_for('users.account_type') }}">non-commercial use</a> of this data is free,
-        but <a href="{{ url_for('users.account_type') }}">commercial users</a> are asked to
-        <a href="{{ url_for('users.account_type') }}">support us</a> in order to help fund the
+        <a href="{{ url_for(\'users.account_type\') }}">non-commercial use</a> of this data is free,
+        but <a href="{{ url_for(\'users.account_type\') }}">commercial users</a> are asked to
+        <a href="{{ url_for(\'users.account_type\') }}">support us</a> in order to help fund the
         project. We encourage all data users to contribute to the data gathering process so
         that our data can be as comprehensive as possible.') }}
       </p>
@@ -33,7 +33,7 @@
             <div class="caption">
               {{ _('An open music encyclopedia that collects music metadata and makes it
               available to the public<br />
-              <em>Sign up to use the <a href="{{ url_for('users.account_type') }}">Live Data Feed</a></em>') }}
+              <em>Sign up to use the <a href="{{ url_for(\'users.account_type\') }}">Live Data Feed</a></em>') }}
             </div>
           </div>
           <div class="item">
@@ -99,11 +99,11 @@
 
     <div id="more-intro">
       <p>
-        {{ _('The MetaBrainz Foundation believes in <a href="{{ url_for('financial_reports.index') }}">
-        transparent finances</a> and is supported by <a href="{{ url_for('payments.donate') }}">end user
-        donations</a> and a number of <a href="{{ url_for('index.sponsors') }}">sponsors</a>
+        {{ _('The MetaBrainz Foundation believes in <a href="{{ url_for(\'financial_reports.index\') }}">
+        transparent finances</a> and is supported by <a href="{{ url_for(\'payments.donate\') }}">end user
+        donations</a> and a number of <a href="{{ url_for(\'index.sponsors\') }}">sponsors</a>
         who provide funds in order for the foundation to accomplish its goals. The foundation also
-        has several <a href="{{ url_for('users.supporters_list') }}"> commercial supporters</a>
+        has several <a href="{{ url_for(\'users.supporters_list\') }}"> commercial supporters</a>
         who make use of our data sets.') }}
       </p>
     </div>
@@ -131,8 +131,8 @@
     {% if bad_users %}
       <div class="homepage-section">
         {{ _('Unfortunately, some companies listed below use data we provide without contributing back.
-        <a href="{{ url_for('index.bad_customers') }}">Find out more</a> about them or
-        <a href="{{ url_for('users.account_type') }}">sign up</a>!') }}
+        <a href="{{ url_for(\'index.bad_customers\') }}">Find out more</a> about them or
+        <a href="{{ url_for(\'users.account_type\') }}">sign up</a>!') }}
       </div>
 
       <div id="featured-users" class="row">
@@ -152,7 +152,7 @@
 
     <div id="additional-intro">
       {{ _('To get more information about the foundation, go to the
-      <a href="{{ url_for('index.about') }}">about</a> page.') }}
+      <a href="{{ url_for(\'index.about\') }}">about</a> page.') }}
     </div>
 
   </div>

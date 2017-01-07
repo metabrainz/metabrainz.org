@@ -5,7 +5,7 @@
 {% block content %}
   <h1 class="page-title">{{ tier.name }} tier</h1>
 
-  <p>{{ _({{ tier.long_desc | nl2br | safe }}) }}</p>
+  <p>{{ tier.long_desc | nl2br | safe }}</p>
 
   {% if not current_user or current_user.is_anonymous %}
     <p class="text-center">
