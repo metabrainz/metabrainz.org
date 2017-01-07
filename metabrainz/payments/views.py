@@ -1,5 +1,6 @@
 from __future__ import division
 from flask import Blueprint, request, render_template, url_for, redirect, current_app, jsonify
+from flask_babel import gettext
 from metabrainz.model.payment import Payment
 from metabrainz.payments.forms import DonationForm, PaymentForm
 from metabrainz import flash
@@ -101,25 +102,25 @@ def check_editor():
 def complete():
     """Endpoint for successful payments."""
     if request.args.get("is_donation") == "True":
-        flash.success("Thank you for making a donation to the MetaBrainz Foundation. Your "
+        flash.success(gettext("Thank you for making a donation to the MetaBrainz Foundation. Your "
                       "support is greatly appreciated! It may take some time before your "
-                      "donation appears in the list due to processing delays.")
+                      "donation appears in the list due to processing delays."))
         return redirect(url_for('payments.donors'))
     else:
-        flash.success("Thank you for making a payment to the MetaBrainz Foundation. Your "
-                      "support is greatly appreciated!")
+        flash.success(gettext("Thank you for making a payment to the MetaBrainz Foundation. Your "
+                      "support is greatly appreciated!"))
         return redirect(url_for('financial_reports.index'))
 
 @payments_bp.route('/payment/cancelled')
 def cancelled():
     """Endpoint for cancelled payments."""
     if request.args.get("is_donation") == "True":
-        flash.info("We're sorry to see that you won't be donating today. We hope that "
-                   "you'll change your mind!")
+        flash.info(gettext("We're sorry to see that you won't be donating today. We hope that "
+                   "you'll change your mind!"))
         return redirect(url_for('payments.donate'))
     else:
-        flash.info("We're sorry to see that you won't be paying today. We hope that "
-                   "you'll change your mind!")
+        flash.info(gettext("We're sorry to see that you won't be paying today. We hope that "
+                   "you'll change your mind!"))
         return redirect(url_for('financial_reports.index'))
 
 @payments_bp.route('/payment/error')
@@ -129,10 +130,10 @@ def error():
     Users should be redirected there when errors occur during payment process.
     """
     if request.args.get("is_donation") == "True":
-        flash.error("We're sorry, but it appears we've run into an error and can't "
-                    "process your donation.")
+        flash.error(gettext("We're sorry, but it appears we've run into an error and can't "
+                    "process your donation."))
         return redirect(url_for('payments.donate'))
     else:
-        flash.error("We're sorry, but it appears we've run into an error and can't "
-                    "process your payment.")
+        flash.error(gettext("We're sorry, but it appears we've run into an error and can't "
+                    "process your payment."))
         return redirect(url_for('financial_reports.index'))

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, redirect, render_template, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
+from flask_babel import gettext
 from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 from metabrainz.mail import send_mail, MailException
 from metabrainz.model.tier import Tier
@@ -44,7 +45,7 @@ def account_type():
 def tier(tier_id):
     t = Tier.get(id=tier_id)
     if not t or not t.available:
-        raise NotFound("Can't find tier with a specified ID.")
+        raise NotFound(gettext("Can't find tier with a specified ID."))
     return render_template('users/tier.html', tier=t)
 
 
@@ -58,13 +59,13 @@ def signup():
 
     account_type = session.fetch_data(SESSION_KEY_ACCOUNT_TYPE)
     if not account_type:
-        flash.info("Please select account type to sign up.")
+        flash.info(gettext("Please select account type to sign up."))
         return redirect(url_for(".account_type"))
 
     if account_type == ACCOUNT_TYPE_COMMERCIAL:
         tier_id = session.fetch_data(SESSION_KEY_TIER_ID)
         if not tier_id:
-            flash.info("Please select account type to sign up.")
+            flash.info(gettext("Please select account type to sign up."))
             return redirect(url_for(".account_type"))
         return redirect(url_for(".signup_commercial", tier_id=tier_id))
     else:
@@ -81,11 +82,11 @@ def signup_commercial():
     """
     tier_id = request.args.get('tier_id')
     if not tier_id:
-        flash.warn("You need to choose support tier before signing up!")
+        flash.warn(gettext("You need to choose support tier before signing up!"))
         return redirect(url_for('.account_type'))
     selected_tier = Tier.get(id=tier_id)
     if not selected_tier or not selected_tier.available:
-        flash.error("You need to choose existing tier before signing up!")
+        flash.error(gettext("You need to choose existing tier before signing up!"))
         return redirect(url_for(".account_type"))
 
     mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
@@ -101,8 +102,8 @@ def signup_commercial():
 
     def custom_validation(f):
         if f.amount_pledged.data < selected_tier.price:
-            flash.warning("Custom amount must be more than threshold amount"
-                          "for selected tier or equal to it!")
+            flash.warning(gettext("Custom amount must be more than threshold amount"
+                          "for selected tier or equal to it!"))
             return False
         return True
 
@@ -132,8 +133,8 @@ def signup_commercial():
                 tier_id=tier_id,
                 amount_pledged=form.amount_pledged.data,
             )
-            flash.success("Thanks for signing up! Your application will be reviewed "
-                          "soon. We will send you updates via email.")
+            flash.success(gettext("Thanks for signing up! Your application will be reviewed "
+                          "soon. We will send you updates via email."))
             try:
                 send_mail(
                     subject="[MetaBrainz] Sign up confirmation",
@@ -144,10 +145,10 @@ def signup_commercial():
                 )
             except MailException as e:
                 logging.error(e)
-                flash.warn("Failed to send welcome email to you. We are looking into it. "
-                           "Sorry for inconvenience!")
+                flash.warn(gettext("Failed to send welcome email to you. We are looking into it. "
+                           "Sorry for inconvenience!"))
         else:
-            flash.info("You already have a MetaBrainz account!")
+            flash.info(gettext("You already have a MetaBrainz account!"))
         login_user(new_user)
         return redirect(url_for('.profile'))
 
@@ -178,7 +179,7 @@ def signup_noncommercial():
                 contact_email=form.contact_email.data,
                 data_usage_desc=form.usage_desc.data,
             )
-            flash.success("Thanks for signing up!")
+            flash.success(gettext("Thanks for signing up!"))
             try:
                 send_mail(
                     subject="[MetaBrainz] Sign up confirmation",
@@ -189,10 +190,10 @@ def signup_noncommercial():
                 )
             except MailException as e:
                 logging.error(e)
-                flash.warn("Failed to send welcome email to you. We are looking into it. "
-                           "Sorry for inconvenience!")
+                flash.warn(gettext("Failed to send welcome email to you. We are looking into it. "
+                           "Sorry for inconvenience!"))
         else:
-            flash.info("You already have a MetaBrainz account!")
+            flash.info(gettext("You already have a MetaBrainz account!"))
         login_user(new_user)
         return redirect(url_for('.profile'))
 
@@ -211,10 +212,10 @@ def musicbrainz():
 def musicbrainz_post():
     """MusicBrainz OAuth2 callback endpoint."""
     if not musicbrainz_login.validate_post_login():
-        raise BadRequest("Login failed!")
+        raise BadRequest(gettext("Login failed!"))
     code = request.args.get('code')
     if not code:
-        raise InternalServerError("Authorization code is missing!")
+        raise InternalServerError(gettext("Authorization code is missing!"))
     mb_username, mb_email = musicbrainz_login.get_user(code)
     session.persist_data(**{
         SESSION_KEY_MB_USERNAME: mb_username,
@@ -258,7 +259,7 @@ def regenerate_token():
     try:
         return jsonify({'token': current_user.generate_token()})
     except InactiveUserException:
-        raise BadRequest("Can't generate new token unless account is active.")
+        raise BadRequest(gettext("Can't generate new token unless account is active."))
     except TokenGenerationLimitException as e:
         return jsonify({'error': e.message}), 429  # https://tools.ietf.org/html/rfc6585#page-3
 
