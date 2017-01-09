@@ -3,7 +3,7 @@
 {% block title %}{{ _('Sign up') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">Sign up <small>{{ _('Commercial') }}</small></h1>
+  <h1 class="page-title">{{ _('Sign up <small>Commercial</small>') }}</h1>
 
   <p>
     {{ _('<strong>Note:</strong> Signing up for any tier other than the <i>Stealth startup</i> tier
@@ -51,7 +51,7 @@
 
     <div class="form-group">
       <label class="col-sm-4 control-label">
-        MusicBrainz {{ _('Account') }}
+        {{ _('MusicBrainz Account') }}
       </label>
       <div class="col-sm-5" style="padding-top: 7px">{{ mb_username }}</div>
     </div>
@@ -74,7 +74,7 @@
 
     <div class="form-group">
       <label class="col-sm-4 control-label">{{ form.logo_url.label.text }}</label>
-      <div class="col-sm-5">{{ form.logo_url(class="form-control", placeholder="(preferably in SVG format)") }}</div>
+      <div class="col-sm-5">{{ form.logo_url(class="form-control", placeholder="({{ _('preferably in SVG format') }})") }}</div>
       <div class="col-sm-offset-4 col-sm-5" style="padding-top: 7px">
         <em class="text-muted">
           {{ _('Image should be about 250 pixels wide on a white or transparent
