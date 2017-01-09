@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, send_from_directory, current_app
 from flask.helpers import safe_join
-from flask_babel import gettext
 from werkzeug.wrappers import Response
 from werkzeug.urls import iri_to_uri
 from metabrainz.api.decorators import token_required, tracked
@@ -37,7 +36,7 @@ def replication_check():
                    for e in os.listdir(current_app.config['REPLICATION_PACKETS_DIR'])]
     except OSError as e:
         logging.warning(e)
-        return Response(gettext("UNKNOWN " + str(e)), mimetype='text/plain')
+        return Response("UNKNOWN " + str(e), mimetype='text/plain')
 
     pattern = re.compile("replication-[0-9]+.tar.bz2$")
     entries = filter(lambda x: pattern.search(x), entries)
@@ -45,7 +44,7 @@ def replication_check():
     entries = _sort_natural(entries)
 
     if len(entries) == 0:
-        return Response(gettext("UNKNOWN no replication packets available", mimetype='text/plain'))
+        return Response("UNKNOWN no replication packets available", mimetype='text/plain')
 
     resp = "OK"
     last = -1
@@ -53,13 +52,13 @@ def replication_check():
     for entry in entries:
         m = pattern.search(entry)
         if not m:
-            resp = gettext("UNKNOWN Unkown files in the replication directory")
+            resp = "UNKNOWN Unkown files in the replication directory"
             break
         num = int(m.groups()[0])
         if last < 0:
             last = num - 1
         if last != num - 1:
-            resp = gettext("CRITICAL Replication packet %d is missing" % (num - 1))
+            resp = "CRITICAL Replication packet %d is missing" % (num - 1)
         last = num
 
     if resp != "OK":
@@ -67,9 +66,9 @@ def replication_check():
         
     last_packet_age = time.time() - os.path.getmtime(entries[-1]) 
     if last_packet_age > MAX_PACKET_AGE_CRITICAL:
-        resp = gettext("CRITICAL Latest replication packet is %.1f hours old" % (last_packet_age / 3600))
+        resp = "CRITICAL Latest replication packet is %.1f hours old" % (last_packet_age / 3600)
     elif last_packet_age > MAX_PACKET_AGE_WARNING:
-        resp = gettext("WARNING Latest replication packet is %.1f hours old" % (last_packet_age / 3600))
+        resp = "WARNING Latest replication packet is %.1f hours old" % (last_packet_age / 3600)
 
     return Response(resp, mimetype='text/plain')
 
@@ -115,7 +114,7 @@ def replication_hourly(packet_number):
     directory = current_app.config['REPLICATION_PACKETS_DIR']
     filename = 'replication-%s.tar.bz2' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
-        return Response(gettext("Can't find specified replication packet!\n"), status=404)
+        return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, filename))
@@ -129,7 +128,7 @@ def replication_hourly_signature(packet_number):
     directory = current_app.config['REPLICATION_PACKETS_DIR']
     filename = 'replication-%s.tar.bz2.asc' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
-        return Response(gettext("Can't find signature for a specified replication packet!\n"), status=404)
+        return Response("Can't find signature for a specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, filename))
@@ -144,7 +143,7 @@ def replication_daily(packet_number):
     directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR)
     filename = 'replication-daily-%s.tar.bz2' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
-        return Response(gettext("Can't find specified replication packet!\n"), status=404)
+        return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, DAILY_SUBDIR, filename))
@@ -158,7 +157,7 @@ def replication_daily_signature(packet_number):
     directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR)
     filename = 'replication-daily-%s.tar.bz2.asc' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
-        return Response(gettext("Can't find signature for a specified replication packet!\n"), status=404)
+        return Response("Can't find signature for a specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, DAILY_SUBDIR, filename))
@@ -173,7 +172,7 @@ def replication_weekly(packet_number):
     directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR)
     filename = 'replication-weekly-%s.tar.bz2' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
-        return Response(gettext("Can't find specified replication packet!\n"), status=404)
+        return Response("Can't find specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, WEEKLY_SUBDIR, filename))
@@ -187,7 +186,7 @@ def replication_weekly_signature(packet_number):
     directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR)
     filename = 'replication-weekly-%s.tar.bz2.asc' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
-        return Response(gettext("Can't find signature for a specified replication packet!\n"), status=404)
+        return Response("Can't find signature for a specified replication packet!\n", status=404)
 
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, WEEKLY_SUBDIR, filename))

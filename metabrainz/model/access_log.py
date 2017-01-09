@@ -7,7 +7,6 @@ from sqlalchemy import func
 from sqlalchemy.dialects import postgres
 from datetime import datetime, timedelta
 from flask import current_app
-from flask_babel import gettext
 import logging
 import pytz
 
@@ -57,9 +56,9 @@ class AccessLog(db.Model):
                     cls.token == access_token) \
             .count()
         if count > DIFFERENT_IP_LIMIT:
-            msg = (gettext("Hourly access threshold exceeded for token %s\n\n"
+            msg = ("Hourly access threshold exceeded for token %s\n\n"
                    "This token has been used from %s different IP "
-                   "addresses during the last %s minutes.")) % \
+                   "addresses during the last %s minutes.") % \
                   (access_token, count, CLEANUP_RANGE_MINUTES)
             logging.info(msg)
             # Checking if notification for admins about this token abuse has
