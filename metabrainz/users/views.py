@@ -102,8 +102,10 @@ def signup_commercial():
 
     def custom_validation(f):
         if f.amount_pledged.data < selected_tier.price:
-            flash.warning(gettext("Custom amount must be more than threshold amount"
-                          "for selected tier or equal to it!"))
+            flash.warning(gettext(
+                "Custom amount must be more than threshold amount"
+                "for selected tier or equal to it!"
+            ))
             return False
         return True
 
@@ -133,8 +135,10 @@ def signup_commercial():
                 tier_id=tier_id,
                 amount_pledged=form.amount_pledged.data,
             )
-            flash.success(gettext("Thanks for signing up! Your application will be reviewed "
-                          "soon. We will send you updates via email."))
+            flash.success(gettext(
+                "Thanks for signing up! Your application will be reviewed "
+                "soon. We will send you updates via email."
+            ))
             try:
                 send_mail(
                     subject="[MetaBrainz] Sign up confirmation",
@@ -145,8 +149,10 @@ def signup_commercial():
                 )
             except MailException as e:
                 logging.error(e)
-                flash.warn(gettext("Failed to send welcome email to you. We are looking into it. "
-                           "Sorry for inconvenience!"))
+                flash.warn(gettext(
+                    "Failed to send welcome email to you. We are looking into it. "
+                    "Sorry for inconvenience!"
+                ))
         else:
             flash.info(gettext("You already have a MetaBrainz account!"))
         login_user(new_user)
@@ -190,8 +196,10 @@ def signup_noncommercial():
                 )
             except MailException as e:
                 logging.error(e)
-                flash.warn(gettext("Failed to send welcome email to you. We are looking into it. "
-                           "Sorry for inconvenience!"))
+                flash.warn(gettext(
+                    "Failed to send welcome email to you. We are looking into it. "
+                    "Sorry for inconvenience!"
+                ))
         else:
             flash.info(gettext("You already have a MetaBrainz account!"))
         login_user(new_user)
