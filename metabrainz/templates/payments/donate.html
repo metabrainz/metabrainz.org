@@ -230,7 +230,7 @@
                 setEditorTooltip("{{ _('MusicBrainz is currently unavailable.') }} " +
                 "{{ _('Please, make sure that your username is correct.') }}", 'warning');
               } else if (response.found == true && response.editor == value) {
-                setEditorTooltip({{ _('"Your donation will be associated with this account.') }}", 'success');
+                setEditorTooltip("{{ _('Your donation will be associated with this account.') }}", 'success');
               } else {
                 setEditorTooltip("{{ _('We can\'t find this account. Please, make sure it\'s correct') }}", 'error');
               }
