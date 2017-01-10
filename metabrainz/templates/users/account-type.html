@@ -24,8 +24,8 @@
     don\'t anticipate earning more than $500 in a given year. If you are a pre-revenue
     start-up and expect to have more than $500 of revenue in the future, please sign up
     with a commercial account &mdash; see below for more details. Please
-    <a href="{{ url_for(\'payments.donate\') }}">consider making a donation</a> to support
-    our efforts!') }}
+    <a href="%(url)s">consider making a donation</a> to support
+    our efforts!', url=url_for('payments.donate')) }}
   </p>
 
   <p class="text-center">
@@ -121,7 +121,7 @@
 
     <div>
       {{ _('If you are not sure which tier to pick, please
-      <a href="{{ url_for(\'index.contact\') }}">contact us</a>.') }}
+      <a href="%(url)s">contact us</a>.', url=url_for('index.contact')) }}
     </div>
 
   {% endif %}

@@ -20,8 +20,8 @@
       salary for MetaBrainz employees.') }}
     </p>
 
-    <p>{{ _('Where has my contribution gone? See our <a href="{{ url_for(\'financial_reports.index\') }}">transparent finances</a>.') }}</p>
-    <p>{{ _('Who else is contributing? See our list of <a href="{{ url_for(\'payments.donors\') }}">donors</a>.') }}</p>
+    <p>{{ _('Where has my contribution gone? See our <a href="%(url)s">transparent finances</a>.', url=url_for('financial_reports.index')) }}</p>
+    <p>{{ _('Who else is contributing? See our list of <a href="%(url)s">donors</a>.', url=url_for('payments.donors')) }}</p>
 
     {% if config.PAYMENT_PRODUCTION != True %}
       <div class="alert alert-warning" role="alert">
@@ -107,15 +107,15 @@
       <small>
         {{ _('The personal information provided to the MetaBrainz Foundation during the
         donation process will not be shared with anyone. For more information,
-        please take a look at our <a href="{{ url_for(\'index.privacy_policy\') }}">
-        privacy policy</a>.') }}
+        please take a look at our <a href="%(url)s">
+        privacy policy</a>.', url=url_for('index.privacy_policy')) }}
       </small>
     </p>
 
     <p>
       <small>
         {{ _('To find out how to cancel recurring donations take a look at
-        <a href="{{ url_for(\'payments.cancel_recurring\') }}">this page</a>.') }}
+        <a href="%(url)s">this page</a>.', url=url_for('payments.cancel_recurring')) }}
       </small>
     </p>
 
