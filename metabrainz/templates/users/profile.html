@@ -34,8 +34,8 @@
                                        '<em class="text-muted">Unspecified</em>'|safe }}<br />
         </p>
         <p>
-          {{ _('Please <a href="%(url)s">contact us</a>
-          if you wish for us to update this information.', url=url_for('index.contact')) }}
+          {{ _('Please <a href="%(contact_url)s">contact us</a>
+          if you wish for us to update this information.', contact_url=url_for('index.contact')) }}
         </p>
       </div>
     {% endif %}
@@ -78,7 +78,7 @@
         {% if not current_user.good_standing %}
           {{ _('Your account is in bad standing, which means that you are more than
           60 days behind in support payments. If you think this is a mistake,
-          please <a href="%(url)s">contact us</a>.', url=url_for('index.contact')) }}
+          please <a href="%(contact_url)s">contact us</a>.', contact_url=url_for('index.contact')) }}
         {% elif current_user.state == 'rejected' %}
           {{ _('Your application for using the Live Data Feed has been rejected.') }}
         {% elif current_user.state == 'pending' %}
@@ -104,7 +104,7 @@
       If the token has been exposed, you should immediately generate a new one!
       When you generate a new token, your current token is revoked.') }}
     </p>
-    <p>{{ _('See the <a href="%(url)s">API documentation</a> for more information.', url=url_for('api_index.info')) }}</p>
+    <p>{{ _('See the <a href="%(api_docs_url)s">API documentation</a> for more information.', api_docs_url=url_for('api_index.info')) }}</p>
   {% endif %}
 {% endblock %}
 

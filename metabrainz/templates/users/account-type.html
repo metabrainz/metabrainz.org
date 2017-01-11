@@ -7,9 +7,10 @@
 
   <p>
     {{ _('For commercial use of our data or to get access to the
-    <a href="https://musicbrainz.org/doc/Live_Data_Feed">MusicBrainz Live Data Feed</a>,
+    <a href="%(mb_data_feed)s">MusicBrainz Live Data Feed</a>,
     please choose between non-commercial and commercial use below. You will need a
-    <a href="https://musicbrainz.org/register">MusicBrainz account</a> with a verified email address to sign-up.') }}
+    <a href="%(mb_register_link)s">MusicBrainz account</a> with a verified email address to sign-up.',
+    mb_data_feed='https://musicbrainz.org/doc/Live_Data_Feed', mb_register_link='https://musicbrainz.org/register') }}
   </p>
   <p>
     {{ _('<strong>Open source developers and non-profits</strong>: Please sign up as a
@@ -24,8 +25,8 @@
     don\'t anticipate earning more than $500 in a given year. If you are a pre-revenue
     start-up and expect to have more than $500 of revenue in the future, please sign up
     with a commercial account &mdash; see below for more details. Please
-    <a href="%(url)s">consider making a donation</a> to support
-    our efforts!', url=url_for('payments.donate')) }}
+    <a href="%(donate_url)s">consider making a donation</a> to support
+    our efforts!', donate_url=url_for('payments.donate')) }}
   </p>
 
   <p class="text-center">
@@ -121,7 +122,7 @@
 
     <div>
       {{ _('If you are not sure which tier to pick, please
-      <a href="%(url)s">contact us</a>.', url=url_for('index.contact')) }}
+      <a href="%(contact_url)s">contact us</a>.', contact_url=url_for('index.contact')) }}
     </div>
 
   {% endif %}

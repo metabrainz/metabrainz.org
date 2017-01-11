@@ -5,11 +5,11 @@
 {% block content %}
   <div id="api">
 
-    <h1 class="page-title">MetaBrainz API</h1>
+    <h1 class="page-title">{{ _('MetaBrainz API') }}</h1>
 
     <em>
     {{ _('All endpoints require an access token which you can get from your
-    <a href="%(url)s">profile page</a>.', url=url_for('users.profile')) }}
+    <a href="%(profile_url)s">profile page</a>.', profile_url=url_for('users.profile')) }}
     </em>
 
     <h2>{{ _('MusicBrainz Live Data Feed') }}</h2>

@@ -83,9 +83,9 @@
             </div>
           </div>
           <div class="lower-footer">
-            {{ _('Sponsored by <a href="https://www.google.com/">Google</a>,
-            <a href="https://osuosl.org/">OSUOSL</a> and
-            <a href="%(url)s">others&hellip;</a>', url=url_for('index.sponsors')) }}
+            {{ _('Sponsored by <a href="%(google_url)s">Google</a>,
+            <a href="%(osuosl_url)s">OSUOSL</a> and
+            <a href="%(sponsors_url)s">others&hellip;</a>', sponsors_url=url_for('index.sponsors'), osuosl_url='https://osuosl.org/', google_url='https://www.google.com/') }}
           </div>
         </div>
       {% endblock %}

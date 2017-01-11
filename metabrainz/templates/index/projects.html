@@ -14,10 +14,10 @@
           </a>
         </div>
         <div>
-          <span class="title">MusicBrainz</span>
+          <span class="title">{{ _('MusicBrainz') }}</span>
           <p>
-            <a href="https://musicbrainz.org/">MusicBrainz</a> {{ _('is a community-maintained open source music encyclopedia that
-            collects music metadata and makes it available to the public.') }}
+            {{ _('<a href="%(MB_url)s">MusicBrainz</a> is a community-maintained open source music encyclopedia that
+            collects music metadata and makes it available to the public.', MB_url='https://musicbrainz.org/') }}
           </p>
         </div>
       </div>
@@ -29,10 +29,10 @@
           </a>
         </div>
         <div>
-          <span class="title">MusicBrainz Picard</span>
+          <span class="title">{{ _('MusicBrainz Picard') }}</span>
           <p>
-            <a href="https://picard.musicbrainz.org/">MusicBrainz Picard</a> {{ _('is an open-source software application for
-            identifying, tagging, and organizing digital audio recordings.') }}
+            {{ _('<a href="%(picard_link)s">MusicBrainz Picard</a> is an open-source software application for
+            identifying, tagging, and organizing digital audio recordings.', picard_link='https://picard.musicbrainz.org/') }}
           </p>
         </div>
       </div>
@@ -44,10 +44,11 @@
           </a>
         </div>
         <div>
-          <span class="title">Cover Art Archive</span>
+          <span class="title">{{ _('Cover Art Archive') }}</span>
           <p>
-            <a href="https://coverartarchive.org/">Cover Art Archive</a> {{ _('is a database of cover art corresponding with the
-            releases in MusicBrainz. It is a joint project with the <a href="https://archive.org/">Internet Archive</a>.') }}
+            {{ _('<a href="%(caa_link)s">Cover Art Archive</a> is a database of cover art corresponding with the
+            releases in MusicBrainz. It is a joint project with the <a href="%(archive_org_link)s">Internet Archive</a>.', caa_link='https://coverartarchive.org/',
+            archive_org_link='https://archive.org/') }}
           </p>
         </div>
       </div>
@@ -59,10 +60,10 @@
           </a>
         </div>
         <div>
-          <span class="title">CritiqueBrainz</span>
+          <span class="title">{{ _('CritiqueBrainz') }}</span>
           <p>
-            <a href="https://critiquebrainz.org/">CritiqueBrainz</a> {{ _('fills the gap between music critics and raw data by
-            providing a platform created for the sole purpose of Creative Commons licensed reviews.') }}
+            {{ _('<a href="%(CB_link)s">CritiqueBrainz</a> fills the gap between music critics and raw data by
+            providing a platform created for the sole purpose of Creative Commons licensed reviews.', CB_link='https://critiquebrainz.org/') }}
           </p>
         </div>
       </div>
@@ -74,12 +75,12 @@
           </a>
         </div>
         <div>
-          <span class="title">AcousticBrainz</span>
+          <span class="title">{{ _('AcousticBrainz') }}</span>
           <p>
-            <a href="https://acousticbrainz.org/">AcousticBrainz</a> {{ _('crowd sources acoustic information for all music in
+            {{ _('<a href="%(AB_link)s">AcousticBrainz</a> crowd sources acoustic information for all music in
             the world and makes it available to the public. It is a joint effort with
-            <a href="http://www.mtg.upf.edu/">Music Technology Group</a> at <a href="https://www.upf.edu/">Universitat Pompeu Fabra</a>
-            in Barcelona.') }}
+            <a href="%(mtg_link)s">Music Technology Group</a> at <a href="%(upf_link)s">Universitat Pompeu Fabra</a>
+            in Barcelona.', AB_link='https://acousticbrainz.org/', mtg_link='http://www.mtg.upf.edu/', upf_link='https://www.upf.edu/') }}
           </p>
         </div>
       </div>
@@ -91,10 +92,10 @@
           </a>
         </div>
         <div>
-          <span class="title">BookBrainz</span>
+          <span class="title">{{ _('BookBrainz') }}</span>
           <p>
-            <a href="https://bookbrainz.org/">BookBrainz</a> {{ _('is an online encyclopedia containing information about published
-            literature. Its aim is to collect and store data about every publication ever written.') }}
+            {{ _('<a href="%(BB_link)s">BookBrainz</a> is an online encyclopedia containing information about published
+            literature. Its aim is to collect and store data about every publication ever written.', BB_link='https://bookbrainz.org/') }}
           </p>
         </div>
       </div>
@@ -106,10 +107,10 @@
           </a>
         </div>
         <div>
-          <span class="title">ListenBrainz</span>
+          <span class="title">{{ _('ListenBrainz') }}</span>
           <p>
-            <a href="https://listenbrainz.org/">ListenBrainz</a> {{ _('is an open source music website that allows users to import
-            their listen history. One of the goals is for this data to be used for building open music recommendation systems.') }}
+            {{ _('<a href="%(LB_link)s">ListenBrainz</a> is an open source music website that allows users to import
+            their listen history. One of the goals is for this data to be used for building open music recommendation systems.', LB_link='https://listenbrainz.org/') }}
           </p>
         </div>
       </div>
@@ -121,10 +122,10 @@
           </a>
         </div>
         <div>
-          <span class="title">MessyBrainz</span>
+          <span class="title">{{ _('MessyBrainz') }}</span>
           <p>
-            <a href="https://messybrainz.org/">MessyBrainz</a> {{ _('identifies unclean metadata, and where possible,
-            links it to stable MusicBrainz identifiers. MessyBrainz is currently being used for AcousticBrainz and ListenBrainz.') }}
+            {{ _('<a href="%(messybrainz_link)s">MessyBrainz</a> identifies unclean metadata, and where possible,
+            links it to stable MusicBrainz identifiers. MessyBrainz is currently being used for AcousticBrainz and ListenBrainz.', messybrainz_link='https://messybrainz.org/') }}
           </p>
         </div>
       </div>

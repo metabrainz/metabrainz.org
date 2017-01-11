@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Make a Donation - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Make a Donation') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
   <div id="payment">
@@ -8,10 +8,10 @@
 
     <p>
       {{ _('If you feel that our projects are a worthwhile effort, please consider contributing money to the
-      MetaBrainz Foundation, which is a <a href="https://en.wikipedia.org/wiki/Non-profit_organization">
+      MetaBrainz Foundation, which is a <a href="(wikipedia_non_profit_link)s">
       501(c)(3) tax-exempt non-profit</a> based in California. All of your donations will be tax-deductible
       and you will receive a receipt that you can use to deduct your donation off your taxes if you are a
-      US taxpayer.') }}
+      US taxpayer.', wikipedia_non_profit_link='https://en.wikipedia.org/wiki/Non-profit_organization') }}
     </p>
 
     <p>
@@ -20,14 +20,14 @@
       salary for MetaBrainz employees.') }}
     </p>
 
-    <p>{{ _('Where has my contribution gone? See our <a href="%(url)s">transparent finances</a>.', url=url_for('financial_reports.index')) }}</p>
-    <p>{{ _('Who else is contributing? See our list of <a href="%(url)s">donors</a>.', url=url_for('payments.donors')) }}</p>
+    <p>{{ _('Where has my contribution gone? See our <a href="%(finance_reports_url)s">transparent finances</a>.', finance_reports_url=url_for('financial_reports.index')) }}</p>
+    <p>{{ _('Who else is contributing? See our list of <a href="%(donors_url)s">donors</a>.', donors_url=url_for('payments.donors')) }}</p>
 
     {% if config.PAYMENT_PRODUCTION != True %}
       <div class="alert alert-warning" role="alert">
         {{ _('<b>Be careful!</b> This is a development version of the website. Do NOT
         use your real credit card credentials! If you want to send an actual
-        donation, go to <a href="https://metabrainz.org/">metabrainz.org</a>.') }}
+        donation, go to <a href="%(MB_link)s">metabrainz.org</a>.', MB_link='https://metabrainz.org/') }}
       </div>
     {% endif %}
 
@@ -44,8 +44,8 @@
           </div>
           <div id="big-amount-info" class="col-sm-offset-3 col-sm-6" style="display:none">
             {{ _('If you would like to make a large donation, please contact us at
-            <a href="mailto:donations@metabrainz.org">donations@metabrainz.org</a>
-            before you do.') }}
+            <a href="%(mail_link)s">donations@metabrainz.org</a>
+            before you do.', mail_link='mailto:donations@metabrainz.org') }}
           </div>
         </div>
 
@@ -62,7 +62,7 @@
 
         <div id="input-editor-fg" class="form-group">
           <div class="col-sm-offset-3 col-sm-6">
-            {{ form.editor(id="input-editor", class="form-control", placeholder="MusicBrainz {{ _('username') }}", data_toggle="tooltip", data_placement="bottom") | safe }}
+            {{ form.editor(id="input-editor", class="form-control", placeholder=_('MusicBrainz username'), data_toggle="tooltip", data_placement="bottom") | safe }}
           </div>
         </div>
 
@@ -107,15 +107,15 @@
       <small>
         {{ _('The personal information provided to the MetaBrainz Foundation during the
         donation process will not be shared with anyone. For more information,
-        please take a look at our <a href="%(url)s">
-        privacy policy</a>.', url=url_for('index.privacy_policy')) }}
+        please take a look at our <a href="%(privacy_policy_url)s">
+        privacy policy</a>.', privacy_policy_url=url_for('index.privacy_policy')) }}
       </small>
     </p>
 
     <p>
       <small>
         {{ _('To find out how to cancel recurring donations take a look at
-        <a href="%(url)s">this page</a>.', url=url_for('payments.cancel_recurring')) }}
+        <a href="%(cancel_recurring_url)s">this page</a>.', cancel_recurring_url=url_for('payments.cancel_recurring')) }}
       </small>
     </p>
 
@@ -126,18 +126,18 @@
     <p><em style="margin-left: 2em">ES39 0182 6536 7602 0155 8258 (BIC: BBVAESMMXXX)</em></p>
     <p>{{ _('Please indicate your name and use the word <em>DONATION</em> in the description field.') }}</p>
 
-    <h3>{{ _('US Cheque') }}</h3>
-    <p>{{ _('If you would like to donate using a cheque drawn on a US bank, please send them to:') }}</p>
+    <h3>{{ _('US Check') }}</h3>
+    <p>{{ _('If you would like to donate using a check drawn on a US bank, please send them to:') }}</p>
     <p>
       MetaBrainz Foundation<br/>
       3565 South Higuera St, Suite B<br/>
       San Luis Obispo, CA 93401<br/>
       United States
     </p>
-    <p>{{ _('Please make checks payable to the ') }}<strong>MetaBrainz Foundation</strong>.</p>
+    <p>{{ _('Please make checks payable to the <strong>MetaBrainz Foundation</strong>.') }}</p>
 
     <h3>Flattr</h3>
-    <p>{{ _('If you use Flattr to donate to your favourite projects, you can click below to') }} Flattr MetaBrainz:</p>
+    <p>{{ _('If you use Flattr to donate to your favourite projects, you can click below to Flattr MetaBrainz:') }}</p>
     <p><a href="https://flattr.com/profile/metabrainz ">https://flattr.com/profile/metabrainz</a></p>
 
   </div>
