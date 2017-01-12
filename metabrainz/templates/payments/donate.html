@@ -8,10 +8,10 @@
 
     <p>
       {{ _('If you feel that our projects are a worthwhile effort, please consider contributing money to the
-      MetaBrainz Foundation, which is a <a href="(wikipedia_non_profit_link)s">
+      MetaBrainz Foundation, which is a <a href="(wikipedia_non_profit_url)s">
       501(c)(3) tax-exempt non-profit</a> based in California. All of your donations will be tax-deductible
       and you will receive a receipt that you can use to deduct your donation off your taxes if you are a
-      US taxpayer.', wikipedia_non_profit_link='https://en.wikipedia.org/wiki/Non-profit_organization') }}
+      US taxpayer.', wikipedia_non_profit_url='https://en.wikipedia.org/wiki/Non-profit_organization') }}
     </p>
 
     <p>
@@ -27,7 +27,7 @@
       <div class="alert alert-warning" role="alert">
         {{ _('<b>Be careful!</b> This is a development version of the website. Do NOT
         use your real credit card credentials! If you want to send an actual
-        donation, go to <a href="%(MB_link)s">metabrainz.org</a>.', MB_link='https://metabrainz.org/') }}
+        donation, go to <a href="%(mb_url)s">metabrainz.org</a>.', mb_url='https://metabrainz.org/') }}
       </div>
     {% endif %}
 
@@ -124,7 +124,7 @@
     <h3>{{ _('Non-US Bank transfer') }}</h3>
     <p>{{ _('You can make a donation, or recurring donations, via bank transfer to the following IBAN:') }}</p>
     <p><em style="margin-left: 2em">ES39 0182 6536 7602 0155 8258 (BIC: BBVAESMMXXX)</em></p>
-    <p>{{ _('Please indicate your name and use the word <em>DONATION</em> in the description field.') }}</p>
+    <p>{{ _('Please indicate your name and use the word %(donation_fixed_string)s in the description field.', donation_fixed_string='<em>DONATION</em>') }}</p>
 
     <h3>{{ _('US Check') }}</h3>
     <p>{{ _('If you would like to donate using a check drawn on a US bank, please send them to:') }}</p>

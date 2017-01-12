@@ -17,7 +17,7 @@
     {% for tier in tiers %}
       {% set featured_users = tier.get_featured_users() %}
       {% if featured_users|length > 0 %}
-        <h2><a href="{{ url_for('users.tier', tier_id=tier.id) }}">{{ tier.name }} {{ _('tier') }}</a></h2>
+        <h2><a href="{{ url_for('users.tier', tier_id=tier.id) }}">{{ _(tier.name + 'tier') }}</a></h2>
         {% if tier.short_desc %}
           <div class="tier-description">{{ tier.short_desc }}</div>
         {% endif %}

@@ -24,7 +24,7 @@
       <div class="alert alert-warning" role="alert">
         {{ _('<b>Be careful!</b> This is a development version of the website. Do NOT
         use your real credit card credentials! If you want to send an actual
-        payment, go to <a href="%(MB_link)s">metabrainz.org</a>.', MB_link='https://metabrainz.org/') }}
+        payment, go to <a href="%(mb_url)s">metabrainz.org</a>.', mb_url='https://metabrainz.org/') }}
       </div>
     {% endif %}
 
@@ -189,7 +189,7 @@
       var stripeHandler = StripeCheckout.configure({
         key: "{{ stripe_public_key }}",
         name: "MetaBrainz Foundation",
-        description: "{{ _('Payment to the ') }}MetaBrainz Foundation",
+        description: "Payment to the MetaBrainz Foundation",
         address: "true",
 
         token: function(token) {
@@ -232,7 +232,7 @@
 
         if ($('#recurring-flag').is(":checked")) { // Recurring payments
           $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick-subscriptions'}).appendTo(form);
-          $('<input>').attr({type: 'hidden', name: 'item_name', value: {{ _('Recurring payment to the MetaBrainz Foundation') }} }).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Recurring payment to the MetaBrainz Foundation'}).appendTo(form);
           $('<input>').attr({type: 'hidden', name: 't3', value: 'M'}).appendTo(form); {# units of duration ('M' is month) #}
           $('<input>').attr({type: 'hidden', name: 'p3', value: '1'}).appendTo(form); {# subscription duration #}
           $('<input>').attr({type: 'hidden', name: 'src', value: '1'}).appendTo(form); {# recurring payments #}
@@ -240,7 +240,7 @@
 
         } else {  // One-time payment
           $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick'}).appendTo(form);
-          $('<input>').attr({type: 'hidden', name: 'item_name', value: {{ _('Payment to the MetaBrainz Foundation') }} }).appendTo(form);
+          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Payment to the MetaBrainz Foundation'}).appendTo(form);
         }
 
         {# Reconfiguring inputs for PayPal #}

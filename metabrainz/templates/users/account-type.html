@@ -9,8 +9,8 @@
     {{ _('For commercial use of our data or to get access to the
     <a href="%(mb_data_feed)s">MusicBrainz Live Data Feed</a>,
     please choose between non-commercial and commercial use below. You will need a
-    <a href="%(mb_register_link)s">MusicBrainz account</a> with a verified email address to sign-up.',
-    mb_data_feed='https://musicbrainz.org/doc/Live_Data_Feed', mb_register_link='https://musicbrainz.org/register') }}
+    <a href="%(mb_register_url)s">MusicBrainz account</a> with a verified email address to sign-up.',
+    mb_data_feed='https://musicbrainz.org/doc/Live_Data_Feed', mb_register_url='https://musicbrainz.org/register') }}
   </p>
   <p>
     {{ _('<strong>Open source developers and non-profits</strong>: Please sign up as a
@@ -56,7 +56,7 @@
                 <div class="thumbnail">
                   <div class="caption">
                     <h3>{{ tier.name }}</h3>
-                    <div class="price">${{ tier.price }}/{{ _('month and up') }}</div>
+                    <div class="price">{{ _('$%(tier_price)s/month and up', tier_price=tier.price) }}</div>
                     <div class="description">{{ tier.short_desc }}</div>
                     <div class="buttons">
                       <p><a href="{{ url_for('users.tier', tier_id=tier.id) }}"
@@ -103,7 +103,7 @@
             <tr>
               <td><strong>{{ tier.name }}</strong></td>
               <td>{{ tier.short_desc }}</td>
-              <td>${{ tier.price }}/{{ _('month and up') }}</td>
+              <td>{{ _('$%(tier_price)s/month and up', tier_price=tier.price) }}</td>
               <td>
                 <a href="{{ url_for('users.tier', tier_id=tier.id) }}"
                    class="btn btn-default btn-xs" role="button">{{ _('More info') }}</a>

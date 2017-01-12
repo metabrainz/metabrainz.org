@@ -9,7 +9,7 @@
     {% set alert_class="alert-info" %}
   {% endif %}
 
-  <div class="alert {{ alert_class }}">{{ _(message) }}</div>
+  <div class="alert {{ alert_class }}">{{ message }}</div>
 {% endmacro %}
 
 {% macro oauth_scope_desc(scope) %}

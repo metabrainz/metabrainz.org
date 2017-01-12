@@ -26,7 +26,7 @@
       <label class="col-sm-4 control-label">{{ _('Selected tier') }}</label>
       <div class="col-sm-5" style="padding-top: 7px">
         <b>{{ tier.name }}</b>
-        <em class="text-muted">${{ tier.price }}/{{ _('month and up') }}</em>
+        <em class="text-muted">{{ _('$%(tier_price)s/month and up', tier_price=tier.price) }}</em>
       </div>
       <div class="col-sm-6 col-sm-offset-4" style="padding-top: 7px">
         <a href="{{ url_for(".account_type") }}">{{ _('Change account type or tier') }}</a>
@@ -105,7 +105,7 @@
 
     <div class="form-group">
       <label class="col-sm-offset-4 col-sm-5">
-        {{ _('If you would like to support us with more than $ %(tier_price)d,
+        {{ _('If you would like to support us with more than $%(tier_price)d,
         please enter the actual amount here:', tier_price=tier.price) }}
       </label>
       <div class="col-sm-offset-4 col-sm-5">
