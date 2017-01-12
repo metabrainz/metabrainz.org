@@ -106,7 +106,9 @@
         who provide funds in order for the foundation to accomplish its goals. The foundation also
         has several <a href="%(supporters_url)s"> commercial supporters</a>
         who make use of our data sets.', financial_reports_url=url_for('financial_reports.index'),
-        donations_url=url_for('payments.donate'), sponsors_url=url_for('index.sponsors'), supporters_url=url_for('users.supporters_list') ) }}
+        donations_url=url_for('payments.donate'),
+        sponsors_url=url_for('index.sponsors'),
+        supporters_url=url_for('users.supporters_list') ) }}
       </p>
     </div>
 
@@ -134,7 +136,9 @@
       <div class="homepage-section">
         {{ _('Unfortunately, some companies listed below use data we provide without contributing back.
         <a href="%(bad_customers_url)s">Find out more</a> about them or
-        <a href="%(account_type_url)s">sign up</a>!', bad_customers_url=url_for('index.bad_customers'), account_type_url=url_for('users.account_type')) }}
+        <a href="%(account_type_url)s">sign up</a>!',
+        bad_customers_url=url_for('index.bad_customers'),
+        account_type_url=url_for('users.account_type')) }}
       </div>
 
       <div id="featured-users" class="row">
