@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ _(tier.name + 'tier') }} - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('%(tier_name)s tier', tier_name=tier.name) }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">{{ _(tier.name + 'tier') }}</h1>
+  <h1 class="page-title">{{ _('%(tier_name)s tier', tier_name=tier.name) }}</h1>
 
   <p>{{ tier.long_desc | nl2br | safe }}</p>
 
