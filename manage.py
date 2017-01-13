@@ -131,5 +131,26 @@ def init_test_db(force=False):
     print("Done!")
 
 
+@cli.command()
+def extract_strings():
+    """Extract all strings into messages.pot.
+    This command should be run after any translatable strings are updated.
+    Otherwise updates are not going to be available on Transifex.
+    """
+    _run_command("pybabel extract -F metabrainz/babel.cfg "
+                 "-o metabrainz/messages.pot metabrainz/")
+    click.echo("Strings have been successfully extracted into messages.pot file.")
+
+
+@cli.command()
+def compile_translations():
+    """Compile translations for use."""
+    _run_command("pybabel compile -d metabrainz/translations")
+    click.echo("Translated strings have been compiled and ready to be used.")
+
+
+def _run_command(command):
+    return subprocess.check_call(command, shell=True)
+
 if __name__ == '__main__':
     cli()

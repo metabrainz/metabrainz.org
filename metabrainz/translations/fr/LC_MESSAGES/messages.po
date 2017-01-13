@@ -1,0 +1,2530 @@
+# French translations for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-01-13 20:55+0530\n"
+"PO-Revision-Date: 2017-01-13 20:56+0530\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: payments/forms.py:9
+msgid "You need to specify amount!"
+msgstr ""
+
+#: payments/forms.py:21
+msgid "You need to specify invoice number!"
+msgstr ""
+
+#: payments/views.py:105
+msgid ""
+"Thank you for making a donation to the MetaBrainz Foundation. Your "
+"support is greatly appreciated! It may take some time before your "
+"donation appears in the list due to processing delays."
+msgstr ""
+
+#: payments/views.py:112
+msgid ""
+"Thank you for making a payment to the MetaBrainz Foundation. Your support"
+" is greatly appreciated!"
+msgstr ""
+
+#: payments/views.py:123
+msgid ""
+"We're sorry to see that you won't be donating today. We hope that you'll "
+"change your mind!"
+msgstr ""
+
+#: payments/views.py:129
+msgid ""
+"We're sorry to see that you won't be paying today. We hope that you'll "
+"change your mind!"
+msgstr ""
+
+#: payments/views.py:143
+msgid ""
+"We're sorry, but it appears we've run into an error and can't process "
+"your donation."
+msgstr ""
+
+#: payments/views.py:149
+msgid ""
+"We're sorry, but it appears we've run into an error and can't process "
+"your payment."
+msgstr ""
+
+#: reports/annual_reports/views.py:25
+msgid "Requested annual report was not found."
+msgstr ""
+
+#: templates/base.html:48
+msgid "Foundation"
+msgstr ""
+
+#: templates/base.html:50 templates/index/projects.html:3
+#: templates/navbar.html:24
+msgid "Projects"
+msgstr ""
+
+#: templates/base.html:51 templates/index/team.html:3 templates/navbar.html:25
+msgid "Team"
+msgstr ""
+
+#: templates/base.html:52 templates/index/sponsors.html:3
+#: templates/index/sponsors.html:6 templates/index/sponsors.html:20
+#: templates/navbar.html:29
+msgid "Sponsors"
+msgstr ""
+
+#: templates/base.html:53 templates/navbar.html:28
+#: templates/users/supporters-list.html:3
+#: templates/users/supporters-list.html:6
+msgid "Supporters"
+msgstr ""
+
+#: templates/base.html:54 templates/index/privacy.html:6
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/base.html:58 templates/reports/financial_reports/index.html:3
+#: templates/reports/financial_reports/index.html:6
+msgid "Finances"
+msgstr ""
+
+#: templates/base.html:60 templates/navbar.html:33
+#: templates/reports/annual_reports/view.html:4
+msgid "Annual Reports"
+msgstr ""
+
+#: templates/base.html:61 templates/navbar.html:35
+#: templates/payments/donors.html:6
+msgid "Donors"
+msgstr ""
+
+#: templates/base.html:65
+msgid "Users"
+msgstr ""
+
+#: templates/base.html:68
+msgid "Sign in"
+msgstr ""
+
+#: templates/base.html:70 templates/navbar.html:53
+msgid "Sign out"
+msgstr ""
+
+#: templates/base.html:72
+msgid "Access your account"
+msgstr ""
+
+#: templates/base.html:73
+msgid "API"
+msgstr ""
+
+#: templates/base.html:78
+msgid "Contact us"
+msgstr ""
+
+#: templates/base.html:80
+msgid "Blog"
+msgstr ""
+
+#: templates/base.html:81
+msgid "Twitter"
+msgstr ""
+
+#: templates/base.html:86
+#, python-format
+msgid ""
+"Sponsored by <a href=\"%(google_url)s\">Google</a>,\n"
+"            <a href=\"%(osuosl_url)s\">OSUOSL</a> and\n"
+"            <a href=\"%(sponsors_url)s\">others&hellip;</a>"
+msgstr ""
+
+#: templates/navbar.html:7
+msgid "Toggle navigation"
+msgstr ""
+
+#: templates/navbar.html:21
+msgid "About "
+msgstr ""
+
+#: templates/navbar.html:23
+msgid "The Foundation"
+msgstr ""
+
+#: templates/navbar.html:31
+msgid "Reports "
+msgstr ""
+
+#: templates/navbar.html:34
+msgid "Financial Reports"
+msgstr ""
+
+#: templates/navbar.html:38
+msgid "Donate"
+msgstr ""
+
+#: templates/navbar.html:45 templates/users/account-type.html:65
+#: templates/users/account-type.html:111 templates/users/mb-signup.html:3
+#: templates/users/mb-signup.html:6
+msgid "Sign up"
+msgstr ""
+
+#: templates/navbar.html:52
+msgid "Your profile"
+msgstr ""
+
+#: templates/api/info.html:8
+msgid "MetaBrainz API"
+msgstr ""
+
+#: templates/api/info.html:11
+#, python-format
+msgid ""
+"All endpoints require an access token which you can get from your\n"
+"    <a href=\"%(profile_url)s\">profile page</a>."
+msgstr ""
+
+#: templates/api/info.html:15
+msgid "MusicBrainz Live Data Feed"
+msgstr ""
+
+#: templates/api/info.html:16
+msgid "There are three endpoints for fetching replication packets:"
+msgstr ""
+
+#: templates/api/info.html:18
+msgid "Hourly:"
+msgstr ""
+
+#: templates/api/info.html:29
+msgid "Daily:"
+msgstr ""
+
+#: templates/api/info.html:40
+msgid "Weekly:"
+msgstr ""
+
+#: templates/api/info.html:51
+msgid ""
+"It is possible to get a signature for each replication packet. Just "
+"replace\n"
+"      <code>.tar.bz2</code> with <code>.asc</code>."
+msgstr ""
+
+#: templates/api/info.html:55
+msgid "You can find the latest replication packet numbers from this endpoint:"
+msgstr ""
+
+#: templates/errors/base.html:8
+msgid "Back to home page"
+msgstr ""
+
+#: templates/index/about.html:3
+msgid "About"
+msgstr ""
+
+#: templates/index/about.html:6
+msgid "About the MetaBrainz Foundation"
+msgstr ""
+
+#: templates/index/about.html:11
+msgid ""
+"The MetaBrainz Foundation is a 501(c)(3) tax-exempt non-profit founded in"
+"\n"
+"        December 2004 and based in San Luis Obispo, California, that "
+"believes in\n"
+"        free, open access to data."
+msgstr ""
+
+#: templates/index/about.html:16
+msgid ""
+"The MetaBrainz Foundation has been set up to build community maintained\n"
+"        databases and make them available in the public domain or under "
+"Creative\n"
+"        Commons licenses. Our data is mostly gathered by volunteers, and "
+"verified\n"
+"        by a voting system to make sure it is consistent and correct. All"
+"\n"
+"        non-commercial use is free, but commercial users are asked to pay"
+" for\n"
+"        regular updates of the data in order to help fund the project. We"
+"\n"
+"        encourage all data users to contribute to the data gathering "
+"process so\n"
+"        that our data can be as comprehensive as possible."
+msgstr ""
+
+#: templates/index/about.html:26
+#, python-format
+msgid ""
+"The MetaBrainz Foundation believes in <a "
+"href=\"%(financial_reports_url)s\">\n"
+"        transparent finances</a> and has several <a "
+"href=\"%(supporters_url)s\">\n"
+"        commercial supporters</a> who pay for timely and convenient "
+"access to\n"
+"        data. The MetaBrainz Foundation is also supported by a number of\n"
+"        <a href=\"%(sponsors_url)s\">sponsors</a> who provide\n"
+"        funds in order for the foundation to accomplish its goals."
+msgstr ""
+
+#: templates/index/about.html:42
+msgid "Board of Directors"
+msgstr ""
+
+#: templates/index/about.html:43
+msgid "Our board of directors consists of:"
+msgstr ""
+
+#: templates/index/about.html:45
+#, python-format
+msgid ""
+"Director Nick Ashton-Hart, Executive Director of the <a "
+"href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
+"Alliance</a>"
+msgstr ""
+
+#: templates/index/about.html:46
+#, python-format
+msgid ""
+"Director <a href=\"%(paul_url)s\">Paul Bennun</a> of <a "
+"href=\"%(somethin_else_url)s\">Somethin' Else</a>"
+msgstr ""
+
+#: templates/index/about.html:47
+#, python-format
+msgid ""
+"Director <a href=\"%(cory_url)s\">Cory Doctorow</a>, Sci-Fi author and "
+"editor of the <a href=\"%(boing_url)s\">Boing Boing</a> weblog"
+msgstr ""
+
+#: templates/index/about.html:48
+#, python-format
+msgid ""
+"Director <a href=\"%(sophie_url)s\">Sophie Goossens</a> of <a "
+"href=\"%(ab_url)s\">August &amp; Debouzy</a>"
+msgstr ""
+
+#: templates/index/about.html:49
+#, python-format
+msgid ""
+"Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
+"href=\"%(audio_net_url)s\">Audio Network</a>"
+msgstr ""
+
+#: templates/index/about.html:50
+#, python-format
+msgid ""
+"Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
+"Ljungberg</a> of the <a href=\"%(m4p5_url)s\">Music 4.5 seminar "
+"series</a> put on by <a href=\"%(two_pears_url)s\">2 Pears</a>"
+msgstr ""
+
+#: templates/index/about.html:51
+#, python-format
+msgid ""
+"Executive Director <a href=\"%(mayhem_url)s\">Robert Kaye</a> of the "
+"MetaBrainz Foundation"
+msgstr ""
+
+#: templates/index/about.html:52
+#, python-format
+msgid ""
+"Secretary <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>, "
+"Community Manager of the MetaBrainz Foundation"
+msgstr ""
+
+#: templates/index/about.html:55
+msgid "Our directors emeritus include:"
+msgstr ""
+
+#: templates/index/about.html:58
+#, python-format
+msgid ""
+"Director Emeritus <a href=\"%(lessig_url)s\">Lawrence Lessig</a> of the "
+"<a href=\"%(berkman_url)s\">Berkman Center for Internet and Society</a> "
+"and <a href=\"%(cc_url)s\">Creative Commons</a>"
+msgstr ""
+
+#: templates/index/about.html:59
+#, python-format
+msgid ""
+"Director Emeritus <a href=\"%(joi_url)s\">Joichi Ito</a> of <a "
+"href=\"%(neoteny_url)s\">Neoteny Co. Ltd.</a>"
+msgstr ""
+
+#: templates/index/about.html:62
+msgid "Officers"
+msgstr ""
+
+#: templates/index/about.html:63
+msgid "The officers of this company are:"
+msgstr ""
+
+#: templates/index/about.html:65
+msgid "President Robert Kaye"
+msgstr ""
+
+#: templates/index/about.html:66
+#, python-format
+msgid "Treasurer <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+msgstr ""
+
+#: templates/index/about.html:67
+#, python-format
+msgid "Secretary <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>"
+msgstr ""
+
+#: templates/index/bad-customers.html:3
+msgid "Bad customers"
+msgstr ""
+
+#: templates/index/bad-customers.html:8
+msgid "Our not-so-favorite commercial data users"
+msgstr ""
+
+#: templates/index/bad-customers.html:11
+msgid ""
+"The following companies use our data, but have declined to support us on "
+"an ongoing basis."
+msgstr ""
+
+#: templates/index/bad-customers.html:14
+msgid ""
+"All of our projects require support from end-user donations and "
+"commercial support. Our free\n"
+"      data-sets provide incredible value to these companies giving them a"
+" business advantage.\n"
+"      We believe that companies that use our data to conduct their "
+"business should provide financial\n"
+"      support so that we may continue to cover our expenses and pay our "
+"staff."
+msgstr ""
+
+#: templates/index/bad-customers.html:20
+#, python-format
+msgid ""
+"If a company you like appears on this list, please contact that company "
+"and ask them why\n"
+"      they have declined to support us. If you are with a company listed "
+"below and would like to\n"
+"      get off this list, you can do so by <a "
+"href=\"%(account_type_url)s\">signing up\n"
+"      for support</a>."
+msgstr ""
+
+#: templates/index/bad-customers.html:26
+#, python-format
+msgid ""
+"Do you know of other companies using our data? We'd love to know and ask "
+"them for support!\n"
+"      Please <a href=\"%(contact_url)s\">let us know</a>!"
+msgstr ""
+
+#: templates/index/bad-customers.html:53
+msgid "Nice!!"
+msgstr ""
+
+#: templates/index/bad-customers.html:54
+msgid "There are currently no not-so-favorite commercial data users!"
+msgstr ""
+
+#: templates/index/bad-customers.html:56
+msgid ""
+"... either that, or maybe we're working to convince some companies to do "
+"the\n"
+"          \"right thing\"... :)"
+msgstr ""
+
+#: templates/index/contact.html:3 templates/index/contact.html:6
+msgid "Contact"
+msgstr ""
+
+#: templates/index/contact.html:8
+msgid "Found a bug in one of our projects?"
+msgstr ""
+
+#: templates/index/contact.html:10
+#, python-format
+msgid ""
+"Found a broken link or something that doesn't work as you expect it to? "
+"You can report issues in our\n"
+"    <a href=\"%(bug_tracker_url)s\">bug tracker</a>, or let us know on "
+"IRC or\n"
+"    by email. Contact details are provided below. Please include details "
+"such as what happened, what you expected\n"
+"    to happen, and the URLs of any pages involved."
+msgstr ""
+
+#: templates/index/contact.html:16
+msgid "Have a question about MusicBrainz?"
+msgstr ""
+
+#: templates/index/contact.html:18
+#, python-format
+msgid ""
+"Please check the <a href=\"%(general_faq_url)s\">General FAQ</a>, or one "
+"of the other pages\n"
+"    of <a href=\"%(faq_url)s\">frequently asked questions</a>, to see if\n"
+"    your question has already been answered. If you're using <a "
+"href=\"%(picard_homepage)s\">MusicBrainz\n"
+"    Picard</a>, check its <a "
+"href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
+msgstr ""
+
+#: templates/index/contact.html:25
+msgid "Data removal requests"
+msgstr ""
+
+#: templates/index/contact.html:27
+#, python-format
+msgid ""
+"MusicBrainz does not edit or remove factual data upon request. Please "
+"read our\n"
+"    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more "
+"information."
+msgstr ""
+
+#: templates/index/contact.html:30
+msgid "Copyright issues"
+msgstr ""
+
+#: templates/index/contact.html:32
+#, python-format
+msgid ""
+"If you believe that MusicBrainz violates your copyright, you may\n"
+"    <a href=\"%(cr_violation_url)s\">report a copyright violation</a>. "
+"Please note\n"
+"    that MusicBrainz provides data about recordings, <i>not the music "
+"itself</i>. If you find your music listed in\n"
+"    MusicBrainz <b>it does not mean that we have access to or provide "
+"access to the music files themselves</b>. If\n"
+"    you still think that we're infringing your copyright, you must "
+"provide us with a link to where you can download\n"
+"    the infringing material from our website. If you cannot provide us a "
+"link, we cannot help you."
+msgstr ""
+
+#: templates/index/contact.html:40
+msgid "Contact details"
+msgstr ""
+
+#: templates/index/contact.html:42
+msgid "Please do not contact us with the following topics:"
+msgstr ""
+
+#: templates/index/contact.html:44
+msgid ""
+"We cannot license any of the music listed in MusicBrainz, since we have "
+"neither the music itself nor the\n"
+"        rights to license the music."
+msgstr ""
+
+#: templates/index/contact.html:46
+msgid "We are not distributing any of the music listed in MusicBrainz."
+msgstr ""
+
+#: templates/index/contact.html:47
+msgid ""
+"We are not interested in your advertising, SEO optimization, or software "
+"monetization services. Please\n"
+"        do not offer us <b>any</b> services!"
+msgstr ""
+
+#: templates/index/contact.html:53
+msgid ""
+"If you disregard this agreement and contact us about one of the\n"
+"      disallowed topics, we reserve the right to make fun of you."
+msgstr ""
+
+#: templates/index/contact.html:58
+msgid "E-mail us"
+msgstr ""
+
+#: templates/index/contact.html:60
+msgid "I agree with the rules above, show me the email address"
+msgstr ""
+
+#: templates/index/contact.html:63
+msgid "You can reach the MetaBrainz staff directly at the following address:"
+msgstr ""
+
+#: templates/index/contact.html:69
+msgid "Forums"
+msgstr ""
+
+#: templates/index/contact.html:71
+#, python-format
+msgid ""
+"Please come ask your questions at our <a "
+"href=\"%(forums_url)s\">forums</a>! We would love to\n"
+"    answer any questions you may have."
+msgstr ""
+
+#: templates/index/contact.html:75
+msgid "IRC"
+msgstr ""
+
+#: templates/index/contact.html:77
+#, python-format
+msgid ""
+"The MetaBrainz/MusicBrainz team, as well as MusicBrainz users, hang out "
+"in the\n"
+"    <strong><a href=\"%(irc_url)s\">#metabrainz</a></strong>\n"
+"    channel on IRC chat at irc.freenode.net. If you don't have an IRC "
+"client\n"
+"    installed, consider using this\n"
+"    <a href=\"%(irc_webchat_url)s\">webchat client</a>\n"
+"    instead. Please feel free to browse the\n"
+"    <a href=\"%(chatlogs_url)s\">IRC log archives</a>."
+msgstr ""
+
+#: templates/index/contact.html:89
+msgid "Mailing address"
+msgstr ""
+
+#: templates/index/index.html:6
+msgid "Welcome to MetaBrainz!"
+msgstr ""
+
+#: templates/index/index.html:10
+msgid ""
+"The MetaBrainz Foundation is a non-profit that believes in free, open\n"
+"        access to data. It has been set up to build community maintained\n"
+"        databases and make them available in the public domain or under "
+"Creative\n"
+"        Commons licenses."
+msgstr ""
+
+#: templates/index/index.html:16
+#, python-format
+msgid ""
+"Our data is mostly gathered by volunteers and verified\n"
+"        by peer review to ensure it is consistent and correct. All\n"
+"        <a href=\"%(account_type_url)s\">non-commercial use</a> of this "
+"data is free,\n"
+"        but <a href=\"%(account_type_url)s\">commercial users</a> are "
+"asked to\n"
+"        <a href=\"%(account_type_url)s\">support us</a> in order to help "
+"fund the\n"
+"        project. We encourage all data users to contribute to the data "
+"gathering process so\n"
+"        that our data can be as comprehensive as possible."
+msgstr ""
+
+#: templates/index/index.html:34
+msgid ""
+"An open music encyclopedia that collects music metadata and makes it\n"
+"              available to the public"
+msgstr ""
+
+#: templates/index/index.html:36
+#, python-format
+msgid ""
+"Sign up to use the <a href=\"%(account_type_url)s\">Live Data "
+"Feed</a></em>"
+msgstr ""
+
+#: templates/index/index.html:45
+msgid "A cross-platform music tagger"
+msgstr ""
+
+#: templates/index/index.html:53
+msgid "A crowdsourced collection of acoustic information"
+msgstr ""
+
+#: templates/index/index.html:61
+msgid "An open record of user listening habits"
+msgstr ""
+
+#: templates/index/index.html:69
+msgid "A repository for Creative Commons licensed music reviews"
+msgstr ""
+
+#: templates/index/index.html:77
+msgid "An open encyclopedia which contains information about published literature"
+msgstr ""
+
+#: templates/index/index.html:85
+msgid "A repository of music cover art that is freely and easily accessible"
+msgstr ""
+
+#: templates/index/index.html:92 templates/payments/donors.html:66
+msgid "Previous"
+msgstr ""
+
+#: templates/index/index.html:96
+msgid "Next"
+msgstr ""
+
+#: templates/index/index.html:103
+#, python-format
+msgid ""
+"The MetaBrainz Foundation believes in <a "
+"href=\"%(financial_reports_url)s\">\n"
+"        transparent finances</a> and is supported by <a "
+"href=\"%(donations_url)s\">end user\n"
+"        donations</a> and a number of <a "
+"href=\"%(sponsors_url)s\">sponsors</a>\n"
+"        who provide funds in order for the foundation to accomplish its "
+"goals. The foundation also\n"
+"        has several <a href=\"%(supporters_url)s\"> commercial "
+"supporters</a>\n"
+"        who make use of our data sets."
+msgstr ""
+
+#: templates/index/index.html:137
+#, python-format
+msgid ""
+"Unfortunately, some companies listed below use data we provide without "
+"contributing back.\n"
+"        <a href=\"%(bad_customers_url)s\">Find out more</a> about them or"
+"\n"
+"        <a href=\"%(account_type_url)s\">sign up</a>!"
+msgstr ""
+
+#: templates/index/index.html:160
+#, python-format
+msgid ""
+"To get more information about the foundation, go to the\n"
+"      <a href=\"%(about_url)s\">about</a> page."
+msgstr ""
+
+#: templates/index/privacy.html:3
+msgid "Privacy"
+msgstr ""
+
+#: templates/index/privacy.html:8
+msgid "Summary"
+msgstr ""
+
+#: templates/index/privacy.html:10
+msgid ""
+"The MetaBrainz Foundation will not collect any private information unless"
+"\n"
+"    you choose to donate to support the MusicBrainz project. Any personal"
+"\n"
+"    information you choose to provide during the donation process will "
+"not be\n"
+"    revealed to anyone else, unless you give us permission to list your "
+"name on\n"
+"    our donations page. We will not contact you unless you give us "
+"permission\n"
+"    to do so when you make a donation."
+msgstr ""
+
+#: templates/index/privacy.html:18
+msgid "MetaBrainz donors"
+msgstr ""
+
+#: templates/index/privacy.html:20
+msgid ""
+"When you make a donation to the MetaBrainz Foundation, we are legally\n"
+"    required to collect your personal information and keep it in our "
+"records\n"
+"    in case we ever get audited by the IRS. We will not disclose your "
+"personal\n"
+"    information to anyone else, ever."
+msgstr ""
+
+#: templates/index/privacy.html:26
+msgid ""
+"We believe in transparent finances, which means that we list all "
+"donations\n"
+"    made to us on this site. We will only list your name and the amount "
+"of the\n"
+"    donation, unless you chose to be anonymous during the donation "
+"process."
+msgstr ""
+
+#: templates/index/privacy.html:31
+msgid "Web and FTP access logs (all users)"
+msgstr ""
+
+#: templates/index/privacy.html:33
+msgid ""
+"Like just about all web sites, we keep logs of all web requests made\n"
+"    against our servers. These logs include the usual stuff: your IP "
+"address,\n"
+"    your browser's \"User-Agent\" string, and which page you requested."
+msgstr ""
+
+#: templates/index/privacy.html:38
+msgid ""
+"Reasonable exceptions may apply to the above policy, for example to "
+"comply\n"
+"    with applicable laws. The MusicBrainz/MetaBrainz server "
+"administrators\n"
+"    (about three people in all) can of course see any information on the "
+"system\n"
+"    they want to, but to be honest they're probably not interested enough"
+" to look."
+msgstr ""
+
+#: templates/index/projects.html:6
+msgid "MetaBrainz Projects"
+msgstr ""
+
+#: templates/index/projects.html:17
+msgid "MusicBrainz"
+msgstr ""
+
+#: templates/index/projects.html:19
+#, python-format
+msgid ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a> is a community-maintained open "
+"source music encyclopedia that\n"
+"            collects music metadata and makes it available to the public."
+msgstr ""
+
+#: templates/index/projects.html:32
+msgid "MusicBrainz Picard"
+msgstr ""
+
+#: templates/index/projects.html:34
+#, python-format
+msgid ""
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> is an open-source "
+"software application for\n"
+"            identifying, tagging, and organizing digital audio recordings."
+msgstr ""
+
+#: templates/index/projects.html:47
+msgid "Cover Art Archive"
+msgstr ""
+
+#: templates/index/projects.html:49
+#, python-format
+msgid ""
+"<a href=\"%(caa_url)s\">Cover Art Archive</a> is a database of cover art "
+"corresponding with the\n"
+"            releases in MusicBrainz. It is a joint project with the <a "
+"href=\"%(archive_org_url)s\">Internet Archive</a>."
+msgstr ""
+
+#: templates/index/projects.html:63
+msgid "CritiqueBrainz"
+msgstr ""
+
+#: templates/index/projects.html:65
+#, python-format
+msgid ""
+"<a href=\"%(cb_url)s\">CritiqueBrainz</a> fills the gap between music "
+"critics and raw data by\n"
+"            providing a platform created for the sole purpose of Creative"
+" Commons licensed reviews."
+msgstr ""
+
+#: templates/index/projects.html:78
+msgid "AcousticBrainz"
+msgstr ""
+
+#: templates/index/projects.html:80
+#, python-format
+msgid ""
+"<a href=\"%(ab_url)s\">AcousticBrainz</a> crowd sources acoustic "
+"information for all music in\n"
+"            the world and makes it available to the public. It is a joint"
+" effort with\n"
+"            <a href=\"%(mtg_url)s\">Music Technology Group</a> at <a "
+"href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
+"            in Barcelona."
+msgstr ""
+
+#: templates/index/projects.html:95
+msgid "BookBrainz"
+msgstr ""
+
+#: templates/index/projects.html:97
+#, python-format
+msgid ""
+"<a href=\"%(bb_url)s\">BookBrainz</a> is an online encyclopedia "
+"containing information about published\n"
+"            literature. Its aim is to collect and store data about every "
+"publication ever written."
+msgstr ""
+
+#: templates/index/projects.html:110
+msgid "ListenBrainz"
+msgstr ""
+
+#: templates/index/projects.html:112
+#, python-format
+msgid ""
+"<a href=\"%(lb_url)s\">ListenBrainz</a> is an open source music website "
+"that allows users to import\n"
+"            their listen history. One of the goals is for this data to be"
+" used for building open music recommendation systems."
+msgstr ""
+
+#: templates/index/projects.html:125
+msgid "MessyBrainz"
+msgstr ""
+
+#: templates/index/projects.html:127
+#, python-format
+msgid ""
+"<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifies unclean "
+"metadata, and where possible,\n"
+"            links it to stable MusicBrainz identifiers. MessyBrainz is "
+"currently being used for AcousticBrainz and ListenBrainz."
+msgstr ""
+
+#: templates/index/sponsors.html:9
+msgid ""
+"The MetaBrainz Foundation wishes to offer a huge thank you to all of our\n"
+"    sponsors and partners for their support in helping MusicBrainz "
+"operate."
+msgstr ""
+
+#: templates/index/sponsors.html:13
+msgid ""
+"Some of the following organizations and individuals have provided "
+"funding,\n"
+"    others have supported us by providing access to tools and "
+"technologies that\n"
+"    have helped us grow. In either case they played a significant role in"
+" the\n"
+"    success and growth of MusicBrainz."
+msgstr ""
+
+#: templates/index/sponsors.html:18
+msgid "We would not exist without you — <b>Thank You!</b>"
+msgstr ""
+
+#: templates/index/sponsors.html:26
+#, python-format
+msgid ""
+"<b><a href=\"%(google_url)s\">Google</a></b> has been an extremely "
+"supportive\n"
+"        sponsor. They've donated over <b>$320,000</b>."
+msgstr ""
+
+#: templates/index/sponsors.html:34
+#, python-format
+msgid ""
+"The <b><a href=\"%(osuosl_url)s\">OSU Open Source Lab</a></b> hosts the "
+"FTP\n"
+"        mirror server that handles the distribution of the\n"
+"        <a href=\"%(mb_db_url)s\">MusicBrainz Database</a>\n"
+"        and virtual machines, thus saving us considerable load and "
+"bandwidth costs."
+msgstr ""
+
+#: templates/index/sponsors.html:44
+#, python-format
+msgid ""
+"<b><a href=\"%(dotsrc_url)s\">DotSrc</a></b> hosts an\n"
+"        <a href=\"%(mb_ftp_url)s\">EU mirror of our FTP site</a>.\n"
+"        This gives better download speeds of our large data sets for "
+"users in Europe."
+msgstr ""
+
+#: templates/index/sponsors.html:53
+#, python-format
+msgid ""
+"<b><a href=\"%(layer42_url)s\">Layer42</a></b> generously hosts a test "
+"server for\n"
+"        us, free of charge!"
+msgstr ""
+
+#: templates/index/sponsors.html:61
+#, python-format
+msgid ""
+"<b><a href=\"%(github_url)s\">GitHub</a></b> provides us with a free "
+"Bronze\n"
+"        account for hosting our sysadmin repositories."
+msgstr ""
+
+#: templates/index/sponsors.html:69
+#, python-format
+msgid ""
+"<b><a href=\"%(pipedrive_url)s\">Pipedrive</a></b> provides us with a "
+"free\n"
+"        account to help keep track of commercial users and supporters."
+msgstr ""
+
+#: templates/index/sponsors.html:76
+msgid "Special thanks"
+msgstr ""
+
+#: templates/index/sponsors.html:78
+msgid ""
+"In our past, we've had a lot of people support us with many different "
+"levels of support:\n"
+"    Access to conferences, covering travel expenses, large personal "
+"donations and countless\n"
+"    meals. These have become too numerous to list, but we wanted to note "
+"a few individuals\n"
+"    who have made a big difference for us."
+msgstr ""
+
+#: templates/index/sponsors.html:84
+#, python-format
+msgid ""
+"Richard Jones of <a href=\"%(last_fm_url)s\">Last.fm fame</a> donated "
+"<b>$50,000</b> in 2010,\n"
+"    <a href=\"%(oracle_url)s\">Sun Microsystems</a> &amp; Paul Lamere "
+"donated a database\n"
+"    server and <a href=\"%(oreilly_url)s\">O'Reilly Media</a> gave "
+"MusicBrainz $500 to\n"
+"    start off a bank account for the project before the MetaBrainz "
+"Foundation existed.\n"
+"    <a href=\"%(ed_url)s\">Ed Cavazos</a> periodically provides pro-bono\n"
+"    legal advice for the occasional Intellectual Property questions that "
+"MetaBrainz faces.\n"
+"    <a href=\"%(dan_url)s\">Dan Appleman</a> provides\n"
+"    periodic help crafting contracts for licensing our data.\n"
+"    <a href=\"%(dw_url)s\">Digital West Networks Inc.</a> was our main\n"
+"    hosting provider between 2006 and 2016 and gave us a discount because"
+" of our non-profit status."
+msgstr ""
+
+#: templates/index/sponsors.html:100
+msgid ""
+"Thanks to everyone who has helped make the MetaBrainz Foundation what it "
+"is today!"
+msgstr ""
+
+#: templates/index/team.html:6
+msgid "The MetaBrainz Team"
+msgstr ""
+
+#: templates/index/team.html:12
+msgid "<span class=\"name\">Robert Kaye</span> &mdash; Executive Director"
+msgstr ""
+
+#: templates/index/team.html:14
+#, python-format
+msgid ""
+"Robert is the founder and lead geek for <a "
+"href=\"%(mb_url)s\">MusicBrainz</a>, and Executive Director of\n"
+"          the MetaBrainz Foundation, the non-profit organization that "
+"pays the bills for MusicBrainz. After studying Computer\n"
+"          Engineering at Cal Poly, San Luis Obispo, he joined Xing "
+"Technology where he shaped the MP3 efforts and then spent\n"
+"          time for the dot com boom on EMusic’s FreeAmp team. While at "
+"EMusic he started working on MusicBrainz, the open music\n"
+"          encyclopedia, and fell in love with Open Source software."
+msgstr ""
+
+#: templates/index/team.html:21
+#, python-format
+msgid ""
+"Robert is also an active hardware hacker, creating art projects for "
+"Burning Man and Nowhere. He is the co-founder of\n"
+"          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created "
+"Bartendro the open source cocktail robot."
+msgstr ""
+
+#: templates/index/team.html:26
+msgid "He lives in Barcelona, Spain."
+msgstr ""
+
+#: templates/index/team.html:39
+msgid "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr ""
+
+#: templates/index/team.html:41
+msgid ""
+"Michael is the senior developer for MusicBrainz, residing in his hometown"
+" of Chicago. He heard about MusicBrainz when\n"
+"          he was still in grammar school, started editing in high school "
+"as his music collection got unwieldy, and participated\n"
+"          in three GSoC projects during college. In his copious free time"
+" he enjoys going to concerts, making music no one will\n"
+"          ever hear, binge-watching old TV shows, and being the best "
+"drummer in the world on Rock Band 4."
+msgstr ""
+
+#: templates/index/team.html:57
+msgid ""
+"<span class=\"name\">Frederik “Freso” S. Olesen</span> &mdash; Community "
+"Manager"
+msgstr ""
+
+#: templates/index/team.html:59
+#, python-format
+msgid ""
+"Hired in the fall of 2015 as the MetaBrainz Community Manager, Freso is "
+"in charge of most of the public communication\n"
+"          channels (IRC, forums, blog, etc.) and various community "
+"projects (like the Google Code-in). He has been a\n"
+"          <a href=\"%(mb_freso_url)s\">MusicBrainz contributor since "
+"2006</a> and an open source enthusiast for\n"
+"          even longer."
+msgstr ""
+
+#: templates/index/team.html:65
+#, python-format
+msgid ""
+"On the rare occasions that he is not found in front of a monitor of some "
+"sort, Freso can be found\n"
+"          <a href=\"%(mb_freso_artist)s\">playing music</a> or (far more "
+"commonly)\n"
+"          dancing to it. He has even taught some dance classes and "
+"workshops in\n"
+"          <a href=\"%(bboy_url)s\">b-boying</a>!"
+msgstr ""
+
+#: templates/index/team.html:73
+msgid ""
+"Freso was born and raised in Copenhagen, Denmark but has recently moved "
+"to Barcelona to be closer to the rest of\n"
+"          the MetaBrainz team."
+msgstr ""
+
+#: templates/index/team.html:87
+msgid ""
+"<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer"
+" Support"
+msgstr ""
+
+#: templates/index/team.html:89
+#, python-format
+msgid ""
+"Nicolás is the leader of everything style-related in MusicBrainz (all "
+"except for fashion), and is in charge of\n"
+"          answering (or delegating!) support requests. When he's not "
+"actively working for MetaBrainz, he's busy\n"
+"          <a href=\"%(mb_editors_url)s\">editing MusicBrainz</a>, "
+"devouring ice cream, and following\n"
+"          the <a href=\"%(tartu_url)s\">world's best football team</a> "
+"around the country."
+msgstr ""
+
+#: templates/index/team.html:96
+msgid "He lives in Tartu, Estonia."
+msgstr ""
+
+#: templates/index/team.html:108
+msgid "<span class=\"name\">Roman Tsukanov</span> &mdash; Software Engineer"
+msgstr ""
+
+#: templates/index/team.html:110
+#, python-format
+msgid ""
+"Roman first became associated with MetaBrainz through Google Summer of "
+"Code program, where he was instrumental\n"
+"          in the birth of <a href=\"%(cb_url)s\">CritiqueBrainz</a>. He "
+"wrote the updated MetaBrainz\n"
+"          website. Currently works on MusicBrainz, AcousticBrainz, and "
+"other projects."
+msgstr ""
+
+#: templates/index/team.html:115
+msgid ""
+"Roman joined the MetaBrainz team as a software engineer in 2015. He "
+"currently lives and studies music technology\n"
+"          in Barcelona, Spain."
+msgstr ""
+
+#: templates/index/team.html:129
+msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
+msgstr ""
+
+#: templates/index/team.html:131
+msgid ""
+"A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz "
+"and Picard in attempts to codify his vast\n"
+"          collection of over 1500 CDs. In addition to being a music "
+"fanatic, Laurent has been programming on anything with\n"
+"          more than 1 bit since 1982 and has been an esteemed Linux "
+"system administrator since 1998."
+msgstr ""
+
+#: templates/index/team.html:136
+#, python-format
+msgid ""
+"With his extensive repertoire of skills and passions, Laurent has "
+"actively contributed to a myriad of open source\n"
+"          projects, notably <a href=\"%(elinks_url)s\">ELinks</a> and\n"
+"          <a href=\"%(geeqie_url)s\">Geeqie</a>, and loves to tinker with"
+" the hardware of various audio\n"
+"          gadgets, including amplifiers and loudspeakers. However, "
+"Laurent's contributions do not end there. He currently\n"
+"          sustains the MetaBrainz servers while residing near Besançon, "
+"France."
+msgstr ""
+
+#: templates/index/team.html:150
+msgid "Voluntary Project Leaders"
+msgstr ""
+
+#: templates/index/team.html:155
+msgid "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
+msgstr ""
+
+#: templates/index/team.html:157
+#, python-format
+msgid ""
+"Ben is one of the two project leads and the main programmer for <a "
+"href=\"%(bb_url)s\">BookBrainz</a>,\n"
+"          a volunteer project doing for books what MusicBrainz does for "
+"music. He started programming C++ 9 years ago, and now\n"
+"          knows Python and Node.js too, although he is currently studying"
+" for a degree in Electronics Engineering at the\n"
+"          <a href=\"%(surrey_url)s\"> University of Surrey</a>. Ben has "
+"been editing MusicBrainz for the past 4 years,\n"
+"          attending the last three summits, and has contributed code to<a"
+" href=\"%(mutagen_url)s\">\n"
+"          mutagen</a> and <a href=\"%(beets_url)s\">beets</a> besides "
+"BookBrainz."
+msgstr ""
+
+#: templates/index/team.html:169
+#, python-format
+msgid ""
+"In his spare time, Ben likes to design quadrotors,\n"
+"          <a href=\"%(race_surrey_url)s\"> racing cars</a>,\n"
+"          artificial intelligence, <a "
+"href=\"%(opengrow_url)s\">vegetation simulators</a> and music\n"
+"          software. However, none of them are finished yet!"
+msgstr ""
+
+#: templates/index/team.html:186
+msgid "<span class=\"name\">Sean Burke</span> &mdash; BookBrainz"
+msgstr ""
+
+#: templates/index/team.html:188
+#, python-format
+msgid ""
+"Sean is the other of the two project leaders for <a "
+"href=\"%(bb_url)s\">BookBrainz</a>. He speaks\n"
+"          Irish and is currently trying to learn to play the bodhrán."
+msgstr ""
+
+#: templates/index/team.html:199
+msgid "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr ""
+
+#: templates/index/team.html:201
+#, python-format
+msgid ""
+"Alastair is the project leader for <a "
+"href=\"%(ab_url)s\">AcousticBrainz</a>."
+msgstr ""
+
+#: templates/oauth/prompt.html:4
+msgid "OAuth Authorization"
+msgstr ""
+
+#: templates/oauth/prompt.html:10
+msgid "This app requested permission to access:"
+msgstr ""
+
+#: templates/oauth/prompt.html:19
+msgid "Your identity on MetaBrainz"
+msgstr ""
+
+#: templates/oauth/prompt.html:32
+msgid "Allow access"
+msgstr ""
+
+#: templates/oauth/prompt.html:33
+msgid "Cancel"
+msgstr ""
+
+#: templates/payments/cancel_recurring.html:3
+#: templates/payments/cancel_recurring.html:6
+msgid "Cancelling recurring payments"
+msgstr ""
+
+#: templates/payments/cancel_recurring.html:9
+msgid ""
+"In case you want to cancel recurring donation (payment) that you set up "
+"before,\n"
+"    you'll need to go to a service which you used to pay."
+msgstr ""
+
+#: templates/payments/cancel_recurring.html:14
+msgid "Here are links to more information:"
+msgstr ""
+
+#: templates/payments/donate.html:3 templates/payments/donate.html:7
+msgid "Make a Donation"
+msgstr ""
+
+#: templates/payments/donate.html:10
+msgid ""
+"If you feel that our projects are a worthwhile effort, please consider "
+"contributing money to the\n"
+"      MetaBrainz Foundation, which is a <a "
+"href=\"(wikipedia_non_profit_url)s\">\n"
+"      501(c)(3) tax-exempt non-profit</a> based in California. All of "
+"your donations will be tax-deductible\n"
+"      and you will receive a receipt that you can use to deduct your "
+"donation off your taxes if you are a\n"
+"      US taxpayer."
+msgstr ""
+
+#: templates/payments/donate.html:18
+msgid ""
+"Your donations will be used to operate projects of the MetaBrainz "
+"Foundation. This includes paying\n"
+"      for ongoing expenses like hosting, hardware, maintaining a modest "
+"office, and paying a minimal\n"
+"      salary for MetaBrainz employees."
+msgstr ""
+
+#: templates/payments/donate.html:23
+#, python-format
+msgid ""
+"Where has my contribution gone? See our <a "
+"href=\"%(finance_reports_url)s\">transparent finances</a>."
+msgstr ""
+
+#: templates/payments/donate.html:24
+#, python-format
+msgid ""
+"Who else is contributing? See our list of <a "
+"href=\"%(donors_url)s\">donors</a>."
+msgstr ""
+
+#: templates/payments/donate.html:28
+#, python-format
+msgid ""
+"<b>Be careful!</b> This is a development version of the website. Do NOT\n"
+"        use your real credit card credentials! If you want to send an "
+"actual\n"
+"        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
+msgstr ""
+
+#: templates/payments/donate.html:39 templates/payments/payment.html:36
+msgid "Amount"
+msgstr ""
+
+#: templates/payments/donate.html:46
+#, python-format
+msgid ""
+"If you would like to make a large donation, please contact us at\n"
+"            <a href=\"%(mail_link)s\">donations@metabrainz.org</a>\n"
+"            before you do."
+msgstr ""
+
+#: templates/payments/donate.html:57
+msgid "I want this to be a recurring monthly donation"
+msgstr ""
+
+#: templates/payments/donate.html:65
+msgid "MusicBrainz username"
+msgstr ""
+
+#: templates/payments/donate.html:74
+msgid "Email me about future fundraising events"
+msgstr ""
+
+#: templates/payments/donate.html:75
+msgid "This will be very seldom"
+msgstr ""
+
+#: templates/payments/donate.html:83
+msgid "I would like this donation to be anonymous"
+msgstr ""
+
+#: templates/payments/donate.html:84
+msgid "Your name won't appear in the donors list"
+msgstr ""
+
+#: templates/payments/donate.html:92
+msgid "Donate with Credit Card"
+msgstr ""
+
+#: templates/payments/donate.html:108
+#, python-format
+msgid ""
+"The personal information provided to the MetaBrainz Foundation during the"
+"\n"
+"        donation process will not be shared with anyone. For more "
+"information,\n"
+"        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
+"        privacy policy</a>."
+msgstr ""
+
+#: templates/payments/donate.html:117
+#, python-format
+msgid ""
+"To find out how to cancel recurring donations take a look at\n"
+"        <a href=\"%(cancel_recurring_url)s\">this page</a>."
+msgstr ""
+
+#: templates/payments/donate.html:122
+msgid "Other ways to donate"
+msgstr ""
+
+#: templates/payments/donate.html:124 templates/payments/payment.html:100
+msgid "Non-US Bank transfer"
+msgstr ""
+
+#: templates/payments/donate.html:125
+msgid ""
+"You can make a donation, or recurring donations, via bank transfer to the"
+" following IBAN:"
+msgstr ""
+
+#: templates/payments/donate.html:127
+#, python-format
+msgid ""
+"Please indicate your name and use the word %(donation_fixed_string)s in "
+"the description field."
+msgstr ""
+
+#: templates/payments/donate.html:129 templates/payments/payment.html:105
+msgid "US Check"
+msgstr ""
+
+#: templates/payments/donate.html:130
+msgid ""
+"If you would like to donate using a check drawn on a US bank, please send"
+" them to:"
+msgstr ""
+
+#: templates/payments/donate.html:137 templates/payments/payment.html:113
+msgid "Please make checks payable to the <strong>MetaBrainz Foundation</strong>."
+msgstr ""
+
+#: templates/payments/donate.html:140
+msgid ""
+"If you use Flattr to donate to your favourite projects, you can click "
+"below to Flattr MetaBrainz:"
+msgstr ""
+
+#: templates/payments/donate.html:215
+msgid ""
+"Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging "
+"you"
+msgstr ""
+
+#: templates/payments/donate.html:230
+msgid "MusicBrainz is currently unavailable."
+msgstr ""
+
+#: templates/payments/donate.html:231
+msgid "Please, make sure that your username is correct."
+msgstr ""
+
+#: templates/payments/donate.html:233
+msgid "Your donation will be associated with this account."
+msgstr ""
+
+#: templates/payments/donate.html:235
+msgid "We can't find this account. Please, make sure it's correct"
+msgstr ""
+
+#: templates/payments/donors.html:3
+#: templates/reports/financial_reports/index.html:23
+msgid "Donations"
+msgstr ""
+
+#: templates/payments/donors.html:11
+msgid "by date"
+msgstr ""
+
+#: templates/payments/donors.html:14
+msgid "by amount"
+msgstr ""
+
+#: templates/payments/donors.html:20
+msgid "No donations. :("
+msgstr ""
+
+#: templates/payments/donors.html:25
+msgid "Date"
+msgstr ""
+
+#: templates/payments/donors.html:26
+msgid "Donor"
+msgstr ""
+
+#: templates/payments/donors.html:27
+msgid "Donation"
+msgstr ""
+
+#: templates/payments/donors.html:28
+msgid "Fee"
+msgstr ""
+
+#: templates/payments/donors.html:61
+msgid "First"
+msgstr ""
+
+#: templates/payments/payment.html:3 templates/payments/payment.html:7
+msgid "Make a Payment"
+msgstr ""
+
+#: templates/payments/payment.html:10
+#, python-format
+msgid ""
+"<b>This page is for organizations!</b> Payments made here will not show "
+"up\n"
+"      in the list of donations. If you want to make a donation instead, "
+"go to\n"
+"      <a href=\"%(donate_url)s\">donation page</a>."
+msgstr ""
+
+#: templates/payments/payment.html:16
+msgid ""
+"Your payments will be used to operate projects of the MetaBrainz "
+"Foundation. This includes paying\n"
+"      for ongoing expenses like hosting, hardware, maintaining a modest "
+"office, and paying a minimal\n"
+"      salary for MetaBrainz employees."
+msgstr ""
+
+#: templates/payments/payment.html:21
+#, python-format
+msgid ""
+"<p>Where has your contribution gone? See our <a "
+"href=\"%(financial_reports_url)s\">transparent finances</a>.</p>"
+msgstr ""
+
+#: templates/payments/payment.html:25
+#, python-format
+msgid ""
+"<b>Be careful!</b> This is a development version of the website. Do NOT\n"
+"        use your real credit card credentials! If you want to send an "
+"actual\n"
+"        payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
+msgstr ""
+
+#: templates/payments/payment.html:43
+#, python-format
+msgid ""
+"If you would like to make a large payment, please contact us at\n"
+"            <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
+"            before you do."
+msgstr ""
+
+#: templates/payments/payment.html:51
+msgid "Invoice number"
+msgstr ""
+
+#: templates/payments/payment.html:60
+msgid "Make this a recurring monthly payment"
+msgstr ""
+
+#: templates/payments/payment.html:68
+msgid "Pay with Credit Card"
+msgstr ""
+
+#: templates/payments/payment.html:84
+#, python-format
+msgid ""
+"The personal information provided to the MetaBrainz Foundation during the"
+"\n"
+"        payment process will not be shared with anyone. For more "
+"information,\n"
+"        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
+"        privacy policy</a>."
+msgstr ""
+
+#: templates/payments/payment.html:93
+#, python-format
+msgid ""
+"To find out how to cancel recurring payments take a look at\n"
+"        <a href=\"%(cancel_recurring_url)s\">this page</a>."
+msgstr ""
+
+#: templates/payments/payment.html:98
+msgid "Other ways to pay"
+msgstr ""
+
+#: templates/payments/payment.html:101
+msgid ""
+"You can make a payment, or recurring payments, via bank transfer to the "
+"following IBAN:"
+msgstr ""
+
+#: templates/payments/payment.html:103
+msgid ""
+"Please specify the invoice number(s) you are paying in the description "
+"field of the transfer."
+msgstr ""
+
+#: templates/payments/payment.html:106
+msgid ""
+"If you would like to pay us using a check drawn on a US bank, please send"
+" them to:"
+msgstr ""
+
+#: templates/reports/annual_reports/view.html:2
+msgid "Annual Report"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:9
+msgid ""
+"The MetaBrainz Foundation practices a policy of <i>transparent "
+"finances</i> where the finances of the non-profit\n"
+"    are freely available on this web site. This financial philosophy "
+"allows the monetary contributors to MetaBrainz\n"
+"    and information contributors to MusicBrainz to see how the non-profit"
+" spends the donations and license fees it\n"
+"    collects. Since MusicBrainz was built with volunteer effort and "
+"MetaBrainz is supported in part by volunteer\n"
+"    donations, we believe that our contributors have the right to see how"
+" the non-profit manages its finances."
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:17
+msgid ""
+"The non-profit publishes all aspects of its finances, as far as that is "
+"possible. In some cases, third parties\n"
+"    making payments to the non-profit require us to not disclose the sums"
+" paid to us for various activities. For\n"
+"    instance, one affiliate of MetaBrainz prevents us from publishing the"
+" details of earnings from an affiliate\n"
+"    program. In these cases we will anonymize these payments before "
+"publishing on this site."
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:25
+msgid ""
+"Please visit our <a href=\"{{ url_for('payments.donors') }}\">donation "
+"tracker</a> to view a list of all the\n"
+"    donations that we have received."
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:29
+msgid "Reports"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:31
+msgid ""
+"We attempt to publish our balance sheets within the first week of the "
+"succeeding month, or as close to that as possible."
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:35
+#: templates/reports/financial_reports/index.html:62
+#: templates/reports/financial_reports/index.html:91
+#: templates/reports/financial_reports/index.html:120
+#: templates/reports/financial_reports/index.html:149
+#: templates/reports/financial_reports/index.html:178
+#: templates/reports/financial_reports/index.html:207
+#: templates/reports/financial_reports/index.html:236
+#: templates/reports/financial_reports/index.html:265
+#: templates/reports/financial_reports/index.html:294
+msgid "Quarterly reports"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:37
+#: templates/reports/financial_reports/index.html:38
+#: templates/reports/financial_reports/index.html:39
+#: templates/reports/financial_reports/index.html:43
+#: templates/reports/financial_reports/index.html:44
+#: templates/reports/financial_reports/index.html:45
+#: templates/reports/financial_reports/index.html:46
+#: templates/reports/financial_reports/index.html:47
+#: templates/reports/financial_reports/index.html:48
+#: templates/reports/financial_reports/index.html:49
+#: templates/reports/financial_reports/index.html:50
+#: templates/reports/financial_reports/index.html:51
+#: templates/reports/financial_reports/index.html:52
+#: templates/reports/financial_reports/index.html:53
+#: templates/reports/financial_reports/index.html:60
+#: templates/reports/financial_reports/index.html:64
+#: templates/reports/financial_reports/index.html:65
+#: templates/reports/financial_reports/index.html:66
+#: templates/reports/financial_reports/index.html:67
+#: templates/reports/financial_reports/index.html:71
+#: templates/reports/financial_reports/index.html:72
+#: templates/reports/financial_reports/index.html:73
+#: templates/reports/financial_reports/index.html:74
+#: templates/reports/financial_reports/index.html:75
+#: templates/reports/financial_reports/index.html:76
+#: templates/reports/financial_reports/index.html:77
+#: templates/reports/financial_reports/index.html:78
+#: templates/reports/financial_reports/index.html:79
+#: templates/reports/financial_reports/index.html:80
+#: templates/reports/financial_reports/index.html:81
+#: templates/reports/financial_reports/index.html:82
+#: templates/reports/financial_reports/index.html:89
+#: templates/reports/financial_reports/index.html:93
+#: templates/reports/financial_reports/index.html:94
+#: templates/reports/financial_reports/index.html:95
+#: templates/reports/financial_reports/index.html:96
+#: templates/reports/financial_reports/index.html:100
+#: templates/reports/financial_reports/index.html:101
+#: templates/reports/financial_reports/index.html:102
+#: templates/reports/financial_reports/index.html:103
+#: templates/reports/financial_reports/index.html:104
+#: templates/reports/financial_reports/index.html:105
+#: templates/reports/financial_reports/index.html:106
+#: templates/reports/financial_reports/index.html:107
+#: templates/reports/financial_reports/index.html:108
+#: templates/reports/financial_reports/index.html:109
+#: templates/reports/financial_reports/index.html:110
+#: templates/reports/financial_reports/index.html:111
+#: templates/reports/financial_reports/index.html:118
+#: templates/reports/financial_reports/index.html:122
+#: templates/reports/financial_reports/index.html:123
+#: templates/reports/financial_reports/index.html:124
+#: templates/reports/financial_reports/index.html:125
+#: templates/reports/financial_reports/index.html:129
+#: templates/reports/financial_reports/index.html:130
+#: templates/reports/financial_reports/index.html:131
+#: templates/reports/financial_reports/index.html:132
+#: templates/reports/financial_reports/index.html:133
+#: templates/reports/financial_reports/index.html:134
+#: templates/reports/financial_reports/index.html:135
+#: templates/reports/financial_reports/index.html:136
+#: templates/reports/financial_reports/index.html:137
+#: templates/reports/financial_reports/index.html:138
+#: templates/reports/financial_reports/index.html:139
+#: templates/reports/financial_reports/index.html:140
+#: templates/reports/financial_reports/index.html:147
+#: templates/reports/financial_reports/index.html:151
+#: templates/reports/financial_reports/index.html:152
+#: templates/reports/financial_reports/index.html:153
+#: templates/reports/financial_reports/index.html:154
+#: templates/reports/financial_reports/index.html:158
+#: templates/reports/financial_reports/index.html:159
+#: templates/reports/financial_reports/index.html:160
+#: templates/reports/financial_reports/index.html:161
+#: templates/reports/financial_reports/index.html:162
+#: templates/reports/financial_reports/index.html:163
+#: templates/reports/financial_reports/index.html:164
+#: templates/reports/financial_reports/index.html:165
+#: templates/reports/financial_reports/index.html:166
+#: templates/reports/financial_reports/index.html:167
+#: templates/reports/financial_reports/index.html:168
+#: templates/reports/financial_reports/index.html:169
+#: templates/reports/financial_reports/index.html:176
+#: templates/reports/financial_reports/index.html:180
+#: templates/reports/financial_reports/index.html:181
+#: templates/reports/financial_reports/index.html:182
+#: templates/reports/financial_reports/index.html:183
+#: templates/reports/financial_reports/index.html:187
+#: templates/reports/financial_reports/index.html:188
+#: templates/reports/financial_reports/index.html:189
+#: templates/reports/financial_reports/index.html:190
+#: templates/reports/financial_reports/index.html:191
+#: templates/reports/financial_reports/index.html:192
+#: templates/reports/financial_reports/index.html:193
+#: templates/reports/financial_reports/index.html:194
+#: templates/reports/financial_reports/index.html:195
+#: templates/reports/financial_reports/index.html:196
+#: templates/reports/financial_reports/index.html:197
+#: templates/reports/financial_reports/index.html:198
+#: templates/reports/financial_reports/index.html:205
+#: templates/reports/financial_reports/index.html:209
+#: templates/reports/financial_reports/index.html:210
+#: templates/reports/financial_reports/index.html:211
+#: templates/reports/financial_reports/index.html:212
+#: templates/reports/financial_reports/index.html:216
+#: templates/reports/financial_reports/index.html:217
+#: templates/reports/financial_reports/index.html:218
+#: templates/reports/financial_reports/index.html:219
+#: templates/reports/financial_reports/index.html:220
+#: templates/reports/financial_reports/index.html:221
+#: templates/reports/financial_reports/index.html:222
+#: templates/reports/financial_reports/index.html:223
+#: templates/reports/financial_reports/index.html:224
+#: templates/reports/financial_reports/index.html:225
+#: templates/reports/financial_reports/index.html:226
+#: templates/reports/financial_reports/index.html:227
+#: templates/reports/financial_reports/index.html:234
+#: templates/reports/financial_reports/index.html:238
+#: templates/reports/financial_reports/index.html:239
+#: templates/reports/financial_reports/index.html:240
+#: templates/reports/financial_reports/index.html:241
+#: templates/reports/financial_reports/index.html:245
+#: templates/reports/financial_reports/index.html:246
+#: templates/reports/financial_reports/index.html:247
+#: templates/reports/financial_reports/index.html:248
+#: templates/reports/financial_reports/index.html:249
+#: templates/reports/financial_reports/index.html:250
+#: templates/reports/financial_reports/index.html:251
+#: templates/reports/financial_reports/index.html:252
+#: templates/reports/financial_reports/index.html:253
+#: templates/reports/financial_reports/index.html:254
+#: templates/reports/financial_reports/index.html:255
+#: templates/reports/financial_reports/index.html:256
+#: templates/reports/financial_reports/index.html:263
+#: templates/reports/financial_reports/index.html:267
+#: templates/reports/financial_reports/index.html:268
+#: templates/reports/financial_reports/index.html:269
+#: templates/reports/financial_reports/index.html:270
+#: templates/reports/financial_reports/index.html:274
+#: templates/reports/financial_reports/index.html:275
+#: templates/reports/financial_reports/index.html:276
+#: templates/reports/financial_reports/index.html:277
+#: templates/reports/financial_reports/index.html:278
+#: templates/reports/financial_reports/index.html:279
+#: templates/reports/financial_reports/index.html:280
+#: templates/reports/financial_reports/index.html:281
+#: templates/reports/financial_reports/index.html:282
+#: templates/reports/financial_reports/index.html:283
+#: templates/reports/financial_reports/index.html:284
+#: templates/reports/financial_reports/index.html:285
+#: templates/reports/financial_reports/index.html:292
+#: templates/reports/financial_reports/index.html:296
+#: templates/reports/financial_reports/index.html:297
+#: templates/reports/financial_reports/index.html:298
+#: templates/reports/financial_reports/index.html:299
+#: templates/reports/financial_reports/index.html:303
+#: templates/reports/financial_reports/index.html:304
+#: templates/reports/financial_reports/index.html:305
+#: templates/reports/financial_reports/index.html:306
+#: templates/reports/financial_reports/index.html:307
+#: templates/reports/financial_reports/index.html:308
+#: templates/reports/financial_reports/index.html:309
+#: templates/reports/financial_reports/index.html:310
+#: templates/reports/financial_reports/index.html:311
+#: templates/reports/financial_reports/index.html:312
+#: templates/reports/financial_reports/index.html:313
+#: templates/reports/financial_reports/index.html:314
+#: templates/reports/financial_reports/index.html:321
+#: templates/reports/financial_reports/index.html:343
+msgid "profit &amp; loss"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:41
+#: templates/reports/financial_reports/index.html:69
+#: templates/reports/financial_reports/index.html:98
+#: templates/reports/financial_reports/index.html:127
+#: templates/reports/financial_reports/index.html:156
+#: templates/reports/financial_reports/index.html:185
+#: templates/reports/financial_reports/index.html:214
+#: templates/reports/financial_reports/index.html:243
+#: templates/reports/financial_reports/index.html:272
+#: templates/reports/financial_reports/index.html:301
+msgid "Monthly reports"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:43
+#: templates/reports/financial_reports/index.html:72
+#: templates/reports/financial_reports/index.html:101
+#: templates/reports/financial_reports/index.html:130
+#: templates/reports/financial_reports/index.html:159
+#: templates/reports/financial_reports/index.html:188
+#: templates/reports/financial_reports/index.html:217
+#: templates/reports/financial_reports/index.html:246
+#: templates/reports/financial_reports/index.html:275
+#: templates/reports/financial_reports/index.html:304
+msgid "November:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:43
+#: templates/reports/financial_reports/index.html:44
+#: templates/reports/financial_reports/index.html:45
+#: templates/reports/financial_reports/index.html:46
+#: templates/reports/financial_reports/index.html:47
+#: templates/reports/financial_reports/index.html:48
+#: templates/reports/financial_reports/index.html:49
+#: templates/reports/financial_reports/index.html:50
+#: templates/reports/financial_reports/index.html:51
+#: templates/reports/financial_reports/index.html:52
+#: templates/reports/financial_reports/index.html:53
+#: templates/reports/financial_reports/index.html:59
+#: templates/reports/financial_reports/index.html:71
+#: templates/reports/financial_reports/index.html:72
+#: templates/reports/financial_reports/index.html:73
+#: templates/reports/financial_reports/index.html:74
+#: templates/reports/financial_reports/index.html:75
+#: templates/reports/financial_reports/index.html:76
+#: templates/reports/financial_reports/index.html:77
+#: templates/reports/financial_reports/index.html:78
+#: templates/reports/financial_reports/index.html:79
+#: templates/reports/financial_reports/index.html:80
+#: templates/reports/financial_reports/index.html:81
+#: templates/reports/financial_reports/index.html:82
+#: templates/reports/financial_reports/index.html:88
+#: templates/reports/financial_reports/index.html:100
+#: templates/reports/financial_reports/index.html:101
+#: templates/reports/financial_reports/index.html:102
+#: templates/reports/financial_reports/index.html:103
+#: templates/reports/financial_reports/index.html:104
+#: templates/reports/financial_reports/index.html:105
+#: templates/reports/financial_reports/index.html:106
+#: templates/reports/financial_reports/index.html:107
+#: templates/reports/financial_reports/index.html:108
+#: templates/reports/financial_reports/index.html:109
+#: templates/reports/financial_reports/index.html:110
+#: templates/reports/financial_reports/index.html:111
+#: templates/reports/financial_reports/index.html:117
+#: templates/reports/financial_reports/index.html:129
+#: templates/reports/financial_reports/index.html:130
+#: templates/reports/financial_reports/index.html:131
+#: templates/reports/financial_reports/index.html:132
+#: templates/reports/financial_reports/index.html:133
+#: templates/reports/financial_reports/index.html:134
+#: templates/reports/financial_reports/index.html:135
+#: templates/reports/financial_reports/index.html:136
+#: templates/reports/financial_reports/index.html:137
+#: templates/reports/financial_reports/index.html:138
+#: templates/reports/financial_reports/index.html:139
+#: templates/reports/financial_reports/index.html:140
+#: templates/reports/financial_reports/index.html:146
+#: templates/reports/financial_reports/index.html:158
+#: templates/reports/financial_reports/index.html:159
+#: templates/reports/financial_reports/index.html:160
+#: templates/reports/financial_reports/index.html:161
+#: templates/reports/financial_reports/index.html:162
+#: templates/reports/financial_reports/index.html:163
+#: templates/reports/financial_reports/index.html:164
+#: templates/reports/financial_reports/index.html:165
+#: templates/reports/financial_reports/index.html:166
+#: templates/reports/financial_reports/index.html:167
+#: templates/reports/financial_reports/index.html:168
+#: templates/reports/financial_reports/index.html:169
+#: templates/reports/financial_reports/index.html:175
+#: templates/reports/financial_reports/index.html:187
+#: templates/reports/financial_reports/index.html:188
+#: templates/reports/financial_reports/index.html:189
+#: templates/reports/financial_reports/index.html:190
+#: templates/reports/financial_reports/index.html:191
+#: templates/reports/financial_reports/index.html:192
+#: templates/reports/financial_reports/index.html:193
+#: templates/reports/financial_reports/index.html:194
+#: templates/reports/financial_reports/index.html:195
+#: templates/reports/financial_reports/index.html:196
+#: templates/reports/financial_reports/index.html:197
+#: templates/reports/financial_reports/index.html:198
+#: templates/reports/financial_reports/index.html:204
+#: templates/reports/financial_reports/index.html:216
+#: templates/reports/financial_reports/index.html:217
+#: templates/reports/financial_reports/index.html:218
+#: templates/reports/financial_reports/index.html:219
+#: templates/reports/financial_reports/index.html:220
+#: templates/reports/financial_reports/index.html:221
+#: templates/reports/financial_reports/index.html:222
+#: templates/reports/financial_reports/index.html:223
+#: templates/reports/financial_reports/index.html:224
+#: templates/reports/financial_reports/index.html:225
+#: templates/reports/financial_reports/index.html:226
+#: templates/reports/financial_reports/index.html:227
+#: templates/reports/financial_reports/index.html:233
+#: templates/reports/financial_reports/index.html:245
+#: templates/reports/financial_reports/index.html:246
+#: templates/reports/financial_reports/index.html:247
+#: templates/reports/financial_reports/index.html:248
+#: templates/reports/financial_reports/index.html:249
+#: templates/reports/financial_reports/index.html:250
+#: templates/reports/financial_reports/index.html:251
+#: templates/reports/financial_reports/index.html:252
+#: templates/reports/financial_reports/index.html:253
+#: templates/reports/financial_reports/index.html:254
+#: templates/reports/financial_reports/index.html:255
+#: templates/reports/financial_reports/index.html:256
+#: templates/reports/financial_reports/index.html:262
+#: templates/reports/financial_reports/index.html:274
+#: templates/reports/financial_reports/index.html:275
+#: templates/reports/financial_reports/index.html:276
+#: templates/reports/financial_reports/index.html:277
+#: templates/reports/financial_reports/index.html:278
+#: templates/reports/financial_reports/index.html:279
+#: templates/reports/financial_reports/index.html:280
+#: templates/reports/financial_reports/index.html:281
+#: templates/reports/financial_reports/index.html:282
+#: templates/reports/financial_reports/index.html:283
+#: templates/reports/financial_reports/index.html:284
+#: templates/reports/financial_reports/index.html:285
+#: templates/reports/financial_reports/index.html:291
+#: templates/reports/financial_reports/index.html:303
+#: templates/reports/financial_reports/index.html:304
+#: templates/reports/financial_reports/index.html:305
+#: templates/reports/financial_reports/index.html:306
+#: templates/reports/financial_reports/index.html:307
+#: templates/reports/financial_reports/index.html:308
+#: templates/reports/financial_reports/index.html:309
+#: templates/reports/financial_reports/index.html:310
+#: templates/reports/financial_reports/index.html:311
+#: templates/reports/financial_reports/index.html:312
+#: templates/reports/financial_reports/index.html:313
+#: templates/reports/financial_reports/index.html:314
+#: templates/reports/financial_reports/index.html:320
+#: templates/reports/financial_reports/index.html:342
+msgid "balance sheet"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:44
+#: templates/reports/financial_reports/index.html:73
+#: templates/reports/financial_reports/index.html:102
+#: templates/reports/financial_reports/index.html:131
+#: templates/reports/financial_reports/index.html:160
+#: templates/reports/financial_reports/index.html:189
+#: templates/reports/financial_reports/index.html:218
+#: templates/reports/financial_reports/index.html:247
+#: templates/reports/financial_reports/index.html:276
+#: templates/reports/financial_reports/index.html:305
+msgid "October:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:45
+#: templates/reports/financial_reports/index.html:74
+#: templates/reports/financial_reports/index.html:103
+#: templates/reports/financial_reports/index.html:132
+#: templates/reports/financial_reports/index.html:161
+#: templates/reports/financial_reports/index.html:190
+#: templates/reports/financial_reports/index.html:219
+#: templates/reports/financial_reports/index.html:248
+#: templates/reports/financial_reports/index.html:277
+#: templates/reports/financial_reports/index.html:306
+msgid "September:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:46
+#: templates/reports/financial_reports/index.html:75
+#: templates/reports/financial_reports/index.html:104
+#: templates/reports/financial_reports/index.html:133
+#: templates/reports/financial_reports/index.html:162
+#: templates/reports/financial_reports/index.html:191
+#: templates/reports/financial_reports/index.html:220
+#: templates/reports/financial_reports/index.html:249
+#: templates/reports/financial_reports/index.html:278
+#: templates/reports/financial_reports/index.html:307
+msgid "August:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:47
+#: templates/reports/financial_reports/index.html:76
+#: templates/reports/financial_reports/index.html:105
+#: templates/reports/financial_reports/index.html:134
+#: templates/reports/financial_reports/index.html:163
+#: templates/reports/financial_reports/index.html:192
+#: templates/reports/financial_reports/index.html:221
+#: templates/reports/financial_reports/index.html:250
+#: templates/reports/financial_reports/index.html:279
+#: templates/reports/financial_reports/index.html:308
+msgid "July:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:48
+#: templates/reports/financial_reports/index.html:77
+#: templates/reports/financial_reports/index.html:106
+#: templates/reports/financial_reports/index.html:135
+#: templates/reports/financial_reports/index.html:164
+#: templates/reports/financial_reports/index.html:193
+#: templates/reports/financial_reports/index.html:222
+#: templates/reports/financial_reports/index.html:251
+#: templates/reports/financial_reports/index.html:280
+#: templates/reports/financial_reports/index.html:309
+msgid "June:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:49
+#: templates/reports/financial_reports/index.html:78
+#: templates/reports/financial_reports/index.html:107
+#: templates/reports/financial_reports/index.html:136
+#: templates/reports/financial_reports/index.html:165
+#: templates/reports/financial_reports/index.html:194
+#: templates/reports/financial_reports/index.html:223
+#: templates/reports/financial_reports/index.html:252
+#: templates/reports/financial_reports/index.html:281
+#: templates/reports/financial_reports/index.html:310
+msgid "May:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:50
+#: templates/reports/financial_reports/index.html:79
+#: templates/reports/financial_reports/index.html:108
+#: templates/reports/financial_reports/index.html:137
+#: templates/reports/financial_reports/index.html:166
+#: templates/reports/financial_reports/index.html:195
+#: templates/reports/financial_reports/index.html:224
+#: templates/reports/financial_reports/index.html:253
+#: templates/reports/financial_reports/index.html:282
+#: templates/reports/financial_reports/index.html:311
+msgid "April:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:51
+#: templates/reports/financial_reports/index.html:80
+#: templates/reports/financial_reports/index.html:109
+#: templates/reports/financial_reports/index.html:138
+#: templates/reports/financial_reports/index.html:167
+#: templates/reports/financial_reports/index.html:196
+#: templates/reports/financial_reports/index.html:225
+#: templates/reports/financial_reports/index.html:254
+#: templates/reports/financial_reports/index.html:283
+#: templates/reports/financial_reports/index.html:312
+msgid "March:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:52
+#: templates/reports/financial_reports/index.html:81
+#: templates/reports/financial_reports/index.html:110
+#: templates/reports/financial_reports/index.html:139
+#: templates/reports/financial_reports/index.html:168
+#: templates/reports/financial_reports/index.html:197
+#: templates/reports/financial_reports/index.html:226
+#: templates/reports/financial_reports/index.html:255
+#: templates/reports/financial_reports/index.html:284
+#: templates/reports/financial_reports/index.html:313
+msgid "February:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:53
+#: templates/reports/financial_reports/index.html:82
+#: templates/reports/financial_reports/index.html:111
+#: templates/reports/financial_reports/index.html:140
+#: templates/reports/financial_reports/index.html:169
+#: templates/reports/financial_reports/index.html:198
+#: templates/reports/financial_reports/index.html:227
+#: templates/reports/financial_reports/index.html:256
+#: templates/reports/financial_reports/index.html:285
+#: templates/reports/financial_reports/index.html:314
+msgid "January:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:57
+#: templates/reports/financial_reports/index.html:86
+#: templates/reports/financial_reports/index.html:115
+#: templates/reports/financial_reports/index.html:144
+#: templates/reports/financial_reports/index.html:173
+#: templates/reports/financial_reports/index.html:202
+#: templates/reports/financial_reports/index.html:231
+#: templates/reports/financial_reports/index.html:260
+#: templates/reports/financial_reports/index.html:289
+#: templates/reports/financial_reports/index.html:318
+#: templates/reports/financial_reports/index.html:340
+msgid "Year end reports"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:71
+#: templates/reports/financial_reports/index.html:100
+#: templates/reports/financial_reports/index.html:129
+#: templates/reports/financial_reports/index.html:158
+#: templates/reports/financial_reports/index.html:187
+#: templates/reports/financial_reports/index.html:216
+#: templates/reports/financial_reports/index.html:245
+#: templates/reports/financial_reports/index.html:274
+#: templates/reports/financial_reports/index.html:303
+msgid "December:"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:323
+#: templates/reports/financial_reports/index.html:345
+msgid "Monthly balance sheets"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:325
+#: templates/reports/financial_reports/index.html:347
+#: templates/reports/financial_reports/index.html:363
+msgid "December"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:326
+#: templates/reports/financial_reports/index.html:348
+msgid "November"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:327
+#: templates/reports/financial_reports/index.html:349
+msgid "October"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:328
+#: templates/reports/financial_reports/index.html:350
+msgid "September"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:329
+#: templates/reports/financial_reports/index.html:351
+msgid "August"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:330
+#: templates/reports/financial_reports/index.html:352
+msgid "July"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:331
+#: templates/reports/financial_reports/index.html:353
+msgid "June"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:332
+#: templates/reports/financial_reports/index.html:354
+msgid "May"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:333
+#: templates/reports/financial_reports/index.html:355
+msgid "April"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:334
+#: templates/reports/financial_reports/index.html:356
+msgid "March"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:335
+#: templates/reports/financial_reports/index.html:357
+msgid "February"
+msgstr ""
+
+#: templates/reports/financial_reports/index.html:336
+#: templates/reports/financial_reports/index.html:358
+msgid "January"
+msgstr ""
+
+#: templates/users/account-type.html:3
+msgid "Support"
+msgstr ""
+
+#: templates/users/account-type.html:6
+msgid "Support us"
+msgstr ""
+
+#: templates/users/account-type.html:9
+#, python-format
+msgid ""
+"For commercial use of our data or to get access to the\n"
+"    <a href=\"%(mb_data_feed)s\">MusicBrainz Live Data Feed</a>,\n"
+"    please choose between non-commercial and commercial use below. You "
+"will need a\n"
+"    <a href=\"%(mb_register_url)s\">MusicBrainz account</a> with a "
+"verified email address to sign-up."
+msgstr ""
+
+#: templates/users/account-type.html:16
+msgid ""
+"<strong>Open source developers and non-profits</strong>: Please sign up "
+"as a\n"
+"    commercial user using the free non-profit tier below. This allows us "
+"to give you credit\n"
+"    for your open source project or your non-profit."
+msgstr ""
+
+#: templates/users/account-type.html:21
+msgid "Non-commercial / Personal"
+msgstr ""
+
+#: templates/users/account-type.html:24
+#, python-format
+msgid ""
+"Non-commercial use includes personal use of our data sets and use by "
+"companies that\n"
+"    don't anticipate earning more than $500 in a given year. If you are a"
+" pre-revenue\n"
+"    start-up and expect to have more than $500 of revenue in the future, "
+"please sign up\n"
+"    with a commercial account &mdash; see below for more details. Please\n"
+"    <a href=\"%(donate_url)s\">consider making a donation</a> to support\n"
+"    our efforts!"
+msgstr ""
+
+#: templates/users/account-type.html:34
+msgid "Non-commercial"
+msgstr ""
+
+#: templates/users/account-type.html:37
+msgid "Commercial"
+msgstr ""
+
+#: templates/users/account-type.html:40
+msgid ""
+"If you are a company with more than $500 income in a year, please select "
+"a support\n"
+"    tier below that fits your current situation. We welcome working with "
+"companies that\n"
+"    are just getting started and we're happy for your support for "
+"MetaBrainz to grow as\n"
+"    you grow. If you would like to use our data, but are not ready to "
+"state this publicly\n"
+"    yet, please sign up for the <em>Stealth start up</em> tier; we will "
+"keep your\n"
+"    data-usage confidential and contact you to discuss your future plans."
+msgstr ""
+
+#: templates/users/account-type.html:59 templates/users/account-type.html:106
+#, python-format
+msgid "$%(tier_price)s/month and up"
+msgstr ""
+
+#: templates/users/account-type.html:63 templates/users/account-type.html:109
+msgid "More info"
+msgstr ""
+
+#: templates/users/account-type.html:79
+msgid "Some of our Unicorn members"
+msgstr ""
+
+#: templates/users/account-type.html:90
+msgid "See all our supporters"
+msgstr ""
+
+#: templates/users/account-type.html:96
+msgid "View all tiers"
+msgstr ""
+
+#: templates/users/account-type.html:117
+msgid "View featured tiers"
+msgstr ""
+
+#: templates/users/account-type.html:124
+#, python-format
+msgid ""
+"If you are not sure which tier to pick, please\n"
+"      <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+
+#: templates/users/bad-standing.html:3 templates/users/bad-standing.html:6
+msgid "Bad standing"
+msgstr ""
+
+#: templates/users/bad-standing.html:8
+msgid ""
+"Companies that are in <i>bad standing</i> have previously agreed to "
+"support\n"
+"  MetaBrainz and are using one of our data-sets, but are behind in their\n"
+"  payments by more than 60 days."
+msgstr ""
+
+#: templates/users/mb-login.html:3 templates/users/mb-login.html:6
+msgid "Log in"
+msgstr ""
+
+#: templates/users/mb-login.html:8
+msgid "To log in you need to have a MusicBrainz account."
+msgstr ""
+
+#: templates/users/mb-login.html:13
+msgid "Log in with MusicBrainz"
+msgstr ""
+
+#: templates/users/mb-signup.html:9
+msgid ""
+"Please sign in with the MusicBrainz account that will be associated with\n"
+"    your MetaBrainz profile. If you don't have a MusicBrainz account or "
+"wish to\n"
+"    use a new MusicBrainz account, you can register on the page linked "
+"below."
+msgstr ""
+
+#: templates/users/mb-signup.html:17
+msgid "Sign up with MusicBrainz"
+msgstr ""
+
+#: templates/users/profile-edit.html:3
+msgid "Edit"
+msgstr ""
+
+#: templates/users/profile-edit.html:3 templates/users/profile-edit.html:6
+msgid "Your Profile"
+msgstr ""
+
+#: templates/users/profile-edit.html:7
+msgid "Edit contact information"
+msgstr ""
+
+#: templates/users/profile-edit.html:29
+msgid "Update"
+msgstr ""
+
+#: templates/users/supporters-list.html:9
+#, python-format
+msgid ""
+"The following organizations make use of the data-sets published by "
+"MetaBrainz and\n"
+"    are supporting us financially or through some other reciprocal "
+"agreement. There are also\n"
+"    organizations that make use of our data that have explicitly declined"
+" to support us. There\n"
+"    may also be other organizations making use of our data that we don't "
+"know about yet. If you\n"
+"    know of a company using our data, please <a "
+"href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+
+#: templates/users/supporters-list.html:30 templates/users/tier.html:25
+msgid "This user has bad standing"
+msgstr ""
+
+#: templates/users/tier.html:3 templates/users/tier.html:6
+#, python-format
+msgid "%(tier_name)s tier"
+msgstr ""
+
+#: templates/users/tier.html:13
+msgid "Sign up for this tier"
+msgstr ""
+
+#: templates/users/tier.html:19
+msgid "Supporters on this tier"
+msgstr ""
+
+#: users/forms.py:14
+msgid "Contact name is required!"
+msgstr ""
+
+#: users/forms.py:15
+msgid "Email address is required!"
+msgstr ""
+
+#: users/forms.py:16
+msgid "How are you using our data?"
+msgstr ""
+
+#: users/forms.py:17
+msgid "Please, tell us how you (will) use our data."
+msgstr ""
+
+#: users/forms.py:18
+msgid "Please, limit usage description to 150 characters."
+msgstr ""
+
+#: users/forms.py:20
+msgid "You need to accept the agreement!"
+msgstr ""
+
+#: users/forms.py:35
+msgid "Organization name"
+msgstr ""
+
+#: users/forms.py:36
+msgid "You need to specify the name of your organization."
+msgstr ""
+
+#: users/forms.py:38
+msgid "Organization description"
+msgstr ""
+
+#: users/forms.py:39
+msgid "You need to provide description of your organization."
+msgstr ""
+
+#: users/forms.py:42
+msgid "Website URL"
+msgstr ""
+
+#: users/forms.py:43
+msgid "You need to specify website of the organization."
+msgstr ""
+
+#: users/forms.py:45
+msgid "Logo image URL"
+msgstr ""
+
+#: users/forms.py:46
+msgid "API URL"
+msgstr ""
+
+#: users/forms.py:48
+msgid "Street"
+msgstr ""
+
+#: users/forms.py:49
+msgid "You need to specify street."
+msgstr ""
+
+#: users/forms.py:51
+msgid "City"
+msgstr ""
+
+#: users/forms.py:52
+msgid "You need to specify city."
+msgstr ""
+
+#: users/forms.py:54
+msgid "State / Province"
+msgstr ""
+
+#: users/forms.py:55
+msgid "You need to specify state/province."
+msgstr ""
+
+#: users/forms.py:57
+msgid "Postcode"
+msgstr ""
+
+#: users/forms.py:58
+msgid "You need to specify postcode."
+msgstr ""
+
+#: users/forms.py:60
+msgid "Country"
+msgstr ""
+
+#: users/forms.py:61
+msgid "You need to specify country."
+msgstr ""
+
+#: users/forms.py:69
+msgid "Name"
+msgstr ""
+
+#: users/forms.py:70
+msgid "Contact name field is empty."
+msgstr ""
+
+#: users/forms.py:72
+msgid "Email"
+msgstr ""
+
+#: users/forms.py:74
+msgid "Email field is not a valid email address."
+msgstr ""
+
+#: users/forms.py:75
+msgid "Contact email field is empty."
+msgstr ""
+
+#: users/views.py:48
+msgid "Can't find tier with a specified ID."
+msgstr ""
+
+#: users/views.py:62 users/views.py:68
+msgid "Please select account type to sign up."
+msgstr ""
+
+#: users/views.py:85
+msgid "You need to choose support tier before signing up!"
+msgstr ""
+
+#: users/views.py:89
+msgid "You need to choose existing tier before signing up!"
+msgstr ""
+
+#: users/views.py:105
+msgid ""
+"Custom amount must be more than threshold amountfor selected tier or "
+"equal to it!"
+msgstr ""
+
+#: users/views.py:138
+msgid ""
+"Thanks for signing up! Your application will be reviewed soon. We will "
+"send you updates via email."
+msgstr ""
+
+#: users/views.py:152 users/views.py:199
+msgid ""
+"Failed to send welcome email to you. We are looking into it. Sorry for "
+"inconvenience!"
+msgstr ""
+
+#: users/views.py:157 users/views.py:204
+msgid "You already have a MetaBrainz account!"
+msgstr ""
+
+#: users/views.py:188
+msgid "Thanks for signing up!"
+msgstr ""
+
+#: users/views.py:223
+msgid "Login failed!"
+msgstr ""
+
+#: users/views.py:226
+msgid "Authorization code is missing!"
+msgstr ""
+
+#: users/views.py:270
+msgid "Can't generate new token unless account is active."
+msgstr ""
+

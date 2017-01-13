@@ -77,6 +77,20 @@ The first time you set up the application, database tables need to be created:
 
 Web server should now be accessible at **http://localhost:80/**.
 
+## Translations
+
+### Extracting strings
+
+Once the docker is up, run:
+
+`$ docker-compose -f docker/docker-compose.dev.yml run web python manage.py extract_strings`
+
+### Compiling the strings
+
+The POT files are compiled automatically every time the docker is created, but in case you make any changes
+and want to compile the translations files again, run:
+
+`$ docker-compose -f docker/docker-compose.dev.yml run web python manage.py compile_translations`
 
 ## Testing
 
