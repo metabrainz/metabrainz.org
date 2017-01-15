@@ -43,9 +43,6 @@ COPY . /code/
 RUN ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/static/css/main.css
 RUN ./node_modules/.bin/lessc ./metabrainz/static/css/theme/boostrap/boostrap.less > ./metabrainz/static/css/theme/boostrap/boostrap.css
 
-# Compile translations
-RUN pybabel compile -d metabrainz/translations
-
 ############
 # Services #
 ############
