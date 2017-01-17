@@ -118,8 +118,7 @@
         var ignoreConfirmation = {{ 'false' if current_user.token else 'true' }};
 
         $("#btn-generate-token").click(function () {
-          if (ignoreConfirmation || confirm({{ _('Are you sure you want to generate new access token?\n') }} +
-                                            {{ _('Current token will be revoked!') }})) {
+          if (ignoreConfirmation || confirm("{{ _('Are you sure you want to generate new access token? Current token will be revoked!') }}")) {
             $.ajax({
               type: "POST",
               url: "{{ url_for('users.regenerate_token') }}",
@@ -129,7 +128,7 @@
                 ignoreConfirmation = false;
               },
               error: function (jqXHR, textStatus, errorThrown) {
-                var msg = {{ _('Failed to generate new access token!') }};
+                var msg = "{{ _('Failed to generate new access token!') }}";
                 if (jqXHR.status == 429) {
                   msg += '\n' + JSON.parse(jqXHR.responseText).error
                 }
