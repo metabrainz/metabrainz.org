@@ -28,7 +28,7 @@ for i, row in enumerate(reader):
     if not i:
         continue
 
-    if row[9] == 'withdrawal':
+    if row[9] in ('withdrawal'):
         continue
 
     print row
@@ -38,8 +38,10 @@ for i, row in enumerate(reader):
     fee = -toFloat(row[12])
     net = amount - fee
 
-    out.write("%s,%s,%.2f\n" % (date, "WePay", fee))
-    out.write("%s,%s,%.2f\n" % (date, sender, amount))
+    print row[13]
+    if toFloat(row[13]) != 0.0:
+        out.write("%s,%s,%.2f\n" % (date, "WePay", fee))
+        out.write("%s,%s,%.2f\n" % (date, sender, amount))
 
 fp.close()
 out.close()
