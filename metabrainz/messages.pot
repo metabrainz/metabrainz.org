@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-01-15 17:53+0100\n"
+"POT-Creation-Date: 2017-01-19 21:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,6 +182,9 @@ msgstr ""
 #: metabrainz/templates/users/account-type.html:111
 #: metabrainz/templates/users/mb-signup.html:3
 #: metabrainz/templates/users/mb-signup.html:6
+#: metabrainz/templates/users/signup-commercial.html:3
+#: metabrainz/templates/users/signup-non-commercial.html:3
+#: metabrainz/templates/users/signup-non-commercial.html:87
 msgid "Sign up"
 msgstr ""
 
@@ -1165,15 +1168,31 @@ msgid ""
 "France."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:150
-msgid "Voluntary Project Leaders"
+#: metabrainz/templates/index/team.html:153
+msgid "<span class=\"name\">Elizabeth Bigger</span> &mdash; Supporter Catalyst"
 msgstr ""
 
 #: metabrainz/templates/index/team.html:155
+msgid ""
+"Elizabeth lives in Barcelona, Spain and joined the MetaBrainz team to "
+"manage the relationships with our \n"
+"          supporters. When not working for MetaBrainz, Elizabeth enjoys "
+"researching and developing computational textiles and\n"
+"          attending the International Symposium of Wearable Computing. "
+"She continuously struggles to find balance between her \n"
+"          cheese obsession, tinkering with power tools and learning the "
+"art of weaving."
+msgstr ""
+
+#: metabrainz/templates/index/team.html:166
+msgid "Voluntary Project Leaders"
+msgstr ""
+
+#: metabrainz/templates/index/team.html:171
 msgid "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:157
+#: metabrainz/templates/index/team.html:173
 #, python-format
 msgid ""
 "Ben is one of the two project leads and the main programmer for <a "
@@ -1190,7 +1209,7 @@ msgid ""
 "BookBrainz."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:169
+#: metabrainz/templates/index/team.html:185
 #, python-format
 msgid ""
 "In his spare time, Ben likes to design quadrotors,\n"
@@ -1200,11 +1219,11 @@ msgid ""
 "          software. However, none of them are finished yet!"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:186
+#: metabrainz/templates/index/team.html:202
 msgid "<span class=\"name\">Sean Burke</span> &mdash; BookBrainz"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:188
+#: metabrainz/templates/index/team.html:204
 #, python-format
 msgid ""
 "Sean is the other of the two project leaders for <a "
@@ -1212,11 +1231,11 @@ msgid ""
 "          Irish and is currently trying to learn to play the bodhrán."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:199
+#: metabrainz/templates/index/team.html:215
 msgid "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:201
+#: metabrainz/templates/index/team.html:217
 #, python-format
 msgid ""
 "Alastair is the project leader for <a "
@@ -1265,11 +1284,12 @@ msgid "Make a Donation"
 msgstr ""
 
 #: metabrainz/templates/payments/donate.html:10
+#, python-format
 msgid ""
 "If you feel that our projects are a worthwhile effort, please consider "
 "contributing money to the\n"
 "      MetaBrainz Foundation, which is a <a "
-"href=\"(wikipedia_non_profit_url)s\">\n"
+"href=\"%(wikipedia_non_profit_url)s\">\n"
 "      501(c)(3) tax-exempt non-profit</a> based in California. All of "
 "your donations will be tax-deductible\n"
 "      and you will receive a receipt that you can use to deduct your "
@@ -1602,9 +1622,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:25
+#, python-format
 msgid ""
-"Please visit our <a href=\"{{ url_for('payments.donors') }}\">donation "
-"tracker</a> to view a list of all the\n"
+"Please visit our <a href=\"%(donors_url)s\">donation tracker</a> to view "
+"a list of all the\n"
 "    donations that we have received."
 msgstr ""
 
@@ -2231,10 +2252,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/users/account-type.html:34
+#: metabrainz/templates/users/signup-non-commercial.html:25
 msgid "Non-commercial"
 msgstr ""
 
 #: metabrainz/templates/users/account-type.html:37
+#: metabrainz/templates/users/signup-commercial.html:25
 msgid "Commercial"
 msgstr ""
 
@@ -2255,6 +2278,7 @@ msgstr ""
 
 #: metabrainz/templates/users/account-type.html:59
 #: metabrainz/templates/users/account-type.html:106
+#: metabrainz/templates/users/signup-commercial.html:29
 #, python-format
 msgid "$%(tier_price)s/month and up"
 msgstr ""
@@ -2332,15 +2356,271 @@ msgstr ""
 
 #: metabrainz/templates/users/profile-edit.html:3
 #: metabrainz/templates/users/profile-edit.html:6
+#: metabrainz/templates/users/profile.html:3
+#: metabrainz/templates/users/profile.html:6
 msgid "Your Profile"
 msgstr ""
 
 #: metabrainz/templates/users/profile-edit.html:7
+#: metabrainz/templates/users/profile.html:51
 msgid "Edit contact information"
 msgstr ""
 
 #: metabrainz/templates/users/profile-edit.html:29
 msgid "Update"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:27
+msgid "Organization information"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:29
+#: metabrainz/templates/users/profile.html:46
+msgid "Name:"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:31
+msgid "Website URL:"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:33
+msgid "API URL:"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:37
+#, python-format
+msgid ""
+"Please <a href=\"%(contact_url)s\">contact us</a>\n"
+"          if you wish for us to update this information."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:44
+msgid "Contact information"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:47
+msgid "Email:"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:59
+msgid "Data use permission granted"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:61
+msgid ""
+"You have permission to use any of the data published by the MetaBrainz\n"
+"        Foundation. This includes data dumps released under a Creative "
+"Commons\n"
+"        non-commercial license. Thank you for your support!"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:66
+msgid ""
+"Please note that if your support falls behind by more than 60 days, this\n"
+"        permission may be withdrawn. You can always check your current "
+"permission\n"
+"        status on this page."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:71
+msgid "No data use permission granted"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:73
+msgid ""
+"You <strong>DO NOT</strong> currently have permission to use data\n"
+"        released under a Creative Commons non-commercial license."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:77
+msgid "Reason:"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:79
+#, python-format
+msgid ""
+"Your account is in bad standing, which means that you are more than\n"
+"          60 days behind in support payments. If you think this is a "
+"mistake,\n"
+"          please <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:83
+msgid "Your application for using the Live Data Feed has been rejected."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:85
+msgid "Your application for using the Live Data Feed is still pending."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:87
+msgid "Your application for using the Live Data Feed is in the waiting list."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:89
+msgid "Unknown. :("
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:96
+msgid "Access token"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:99
+msgid "Generate new token"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:102
+msgid ""
+"This access token should be considered private. Don't check this token\n"
+"      into any publicly visible version control systems and similar "
+"places.\n"
+"      If the token has been exposed, you should immediately generate a "
+"new one!\n"
+"      When you generate a new token, your current token is revoked."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:107
+#, python-format
+msgid ""
+"See the <a href=\"%(api_docs_url)s\">API documentation</a> for more "
+"information."
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:121
+msgid ""
+"Are you sure you want to generate new access token? Current token will be"
+" revoked!"
+msgstr ""
+
+#: metabrainz/templates/users/profile.html:131
+msgid "Failed to generate new access token!"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:6
+msgid "Sign up <small>Commercial</small>"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:9
+msgid ""
+"<strong>Note:</strong> Signing up for any tier other than the <i>Stealth "
+"startup</i> tier\n"
+"    will publicly list your company on this web site. However, we will "
+"not publish any of\n"
+"    your private details."
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:24
+#: metabrainz/templates/users/signup-non-commercial.html:24
+msgid "Account type"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:26
+msgid "Selected tier"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:32
+msgid "Change account type or tier"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:46
+#, python-format
+msgid ""
+"If you don't have an organization name, you probably want to sign up as a"
+"\n"
+"          <a href=\"%(signup_url)s\">non-commercial / personal</a> user."
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:55
+#: metabrainz/templates/users/signup-non-commercial.html:33
+msgid "MusicBrainz Account"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:78
+msgid "(preferably in SVG format)"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:81
+msgid ""
+"Image should be about 250 pixels wide on a white or transparent\n"
+"          background. We will host it on our site."
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:92
+msgid ""
+"URL to where developers can use your APIs using MusicBrainz IDs, if "
+"available.."
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:103
+#: metabrainz/templates/users/signup-non-commercial.html:62
+msgid "(max 150 characters)"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:109
+#, python-format
+msgid ""
+"If you would like to support us with more than $%(tier_price)d,\n"
+"        please enter the actual amount here:"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:120
+msgid "Billing address"
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:183
+msgid ""
+"I agree to treat my access token as a secret and will not share\n"
+"            this token publicly or commit it to a publicly visible source"
+" code repository."
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:192
+msgid ""
+"The following information will be shown publicly: organization name,\n"
+"        logo, website and API URLs, data usage description."
+msgstr ""
+
+#: metabrainz/templates/users/signup-commercial.html:199
+msgid ""
+"We'll send you more details about payment process once your application\n"
+"        is approved."
+msgstr ""
+
+#: metabrainz/templates/users/signup-non-commercial.html:6
+msgid "Sign up <small>non-commercial</small>"
+msgstr ""
+
+#: metabrainz/templates/users/signup-non-commercial.html:9
+msgid ""
+"Please be aware that misuse of the non-commercial service for commercial "
+"purposes will\n"
+"    result in us revoking your access token and then billing you for your"
+" commercial use of our\n"
+"    Live Data Feed."
+msgstr ""
+
+#: metabrainz/templates/users/signup-non-commercial.html:27
+msgid "Change account type"
+msgstr ""
+
+#: metabrainz/templates/users/signup-non-commercial.html:42
+#: metabrainz/users/forms.py:69
+msgid "Name"
+msgstr ""
+
+#: metabrainz/templates/users/signup-non-commercial.html:49
+#: metabrainz/users/forms.py:72
+msgid "Email"
+msgstr ""
+
+#: metabrainz/templates/users/signup-non-commercial.html:72
+msgid ""
+"I agree to use the Live Data Feed for non-commercial (less than $500\n"
+"            income per year) or personal uses only. I also agree to treat"
+" my access\n"
+"            token as a secret and will not share this token publicly or "
+"commit it\n"
+"            to a source code repository."
 msgstr ""
 
 #: metabrainz/templates/users/supporters-list.html:9
@@ -2474,16 +2754,8 @@ msgstr ""
 msgid "You need to specify country."
 msgstr ""
 
-#: metabrainz/users/forms.py:69
-msgid "Name"
-msgstr ""
-
 #: metabrainz/users/forms.py:70
 msgid "Contact name field is empty."
-msgstr ""
-
-#: metabrainz/users/forms.py:72
-msgid "Email"
 msgstr ""
 
 #: metabrainz/users/forms.py:74
