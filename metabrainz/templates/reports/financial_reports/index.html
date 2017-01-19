@@ -22,8 +22,8 @@
 
 <h2>{{ _('Donations') }}</h2>
 <p>
-    {{ _('Please visit our <a href="{{ url_for(\'payments.donors\') }}">donation tracker</a> to view a list of all the
-    donations that we have received.') }}
+    {{ _('Please visit our <a href="%(donors_url)s">donation tracker</a> to view a list of all the
+    donations that we have received.', donors_url=url_for('payments.donors')) }}
 </p>
 
 <h2>{{ _('Reports') }}</h2>
