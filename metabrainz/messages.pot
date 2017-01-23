@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-01-19 21:24+0100\n"
+"POT-Creation-Date: 2017-01-24 02:41+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1847,7 +1847,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:246
 #: metabrainz/templates/reports/financial_reports/index.html:275
 #: metabrainz/templates/reports/financial_reports/index.html:304
-msgid "November:"
+#: metabrainz/templates/reports/financial_reports/index.html:326
+#: metabrainz/templates/reports/financial_reports/index.html:348
+msgid "November"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:43
@@ -1993,7 +1995,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:247
 #: metabrainz/templates/reports/financial_reports/index.html:276
 #: metabrainz/templates/reports/financial_reports/index.html:305
-msgid "October:"
+#: metabrainz/templates/reports/financial_reports/index.html:327
+#: metabrainz/templates/reports/financial_reports/index.html:349
+msgid "October"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:45
@@ -2006,7 +2010,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:248
 #: metabrainz/templates/reports/financial_reports/index.html:277
 #: metabrainz/templates/reports/financial_reports/index.html:306
-msgid "September:"
+#: metabrainz/templates/reports/financial_reports/index.html:328
+#: metabrainz/templates/reports/financial_reports/index.html:350
+msgid "September"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:46
@@ -2019,7 +2025,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:249
 #: metabrainz/templates/reports/financial_reports/index.html:278
 #: metabrainz/templates/reports/financial_reports/index.html:307
-msgid "August:"
+#: metabrainz/templates/reports/financial_reports/index.html:329
+#: metabrainz/templates/reports/financial_reports/index.html:351
+msgid "August"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:47
@@ -2032,7 +2040,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:250
 #: metabrainz/templates/reports/financial_reports/index.html:279
 #: metabrainz/templates/reports/financial_reports/index.html:308
-msgid "July:"
+#: metabrainz/templates/reports/financial_reports/index.html:330
+#: metabrainz/templates/reports/financial_reports/index.html:352
+msgid "July"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:48
@@ -2045,7 +2055,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:251
 #: metabrainz/templates/reports/financial_reports/index.html:280
 #: metabrainz/templates/reports/financial_reports/index.html:309
-msgid "June:"
+#: metabrainz/templates/reports/financial_reports/index.html:331
+#: metabrainz/templates/reports/financial_reports/index.html:353
+msgid "June"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:49
@@ -2058,7 +2070,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:252
 #: metabrainz/templates/reports/financial_reports/index.html:281
 #: metabrainz/templates/reports/financial_reports/index.html:310
-msgid "May:"
+#: metabrainz/templates/reports/financial_reports/index.html:332
+#: metabrainz/templates/reports/financial_reports/index.html:354
+msgid "May"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:50
@@ -2071,7 +2085,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:253
 #: metabrainz/templates/reports/financial_reports/index.html:282
 #: metabrainz/templates/reports/financial_reports/index.html:311
-msgid "April:"
+#: metabrainz/templates/reports/financial_reports/index.html:333
+#: metabrainz/templates/reports/financial_reports/index.html:355
+msgid "April"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:51
@@ -2084,7 +2100,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:254
 #: metabrainz/templates/reports/financial_reports/index.html:283
 #: metabrainz/templates/reports/financial_reports/index.html:312
-msgid "March:"
+#: metabrainz/templates/reports/financial_reports/index.html:334
+#: metabrainz/templates/reports/financial_reports/index.html:356
+msgid "March"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:52
@@ -2097,7 +2115,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:255
 #: metabrainz/templates/reports/financial_reports/index.html:284
 #: metabrainz/templates/reports/financial_reports/index.html:313
-msgid "February:"
+#: metabrainz/templates/reports/financial_reports/index.html:335
+#: metabrainz/templates/reports/financial_reports/index.html:357
+msgid "February"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:53
@@ -2110,7 +2130,9 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:256
 #: metabrainz/templates/reports/financial_reports/index.html:285
 #: metabrainz/templates/reports/financial_reports/index.html:314
-msgid "January:"
+#: metabrainz/templates/reports/financial_reports/index.html:336
+#: metabrainz/templates/reports/financial_reports/index.html:358
+msgid "January"
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:57
@@ -2136,73 +2158,15 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:245
 #: metabrainz/templates/reports/financial_reports/index.html:274
 #: metabrainz/templates/reports/financial_reports/index.html:303
-msgid "December:"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:323
-#: metabrainz/templates/reports/financial_reports/index.html:345
-msgid "Monthly balance sheets"
-msgstr ""
-
 #: metabrainz/templates/reports/financial_reports/index.html:325
 #: metabrainz/templates/reports/financial_reports/index.html:347
 #: metabrainz/templates/reports/financial_reports/index.html:363
 msgid "December"
 msgstr ""
 
-#: metabrainz/templates/reports/financial_reports/index.html:326
-#: metabrainz/templates/reports/financial_reports/index.html:348
-msgid "November"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:327
-#: metabrainz/templates/reports/financial_reports/index.html:349
-msgid "October"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:328
-#: metabrainz/templates/reports/financial_reports/index.html:350
-msgid "September"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:329
-#: metabrainz/templates/reports/financial_reports/index.html:351
-msgid "August"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:330
-#: metabrainz/templates/reports/financial_reports/index.html:352
-msgid "July"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:331
-#: metabrainz/templates/reports/financial_reports/index.html:353
-msgid "June"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:332
-#: metabrainz/templates/reports/financial_reports/index.html:354
-msgid "May"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:333
-#: metabrainz/templates/reports/financial_reports/index.html:355
-msgid "April"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:334
-#: metabrainz/templates/reports/financial_reports/index.html:356
-msgid "March"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:335
-#: metabrainz/templates/reports/financial_reports/index.html:357
-msgid "February"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:336
-#: metabrainz/templates/reports/financial_reports/index.html:358
-msgid "January"
+#: metabrainz/templates/reports/financial_reports/index.html:323
+#: metabrainz/templates/reports/financial_reports/index.html:345
+msgid "Monthly balance sheets"
 msgstr ""
 
 #: metabrainz/templates/users/account-type.html:3
