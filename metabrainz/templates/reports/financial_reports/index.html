@@ -32,14 +32,21 @@
 </p>
 
 <h3>2016</h3>
+<p>{{ _('Year end reports') }}</p>
+<ul>
+    <li><a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20161231.pdf') }}">{{ _('balance sheet') }}</a></li>
+    <li><a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2016.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
+</ul>
 <p>{{ _('Quarterly reports') }}</p>
 <ul>
+    <li>Q4 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2016_Q4.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>Q3 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2016_Q3.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>Q2 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2016_Q2.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>Q1 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2016_Q1.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
 </ul>
 <p>{{ _('Monthly reports') }}</p>
 <ul>
+    <li>{{ _('December') }}: <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20161231.pdf') }}">{{ _('balance sheet') }}</a>, <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_20161231.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>{{ _('November') }}: <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20161130.pdf') }}">{{ _('balance sheet') }}</a>, <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_20161130.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>{{ _('October') }}: <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20161031.pdf') }}">{{ _('balance sheet') }}</a>, <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_20161031.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>{{ _('September') }}: <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20160930.pdf') }}">{{ _('balance sheet') }}</a>, <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_20160930.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
