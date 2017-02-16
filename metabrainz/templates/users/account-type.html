@@ -6,25 +6,24 @@
   <h1 class="page-title">{{ _('Support us') }}</h1>
 
   <p>
-    {{ _('For commercial use of our data or to get access to the
+    {{ _('If you rely on data from MetaBrainz, please remember that we rely on contributions 
+    to keep providing it. For commercial use of our data or to get access to the
     <a href="%(mb_data_feed)s">MusicBrainz Live Data Feed</a>,
     please choose between non-commercial and commercial use below. You will need a
     <a href="%(mb_register_url)s">MusicBrainz account</a> with a verified email address to sign-up.',
     mb_data_feed='https://musicbrainz.org/doc/Live_Data_Feed', mb_register_url='https://musicbrainz.org/register') }}
   </p>
   <p>
-    {{ _('<strong>Open source developers and non-profits</strong>: Please sign up as a
-    commercial user using the free non-profit tier below. This allows us to give you credit
-    for your open source project or your non-profit.') }}
-  </p>
+ 
 
   <h3>{{ _('Non-commercial / Personal') }}</h3>
 
   <p>
     {{ _('Non-commercial includes personal use and university course assignment use of our data. 
-    However, if you are using our data as part of an official university or research project, 
-    please sign up on our non-profit tier. If you are a pre-revenue start-up and expect to have 
-    revenue in the future, please sign up with a commercial account &mdash; see below for more details. Please
+    If you are an open source developer, non-profit or are using our data as part of an official 
+    university or research project, please sign up as a commercial user using the non-profit tier below.
+    If you are a pre-revenue start-up and expect to have revenue in the future, please sign up with a 
+    commercial account &mdash; see below for more details. Please
     <a href="%(donate_url)s">consider making a donation</a> to support
     our efforts!', donate_url=url_for('payments.donate')) }}
   </p>
@@ -42,7 +41,9 @@
     with companies that are just getting started and we\'re happy for your support for MetaBrainz to grow as
     you grow. If you would like to use our data, but are not ready to state this publicly
     yet, please sign up for the <em>Stealth start-up</em> tier; we will keep your
-    data-usage confidential and contact you to discuss your future plans.') }}
+    data-usage confidential and contact you to discuss your future plans. If you are an established company, 
+    please choose a tier that appropriately fits the size and revenue of your company to properly support
+    our non-profit foundation.') }}
   </p>
 
   {% if tiers %}
