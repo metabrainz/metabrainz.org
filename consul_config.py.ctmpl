@@ -59,8 +59,8 @@ LOG_SENTRY = {
 RECAPTCHA_PUBLIC_KEY = '''{{template "KEY" "recaptcha/public_key"}}'''
 RECAPTCHA_PRIVATE_KEY = '''{{template "KEY" "recaptcha/private_key"}}'''
 
-{{if service "metabrainz-mail"}}
-{{with index (service "metabrainz-mail") 0}}
+{{if service "metabrainz-org.exim-relay"}}
+{{with index (service "metabrainz-org.exim-relay") 0}}
 SMTP_SERVER = '''{{.Address}}'''
 SMTP_PORT = {{.Port}}
 {{end}}
