@@ -27,7 +27,7 @@
             <div class="user {{ 'bad-standing' if not user.good_standing }}">
               {% if not user.good_standing %}
                 <a href="{{ url_for('users.bad_standing') }}"
-                   title="{{ _('This user has bad standing') }}">
+                   title="{{ _('This supporter is behind on their payments.') }}">
               {% elif user.website_url %}
                 <a href="{{ user.website_url }}">
               {% endif %}
