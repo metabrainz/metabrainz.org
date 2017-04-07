@@ -19,12 +19,6 @@ PG_PORT = "5432"
 
 PAYMENT_PRODUCTION = False  # set to False to use testing environments for donations
 
-# WePay
-# https://www.wepay.com/developer/reference/account-id
-WEPAY_ACCOUNT_ID = ""
-# https://www.wepay.com/developer/reference/access-tokens
-WEPAY_ACCESS_TOKEN = ""
-
 # PayPal
 PAYPAL_PRIMARY_EMAIL = "paypal@example.org"
 PAYPAL_BUSINESS = "payment@example.org"
