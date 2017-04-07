@@ -93,9 +93,6 @@
             <button id="btn-paypal" type="button" class="btn">
               <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
             </button>
-            <button id="btn-wepay" type="button" class="btn">
-              <img src="{{ url_for('static', filename='img/payments/wepay.png') }}" />
-            </button>
           </div>
         </div>
 
@@ -158,8 +155,7 @@
 
       var buttons = {
         stripe: $('#btn-stripe'),
-        paypal: $('#btn-paypal'),
-        wepay: $('#btn-wepay')
+        paypal: $('#btn-paypal')
       };
 
       function setButtonsState(enabled) {
@@ -336,14 +332,6 @@
         $("#can-contact-flag").attr('name', 'os1');
         $("#anonymous-flag").attr('value', 'yes'); {# Boolean values are compared to 'yes' in IPN processor. #}
 
-        form.submit();
-        return false;
-      });
-
-      // WePay
-      buttons.wepay.on('click', function(e) {
-        setButtonsState(false);
-        form.attr("action", "{{ url_for('payments_wepay.pay', is_donation=True) }}");
         form.submit();
         return false;
       });

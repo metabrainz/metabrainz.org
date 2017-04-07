@@ -69,9 +69,6 @@
             <button id="btn-paypal" type="button" class="btn">
               <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
             </button>
-            <button id="btn-wepay" type="button" class="btn">
-              <img src="{{ url_for('static', filename='img/payments/wepay.png') }}" />
-            </button>
           </div>
         </div>
 
@@ -130,8 +127,7 @@
 
       var buttons = {
         stripe: $('#btn-stripe'),
-        paypal: $('#btn-paypal'),
-        wepay: $('#btn-wepay')
+        paypal: $('#btn-paypal')
       };
 
       function setButtonsState(enabled) {
@@ -258,14 +254,6 @@
         $('<input>').attr({type: 'hidden', name: 'on3', value: 'invoice_number'}).appendTo(form);
         $("#input-invoice-number").attr('name', 'os3');
 
-        form.submit();
-        return false;
-      });
-
-      // WePay
-      buttons.wepay.on('click', function(e) {
-        setButtonsState(false);
-        form.attr("action", "{{ url_for('payments_wepay.pay', is_donation=False) }}");
         form.submit();
         return false;
       });

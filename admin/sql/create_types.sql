@@ -1,7 +1,7 @@
 CREATE TYPE payment_method_types AS ENUM (
   'stripe',
   'paypal',
-  'wepay',
+  'wepay', -- legacy
   'bitcoin',
   'check'
 );
