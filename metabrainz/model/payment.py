@@ -12,7 +12,7 @@ import logging
 
 PAYMENT_METHOD_STRIPE = 'stripe'
 PAYMENT_METHOD_PAYPAL = 'paypal'
-PAYMENT_METHOD_WEPAY = 'wepay'
+PAYMENT_METHOD_WEPAY = 'wepay'  # no longer supported
 PAYMENT_METHOD_CHECK = 'check'
 
 
