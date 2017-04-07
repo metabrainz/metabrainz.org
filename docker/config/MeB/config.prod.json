@@ -16,10 +16,6 @@
   },
   "payments": {
     "production": "False",
-    "wepay": {
-      "account_id": "",
-      "account_token": ""
-    },
     "paypal": {
       "primary_email": "paypal@example.org",
       "business_email": "payment@example.org"

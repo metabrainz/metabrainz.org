@@ -31,9 +31,6 @@ REDIS = {
 # PAYMENTS
 PAYMENT_PRODUCTION = {{template "KEY_OR_NONE" "payments/production"}}  # Must be `True` or `False`
 
-WEPAY_ACCOUNT_ID = '''{{template "KEY" "payments/wepay/account_id"}}'''
-WEPAY_ACCESS_TOKEN = '''{{template "KEY" "payments/wepay/account_token"}}'''
-
 PAYPAL_PRIMARY_EMAIL = '''{{template "KEY" "payments/paypal/primary_email"}}'''
 PAYPAL_BUSINESS = '''{{template "KEY" "payments/paypal/business_email"}}'''
 
