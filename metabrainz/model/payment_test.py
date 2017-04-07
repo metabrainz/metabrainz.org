@@ -166,30 +166,6 @@ class PaymentModelTestCase(FlaskTestCase):
         # There should still be one recorded donation
         self.assertEqual(len(Payment.query.all()), 1)
 
-    def test_verify_and_log_wepay_checkout_donation(self):
-        checkout_id = 12345
-        self.assertTrue(Payment.verify_and_log_wepay_checkout(
-            checkout_id=12345,
-            is_donation=True,
-            editor='Tester',
-            anonymous=False,
-            can_contact=True,
-        ))
-
-        # Donation should be in the DB now
-        self.assertEqual(Payment.query.all()[0].transaction_id, str(checkout_id))
-
-    def test_verify_and_log_wepay_checkout_payment(self):
-        checkout_id = 12345
-        self.assertTrue(Payment.verify_and_log_wepay_checkout(
-            checkout_id=12345,
-            is_donation=False,
-            invoice_number=42,
-        ))
-
-        # Donation should be in the DB now
-        self.assertEqual(Payment.query.all()[0].transaction_id, str(checkout_id))
-
     def test_log_stripe_charge_donation(self):
         # Function should execute without any exceptions
         charge = convert_to_stripe_object(
