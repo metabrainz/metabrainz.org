@@ -32,7 +32,7 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
             'last_name': u'Testing',
             'custom': u'tester',  # MusicBrainz username
             'payer_email': u'test@example.org',
-            'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
+            'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
             'business': u'donations@metabrainz.org',
             'address_street': u'1 Главная улица',
             'address_city': u'Сан Хозе',
@@ -70,7 +70,7 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
             'last_name': u'Testing',
             'custom': u'tester',  # MusicBrainz username
             'payer_email': u'test@example.org',
-            'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
+            'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
             'business': u'donations@metabrainz.org',
             'address_street': u'1 Главная улица',
             'address_city': u'Сан Хозе',
@@ -106,7 +106,7 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
             'last_name': u'Testing',
             'custom': u'tester',  # MusicBrainz username
             'payer_email': u'test@example.org',
-            'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
+            'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
             'business': u'donations@metabrainz.org',
             'address_street': u'1 Главная улица',
             'address_city': u'Сан Хозе',
@@ -142,7 +142,7 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
             'last_name': u'Testing',
             'custom': u'tester',  # MusicBrainz username
             'payer_email': u'test@example.org',
-            'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
+            'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
             'business': u'donations@metabrainz.org',
             'mc_gross': u'42.50',
             'mc_fee': u'1',

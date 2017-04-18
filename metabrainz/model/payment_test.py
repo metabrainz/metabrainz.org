@@ -76,7 +76,7 @@ class PaymentModelTestCase(FlaskTestCase):
             'last_name': u'Testing',
             'custom': u'tester',  # MusicBrainz username
             'payer_email': u'test@example.org',
-            'receiver_email': current_app.config['PAYPAL_PRIMARY_EMAIL'],
+            'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
             'business': u'donations@metabrainz.org',
             'address_street': u'1 Main St',
             'address_city': u'San Jose',

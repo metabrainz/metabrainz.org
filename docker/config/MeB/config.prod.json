@@ -17,7 +17,10 @@
   "payments": {
     "production": "False",
     "paypal": {
-      "primary_email": "paypal@example.org",
+      "account_ids": {
+        "usd": "paypal-usd@example.org",
+        "eur": "paypal-eur@example.org"
+      },
       "business_email": "payment@example.org"
     },
     "stripe": {
