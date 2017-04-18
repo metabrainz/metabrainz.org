@@ -38,9 +38,17 @@
         <div class="form-group">
           <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">{{ _('Amount') }}</label>
           <div class="col-sm-4">
-            <div id="input-amount-fg" class="input-group">
-              <span class="input-group-addon">$</span>
-              {{ form.amount(id="input-amount", class="form-control", value="50.00") | safe }}</div>
+            <div id="input-amount-fg">
+              {{ form.amount(id="input-amount", class="form-control", value="50.00") | safe }}
+              <div id="currency-selector" class="btn-group" data-toggle="buttons">
+                {% for subfield in form.currency %}
+                  <label class="btn btn-primary {{ 'active' if subfield.checked }}">
+                    {{ subfield }}
+                    {{ subfield.label.text }}
+                  </label>
+                {% endfor %}
+              </div>
+            </div>
           </div>
           <div id="big-amount-info" class="col-sm-offset-3 col-sm-6" style="display:none">
             {{ _('If you would like to make a large donation, please contact us at
@@ -148,6 +156,17 @@
 
       var form = $("#payment-form");
 
+      var CURRENCY = {
+        // These must match form definitions.
+        US_Dollar: {
+          code: "USD",
+          paypal_id: '{{ config['PAYPAL_ACCOUNT_IDS']['USD'] }}'
+        },
+        Euro: {
+          code: "EUR",
+          paypal_id: '{{ config['PAYPAL_ACCOUNT_IDS']['EUR'] }}'
+        }
+      };
 
       //////////////////
       // PAYMENT BUTTONS
@@ -163,12 +182,25 @@
           $.each(buttons, function( index, button ) {
             button.removeAttr('disabled');
           });
-          updateRecurringState();
+          updateButtonState();
 
         } else { // Disabled
           $.each(buttons, function( index, button ) {
             button.attr('disabled', 'disabled');
           });
+        }
+      }
+
+      function updateButtonState() {
+        // This function disables or enables payment buttons depending on what
+        // features they support.
+
+        // We don't support recurring payments via Stripe. Payments in EUR are
+        // also not supported currently.
+        if ($('#recurring-flag').is(":checked") || selectedCurrency === CURRENCY.Euro) {
+          buttons.stripe.attr('disabled', 'disabled');
+        } else {
+          buttons.stripe.removeAttr('disabled');
         }
       }
 
@@ -190,6 +222,27 @@
         }
       });
 
+      /////////////////
+      // CURRENCY INPUT
+      /////////////////
+      var selectedCurrency = CURRENCY.US_Dollar;
+      $('input:radio[name=currency]').change(function() {
+        if (this.value === CURRENCY.US_Dollar.code) {
+          selectedCurrency = CURRENCY.US_Dollar;
+        } else if (this.value === CURRENCY.Euro.code) {
+          selectedCurrency = CURRENCY.Euro;
+        } else {
+          console.error("Unknown currency:", this.value)
+        }
+        updateButtonState();
+      });
+
+      /////////////
+      // RECURRENCE
+      /////////////
+      $('#recurring-flag').change(function() {
+        updateButtonState();
+      });
 
       ///////////////
       // EDITOR INPUT
@@ -240,20 +293,6 @@
       // PAYMENTS
       ///////////
 
-      function updateRecurringState() {
-        // We don't support recurring donations via Stripe
-        if ($('#recurring-flag').is(":checked")) {
-          buttons.stripe.attr('disabled', 'disabled');
-        } else {
-          buttons.stripe.removeAttr('disabled');
-        }
-      }
-
-      $('#recurring-flag').change(function() {
-        updateRecurringState();
-      });
-
-
       // Stripe
       var stripeHandler = StripeCheckout.configure({
         key: "{{ stripe_public_key }}",
@@ -292,12 +331,12 @@
 
         {# Info about variables can be found at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/ #}
 
-        $('<input>').attr({type: 'hidden', name: 'business', value: '{{ config.PAYPAL_PRIMARY_EMAIL }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'business', value: selectedCurrency.paypal_id}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('payments.complete', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('payments.cancelled', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('payments_paypal.ipn', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'currency_code', value: 'USD'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'currency_code', value: selectedCurrency.code}).appendTo(form);
 
         if ($('#recurring-flag').is(":checked")) { // Recurring donations
           $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick-subscriptions'}).appendTo(form);

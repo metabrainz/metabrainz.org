@@ -31,7 +31,10 @@ REDIS = {
 # PAYMENTS
 PAYMENT_PRODUCTION = {{template "KEY_OR_NONE" "payments/production"}}  # Must be `True` or `False`
 
-PAYPAL_PRIMARY_EMAIL = '''{{template "KEY" "payments/paypal/primary_email"}}'''
+PAYPAL_ACCOUNT_IDS = {
+    "USD": '''{{template "KEY" "payments/paypal/account_ids/usd"}}''',
+    "EUR": '''{{template "KEY" "payments/paypal/account_ids/eur"}}''',
+}
 PAYPAL_BUSINESS = '''{{template "KEY" "payments/paypal/business_email"}}'''
 
 STRIPE_KEYS = {
