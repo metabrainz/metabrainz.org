@@ -20,7 +20,10 @@ REPLICATION_PACKETS_DIR = "/data/replication_packets"
 
 PAYMENT_PRODUCTION = False
 
-PAYPAL_PRIMARY_EMAIL = ""
+PAYPAL_ACCOUNT_IDS = {
+    "USD": "",
+    "EUR": "",
+}
 PAYPAL_BUSINESS = ""
 
 STRIPE_KEYS = {
