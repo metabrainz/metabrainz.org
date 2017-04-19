@@ -60,5 +60,6 @@ class FlaskTestCase(TestCase):
     def drop_types(self):
         with db.engine.connect() as connection:
             connection.execute('DROP TYPE IF EXISTS payment_method_types CASCADE;')
+            connection.execute('DROP TYPE IF EXISTS payment_currency CASCADE;')
             connection.execute('DROP TYPE IF EXISTS state_types CASCADE;')
             connection.execute('DROP TYPE IF EXISTS token_log_action_types CASCADE;')
