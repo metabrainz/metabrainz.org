@@ -37,10 +37,8 @@ with ``localhost``.
 
 #### Payments
 
-Next is the configuration of the payment systems. We use PayPal and WePay to accept
-donations to our foundation. For WePay you need to set your access token
-(*WEPAY_ACCESS_TOKEN*) and account ID (*WEPAY_ACCESS_TOKEN*). PayPal is a
-bit more complicated. *PAYPAL_ACCOUNT_IDS* dictionary contains PayPal IDs or
+Next is the configuration of the payment systems. We use PayPal and Stripe to accept
+payments to our foundation. *PAYPAL_ACCOUNT_IDS* dictionary contains PayPal IDs or
 email addresses of accounts for each supported currency. *PAYPAL_BUSINESS* is
 an address for non-donations; all payments sent there will be ignored.
 
