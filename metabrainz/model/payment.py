@@ -1,5 +1,6 @@
 from __future__ import division
 from metabrainz.model import db
+from metabrainz.payments import Currency
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
 from sqlalchemy.sql import func, desc
@@ -13,6 +14,10 @@ PAYMENT_METHOD_STRIPE = 'stripe'
 PAYMENT_METHOD_PAYPAL = 'paypal'
 PAYMENT_METHOD_WEPAY = 'wepay'  # no longer supported
 PAYMENT_METHOD_CHECK = 'check'
+
+
+# These are defined in the `payment_currency` database type.
+SUPPORTED_CURRENCIES = [code.value.lower() for code in Currency.__members__.values()]
 
 
 class Payment(db.Model):
@@ -51,6 +56,7 @@ class Payment(db.Model):
     transaction_id = db.Column(db.Unicode)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.Numeric(11, 2))
+    currency = db.Column(db.Enum(SUPPORTED_CURRENCIES, name='payment_currency'), nullable=False)
     memo = db.Column(db.Unicode)
 
     def __str__(self):
