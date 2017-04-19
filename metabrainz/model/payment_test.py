@@ -2,8 +2,10 @@ from metabrainz.testing import FlaskTestCase
 from metabrainz.model import payment
 from metabrainz.model.payment import Payment
 from metabrainz.model import db
+from metabrainz.payments import Currency
 from stripe import convert_to_stripe_object
 from flask import current_app
+import copy
 
 
 class FakeStripeBalanceTransaction(object):
@@ -48,84 +50,114 @@ class FakeStripeBalanceTransaction(object):
 class PaymentModelGeneralTestCase(FlaskTestCase):
     """General tests for the Payment model."""
 
-    def setUp(self):
-        super(PaymentModelGeneralTestCase, self).setUp()
-        payment.stripe.BalanceTransaction = FakeStripeBalanceTransaction
-
     def test_get_by_transaction_id(self):
         new = Payment()
         new.is_donation = True
-        new.first_name = 'Tester'
-        new.last_name = 'Testing'
-        new.email = 'test@example.org'
-        new.transaction_id = 'TEST'
+        new.first_name = "Tester"
+        new.last_name = "Testing"
+        new.email = "test@example.org"
+        new.transaction_id = "TEST"
         new.amount = 42.50
+        new.currency = "eur"
         db.session.add(new)
         db.session.commit()
 
-        result = Payment.get_by_transaction_id('TEST')
+        result = Payment.get_by_transaction_id("TEST")
         self.assertIsNotNone(result)
 
-        bad_result = Payment.get_by_transaction_id('MISSING')
+        bad_result = Payment.get_by_transaction_id("MISSING")
         self.assertIsNone(bad_result)
 
 
 class PaymentModelPayPalTestCase(FlaskTestCase):
     """PayPal-specific tests."""
 
-    def test_process_paypal_ipn(self):
-        # This is not a complete list:
-        good_form = {
-            'first_name': 'Tester',
-            'last_name': 'Testing',
-            'custom': 'tester',  # MusicBrainz username
-            'payer_email': 'test@example.org',
-            'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
-            'business': 'donations@metabrainz.org',
-            'address_street': '1 Main St',
-            'address_city': 'San Jose',
-            'address_state': 'CA',
-            'address_country': 'United States',
-            'address_zip': '95131',
-            'mc_gross': '42.50',
-            'mc_fee': '1',
-            'txn_id': 'TEST1',
-            'payment_status': 'Completed',
+    def setUp(self):
+        super(PaymentModelPayPalTestCase, self).setUp()
+        self.base_form = {
+            # This is not a complete set of values:
+            "first_name": "Tester",
+            "last_name": "Testing",
+            "custom": "tester",  # MusicBrainz username
+            "payer_email": "test@example.org",
+            "receiver_email": current_app.config["PAYPAL_ACCOUNT_IDS"]["USD"],
+            "business": "donations@metabrainz.org",
+            "address_street": "1 Main St",
+            "address_city": "San Jose",
+            "address_state": "CA",
+            "address_country": "United States",
+            "address_zip": "95131",
+            "mc_currency": "USD",
+            "mc_gross": "42.50",
+            "mc_fee": "1",
+            "txn_id": "TEST1",
+            "payment_status": "Completed",
 
             # Additional variables:
-            'option_name1': 'anonymous',
-            'option_selection1': 'yes',
-            'option_name2': 'contact',
-            'option_selection2': 'yes',
+            "option_name1": "anonymous",
+            "option_selection1": "yes",
+            "option_name2": "contact",
+            "option_selection2": "yes",
         }
-        Payment.process_paypal_ipn(good_form)
-        # Donation should be in the DB now
-        self.assertEqual(len(Payment.query.all()), 1)
-        self.assertEqual(Payment.query.all()[0].transaction_id, 'TEST1')
 
-        relatively_bad_form = good_form
-        relatively_bad_form['txn_id'] = 'TEST2'
-        relatively_bad_form['mc_gross'] = '0.49'
+    def test_process_paypal_ipn(self):
+        Payment.process_paypal_ipn(self.base_form)
+        # Donation should be in the DB now
+        payments = Payment.query.all()
+        self.assertEqual(len(payments), 1)
+        self.assertEqual(payments[0].transaction_id, "TEST1")
+
+        relatively_bad_form = copy.deepcopy(self.base_form)
+        relatively_bad_form["txn_id"] = "TEST2"
+        relatively_bad_form["mc_gross"] = "0.49"
         Payment.process_paypal_ipn(relatively_bad_form)
         # There should still be one recorded donation
         self.assertEqual(len(Payment.query.all()), 1)
 
-        bad_form = good_form
-        relatively_bad_form['txn_id'] = 'TEST3'
-        bad_form['business'] = current_app.config['PAYPAL_BUSINESS']
+        bad_form = copy.deepcopy(self.base_form)
+        relatively_bad_form["txn_id"] = "TEST3"
+        bad_form["business"] = current_app.config["PAYPAL_BUSINESS"]
         Payment.process_paypal_ipn(bad_form)
         # There should still be one recorded donation
         self.assertEqual(len(Payment.query.all()), 1)
 
-        super_bad_form = good_form
-        relatively_bad_form['txn_id'] = 'TEST4'
-        super_bad_form['payment_status'] = 'Refunded'  # What kind of monster would do that?!
+        super_bad_form = copy.deepcopy(self.base_form)
+        relatively_bad_form["txn_id"] = "TEST4"
+        super_bad_form["payment_status"] = "Refunded"  # What kind of monster would do that?!
         Payment.process_paypal_ipn(super_bad_form)
         # There should still be one recorded donation
         self.assertEqual(len(Payment.query.all()), 1)
 
+    def test_currency_case(self):
+        """Try with different letter cases in the currency value."""
+        form = copy.deepcopy(self.base_form)
+        form["mc_currency"] = "UsD"
+        Payment.process_paypal_ipn(form)
+        payments = Payment.query.all()
+        self.assertEqual(payments[0].currency, Currency.US_Dollar.value)
+
+    def test_currency_euro(self):
+        form = copy.deepcopy(self.base_form)
+        form["mc_currency"] = "eur"
+        Payment.process_paypal_ipn(form)
+        payments = Payment.query.all()
+        self.assertEqual(payments[0].currency, Currency.Euro.value)
+
+    def test_unknown_currency(self):
+        form = copy.deepcopy(self.base_form)
+        form["mc_currency"] = "rub"
+        Payment.process_paypal_ipn(form)
+        payments = Payment.query.all()
+        # Should ignore this payment notification
+        self.assertEqual(len(payments), 0)
+
 
 class PaymentModelStripeTestCase(FlaskTestCase):
+    """Stripe-specific tests."""
+
+    def setUp(self):
+        super(PaymentModelStripeTestCase, self).setUp()
+        payment.stripe.BalanceTransaction = FakeStripeBalanceTransaction
 
     def test_log_stripe_charge_donation(self):
         # Function should execute without any exceptions
