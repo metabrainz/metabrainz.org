@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model import payment
 from metabrainz.model.payment import Payment
@@ -12,32 +11,32 @@ class FakeStripeBalanceTransaction(object):
     def retrieve(cls, bt_id):
         return convert_to_stripe_object(
             {
-                "id": u"txn_161MS22eZvKYlo2CD20DfbfM",
-                "object": u"balance_transaction",
+                "id": "txn_161MS22eZvKYlo2CD20DfbfM",
+                "object": "balance_transaction",
                 "amount": 4995,
-                "currency": u"usd",
+                "currency": "usd",
                 "net": 4820,
-                "type": u"charge",
+                "type": "charge",
                 "created": 1431372030,
                 "available_on": 1431907200,
-                "status": u"pending",
+                "status": "pending",
                 "fee": 175,
                 "fee_details": [
                     {
                         "amount": 175,
-                        "currency": u"usd",
-                        "type": u"stripe_fee",
-                        "description": u"Stripe processing fees",
+                        "currency": "usd",
+                        "type": "stripe_fee",
+                        "description": "Stripe processing fees",
                         "application": None
                     }
                 ],
-                "source": u"ch_161MS22eZvKYlo2CcuXkbZS8",
-                "description": u"Donation to MetaBrainz Foundation",
+                "source": "ch_161MS22eZvKYlo2CcuXkbZS8",
+                "description": "Donation to MetaBrainz Foundation",
                 "sourced_transfers": {
                     "object": "list",
                     "total_count": 0,
                     "has_more": None,
-                    "url": u"/v1/transfers?source_transaction=ch_161MS22eZvKYlo2CcuXkbZS8",
+                    "url": "/v1/transfers?source_transaction=ch_161MS22eZvKYlo2CcuXkbZS8",
                     "data": []
                 }
             },
@@ -55,44 +54,44 @@ class PaymentModelTestCase(FlaskTestCase):
     def test_get_by_transaction_id(self):
         new = Payment()
         new.is_donation = True
-        new.first_name = u'Tester'
-        new.last_name = u'Testing'
-        new.email = u'test@example.org'
-        new.transaction_id = u'TEST'
+        new.first_name = 'Tester'
+        new.last_name = 'Testing'
+        new.email = 'test@example.org'
+        new.transaction_id = 'TEST'
         new.amount = 42.50
         db.session.add(new)
         db.session.commit()
 
-        result = Payment.get_by_transaction_id(u'TEST')
+        result = Payment.get_by_transaction_id('TEST')
         self.assertIsNotNone(result)
 
-        bad_result = Payment.get_by_transaction_id(u'MISSING')
+        bad_result = Payment.get_by_transaction_id('MISSING')
         self.assertIsNone(bad_result)
 
     def test_process_paypal_ipn(self):
         # This is not a complete list:
         good_form = {
-            'first_name': u'Tester',
-            'last_name': u'Testing',
-            'custom': u'tester',  # MusicBrainz username
-            'payer_email': u'test@example.org',
+            'first_name': 'Tester',
+            'last_name': 'Testing',
+            'custom': 'tester',  # MusicBrainz username
+            'payer_email': 'test@example.org',
             'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
-            'business': u'donations@metabrainz.org',
-            'address_street': u'1 Main St',
-            'address_city': u'San Jose',
-            'address_state': u'CA',
-            'address_country': u'United States',
-            'address_zip': u'95131',
-            'mc_gross': u'42.50',
-            'mc_fee': u'1',
-            'txn_id': u'TEST1',
-            'payment_status': u'Completed',
+            'business': 'donations@metabrainz.org',
+            'address_street': '1 Main St',
+            'address_city': 'San Jose',
+            'address_state': 'CA',
+            'address_country': 'United States',
+            'address_zip': '95131',
+            'mc_gross': '42.50',
+            'mc_fee': '1',
+            'txn_id': 'TEST1',
+            'payment_status': 'Completed',
 
             # Additional variables:
-            'option_name1': u'anonymous',
-            'option_selection1': u'yes',
-            'option_name2': u'contact',
-            'option_selection2': u'yes',
+            'option_name1': 'anonymous',
+            'option_selection1': 'yes',
+            'option_name2': 'contact',
+            'option_selection2': 'yes',
         }
         Payment.process_paypal_ipn(good_form)
         # Donation should be in the DB now
@@ -124,53 +123,53 @@ class PaymentModelTestCase(FlaskTestCase):
         # Function should execute without any exceptions
         charge = convert_to_stripe_object(
             {
-                "id": u"ch_15AjX1F21qH57QtHT6avvqrM",
-                "object": u"charge",
+                "id": "ch_15AjX1F21qH57QtHT6avvqrM",
+                "object": "charge",
                 "created": 1418829367,
                 "livemode": False,
                 "paid": True,
-                "status": u"succeeded",
+                "status": "succeeded",
                 "amount": 99999900,
-                "currency": u"usd",
+                "currency": "usd",
                 "refunded": False,
                 "source": {
-                    "id": u"card_15AjWxF21qH57QtHHVNgaHOP",
-                    "object": u"card",
-                    "last4": u"4242",
-                    "brand": u"Visa",
-                    "funding": u"credit",
+                    "id": "card_15AjWxF21qH57QtHHVNgaHOP",
+                    "object": "card",
+                    "last4": "4242",
+                    "brand": "Visa",
+                    "funding": "credit",
                     "exp_month": 11,
                     "exp_year": 2016,
-                    "country": u"US",
-                    "name": u"Uh Oh",
-                    "address_line1": u"test 12",
+                    "country": "US",
+                    "name": "Uh Oh",
+                    "address_line1": "test 12",
                     "address_line2": None,
-                    "address_city": u"Schenectady",
-                    "address_state": u"NY",
-                    "address_zip": u"12345",
-                    "address_country": u"United States",
-                    "cvc_check": u"pass",
-                    "address_line1_check": u"pass",
-                    "address_zip_check": u"pass",
+                    "address_city": "Schenectady",
+                    "address_state": "NY",
+                    "address_zip": "12345",
+                    "address_country": "United States",
+                    "cvc_check": "pass",
+                    "address_line1_check": "pass",
+                    "address_zip_check": "pass",
                     "dynamic_last4": None,
                     "metadata": {},
                     "customer": None
                 },
                 "captured": True,
-                "balance_transaction": u"txn_159qthF21qH57QtHBksXX3tN",
+                "balance_transaction": "txn_159qthF21qH57QtHBksXX3tN",
                 "failure_message": None,
                 "failure_code": None,
                 "amount_refunded": 0,
                 "customer": None,
                 "invoice": None,
-                "description": u"Donation to MetaBrainz Foundation",
+                "description": "Donation to MetaBrainz Foundation",
                 "dispute": None,
                 "metadata": {
                     "is_donation": True,
-                    "anonymous": u"True",  # passed as a string
-                    "can_contact": u"False",  # passed as a string
-                    "email": u"mail@example.com",
-                    "editor": u"null"
+                    "anonymous": "True",  # passed as a string
+                    "can_contact": "False",  # passed as a string
+                    "email": "mail@example.com",
+                    "editor": "null"
                 },
                 "statement_descriptor": None,
                 "fraud_details": {},
@@ -195,50 +194,50 @@ class PaymentModelTestCase(FlaskTestCase):
         # Function should execute without any exceptions
         charge = convert_to_stripe_object(
             {
-                "id": u"ch_15AjX1F21qH57QtHT6avvqrM",
-                "object": u"charge",
+                "id": "ch_15AjX1F21qH57QtHT6avvqrM",
+                "object": "charge",
                 "created": 1418829367,
                 "livemode": False,
                 "paid": True,
-                "status": u"succeeded",
+                "status": "succeeded",
                 "amount": 99999900,
-                "currency": u"usd",
+                "currency": "usd",
                 "refunded": False,
                 "source": {
-                    "id": u"card_15AjWxF21qH57QtHHVNgaHOP",
-                    "object": u"card",
-                    "last4": u"4242",
-                    "brand": u"Visa",
-                    "funding": u"credit",
+                    "id": "card_15AjWxF21qH57QtHHVNgaHOP",
+                    "object": "card",
+                    "last4": "4242",
+                    "brand": "Visa",
+                    "funding": "credit",
                     "exp_month": 11,
                     "exp_year": 2016,
-                    "country": u"US",
-                    "name": u"Uh Oh",
-                    "address_line1": u"test 12",
+                    "country": "US",
+                    "name": "Uh Oh",
+                    "address_line1": "test 12",
                     "address_line2": None,
-                    "address_city": u"Schenectady",
-                    "address_state": u"NY",
-                    "address_zip": u"12345",
-                    "address_country": u"United States",
-                    "cvc_check": u"pass",
-                    "address_line1_check": u"pass",
-                    "address_zip_check": u"pass",
+                    "address_city": "Schenectady",
+                    "address_state": "NY",
+                    "address_zip": "12345",
+                    "address_country": "United States",
+                    "cvc_check": "pass",
+                    "address_line1_check": "pass",
+                    "address_zip_check": "pass",
                     "dynamic_last4": None,
                     "metadata": {},
                     "customer": None
                 },
                 "captured": True,
-                "balance_transaction": u"txn_159qthF21qH57QtHBksXX3tN",
+                "balance_transaction": "txn_159qthF21qH57QtHBksXX3tN",
                 "failure_message": None,
                 "failure_code": None,
                 "amount_refunded": 0,
                 "customer": None,
                 "invoice": None,
-                "description": u"Donation to MetaBrainz Foundation",
+                "description": "Donation to MetaBrainz Foundation",
                 "dispute": None,
                 "metadata": {
                     "is_donation": False,
-                    "email": u"mail@example.com",
+                    "email": "mail@example.com",
                     "invoice_number": 42,
                 },
                 "statement_descriptor": None,
