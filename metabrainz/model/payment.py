@@ -168,14 +168,29 @@ class Payment(db.Model):
             logging.info('PayPal: Payment not completed. Status: "%s".', form['payment_status'])
             return
 
+        account_ids = current_app.config['PAYPAL_ACCOUNT_IDS']  # "currency => account" mapping
+
+        if form['mc_currency'].lower() not in SUPPORTED_CURRENCIES:
+            logging.warning("Unsupported currency: ", form['mc_currency'])
+            return
+
+        # Checking if payment was sent to the right account depending on the currency
+        if form['mc_currency'].upper() in account_ids:
+            receiver_email_expected = current_app.config['PAYPAL_ACCOUNT_IDS'][form['mc_currency'].upper()]
+            if receiver_email_expected != form['receiver_email']:
+                logging.warning("Received {currency} payment to {addr} (expected {expected_addr})".format(
+                                currency=form['mc_currency'],
+                                addr=form['receiver_email'],
+                                expected_addr=receiver_email_expected))
+
         # We shouldn't process transactions to address for payments
         # TODO: Clarify what this address is
         if form['business'] == current_app.config['PAYPAL_BUSINESS']:
-            logging.info('PayPal: Recieved payment to address for payments.')
+            logging.info('PayPal: Received payment to address for payments.')
             return
 
-        if form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
-            logging.warning('PayPal: Not primary email. Got "%s".', form['receiver_email'])
+        if form['receiver_email'] not in account_ids.values():
+            logging.warning('PayPal: Unexpected receiver email. Got "%s".', form['receiver_email'])
             return
         if float(form['mc_gross']) < 0.50:
             # Tiny donation
@@ -208,6 +223,7 @@ class Payment(db.Model):
             amount=float(form['mc_gross']) - float(form['mc_fee']),
             fee=float(form['mc_fee']),
             transaction_id=form['txn_id'],
+            currency=form['mc_currency'].lower(),
             payment_method=PAYMENT_METHOD_PAYPAL,
         )
 
@@ -253,11 +269,16 @@ class Payment(db.Model):
 
         bt = stripe.BalanceTransaction.retrieve(charge.balance_transaction)
 
+        if bt.currency.lower() not in SUPPORTED_CURRENCIES:
+            logging.warning("Unsupported currency: ", bt.currency)
+            return
+
         new_donation = cls(
             first_name=charge.source.name,
             last_name='',
             amount=bt.net / 100,  # cents should be converted
             fee=bt.fee / 100,  # cents should be converted
+            currency=bt.currency.lower(),
             transaction_id=charge.id,
             payment_method=PAYMENT_METHOD_STRIPE,
 
