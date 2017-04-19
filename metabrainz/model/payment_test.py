@@ -4,51 +4,7 @@ from metabrainz.model import payment
 from metabrainz.model.payment import Payment
 from metabrainz.model import db
 from stripe import convert_to_stripe_object
-from flask import url_for, current_app
-
-
-class FakeWePay(object):
-
-    def __init__(self, production=True, access_token=None, api_version=None):
-        self.production = production
-        self.access_token = access_token
-        self.api_version = api_version
-
-    def call(self, uri, params=None, token=None):
-        if uri == '/checkout':
-            return {
-                'checkout_id': params['checkout_id'],
-                'account_id': 54321,
-                'state': u'captured',
-                'soft_descriptor': u'MetaBrainz Donation',
-                'short_description': u'Donation to MetaBrainz Foundation',
-                'currency': u'USD',
-                'amount': 100,
-                'fee': 3.2,
-                'gross': 108.2,
-                'app_fee': 5,
-                'shipping_fee': 5,
-                'fee_payer': u'payer',
-                'reference_id': u'abc123',
-                'redirect_uri': url_for(
-                    'payments.complete',
-                    _external=True,
-                    _scheme=current_app.config['PREFERRED_URL_SCHEME'],
-                ),
-                'callback_uri': url_for(
-                    'payments_wepay.ipn',
-                    _scheme=current_app.config['PREFERRED_URL_SCHEME'],
-                    _external=True,
-                    editor=u'Tester',
-                    anonymous=False,
-                    can_contact=True,
-                ),
-                'payer_email': u'test@example.org',
-                'payer_name': u'Tester Testing',
-                'auto_capture': True,
-            }
-        else:
-            raise NotImplementedError()
+from flask import current_app
 
 
 class FakeStripeBalanceTransaction(object):
@@ -94,8 +50,6 @@ class PaymentModelTestCase(FlaskTestCase):
 
     def setUp(self):
         super(PaymentModelTestCase, self).setUp()
-        payment.WePay = lambda production=True, access_token=None, api_version=None: \
-            FakeWePay(production, access_token, api_version)
         payment.stripe.BalanceTransaction = FakeStripeBalanceTransaction
 
     def test_get_by_transaction_id(self):

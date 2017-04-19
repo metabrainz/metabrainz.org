@@ -6,10 +6,6 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 PAYMENT_PRODUCTION = False  # set to False to use testing environments for donations
 
-# WePay
-WEPAY_ACCOUNT_ID = ""
-WEPAY_ACCESS_TOKEN = ""
-
 # PayPal
 PAYPAL_PRIMARY_EMAIL = "paypal@example.org"
 PAYPAL_BUSINESS = "payment@example.org"
