@@ -45,10 +45,11 @@ class FakeStripeBalanceTransaction(object):
         )
 
 
-class PaymentModelTestCase(FlaskTestCase):
+class PaymentModelGeneralTestCase(FlaskTestCase):
+    """General tests for the Payment model."""
 
     def setUp(self):
-        super(PaymentModelTestCase, self).setUp()
+        super(PaymentModelGeneralTestCase, self).setUp()
         payment.stripe.BalanceTransaction = FakeStripeBalanceTransaction
 
     def test_get_by_transaction_id(self):
@@ -67,6 +68,10 @@ class PaymentModelTestCase(FlaskTestCase):
 
         bad_result = Payment.get_by_transaction_id('MISSING')
         self.assertIsNone(bad_result)
+
+
+class PaymentModelPayPalTestCase(FlaskTestCase):
+    """PayPal-specific tests."""
 
     def test_process_paypal_ipn(self):
         # This is not a complete list:
@@ -118,6 +123,9 @@ class PaymentModelTestCase(FlaskTestCase):
         Payment.process_paypal_ipn(super_bad_form)
         # There should still be one recorded donation
         self.assertEqual(len(Payment.query.all()), 1)
+
+
+class PaymentModelStripeTestCase(FlaskTestCase):
 
     def test_log_stripe_charge_donation(self):
         # Function should execute without any exceptions
