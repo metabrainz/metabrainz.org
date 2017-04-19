@@ -76,6 +76,7 @@ CREATE TABLE payment (
   transaction_id   CHARACTER VARYING,
   amount           NUMERIC(11, 2)    NOT NULL,
   fee              NUMERIC(11, 2),
+  currency         payment_currency  NOT NULL,
   memo             CHARACTER VARYING,
   invoice_number   INTEGER
 );
