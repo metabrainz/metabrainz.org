@@ -229,6 +229,7 @@ class PaymentModelStripeTestCase(FlaskTestCase):
             account=None
         )
         Payment.log_stripe_charge(charge)
+        self.assertEqual(len(Payment.query.all()), 1)
 
     def test_log_stripe_charge_payment(self):
         # Function should execute without any exceptions
@@ -298,3 +299,4 @@ class PaymentModelStripeTestCase(FlaskTestCase):
             account=None
         )
         Payment.log_stripe_charge(charge)
+        self.assertEqual(len(Payment.query.all()), 1)
