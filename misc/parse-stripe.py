@@ -35,14 +35,14 @@ for i, row in enumerate(reader):
     date = row[2].split(' ')[0]
     date = date.split('-')
     date = "%s/%s/%s" % (date[1], date[2], date[0])
-    sender = row[24]
+    sender = row[24].decode('iso-8859-1') #.encode('utf8')
     amount = toFloat(row[6])
     fee = -toFloat(row[8])
     net = amount - fee
     memo = row[1]
 
     out.write("%s,%s,%.2f\n" % (date, "Stripe", fee))
-    out.write("%s,%s,%.2f\n" % (date, sender, amount))
+    out.write("%s,%s,%.2f\n" % (date, sender.encode('utf-8'), amount))
 
 fp.close()
 out.close()
