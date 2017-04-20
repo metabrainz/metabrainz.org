@@ -102,18 +102,17 @@ or with Docker:
 
     $ docker-compose -f docker/docker-compose.test.yml up --build --remove-orphans
 
-### Testing donations
+### Testing payments
 
 Before doing anything make sure that `PAYMENT_PRODUCTION` variable in
 configuration file is set to `False`! This way you'll use testing environments
 where credit cards and bank accounts are not actually charged. More info about
 testing environments for each payment service can be found in their documentation:
 
-* WePay: https://www.wepay.com/developer/reference/testing
 * PayPal: https://developer.paypal.com/webapps/developer/docs/
 * Stripe: https://stripe.com/docs/testing
 
 Please note that in order for [IPNs](https://en.wikipedia.org/wiki/Instant_payment_notification)
 to work, application MUST be publicly available. If you are doing development
 on your local machine it is likely that your callback endpoints will not be
-reachable from payment processors.
+reachable for payment processors.

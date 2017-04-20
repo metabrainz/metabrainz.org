@@ -5,14 +5,13 @@ from metabrainz.admin import AdminModelView
 from sqlalchemy.sql import func, desc
 from flask import current_app
 from datetime import datetime
-from wepay import WePay
 import stripe
 import logging
 
 
 PAYMENT_METHOD_STRIPE = 'stripe'
 PAYMENT_METHOD_PAYPAL = 'paypal'
-PAYMENT_METHOD_WEPAY = 'wepay'
+PAYMENT_METHOD_WEPAY = 'wepay'  # no longer supported
 PAYMENT_METHOD_CHECK = 'check'
 
 
@@ -45,7 +44,7 @@ class Payment(db.Model):
     payment_method = db.Column(db.Enum(
         PAYMENT_METHOD_STRIPE,
         PAYMENT_METHOD_PAYPAL,
-        PAYMENT_METHOD_WEPAY,
+        PAYMENT_METHOD_WEPAY,  # legacy
         PAYMENT_METHOD_CHECK,
         name='payment_method_types'
     ))
@@ -233,99 +232,6 @@ class Payment(db.Model):
             is_donation=new_payment.is_donation,
             editor_name=new_payment.editor_name,
         )
-
-    @classmethod
-    def verify_and_log_wepay_checkout(cls, checkout_id, is_donation,
-                                      editor=None, anonymous=None, can_contact=None,
-                                      invoice_number=None):
-        logging.debug('Processing WePay checkout...')
-
-        # Looking up updated information about the object
-        wepay = WePay(production=current_app.config['PAYMENT_PRODUCTION'],
-                      access_token=current_app.config['WEPAY_ACCESS_TOKEN'])
-        details = wepay.call('/checkout', {'checkout_id': checkout_id})
-
-        if 'error' in details:
-            logging.warning('WePay: Error: %s', details['error_description'])
-            return False
-
-        if 'gross' not in details:
-            logging.warning('WePay: The total dollar amount paid is missing')
-            return False
-
-        if details['gross'] < 0.50:
-            # Tiny donation
-            logging.info('WePay: Tiny payment ($%s).', details['gross'])
-            return True
-
-        if details['state'] in ['settled', 'captured']:
-            # Payment has been received
-
-            # Checking that txn_id has not been previously processed
-            if cls.get_by_transaction_id(details['checkout_id']) is not None:
-                logging.info('WePay: Transaction ID %s has been used before.', details['checkout_id'])
-                return
-
-            new_payment = cls(
-                is_donation=is_donation,
-                first_name=details['payer_name'],
-                last_name='',
-                email=details['payer_email'],
-                amount=details['gross'] - details['fee'],
-                fee=details['fee'],
-                transaction_id=checkout_id,
-                payment_method=PAYMENT_METHOD_WEPAY,
-            )
-
-            if is_donation:
-                new_payment.editor_name = editor
-                new_payment.can_contact = can_contact
-                new_payment.anonymous = anonymous
-            else:
-                new_payment.invoice_number = invoice_number
-
-            if 'shipping_address' in details:
-                address = details['shipping_address']
-                new_payment.address_street = "%s\n%s" % (address['address1'], address['address2'])
-                new_payment.address_city = address['city']
-                if 'state' in address:  # US address
-                    new_payment.address_state = address['state']
-                else:
-                    new_payment.address_state = address['region']
-                if 'zip' in address:  # US address
-                    new_payment.address_postcode = address['zip']
-                else:
-                    new_payment.address_postcode = address['postcode']
-
-            db.session.add(new_payment)
-            db.session.commit()
-            logging.info('WePay: Payment added. ID: %s.', new_payment.id)
-
-            send_receipt(
-                email=new_payment.email,
-                date=new_payment.payment_date,
-                amount=new_payment.amount,
-                name='%s %s' % (new_payment.first_name, new_payment.last_name),
-                is_donation=new_payment.is_donation,
-                editor_name=new_payment.editor_name,
-            )
-
-        elif details['state'] in ['authorized', 'reserved']:
-            # Payment is pending
-            logging.info('WePay: Payment is pending. State: "%s".', details['state'])
-            pass
-
-        elif details['state'] in ['expired', 'cancelled', 'failed', 'refunded', 'chargeback']:
-            # Payment has failed
-            logging.warning('WePay: Payment has failed. State: "%s".', details['state'])
-            pass
-
-        else:
-            # Unknown status
-            logging.warning('WePay: Unknown status.')
-            return False
-
-        return True
 
     @classmethod
     def log_stripe_charge(cls, charge):
