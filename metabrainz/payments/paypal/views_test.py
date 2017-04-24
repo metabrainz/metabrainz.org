@@ -14,8 +14,8 @@ class FakeResponse(object):
 class FakeRequests(object):
     def post(self, url, *args, **kwargs):
         """Always confirms verification as valid."""
-        if url in ['https://www.paypal.com/cgi-bin/webscr',
-                   'https://www.sandbox.paypal.com/cgi-bin/webscr']:
+        if url in ['https://ipnpb.paypal.com/cgi-bin/webscr',
+                   'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr']:
             return FakeResponse('VERIFIED')
 
 
