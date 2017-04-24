@@ -7,8 +7,9 @@ import logging
 
 payments_paypal_bp = Blueprint('payments_paypal', __name__)
 
-PAYPAL_URL_PRIMARY = 'https://www.paypal.com/cgi-bin/webscr'
-PAYPAL_URL_SANDBOX = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
+# URLs from https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNImplementation/
+PAYPAL_URL_PRIMARY = 'https://ipnpb.paypal.com/cgi-bin/webscr'
+PAYPAL_URL_SANDBOX = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr'
 
 IPN_VERIFY_EXTRA_PARAMS = ((u'cmd', u'_notify-validate'),)
 
