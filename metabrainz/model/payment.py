@@ -56,9 +56,15 @@ class Payment(db.Model):
     transaction_id = db.Column(db.Unicode)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.Numeric(11, 2))
-    currency = db.Column(db.Enum('usd', 'eur', name='payment_currency'),
-                         nullable=False,
-                         default='usd')
+    currency = db.Column(
+        db.Enum(
+            Currency.US_Dollar.value,
+            Currency.Euro.value,
+            name='payment_currency'
+        ),
+        nullable=False,
+        default='usd',
+    )
     memo = db.Column(db.Unicode)
 
     def __str__(self):
@@ -329,6 +335,8 @@ class PaymentAdminView(AdminModelView):
     column_descriptions = dict(
         can_contact='This donor may be contacted',
         anonymous='This donor wishes to remain anonymous',
+        amount='USD',
+        fee='USD',
     )
     column_list = (
         'id',
@@ -338,7 +346,6 @@ class PaymentAdminView(AdminModelView):
         'is_donation',
         'amount',
         'fee',
-        'currency',
     )
     form_columns = (
         'first_name',
@@ -351,7 +358,6 @@ class PaymentAdminView(AdminModelView):
         'address_country',
         'amount',
         'fee',
-        'currency',
         'memo',
         'is_donation',
         'invoice_number',
@@ -361,15 +367,15 @@ class PaymentAdminView(AdminModelView):
     )
 
     def __init__(self, session, **kwargs):
-        super(PaymentAdminView, self).__init__(Payment, session, name='Raw DB view', **kwargs)
+        super(PaymentAdminView, self).__init__(Payment, session, name='Payments', **kwargs)
 
-    def after_model_change(self, form, new_payment, is_created):
+    def after_model_change(self, form, new_donation, is_created):
         if is_created:
             send_receipt(
-                email=new_payment.email,
-                date=new_payment.payment_date,
-                amount=new_payment.amount,
-                name='%s %s' % (new_payment.first_name, new_payment.last_name),
-                is_donation=new_payment.is_donation,
-                editor_name=new_payment.editor_name,
+                email=new_donation.email,
+                date=new_donation.payment_date,
+                amount=new_donation.amount,
+                name='%s %s' % (new_donation.first_name, new_donation.last_name),
+                is_donation=new_donation.is_donation,
+                editor_name=new_donation.editor_name,
             )
