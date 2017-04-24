@@ -227,9 +227,9 @@
       /////////////////
       var selectedCurrency = CURRENCY.US_Dollar;
       $('input:radio[name=currency]').change(function() {
-        if (this.value === CURRENCY.US_Dollar.code) {
+        if (this.value.toUpperCase() === CURRENCY.US_Dollar.code.toUpperCase()) {
           selectedCurrency = CURRENCY.US_Dollar;
-        } else if (this.value === CURRENCY.Euro.code) {
+        } else if (this.value.toUpperCase() === CURRENCY.Euro.code.toUpperCase()) {
           selectedCurrency = CURRENCY.Euro;
         } else {
           console.error("Unknown currency:", this.value)
