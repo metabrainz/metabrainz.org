@@ -151,7 +151,7 @@ class UsersView(AdminBaseView):
     def reject(self):
         user_id = request.args.get('user_id')
         User.get(id=user_id).set_state(STATE_REJECTED)
-        flash.warn('User #%s has been rejected.' % user_id)
+        flash.warning('User #%s has been rejected.' % user_id)
 
         # Redirecting to the next pending user
         next_user = User.get(state=STATE_PENDING)
