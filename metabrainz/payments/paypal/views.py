@@ -40,5 +40,7 @@ def ipn():
 
     if verification_response.text == 'VERIFIED':
         Payment.process_paypal_ipn(request.form)
+    else:
+        logging.warning('Unverified PayPal IPN.')
 
     return '', 200
