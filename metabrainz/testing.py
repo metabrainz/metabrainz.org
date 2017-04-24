@@ -2,6 +2,7 @@ from flask_testing import TestCase
 from metabrainz import create_app
 from metabrainz import model
 from metabrainz import db
+import logging
 import os.path
 import os
 
@@ -20,6 +21,7 @@ class FlaskTestCase(TestCase):
         return app
 
     def setUp(self):
+        logging.basicConfig(level=logging.DEBUG)
         self.reset_db()
 
     def tearDown(self):
