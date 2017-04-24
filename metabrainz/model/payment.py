@@ -56,7 +56,10 @@ class Payment(db.Model):
     transaction_id = db.Column(db.Unicode)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.Numeric(11, 2))
-    currency = db.Column(db.Enum(SUPPORTED_CURRENCIES, name='payment_currency'), nullable=False)
+    currency = db.Column(db.Enum(
+        Currency.US_Dollar.value,
+        Currency.Euro.value,
+        name='payment_currency'), nullable=False)
     memo = db.Column(db.Unicode)
 
     def __str__(self):
