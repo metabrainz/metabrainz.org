@@ -82,7 +82,7 @@ def signup_commercial():
     """
     tier_id = request.args.get('tier_id')
     if not tier_id:
-        flash.warn(gettext("You need to choose support tier before signing up!"))
+        flash.warning(gettext("You need to choose support tier before signing up!"))
         return redirect(url_for('.account_type'))
     selected_tier = Tier.get(id=tier_id)
     if not selected_tier or not selected_tier.available:
@@ -149,7 +149,7 @@ def signup_commercial():
                 )
             except MailException as e:
                 logging.error(e)
-                flash.warn(gettext(
+                flash.warning(gettext(
                     "Failed to send welcome email to you. We are looking into it. "
                     "Sorry for inconvenience!"
                 ))
@@ -196,7 +196,7 @@ def signup_noncommercial():
                 )
             except MailException as e:
                 logging.error(e)
-                flash.warn(gettext(
+                flash.warning(gettext(
                     "Failed to send welcome email to you. We are looking into it. "
                     "Sorry for inconvenience!"
                 ))

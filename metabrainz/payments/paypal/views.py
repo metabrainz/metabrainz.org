@@ -35,7 +35,7 @@ def ipn():
 
     # Some payment options don't return payment_status value.
     if 'payment_status' not in request.form:
-        logging.warn('PayPal IPN: payment_status is missing.')
+        logging.warning('PayPal IPN: payment_status is missing.')
         return '', 200
 
     if verification_response.text == 'VERIFIED':
