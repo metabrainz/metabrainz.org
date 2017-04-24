@@ -191,7 +191,7 @@ class Payment(db.Model):
 
         if form['receiver_email'] not in account_ids.values():
             logging.warning('PayPal: Unexpected receiver email. Got "%s".', form['receiver_email'])
-            return
+
         if float(form['mc_gross']) < 0.50:
             # Tiny donation
             logging.info('PayPal: Tiny donation ($%s).', form['mc_gross'])
