@@ -333,8 +333,8 @@
 
         $('<input>').attr({type: 'hidden', name: 'business', value: selectedCurrency.paypal_id}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('payments.complete', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('payments.cancelled', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('payments.complete', is_donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('payments.cancelled', is_donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('payments_paypal.ipn', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'currency_code', value: selectedCurrency.code}).appendTo(form);
 
