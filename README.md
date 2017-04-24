@@ -69,9 +69,9 @@ use for development:
 
     $ docker-compose -f docker/docker-compose.dev.yml up --build -d
 
-The first time you set up the application, database tables need to be created:
+The first time you set up the application, database needs to be initialized:
 
-    $ docker-compose -f docker/docker-compose.dev.yml run web python manage.py create_tables
+    $ docker-compose -f docker/docker-compose.dev.yml run web python manage.py init_db
 
 Web server should now be accessible at **http://localhost:80/**.
 
