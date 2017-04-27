@@ -23,7 +23,7 @@ SQLALCHEMY_DATABASE_URI = "postgresql://{{template "KEY" "postgresql/username"}}
 REDIS = {
     "host": '''{{.Address}}''',
     "port": {{.Port}},
-    "namespace": "MEB",
+    "namespace": '''{{template "KEY" "redis/namespace"}}''',
 }
 {{end}}
 {{end}}
