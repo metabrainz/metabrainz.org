@@ -6,8 +6,10 @@ from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
 from metabrainz.db import user as db_user
+from metabrainz.db import payment as db_payment
 from metabrainz import flash
 from werkzeug.utils import secure_filename
+from distutils.util import strtobool
 import werkzeug.datastructures
 import os.path
 import logging
@@ -195,6 +197,24 @@ class CommercialUsersView(AdminBaseView):
         offset = (page - 1) * limit
         users, count = User.get_all_commercial(limit=limit, offset=offset)
         return self.render('admin/commercial-users/index.html', users=users,
+                           page=page, limit=limit, count=count)
+
+
+class PaymentsView(AdminBaseView):
+
+    @expose('/')
+    def list(self):
+        page = int(request.args.get('page', default=1))
+        try:
+            is_donation = strtobool(str(request.args.get('is_donation')))
+        except ValueError:
+            is_donation = None
+        if page < 1:
+            return redirect(url_for('.list'))
+        limit = 40
+        offset = (page - 1) * limit
+        payments, count = db_payment.list_payments(is_donation=is_donation, limit=limit, offset=offset)
+        return self.render('admin/payments/list.html', payments=payments, is_donation=is_donation,
                            page=page, limit=limit, count=count)
 
 

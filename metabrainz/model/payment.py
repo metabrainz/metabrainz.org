@@ -335,7 +335,7 @@ class PaymentAdminView(AdminModelView):
     )
 
     def __init__(self, session, **kwargs):
-        super(PaymentAdminView, self).__init__(Payment, session, name='Payments', **kwargs)
+        super(PaymentAdminView, self).__init__(Payment, session, name='Raw DB view', **kwargs)
 
     def after_model_change(self, form, new_payment, is_created):
         if is_created:
