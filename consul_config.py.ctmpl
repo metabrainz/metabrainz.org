@@ -14,7 +14,7 @@ SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
 
 {{if service "pgbouncer-master"}}
 {{with index (service "pgbouncer-master") 0}}
-SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@{{.Address}}:{{.Port}}/metabrainz_db"
+SQLALCHEMY_DATABASE_URI = "postgresql://{{template "KEY" "postgresql/username"}}:{{template "KEY" "postgresql/password"}}@{{.Address}}:{{.Port}}/{{template "KEY" "postgresql/db_name"}}"
 {{end}}
 {{end}}
 
