@@ -85,16 +85,18 @@ def create_app(config_path=None):
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
     admin.add_view(UserAdminView(model.db.session, category='Users', endpoint="user_model"))
-    admin.add_view(PaymentAdminView(model.db.session, endpoint="donation_model"))
+    admin.add_view(PaymentAdminView(model.db.session, category='Payments', endpoint="payment_model"))
     admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
 
     # Custom stuff
     from metabrainz.admin.views import CommercialUsersView
     from metabrainz.admin.views import UsersView
+    from metabrainz.admin.views import PaymentsView
     from metabrainz.admin.views import TokensView
     from metabrainz.admin.views import StatsView
     admin.add_view(CommercialUsersView(name='Commercial users', category='Users'))
     admin.add_view(UsersView(name='Search', category='Users'))
+    admin.add_view(PaymentsView(name='All', category='Payments'))
     admin.add_view(TokensView(name='Access tokens', category='Users'))
     admin.add_view(StatsView(name='Statistics'))
 
