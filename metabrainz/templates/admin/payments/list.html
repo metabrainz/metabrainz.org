@@ -4,6 +4,18 @@
 
   <p class="text-muted"><em>Sorted by date</em></p>
 
+  <ul class="nav nav-pills">
+    <li role="presentation" {{ 'class=active' if is_donation == None }}>
+      <a href="{{ url_for('paymentsview.list', is_donation=None) }}">All</a>
+    </li>
+    <li role="presentation" {{ 'class=active' if is_donation == False }}>
+      <a href="{{ url_for('paymentsview.list', is_donation=False) }}">Org. payments</a>
+    </li>
+    <li role="presentation" {{ 'class=active' if is_donation == True }}>
+      <a href="{{ url_for('paymentsview.list', is_donation=True) }}">Donations</a>
+    </li>
+  </ul>
+
   {% if payments %}
     <table class="table table-striped">
       <thead>

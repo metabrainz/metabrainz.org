@@ -9,7 +9,6 @@ from metabrainz.db import user as db_user
 from metabrainz.db import payment as db_payment
 from metabrainz import flash
 from werkzeug.utils import secure_filename
-from distutils.util import strtobool
 import werkzeug.datastructures
 import os.path
 import logging
@@ -205,9 +204,12 @@ class PaymentsView(AdminBaseView):
     @expose('/')
     def list(self):
         page = int(request.args.get('page', default=1))
-        try:
-            is_donation = strtobool(str(request.args.get('is_donation')))
-        except ValueError:
+        is_donation_arg = request.args.get('is_donation')
+        if is_donation_arg == "True":
+            is_donation = True
+        elif is_donation_arg == "False":
+            is_donation = False
+        else:
             is_donation = None
         if page < 1:
             return redirect(url_for('.list'))
