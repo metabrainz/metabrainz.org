@@ -3,6 +3,7 @@ from metabrainz.model import db
 from metabrainz.payments import Currency
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
+from brainzutils.flask.loggers import get_sentry_client
 from sqlalchemy.sql import func, desc
 from flask import current_app
 from datetime import datetime
@@ -171,41 +172,52 @@ class Payment(db.Model):
 
         # Only processing completed donations
         if form['payment_status'] != 'Completed':
-            logging.info('PayPal: Payment not completed. Status: "%s".', form['payment_status'])
+            # TODO(roman): Convert to regular `logging.info` call when such detailed logs
+            # are no longer necessary to capture.
+            get_sentry_client().captureMessage("PayPal: Payment is not completed",
+                                               level=logging.INFO,
+                                               extra={"ipn_content": form})
             return
 
         account_ids = current_app.config['PAYPAL_ACCOUNT_IDS']  # "currency => account" mapping
 
         if form['mc_currency'].lower() not in SUPPORTED_CURRENCIES:
-            logging.warning("Unsupported currency: ", form['mc_currency'])
+            logging.warning("PayPal IPN: Unsupported currency", extra={"ipn_content": form})
+            return
+
+        # We shouldn't process transactions to address for payments
+        # TODO: Clarify what this address is
+        if form['business'] == current_app.config['PAYPAL_BUSINESS']:
+            logging.info('PayPal: Received payment to address for payments.', extra={"ipn_content": form})
             return
 
         # Checking if payment was sent to the right account depending on the currency
         if form['mc_currency'].upper() in account_ids:
             receiver_email_expected = current_app.config['PAYPAL_ACCOUNT_IDS'][form['mc_currency'].upper()]
             if receiver_email_expected != form['receiver_email']:
-                logging.warning("Received {currency} payment to {addr} (expected {expected_addr})".format(
-                                currency=form['mc_currency'],
-                                addr=form['receiver_email'],
-                                expected_addr=receiver_email_expected))
-
-        # We shouldn't process transactions to address for payments
-        # TODO: Clarify what this address is
-        if form['business'] == current_app.config['PAYPAL_BUSINESS']:
-            logging.info('PayPal: Received payment to address for payments.')
-            return
-
+                logging.warning("Received payment to an unexpected address", extra={
+                    "currency": form['mc_currency'],
+                    "received_to_address": form['receiver_email'],
+                    "expected_address": receiver_email_expected,
+                    "ipn_content": form,
+                })
         if form['receiver_email'] not in account_ids.values():
-            logging.warning('PayPal: Unexpected receiver email. Got "%s".', form['receiver_email'])
+            logging.warning('PayPal: Unexpected receiver email', extra={
+                "received_to_address": form['receiver_email'],
+                "ipn_content": form,
+            })
 
         if float(form['mc_gross']) < 0.50:
             # Tiny donation
-            logging.info('PayPal: Tiny donation ($%s).', form['mc_gross'])
+            logging.info('PayPal: Tiny donation', extra={"ipn_content": form})
             return
 
         # Checking that txn_id has not been previously processed
         if cls.get_by_transaction_id(form['txn_id']) is not None:
-            logging.info('PayPal: Transaction ID %s has been used before.', form['txn_id'])
+            logging.info('PayPal: Transaction ID has been used before', extra={
+                "transaction_id": form['txn_id'],
+                "ipn_content": form,
+            })
             return
 
         if 'option_name3' in form and form['option_name3'] == "is_donation" \
@@ -248,7 +260,7 @@ class Payment(db.Model):
             if 'option_name4' in form and form['option_name4'] == 'invoice_number':
                 new_payment.invoice_number = int(form.get("option_selection4"))
             else:
-                logging.warning("PayPal: Can't find invoice number if organization payment.")
+                logging.warning("PayPal: Can't find invoice number if organization payment", extra={"ipn_content": form})
 
         db.session.add(new_payment)
         db.session.commit()
