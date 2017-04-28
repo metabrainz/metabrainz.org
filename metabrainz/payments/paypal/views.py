@@ -31,17 +31,26 @@ def ipn():
     # Checking if data is legit
     paypal_url = PAYPAL_URL_PRIMARY if current_app.config['PAYMENT_PRODUCTION'] else PAYPAL_URL_SANDBOX
     verify_args = chain(IPN_VERIFY_EXTRA_PARAMS, request.form.items())
+    verify_args = [(param, value) for param, value in verify_args]
     verify_string = u'&'.join((u'%s=%s' % (param, value) for param, value in verify_args))
     verification_response = requests.post(paypal_url, data=verify_string.encode('utf-8'))
 
     # Some payment options don't return payment_status value.
     if 'payment_status' not in request.form:
-        logging.warning('PayPal IPN: payment_status is missing.')
+        logging.warning('PayPal IPN: payment_status is missing', extra={
+            "payment_production": current_app.config['PAYMENT_PRODUCTION'],
+            "verification_response": verification_response.text,
+        })
         return '', 200
 
     if verification_response.text == 'VERIFIED':
         Payment.process_paypal_ipn(request.form)
     else:
-        logging.warning('Unverified PayPal IPN.')
+        logging.warning('Unverified PayPal IPN', extra={
+            "payment_production": current_app.config['PAYMENT_PRODUCTION'],
+            "verification_url": paypal_url,
+            "verification_arguments": verify_args,
+            "verification_response": verification_response.text,
+        })
 
     return '', 200
