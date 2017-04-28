@@ -49,7 +49,8 @@ MUSICBRAINZ_CLIENT_ID = '''{{template "KEY" "musicbrainz/client_id"}}'''
 MUSICBRAINZ_CLIENT_SECRET = '''{{template "KEY" "musicbrainz/client_secret"}}'''
 
 LOG_SENTRY = {
-    'dsn': '''{{template "KEY" "sentry_dsn_private"}}''',
+    'dsn': '''{{template "KEY" "sentry/dsn_private"}}''',
+    'environment': '''{{template "KEY" "sentry/environment"}}''',
 }
 
 # reCAPTCHA (https://www.google.com/recaptcha/)
