@@ -1,6 +1,6 @@
 from __future__ import division
 from metabrainz.model import db
-from metabrainz.payments import Currency
+from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
 from brainzutils.flask.loggers import get_sentry_client
@@ -15,10 +15,6 @@ PAYMENT_METHOD_STRIPE = 'stripe'
 PAYMENT_METHOD_PAYPAL = 'paypal'
 PAYMENT_METHOD_WEPAY = 'wepay'  # no longer supported
 PAYMENT_METHOD_CHECK = 'check'
-
-
-# These are defined in the `payment_currency` database type.
-SUPPORTED_CURRENCIES = [code.value.lower() for code in Currency.__members__.values()]
 
 
 class Payment(db.Model):

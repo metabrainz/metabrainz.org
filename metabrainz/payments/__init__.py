@@ -12,3 +12,6 @@ class Currency(Enum):
     """
     US_Dollar = "usd"
     Euro = "eur"
+
+
+SUPPORTED_CURRENCIES = [code.value.lower() for code in Currency.__members__.values()]
