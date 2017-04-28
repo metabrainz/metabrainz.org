@@ -1,11 +1,11 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from flask_babel import gettext
 from wtforms import StringField, BooleanField
 from wtforms.fields.html5 import DecimalField, IntegerField
 from wtforms.validators import DataRequired
 
 
-class BasePaymentForm(Form):
+class BasePaymentForm(FlaskForm):
     amount = DecimalField(validators=[DataRequired(gettext("You need to specify amount!"))])
     recurring = BooleanField()
 
