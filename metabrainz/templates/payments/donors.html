@@ -42,8 +42,8 @@
               {% endif %}
             {% endif %}
           </td>
-          <td>${{ donation.amount }}</td>
-          <td>{{ '$' + donation.fee|string if donation.fee else '-' }}</td>
+          <td>{{ donation.amount|string + ' ' + donation.currency|upper }}</td>
+          <td>{{ donation.fee|string + ' ' + donation.currency|upper if donation.fee else '-' }}</td>
         </tr>
       {% endfor %}
       </tbody>
