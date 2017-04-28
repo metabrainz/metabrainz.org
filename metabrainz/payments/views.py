@@ -1,6 +1,7 @@
 from __future__ import division
 from flask import Blueprint, request, render_template, url_for, redirect, current_app, jsonify
 from flask_babel import gettext
+from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.model.payment import Payment
 from metabrainz.payments.forms import DonationForm, PaymentForm
 from metabrainz import flash
@@ -23,15 +24,23 @@ def donate():
                            stripe_public_key=stripe_public_key)
 
 
-@payments_bp.route('/payment')
-def payment():
+@payments_bp.route('/payment/')
+def payment_selector():
+    """Payment page for organizations. Shows currency selection."""
+    return render_template('payments/payment_selector.html')
+
+
+@payments_bp.route('/payment/<currency>')
+def payment(currency):
     """Payment page for organizations."""
+    currency = currency.lower()
+    if currency not in SUPPORTED_CURRENCIES:
+        return redirect('.payment_selector')
     if current_app.config['PAYMENT_PRODUCTION']:
         stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
     else:
         stripe_public_key = current_app.config['STRIPE_TEST_KEYS']['PUBLISHABLE']
-
-    return render_template('payments/payment.html', form=PaymentForm(),
+    return render_template('payments/payment.html', form=PaymentForm(), currency=currency,
                            stripe_public_key=stripe_public_key)
 
 

@@ -1,115 +1,88 @@
-{% extends 'base.html' %}
+{% extends 'payments/payment_base.html' %}
 
-{% block title %}{{ _('Make a Payment') }} - MetaBrainz Foundation{% endblock %}
+{% block payment_content %}
 
-{% block content %}
-  <div id="payment">
-    <h1 class="page-title">{{ _('Make a Payment') }}</h1>
-
-    <div class="alert alert-info" role="alert">
-      {{ _('<b>This page is for organizations!</b> Payments made here will not show up
-      in the list of donations. If you want to make a donation instead, go to
-      <a href="%(donate_url)s">donation page</a>.', donate_url=url_for('payments.donate')) }}
+  {% if config.PAYMENT_PRODUCTION != True %}
+    <div class="alert alert-warning" role="alert">
+      {{ _('<b>Be careful!</b> This is a development version of the website. Do NOT
+      use your real credit card credentials! If you want to send an actual
+      payment, go to <a href="%(mb_url)s">metabrainz.org</a>.', mb_url='https://metabrainz.org/') }}
     </div>
+  {% endif %}
 
-    <p>
-      {{ _('Your payments will be used to operate projects of the MetaBrainz Foundation. This includes paying
-      for ongoing expenses like hosting, hardware, maintaining a modest office, and paying a minimal
-      salary for MetaBrainz employees.') }}
-    </p>
+  <div id="payment-panel" class="panel panel-default">
+    <form id="payment-form" method="POST" class="panel-body form-horizontal" role="form">
+      {{ form.hidden_tag() }}
 
-    {{ _('<p>Where has your contribution gone? See our <a href="%(financial_reports_url)s">transparent finances</a>.</p>', financial_reports_url=url_for('financial_reports.index')) }}
-
-    {% if config.PAYMENT_PRODUCTION != True %}
-      <div class="alert alert-warning" role="alert">
-        {{ _('<b>Be careful!</b> This is a development version of the website. Do NOT
-        use your real credit card credentials! If you want to send an actual
-        payment, go to <a href="%(mb_url)s">metabrainz.org</a>.', mb_url='https://metabrainz.org/') }}
+      <div class="form-group">
+        <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">{{ _('Amount') }}</label>
+        <div class="col-sm-4">
+          <div id="input-amount-fg" class="input-group">
+            <span class="input-group-addon">
+              {% if currency == 'usd' %}
+                $
+              {% elif currency == 'eur' %}
+                €
+              {% endif %}
+            </span>
+            {{ form.amount(id="input-amount", class="form-control") | safe }}</div>
+        </div>
+        <div id="big-amount-info" class="col-sm-offset-3 col-sm-6" style="display:none">
+          {{ _('If you would like to make a large payment, please contact us at
+          <a href="%(mail_link)s">payments@metabrainz.org</a>
+          before you do.', mail_link='mailto:payments@metabrainz.org') }}
+        </div>
       </div>
-    {% endif %}
 
-    <div id="payment-panel" class="panel panel-default">
-      <form id="payment-form" method="POST" class="panel-body form-horizontal" role="form">
-        {{ form.hidden_tag() }}
+      <div id="input-invoice-number-fg" class="form-group">
+        <div class="col-sm-offset-3 col-sm-6">
+          {{ form.invoice_number(id="input-invoice-number", class="form-control", placeholder=_('Invoice number')) | safe }}
+        </div>
+      </div>
 
-        <div class="form-group">
-          <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">{{ _('Amount') }}</label>
-          <div class="col-sm-4">
-            <div id="input-amount-fg" class="input-group">
-              <span class="input-group-addon">$</span>
-              {{ form.amount(id="input-amount", class="form-control") | safe }}</div>
-          </div>
-          <div id="big-amount-info" class="col-sm-offset-3 col-sm-6" style="display:none">
-            {{ _('If you would like to make a large payment, please contact us at
-            <a href="%(mail_link)s">payments@metabrainz.org</a>
-            before you do.', mail_link='mailto:payments@metabrainz.org') }}
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-6">
+          <div class="checkbox">
+            <label>
+              {{ form.recurring(id="recurring-flag") | safe }}
+              {{ _('Make this a recurring monthly payment') }}
+            </label>
           </div>
         </div>
+      </div>
 
-        <div id="input-invoice-number-fg" class="form-group">
-          <div class="col-sm-offset-3 col-sm-6">
-            {{ form.invoice_number(id="input-invoice-number", class="form-control", placeholder=_('Invoice number')) | safe }}
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-sm-offset-3 col-sm-6">
-            <div class="checkbox">
-              <label>
-                {{ form.recurring(id="recurring-flag") | safe }}
-                {{ _('Make this a recurring monthly payment') }}
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div id="buttons" class="form-group">
-          <div class="col-sm-offset-3 col-sm-6">
+      <div id="buttons" class="form-group">
+        <div class="col-sm-offset-3 col-sm-6">
+          {% if currency == 'usd' %}
+            {# Only accepting payments in USD through Stripe #}
             <button id="btn-stripe" type="button" class="btn">{{ _('Pay with Credit Card') }}</button>
-            <button id="btn-paypal" type="button" class="btn">
-              <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
-            </button>
-          </div>
+          {% endif %}
+          <button id="btn-paypal" type="button" class="btn">
+            <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
+          </button>
         </div>
+      </div>
 
-      </form>
-
-    </div>
-
-    <p>
-      <small>
-        {{ _('The personal information provided to the MetaBrainz Foundation during the
-        payment process will not be shared with anyone. For more information,
-        please take a look at our <a href="%(privacy_policy_url)s">
-        privacy policy</a>.', privacy_policy_url=url_for('index.privacy_policy')) }}
-      </small>
-    </p>
-
-    <p>
-      <small>
-        {{ _('To find out how to cancel recurring payments take a look at
-        <a href="%(cancel_recurring_url)s">this page</a>.', cancel_recurring_url=url_for('payments.cancel_recurring')) }}
-      </small>
-    </p>
-
-    <h2>{{ _('Other ways to pay') }}</h2>
-
-    <h3>{{ _('Non-US Bank transfer') }}</h3>
-    <p>{{ _('You can make a payment, or recurring payments, via bank transfer to the following IBAN:') }}</p>
-    <p><em style="margin-left: 2em">ES39 0182 6536 7602 0155 8258 (BIC: BBVAESMMXXX)</em></p>
-    <p>{{ _('Please specify the invoice number(s) you are paying in the description field of the transfer.') }}</p>
-
-    <h3>{{ _('US Check') }}</h3>
-    <p>{{ _('If you would like to pay us using a check drawn on a US bank, please send them to:') }}</p>
-    <p>
-      MetaBrainz Foundation<br/>
-      3565 South Higuera St, Suite B<br/>
-      San Luis Obispo, CA 93401<br/>
-      United States
-    </p>
-    <p>{{ _('Please make checks payable to the <strong>MetaBrainz Foundation</strong>.') }}</p>
+    </form>
 
   </div>
+
+  <p>
+    <small>
+      {{ _('The personal information provided to the MetaBrainz Foundation during the
+      payment process will not be shared with anyone. For more information,
+      please take a look at our <a href="%(privacy_policy_url)s">
+      privacy policy</a>.', privacy_policy_url=url_for('index.privacy_policy')) }}
+    </small>
+  </p>
+
+  <p>
+    <small>
+      {{ _('To find out how to cancel recurring payments take a look at
+      <a href="%(cancel_recurring_url)s">this page</a>.', cancel_recurring_url=url_for('payments.cancel_recurring')) }}
+    </small>
+  </p>
+
 {% endblock %}
 
 {% block scripts %}
@@ -219,12 +192,12 @@
 
         {# Info about variables can be found at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/ #}
 
-        $('<input>').attr({type: 'hidden', name: 'business', value: '{{ config['PAYPAL_ACCOUNT_IDS']['USD'] }}'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'business', value: '{{ config['PAYPAL_ACCOUNT_IDS'][currency|upper] }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('payments.complete', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('payments.cancelled', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('payments_paypal.ipn', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'currency_code', value: 'USD'}).appendTo(form);
+        $('<input>').attr({type: 'hidden', name: 'currency_code', value: '{{ currency|upper }}'}).appendTo(form);
 
         if ($('#recurring-flag').is(":checked")) { // Recurring payments
           $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick-subscriptions'}).appendTo(form);
