@@ -151,6 +151,26 @@ class PaymentModelPayPalTestCase(FlaskTestCase):
         # Should ignore this payment notification
         self.assertEqual(len(payments), 0)
 
+    def test_extract_paypal_ipn_options(self):
+        form = copy.deepcopy(self.base_form)
+        self.assertDictEqual(Payment._extract_paypal_ipn_options(form), {
+            "anonymous": "yes",
+            "contact": "yes",
+        })
+
+        self.assertDictEqual(Payment._extract_paypal_ipn_options({
+            "option_name1": "contact",
+            "option_name2": "anonymous",
+            "option_name3": "is_donation",
+            "option_selection1": "N/A",
+            "option_selection2": "yes",
+            "option_selection3": "yes",
+        }), {
+            "contact": "N/A",
+            "anonymous": "yes",
+            "is_donation": "yes",
+        })
+
 
 class PaymentModelStripeTestCase(FlaskTestCase):
     """Stripe-specific tests."""
