@@ -368,7 +368,7 @@
         $("#can-contact-flag").attr('value', 'yes'); {# Boolean values are compared to 'yes' in IPN processor. #}
 
         $('<input>').attr({type: 'hidden', name: 'on1', value: 'anonymous'}).appendTo(form);
-        $("#can-contact-flag").attr('name', 'os1');
+        $("#anonymous-flag").attr('name', 'os1');
         $("#anonymous-flag").attr('value', 'yes'); {# Boolean values are compared to 'yes' in IPN processor. #}
 
         form.submit();
