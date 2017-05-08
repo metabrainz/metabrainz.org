@@ -3,42 +3,44 @@
 {% block title %}{{ _('About') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">{{ _('About the MetaBrainz Foundation') }}</h1>
+  <h1 class="page-title"><img src="{{ url_for('static', filename='img/logos/metabrainz.svg') }}" class="hidden-xs"></h1>
+
+     <h2 class="page-title">{{ _('About the MetaBrainz Foundation') }}</h2>
 
   <div class="row">
     <div class="col-sm-9">
       <p>
-        {{ _('The MetaBrainz Foundation is a 501(c)(3) tax-exempt non-profit founded in
-        December 2004 and based in San Luis Obispo, California, that believes in
-        free, open access to data.') }}
+        {{ _('The MetaBrainz Foundation is a global community creating and maintaining 
+        an open encyclopedia of music and arts metadata. Beginning as a resource for music 
+        collectors we currently establish collaborations between volunteers, artists, and 
+        industry leaders. Since it’s founding it has grown into a global community of 
+        <a href="%(editors_url)s">hundreds of thousands of editors</a> 
+        collaborating together to build and maintain the MetaBrainz comprehensive datasets.') }}
       </p>
       <p>
-        {{ _('The MetaBrainz Foundation has been set up to build community maintained
-        databases and make them available in the public domain or under Creative
-        Commons licenses. Our data is mostly gathered by volunteers, and verified
-        by a voting system to make sure it is consistent and correct. All
-        non-commercial use is free, but commercial users are asked to pay for
-        regular updates of the data in order to help fund the project. We
-        encourage all data users to contribute to the data gathering process so
-        that our data can be as comprehensive as possible.') }}
+        {{ _('The foundation works within a balanced ecosystem of contributions to the datasets 
+        and community and the utilization of the datasets. We encourage all data users to participate 
+        in the data gathering, editing and peer review processes so that our data can be as comprehensive
+        as possible. Each entity is assigned a permanent 
+        <a href="%(MusicBrainz_Identifier_url)s">MBID (MusicBrainz Identifier)</a> 
+        in order to facilitate the creation of a reliable and unambiguous universal lingua franca for music data. 
+        MBID’s have opened the possibility of boundless search queries, exceeding the seven traditional 
+        identifiers for music data and truly putting knowledge at one's fingertips. Our community aggregated 
+        data sets are verified and edited by a global voting system to ensure the data is consistent and correct.
+        We collect information about as many different styles and types of arts and music as possible 
+        and do not discriminate when compiling data.') }}
       </p>
       <p>
-        {{ _('The MetaBrainz Foundation believes in <a href="%(financial_reports_url)s">
-        transparent finances</a> and has several <a href="%(supporters_url)s">
-        commercial supporters</a> who pay for timely and convenient access to
-        data. The MetaBrainz Foundation is also supported by a number of
-        <a href="%(sponsors_url)s">sponsors</a> who provide
-        funds in order for the foundation to accomplish its goals.',
-        financial_reports_url=url_for('financial_reports.index'),
-        supporters_url=url_for('users.supporters_list'),
-        sponsors_url=url_for('index.sponsors')) }}
+        {{ _('The foundation was founded in 2004 by Robert Kaye, in San Luis Obispo, California and is a 
+        501(c)(3) tax-exempt non-profit. <a href="%(supporters_url)s">Commercial users</a> are asked to contribute 
+        financially in order to help fund our family of projects, and give back to our community to keep our 
+        ecosystem healthy. Non-commercial use of our data remains free, and we are committed to keeping it free to utilize. 
+        We are also supported by donations and a number of <a href="%(sponsors_url)s">sponsors</a> who provide 
+        funds in order for the foundation to continue to accomplish various project goals. The MetaBrainz 
+        Foundation believes in<a href="%(financial_reports_url)s">transparent finances,</a> which are published quarterly.
       </p>
-    </div>
-    <div class="col-sm-3">
-      <img src="{{ url_for('static', filename='img/logos/metabrainz.svg') }}" class="hidden-xs" />
     </div>
   </div>
-
   <h3>{{ _('Board of Directors') }}</h3>
   {{ _('Our board of directors consists of:') }}
   <ul>
