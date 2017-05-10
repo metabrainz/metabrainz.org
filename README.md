@@ -75,6 +75,26 @@ The first time you set up the application, database needs to be initialized:
 
 Web server should now be accessible at **http://localhost:80/**.
 
+
+### Building style sheets
+
+Due to the way development environment works with Docker, it's necessary to build CSS
+separately from building an image. To do that you need to start the development server
+(all the containers with Docker Compose) and attach to the `web` container:
+```bash
+$ docker-compose -f docker/docker-compose.dev.yml exec web /bin/bash
+```
+
+Then install npm modules and build CSS:
+```bash
+web# ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/static/css/main.css
+web# ./node_modules/.bin/lessc ./metabrainz/static/css/theme/boostrap/boostrap.less > ./metabrainz/static/css/theme/boostrap/boostrap.css
+web# ./node_modules/.bin/lessc ./metabrainz/static/fonts/font_awesome/less/font-awesome.less > ./metabrainz/static/fonts/font_awesome/less/font-awesome.css
+```
+
+*Last two builds are necessary only if you are planning to use the admin interface.*
+
+
 ## Translations
 
 ### Extracting strings
@@ -89,6 +109,7 @@ The POT files are compiled automatically every time the services are built, but 
 and want to compile the translation files again, run:
 
 `$ docker-compose -f docker/docker-compose.dev.yml run web python manage.py compile_translations`
+
 
 ## Testing
 
