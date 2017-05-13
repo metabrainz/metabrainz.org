@@ -87,6 +87,7 @@ $ docker-compose -f docker/docker-compose.dev.yml exec web /bin/bash
 
 Then install npm modules and build CSS:
 ```bash
+web# npm install
 web# ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/static/css/main.css
 web# ./node_modules/.bin/lessc ./metabrainz/static/css/theme/boostrap/boostrap.less > ./metabrainz/static/css/theme/boostrap/boostrap.css
 web# ./node_modules/.bin/lessc ./metabrainz/static/fonts/font_awesome/less/font-awesome.less > ./metabrainz/static/fonts/font_awesome/less/font-awesome.css
