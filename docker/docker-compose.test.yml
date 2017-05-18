@@ -7,10 +7,10 @@ services:
       context: ..
       dockerfile: ./docker/Dockerfile.test
     depends_on:
-      - db
+      - db_test
       - redis
 
-  db:
+  db_test:
     build:
       context: ./pg_custom/
       dockerfile: Dockerfile

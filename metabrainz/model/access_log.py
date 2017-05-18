@@ -4,7 +4,7 @@ from metabrainz.model.user import User
 from metabrainz.mail import send_mail
 from brainzutils import cache
 from sqlalchemy import func
-from sqlalchemy.dialects import postgres
+from sqlalchemy.dialects import postgresql
 from datetime import datetime, timedelta
 from flask import current_app
 import logging
@@ -26,7 +26,7 @@ class AccessLog(db.Model):
 
     token = db.Column(db.String, db.ForeignKey('token.value'), primary_key=True)
     timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=datetime.utcnow)
-    ip_address = db.Column(postgres.INET)
+    ip_address = db.Column(postgresql.INET)
 
     @classmethod
     def create_record(cls, access_token, ip_address):

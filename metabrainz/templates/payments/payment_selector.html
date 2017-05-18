@@ -1,0 +1,15 @@
+{% extends 'payments/payment_base.html' %}
+
+{% block payment_content %}
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <p><strong>{{ _('Please, select a currency that you want to use for payment:') }}</strong></p>
+      <a href="{{ url_for('payments.payment', currency='usd') }}" title="{{ _('United States dollar') }}"
+         class="btn btn-lg btn-default" role="button">{{ _('USD') }}</a>
+      <a href="{{ url_for('payments.payment', currency='eur') }}" title="{{ _('Euro') }}"
+         class="btn btn-lg btn-default" role="button">{{ _('EUR') }}</a>
+    </div>
+  </div>
+
+{% endblock %}

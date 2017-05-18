@@ -7,8 +7,9 @@ import logging
 
 payments_paypal_bp = Blueprint('payments_paypal', __name__)
 
-PAYPAL_URL_PRIMARY = 'https://www.paypal.com/cgi-bin/webscr'
-PAYPAL_URL_SANDBOX = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
+# URLs from https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNImplementation/
+PAYPAL_URL_PRIMARY = 'https://ipnpb.paypal.com/cgi-bin/webscr'
+PAYPAL_URL_SANDBOX = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr'
 
 IPN_VERIFY_EXTRA_PARAMS = ((u'cmd', u'_notify-validate'),)
 
@@ -30,15 +31,26 @@ def ipn():
     # Checking if data is legit
     paypal_url = PAYPAL_URL_PRIMARY if current_app.config['PAYMENT_PRODUCTION'] else PAYPAL_URL_SANDBOX
     verify_args = chain(IPN_VERIFY_EXTRA_PARAMS, request.form.items())
+    verify_args = [(param, value) for param, value in verify_args]
     verify_string = u'&'.join((u'%s=%s' % (param, value) for param, value in verify_args))
     verification_response = requests.post(paypal_url, data=verify_string.encode('utf-8'))
 
     # Some payment options don't return payment_status value.
     if 'payment_status' not in request.form:
-        logging.warn('PayPal IPN: payment_status is missing.')
+        logging.warning('PayPal IPN: payment_status is missing', extra={
+            "payment_production": current_app.config['PAYMENT_PRODUCTION'],
+            "verification_response": verification_response.text,
+        })
         return '', 200
 
     if verification_response.text == 'VERIFIED':
         Payment.process_paypal_ipn(request.form)
+    else:
+        logging.warning('Unverified PayPal IPN', extra={
+            "payment_production": current_app.config['PAYMENT_PRODUCTION'],
+            "verification_url": paypal_url,
+            "verification_arguments": verify_args,
+            "verification_response": verification_response.text,
+        })
 
     return '', 200

@@ -20,10 +20,10 @@ REPLICATION_PACKETS_DIR = "/data/replication_packets"
 
 PAYMENT_PRODUCTION = False
 
-WEPAY_ACCOUNT_ID = ""
-WEPAY_ACCESS_TOKEN = ""
-
-PAYPAL_PRIMARY_EMAIL = ""
+PAYPAL_ACCOUNT_IDS = {
+    "USD": "",
+    "EUR": "",
+}
 PAYPAL_BUSINESS = ""
 
 STRIPE_KEYS = {

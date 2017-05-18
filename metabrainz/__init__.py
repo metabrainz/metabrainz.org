@@ -85,16 +85,18 @@ def create_app(config_path=None):
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
     admin.add_view(UserAdminView(model.db.session, category='Users', endpoint="user_model"))
-    admin.add_view(PaymentAdminView(model.db.session, endpoint="donation_model"))
+    admin.add_view(PaymentAdminView(model.db.session, category='Payments', endpoint="payment_model"))
     admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
 
     # Custom stuff
     from metabrainz.admin.views import CommercialUsersView
     from metabrainz.admin.views import UsersView
+    from metabrainz.admin.views import PaymentsView
     from metabrainz.admin.views import TokensView
     from metabrainz.admin.views import StatsView
     admin.add_view(CommercialUsersView(name='Commercial users', category='Users'))
     admin.add_view(UsersView(name='Search', category='Users'))
+    admin.add_view(PaymentsView(name='All', category='Payments'))
     admin.add_view(TokensView(name='Access tokens', category='Users'))
     admin.add_view(StatsView(name='Statistics'))
 
@@ -114,7 +116,6 @@ def _register_blueprints(app):
     from metabrainz.users.views import users_bp
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
-    from metabrainz.payments.wepay.views import payments_wepay_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
 
     app.register_blueprint(index_bp)
@@ -125,7 +126,6 @@ def _register_blueprints(app):
     # FIXME(roman): These URLs aren't named very correct since they receive payments
     # from organizations as well as regular donations:
     app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')
-    app.register_blueprint(payments_wepay_bp, url_prefix='/donations/wepay')
     app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
 
     #############
