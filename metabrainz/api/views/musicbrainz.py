@@ -4,7 +4,6 @@ from werkzeug.wrappers import Response
 from werkzeug.urls import iri_to_uri
 from metabrainz.api.decorators import token_required, tracked
 import logging
-import copy
 import time
 import re
 import os
@@ -13,7 +12,8 @@ api_musicbrainz_bp = Blueprint('api_musicbrainz', __name__)
 
 NGINX_INTERNAL_LOCATION = '/internal/replication'
 
-MIMETYPE_ARCHIVE = 'application/x-tar-bz2'
+MIMETYPE_ARCHIVE_BZ2 = 'application/x-tar-bz2'
+MIMETYPE_ARCHIVE_XZ = 'application/x-xz'
 MIMETYPE_SIGNATURE = 'text/plain'
 
 DAILY_SUBDIR = 'daily'
@@ -119,7 +119,7 @@ def replication_hourly(packet_number):
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, filename))
     else:
-        return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
+        return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_BZ2)
 
 
 @api_musicbrainz_bp.route('/replication-<int:packet_number>.tar.bz2.asc')
@@ -148,7 +148,7 @@ def replication_daily(packet_number):
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, DAILY_SUBDIR, filename))
     else:
-        return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
+        return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_BZ2)
 
 
 @api_musicbrainz_bp.route('/replication-daily-<int:packet_number>.tar.bz2.asc')
@@ -177,7 +177,7 @@ def replication_weekly(packet_number):
     if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, WEEKLY_SUBDIR, filename))
     else:
-        return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE)
+        return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_BZ2)
 
 
 @api_musicbrainz_bp.route('/replication-weekly-<int:packet_number>.tar.bz2.asc')
@@ -192,6 +192,21 @@ def replication_weekly_signature(packet_number):
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, WEEKLY_SUBDIR, filename))
     else:
         return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
+
+
+@api_musicbrainz_bp.route('/json-dumps/json-dump-<int:packet_number>/<entity_name>.tar.xz')
+@token_required
+@tracked
+def json_dump(packet_number, entity_name):
+    """Endpoint that provides access to the JSON dump files.
+
+    See MEB-93 for more info.
+    """
+    directory = os.path.join(current_app.config['JSON_DUMPS_DIR'], "json-dump-%s" % packet_number)
+    filename = '%s.tar.xz' % entity_name
+    if not os.path.isfile(safe_join(directory, filename)):
+        return Response("Can't find specified JSON dump!", status=404)
+    return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_XZ)
 
 
 def _redirect_to_nginx(location):
