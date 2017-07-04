@@ -33,7 +33,7 @@ def team():
 def contact():
     # Dear intelligent people who hate advertisers:
     #   No, we have no plans to add advertising, SEO, or software monetization to any of our pages.
-    #   We are sick of being constantly harrassed by advertisers, so we are giving them a place
+    #   We are sick of being constantly harassed by advertisers, so we are giving them a place
     #   to send their proposals to. We're never going to read them. We're never going to respond to 
     #   any of the proposals. And the deadline will always be extended to next month. :)
     today = datetime.date.today()
