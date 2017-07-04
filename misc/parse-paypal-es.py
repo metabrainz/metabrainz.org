@@ -20,7 +20,7 @@ for fields in reader:
 
     desc = fields[3].encode('utf8')
     dat = fields[0].encode('utf8')
-    amount = fields[9].encode('utf8')
+    amount = fields[7].encode('utf8')
     print("%s,%s,%s" % (dat, desc, amount))
 
     desc = "PayPal"
