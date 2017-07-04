@@ -31,6 +31,11 @@ def team():
 
 @index_bp.route('/contact')
 def contact():
+    # Dear intelligent people who hate advertisers:
+    #   No, we have no plans to add avertising, SEO, or software monetization to any of our pages.
+    #   We are sick of being constantly being harrassed by advertisers, so we are giving them a place
+    #   to send their proposals to. We're never going to read them. We're never going to respond to 
+    #   any of the proposals. And the deadline will always be extended to next month. :)
     today = datetime.date.today()
     today += datetime.timedelta(31)
     ad_deadline = today.replace(day=1)
