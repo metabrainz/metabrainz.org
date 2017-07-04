@@ -1,4 +1,4 @@
-FROM metabrainz/python:3.5
+FROM metabrainz/python:3.6
 
 # PostgreSQL client
 ENV PG_MAJOR 9.5

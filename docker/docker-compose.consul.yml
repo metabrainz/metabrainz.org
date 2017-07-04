@@ -32,6 +32,7 @@ services:
       - ../:/tmp/metabrainz.git
       - ../data/logos:/code/metabrainz/static/img/user_logos
       - ../data/replication_packets:/data/replication_packets
+      - ../data/json_dumps:/data/json_dumps
     ports:
       - "13031:3031"
 

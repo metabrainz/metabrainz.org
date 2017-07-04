@@ -1,4 +1,4 @@
-FROM metabrainz/python:3.5
+FROM metabrainz/python:3.6
 
 ##############
 # MetaBrainz #
