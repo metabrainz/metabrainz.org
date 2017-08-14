@@ -1,6 +1,5 @@
 git+https://github.com/metabrainz/brainzutils-python.git@v1.2.1
 click==6.7
-coverage==4.3.4
 Flask-Admin==1.5.0
 Flask-Babel==0.11.2
 Flask-Login==0.4.0
@@ -8,13 +7,13 @@ Flask-SQLAlchemy==2.2
 Flask-Testing==0.6.2
 Flask-Uploads==0.2.1
 Flask-WTF==0.14.2
-psycopg2==2.7.1
-pytest-cov==2.4.0
-pytest==3.0.7
+psycopg2==2.7.3
+pytest-cov==2.5.1
+pytest==3.2.1
 pytz==2017.2
 rauth==0.7.3
 reportlab==3.1.44
-requests==2.13.0
+requests==2.18.3
 six==1.10.0
 SQLAlchemy==1.1.9
-stripe==1.53.0
+stripe==1.62.0
