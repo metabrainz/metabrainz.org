@@ -103,27 +103,6 @@
     </div>
 
     <div class="person">
-      <img class="pic" src="{{ url_for('static', filename='img/team/roman_tsukanov.jpg') }}"/>
-      <div class="bio">
-        <h4>{{ _('<span class="name">Roman Tsukanov</span> &mdash; Software Engineer') }}</h4>
-        <p>
-          {{ _('Roman first became associated with MetaBrainz through Google Summer of Code program, where he was instrumental
-          in the birth of <a href="%(cb_url)s">CritiqueBrainz</a>. He wrote the updated MetaBrainz
-          website. Currently works on MusicBrainz, AcousticBrainz, and other projects.', cb_url='https://critiquebrainz.org/') }}
-        </p>
-        <p>
-          {{ _('Roman joined the MetaBrainz team as a software engineer in 2015. He currently lives and studies music technology
-          in Barcelona, Spain.') }}
-        </p>
-        <ul class="links">
-          <li><strong>IRC:</strong> Gentlecat</li>
-          <li><strong>GitHub:</strong> <a href="https://github.com/gentlecat">gentlecat</a></li>
-          <li><strong>Last.fm:</strong> <a href="http://www.last.fm/user/MrGentlecat">MrGentlecat</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/laurent_monin.jpg') }}"/>
       <div class="bio">
         <h4>{{ _('<span class="name">Laurent Monin</span> &mdash; System Administrator') }}</h4>
@@ -193,6 +172,25 @@
           <li><strong>GitHub:</strong> <a href="https://github.com/paramsingh">paramsingh</a></li>
           <li><strong>Last.fm:</strong> <a href="http://www.last.fm/user/singhparam">singhparam</a></li>
           <li><strong>ListenBrainz:</strong> <a href="https://listenbrainz.org/user/iliekcomputers">iliekcomputers</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/sambhav_kothari.jpg') }}"/>
+      <div class="bio">
+        <h4>{{ _('<span class="name">Sambhav Kothari</span> &mdash; Software Engineer') }}</h4>
+        <p>
+          {{ _('Sambhav (or the Python Geek), is presently studying Computer Science at IIT, India. Chasing bugs, commits and PRs,
+          he started as a <a href="%(gsoc_url)s">Google Summer of Code</a> student with MetaBrainz, and ended up joining the team as a full
+          timer. <a href="%(picard_url)s">Picard</a> is his adopted child and longtime lover. When he can find time away from GitHub, he
+          enjoys reading manga, plotting his plans to travel the world, stalking fine dining pictures and well, getting back to Github.', 
+          gsoc_url='https://summerofcode.withgoogle.com',
+          picard_url='https://picard.musicbrainz.org') }}
+        </p>
+        <ul class="links">
+          <li><strong>IRC:</strong> samj1912</li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/samj1912">samj1912</a></li>
         </ul>
       </div>
     </div>
