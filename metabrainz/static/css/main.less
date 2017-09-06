@@ -279,7 +279,31 @@ h1.page-title, h2.page-title {
     form {
       #input-amount-fg {
         font-weight: bold;
+
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
         .input-group-addon { font-weight: bold; }
+
+        #input-amount {
+          -webkit-box-flex: 1;
+          -webkit-flex: 1;
+          flex: 1;
+          height: 30px;
+        }
+
+        #currency-selector {
+          -webkit-box-flex: none;
+          -webkit-flex: none;
+          flex: none;
+          margin-left: 4px;
+        }
       }
 
       #big-amount-info {

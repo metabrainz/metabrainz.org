@@ -3,7 +3,7 @@ from metabrainz.mail import send_mail
 from metabrainz.model.token import Token
 from metabrainz.admin import AdminModelView
 from sqlalchemy.sql.expression import func, or_
-from sqlalchemy.dialects import postgres
+from sqlalchemy.dialects import postgresql
 from flask_login import UserMixin
 from flask import current_app
 from datetime import datetime
@@ -39,7 +39,7 @@ class User(db.Model, UserMixin):
     is_commercial = db.Column(db.Boolean, nullable=False)
     musicbrainz_id = db.Column(db.Unicode, unique=True)  # MusicBrainz account that manages this user
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
-    state = db.Column(postgres.ENUM(
+    state = db.Column(postgresql.ENUM(
         STATE_ACTIVE,
         STATE_PENDING,
         STATE_WAITING,
@@ -128,7 +128,8 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def get_all(cls, **kwargs):
-        return cls.query.filter_by(**kwargs).all()
+        """Get all users that match provided filters, ordered by their creation time."""
+        return cls.query.filter_by(**kwargs).order_by(cls.created).all()
 
     @classmethod
     def get_all_commercial(cls, limit=None, offset=None):

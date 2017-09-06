@@ -1,3 +1,4 @@
+import datetime 
 from flask import Blueprint, render_template, redirect, url_for
 from metabrainz.model.user import User
 
@@ -30,7 +31,15 @@ def team():
 
 @index_bp.route('/contact')
 def contact():
-    return render_template('index/contact.html')
+    # Dear intelligent people who hate advertisers:
+    #   No, we have no plans to add advertising, SEO, or software monetization to any of our pages.
+    #   We are sick of being constantly harassed by advertisers, so we are giving them a place
+    #   to send their proposals to. We're never going to read them. We're never going to respond to 
+    #   any of the proposals. And the deadline will always be extended to next month. :)
+    today = datetime.date.today()
+    today += datetime.timedelta(31)
+    ad_deadline = today.replace(day=1)
+    return render_template('index/contact.html', ad_deadline=ad_deadline)
 
 
 @index_bp.route('/sponsors')

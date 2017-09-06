@@ -37,12 +37,10 @@ with ``localhost``.
 
 #### Payments
 
-Next is the configuration of the payment systems. We use PayPal and WePay to accept
-donations to our foundation. For WePay you need to set your access token
-(*WEPAY_ACCESS_TOKEN*) and account ID (*WEPAY_ACCESS_TOKEN*). PayPal is a
-bit more complicated. *PAYPAL_PRIMARY_EMAIL* is an address that should receive
-all the payments. *PAYPAL_BUSINESS* is an address for non-donations; all
-payments sent there will be ignored.
+Next is the configuration of the payment systems. We use PayPal and Stripe to accept
+payments to our foundation. *PAYPAL_ACCOUNT_IDS* dictionary contains PayPal IDs or
+email addresses of accounts for each supported currency. *PAYPAL_BUSINESS* is
+an address for non-donations; all payments sent there will be ignored.
 
 After these settings have been set and you are sure that your configuration
 is working properly with in test mode, you can flip the switch. Set *DEBUG* to
@@ -71,11 +69,32 @@ use for development:
 
     $ docker-compose -f docker/docker-compose.dev.yml up --build -d
 
-The first time you set up the application, database tables need to be created:
+The first time you set up the application, database needs to be initialized:
 
-    $ docker-compose -f docker/docker-compose.dev.yml run web python manage.py create_tables
+    $ docker-compose -f docker/docker-compose.dev.yml run web python manage.py init_db
 
 Web server should now be accessible at **http://localhost:80/**.
+
+
+### Building style sheets
+
+Due to the way development environment works with Docker, it's necessary to build CSS
+separately from building an image. To do that you need to start the development server
+(all the containers with Docker Compose) and attach to the `web` container:
+```bash
+$ docker-compose -f docker/docker-compose.dev.yml exec web /bin/bash
+```
+
+Then install npm modules and build CSS:
+```bash
+web# npm install
+web# ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/static/css/main.css
+web# ./node_modules/.bin/lessc ./metabrainz/static/css/theme/boostrap/boostrap.less > ./metabrainz/static/css/theme/boostrap/boostrap.css
+web# ./node_modules/.bin/lessc ./metabrainz/static/fonts/font_awesome/less/font-awesome.less > ./metabrainz/static/fonts/font_awesome/less/font-awesome.css
+```
+
+*Last two builds are necessary only if you are planning to use the admin interface.*
+
 
 ## Translations
 
@@ -91,6 +110,7 @@ The POT files are compiled automatically every time the services are built, but 
 and want to compile the translation files again, run:
 
 `$ docker-compose -f docker/docker-compose.dev.yml run web python manage.py compile_translations`
+
 
 ## Testing
 

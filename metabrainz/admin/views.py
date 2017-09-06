@@ -6,6 +6,7 @@ from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
 from metabrainz.db import user as db_user
+from metabrainz.db import payment as db_payment
 from metabrainz import flash
 from werkzeug.utils import secure_filename
 import werkzeug.datastructures
@@ -151,7 +152,7 @@ class UsersView(AdminBaseView):
     def reject(self):
         user_id = request.args.get('user_id')
         User.get(id=user_id).set_state(STATE_REJECTED)
-        flash.warn('User #%s has been rejected.' % user_id)
+        flash.warning('User #%s has been rejected.' % user_id)
 
         # Redirecting to the next pending user
         next_user = User.get(state=STATE_PENDING)
@@ -195,6 +196,27 @@ class CommercialUsersView(AdminBaseView):
         offset = (page - 1) * limit
         users, count = User.get_all_commercial(limit=limit, offset=offset)
         return self.render('admin/commercial-users/index.html', users=users,
+                           page=page, limit=limit, count=count)
+
+
+class PaymentsView(AdminBaseView):
+
+    @expose('/')
+    def list(self):
+        page = int(request.args.get('page', default=1))
+        is_donation_arg = request.args.get('is_donation')
+        if is_donation_arg == "True":
+            is_donation = True
+        elif is_donation_arg == "False":
+            is_donation = False
+        else:
+            is_donation = None
+        if page < 1:
+            return redirect(url_for('.list'))
+        limit = 40
+        offset = (page - 1) * limit
+        payments, count = db_payment.list_payments(is_donation=is_donation, limit=limit, offset=offset)
+        return self.render('admin/payments/list.html', payments=payments, is_donation=is_donation,
                            page=page, limit=limit, count=count)
 
 

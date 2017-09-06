@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE payment ALTER COLUMN currency SET DEFAULT 'usd';
+
+COMMIT;

@@ -18,3 +18,8 @@ CREATE TYPE token_log_action_types AS ENUM (
   'deactivate',
   'create'
 );
+
+CREATE TYPE payment_currency AS ENUM (
+  'usd',
+  'eur'
+);

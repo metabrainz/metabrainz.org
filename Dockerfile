@@ -1,4 +1,4 @@
-FROM metabrainz/python:3.5
+FROM metabrainz/python:3.6
 
 ##############
 # MetaBrainz #
@@ -37,7 +37,7 @@ RUN apt-get update \
      && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
-RUN pip install uWSGI==2.0.13.1
+RUN pip install uWSGI==2.0.15
 
 COPY . /code/
 RUN ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/static/css/main.css

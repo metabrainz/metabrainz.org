@@ -6,8 +6,13 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 PAYMENT_PRODUCTION = False  # set to False to use testing environments for donations
 
+SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@db_test:5432/metabrainz"
+
 # PayPal
-PAYPAL_PRIMARY_EMAIL = "paypal@example.org"
+PAYPAL_ACCOUNT_IDS = {
+    "USD": "paypal-usd@example.org",
+    "EUR": "paypal-eur@example.org",
+}
 PAYPAL_BUSINESS = "payment@example.org"
 
 # Stripe

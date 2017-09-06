@@ -1,4 +1,4 @@
-FROM metabrainz/python:3.5
+FROM metabrainz/python:3.6
 
 RUN apt-get update \
      && apt-get install -y --no-install-recommends \
@@ -25,7 +25,7 @@ RUN pip install -r requirements.txt
 
 COPY . /code/
 
-CMD dockerize -wait tcp://db:5432 -timeout 60s \
+CMD dockerize -wait tcp://db_test:5432 -timeout 60s \
     py.test --junitxml=/data/test_report.xml \
             --cov-report xml:/data/coverage.xml \
             --cov-report html:/data/coverage-html

@@ -8,6 +8,7 @@ services:
       dockerfile: ./docker/Dockerfile.dev
     volumes:
       - ../data/replication_packets:/data/replication_packets
+      - ../data/json_dumps:/data/json_dumps
       - ../data/logos:/code/metabrainz/static/img/user_logos
       - ..:/code
     ports:
@@ -25,6 +26,17 @@ services:
       - ../data/pgdata:/var/lib/postgresql/data/pgdata
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: metabrainz
+      POSTGRES_PASSWORD: metabrainz
+      POSTGRES_DB: metabrainz
+    ports:
+      - "15432:5432"
+
+  db_test:
+    build:
+      context: ./pg_custom/
+      dockerfile: Dockerfile
+    environment:
       POSTGRES_USER: metabrainz
       POSTGRES_PASSWORD: metabrainz
       POSTGRES_DB: metabrainz

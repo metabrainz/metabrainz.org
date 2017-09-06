@@ -1,7 +1,9 @@
 from __future__ import division
 from metabrainz.model import db
+from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
+from brainzutils.flask.loggers import get_sentry_client
 from sqlalchemy.sql import func, desc
 from flask import current_app
 from datetime import datetime
@@ -51,6 +53,15 @@ class Payment(db.Model):
     transaction_id = db.Column(db.Unicode)
     amount = db.Column(db.Numeric(11, 2), nullable=False)
     fee = db.Column(db.Numeric(11, 2))
+    currency = db.Column(
+        db.Enum(
+            Currency.US_Dollar.value,
+            Currency.Euro.value,
+            name='payment_currency'
+        ),
+        nullable=False,
+        default='usd',
+    )
     memo = db.Column(db.Unicode)
 
     def __str__(self):
@@ -157,35 +168,59 @@ class Payment(db.Model):
 
         # Only processing completed donations
         if form['payment_status'] != 'Completed':
-            logging.info('PayPal: Payment not completed. Status: "%s".', form['payment_status'])
+            # TODO(roman): Convert to regular `logging.info` call when such detailed logs
+            # are no longer necessary to capture.
+            get_sentry_client().captureMessage("PayPal: Payment is not completed",
+                                               level=logging.INFO,
+                                               extra={"ipn_content": form})
+            return
+
+        account_ids = current_app.config['PAYPAL_ACCOUNT_IDS']  # "currency => account" mapping
+
+        if form['mc_currency'].lower() not in SUPPORTED_CURRENCIES:
+            logging.warning("PayPal IPN: Unsupported currency", extra={"ipn_content": form})
             return
 
         # We shouldn't process transactions to address for payments
         # TODO: Clarify what this address is
         if form['business'] == current_app.config['PAYPAL_BUSINESS']:
-            logging.info('PayPal: Recieved payment to address for payments.')
+            logging.info('PayPal: Received payment to address for payments.', extra={"ipn_content": form})
             return
 
-        if form['receiver_email'] != current_app.config['PAYPAL_PRIMARY_EMAIL']:
-            logging.warning('PayPal: Not primary email. Got "%s".', form['receiver_email'])
-            return
+        # Checking if payment was sent to the right account depending on the currency
+        if form['mc_currency'].upper() in account_ids:
+            receiver_email_expected = current_app.config['PAYPAL_ACCOUNT_IDS'][form['mc_currency'].upper()]
+            if receiver_email_expected != form['receiver_email']:
+                logging.warning("Received payment to an unexpected address", extra={
+                    "currency": form['mc_currency'],
+                    "received_to_address": form['receiver_email'],
+                    "expected_address": receiver_email_expected,
+                    "ipn_content": form,
+                })
+        if form['receiver_email'] not in account_ids.values():
+            logging.warning('PayPal: Unexpected receiver email', extra={
+                "received_to_address": form['receiver_email'],
+                "ipn_content": form,
+            })
+
         if float(form['mc_gross']) < 0.50:
             # Tiny donation
-            logging.info('PayPal: Tiny donation ($%s).', form['mc_gross'])
+            logging.info('PayPal: Tiny donation', extra={"ipn_content": form})
             return
 
         # Checking that txn_id has not been previously processed
         if cls.get_by_transaction_id(form['txn_id']) is not None:
-            logging.info('PayPal: Transaction ID %s has been used before.', form['txn_id'])
+            logging.info('PayPal: Transaction ID has been used before', extra={
+                "transaction_id": form['txn_id'],
+                "ipn_content": form,
+            })
             return
 
-        if 'option_name3' in form and form['option_name3'] == "is_donation" \
-                and form['option_selection3'] != 'yes':
-            is_donation = False
-        else:
-            # If third option (whether it is donation or not) is not specified, assuming
-            # that it is donation. This is done to support old IPN messages.
-            is_donation = True
+        options = cls._extract_paypal_ipn_options(form)
+
+        # If donation option (whether it is donation or not) is not specified, assuming
+        # that this payment is donation. This is done to support old IPN messages.
+        is_donation = options.get("is_donation", "yes") == "yes"
 
         new_payment = cls(
             is_donation=is_donation,
@@ -200,25 +235,31 @@ class Payment(db.Model):
             amount=float(form['mc_gross']) - float(form['mc_fee']),
             fee=float(form['mc_fee']),
             transaction_id=form['txn_id'],
+            currency=form['mc_currency'].lower(),
             payment_method=PAYMENT_METHOD_PAYPAL,
         )
 
         if is_donation:
             new_payment.editor_name = form.get('custom')
-            if 'option_name1' in form and 'option_name2' in form:
-                if (form['option_name1'] == 'anonymous' and form['option_selection1'] == 'yes') or \
-                        (form['option_name2'] == 'anonymous' and form['option_selection2'] == 'yes') or \
-                                form['option_name2'] == 'yes':
-                    new_payment.anonymous = True
-                if (form['option_name1'] == 'contact' and form['option_selection1'] == 'yes') or \
-                        (form['option_name2'] == 'contact' and form['option_selection2'] == 'yes') or \
-                                form['option_name2'] == 'yes':
-                    new_payment.can_contact = True
-        else:
-            if 'option_name4' in form and form['option_name4'] == 'invoice_number':
-                new_payment.invoice_number = int(form.get("option_selection4"))
+
+            anonymous_opt = options.get("anonymous")
+            if anonymous_opt is None:
+                logging.warning("PayPal: Anonymity option is missing", extra={"ipn_content": form})
             else:
-                logging.warning("PayPal: Can't find invoice number if organization payment.")
+                new_payment.anonymous = anonymous_opt == "yes"
+
+            contact_opt = options.get("contact")
+            if contact_opt is None:
+                logging.warning("PayPal: Contact option is missing", extra={"ipn_content": form})
+            else:
+                new_payment.can_contact = contact_opt == "yes"
+
+        else:
+            invoice_num_opt = options.get("invoice_number")
+            if invoice_num_opt is None:
+                logging.warning("PayPal: Invoice number is missing from org payment", extra={"ipn_content": form})
+            else:
+                new_payment.invoice_number = int(invoice_num_opt)
 
         db.session.add(new_payment)
         db.session.commit()
@@ -233,6 +274,30 @@ class Payment(db.Model):
             editor_name=new_payment.editor_name,
         )
 
+    @staticmethod
+    def _extract_paypal_ipn_options(form: dict) -> dict:
+        """Extracts all options from a PayPal IPN.
+        
+        This is necessary because the order or numbering of options might not
+        what you expect it to be.
+         
+        Returns:
+            Dictionary that maps options (by name) to their values.
+        """
+        options = {}
+        current_number = 1  # option numbering starts from 1, not 0
+        while True:
+            current_key = "option_name" + str(current_number)
+            current_val = "option_selection" + str(current_number)
+            if current_key not in form:
+                break
+            if current_val not in form:
+                logging.warning("PayPal: Value for option `{name}` is missing".format(name=current_key),
+                                extra={"ipn_content": form})
+            options[form[current_key]] = form[current_val]
+            current_number += 1
+        return options
+
     @classmethod
     def log_stripe_charge(cls, charge):
         """Log successful Stripe charge.
@@ -245,11 +310,16 @@ class Payment(db.Model):
 
         bt = stripe.BalanceTransaction.retrieve(charge.balance_transaction)
 
+        if bt.currency.lower() not in SUPPORTED_CURRENCIES:
+            logging.warning("Unsupported currency: ", bt.currency)
+            return
+
         new_donation = cls(
             first_name=charge.source.name,
             last_name='',
             amount=bt.net / 100,  # cents should be converted
             fee=bt.fee / 100,  # cents should be converted
+            currency=bt.currency.lower(),
             transaction_id=charge.id,
             payment_method=PAYMENT_METHOD_STRIPE,
 

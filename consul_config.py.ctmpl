@@ -14,7 +14,7 @@ SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
 
 {{if service "pgbouncer-master"}}
 {{with index (service "pgbouncer-master") 0}}
-SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@{{.Address}}:{{.Port}}/metabrainz_db"
+SQLALCHEMY_DATABASE_URI = "postgresql://{{template "KEY" "postgresql/username"}}:{{template "KEY" "postgresql/password"}}@{{.Address}}:{{.Port}}/{{template "KEY" "postgresql/db_name"}}"
 {{end}}
 {{end}}
 
@@ -23,7 +23,7 @@ SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@{{.Address}}:{{.Po
 REDIS = {
     "host": '''{{.Address}}''',
     "port": {{.Port}},
-    "namespace": "MEB",
+    "namespace": '''{{template "KEY" "redis/namespace"}}''',
 }
 {{end}}
 {{end}}
@@ -31,7 +31,10 @@ REDIS = {
 # PAYMENTS
 PAYMENT_PRODUCTION = {{template "KEY_OR_NONE" "payments/production"}}  # Must be `True` or `False`
 
-PAYPAL_PRIMARY_EMAIL = '''{{template "KEY" "payments/paypal/primary_email"}}'''
+PAYPAL_ACCOUNT_IDS = {
+    "USD": '''{{template "KEY" "payments/paypal/account_ids/usd"}}''',
+    "EUR": '''{{template "KEY" "payments/paypal/account_ids/eur"}}''',
+}
 PAYPAL_BUSINESS = '''{{template "KEY" "payments/paypal/business_email"}}'''
 
 STRIPE_KEYS = {
@@ -49,7 +52,8 @@ MUSICBRAINZ_CLIENT_ID = '''{{template "KEY" "musicbrainz/client_id"}}'''
 MUSICBRAINZ_CLIENT_SECRET = '''{{template "KEY" "musicbrainz/client_secret"}}'''
 
 LOG_SENTRY = {
-    'dsn': '''{{template "KEY" "sentry_dsn_private"}}''',
+    'dsn': '''{{template "KEY" "sentry/dsn_private"}}''',
+    'environment': '''{{template "KEY" "sentry/environment"}}''',
 }
 
 # reCAPTCHA (https://www.google.com/recaptcha/)

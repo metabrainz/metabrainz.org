@@ -20,7 +20,10 @@ PG_PORT = "5432"
 PAYMENT_PRODUCTION = False  # set to False to use testing environments for donations
 
 # PayPal
-PAYPAL_PRIMARY_EMAIL = "paypal@example.org"
+PAYPAL_ACCOUNT_IDS = {
+    "USD": "paypal-usd@example.org",
+    "EUR": "paypal-eur@example.org",
+}
 PAYPAL_BUSINESS = "payment@example.org"
 
 # Stripe

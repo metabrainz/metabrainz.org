@@ -1,0 +1,65 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h1>Payments</h1>
+
+  <p class="text-muted"><em>Sorted by date</em></p>
+
+  <ul class="nav nav-pills">
+    <li role="presentation" {{ 'class=active' if is_donation == None }}>
+      <a href="{{ url_for('paymentsview.list', is_donation=None) }}">All</a>
+    </li>
+    <li role="presentation" {{ 'class=active' if is_donation == False }}>
+      <a href="{{ url_for('paymentsview.list', is_donation=False) }}">Org. payments</a>
+    </li>
+    <li role="presentation" {{ 'class=active' if is_donation == True }}>
+      <a href="{{ url_for('paymentsview.list', is_donation=True) }}">Donations</a>
+    </li>
+  </ul>
+
+  {% if payments %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th title="Internal payment identifier">ID</th>
+          <th>Payer</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th><!-- Buttons --></th>
+        </tr>
+      </thead>
+      {% for payment in payments %}
+        <tr>
+          <td><code>{{ payment.id }}</code></td>
+          <td><strong>{{ payment.first_name }} {{ payment.last_name }}</strong></td>
+          <td>{{ payment.amount }} {{ payment.currency|upper }}</td>
+          <td>{{ payment.payment_date|datetime }}</td>
+          <td>
+            {% if payment.is_donation %}
+              <span class="label label-success">donation</span>
+            {% else %}
+              <span class="label label-info">payment</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('payment_model.edit_view', id=payment.id) }}"
+               class="btn btn-primary btn-xs" role="button">Edit</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    {% if count > limit %}
+      <ul class="pager">
+        {% if page > 1 %}
+          <li class="previous"><a href="{{ url_for('paymentsview.list', page=page-1) }}">&larr; Previous</a></li>
+        {% endif %}
+        {% if page-1 < count//limit %}
+          <li class="next"><a href="{{ url_for('paymentsview.list', page=page+1) }}">Next &rarr;</a></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+  {% else %}
+    None!
+  {% endif %}
+{% endblock %}

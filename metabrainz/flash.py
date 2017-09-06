@@ -25,9 +25,5 @@ def success(message):
 def warning(message):
     flash(message, WARNING)
 
-def warn(message):
-    """Alias for `warning`."""
-    warning(message)
-
 def error(message):
     flash(message, ERROR)
