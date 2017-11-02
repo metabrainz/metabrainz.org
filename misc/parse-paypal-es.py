@@ -21,9 +21,14 @@ for fields in reader:
     desc = fields[3].encode('utf8')
     dat = fields[0].encode('utf8')
     amount = fields[7].encode('utf8')
+    status = fields[5].encode('utf8')
+    if status != 'Completed':
+        continue
+
     print("%s,%s,%s" % (dat, desc, amount))
 
     desc = "PayPal"
     dat = fields[0].encode('utf8')
     fee = fields[8].encode('utf8')
-    print("%s,%s,%s" % (dat, desc, fee))
+    if fee and float(fee) != 0.0:
+        print("%s,%s,%s" % (dat, desc, fee))

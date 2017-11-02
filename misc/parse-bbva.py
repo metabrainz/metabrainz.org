@@ -19,6 +19,7 @@ for line in lines:
         desc = desc [1:]
     if desc.endswith("'"):
         desc = desc [:-1]
+    desc = desc.replace(",", " ")
     desc = re.sub("^\d\d\d\d\d\d\d\-", "", desc)
     desc = re.sub("^\d\d\d\d\d\d\d\d\d\d ", "", desc)
     desc = re.sub("^\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d ", "", desc)
