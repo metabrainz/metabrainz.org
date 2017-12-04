@@ -1,7 +1,12 @@
+import os
+from time import sleep
+
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
-import os
 
+# Check to see if we're running under a docker deployment. If so, don't second guess
+# the config file setup and just wait for the correct configuration to be generated.
+deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 def create_app(config_path=None):
     app = CustomFlask(
@@ -10,21 +15,30 @@ def create_app(config_path=None):
         use_debug_toolbar=True,
     )
 
-    # Configuration files
-    app.config.from_pyfile(os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        '..', 'default_config.py'
-    ))
-    app.config.from_pyfile(os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        '..', 'consul_config.py'
-    ), silent=True)
-    app.config.from_pyfile(os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        '..', 'custom_config.py'
-    ), silent=True)
-    if config_path:
-        app.config.from_pyfile(config_path)
+    # Load configuration files
+    # If we're running under a docker deployment, only use the consul configuration.
+    if deploy_env:
+        print("Running in production!");
+        consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), 
+            '..', 'consul_config.py')
+        while not os.path.exists(consul_config):
+            print("No configuration file generated yet. Sleeping...");
+            sleep(2)
+
+        app.config.from_pyfile(consul_config, silent=True)
+
+    else:
+        # Otherwise, do our best to find configu files
+        app.config.from_pyfile(os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            '..', 'default_config.py'
+        ))
+        app.config.from_pyfile(os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            '..', 'custom_config.py'
+        ), silent=True)
+        if config_path:
+            app.config.from_pyfile(config_path)
 
     app.init_loggers(
         file_config=app.config.get('LOG_FILE'),
