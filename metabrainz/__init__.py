@@ -15,8 +15,8 @@ def create_app(config_path=None):
         use_debug_toolbar=True,
     )
 
-    # Load configuration files
-    # If we're running under a docker deployment, only use the consul configuration.
+    # Load configuration files: If we're running under a docker deployment, wait until 
+    # the consul configuration is available.
     if deploy_env:
         print("Running in production!");
         consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), 
@@ -27,18 +27,17 @@ def create_app(config_path=None):
 
         app.config.from_pyfile(consul_config, silent=True)
 
-    else:
-        # Otherwise, do our best to find configu files
-        app.config.from_pyfile(os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            '..', 'default_config.py'
-        ))
-        app.config.from_pyfile(os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            '..', 'custom_config.py'
-        ), silent=True)
-        if config_path:
-            app.config.from_pyfile(config_path)
+    # Now load other bits of configuration
+    app.config.from_pyfile(os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        '..', 'default_config.py'
+    ))
+    app.config.from_pyfile(os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        '..', 'custom_config.py'
+    ), silent=True)
+    if config_path:
+        app.config.from_pyfile(config_path)
 
     app.init_loggers(
         file_config=app.config.get('LOG_FILE'),
