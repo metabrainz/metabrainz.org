@@ -1,7 +1,15 @@
+import os
+import sys
+from time import sleep
+
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
-import os
 
+# Check to see if we're running under a docker deployment. If so, don't second guess
+# the config file setup and just wait for the correct configuration to be generated.
+deploy_env = os.environ.get('DEPLOY_ENV', '')
+
+CONSUL_CONFIG_FILE_RETRY_COUNT = 10 
 
 def create_app(config_path=None):
     app = CustomFlask(
@@ -10,15 +18,28 @@ def create_app(config_path=None):
         use_debug_toolbar=True,
     )
 
-    # Configuration files
+    # Load configuration files: If we're running under a docker deployment, wait until 
+    # the consul configuration is available.
+    if deploy_env:
+        print("Running in production!");
+        consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), 
+            '..', 'consul_config.py')
+
+        for i in range(CONSUL_CONFIG_FILE_RETRY_COUNT):
+            if not os.path.exists(consul_config):
+                sleep(1)
+                    
+        if not os.path.exists(consul_config):
+            print("No configuration file generated yet. Retried %d times, exiting." % CONSUL_CONFIG_FILE_RETRY_COUNT);
+            sys.exit(-1)
+
+        app.config.from_pyfile(consul_config, silent=True)
+
+    # Now load other bits of configuration
     app.config.from_pyfile(os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
         '..', 'default_config.py'
     ))
-    app.config.from_pyfile(os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        '..', 'consul_config.py'
-    ), silent=True)
     app.config.from_pyfile(os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
         '..', 'custom_config.py'
