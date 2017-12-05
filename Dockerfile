@@ -1,4 +1,4 @@
-FROM metabrainz/python:3.6
+FROM metabrainz/python:3.6-1
 
 ##############
 # MetaBrainz #
@@ -50,7 +50,7 @@ RUN ./node_modules/.bin/lessc ./metabrainz/static/fonts/font_awesome/less/font-a
 
 # Consul Template service is already set up with the base image.
 # Just need to copy the configuration.
-COPY ./docker/prod/consul-template.conf /etc/consul-template.conf
+COPY ./docker/prod/consul-template-uwsgi.conf /etc/
 
 COPY ./docker/prod/uwsgi.service /etc/service/uwsgi/run
 RUN chmod 755 /etc/service/uwsgi/run
