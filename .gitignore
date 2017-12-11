@@ -23,3 +23,6 @@ htmlcov/
 /custom_config.py
 
 /node_modules
+
+# git version files
+.git-version

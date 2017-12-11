@@ -5,7 +5,6 @@ import sys
 
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
-from metabrainz.utils import get_git_commit
 from time import sleep
 
 # Check to see if we're running under a docker deployment. If so, don't second guess
@@ -56,22 +55,22 @@ def create_app(config_path=None):
 
         app.config.from_pyfile(consul_config, silent=True)
 
+    # Printing out some debug values such as config and git commit
+    try:
+        with open(".git-version") as f:
+            git_version = f.read()
+        print('Running on git commit %s' % git_version.strip())
+    except IOError:
+        print("Unable to retrieve git commit. Use docker/push.sh to push images for production.")
+
+    print('Configuration values are as follows: ')
+    print(pprint.pformat(app.config, indent=4))
 
     app.init_loggers(
         file_config=app.config.get('LOG_FILE'),
         email_config=app.config.get('LOG_EMAIL'),
         sentry_config=app.config.get('LOG_SENTRY'),
     )
-
-
-    # Printing out some debug values such as config and git commit
-    app.logger.info('Configuration values are as follows: ')
-    app.logger.info(pprint.pformat(app.config, indent=4))
-    try:
-        app.logger.info('Running on git commit %s', get_git_commit())
-    except subprocess.CalledProcessError as e:
-        app.logger.info('Unable to retrieve git commit due to error: %s', str(e))
-
 
     # Database
     from metabrainz import db

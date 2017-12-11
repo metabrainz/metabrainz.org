@@ -8,6 +8,9 @@
 
 cd "$(dirname "${BASH_SOURCE[0]}")/../"
 
+# Save the current git status
+git describe --tags --dirty --always > .git-version
+
 TAG_PART=${1:-latest}
 docker build -t metabrainz/metabrainz:$TAG_PART .
 docker push metabrainz/metabrainz:$TAG_PART
