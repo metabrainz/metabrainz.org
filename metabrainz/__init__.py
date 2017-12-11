@@ -1,15 +1,18 @@
 import os
+import pprint
+import subprocess
 import sys
-from time import sleep
 
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
+from metabrainz.utils import get_git_commit
+from time import sleep
 
 # Check to see if we're running under a docker deployment. If so, don't second guess
 # the config file setup and just wait for the correct configuration to be generated.
 deploy_env = os.environ.get('DEPLOY_ENV', '')
 
-CONSUL_CONFIG_FILE_RETRY_COUNT = 10 
+CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 def create_app(config_path=None):
     app = CustomFlask(
@@ -58,6 +61,16 @@ def create_app(config_path=None):
         email_config=app.config.get('LOG_EMAIL'),
         sentry_config=app.config.get('LOG_SENTRY'),
     )
+
+
+    # Printing out some debug values such as config and git commit
+    app.logger.info('Configuration values are as follows: ')
+    app.logger.info(pprint.pformat(app.config, indent=4))
+    try:
+        app.logger.info('Running on git commit %s', get_git_commit())
+    except subprocess.CalledProcessError as e:
+        app.logger.info('Unable to retrieve git commit due to error: %s', str(e))
+
 
     # Database
     from metabrainz import db
