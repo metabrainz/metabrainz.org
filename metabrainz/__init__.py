@@ -61,7 +61,7 @@ def create_app(config_path=None):
             git_version = f.read()
         print('Running on git commit %s' % git_version.strip())
     except IOError:
-        print('Unable to retrieve git commit. Use docker/push.sh to push images for production.")
+        print("Unable to retrieve git commit. Use docker/push.sh to push images for production.")
 
     print('Configuration values are as follows: ')
     print(pprint.pformat(app.config, indent=4))
