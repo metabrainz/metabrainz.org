@@ -18,6 +18,8 @@ def create_app(config_path=None):
         use_debug_toolbar=True,
     )
 
+    print("Starting metabrainz service with %s environment." % deploy_env);
+
     # Now load other bits of configuration
     print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'default_config.py'))
     app.config.from_pyfile(os.path.join(
@@ -37,11 +39,10 @@ def create_app(config_path=None):
     # Load configuration files: If we're running under a docker deployment, wait until 
     # the consul configuration is available.
     if deploy_env:
-        print("Running in production!");
         consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), 
             '..', 'consul_config.py')
-        print("loading consul %s" % consul_config)
 
+        print("loading consul %s" % consul_config)
         for i in range(CONSUL_CONFIG_FILE_RETRY_COUNT):
             if not os.path.exists(consul_config):
                 sleep(1)
