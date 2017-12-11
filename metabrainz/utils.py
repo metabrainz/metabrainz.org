@@ -29,9 +29,3 @@ def build_url(base, additional_params=None):
         (url.scheme, url.netloc, url.path, url.params,
          urlencode(query_params), url.fragment)
     )
-
-
-def get_git_commit():
-    """ Gets the SHA hash of the current git commit of the repository
-    """
-    return subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('utf-8')[:8]
