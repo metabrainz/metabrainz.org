@@ -60,8 +60,8 @@ def create_app(config_path=None):
         with open(".git-version") as f:
             git_version = f.read()
         print('Running on git commit %s' % git_version.strip())
-    except subprocess.CalledProcessError as e:
-        print('Unable to retrieve git commit due to error: %s', str(e))
+    except IOError:
+        print('Unable to retrieve git commit. Use docker/push.sh to push images for production.")
 
     print('Configuration values are as follows: ')
     print(pprint.pformat(app.config, indent=4))
