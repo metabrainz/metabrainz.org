@@ -2,7 +2,7 @@
     {{- key (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") .) -}}
 {{- end -}}
 {{- define "KEY_OR_NONE" -}}
-    {{- key_or_default (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") .) "None" -}}
+    {{- keyOrDefault (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") .) "None" -}}
 {{- end -}}
 {{- define "KEY_ARRAY" -}}
     {{- range $index, $element := (key (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") .) | parseJSON) -}}
@@ -81,5 +81,3 @@ NOTIFICATION_RECIPIENTS = [
 ADMINS = [
     {{template "KEY_ARRAY" "admins"}}
 ]
-
-
