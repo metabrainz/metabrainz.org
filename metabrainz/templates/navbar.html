@@ -36,6 +36,16 @@
           </ul>
         </li>
         <li><a href="{{ url_for('payments.donate') }}">{{ _('Donate') }}</a></li>
+        <li class="language-selector dropdown hidden-md">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <span class="glyphicon glyphicon-globe"></span> {{ _('Language') }} <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            {% for language in config.LANGUAGES|dictsort(false, 'value') %}
+              <li><a href="{{ language[0] | parameterize('l') }}">{{ language[1]|capitalize }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
       </ul>
 
       {# Not showing user stuff on error pages. If attempt to load user info fails there, page will not render. #}
