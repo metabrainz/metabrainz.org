@@ -59,6 +59,24 @@ SMTP_SERVER = "metabrainz-mail"
 SMTP_PORT = 25
 MAIL_FROM_DOMAIN = "metabrainz.org"
 
+# List of supported UI languages.
+# Valid language codes can be obtained from Transifex.
+SUPPORTED_LANGUAGES = [
+    'en',  # English
+    'hr',  # Croatian
+    'nl',  # Dutch
+    'et',  # Estonian
+    'fi',  # Finnish
+    'fr',  # French
+    'de',  # German
+    'it',  # Italian
+    'nb',  # Norwegian Bokmål
+    'pl',  # Polish
+    'es',  # Spanish
+    'sv',  # Swedish
+    'ru',  # Russian
+]
+
 ADMINS = []
 
 RECAPTCHA_PUBLIC_KEY = ""
