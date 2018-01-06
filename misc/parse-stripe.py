@@ -7,12 +7,16 @@ import csv
 def toFloat(svalue):
     return float(svalue.replace(",", ""))
 
+if len(sys.argv) != 3:
+    print "Usage parse-stripe.py <stripe csv file> <qbo csv file>"
+    sys.exit(-1)
+
 fp = None
 try:
     fp = open(sys.argv[1], "r")
 except IOError:
     print "Cannot open input file %s" % sys.argv[1]
-    exit(0)
+    sys.exit(0)
 
 out = None
 try:
@@ -29,6 +33,10 @@ for i, row in enumerate(reader):
         continue
 
     if row[1] == 'transfer':
+        continue
+
+    print "status: %s" % row[12]
+    if row[12].lower() == 'failed':
         continue
 
     print row

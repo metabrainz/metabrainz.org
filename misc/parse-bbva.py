@@ -3,9 +3,27 @@
 import sys
 import re
 
-print "Date,Description,Amount"
+if len(sys.argv) != 3:
+    print "Usage parse-bbva.py <bbva csv file> <qbo csv file>"
+    sys.exit(-1)
 
-lines = sys.stdin.readlines()
+fp = None
+try:
+    fp = open(sys.argv[1], "r")
+except IOError:
+    print "Cannot open input file %s" % sys.argv[1]
+    sys.exit(0)
+
+out = None
+try:
+    out = open(sys.argv[2], "w")
+except IOError:
+    print "Cannot open output file %s" % sys.argv[2]
+    sys.exit(0)
+
+out.write("Date,Description,Amount\n")
+
+lines = fp.readlines()
 for line in lines:
     line = line.decode('iso-8859-1').encode('utf8')
     stripped = line.strip()
@@ -32,4 +50,4 @@ for line in lines:
     amount = fields[6].replace(".", "")
     amount = amount.replace(",", ".")
     amount = float(amount)
-    print("%s,%s,%.2f" % (dat, desc, amount))
+    out.write("%s,%s,%.2f\n" % (dat, desc, amount))
