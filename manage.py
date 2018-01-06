@@ -77,7 +77,6 @@ def init_db(force=False, create_db=False):
 
     click.echo("Database has been initialized successfully!")
 
-
 @cli.command()
 def extract_strings():
     """Extract all strings into messages.pot.
@@ -87,8 +86,23 @@ def extract_strings():
     _run_command("pybabel extract -F metabrainz/babel.cfg "
                  "-o metabrainz/messages.pot metabrainz/")
     click.echo("Strings have been successfully extracted into messages.pot file.")
+    
+@cli.command()
+def pull_translations():
+    """Pull translations for languages defined in config from Transifex and compile them.
+    Before using this command make sure that you properly configured Transifex client.
+    More info about that is available at http://docs.transifex.com/developer/client/setup#configuration.
+    """
+    languages = ','.join(create_app().config['SUPPORTED_LANGUAGES'])
+    _run_command("tx pull -f -r metabrainz.metabrainz -l %s" % languages)
 
 
+@cli.command()
+def update_strings():
+    """Extract strings and pull translations from Transifex."""
+    extract_strings()
+    pull_translations()
+    
 @cli.command()
 def compile_translations():
     """Compile translations for use."""
