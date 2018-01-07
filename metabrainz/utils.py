@@ -1,4 +1,5 @@
 import urllib.parse
+from flask import request
 
 import random
 import string
