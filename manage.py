@@ -77,6 +77,7 @@ def init_db(force=False, create_db=False):
 
     click.echo("Database has been initialized successfully!")
 
+    
 @cli.command()
 def extract_strings():
     """Extract all strings into messages.pot.
@@ -86,6 +87,7 @@ def extract_strings():
     _run_command("pybabel extract -F metabrainz/babel.cfg "
                  "-o metabrainz/messages.pot metabrainz/")
     click.echo("Strings have been successfully extracted into messages.pot file.")
+    
     
 @cli.command()
 def pull_translations():
