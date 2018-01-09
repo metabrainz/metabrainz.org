@@ -77,7 +77,7 @@ def init_db(force=False, create_db=False):
 
     click.echo("Database has been initialized successfully!")
 
-    
+
 @cli.command()
 def extract_strings():
     """Extract all strings into messages.pot.
