@@ -104,7 +104,8 @@ def update_strings():
     """Extract strings and pull translations from Transifex."""
     extract_strings()
     pull_translations()
-    
+
+
 @cli.command()
 def compile_translations():
     """Compile translations for use."""
