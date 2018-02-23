@@ -13,7 +13,7 @@ deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
-def create_app(config_path=None):
+def create_app(debug=None, config_path=None):
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
@@ -53,6 +53,9 @@ def create_app(config_path=None):
             sys.exit(-1)
 
         app.config.from_pyfile(consul_config, silent=True)
+
+    if debug is not None:
+        app.debug = debug
 
     if app.debug and app.config['SECRET_KEY']:
         app.init_debug_toolbar()
