@@ -18,7 +18,7 @@ class IndexViewsTestCase(FlaskTestCase):
         self.assert200(response)
 
     def test_socialcontract(self):
-        response = self.client.get(url_for('index.socialcontract'))
+        response = self.client.get(url_for('index.social_contract'))
         self.assert200(response)
 
     def test_about(self):
