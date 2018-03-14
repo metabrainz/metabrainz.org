@@ -27,7 +27,7 @@
   </p>
   <p>
     If you do not create an account (or are not logged in) you will not have access to the above listed features, however, you will 
-    still have full access to browse and examine the database.
+    still have full access to browse and examine the databases.
   </p>
 
   <h2>{{ _('Applicable to all users') }}</h2>
@@ -43,12 +43,12 @@
       remember your login details.
     </li>
     <li>
-      <b>musicbrainz_server_session</b>: If you are logged into one of our sites, your current session ID is stored in this cookie.
+      <b>musicbrainz_server_session, session, or connect.sid</b>: If you are logged into one of our sites, your current session ID is stored in this cookie.
     </li>
   </ol>
 
   <p>
-    We may store boolean dynamic preference information in other cookies, but these do not contain any sensitive information.
+    We may store dynamic preference information in other cookies, but these do not contain any sensitive information.
   </p>
 
   <h3>{{ _('Web and FTP access logs') }}</h3>
@@ -66,9 +66,9 @@
 
   <ol>
     <li>
-      Cover art images: These are provided by the various cover art sites that have given MusicBrainz permission to do so. This means 
-      that the relevant site will know (if they want to) your IP address, User-Agent string, etc., and which MusicBrainz web page you 
-      were visiting (the one which included the cover art image).
+      Cover art and other images: These are provided by the various cover art sites that have given MusicBrainz permission to do so and our own 
+      <a href="https://coverartarchive.org">Cover Art Archive</a>. This means that the relevant site will know (if they want to) your IP 
+      address, User-Agent string, etc., and which MusicBrainz web page you were visiting (the one which included the cover art image).
     </li>
     <li>
       Google Analytics: We use Google Analytics in our web pages to get a picture of who visits MusicBrainz. From these analytics we 
@@ -142,7 +142,7 @@
   </p>
 
   <p>
-    The localization service we use for creating localized versions of the MetaBrainz sites embeds embeds email addresses into 
+    The localization service we use for creating localized versions of the MetaBrainz sites embeds email addresses into 
     translation files that will be checked into our git repositories. If you participate in translating at Transifex, your email 
     address will be visible in our git repositories.
   </p>
@@ -162,9 +162,9 @@
 
   <h2>{{ _('Exceptions') }}</h2>
   <p>
-    Please note: Reasonable exceptions may apply to the above policy, for example to comply with applicable laws. The MetaBrainz 
+    <i><b>Please note</b>: Reasonable exceptions may apply to the above policy, for example to comply with applicable laws. The MetaBrainz 
     server administrators (about five people in all) can of course see any information on the system they want to, but to be honest 
-    we're probably not interested enough to look.
+    we're probably not interested enough to look.</i>
   </p>
 
 {% endblock %}
