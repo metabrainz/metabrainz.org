@@ -61,8 +61,10 @@ class IndexViewsTestCase(FlaskTestCase):
         self.assert200(resp)
         self.assertIn('flDebug', str(resp.data))
 
-
     def test_shop(self):
         response = self.client.get(url_for('index.shop'))
         self.assert200(response)
 
+    def test_datasets(self):
+        response = self.client.get(url_for('index.datasets'))
+        self.assert200(response)

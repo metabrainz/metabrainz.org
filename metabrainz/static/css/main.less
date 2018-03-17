@@ -387,3 +387,29 @@ h1.page-title, h2.page-title {
 table.finances td:nth-child(2) {
   text-align: right;
 }
+
+// Datasets page
+#data {
+  .dataset {
+    .clearfix;
+    padding-bottom: 20px;
+    span.name {
+      font-weight: bold;
+      color: @orange;
+    }
+    img.logo {
+      width: 120px;
+      .pull-left;
+      margin-right: 10px;
+      margin-top: 15px;
+    }
+    .info {
+      @media (min-width: @grid-float-breakpoint) {
+        margin-left: 142px;
+      }
+      ul.links {
+        .list-unstyled;
+      }
+    }
+  }
+}
