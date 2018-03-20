@@ -13,6 +13,14 @@ class IndexViewsTestCase(FlaskTestCase):
         response = self.client.get(url_for('index.contact'))
         self.assert200(response)
 
+    def test_code_of_conduct(self):
+        response = self.client.get(url_for('index.code_of_conduct'))
+        self.assert200(response)
+
+    def test_socialcontract(self):
+        response = self.client.get(url_for('index.social_contract'))
+        self.assert200(response)
+
     def test_about(self):
         response = self.client.get(url_for('index.about'))
         self.assert200(response)

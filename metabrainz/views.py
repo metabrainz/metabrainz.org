@@ -42,6 +42,16 @@ def contact():
     return render_template('index/contact.html', ad_deadline=ad_deadline)
 
 
+@index_bp.route('/social-contract')
+def social_contract():
+    return render_template('index/social-contract.html')
+
+
+@index_bp.route('/code-of-conduct')
+def code_of_conduct():
+    return render_template('index/code-of-conduct.html')
+
+
 @index_bp.route('/sponsors')
 def sponsors():
     return render_template('index/sponsors.html')

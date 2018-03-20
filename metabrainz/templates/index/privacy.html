@@ -7,12 +7,144 @@
 
   <h2>{{ _('Summary') }}</h2>
   <p>
-    {{ _('The MetaBrainz Foundation will not collect any private information unless
-    you choose to donate to support the MusicBrainz project. Any personal
-    information you choose to provide during the donation process will not be
-    revealed to anyone else, unless you give us permission to list your name on
-    our donations page. We will not contact you unless you give us permission
-    to do so when you make a donation.') }}
+  <ol>
+    <li>
+      You do not have to provide any personal data to be able to browse the contents of the databases published by MetaBrainz.
+    </li>
+    <li>
+      You do not have to provide any personally-identifying information if you choose not to.
+    </li>
+    <li>
+      We will never reveal your email address on MetaBrainz controlled web sites.
+    </li>
+  </ol>
+  <p>
+    In order to get maximum value out of the MetaBrainz projects, you may want to create an account and log in. 
+    Doing so grants you the ability to: edit the databases, contribute your own data, communicate with other users, and keep track 
+    of recently released music from artists in your MusicBrainz collection. If you choose to create an account then the minimum we 
+    ask is that you: choose a unique username and password, use a web browser that accepts "session" cookies, and provide a verified 
+    email address.
+  </p>
+  <p>
+    If you do not create an account (or are not logged in) you will not have access to the above listed features, however, you will 
+    still have full access to browse and examine the databases.
+  </p>
+
+  <h2>{{ _('Applicable to all users') }}</h2>
+
+  <h3>{{ _('Cookies') }}</h3>
+  <p>
+    We use two cookies that contain sensitive information:
+  </p>
+
+  <ol>
+    <li>
+      <b>remember_login</b>: If you choose the "Log in permanently" option when logging in to one of our sites; the cookie will be used to 
+      remember your login details.
+    </li>
+    <li>
+      <b>musicbrainz_server_session, session, or connect.sid</b>: If you are logged into one of our sites, your current session ID is stored in this cookie.
+    </li>
+  </ol>
+
+  <p>
+    We may store dynamic preference information in other cookies, but these do not contain any sensitive information.
+  </p>
+
+  <h3>{{ _('Web and FTP access logs') }}</h3>
+
+  <p>
+    In a practice similar to other web sites we keep logs of all web requests made against our servers. These logs include: your IP 
+    address, your browser's "User-Agent" string, and which page you requested. Aggregate information about web and FTP traffic is 
+    made available to the public via our site usage pages.
+  </p>
+
+  <h3>{{ _('Third-Party content') }}</h3>
+  <p>
+    Our project's web pages may load some third-party content. Some, but possibly not all sites are listed below:
+  </p>
+
+  <ol>
+    <li>
+      Cover art and other images: These are provided by the various cover art sites that have given MusicBrainz permission to do so and our own 
+      <a href="https://coverartarchive.org">Cover Art Archive</a>. This means that the relevant site will know (if they want to) your IP 
+      address, User-Agent string, etc., and which MusicBrainz web page you were visiting (the one which included the cover art image).
+    </li>
+    <li>
+      Google Analytics: We use Google Analytics in our web pages to get a picture of who visits MusicBrainz. From these analytics we 
+      can set targets for supported browser versions, screen sizes and other useful information that we take into consideration when 
+      developing or improving features on our site. If you object to the use of Google Analytics, please consider blocking it in your 
+      browser.
+    </li>
+    <li>
+      AcoustID: Our fingerprints tab loads fingerprint information from acoustid.org.
+    </li>
+    <li>
+      reCAPTCHA: Our account creation page loads third party content in order to prevent spammers from creating accounts.
+    </li>
+  </ol>
+
+  <p>
+    <i>The above information assumes that you are using "normal" web browser settings, whereby images are always loaded and HTTP referrer 
+    information is always sent.</i>
+  </p>
+
+  <p>
+    It is impractical to constantly modify this privacy policy when MusicBrainz changes which third party content it utilizes. We will 
+    aim to use common sense, respect to our community and community review when adding more content from third party sites. We will also 
+    periodically review our policy to ensure that it remains current.
+  </p>
+
+  <h2>{{ _('Applicable to account holders') }}</h2>
+
+  <h3>{{ _('Account creation') }}</h3>
+  <p>
+    When creating an account with a MetaBrainz project you need to pick a unique username and choose a password, the username you pick is the 
+    only name associated with your account and will be what other MetaBrainz users know you as. You may optionally also tell us other 
+    information about yourself that will be displayed to other MetaBrainz users and the public.
+  </p>
+
+  <p>
+    Additionally, in order to edit the databases you will need to provide a confirmed email address. This email address will be held in 
+    confidence, the only method of revealing your email address to another user is if you choose to send a message to another 
+    user and enable the option to "reveal my email address". Changing the email address stored with your account will require you to 
+    verify the new address.
+  </p>
+
+  <h3>{{ _('Edits and Notes') }}</h3>
+  <p>
+    If you make any changes to a MetaBrainz project database, such as adding any data, the details of those changes will be visible to 
+    other logged-in users and the change will be associated with your username.
+  </p>
+
+  <h3>{{ _('Subscriptions on MusicBrainz') }}</h3>
+  <p>
+    As a logged-in user you can subscribe to one or more artists, labels, collections or other editors. The act of subscribing causes 
+    any edits made to (or by in the case of another editor) those entities to be emailed to you. By default, other users can see your 
+    list of subscriptions, however, you can opt out of this by editing the appropriate preference.
+  </p>
+
+  <p>
+    This does not provide "perfect" privacy though, in some cases it will be possible to infer information about the contents of your 
+    subscription list even though you have disallowed others from viewing that list directly. This imperfection arises because various 
+    parts of the system behave differently depending on whether or not an entity has any subscribers; also, the number of users 
+    subscribed to each artist is available via the artist pages. In the most extreme (possibly contrived) example, imagine that all 
+    users have their subscriptions set to "public", except for exactly one user whose list is "private". In that case, any discrepancy 
+    for a given artist between the shown list of subscribers and the total number of subscribers must be down to that one user. Thus, 
+    you can infer what artists are on that user's list.
+  </p>
+
+  <h2>{{ _('Third-party sites') }}</h2>
+  <p>
+    Our code reviews are done on GitHub, which is not under the control of MetaBrainz. Participating in code reviews or other
+    tasks carried out on GitHub are subject to <a href="https://help.github.com/articles/github-privacy-statement/">GitHub's privacy 
+    policy</a>.
+  </p>
+
+  <p>
+    The localization service we use for creating localized versions of the MetaBrainz sites embeds email addresses into 
+    translation files that will be checked into our git repositories. If you participate in translating at Transifex, your email 
+    address will be visible in our git repositories.
   </p>
 
   <h2>{{ _('MetaBrainz donors') }}</h2>
@@ -28,16 +160,11 @@
     donation, unless you chose to be anonymous during the donation process.') }}
   </p>
 
-  <h2>{{ _('Web and FTP access logs (all users)') }}</h2>
+  <h2>{{ _('Exceptions') }}</h2>
   <p>
-    {{ _('Like just about all web sites, we keep logs of all web requests made
-    against our servers. These logs include the usual stuff: your IP address,
-    your browser\'s "User-Agent" string, and which page you requested.') }}
+    <i><b>Please note</b>: Reasonable exceptions may apply to the above policy, for example to comply with applicable laws. The MetaBrainz 
+    server administrators (about five people in all) can of course see any information on the system they want to, but to be honest 
+    we're probably not interested enough to look.</i>
   </p>
-  <p>
-    {{ _('Reasonable exceptions may apply to the above policy, for example to comply
-    with applicable laws. The MusicBrainz/MetaBrainz server administrators
-    (about three people in all) can of course see any information on the system
-    they want to, but to be honest they\'re probably not interested enough to look.') }}
-  </p>
+
 {% endblock %}
