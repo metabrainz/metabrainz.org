@@ -54,12 +54,6 @@ It must have the following structure:
 ```
 ./data/replication_packets/
     - hourly replication packets
-
-./data/replication_packets/daily/
-    - daily replication packets
-
-./data/replication_packets/weekly/
-    - weekly replication packets
 ```
 
 ### Startup

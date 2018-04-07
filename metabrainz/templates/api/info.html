@@ -13,33 +13,12 @@
     </em>
 
     <h2>{{ _('MusicBrainz Live Data Feed') }}</h2>
-    <p>{{ _('There are three endpoints for fetching replication packets:') }}</p>
+    <p>{{ _('There are two endpoints for fetching live data:') }}</p>
+
+    <h3>{{ _('Hourly Replication Packets') }}</h3>
     <p>
-      <strong>{{ _('Hourly:') }}</strong>
       <code>
         GET {{ url_for('api_musicbrainz.replication_hourly',
-                       _external=True, _scheme=config.PREFERRED_URL_SCHEME,
-                       packet_number=42, token="TOKEN")
-                  | replace("42", "<PACKET_NUMBER>")
-                  | replace("TOKEN", "<ACCESS_TOKEN>")
-            }}
-      </code>
-    </p>
-    <p>
-      <strong>{{ _('Daily:') }}</strong>
-      <code>
-        GET {{ url_for('api_musicbrainz.replication_daily',
-                       _external=True, _scheme=config.PREFERRED_URL_SCHEME,
-                       packet_number=42, token="TOKEN")
-                  | replace("42", "<PACKET_NUMBER>")
-                  | replace("TOKEN", "<ACCESS_TOKEN>")
-            }}
-      </code>
-    </p>
-    <p>
-      <strong>{{ _('Weekly:') }}</strong>
-      <code>
-        GET {{ url_for('api_musicbrainz.replication_weekly',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        packet_number=42, token="TOKEN")
                   | replace("42", "<PACKET_NUMBER>")
@@ -52,15 +31,37 @@
       <code>.tar.bz2</code> with <code>.asc</code>.') }}
     </p>
     <p>
-      {{ _('You can find the latest replication packet numbers from this endpoint:') }}<br />
+      {{ _('You can find the latest replication packet number from this endpoint:') }}<br />
       <code>
         GET {{ url_for('api_musicbrainz.replication_info',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        token="TOKEN")
                   | replace("TOKEN", "<ACCESS_TOKEN>")
             }}
-        </code>
+      </code>
     </p>
 
+    <h3>{{ _('Hourly Incremental JSON Dumps') }}</h3>
+    <p>
+      <code>
+        GET {{ url_for('api_musicbrainz.json_dump',
+                       _external=True, _scheme=config.PREFERRED_URL_SCHEME,
+                       packet_number=42, entity_name="ENTITY_NAME",
+                       token="TOKEN")
+                  | replace("42", "<PACKET_NUMBER>")
+                  | replace("ENTITY_NAME", "<ENTITY_NAME>")
+                  | replace("TOKEN", "<ACCESS_TOKEN>")
+            }}
+      </code>
+    </p>
+    <p>
+      {{ _('The JSON dumps are partitioned by entity type. <code>&lt;ENTITY_NAME&gt;</code> can be one of: area, artist, event, instrument, label, place, recording, release, release-group, series, or work.') }}
+    </p>
+    <p>
+      {{ _('It’s possible that a JSON dump for a particular entity type doesn’t exist if no entities of that type have changed in a given hour.') }}
+    </p>
+    <p>
+      {{ _('Each dump contains a file named <code>mbdump/&lt;ENTITY_NAME&gt;</code>. This file must be read line-by-line; each line contains one changed entity in JSON format.') }}
+    </p>
   </div>
 {% endblock %}
