@@ -10,9 +10,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 # REPLICATION PACKETS
-# Hourly replication packets must be located in this directory. Daily
-# replication packets must be located in subdirectory called "daily"
-# in REPLICATION_PACKETS_DIR. Weekly packets in subdirectory "weekly".
+# Hourly replication packets must be located in this directory.
 REPLICATION_PACKETS_DIR = "/data/replication_packets"
 JSON_DUMPS_DIR = "/data/json_dumps"
 

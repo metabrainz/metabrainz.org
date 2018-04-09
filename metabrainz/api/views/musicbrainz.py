@@ -16,9 +16,6 @@ MIMETYPE_ARCHIVE_BZ2 = 'application/x-tar-bz2'
 MIMETYPE_ARCHIVE_XZ = 'application/x-xz'
 MIMETYPE_SIGNATURE = 'text/plain'
 
-DAILY_SUBDIR = 'daily'
-WEEKLY_SUBDIR = 'weekly'
-
 # These durations are used to create nagios compatible status codes so we can monitor
 # the replication packet stream.
 MAX_PACKET_AGE_WARNING = 60 * 60 * 2  # 4 hours
@@ -96,14 +93,6 @@ def replication_info():
             current_app.config['REPLICATION_PACKETS_DIR'],
             "replication-[0-9]+.tar.bz2$"
         ),
-        'last_packet_daily': _get_last_packet_name(
-            os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR),
-            "replication-daily-[0-9]+.tar.bz2$"
-        ),
-        'last_packet_weekly': _get_last_packet_name(
-            os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR),
-            "replication-weekly-[0-9]+.tar.bz2$"
-        ),
     })
 
 
@@ -136,64 +125,6 @@ def replication_hourly_signature(packet_number):
         return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
 
 
-@api_musicbrainz_bp.route('/replication-daily-<int:packet_number>.tar.bz2')
-@token_required
-@tracked
-def replication_daily(packet_number):
-    directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR)
-    filename = 'replication-daily-%s.tar.bz2' % packet_number
-    if not os.path.isfile(safe_join(directory, filename)):
-        return Response("Can't find specified replication packet!\n", status=404)
-
-    if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, DAILY_SUBDIR, filename))
-    else:
-        return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_BZ2)
-
-
-@api_musicbrainz_bp.route('/replication-daily-<int:packet_number>.tar.bz2.asc')
-@token_required
-def replication_daily_signature(packet_number):
-    directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], DAILY_SUBDIR)
-    filename = 'replication-daily-%s.tar.bz2.asc' % packet_number
-    if not os.path.isfile(safe_join(directory, filename)):
-        return Response("Can't find signature for a specified replication packet!\n", status=404)
-
-    if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, DAILY_SUBDIR, filename))
-    else:
-        return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
-
-
-@api_musicbrainz_bp.route('/replication-weekly-<int:packet_number>.tar.bz2')
-@token_required
-@tracked
-def replication_weekly(packet_number):
-    directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR)
-    filename = 'replication-weekly-%s.tar.bz2' % packet_number
-    if not os.path.isfile(safe_join(directory, filename)):
-        return Response("Can't find specified replication packet!\n", status=404)
-
-    if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, WEEKLY_SUBDIR, filename))
-    else:
-        return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_BZ2)
-
-
-@api_musicbrainz_bp.route('/replication-weekly-<int:packet_number>.tar.bz2.asc')
-@token_required
-def replication_weekly_signature(packet_number):
-    directory = os.path.join(current_app.config['REPLICATION_PACKETS_DIR'], WEEKLY_SUBDIR)
-    filename = 'replication-weekly-%s.tar.bz2.asc' % packet_number
-    if not os.path.isfile(safe_join(directory, filename)):
-        return Response("Can't find signature for a specified replication packet!\n", status=404)
-
-    if 'USE_NGINX_X_ACCEL' in current_app.config and current_app.config['USE_NGINX_X_ACCEL']:
-        return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, WEEKLY_SUBDIR, filename))
-    else:
-        return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
-
-
 @api_musicbrainz_bp.route('/json-dumps/json-dump-<int:packet_number>/<entity_name>.tar.xz')
 @token_required
 @tracked
@@ -207,6 +138,19 @@ def json_dump(packet_number, entity_name):
     if not os.path.isfile(safe_join(directory, filename)):
         return Response("Can't find specified JSON dump!", status=404)
     return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_XZ)
+
+
+@api_musicbrainz_bp.route('/json-dumps/json-dump-<int:packet_number>/<entity_name>.tar.xz.asc')
+@token_required
+@tracked
+def json_dump_signature(packet_number, entity_name):
+    """Endpoint that provides access to the JSON dump signature files.
+    """
+    directory = os.path.join(current_app.config['JSON_DUMPS_DIR'], "json-dump-%s" % packet_number)
+    filename = '%s.tar.xz.asc' % entity_name
+    if not os.path.isfile(safe_join(directory, filename)):
+        return Response("Can't find signature for the specified JSON dump!", status=404)
+    return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
 
 
 def _redirect_to_nginx(location):
