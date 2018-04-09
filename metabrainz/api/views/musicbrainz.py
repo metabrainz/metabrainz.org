@@ -140,6 +140,19 @@ def json_dump(packet_number, entity_name):
     return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_XZ)
 
 
+@api_musicbrainz_bp.route('/json-dumps/json-dump-<int:packet_number>/<entity_name>.tar.xz.asc')
+@token_required
+@tracked
+def json_dump_signature(packet_number, entity_name):
+    """Endpoint that provides access to the JSON dump signature files.
+    """
+    directory = os.path.join(current_app.config['JSON_DUMPS_DIR'], "json-dump-%s" % packet_number)
+    filename = '%s.tar.xz.asc' % entity_name
+    if not os.path.isfile(safe_join(directory, filename)):
+        return Response("Can't find signature for the specified JSON dump!", status=404)
+    return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
+
+
 def _redirect_to_nginx(location):
     """This creates an internal redirection to a specified location.
 
