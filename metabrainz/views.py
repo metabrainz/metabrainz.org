@@ -73,3 +73,8 @@ def privacy_policy():
 @index_bp.route('/about/customers.html')
 def about_customers_redirect():
     return redirect(url_for('users.supporters_list') , 301)
+
+
+@index_bp.route('/shop')
+def shop():
+    return render_template('index/shop.html')

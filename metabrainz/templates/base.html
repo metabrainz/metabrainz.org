@@ -44,24 +44,32 @@
         <hr />
         <div class="footer">
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <div class="title"><a href="{{ url_for('index.about') }}">{{ _('Foundation') }}</a></div>
               <ul>
                 <li><a href="{{ url_for('index.projects') }}">{{ _('Projects') }}</a></li>
                 <li><a href="{{ url_for('index.team') }}">{{ _('Team') }}</a></li>
-                <li><a href="{{ url_for('index.sponsors') }}">{{ _('Sponsors') }}</a></li>
-                <li><a href="{{ url_for('users.supporters_list') }}">{{ _('Supporters') }}</a></li>
+                <li><a href="{{ url_for('index.shop') }}">{{ _('Shop') }}</a></li>
+              </ul>
+            </div>
+            <div class="col-sm-2">
+              <div class="title"><a href="{{ url_for('index.about') }}">{{ _('Policies') }}</a></div>
+              <ul>
+                <li><a href="{{ url_for('index.social_contract') }}">{{ _('Social Contract') }}</a></li>
+                <li><a href="{{ url_for('index.code_of_conduct') }}">{{ _('Code of Conduct') }}</a></li>
                 <li><a href="{{ url_for('index.privacy_policy') }}">{{ _('Privacy Policy') }}</a></li>
               </ul>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <div class="title"><a href="{{ url_for('financial_reports.index') }}">{{ _('Finances') }}</a></div>
               <ul>
                 <li><a href="{{ url_for('annual_reports.index') }}">{{ _('Annual Reports') }}</a></li>
                 <li><a href="{{ url_for('payments.donors') }}">{{ _('Donors') }}</a></li>
+                <li><a href="{{ url_for('index.sponsors') }}">{{ _('Sponsors') }}</a></li>
+                <li><a href="{{ url_for('users.supporters_list') }}">{{ _('Supporters') }}</a></li>
               </ul>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <div class="title"><a href="{{ url_for('users.supporters_list') }}">{{ _('Users') }}</a></div>
               <ul>
                 {% if not current_user or current_user.is_anonymous %}
@@ -74,7 +82,7 @@
               </ul>
             </div>
             {# Last block should fill up the rest of this row. #}
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <div class="title"><a href="{{ url_for('index.contact') }}">{{ _('Contact us') }}</a></div>
               <ul>
                 <li><a href="https://blog.musicbrainz.org/category/metabrainz/">{{ _('Blog') }}</a></li>
