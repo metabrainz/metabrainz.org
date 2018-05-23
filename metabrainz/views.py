@@ -70,6 +70,11 @@ def privacy_policy():
     return render_template('index/privacy.html')
 
 
+@index_bp.route('/gdpr')
+def gdpr_statement():
+    return render_template('index/gdpr.html')
+
+
 @index_bp.route('/about/customers.html')
 def about_customers_redirect():
     return redirect(url_for('users.supporters_list') , 301)
