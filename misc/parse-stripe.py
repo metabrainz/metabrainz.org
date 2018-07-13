@@ -18,13 +18,15 @@ except IOError:
     print "Cannot open input file %s" % sys.argv[1]
     sys.exit(0)
 
-out = None
+_out = None
 try:
-    out = open(sys.argv[2], "w")
-    out.write("Date,Description,Amount\n")
+    _out = open(sys.argv[2], "w")
 except IOError:
     print "Cannot open output file %s" % sys.argv[2]
     exit(0)
+
+out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
+out.writerow(["Date","Description","Amount"])
 
 trans = []
 reader = csv.reader(fp)
@@ -40,17 +42,17 @@ for i, row in enumerate(reader):
         continue
 
     print row
-    date = row[2].split(' ')[0]
+    date = row[3].split(' ')[0]
     date = date.split('-')
     date = "%s/%s/%s" % (date[1], date[2], date[0])
-    sender = row[24].decode('iso-8859-1') #.encode('utf8')
-    amount = toFloat(row[6])
-    fee = -toFloat(row[8])
+    sender = row[25].decode('iso-8859-1') #.encode('utf8')
+    amount = toFloat(row[7])
+    fee = -toFloat(row[9])
     net = amount - fee
     memo = row[1]
 
-    out.write("%s,%s,%.2f\n" % (date, "Stripe", fee))
-    out.write("%s,%s,%.2f\n" % (date, sender.encode('utf-8'), amount))
+    out.writerow([date, "Stripe fee", "%.2f" % fee])
+    out.writerow([date, sender.encode('utf-8'), amount])
 
 fp.close()
-out.close()
+_out.close()

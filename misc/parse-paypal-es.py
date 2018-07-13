@@ -13,22 +13,21 @@ if len(sys.argv) != 3:
     print "Usage parse-paypal-es.py <paypal csv file> <qbo csv file>"
     sys.exit(-1)
 
-fp = None
 try:
     fp = open(sys.argv[1], "r")
 except IOError:
     print "Cannot open input file %s" % sys.argv[1]
     sys.exit(0)
 
-out = None
 try:
-    out = open(sys.argv[2], "w")
+    _out = open(sys.argv[2], "w")
 except IOError:
     print "Cannot open output file %s" % sys.argv[2]
     sys.exit(0)
 
 
-out.write("Date,Description,Amount\n")
+out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
+out.writerow(["Date","Description","Amount"])
 
 reader = unicode_csv_reader(fp)
 index = 0
@@ -40,17 +39,20 @@ for fields in reader:
     desc = fields[3].encode('utf8')
     dat = fields[0].encode('utf8')
     amount = fields[7].encode('utf8')
+    type = fields[4].encode('utf8')
     status = fields[5].encode('utf8')
     if status != 'Completed':
         continue
 
-    out.write("%s,%s,%s\n" % (dat, desc, amount))
+    if type.find("Account Hold") >= 0:
+        continue
 
-    desc = "PayPal"
+    out.writerow([dat, desc, amount])
+
     dat = fields[0].encode('utf8')
     fee = fields[8].encode('utf8')
     if fee and float(fee) != 0.0:
-        out.write("%s,%s,%s\n" % (dat, desc, fee))
+        out.writerow([dat, "PayPal fee", fee])
 
 fp.close()
-out.close()
+_out.close()

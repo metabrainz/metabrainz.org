@@ -27,15 +27,15 @@ except IOError:
     print "Cannot open input file %s" % sys.argv[1]
     sys.exit(0)
 
-out = None
+_out = None
 try:
-    out = open(sys.argv[2], "w")
+    _out = open(sys.argv[2], "w")
 except IOError:
     print "Cannot open output file %s" % sys.argv[2]
     sys.exit(0)
 
-
-out.write("Date,Description,Amount\n")
+out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
+out.writerow(["Date","Description","Amount"])
 
 lines = []
 reader = unicode_csv_reader(fp)
@@ -72,8 +72,8 @@ while True:
 
     elif currency != 'USD':
         # Received money in foreign currency
-        native = float(lines[index + 2][7].encode('utf8'))
-        foreign = -float(lines[index + 1][7].encode('utf8'))
+        native = float(lines[index + 2][7].encode('utf8').replace(",", ""))
+        foreign = -float(lines[index + 1][7].encode('utf8').replace(",", ""))
 
         #print "native %f, foreign %f" % (native, foreign)
 
@@ -92,14 +92,14 @@ while True:
         #print lines[index + 1]
         #print lines[index + 2]
 
-        native = float(lines[index][7].encode('utf8'))
-        foreign = -float(lines[index + 1][7].encode('utf8'))
+        native = float(lines[index][7].encode('utf8').replace(",", ""))
+        foreign = -float(lines[index + 1][7].encode('utf8').replace(",", ""))
         desc = lines[index + 2][3].encode('utf8')
 
         #print "native %f, foreign %f" % (native, foreign)
 
         ratio = native / foreign
-        print "conversion rate: %f" % ratio
+        #print "conversion rate: %f" % ratio
 
         fee = float(fee) * ratio
         fee = float(int(fee * 100)) / 100
@@ -111,14 +111,14 @@ while True:
         
 
     desc = desc.replace(",", " ")
-    out.write("%s,%s,%s\n" % (dat, desc, amount))
+    out.writerow([dat, desc, amount])
 
-    desc = "PayPal"
+    desc = "PayPal Fee"
     dat = fields[0].encode('utf8')
     if fee and float(fee) != 0.0:
-        out.write("%s,%s,%s\n" % (dat, desc, fee))
+        out.writerow([dat, desc, fee])
 
     index += 1
 
 fp.close()
-out.close()
+_out.close()
