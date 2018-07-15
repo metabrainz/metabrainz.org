@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Login to Quickbooks') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <div id="qbo">
+    <h1 class="page-title">{{ _('Login to Quickbooks') }}</h1>
+
+    <p>
+    We're currently not logged into QuickBooks:
+    </p>
+
+    <a href="{{ url_for("quickbooks.login") }}" class="btn btn-primary btn-lg btn-block">Log to QuickBooks</a>
+  </div>
+
+{% endblock %}
