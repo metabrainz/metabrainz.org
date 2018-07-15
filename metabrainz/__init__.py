@@ -68,13 +68,8 @@ def create_app(debug=None, config_path = None):
         print("Unable to retrieve git commit. Use docker/push.sh to push images for production.")
 
     print('Configuration values are as follows: ')
-    print(pprint.pformat(app.config, indent=4))
+    app.logger.error(pprint.pformat(app.config, indent=4))
 
-    app.init_loggers(
-        file_config=app.config.get('LOG_FILE'),
-        email_config=app.config.get('LOG_EMAIL'),
-        sentry_config=app.config.get('LOG_SENTRY'),
-    )
 
     # Database
     from metabrainz import db
@@ -85,6 +80,10 @@ def create_app(debug=None, config_path = None):
     # Redis (cache)
     from brainzutils import cache
     cache.init(**app.config['REDIS'])
+
+    # quickbooks module setup
+    from metabrainz.quickbooks import quickbooks
+    quickbooks.init(app)
 
     # MusicBrainz OAuth
     from metabrainz.users import login_manager, musicbrainz_login
@@ -163,6 +162,7 @@ def _register_blueprints(app):
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
+    from metabrainz.quickbooks.views import quickbooks_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
@@ -173,6 +173,7 @@ def _register_blueprints(app):
     # from organizations as well as regular donations:
     app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')
     app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
+    app.register_blueprint(quickbooks_bp, url_prefix='/quickbooks')
 
     #############
     # OAuth / API
