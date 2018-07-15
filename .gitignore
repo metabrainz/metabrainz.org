@@ -25,6 +25,8 @@ htmlcov/
 /node_modules
 
 .DS_Store
+*.swp
+config.py
 
 # git version files
 .git-version
