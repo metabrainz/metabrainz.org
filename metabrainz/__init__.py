@@ -19,27 +19,23 @@ def create_app(debug=None, config_path=None):
         use_flask_uuid=True,
     )
 
+    app.init_loggers(
+        file_config=app.config.get('LOG_FILE'),
+        email_config=app.config.get('LOG_EMAIL'),
+        sentry_config=app.config.get('LOG_SENTRY'),
+    )
+
     print("Starting metabrainz service with %s environment." % deploy_env);
 
-    # Now load other bits of configuration
-    print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'default_config.py'))
-    app.config.from_pyfile(os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        '..', 'default_config.py'
-    ))
-    print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'custom_config.py'))
-    app.config.from_pyfile(os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        '..', 'custom_config.py'
-    ), silent=True)
-
-    if config_path:
-        print("loading custom %s" % config_path)
-        app.config.from_pyfile(config_path)
-
-    # Load configuration files: If we're running under a docker deployment, wait until 
-    # the consul configuration is available.
-    if deploy_env:
+    if not deploy_env:
+        print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
+        app.config.from_pyfile(os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            '..', 'config.py'
+        ))
+    else:
+        # Load configuration files: If we're running under a docker deployment, wait until 
+        # the consul configuration is available.
         consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), 
             '..', 'consul_config.py')
 
@@ -69,13 +65,8 @@ def create_app(debug=None, config_path=None):
         print("Unable to retrieve git commit. Use docker/push.sh to push images for production.")
 
     print('Configuration values are as follows: ')
-    print(pprint.pformat(app.config, indent=4))
+    app.logger.error(pprint.pformat(app.config, indent=4))
 
-    app.init_loggers(
-        file_config=app.config.get('LOG_FILE'),
-        email_config=app.config.get('LOG_EMAIL'),
-        sentry_config=app.config.get('LOG_SENTRY'),
-    )
 
     # Database
     from metabrainz import db
@@ -86,6 +77,10 @@ def create_app(debug=None, config_path=None):
     # Redis (cache)
     from brainzutils import cache
     cache.init(**app.config['REDIS'])
+
+    # quickbooks module setup
+    from metabrainz.quickbooks import quickbooks
+    quickbooks.init(app)
 
     # MusicBrainz OAuth
     from metabrainz.users import login_manager, musicbrainz_login
@@ -162,6 +157,7 @@ def _register_blueprints(app):
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
+    from metabrainz.quickbooks.views import quickbooks_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
@@ -172,6 +168,7 @@ def _register_blueprints(app):
     # from organizations as well as regular donations:
     app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')
     app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
+    app.register_blueprint(quickbooks_bp, url_prefix='/quickbooks')
 
     #############
     # OAuth / API

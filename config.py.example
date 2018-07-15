@@ -44,6 +44,10 @@ MUSICBRAINZ_BASE_URL = "https://musicbrainz.org/"
 MUSICBRAINZ_CLIENT_ID = ""
 MUSICBRAINZ_CLIENT_SECRET = ""
 
+# QUICKBOOKS OAUTH
+QUICKBOOKS_BASE_URL = "sandbox-quickbooks.api.intuit.com"
+QUICKBOOKS_CLIENT_ID = ""
+QUICKBOOKS_CLIENT_SECRET = ""
 
 # ADMIN SECTION
 # This is a list of MusicBrainz usernames of people that are allowed to access
