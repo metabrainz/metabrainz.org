@@ -56,6 +56,11 @@ def index():
         except ValueError:
             end_date = ""
 
+        try:
+            tier = invoice.Line[0].SalesItemLineDetail.ItemRef.name
+        except AttributeError:
+            tier = ""
+
         invoice_dict[customer_id].append({ 
             'customer' : customer_id, 
             'date' : create_time,
@@ -63,7 +68,7 @@ def index():
             'amount' : invoice.TotalAmt ,
             'begin' : begin_date,
             'end' : end_date,
-            'service' : invoice.Line[0].Description,
+            'service' : tier,
             'number' : invoice.DocNumber,
             'currency' : invoice.CurrencyRef.value
         })
