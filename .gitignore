@@ -24,5 +24,7 @@ htmlcov/
 
 /node_modules
 
+.DS_Store
+
 # git version files
 .git-version

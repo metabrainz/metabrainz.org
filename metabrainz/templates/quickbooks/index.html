@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Send Invoices') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <div id="qbo">
+    <h1 class="page-title">{{ _('Send Invoices') }}</h1>
+
+    <table class="table table-striped">
+      {% for customer in customers %}
+      <tr>
+        <td>{{ customer }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </div>
+
+{% endblock %}
