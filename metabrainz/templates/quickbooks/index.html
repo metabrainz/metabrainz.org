@@ -6,10 +6,34 @@
   <div id="qbo">
     <h1 class="page-title">{{ _('Send Invoices') }}</h1>
 
-    <table class="table table-striped">
+    <p>
+      <a href="{{ url_for("quickbooks.logout") }}">logout from QuickBooks</a>
+    </p>
+
+    <h3>Ready to invoice</h3>
+    <table class="table">
       {% for customer in customers %}
       <tr>
-        <td>{{ customer }}</td>
+        <td><h4>{{ customer.name }}</h4></br>
+        
+          <table class="table table-striped">
+            {% for invoice in customer.invoices %}
+            <tr>
+              <td style="width: 10%; font-weight: bold;">{{ invoice.number }}</td>
+              <td style="width: 15%">{{ invoice.date }}</td>
+              <td style="width: 15%">{{ invoice.begin }}</td>
+              <td style="width: 15%">{{ invoice.end }}</td>
+              <td style="width: 20%">{{ invoice.service }}</td>
+              <td style="width: 20%">{{ invoice.amount }} {{ invoice.currency }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td>No invoices</td>
+            </tr>
+            {% endfor %}
+          </table>
+        
+        </td>
       </tr>
       {% endfor %}
     </table>

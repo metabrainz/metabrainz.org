@@ -17,4 +17,5 @@ requests==2.18.3
 six==1.10.0
 SQLAlchemy==1.1.9
 stripe==1.62.0
-python-quickbooks
+python-quickbooks==0.7.4
+python-dateutil==2.7.3
