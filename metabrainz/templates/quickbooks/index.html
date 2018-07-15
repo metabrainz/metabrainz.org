@@ -11,12 +11,15 @@
     </p>
 
     <h3>Ready to invoice</h3>
+    <div style="background: green; width: 100%; height: 5px"></div>
     {{ section(ready) }}
 
     <h3>Uncertain</h3>
+    <div style="background: red; width: 100%; height: 5px"></div>
     {{ section(wtf) }}
 
     <h3>Current</h3>
+    <div style="background: blue; width: 100%; height: 5px"></div>
     {{ section(current) }}
 
   </div>
@@ -27,7 +30,7 @@
     <table class="table">
       {% for customer in customers %}
         <tr>
-          <td><p style="font-weight: bold">{{ customer.name }}</p></br>
+          <td><p style="font-weight: bold; font-size: 15pt;">{{ customer.name }}</p></br>
             {% if customer.invoices %}
               <table class="table table-striped thead-dark">
                 <tr>
