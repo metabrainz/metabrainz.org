@@ -1,7 +1,8 @@
 import logging
 import quickbooks
-from datetime import datetime
+import datetime 
 from dateutil.parser import parse
+from calendar import monthrange
 
 from werkzeug.exceptions import BadRequest, InternalServerError
 from flask import Blueprint, request, current_app, render_template, redirect, url_for, session
@@ -11,6 +12,17 @@ from quickbooks.objects.customer import Customer
 from quickbooks.objects.invoice import Invoice
 
 quickbooks_bp = Blueprint('quickbooks', __name__)
+
+
+def calculate_quarter_dates(year, quarter):
+    quarter += 1
+    first_month_of_quarter = 3 * quarter - 2
+    last_month_of_quarter = 3 * quarter
+    date_of_first_day_of_quarter = datetime.date(year, first_month_of_quarter, 1).strftime("%m-%d-%Y")
+    date_of_last_day_of_quarter = datetime.date(year, last_month_of_quarter, monthrange(year, last_month_of_quarter)[1]).strftime("%m-%d-%Y")
+
+    return (date_of_first_day_of_quarter, date_of_last_day_of_quarter)
+
 
 @quickbooks_bp.route('/')
 def index():
@@ -38,6 +50,24 @@ def index():
     except quickbooks.exceptions.QuickbooksException as err:
         logging.error(err)
         raise InternalServerError
+
+    dt = datetime.datetime.now()
+    q = (dt.month-1) // 3 
+    pq = (q + 3) % 4
+    ppq = (pq + 3) % 4
+
+    year = dt.year
+    (q_start, q_end) = calculate_quarter_dates(year, q)
+    if pq > q:
+        year -= 1
+    (pq_start, pq_end) = calculate_quarter_dates(year, pq)
+    if ppq > pq:
+        year -= 1
+    (ppq_start, ppq_end) = calculate_quarter_dates(year ,ppq)
+
+    logging.error("q: %d %s %s" % (q, q_start, q_end))
+    logging.error("pq: %d %s %s" % (pq, pq_start, pq_end))
+    logging.error("ppq: %d %s %s" % (ppq, ppq_start, ppq_end))
 
     invoice_dict = {}
     for invoice in invoices:
@@ -72,17 +102,32 @@ def index():
             'number' : invoice.DocNumber,
             'currency' : invoice.CurrencyRef.value
         })
-        
 
-
-    customer_list = []
+    ready_to_invoice = []
+    wtf = []
+    current = []
     for customer in customers:
         invoices = invoice_dict.get(customer.Id, [])
         invoices = sorted(invoices, key=lambda invoice: invoice['sortdate'], reverse=True)
-        customer_list.append({ 'name' : customer.DisplayName or customer.CompanyName, 'invoices' : invoices })
 
+        if invoices:
+            logging.error("q '%s' - '%s' == '%s' - '%s'" % (invoices[0]['begin'], q_start, invoices[0]['end'], q_end))
+            logging.error("pq '%s' - '%s' == '%s' - '%s'" % (invoices[0]['begin'], pq_start, invoices[0]['end'], pq_end))
+        
+        cust = { 'name' : customer.DisplayName or customer.CompanyName, 'invoices' : invoices }
+        if not invoices:
+            logging.error("wtf")
+            wtf.append(cust)
+        elif invoices[0]['begin'] == q_start and invoices[0]['end'] == q_end:
+            logging.error("current")
+            current.append(cust)
+        elif invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
+            logging.error("ready")
+            ready_to_invoice.append(cust)
+        else:
+            wtf.append(cust)
 
-    return render_template("quickbooks/index.html", customers=customer_list)
+    return render_template("quickbooks/index.html", ready=ready_to_invoice, wtf=wtf, current=current)
 
 
 @quickbooks_bp.route('/login')
