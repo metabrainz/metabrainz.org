@@ -15,24 +15,30 @@
       {% for customer in customers %}
       <tr>
         <td><h4>{{ customer.name }}</h4></br>
-        
-          <table class="table table-striped">
-            {% for invoice in customer.invoices %}
-            <tr>
-              <td style="width: 10%; font-weight: bold;">{{ invoice.number }}</td>
-              <td style="width: 15%">{{ invoice.date }}</td>
-              <td style="width: 15%">{{ invoice.begin }}</td>
-              <td style="width: 15%">{{ invoice.end }}</td>
-              <td style="width: 20%">{{ invoice.service }}</td>
-              <td style="width: 20%">{{ invoice.amount }} {{ invoice.currency }}</td>
-            </tr>
-            {% else %}
-            <tr>
-              <td>No invoices</td>
-            </tr>
-            {% endfor %}
-          </table>
-        
+          {% if customer.invoices %}
+            <table class="table table-striped thead-dark">
+              <tr>
+                <th>num</th>
+                <th>date</th>
+                <th>begin</th>
+                <th>end</th>
+                <th>tier</th>
+                <th>amount</th>
+              </tr>
+              {% for invoice in customer.invoices %}
+                <tr>
+                  <td style="width: 10%; font-weight: bold;">{{ invoice.number }}</td>
+                  <td style="width: 15%">{{ invoice.date }}</td>
+                  <td style="width: 15%">{{ invoice.begin }}</td>
+                  <td style="width: 15%">{{ invoice.end }}</td>
+                  <td style="width: 20%">{{ invoice.service }}</td>
+                  <td style="width: 20%">{{ invoice.amount }} {{ invoice.currency }}</td>
+                </tr>
+              {% endfor %}
+            </table>
+          {% else %}
+            <p>No invoices</p>
+          {% endif %}
         </td>
       </tr>
       {% endfor %}
