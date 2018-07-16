@@ -235,6 +235,7 @@ def musicbrainz_post():
         next = session.session.get('next')
         return redirect(next) if next else redirect(url_for('.profile'))
     else:
+        flash.info("This is the first time you've signed into metabrainz.org, please sign up!")
         return redirect(url_for('.signup'))
 
 
