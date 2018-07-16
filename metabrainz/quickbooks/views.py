@@ -16,6 +16,9 @@ quickbooks_bp = Blueprint('quickbooks', __name__)
 
 
 def calculate_quarter_dates(year, quarter):
+    '''
+    Given a year and zero based quarter, return a tuple of quarter start/end dates as a US formatted date string.
+    '''
     quarter += 1
     first_month_of_quarter = 3 * quarter - 2
     last_month_of_quarter = 3 * quarter
@@ -26,6 +29,9 @@ def calculate_quarter_dates(year, quarter):
 
 
 def add_new_invoice(invoice, cust, start, end, today):
+    '''
+    Copy an invoice object and update some fields in the object
+    '''
     new_invoice = deepcopy(invoice)
     new_invoice['begin'] = start
     new_invoice['end'] = end
@@ -36,6 +42,11 @@ def add_new_invoice(invoice, cust, start, end, today):
 
 
 def create_invoices(client, invoices):
+    '''
+    Given a set of exiting invoices, fetch the invoice from QuickBooks, make a copy, updated it
+    with new values and then have QuickBooks save the new invoice. Invoices are not sent,
+    and must be sent via the QuickBooks web interface.
+    '''
 
     for invoice in invoices:
         invoice_list = Invoice.query("select * from invoice where Id = '%s'" % invoice['base_invoice'], qb=client)
@@ -59,7 +70,13 @@ def create_invoices(client, invoices):
 
 @quickbooks_bp.route('/', methods=['GET'])
 def index():
+    '''
+    Load all customers and 100 invoices and the correlate them.
+    Customers get put into three bins: Ready to invoice, current (no need for an invoice) and WTF (we couldn't sort what should happen).
+    Send all this to the caller to render.
+    '''
 
+    # Look up access tokens from sessions, or make the user login
     access_token = session.get('access_token', None)
     realm = session.get('realm', None)
 
@@ -71,6 +88,7 @@ def index():
     # I shouldn't have to do this, but it doesn't persist otherwise
     session_manager.access_token = access_token
 
+    # Now fetch customers and invoices
     try:
         client = get_client(realm)
         customers = Customer.filter(Active=True, qb=client)
@@ -89,6 +107,8 @@ def index():
         logging.error(err)
         raise InternalServerError
 
+    # Calculate a pile of dates, based on today date. Figure out
+    # which quarter we're in, and the dates of this and 2 prior quarters
     dt = datetime.datetime.now()
     today = dt.strftime("%m-%d-%Y")
     q = (dt.month-1) // 3 
@@ -104,6 +124,7 @@ def index():
         year -= 1
     (ppq_start, ppq_end) = calculate_quarter_dates(year ,ppq)
 
+    # Iterate over all the invoices, parse their dates and arrange them into the invoice dict, by customer
     invoice_dict = {}
     for invoice in invoices:
         customer_id = invoice.CustomerRef.value
@@ -139,6 +160,7 @@ def index():
             'currency' : invoice.CurrencyRef.value
         })
 
+    # Finally, classify customers into the three bins
     ready_to_invoice = []
     wtf = []
     current = []
@@ -146,6 +168,8 @@ def index():
         invoices = invoice_dict.get(customer.Id, [])
         invoices = sorted(invoices, key=lambda invoice: invoice['sortdate'], reverse=True)
 
+        # If there are comments in the customer notes field that indicates # arrears or # donotinvoice,
+        # we use those as hints to properly create new invoices or to ignore customers
         name = customer.DisplayName or customer.CompanyName;
         desc = customer.Notes.lower()
         if desc.find("arrears") >= 0:
@@ -160,40 +184,53 @@ def index():
         else:
             do_not_invoice = False
 
+        # create the customer object, ready for saving
         cust = { 'name' : name, 'invoices' : invoices, 'id' : customer.Id }
         if do_not_invoice:
             current.append(cust)
             continue
 
+        # If there are no previous invoices, go WTF!
         if not invoices:
             wtf.append(cust)
             continue
 
+        # If this customer should not be invoiced or if the last invoice corresponds to this quarter,
+        # place them into the current bin
         if do_not_invoice or (invoices[0]['begin'] == q_start and invoices[0]['end'] == q_end):
             current.append(cust)
             continue
 
+        # If the customer is not invoiced in arrears and the last invoice looks to be from last quarter -> ready to invoice
         if not is_arrears and invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
             add_new_invoice(invoices[0], cust, q_start, q_end, today)
             ready_to_invoice.append(cust)
             continue
 
+        # If the customer is invoiced in arrears and the last invoice looks to be from last last quarter -> ready to invoice
         if is_arrears and invoices[0]['begin'] == ppq_start and invoices[0]['end'] == ppq_end:
             add_new_invoice(invoices[0], cust, pq_start, pq_end, today)
             ready_to_invoice.append(cust)
             continue
 
+        # If the customer is invoiced in arrers and the last invoice was from the prior quarter -> current
         if is_arrears and invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
             current.append(cust)
             continue
 
+        # Everyone else, WTF?
         wtf.append(cust)
+
 
     return render_template("quickbooks/index.html", ready=ready_to_invoice, wtf=wtf, current=current)
 
 
 @quickbooks_bp.route('/', methods=['POST'])
 def submit():
+    '''
+    Parse the form submission, load invoices, copy the invoices, update the pertinent details and then save new invoice.
+    '''
+
     customer = 0
     invoices = []
     while True:
@@ -212,6 +249,7 @@ def submit():
         invoices.append( { 'customer' : customer_id, 'begin' : begin_date, 'end' : end_date, 'base_invoice' : base_invoice })
         customer += 1 
 
+    # setup the access nonsense again
     access_token = session.get('access_token', None)
     realm = session.get('realm', None)
 
@@ -222,6 +260,7 @@ def submit():
     # I shouldn't have to do this, but it doesn't persist otherwise
     session_manager.access_token = access_token
 
+    # Now call create invoices and deal with possible errors
     try:
         client = get_client(realm)
         create_invoices(client, invoices)
@@ -244,11 +283,17 @@ def submit():
 
 @quickbooks_bp.route('/login')
 def login():
+    '''
+    Login to quickbooks, oauth2 callback
+    '''
     return redirect(session_manager.get_authorize_url(current_app.config["QUICKBOOKS_CALLBACK_URL"]))
 
 
 @quickbooks_bp.route('/logout')
 def logout():
+    '''
+    Logout from QuickBooks
+    '''
 
     session['access_token'] = None
     session['realm'] = None
@@ -258,6 +303,9 @@ def logout():
 
 @quickbooks_bp.route('/callback')
 def callback():
+    '''
+    OAuth2 login callback function. the URL of this must match exactly what is in the QB App profile
+    '''
     code = request.args.get('code')
     realm = request.args.get('realmId')
 
