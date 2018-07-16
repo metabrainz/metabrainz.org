@@ -52,6 +52,12 @@ MUSICBRAINZ_BASE_URL = '''{{template "KEY" "musicbrainz/base_url"}}'''
 MUSICBRAINZ_CLIENT_ID = '''{{template "KEY" "musicbrainz/client_id"}}'''
 MUSICBRAINZ_CLIENT_SECRET = '''{{template "KEY" "musicbrainz/client_secret"}}'''
 
+# QUICKBOOKS OAUTH
+QUICKBOOKS_SANDBOX = '''{{template "KEY" "quickbooks_sandbox"}}'''
+QUICKBOOKS_CALLBACK_URL = '''{{template "KEY" "quickbooks_callback_url"}}'''
+QUICKBOOKS_CLIENT_ID = '''{{template "KEY" "quickbooks_client_id"}}'''
+QUICKBOOKS_CLIENT_SECRET = '''{{template "KEY" "quickbooks_client_secret"}}'''
+
 LOG_SENTRY = {
     'dsn': '''{{template "KEY" "sentry/dsn_private"}}''',
     'environment': '''{{template "KEY" "sentry/environment"}}''',
