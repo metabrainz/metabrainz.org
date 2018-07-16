@@ -18,4 +18,4 @@ six==1.10.0
 SQLAlchemy==1.1.9
 stripe==1.62.0
 python-dateutil==2.7.3
-git+https://github.com/metabrainz/python-quickbooks.git@ce1e42af9780
+python-quickbooks==0.7.4

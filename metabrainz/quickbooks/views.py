@@ -103,10 +103,6 @@ def index():
         year -= 1
     (ppq_start, ppq_end) = calculate_quarter_dates(year ,ppq)
 
-    logging.error("q: %d %s %s" % (q, q_start, q_end))
-    logging.error("pq: %d %s %s" % (pq, pq_start, pq_end))
-    logging.error("ppq: %d %s %s" % (ppq, ppq_start, ppq_end))
-
     invoice_dict = {}
     for invoice in invoices:
         customer_id = invoice.CustomerRef.value
@@ -184,6 +180,10 @@ def index():
         if is_arrears and invoices[0]['begin'] == ppq_start and invoices[0]['end'] == ppq_end:
             add_new_invoice(invoices[0], cust, pq_start, pq_end, today)
             ready_to_invoice.append(cust)
+            continue
+
+        if is_arrears and invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
+            current.append(cust)
             continue
 
         wtf.append(cust)
