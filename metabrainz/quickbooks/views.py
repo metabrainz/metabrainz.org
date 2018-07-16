@@ -63,8 +63,9 @@ def index():
     access_token = session.get('access_token', None)
     realm = session.get('realm', None)
 
-    if not session['access_token']:
+    if not access_token:
         logging.error("flubbed access token")
+        session['realm'] = None
         return render_template("quickbooks/login.html")
 
     # I shouldn't have to do this, but it doesn't persist otherwise
