@@ -3,6 +3,7 @@ import quickbooks
 import datetime 
 from dateutil.parser import parse
 from calendar import monthrange
+from copy import deepcopy
 
 from werkzeug.exceptions import BadRequest, InternalServerError
 from flask import Blueprint, request, current_app, render_template, redirect, url_for, session, flash
@@ -23,6 +24,14 @@ def calculate_quarter_dates(year, quarter):
 
     return (date_of_first_day_of_quarter, date_of_last_day_of_quarter)
 
+def add_new_invoice(invoice, cust, start, end, today):
+    new_invoice = deepcopy(invoice)
+    new_invoice['begin'] = start
+    new_invoice['end'] = end
+    new_invoice['date'] = today
+    new_invoice['sortdate'] = today
+    new_invoice['number'] = 'NEW'
+    cust['invoices'].insert(0, new_invoice)
 
 @quickbooks_bp.route('/')
 def index():
@@ -56,6 +65,7 @@ def index():
         raise InternalServerError
 
     dt = datetime.datetime.now()
+    today = dt.strftime("%m-%d-%Y")
     q = (dt.month-1) // 3 
     pq = (q + 3) % 4
     ppq = (pq + 3) % 4
@@ -146,10 +156,14 @@ def index():
             continue
 
         if invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
+            add_new_invoice(invoices[0], cust, q_start, q_end, today)
             ready_to_invoice.append(cust)
+            continue
 
         if is_arrears and invoices[0]['begin'] == ppq_start and invoices[0]['end'] == ppq_end:
+            add_new_invoice(invoices[0], cust, pq_start, pq_end, today)
             ready_to_invoice.append(cust)
+            continue
 
         wtf.append(cust)
 
