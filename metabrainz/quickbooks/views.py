@@ -5,7 +5,7 @@ from dateutil.parser import parse
 from calendar import monthrange
 
 from werkzeug.exceptions import BadRequest, InternalServerError
-from flask import Blueprint, request, current_app, render_template, redirect, url_for, session
+from flask import Blueprint, request, current_app, render_template, redirect, url_for, session, flash
 from metabrainz.quickbooks.quickbooks import session_manager, get_client
 from quickbooks import Oauth2SessionManager, QuickBooks
 from quickbooks.objects.customer import Customer
@@ -41,13 +41,17 @@ def index():
         client = get_client(realm)
         customers = Customer.filter(Active=True, qb=client)
         invoices = Invoice.query("select * from invoice order by metadata.createtime desc", qb=client)
+        logging.error("query success")
 
     except quickbooks.exceptions.AuthorizationException as err:
+        flash("Authorization failed, please try again: %s" % err)
+        logging.error(err)
         session['access_token'] = None
         session['realm'] = None
         return redirect(url_for("quickbooks.index"))
         
     except quickbooks.exceptions.QuickbooksException as err:
+        flash("Query failed: %s" % err)
         logging.error(err)
         raise InternalServerError
 
@@ -110,22 +114,44 @@ def index():
         invoices = invoice_dict.get(customer.Id, [])
         invoices = sorted(invoices, key=lambda invoice: invoice['sortdate'], reverse=True)
 
-        if invoices:
-            logging.error("q '%s' - '%s' == '%s' - '%s'" % (invoices[0]['begin'], q_start, invoices[0]['end'], q_end))
-            logging.error("pq '%s' - '%s' == '%s' - '%s'" % (invoices[0]['begin'], pq_start, invoices[0]['end'], pq_end))
-        
-        cust = { 'name' : customer.DisplayName or customer.CompanyName, 'invoices' : invoices }
-        if not invoices:
-            logging.error("wtf")
-            wtf.append(cust)
-        elif invoices[0]['begin'] == q_start and invoices[0]['end'] == q_end:
-            logging.error("current")
-            current.append(cust)
-        elif invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
-            logging.error("ready")
-            ready_to_invoice.append(cust)
+        name = customer.DisplayName or customer.CompanyName;
+        desc = customer.Notes.lower()
+        if desc.find("arrears") >= 0:
+            name += " (arrears)"
+            is_arrears = True
         else:
+            is_arrears = False
+
+        if desc.find("donotinvoice") >= 0:
+            do_not_invoice = True
+            name += " (do not invoice)"
+        else:
+            do_not_invoice = False
+
+#        if invoices:
+#            logging.error("q '%s' - '%s' == '%s' - '%s'" % (invoices[0]['begin'], q_start, invoices[0]['end'], q_end))
+#            logging.error("pq '%s' - '%s' == '%s' - '%s'" % (invoices[0]['begin'], pq_start, invoices[0]['end'], pq_end))
+        
+        cust = { 'name' : name, 'invoices' : invoices }
+        if do_not_invoice:
+            current.append(cust)
+            continue
+
+        if not invoices:
             wtf.append(cust)
+            continue
+
+        if do_not_invoice or (invoices[0]['begin'] == q_start and invoices[0]['end'] == q_end):
+            current.append(cust)
+            continue
+
+        if invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
+            ready_to_invoice.append(cust)
+
+        if is_arrears and invoices[0]['begin'] == ppq_start and invoices[0]['end'] == ppq_end:
+            ready_to_invoice.append(cust)
+
+        wtf.append(cust)
 
     return render_template("quickbooks/index.html", ready=ready_to_invoice, wtf=wtf, current=current)
 
