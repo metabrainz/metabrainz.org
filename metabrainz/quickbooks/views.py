@@ -1,16 +1,18 @@
-import logging
-import quickbooks
-import datetime 
-from dateutil.parser import parse
 from calendar import monthrange
 from copy import deepcopy
+import datetime 
+from dateutil.parser import parse
+import logging
+import quickbooks
 
-from werkzeug.exceptions import BadRequest, InternalServerError
 from flask import Blueprint, request, current_app, render_template, redirect, url_for, session, flash
+from flask_login import login_required
 from metabrainz.quickbooks.quickbooks import session_manager, get_client
 from quickbooks import Oauth2SessionManager, QuickBooks
 from quickbooks.objects.customer import Customer
 from quickbooks.objects.invoice import Invoice
+from werkzeug.exceptions import BadRequest, InternalServerError
+
 
 quickbooks_bp = Blueprint('quickbooks', __name__)
 
@@ -69,6 +71,7 @@ def create_invoices(client, invoices):
 
 
 @quickbooks_bp.route('/', methods=['GET'])
+@login_required
 def index():
     '''
     Load all customers and 100 invoices and the correlate them.
@@ -226,6 +229,7 @@ def index():
 
 
 @quickbooks_bp.route('/', methods=['POST'])
+@login_required
 def submit():
     '''
     Parse the form submission, load invoices, copy the invoices, update the pertinent details and then save new invoice.
@@ -282,6 +286,7 @@ def submit():
 
 
 @quickbooks_bp.route('/login')
+@login_required
 def login():
     '''
     Login to quickbooks, oauth2 callback
@@ -290,6 +295,7 @@ def login():
 
 
 @quickbooks_bp.route('/logout')
+@login_required
 def logout():
     '''
     Logout from QuickBooks
