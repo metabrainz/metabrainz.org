@@ -24,6 +24,7 @@ def calculate_quarter_dates(year, quarter):
 
     return (date_of_first_day_of_quarter, date_of_last_day_of_quarter)
 
+
 def add_new_invoice(invoice, cust, start, end, today):
     new_invoice = deepcopy(invoice)
     new_invoice['begin'] = start
@@ -33,7 +34,30 @@ def add_new_invoice(invoice, cust, start, end, today):
     new_invoice['number'] = 'NEW'
     cust['invoices'].insert(0, new_invoice)
 
-@quickbooks_bp.route('/')
+
+def create_invoices(client, invoices):
+
+    for invoice in invoices:
+        invoice_list = Invoice.query("select * from invoice where Id = '%s'" % invoice['base_invoice'], qb=client)
+        if not invoice_list:
+            flash("Cannot fetch old invoice!")
+            break
+
+        new_invoice = invoice_list[0]
+        new_invoice.Id = None
+        new_invoice.DocNumber = None
+        new_invoice.DueDate = None
+        new_invoice.TxnDate = None
+        new_invoice.ShipDate = None
+        new_invoice.EInvoiceStatus = None
+        new_invoice.MetaData = None
+        new_invoice.EmailStatus = "NeedToSend"
+        new_invoice.CustomField[1].StringValue = invoice['begin']
+        new_invoice.CustomField[2].StringValue = invoice['end']
+        new_invoice.save(qb=client)
+
+
+@quickbooks_bp.route('/', methods=['GET'])
 def index():
 
     access_token = session.get('access_token', None)
@@ -109,6 +133,7 @@ def index():
             'customer' : customer_id, 
             'date' : create_time,
             'sortdate' : invoice.TxnDate,
+            'id' : invoice.Id,
             'amount' : invoice.TotalAmt ,
             'begin' : begin_date,
             'end' : end_date,
@@ -138,11 +163,7 @@ def index():
         else:
             do_not_invoice = False
 
-#        if invoices:
-#            logging.error("q '%s' - '%s' == '%s' - '%s'" % (invoices[0]['begin'], q_start, invoices[0]['end'], q_end))
-#            logging.error("pq '%s' - '%s' == '%s' - '%s'" % (invoices[0]['begin'], pq_start, invoices[0]['end'], pq_end))
-        
-        cust = { 'name' : name, 'invoices' : invoices }
+        cust = { 'name' : name, 'invoices' : invoices, 'id' : customer.Id }
         if do_not_invoice:
             current.append(cust)
             continue
@@ -155,7 +176,7 @@ def index():
             current.append(cust)
             continue
 
-        if invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
+        if not is_arrears and invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
             add_new_invoice(invoices[0], cust, q_start, q_end, today)
             ready_to_invoice.append(cust)
             continue
@@ -168,6 +189,56 @@ def index():
         wtf.append(cust)
 
     return render_template("quickbooks/index.html", ready=ready_to_invoice, wtf=wtf, current=current)
+
+
+@quickbooks_bp.route('/', methods=['POST'])
+def submit():
+    customer = 0
+    invoices = []
+    while True:
+        customer_id = request.form.get("customer_%d" % customer)
+        if not customer_id:
+            break
+
+        if not request.form.get("create_%d" % customer):
+            customer += 1 
+            continue
+
+        begin_date = request.form.get("begin_%d" % customer)
+        end_date = request.form.get("end_%d" % customer)
+        base_invoice = request.form.get("base_invoice_%d" % customer)
+
+        invoices.append( { 'customer' : customer_id, 'begin' : begin_date, 'end' : end_date, 'base_invoice' : base_invoice })
+        customer += 1 
+
+    access_token = session.get('access_token', None)
+    realm = session.get('realm', None)
+
+    if not session['access_token']:
+        flash("access token lost. log in again.")
+        return render_template("quickbooks/login.html")
+
+    # I shouldn't have to do this, but it doesn't persist otherwise
+    session_manager.access_token = access_token
+
+    try:
+        client = get_client(realm)
+        create_invoices(client, invoices)
+
+    except quickbooks.exceptions.AuthorizationException as err:
+        flash("Authorization failed, please try again: %s" % err)
+        logging.error(err)
+        session['access_token'] = None
+        session['realm'] = None
+        return redirect(url_for("quickbooks.index"))
+        
+    except quickbooks.exceptions.QuickbooksException as err:
+        flash("Query failed: %s" % err)
+        logging.error(err)
+        raise InternalServerError
+
+    flash("Invoices created -- make sure to send them!")
+    return redirect(url_for("quickbooks.index"))
 
 
 @quickbooks_bp.route('/login')
