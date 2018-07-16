@@ -20,7 +20,6 @@ def _add_file_handler(app, filename, max_bytes=512 * 1024, backup_count=100):
         '%(asctime)s %(levelname)s: %(message)s '
         '[in %(pathname)s:%(lineno)d]'
     ))
-    file_handler.setLevel(logging.DEBUG)
     app.logger.addHandler(file_handler)
 
 
