@@ -19,12 +19,6 @@ def create_app(debug=None, config_path=None):
         use_flask_uuid=True,
     )
 
-    app.init_loggers(
-        file_config=app.config.get('LOG_FILE'),
-        email_config=app.config.get('LOG_EMAIL'),
-        sentry_config=app.config.get('LOG_SENTRY'),
-    )
-
     print("Starting metabrainz service with %s environment." % deploy_env);
 
     if not deploy_env:
@@ -65,8 +59,13 @@ def create_app(debug=None, config_path=None):
         print("Unable to retrieve git commit. Use docker/push.sh to push images for production.")
 
     print('Configuration values are as follows: ')
-    app.logger.error(pprint.pformat(app.config, indent=4))
+    print(pprint.pformat(app.config, indent=4))
 
+    app.init_loggers(
+        file_config=app.config.get('LOG_FILE'),
+        email_config=app.config.get('LOG_EMAIL'),
+        sentry_config=app.config.get('LOG_SENTRY'),
+    )
 
     # Database
     from metabrainz import db
