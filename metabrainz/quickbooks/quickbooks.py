@@ -5,6 +5,10 @@ from quickbooks import Oauth2SessionManager
 session_manager = None
 
 def init(app):
+    '''
+    Create global session manager that manages QuickBooks sessions.
+    '''
+
     global session_manager
     session_manager = Oauth2SessionManager(
             sandbox=app.config["QUICKBOOKS_SANDBOX"],
@@ -15,6 +19,10 @@ def init(app):
 
 
 def get_client(realm):
+    '''
+    Create the QuickBooks client object from the session manager.
+    '''
+
     global session_manager
 
     return QuickBooks(
