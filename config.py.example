@@ -44,8 +44,9 @@ MUSICBRAINZ_BASE_URL = "https://musicbrainz.org/"
 MUSICBRAINZ_CLIENT_ID = ""
 MUSICBRAINZ_CLIENT_SECRET = ""
 
-# QUICKBOOKS OAUTH
-QUICKBOOKS_BASE_URL = "sandbox-quickbooks.api.intuit.com"
+# QUICKBOOKS OAUTH -- only needed if you ever want to create invoices. (read: never)
+QUICKBOOKS_SANDBOX = True
+QUICKBOOKS_CALLBACK_URL = "https://metabrainz.org/quickbooks/callback"
 QUICKBOOKS_CLIENT_ID = ""
 QUICKBOOKS_CLIENT_SECRET = ""
 
