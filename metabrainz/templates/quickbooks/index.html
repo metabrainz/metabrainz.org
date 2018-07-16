@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ _('Send Invoices') }} - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Create Invoices') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
   <div id="qbo">
-    <h1 class="page-title">{{ _('Send Invoices') }}</h1>
+    <h1 class="page-title">{{ _('Create Invoices') }}</h1>
 
     <p>
       <a href="{{ url_for("quickbooks.logout") }}">logout from QuickBooks</a>
@@ -12,7 +12,13 @@
 
     <h3>Ready to invoice</h3>
     <div style="background: green; width: 100%; height: 5px"></div>
+    <form action="{{ url_for("quickbooks.index") }}" method="post">
     {{ section(ready) }}
+      <div class="pull-right">
+         <button type="submit" class="btn btn-primary btn-lg">Create invoices</button>
+      </div>
+    </form>
+    <div style="clear: right"></div>
 
     <h3>Uncertain</h3>
     <div style="background: red; width: 100%; height: 5px"></div>
@@ -29,6 +35,7 @@
   {% if customers %}
     <table class="table">
       {% for customer in customers %}
+        {% set outer_loop = loop %}
         <tr>
           <td><p style="font-weight: bold; font-size: 15pt;">{{ customer.name }}</p></br>
             {% if customer.invoices %}
@@ -40,6 +47,7 @@
                   <th>end</th>
                   <th>tier</th>
                   <th>amount</th>
+                  <th>create</th>
                 </tr>
                 {% for invoice in customer.invoices %}
                   <tr>
@@ -47,8 +55,17 @@
                     <td style="width: 15%">{{ invoice.date }}</td>
                     <td style="width: 15%">{{ invoice.begin }}</td>
                     <td style="width: 15%">{{ invoice.end }}</td>
-                    <td style="width: 20%">{{ invoice.service }}</td>
-                    <td style="width: 20%">{{ invoice.amount }} {{ invoice.currency }}</td>
+                    <td style="width: 25%">{{ invoice.service }}</td>
+                    <td style="width: 15%">{{ invoice.amount }} {{ invoice.currency }}</td>
+                    <td style="width: 5%">
+                       {% if invoice.number == "NEW" %}
+                          <input type="checkbox" name="create_{{ outer_loop.index0 }}">
+                          <input type="hidden" name="customer_{{ outer_loop.index0 }}" value="{{ customer.id }}">
+                          <input type="hidden" name="base_invoice_{{ outer_loop.index0 }}" value="{{ invoice.id }}">
+                          <input type="hidden" name="begin_{{ outer_loop.index0 }}" value="{{ invoice.begin }}">
+                          <input type="hidden" name="end_{{ outer_loop.index0 }}" value="{{ invoice.end }}">
+                       {% endif %}
+                    </td>
                   </tr>
                 {% endfor %}
               </table>
