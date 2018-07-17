@@ -87,7 +87,7 @@ def create_app(debug=None, config_path = None):
     cache.init(**app.config['REDIS'])
 
     # quickbooks module setup
-    from metabrainz.quickbooks import quickbooks
+    from metabrainz.admin.quickbooks import quickbooks
     quickbooks.init(app)
 
     # MusicBrainz OAuth
@@ -150,6 +150,10 @@ def create_app(debug=None, config_path = None):
     admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
     admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
 
+    # QuickBooks admin section
+    from metabrainz.admin.quickbooks.views import quickbooks_bp
+    app.register_blueprint(quickbooks_bp, url_prefix='/admin/quickbooks')
+
     return app
 
 
@@ -167,7 +171,6 @@ def _register_blueprints(app):
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
-    from metabrainz.quickbooks.views import quickbooks_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
@@ -178,7 +181,6 @@ def _register_blueprints(app):
     # from organizations as well as regular donations:
     app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')
     app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
-    app.register_blueprint(quickbooks_bp, url_prefix='/quickbooks')
 
     #############
     # OAuth / API

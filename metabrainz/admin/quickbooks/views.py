@@ -2,12 +2,11 @@ from calendar import monthrange
 from copy import deepcopy
 import datetime 
 from dateutil.parser import parse
-import logging
 import quickbooks
 
 from flask import Blueprint, request, current_app, render_template, redirect, url_for, session, flash
 from flask_login import login_required
-from metabrainz.quickbooks.quickbooks import session_manager, get_client
+from metabrainz.admin.quickbooks.quickbooks import session_manager, get_client
 from quickbooks import Oauth2SessionManager, QuickBooks
 from quickbooks.objects.customer import Customer
 from quickbooks.objects.invoice import Invoice
@@ -84,7 +83,7 @@ def index():
     realm = session.get('realm', None)
 
     if not access_token:
-        logging.error("flubbed access token")
+        current_app.logger.debug("flubbed access token")
         session['realm'] = None
         return render_template("quickbooks/login.html")
 
@@ -96,18 +95,17 @@ def index():
         client = get_client(realm)
         customers = Customer.filter(Active=True, qb=client)
         invoices = Invoice.query("select * from invoice order by metadata.createtime desc", qb=client)
-        logging.error("query success")
 
     except quickbooks.exceptions.AuthorizationException as err:
         flash("Authorization failed, please try again: %s" % err)
-        logging.error(err)
+        current_app.logger.debug(err)
         session['access_token'] = None
         session['realm'] = None
         return redirect(url_for("quickbooks.index"))
         
     except quickbooks.exceptions.QuickbooksException as err:
         flash("Query failed: %s" % err)
-        logging.error(err)
+        current_app.logger.debug(err)
         raise InternalServerError
 
     # Calculate a pile of dates, based on today date. Figure out
@@ -271,14 +269,14 @@ def submit():
 
     except quickbooks.exceptions.AuthorizationException as err:
         flash("Authorization failed, please try again: %s" % err)
-        logging.error(err)
+        current_app.logger.debug(err)
         session['access_token'] = None
         session['realm'] = None
         return redirect(url_for("quickbooks.index"))
         
     except quickbooks.exceptions.QuickbooksException as err:
         flash("Query failed: %s" % err)
-        logging.error(err)
+        current_app.logger.debug(err)
         raise InternalServerError
 
     flash("Invoices created -- make sure to send them!")
