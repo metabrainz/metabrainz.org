@@ -67,6 +67,9 @@ def create_app(debug=None, config_path=None):
         sentry_config=app.config.get('LOG_SENTRY'),
     )
 
+    # Don't intercept redirects, which is fucking annoying
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+
     # Database
     from metabrainz import db
     db.init_db_engine(app.config["SQLALCHEMY_DATABASE_URI"])

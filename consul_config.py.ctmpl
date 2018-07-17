@@ -11,6 +11,7 @@
 {{- end -}}
 
 SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
+DEBUG = '''{{template "KEY" "debug"}}'''
 
 {{if service "pgbouncer-master"}}
 {{with index (service "pgbouncer-master") 0}}
