@@ -21,6 +21,8 @@ def _add_file_handler(app, filename, max_bytes=512 * 1024, backup_count=100):
         '[in %(pathname)s:%(lineno)d]'
     ))
     app.logger.addHandler(file_handler)
+    # undo before merging
+    app.logger.setLevel(logging.DEBUG)                            
 
 
 def _add_email_handler(app, level=logging.NOTSET):
