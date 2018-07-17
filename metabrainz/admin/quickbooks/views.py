@@ -1,6 +1,7 @@
 from calendar import monthrange
 from copy import deepcopy
 import datetime 
+import time
 from dateutil.parser import parse
 import quickbooks
 
@@ -10,6 +11,7 @@ from metabrainz.admin.quickbooks.quickbooks import session_manager, get_client
 from quickbooks import Oauth2SessionManager, QuickBooks
 from quickbooks.objects.customer import Customer
 from quickbooks.objects.invoice import Invoice
+from quickbooks.objects.detailline import SalesItemLineDetail
 from werkzeug.exceptions import BadRequest, InternalServerError
 
 
@@ -83,29 +85,27 @@ def index():
     realm = session.get('realm', None)
 
     if not access_token:
-        current_app.logger.debug("flubbed access token")
         session['realm'] = None
         return render_template("quickbooks/login.html")
 
     # I shouldn't have to do this, but it doesn't persist otherwise
     session_manager.access_token = access_token
 
+
     # Now fetch customers and invoices
     try:
         client = get_client(realm)
         customers = Customer.filter(Active=True, qb=client)
-        invoices = Invoice.query("select * from invoice order by metadata.createtime desc", qb=client)
+        invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
 
     except quickbooks.exceptions.AuthorizationException as err:
         flash("Authorization failed, please try again: %s" % err)
-        current_app.logger.debug(err)
         session['access_token'] = None
         session['realm'] = None
         return redirect(url_for("quickbooks.index"))
         
     except quickbooks.exceptions.QuickbooksException as err:
         flash("Query failed: %s" % err)
-        current_app.logger.debug(err)
         raise InternalServerError
 
     # Calculate a pile of dates, based on today date. Figure out
@@ -134,12 +134,14 @@ def index():
 
         create_time = parse(invoice.TxnDate).strftime("%m-%d-%Y")
         try:
-            begin_date = parse(invoice.CustomField[1].StringValue).strftime("%m-%d-%Y")
+            begin_dt = parse(invoice.CustomField[1].StringValue)
+            begin_date = begin_dt.strftime("%m-%d-%Y")
         except ValueError:
             begin_date = ""
 
         try:
-            end_date = parse(invoice.CustomField[2].StringValue).strftime("%m-%d-%Y")
+            end_dt = parse(invoice.CustomField[2].StringValue)
+            end_date = end_dt.strftime("%m-%d-%Y")
         except ValueError:
             end_date = ""
 
@@ -155,7 +157,9 @@ def index():
             'id' : invoice.Id,
             'amount' : invoice.TotalAmt ,
             'begin' : begin_date,
+            'begin_dt' : begin_dt,
             'end' : end_date,
+            'end_dt' : end_dt,
             'service' : tier,
             'number' : invoice.DocNumber,
             'currency' : invoice.CurrencyRef.value
@@ -214,8 +218,30 @@ def index():
             ready_to_invoice.append(cust)
             continue
 
-        # If the customer is invoiced in arrers and the last invoice was from the prior quarter -> current
+        # If the customer is invoiced in arrears and the last invoice was from the prior quarter -> current
         if is_arrears and invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
+            current.append(cust)
+            continue
+
+        # Check to see if this is an annual invoice
+        end_dt = invoices[0]['end_dt'] 
+        begin_dt = invoices[0]['begin_dt'] 
+        delta = end_dt - begin_dt
+        if delta.days > 359 and delta.days < 366:
+            cust['name'] += " (annual)"
+            if time.mktime(end_dt.timetuple()) <= time.time():
+                end_date = datetime.date(end_dt.year + 1, end_dt.month, end_dt.day).strftime("%m-%d-%Y")
+                begin_date = datetime.date(begin_dt.year + 1, begin_dt.month, begin_dt.day).strftime("%m-%d-%Y")
+                add_new_invoice(invoices[0], cust, begin_date, end_date, today)
+                ready_to_invoice.append(cust)
+            else:
+                current.append(cust)
+                
+            continue
+
+
+        # If the end date is after the curent date, then consider it current
+        if time.mktime(end_dt.timetuple()) > time.time():
             current.append(cust)
             continue
 

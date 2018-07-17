@@ -11,7 +11,6 @@ def init(app):
 
     global session_manager
     session_manager = Oauth2SessionManager(
-            sandbox=app.config["QUICKBOOKS_SANDBOX"],
             client_id=app.config["QUICKBOOKS_CLIENT_ID"],
             client_secret=app.config["QUICKBOOKS_CLIENT_SECRET"],
             base_url=app.config["QUICKBOOKS_CALLBACK_URL"],
@@ -25,8 +24,11 @@ def get_client(realm):
 
     global session_manager
 
-    return QuickBooks(
+    QuickBooks.enable_global()
+    qb = QuickBooks(
         sandbox=current_app.config["QUICKBOOKS_SANDBOX"],
         session_manager=session_manager,
         company_id=realm
     )
+
+    return qb

@@ -25,6 +25,7 @@ data
 # Configuration
 consul_config.py
 custom_config.py
+config.py
 
 # Volume with user logos
 /metabrainz/static/img/user_logos
