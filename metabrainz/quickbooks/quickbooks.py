@@ -26,7 +26,7 @@ def get_client(realm):
     global session_manager
 
     return QuickBooks(
-        sandbox=True,
+        sandbox=current_app.config["QUICKBOOKS_SANDBOX"],
         session_manager=session_manager,
         company_id=realm
     )
