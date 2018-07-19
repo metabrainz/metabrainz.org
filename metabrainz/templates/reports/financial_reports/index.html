@@ -35,6 +35,8 @@
 
 <p>{{ _('Quarterly reports') }}</p>
 <ul>
+    <li>Q2 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2018_Q2.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
+    <li>Q2 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20180630.pdf') }}">{{ _('balance sheet') }}</a></li>
     <li>Q1 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2018_Q1.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>Q1 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20180331.pdf') }}">{{ _('balance sheet') }}</a></li>
 </ul>
