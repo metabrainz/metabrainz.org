@@ -91,22 +91,30 @@ def index():
     # I shouldn't have to do this, but it doesn't persist otherwise
     session_manager.access_token = access_token
 
+    refreshed = False
+    while True:
+        # Now fetch customers and invoices
+        try:
+            client = get_client(realm)
+            customers = Customer.filter(Active=True, qb=client)
+            invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
 
-    # Now fetch customers and invoices
-    try:
-        client = get_client(realm)
-        customers = Customer.filter(Active=True, qb=client)
-        invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
+        except quickbooks.exceptions.AuthorizationException as err:
+            if not refreshed:
+                current_app.logger.debug("Auth failed, trying refresh")
+                refreshed = True
+                client.reconnect_account()
+                continue
 
-    except quickbooks.exceptions.AuthorizationException as err:
-        flash("Authorization failed, please try again: %s" % err)
-        session['access_token'] = None
-        session['realm'] = None
-        return redirect(url_for("quickbooks.index"))
-        
-    except quickbooks.exceptions.QuickbooksException as err:
-        flash("Query failed: %s" % err)
-        raise InternalServerError
+            flash("Authorization failed, please try again: %s" % err)
+            current_app.logger.debug("Auth failed, logging out, starting over.")
+            session['access_token'] = None
+            session['realm'] = None
+            return redirect(url_for("quickbooks.index"))
+            
+        except quickbooks.exceptions.QuickbooksException as err:
+            flash("Query failed: %s" % err)
+            raise InternalServerError
 
     # Calculate a pile of dates, based on today date. Figure out
     # which quarter we're in, and the dates of this and 2 prior quarters
