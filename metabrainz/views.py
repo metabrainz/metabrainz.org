@@ -52,6 +52,11 @@ def code_of_conduct():
     return render_template('index/code-of-conduct.html')
 
 
+@index_bp.route('/conflict-policy')
+def conflict_policy():
+    return render_template('index/conflict-policy.html')
+
+
 @index_bp.route('/sponsors')
 def sponsors():
     return render_template('index/sponsors.html')
