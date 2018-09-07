@@ -83,14 +83,18 @@
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/nicolas_tamargo.jpg') }}"/>
       <div class="bio">
-        <h4>{{ _('<span class="name">Nicolás Tamargo</span> &mdash; Style Leader/Customer Support') }}</h4>
+        <h4>{{ _('<span class="name">Nicolás Tamargo</span> &mdash; Style Leader/Customer Support/Junior Software Engineer') }}</h4>
         <p>
-          {{ _('Nicolás is the leader of everything style-related in MusicBrainz (all except for fashion), and is in charge of
-          answering (or delegating!) support requests. When he\'s not actively working for MetaBrainz, he\'s busy
-          <a href="%(mb_editors_url)s">editing MusicBrainz</a>, devouring ice cream, and following
+          {{ _('Nicolás started as an editor, but was given the task to be the leader of everything 
+          style-related in MusicBrainz (except for fashion), then put up in charge of answering 
+          (or delegating!) support requests, and then allowed to actually write some code to make sure 
+          he never runs out of complaints to answer. 
+          When he\'s not actively working for MetaBrainz, he\'s busy <a href="%(mb_editors_url)s">editing MusicBrainz</a>, 
+          helping run <a href="%(wmee)s">Wikimedia Eesti</a>, devouring ice cream, and following 
           the <a href="%(tartu_url)s">world\'s best football team</a> around the country.',
           mb_editors_url='https://musicbrainz.org/statistics/editors',
-          tartu_url='https://en.wikipedia.org/wiki/Tartu_JK_Tammeka') }}
+          tartu_url='https://en.wikipedia.org/wiki/Tartu_JK_Tammeka',
+          wmee='http://wikimedia.ee') }}
         </p>
         <p>{{ _('He lives in Tartu, Estonia.') }}</p>
         <ul class="links">
