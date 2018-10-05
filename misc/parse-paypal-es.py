@@ -3,6 +3,7 @@
 import sys
 import re
 import csv
+import datetime
 
 def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
     csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
@@ -38,6 +39,7 @@ for fields in reader:
 
     desc = fields[3].encode('utf8')
     dat = fields[0].encode('utf8')
+    dat = datetime.datetime.strptime(dat, '%d/%m/%Y').strftime('%m/%d/%Y')
     amount = fields[7].encode('utf8')
     type = fields[4].encode('utf8')
     status = fields[5].encode('utf8')
@@ -49,7 +51,6 @@ for fields in reader:
 
     out.writerow([dat, desc, amount])
 
-    dat = fields[0].encode('utf8')
     fee = fields[8].encode('utf8')
     if fee and float(fee) != 0.0:
         out.writerow([dat, "PayPal fee", fee])

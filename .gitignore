@@ -26,3 +26,6 @@ htmlcov/
 
 # git version files
 .git-version
+
+.DS_Store
+*.csv

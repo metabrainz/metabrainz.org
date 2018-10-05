@@ -37,11 +37,9 @@ for i, row in enumerate(reader):
     if row[1] == 'transfer':
         continue
 
-    print "status: %s" % row[12]
     if row[12].lower() == 'failed':
         continue
 
-    print row
     date = row[3].split(' ')[0]
     date = date.split('-')
     date = "%s/%s/%s" % (date[1], date[2], date[0])
@@ -50,9 +48,14 @@ for i, row in enumerate(reader):
     fee = -toFloat(row[9])
     net = amount - fee
     memo = row[1]
+    inv = row[52]
+
+    text = sender
+    if inv:
+        text += " (inv #%s)" % inv
 
     out.writerow([date, "Stripe fee", "%.2f" % fee])
-    out.writerow([date, sender.encode('utf-8'), amount])
+    out.writerow([date, text.encode('utf-8'), amount])
 
 fp.close()
 _out.close()
