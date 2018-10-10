@@ -30,3 +30,6 @@ config.py
 
 # git version files
 .git-version
+
+.DS_Store
+*.csv
