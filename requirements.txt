@@ -1,4 +1,4 @@
-git+https://github.com/metabrainz/brainzutils-python.git@v1.4.1
+git+https://github.com/metabrainz/brainzutils-python.git@v1.7.0
 click==6.7
 Flask-Admin==1.5.0
 Flask-Babel==0.11.2
