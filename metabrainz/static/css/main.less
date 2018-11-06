@@ -387,3 +387,40 @@ h1.page-title, h2.page-title {
 table.finances td:nth-child(2) {
   text-align: right;
 }
+
+// Datasets page
+#data {
+  display: flex;
+  .column {
+    margin: 20px;
+    .dataset {
+      .clearfix;
+      padding-bottom: 20px;
+      span.name {
+        font-weight: bold;
+        color: @orange;
+      }
+      img.logo {
+        float: left;
+        width: 100px;
+        .pull-left;
+        margin-right: 10px;
+        margin-top: 15px;
+      }
+      .info {
+      @media (min-width: @grid-float-breakpoint) {
+        margin-left: 142px;
+      }
+      ul.links {
+        .list-unstyled;
+      }
+    }
+  }
+}
+}
+
+@media (max-width: 400px) {
+  #data {
+    flex-direction: column;
+  }
+}
