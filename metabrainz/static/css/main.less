@@ -390,20 +390,24 @@ table.finances td:nth-child(2) {
 
 // Datasets page
 #data {
-  .dataset {
-    .clearfix;
-    padding-bottom: 20px;
-    span.name {
-      font-weight: bold;
-      color: @orange;
-    }
-    img.logo {
-      width: 120px;
-      .pull-left;
-      margin-right: 10px;
-      margin-top: 15px;
-    }
-    .info {
+  display: flex;
+  .column {
+    margin: 20px;
+    .dataset {
+      .clearfix;
+      padding-bottom: 20px;
+      span.name {
+        font-weight: bold;
+        color: @orange;
+      }
+      img.logo {
+        float: left;
+        width: 100px;
+        .pull-left;
+        margin-right: 10px;
+        margin-top: 15px;
+      }
+      .info {
       @media (min-width: @grid-float-breakpoint) {
         margin-left: 142px;
       }
@@ -411,5 +415,11 @@ table.finances td:nth-child(2) {
         .list-unstyled;
       }
     }
+  }
+}
+
+@media (max-width: 400px) {
+  #data {
+    flex-direction: column;
   }
 }
