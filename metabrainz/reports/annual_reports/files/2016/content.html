@@ -1,0 +1,357 @@
+<h2>Year in review</h2>
+
+<p>
+2016 was a transformative year for the MetaBrainz team -- the financial changes in 2015 improved our situation and allowed 
+us to hire Laurent Monin (Zas) as our part time system administrator. The timing of this was perfect, because as Zas was 
+getting up to speed on our ancient systems, we saw a serious uptick in traffic at the end of 2015. 
+</p>
+
+<p>
+In January of 2016 it became a consistent problem for us that showed no signs of letting up. In response, we fired up three 
+servers we had held in reserve for just such a case, but sadly, we discovered that these servers all had became unreliable as 
+they sat unused, further complicating our hosting scenario and not allowing us to improve the quality of our service. It would 
+take us many months to finally figure out this mysterious uptick on out traffic; where the traffic came from and how to mitigate it.
+</p>
+
+<p>
+In January 2016 we also hired Christina Smith to help establish a Spanish representative organization in an effort to setup a 
+new headquarters office in Barcelona. Christina researched different Spanish corporate models that would allow us to have a 
+pass-thru organization that would be piggy backed off the California 501(c)3 non-profit. 
+</p>
+
+<p>
+In January we continued with our participation in the <a href="https://blog.musicbrainz.org/2016/01/07/one-month-of-google-code-in/">Google 
+Code-In</a> project, which had actually started in December of 2015. A number of high-school aged students from various countries 
+claimed and completed tasks for MetaBrainz in the course of the program. Code-in, compared to Summer of Code, focuses on less 
+technically challenging tasks, which allows the mentors and students to complete a lot of relatively small tasks can still provide 
+a lot of polish for our projects.
+</p>
+
+<p>
+One of the big winners of our Google Code-in participation was our own BookBrainz project. A lot of students contributed many 
+tasks and that led to a release of <a href="https://blog.musicbrainz.org/2016/02/10/bookbrainz-february-2016-release">BookBrainz</a> 
+in February. In the same month we were also accepted to the <a href="https://blog.musicbrainz.org/2016/02/29/metabrainz-gsoc-2016/">Google’s 
+Summer of Code internship program for 2016</a>! 
+</p>
+
+<p>
+We kicked off March by <a href="https://blog.musicbrainz.org/2016/03/01/say-hello-to-discourse/">moving our forums to the Discourse 
+platform</a>. Discourse was intended to combine the defunct mailing lists that had been seeing a decrease in traffic over the years 
+and our old online forums. Previously it has been hard for us combine both of these as their respective user groups were never interested 
+in using the other technology, which split our community into two. Discourse is of high enough quality that it allowed us to consolidate 
+both mailing lists and forums into one technology that works well. 
+</p>
+
+<p>
+Also in March we found that the site <a href="https://blog.musicbrainz.org/2016/03/16/6-degrees-of-vince-gill">Six Degrees of Vince 
+Gill</a> is powered by MusicBrainz data! For a less fun aspect, we had to deal with a questionable web organization that aimed to 
+<a href="https://blog.musicbrainz.org/2016/03/08/beware-of-the-web-sherriff">whitewash the origin of one of their artists</a>. When 
+MusicBrainz was founded, we had no idea that we would get involved in tricky issues like this one! 
+</p>
+
+<p>
+In April we finally signed a lease on an office in Barcelona and started the slow process of getting the utilities set up and finding 
+furniture for the office. It would take until nearly June to get the office ready for people to actually work there. For a while we 
+even <a href="https://blog.musicbrainz.org/2016/05/26/desperate-time">powered our office router off a solar panel</a>!
+</p>
+
+<p>
+In May we had a difficult schema change release. Most of what happened was <a href="https://blog.musicbrainz.org/2016/05/25/schema-change-release-what-happened">laid 
+out in our blog</a>, but to sum it up: This release was drastically complicated by our aging infrastructure, further fueling the 
+need to moving to a new hosting provider. 
+</p>
+
+<p>
+After the schema change release was complete, we called an all-hands-on-deck emergency phase for our project to plan and execute a 
+move to a new hosting provider. We started planning and evaluating service providers; eventually we decided to move to Hetzner in 
+Germany and to move our hosting infrastructure to the Docker software containerization system. 
+</p>
+
+<p>
+All of the sudden we had a ton of work to do with a great sense of urgency -- we had to get our services stable soon, so we put our 
+heads down and worked. And you can see this happening as the number of blog posts on our blog died down in the latter half of 2016, 
+since we had nothing new to report while we feverishly worked towards modernizing our hosting.
+</p>
+
+<p>
+In July Christina left the team after a number of conflicts that ultimately required the help of the board of directors to sort 
+out and resolve. In August we <a href="https://blog.musicbrainz.org/2016/08">published our Google Summer of Code results</a> -- GSoC seemed 
+to be the only relief we got from working on our move.
+</p>
+
+<p>
+In November it was finally time to make the move to Hetzner -- a very challenging move was further complicated by the loss of a file 
+in the migration, which made maintaining our Live Data Feed a challenge, to say the least. Overall the site was migrated to Hetzner 
+and our old hosting setup in California broken down. MusicBrainz remained in read-only state for a few days as we ensured that the 
+new infrastructure was stable enough for us to enable writes to our database again.
+</p>
+
+<p>
+We spent the remainder of the year working to get our new services cleaned up at Hetzner -- we had left quite a few loose ends that 
+needed wrapping up. Between that and learning how our new infrastructure worked we were kept busy through the end of the year. 
+</p>
+
+
+<h2>New Supporters</h2>
+
+<p>
+2016 was a good year for picking up new supporters. Our new website from 2015 was starting to bear fruit and we saw a number of 
+companies join our supporters. In June Barcelona based BMAT and US based Wolfram Research both became Bronze supporters. In 
+September the London based Soundmouse became a Silver supporter and Ticketmaster joined in November and SiriusXM in December, 
+both at Unicorn level.
+</p>
+
+<p>
+The new heavy hitting supporters toward the end of the year allowed us to start thinking about growing them team further!
+</p>
+
+
+<h2>Traffic</h2>
+
+<p>
+At the end of 2015 we had a sharp uptick in traffic that caused our servers to overload -- at that point in time it was unclear 
+where that traffic was coming from and we had no means to really analyze our situation. As 2016 got under way, we started making 
+concrete plans to find a new hosting provider and what it would entail to move our services.
+</p>
+
+<p>
+We still had not been able to setup our traffic analysis software in 2016, so we only have a rough sketch of what was happening 
+to our traffic. For most of 2016 we had a lot of traffic hitting us that we didn’t know where it was coming from. Zas spent quite 
+a few weeks trying to make sense of this mysterious traffic. He started blocking the traffic that we could not identify and waited 
+for people to complain that they couldn't reach MusicBrainz.
+</p>
+
+<p>
+As blocked people started contacting us for help, Zas slowly started picking up on the fact that all blocked users had a QNAP NAS 
+in their local home network. After a lot of digging it became clear that QNAP’s NAS product had started using our API without ever 
+having a discussion about this with us. We proceeded to block their traffic more effectively and started to find a way to discuss 
+the matter with QNAP directly.
+</p>
+
+<p>
+Before our move to Hetzner we had old servers coupled expensive bandwidth and loads of traffic that we couldn't quite cope with -- 
+we were limited to 35 mbit/s of outgoing traffic. After our move to Hetzner our traffic jumped to 120 mbits/s! Blocking the QNAP 
+traffic and improving the controls of bad traffic to our API allowed us to make our systems relatively stable again, with bandwidth 
+usage leveling off at 70 mbit/s.
+</p>
+
+<p>
+After the move we had vastly more servers at our disposal and we immediately increased the rate at which we started serving 
+successful traffic. Our services immediately became more stable serving traffic more constantly. The response time on our web pages 
+and our API started improving as we got the new system to be stable. At this point we started collecting a different set of metrics 
+that measure the performance of our systems, but we don’t have enough data for 2016 to provide a better thumbnail of our traffic. We 
+hope that our 2017 report will change that significantly.
+</p>
+
+
+<h2>Finances</h2>
+
+<p>
+In 2016 we earned the following income:
+</p>
+    
+<table class="table table-condensed table-bordered table-striped finances">
+  <tbody>
+  <tr><th colspan="2">Income</th></tr>
+    <tr><td>Donations - PayPal</td><td>$ 6,177.44</td></tr>
+    <tr><td>Donations - General	</td><td>$ 43,521.36</td></tr>
+    <tr><td>Consulting - General</td><td>$ 11,800.00</td></tr>
+    <tr><td>Bank - Interest</td><td>$ 53.28</td></tr>
+    <tr><td>Affiliate - Amazon</td><td>$ 97.95</td></tr>
+    <tr><td>Affiliate - Tagger</td><td>$ 4,194.31</td></tr>
+    <tr><td>Sponsorship - Summit</td><td>$ 4,189.15</td></tr>
+    <tr><td>Support - Bronze</td><td>$ 24,830.54</td></tr>
+    <tr><td>Support - Silver</td><td>$ 18,049.11</td></tr>
+    <tr><td>Support - Gold</td><td>$ 6,000.00</td></tr>
+    <tr><td>Support - Unicorn</td><td>$ 165,579.88</td></tr>
+    <tr><td>Support - Mobile</td><td>$ 245.54</td></tr>
+    <tr><td>Support - Development</td><td>$ 39,600.00</td></tr>
+    <tr><td><b>Total income:</b></td><td><b>$ 324,338.56</b></td></tr>
+  </tr>
+  </tbody>
+</table>
+    
+<table class="table table-condensed table-bordered table-striped finances">
+  <tbody>
+  <tr><th colspan="2">Expenses</th></tr>
+    <tr><td>Bank - General</td><td>$ 984.84</td></tr>
+    <tr><td>Bank - BBVA</td><td>$ 326.41</td></tr>
+    <tr><td>Bank - PayPal</td><td>$ 770.84</td></tr>
+    <tr><td>Rent - Higuera Office</td><td>$ 707.83</td></tr>
+    <tr><td>Hardware</td><td>$ 844.84</td></tr>
+    <tr><td>Travel</td><td>$ 6,222.73</td></tr>
+    <tr><td>Internet</td><td>$ 1,142.54</td></tr>
+    <tr><td>Marketing</td><td>$ 2,003.75</td></tr>
+    <tr><td>Depreciation</td><td>$ 7,786.00</td></tr>
+    <tr><td>Development - Contractor</td><td>$ 28,558.13</td></tr>
+    <tr><td>Officer Salary</td><td>$ 80,602.86</td></tr>
+    <tr><td>Community management	</td><td>$ 22,272.57</td></tr>
+    <tr><td>Development - 1099</td><td>$ 46,695.36</td></tr>
+    <tr><td>Customer service</td><td>$ 8,009.64</td></tr>
+    <tr><td>Events</td><td>$ 536.97</td></tr>
+    <tr><td>Hosting - DWNI </td><td>$ 20,325.00</td></tr></td></tr>
+    <tr><td>Filing Fees</td><td>$ 150.00</td></tr>
+    <tr><td>Software</td><td>$ 363.96</td></tr>
+    <tr><td>Entertainment</td><td>$ 1,156.81</td></tr>
+    <tr><td>Insurance</td><td>$ 4,333.00</td></tr>
+    <tr><td>Accounting</td><td>$ 2,100.00</td></tr>
+    <tr><td>Shipping</td><td>$ 157.77</td></tr>
+    <tr><td>Bank - WePay</td><td>$ 12.84</td></tr>
+    <tr><td>Hosting - Hetzner</td><td>$ 7,621.16</td></tr>
+    <tr><td>Bank - Stripe</td><td>$ 142.25</td></tr>
+    <tr><td>Hosting - Google</td><td>$ 1,702.79</td></tr>
+    <tr><td>Sysadmin</td><td>$ 25,235.53</td></tr>
+    <tr><td>Biz Dev - Contractor</td><td>$ 15,036.54</td></tr>
+    <tr><td>Office Buenaventura Muñoz 15</td><td>$ 11,001.08</td></tr>
+    <tr><td>Rent Buenaventura Muñoz</td><td>$ 5,715.57</td></tr>
+    <tr><td>Utilities - Buenaventura Muñoz office</td><td>$1,436.32</td></tr>
+    <tr><td>Loss/gain equip sale	</td><td>$ 1,439.23</td></tr>
+    <tr><td>Exchange Gain or Loss</td><td>$ 230.05</td></tr>
+    <tr><td><b>Total expenses:</b></td><td><b>$302,286.65</b></td></tr>
+  </tbody>
+</table>
+
+<table class="table finances">
+  <tbody>
+    <tr><td><span style="font-size: 14pt">Excess income:</td><td><span style="font-size: 14pt">$18,713.35</span></td></tr>
+  </tbody>
+</table>
+
+<p>
+Our revenue increased over the course of 2016, removing more financial pressure, allowing us some more breathing room. 
+Moving to Hetzner initially saved money and expected our expenditures there would be far less for a couple of years to come, 
+while the services we’re receiving are considerably greater than what we had available in California.
+</p>
+
+<p>
+At the end of 2016 we had gotten rid of all of our servers and are now renting servers from Hetzner in Germany. Going 
+forward this means that we no longer have servers to fiscally depreciate or otherwise worry about. If a server fails we 
+submit a ticket and someone else has to worry about fixing the server. This was a game changer for our entire team!
+</p>
+
+<p>
+In the course of 2016 we spent $844.84 on hardware, mostly related to preparing for our move to Hetzner. We spent 
+$20,325.00 on hosting in California and $7,621.16 on our new infrastructure. Including $1,702.79 for some Google Cloud 
+hosting, the total hosting cost came to $29,648.95 for 2016.
+</p>
+
+<p>
+This compares to $24,375.00 in 2015, which means that our costs of operating the service were a little higher in 2016. 
+Most of this increased cost was related to starting up new infrastructure in Germany; paying setup-costs and for duplicated 
+hosting infrastructures for almost two months.
+</p>
+
+<p>
+In 2016 we spent $75,253.49 on salaries for developers, down from $81,378.25 in 2016. But we also hired a system administrator, 
+so our total expenditure on technical contractors grew to $100,489.02. After a complete year of having a community manager, we 
+spent $22,272.57. We also spent $8,009.64 for customer support and our costs for administration was $80,602.86.
+</p>
+
+<p>
+2016 was the first full year after changing how we charge for support; here is the breakdown of how we generated revenue from 
+our open data:
+</p>
+
+<table class="table table-condensed table-bordered table-striped finances">
+  <tbody>
+  <tr><th colspan="2">Income</th></tr>
+    <tr><td>Support - Bronze</td><td>$ 24,830.54</td></tr>
+    <tr><td>Support - Silver</td><td>$ 18,049.11</td></tr>
+    <tr><td>Support - Gold</td><td>$ 6,000.00</td></tr>
+    <tr><td>Support - Unicorn</td><td>$ 165,579.88</td></tr>
+    <tr><td>Support - Mobile</td><td>$ 245.54</td></tr>
+    <tr><td>Support - Development</td><td>$ 39,600.00</td></tr>
+  </tr>
+  </tbody>
+</table>
+
+<p>
+In 2015 we had earned only $146,130.00 from licensing our data and support payments. In 2016, this grew to $254,305.07! The 
+two largest factors that led to this growth are that we asked more companies for support and that our data has been growing and 
+becoming more relevant to the industry.
+</p>
+
+<p>
+The Bronze category has the largest number of customers, with almost 20 supporters in 2016, yet it doesn’t earn a lot of money, 
+$24,830.54, since many of those supporters have limited income or make limited use of our data. If you compare this to our Unicorn 
+level where large companies normally come in, you’ll see far fewer supporters, but with considerably much more income at $165,579.88. 
+Finally, the Development category was an anomaly for 2016 -- in 2016 we received payment from Google for the JSON-LD contract we 
+completed for them in 2015.
+</p>
+
+<p>
+You can also see that the mobile tier didn’t pan out as we had thought -- in fact no mobile application has ever generated any real 
+income. Just from these numbers we can deduce that mobile isn’t a big market for us and also that if we wish to increase income, we 
+should go Unicorn hunting, rather than searching for Bronze.
+</p>
+
+<p>
+Our end user donations via PayPal came to $6,177.44, down from $7,985.93 in 2015. This is far less than our donations of 2012, when 
+they exceeded $14,000. We still have no explanation for this! Direct/large donations added up to $43,521.36, including $40,000 annual 
+support from Google’s Open Source Programs Office and some cash donations from smaller donors. Google also sponsored our annual summit 
+for $4,189.15. Thank you Google!
+</p>
+
+
+<h2>Top contributors</h2>
+
+
+<h2>Server Farm</h2>
+
+<p>
+Sadly, with the move to Hetzner in Germany where we rent servers and have no physical access to them, we cannot 
+show you a pretty picture of our servers.
+</p>
+
+<p>
+Our new hosting infrastructure uses artist names for servers, with some heavy hitters naming some of our most important servers:
+</p>
+
+<ul>
+   <li>Bowie / Queen: Our database servers with 12 cores, 128GB of RAM and RAID-1,0 SSD disks.</li>
+   <li>Zappa, Ludwig, Serge, Trille, Hip, Bootsy: General servers with 8 cores, 64GB of RAM and NVMe solid state disks in RAID-1.</li>
+   <li>Prince / Boingo: General servers with 8 cores, 64GB of ram, generic solid state disk  RAID-1 drives.</li>
+   <li>Kiki / Herb: Gateway servers with 8 cores, 32GB of RAM, generic solid state disk  RAID-1 drives</li>
+</ul>
+
+<p>
+This is a total of 12 machines that are handling vastly more traffic than the 21 machines that we had in service 
+in California. Admittedly, the servers we had in California were a mixed bag -- the better ones were reasonably modern, 
+but we had a large array of donated servers that had their best days behind them. It was never an ideal setup, but it 
+allowed us to grow from 3 servers in 2006 to 21 servers in 2018 without spending a huge amount of money on hosting/servers.
+</p>
+
+<p>
+We started the year with 35mbit/s of traffic, peaked at 120mbit/s of traffic shortly after our move and finally settled 
+on 70mbit/s of traffic towards the end of the year. The uptime of all of our services drastically improved and the response 
+times of all of our services dropped significantly after our move. Our search servers were still relics from a past era that 
+continued to impact our uptime on a regular basis, but overall site reliability was drastically improved by our move to Hetzner.
+</p>
+
+
+<h2>Words of appreciation</h2>
+
+<p>
+Many thanks to our editors, voters, peer reviewers, bug watchers and other members of our community -- without you MetaBrainz 
+would not be what it is today!
+</p>
+
+<p>
+We'd like to also thank our developers that pushed out dozens of releases of the site, Picard, client libraries, AcousticBrainz, BookBrainz,
+CritiqueBrainz, ListenBrainz and the Cover Art Archive. All of your work is critical to enabling the MetaBrainz community to do its job.
+</p>
+
+<p>
+We'd also like to thank our awesome Board of Directors and all of the donors who contributed money and all of our supporters 
+who make it possible for us to employ a team of open source hackers scattered across the globe.
+</p>
+
+<p>
+In particular we'd like to thank Google for its annual support and the support of our summit. These large contributions allow us 
+to carry on with our mission of making MusicBrainz the most comprehensive music encyclopedia out there and pressing on with 
+making our other projects more relevant.
+</p>
+
+<p>
+Thank you to everyone who contributed in 2016!
+</p>
