@@ -36,8 +36,8 @@ RUN apt-get update \
                         libssl-dev \
      && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-RUN pip install uWSGI==2.0.15
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir uWSGI==2.0.15
 
 COPY . /code/
 RUN ./node_modules/.bin/lessc ./metabrainz/static/css/main.less > ./metabrainz/static/css/main.css
