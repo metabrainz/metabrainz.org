@@ -198,5 +198,55 @@
         </ul>
       </div>
     </div>
+
+    <div class="person">
+      <img
+        alt="David Saunders' photo"
+        class="pic"
+        src="{{ url_for('static', filename='img/team/drsaunde.jpg') }}"
+      />
+      <div class="bio">
+        <h4>{{ _('<span class="name">David "drsaunde" Saunders</span> &mdash; MusicBrainz Areas') }}</h4>
+        <p>
+          {{ _('David is in charge of adding new areas to MusicBrainz when they\'re requested by the community. He
+          has been active in MusicBrainz for over a decade, and is one of the few editors to have surpassed the one
+          million edits mark. A proud Canadian, when he\'s not in MusicBrainz, he is often enjoying some of his
+          favourite things, such as <a href="%(thc_url)s">THC</a>, <a href="%(tfc_url)s">TFC</a>,
+          <a href="%(cts_url)s">CTS</a> & <a href="%(gnt_url)s">GnT\'s</a>,
+          as well as cheering for the Toronto Raptors.',
+          thc_url='https://en.wikipedia.org/wiki/Tetrahydrocannabinol',
+          tfc_url='https://en.wikipedia.org/wiki/Toronto_FC',
+          cts_url='http://www.connectthesongs.com/',
+          gnt_url='https://en.wikipedia.org/wiki/Gin_and_tonic') }}
+        </p>
+        <ul class="links">
+          <li><strong>IRC:</strong> drsaunders</li>
+          <li><strong>MusicBrainz:</strong> <a href="https://musicbrainz.org/user/drsaunde">drsaunde</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="person">
+      <img
+        alt="CatCat's photo"
+        class="pic"
+        src="{{ url_for('static', filename='img/team/catcat.jpg') }}"
+      />
+      <div class="bio">
+        <h4>{{ _('<span class="name">C. "CatCat" Holm</span> &mdash; MusicBrainz Instruments') }}</h4>
+        <p>
+          {{ _('CatQuest, the Endeavouring Cat! (CatCat, for short) has been a MusicBrainz editor since 2004, and
+          is in charge of adding and improving the musical instruments in MusicBrainz (the very unseriously-named,
+          yet quite important "Instrument Inserter" position). When not looking all over the internet (and the library!)
+          for instrument data, other hobbies include playing games, listening to all sorts of different music,
+          Lego, colouring, and collecting all sorts of things, from stickers and stamps to bottlecaps.') }}
+        </p>
+        <ul class="links">
+          <li><strong>IRC:</strong> CatQuest</li>
+          <li><strong>MusicBrainz:</strong> <a href="https://musicbrainz.org/user/CatCat">CatCat</a></li>
+          <li><strong>ListenBrainz:</strong> <a href="https://listenbrainz.org/user/CatCat">CatCat</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 {% endblock %}
