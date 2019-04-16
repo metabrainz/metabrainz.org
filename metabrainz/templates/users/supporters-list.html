@@ -10,8 +10,10 @@
     are supporting us financially or through some other reciprocal agreement. There are also
     organizations that make use of our data that have explicitly declined to support us. There
     may also be other organizations making use of our data that we don\'t know about yet. If you
-    know of a company using our data, please <a href="%(contact_url)s">contact us</a>.',
-    contact_url=url_for('index.contact')) }}
+    know of a company using our data, please <a href="%(contact_url)s">contact us</a>. If you want
+    to sign your company up as a supporter, go to our <a href="%(signup_form)s">sign up page</a>.',
+    contact_url=url_for('index.contact'),
+    signup_form=url_for('users.account_type')) }}
   </p>
 
   <div id="supporters-list">
