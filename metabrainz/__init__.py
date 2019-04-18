@@ -13,7 +13,7 @@ deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
-def create_app(debug=None, config_path=None):
+def create_app(debug=None):
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
@@ -22,20 +22,11 @@ def create_app(debug=None, config_path=None):
     print("Starting metabrainz service with %s environment." % deploy_env);
 
     # Now load other bits of configuration
-    print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'default_config.py'))
+    print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
     app.config.from_pyfile(os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
-        '..', 'default_config.py'
+        '..', 'config.py'
     ))
-    print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'custom_config.py'))
-    app.config.from_pyfile(os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        '..', 'custom_config.py'
-    ), silent=True)
-
-    if config_path:
-        print("loading custom %s" % config_path)
-        app.config.from_pyfile(config_path)
 
     # Load configuration files: If we're running under a docker deployment, wait until 
     # the consul configuration is available.
