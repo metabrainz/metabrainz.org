@@ -5,6 +5,9 @@ DEBUG = True  # set to False in production mode
 
 SECRET_KEY = "CHANGE_THIS"
 
+# DATABASE
+SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@db:5432/metabrainz"
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # DATABASES
 
@@ -37,6 +40,14 @@ STRIPE_TEST_KEYS = {
     "PUBLISHABLE": "",
 }
 
+
+
+# REDIS
+REDIS = {
+    "host": "redis",
+    "port": 6379,
+    "namespace": "MEB",
+}
 
 # MUSICBRAINZ
 # MusicBrainz Base URL must have a trailing slash.
@@ -78,6 +89,10 @@ ADMINS = [
 #    "level": "WARNING",  # optional
 #}
 
+# Mail server
+SMTP_SERVER = "metabrainz-mail"
+SMTP_PORT = 25
+MAIL_FROM_DOMAIN = "metabrainz.org"
 
 # OTHER STUFF
 
@@ -94,8 +109,6 @@ NOTIFICATION_RECIPIENTS = [
 #PREFERRED_URL_SCHEME = "https"
 
 #USE_COMPILED_STYLING = True
-
 #BEHIND_GATEWAY = True
 #REMOTE_ADDR_HEADER = "X-MB-Remote-Addr"
-
-MAIL_FROM_DOMAIN = "example.org"
+USE_NGINX_X_ACCEL = False
