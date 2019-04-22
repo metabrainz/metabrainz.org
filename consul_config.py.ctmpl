@@ -11,6 +11,7 @@
 {{- end -}}
 
 SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
+DEBUG = False
 
 {{if service "pgbouncer-master"}}
 {{with index (service "pgbouncer-master") 0}}
@@ -81,3 +82,9 @@ NOTIFICATION_RECIPIENTS = [
 ADMINS = [
     {{template "KEY_ARRAY" "admins"}}
 ]
+
+# REPLICATION PACKETS
+REPLICATION_PACKETS_DIR = "/data/replication_packets"
+
+# JSON DUMPS
+JSON_DUMPS_DIR = "/data/json_dumps"
