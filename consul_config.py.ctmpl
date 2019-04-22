@@ -88,3 +88,5 @@ REPLICATION_PACKETS_DIR = "/data/replication_packets"
 
 # JSON DUMPS
 JSON_DUMPS_DIR = "/data/json_dumps"
+
+USE_COMPILED_STYLING = True
