@@ -55,7 +55,7 @@ class IndexViewsTestCase(FlaskTestCase):
         Creating an app with default config so that debug is True
         and SECRET_KEY is defined.
         """
-        app = create_app(debug=True)
+        app = create_app(debug=True, config_path='test_config.py')
         client = app.test_client()
         resp = client.get('/about')
         self.assert200(resp)

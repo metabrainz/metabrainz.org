@@ -23,9 +23,8 @@ def tracked(f):
     def decorated(*args, **kwargs):
         response = f(*args, **kwargs)
         if response.status_code in (200, 307):
-            if 'BEHIND_GATEWAY' in current_app.config and current_app.config['BEHIND_GATEWAY']:
-                ip_addr = request.headers.get(current_app.config['REMOTE_ADDR_HEADER'])
-            else:
+            ip_addr = request.environ.get('REMOTE_ADDR', None)
+            if not ip_addr:
                 ip_addr = request.remote_addr
             AccessLog.create_record(request.args.get('token'), ip_addr)
         return response

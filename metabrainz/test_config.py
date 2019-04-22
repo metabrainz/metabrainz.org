@@ -25,6 +25,12 @@ STRIPE_TEST_KEYS = {
     "PUBLISHABLE": "",
 }
 
+REDIS = {
+    "host": "redis",
+    "port": 6379,
+    "namespace": "MEB",
+}
+
 # Logging
 LOG_FILE = None
 LOG_EMAIL = None
