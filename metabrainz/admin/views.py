@@ -241,6 +241,15 @@ class StatsView(AdminBaseView):
             token_actions=TokenLog.list(10)[0],
         )
 
+    @expose('/top-ips/')
+    def top_ips(self):
+        non_commercial, commercial = AccessLog.top_ips(limit=100, days=7)
+        return self.render(
+            'admin/stats/top-ips.html',
+            non_commercial=non_commercial,
+            commercial=commercial
+        )
+
     @expose('/token-log')
     def token_log(self):
         page = int(request.args.get('page', default=1))

@@ -147,3 +147,38 @@ class AccessLog(db.Model):
         if limit:
             query = query.limit(limit)
         return query.all()
+
+    @classmethod
+    def top_ips(cls, days=7, limit=None):
+        """Generates list of most active ip addresses in the last days
+
+        Args:
+            days: Number of past days to include in the query
+            limit: Max number of items to return.
+
+        Returns:
+            List of <User, request count> pairs
+        """
+        query = db.session.query(AccessLog).join(Token).join(User) \
+            .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id) \
+            .filter(User.is_commercial == False) \
+            .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
+            .add_columns(func.count("AccessLog.*").label("count")) \
+            .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id) \
+            .order_by("count DESC")
+        if limit:
+            query = query.limit(limit)
+        non_commercial = query.all()
+
+        query = db.session.query(AccessLog).join(Token).join(User) \
+            .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id) \
+            .filter(User.is_commercial == True) \
+            .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
+            .add_columns(func.count("AccessLog.*").label("count")) \
+            .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id) \
+            .order_by("count DESC")
+        if limit:
+            query = query.limit(limit)
+        commercial = query.all()
+
+        return (non_commercial, commercial)

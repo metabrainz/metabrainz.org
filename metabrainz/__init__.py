@@ -139,7 +139,8 @@ def create_app(debug=None, config_path = None):
     admin.add_view(UsersView(name='Search', category='Users'))
     admin.add_view(PaymentsView(name='All', category='Payments'))
     admin.add_view(TokensView(name='Access tokens', category='Users'))
-    admin.add_view(StatsView(name='Statistics'))
+    admin.add_view(StatsView(name='Statistics', category='Statistics'))
+    admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
 
     return app
 
