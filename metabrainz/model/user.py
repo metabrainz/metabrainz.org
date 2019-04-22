@@ -129,7 +129,7 @@ class User(db.Model, UserMixin):
     @classmethod
     def get_all(cls, **kwargs):
         """Get all users that match provided filters, ordered by their creation time."""
-        return cls.query.filter_by(**kwargs).order_by(cls.created).all()
+        return cls.query.filter_by(**kwargs).order_by(cls.created.desc()).all()
 
     @classmethod
     def get_all_commercial(cls, limit=None, offset=None):
