@@ -150,7 +150,11 @@ class AccessLog(db.Model):
 
     @classmethod
     def top_ips(cls, days=7, limit=None):
-        """Generates list of most active ip addresses in the last days
+        """
+            Generates two list of most active ip addresses in the last days. One
+            list for commercial users and another list for non-commercial users who
+            are not in good standing. good standing for non-commercial users means
+            that they are verified good non-commercial users.
 
         Args:
             days: Number of past days to include in the query
