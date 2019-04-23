@@ -3,6 +3,9 @@
   <h1>Top IP addresses</h1>
 
     <h2>Non commercial users</h2>
+    <p>
+       Users in good standing are not listed here.
+    </p>
     {{ user_list(non_commercial) }}
 
     <h2>Commercial users</h2>
@@ -23,12 +26,12 @@
         <th>Count</th>
       </tr>
       </thead>
-      {% for ip, token, user_name, contact_name, contact_email, count in users %}
+      {% for ip, token, user_name, user_id, contact_name, contact_email, count in users %}
         <tr>
           <td>
             {{ ip }}
           </td>
-          <td>{{ user_name }}</td>
+          <td><a href="{{ url_for('usersview.details', user_id=user_id) }}">{{ user_name }}</a></td>
           <td>{{ contact_name }}</td>
           <td>{{ contact_email }}</td>
           <td><code class="text-muted">{{ token }}</code></td>

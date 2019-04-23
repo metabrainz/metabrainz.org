@@ -67,7 +67,7 @@ class User(db.Model, UserMixin):
     amount_pledged = db.Column(db.Numeric(11, 2))
 
     # Administrative columns:
-    good_standing = db.Column(db.Boolean, nullable=False, default=True)
+    good_standing = db.Column(db.Boolean, nullable=False, default=False)
     in_deadbeat_club = db.Column(db.Boolean, nullable=False, default=False)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 
