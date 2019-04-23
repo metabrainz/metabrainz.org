@@ -20,6 +20,9 @@ def create_app(debug=None, config_path = None):
         use_flask_uuid=True,
     )
 
+    # get ride of some really pesky warning
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
     print("Starting metabrainz service with %s environment." % deploy_env);
 
     # This is used to run tests, but not for dev or deployment
