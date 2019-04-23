@@ -2,7 +2,10 @@
 {% block body %}
   <h1>Top IP addresses</h1>
 
+    <h2>Non commercial users</h2>
     {{ user_list(non_commercial) }}
+
+    <h2>Commercial users</h2>
     {{ user_list(commercial) }}
 
 {% endblock %}
@@ -14,16 +17,20 @@
       <tr>
         <th>IP</th>
         <th>User</th>
+        <th>Name</th>
+        <th>Email</th>
         <th>Token</th>
         <th>Count</th>
       </tr>
       </thead>
-      {% for ip, token, user_name, count in users %}
+      {% for ip, token, user_name, contact_name, contact_email, count in users %}
         <tr>
           <td>
             {{ ip }}
           </td>
           <td>{{ user_name }}</td>
+          <td>{{ contact_name }}</td>
+          <td>{{ contact_email }}</td>
           <td><code class="text-muted">{{ token }}</code></td>
           <td>{{ count }}</td>
         </tr>
