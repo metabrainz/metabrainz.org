@@ -161,7 +161,8 @@ class AccessLog(db.Model):
             limit: Max number of items to return.
 
         Returns:
-            List of <User, request count> pairs
+            Tuple of (non_commercial, commercial) lists of [ip_address, token, musicbrainz_id, user_id, contact_name, contact_email]
+
         """
         query = db.session.query(AccessLog).join(Token).join(User) \
             .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \

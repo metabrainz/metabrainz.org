@@ -20,7 +20,7 @@ def create_app(debug=None, config_path = None):
         use_flask_uuid=True,
     )
 
-    # get rid of some really pesky warning
+    # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
     print("Starting metabrainz service with %s environment." % deploy_env);

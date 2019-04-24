@@ -259,13 +259,13 @@ class StatsView(AdminBaseView):
         """ Try to lookup and cache as many reverse DNS as possible in a window of time """
 
         data = []
-        timeout = time.time() + StatsView.IP_ADDR_TIMEOUT
+        timeout = time.monotonic() + StatsView.IP_ADDR_TIMEOUT
         for user in users:
             row = list(user)
 
             reverse = cache.get(user[0])
             if not reverse: 
-                if time.time() < timeout:
+                if time.monotonic() < timeout:
                     reverse = StatsView.dns_lookup(user[0])
                 else:
                     reverse = None

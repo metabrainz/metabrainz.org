@@ -35,7 +35,7 @@ class AccessLogTestCase(FlaskTestCase):
         token = user.generate_token() 
         AccessLog.create_record(token, "10.1.1.59")
 
-        non_commercial, commercial = AccessLog().top_ips()
+        non_commercial, commercial = AccessLog.top_ips()
 
         # Check that we have the right number of rows
         self.assertEqual(len(non_commercial), 1)
