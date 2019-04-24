@@ -8,6 +8,7 @@ from metabrainz.model.access_log import AccessLog
 from metabrainz.db import user as db_user
 from metabrainz.db import payment as db_payment
 from metabrainz import flash
+from brainzutils import cache
 from werkzeug.utils import secure_filename
 import werkzeug.datastructures
 import os.path
@@ -15,6 +16,7 @@ import logging
 import time
 import uuid
 import json
+import socket
 
 
 class HomeView(AdminIndexView):
@@ -232,6 +234,8 @@ class TokensView(AdminBaseView):
 
 class StatsView(AdminBaseView):
 
+    IP_ADDR_TIMEOUT = 10
+
     @expose('/')
     def overview(self):
         return self.render(
@@ -240,6 +244,54 @@ class StatsView(AdminBaseView):
             top_downloaders=AccessLog.top_downloaders(10),
             token_actions=TokenLog.list(10)[0],
         )
+
+    @staticmethod
+    def dns_lookup(ip):
+        try:
+            data = socket.gethostbyaddr(ip)
+            return data[0]
+        except Exception as err:
+            return None
+
+
+    @staticmethod
+    def lookup_ips(users):
+        """ Try to lookup and cache as many reverse DNS as possible in a window of time """
+
+        data = []
+        timeout = time.monotonic() + StatsView.IP_ADDR_TIMEOUT
+        for user in users:
+            row = list(user)
+
+            reverse = cache.get(user[0])
+            if not reverse: 
+                if time.monotonic() < timeout:
+                    reverse = StatsView.dns_lookup(user[0])
+                else:
+                    reverse = None
+
+            if reverse:
+                cache.set(user[0], reverse, 3600)
+                row[0] = reverse
+
+            data.append(row)
+
+        return data
+
+
+    @expose('/top-ips/')
+    def top_ips(self):
+        non_commercial, commercial = AccessLog.top_ips(limit=100, days=7)
+
+        non_commercial = StatsView.lookup_ips(non_commercial)
+        commercial = StatsView.lookup_ips(commercial)
+            
+        return self.render(
+            'admin/stats/top-ips.html',
+            non_commercial=non_commercial,
+            commercial=commercial
+        )
+
 
     @expose('/token-log')
     def token_log(self):

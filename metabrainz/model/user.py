@@ -67,7 +67,9 @@ class User(db.Model, UserMixin):
     amount_pledged = db.Column(db.Numeric(11, 2))
 
     # Administrative columns:
-    good_standing = db.Column(db.Boolean, nullable=False, default=True)
+    # good_standing for commercial users means they are paid up. For non-commercial users they are verified to be non-commercial.
+    # the default value for this column has been changed to False, and once everything is cool, the user will be marked True
+    good_standing = db.Column(db.Boolean, nullable=False, default=False)
     in_deadbeat_club = db.Column(db.Boolean, nullable=False, default=False)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 

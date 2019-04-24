@@ -147,3 +147,44 @@ class AccessLog(db.Model):
         if limit:
             query = query.limit(limit)
         return query.all()
+
+    @classmethod
+    def top_ips(cls, days=7, limit=None):
+        """
+            Generates two list of most active ip addresses in the last days. One
+            list for commercial users and another list for non-commercial users who
+            are not in good standing. good standing for non-commercial users means
+            that they are verified good non-commercial users.
+
+        Args:
+            days: Number of past days to include in the query
+            limit: Max number of items to return.
+
+        Returns:
+            Tuple of (non_commercial, commercial) lists of [ip_address, token, musicbrainz_id, user_id, contact_name, contact_email]
+
+        """
+        query = db.session.query(AccessLog).join(Token).join(User) \
+            .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
+            .filter(User.is_commercial == False) \
+            .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
+            .filter(User.good_standing != True) \
+            .add_columns(func.count("AccessLog.*").label("count")) \
+            .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
+            .order_by("count DESC")
+        if limit:
+            query = query.limit(limit)
+        non_commercial = query.all()
+
+        query = db.session.query(AccessLog).join(Token).join(User) \
+            .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
+            .filter(User.is_commercial == True) \
+            .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
+            .add_columns(func.count("AccessLog.*").label("count")) \
+            .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
+            .order_by("count DESC")
+        if limit:
+            query = query.limit(limit)
+        commercial = query.all()
+
+        return (non_commercial, commercial)

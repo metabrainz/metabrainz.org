@@ -20,6 +20,9 @@ def create_app(debug=None, config_path = None):
         use_flask_uuid=True,
     )
 
+    # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
     print("Starting metabrainz service with %s environment." % deploy_env);
 
     # This is used to run tests, but not for dev or deployment
@@ -139,7 +142,8 @@ def create_app(debug=None, config_path = None):
     admin.add_view(UsersView(name='Search', category='Users'))
     admin.add_view(PaymentsView(name='All', category='Payments'))
     admin.add_view(TokensView(name='Access tokens', category='Users'))
-    admin.add_view(StatsView(name='Statistics'))
+    admin.add_view(StatsView(name='Statistics', category='Statistics'))
+    admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
 
     return app
 

@@ -12,3 +12,9 @@ class AdminViewsTestCase(FlaskTestCase):
 
     def test_tokensview_index(self):
         self.assertStatus(self.client.get(url_for('tokensview.index')), 302)
+
+    def test_statsview_index(self):
+        self.assertStatus(self.client.get(url_for('statsview.overview')), 302)
+
+    def test_statsview_top_ips(self):
+        self.assertStatus(self.client.get(url_for('statsview.top_ips')), 302)
