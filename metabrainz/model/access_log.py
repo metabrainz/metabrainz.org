@@ -203,7 +203,7 @@ class AccessLog(db.Model):
             limit: Max number of items to return.
 
         Returns:
-            Tuple of (non_commercial, commercial) lists of [ip_address, token, musicbrainz_id, user_id, contact_name, contact_email]
+            Tuple of (non_commercial, commercial) lists of [token, musicbrainz_id, user_id, contact_name, contact_email]
 
         """
         query = db.session.query(AccessLog).join(Token).join(User) \
