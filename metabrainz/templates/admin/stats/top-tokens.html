@@ -1,0 +1,41 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h1>Top Tokens</h1>
+
+    <h2>Non commercial users</h2>
+    <p>
+       Users in good standing are not listed here.
+    </p>
+    {{ user_list(non_commercial) }}
+
+    <h2>Commercial users</h2>
+    {{ user_list(commercial) }}
+
+{% endblock %}
+
+{% macro user_list(users) -%}
+  {% if users %}
+    <table class="table table-striped table-condensed">
+      <thead>
+      <tr>
+        <th>Token</th>
+        <th>User</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Count</th>
+      </tr>
+      </thead>
+      {% for row in users %}
+        <tr>
+          <td><a href="{{ url_for('usersview.details', user_id=row.id) }}">{{ row.musicbrainz_id }}</a></td>
+          <td>{{ row.contact_name }}</td>
+          <td>{{ row.contact_email }}</td>
+          <td><code class="text-muted">{{ row.token }}</code></td>
+          <td>{{ row.count }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    None!
+  {% endif %}
+{% endmacro %}
