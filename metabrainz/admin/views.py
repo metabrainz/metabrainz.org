@@ -294,7 +294,7 @@ class StatsView(AdminBaseView):
 
 
     @expose('/top-tokens/')
-    def top_ips(self):
+    def top_tokens(self):
         non_commercial, commercial = AccessLog.top_tokens(limit=100, days=7)
         return self.render(
             'admin/stats/top-tokens.html',
