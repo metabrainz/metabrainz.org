@@ -193,9 +193,9 @@ class AccessLog(db.Model):
     @classmethod
     def top_tokens(cls, days=7, limit=None):
         """
-            Generates two list of most active token in the last days. One
+            Generates two list of the most active token in the last days. One
             list for commercial users and another list for non-commercial users who
-            are not in good standing. good standing for non-commercial users means
+            are not in good standing. Good standing for non-commercial users means
             that they are verified good non-commercial users.
 
         Args:
