@@ -1,4 +1,4 @@
-git+https://github.com/metabrainz/brainzutils-python.git@v1.4.1
+git+https://github.com/paramsingh/brainzutils-python.git@upgrade-dependencies
 click==6.7
 Flask-Admin==1.5.0
 Flask-Babel==0.11.2
@@ -13,7 +13,5 @@ pytest==3.2.1
 pytz==2017.2
 rauth==0.7.3
 reportlab==3.1.44
-requests==2.18.3
 six==1.10.0
-SQLAlchemy==1.1.9
 stripe==1.62.0
