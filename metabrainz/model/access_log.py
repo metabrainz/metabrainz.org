@@ -3,7 +3,7 @@ from metabrainz.model.token import Token
 from metabrainz.model.user import User
 from metabrainz.mail import send_mail
 from brainzutils import cache
-from sqlalchemy import func
+from sqlalchemy import func, text
 from sqlalchemy.dialects import postgresql
 from datetime import datetime, timedelta
 from flask import current_app
@@ -143,7 +143,7 @@ class AccessLog(db.Model):
         query = db.session.query(User).join(Token).join(AccessLog) \
             .filter(cls.timestamp > datetime.now() - timedelta(days=1)) \
             .add_columns(func.count("AccessLog.*").label("count")).group_by(User.id) \
-            .order_by("count DESC")
+            .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         return query.all()
@@ -171,7 +171,7 @@ class AccessLog(db.Model):
             .filter(User.good_standing != True) \
             .add_columns(func.count("AccessLog.*").label("count")) \
             .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
-            .order_by("count DESC")
+            .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         non_commercial = query.all()
@@ -182,7 +182,7 @@ class AccessLog(db.Model):
             .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
             .add_columns(func.count("AccessLog.*").label("count")) \
             .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
-            .order_by("count DESC")
+            .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         commercial = query.all()
@@ -213,7 +213,7 @@ class AccessLog(db.Model):
             .filter(User.good_standing != True) \
             .add_columns(func.count("AccessLog.*").label("count")) \
             .group_by(AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
-            .order_by("count DESC")
+            .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         non_commercial = query.all()
@@ -224,7 +224,7 @@ class AccessLog(db.Model):
             .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
             .add_columns(func.count("AccessLog.*").label("count")) \
             .group_by(AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
-            .order_by("count DESC")
+            .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         commercial = query.all()
