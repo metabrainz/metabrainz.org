@@ -1,6 +1,11 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h1>Top IP addresses</h1>
+  <div style="float: right">
+    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_ips', days=1) }}">last day</a>
+    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_ips', days=7) }}">last week</a>
+    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_ips', days=30) }}">last month</a>
+  </div>
+  <h1>Top IP addresses -- {{ days }} days</h1>
 
     <h2>Non commercial users</h2>
     <p>

@@ -1,6 +1,11 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h1>Top Tokens</h1>
+  <div style="float: right">
+    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_tokens', days=1) }}">last day</a>
+    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_tokens', days=7) }}">last week</a>
+    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_tokens', days=30) }}">last month</a>
+  </div>
+  <h1>Top Tokens -- {{ days }} days</h1>
 
     <h2>Non commercial users</h2>
     <p>
