@@ -281,7 +281,14 @@ class StatsView(AdminBaseView):
 
     @expose('/top-ips/')
     def top_ips(self):
-        non_commercial, commercial = AccessLog.top_ips(limit=100, days=7)
+
+        days = 7
+        try:
+            days = int(request.args.get('days'))
+        except:
+            pass
+
+        non_commercial, commercial = AccessLog.top_ips(limit=100, days=days)
 
         non_commercial = StatsView.lookup_ips(non_commercial)
         commercial = StatsView.lookup_ips(commercial)
@@ -289,17 +296,26 @@ class StatsView(AdminBaseView):
         return self.render(
             'admin/stats/top-ips.html',
             non_commercial=non_commercial,
-            commercial=commercial
+            commercial=commercial,
+            days=days
         )
 
 
     @expose('/top-tokens/')
     def top_tokens(self):
-        non_commercial, commercial = AccessLog.top_tokens(limit=100, days=7)
+
+        days = 7
+        try:
+            days = int(request.args.get('days'))
+        except:
+            pass
+
+        non_commercial, commercial = AccessLog.top_tokens(limit=100, days=days)
         return self.render(
             'admin/stats/top-tokens.html',
             non_commercial=non_commercial,
-            commercial=commercial
+            commercial=commercial,
+            days=days
         )
 
 
