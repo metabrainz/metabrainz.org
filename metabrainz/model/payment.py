@@ -333,9 +333,13 @@ class Payment(db.Model):
             address_country=charge.source.address_country,
         )
 
-        if charge.metadata.is_donation is True or charge.metadata.is_donation == "True":
-            new_donation.can_contact = charge.metadata.can_contact == u'True'
-            new_donation.anonymous = charge.metadata.anonymous == u'True'
+        if charge.metadata.is_donation == "True":
+            charge.metadata.is_donation = True
+        if charge.metadata.is_donation == "False":
+            charge.metadata.is_donation = False
+        if charge.metadata.is_donation is True:
+            new_donation.can_contact = charge.metadata.can_contact == True
+            new_donation.anonymous = charge.metadata.anonymous == True
             if 'editor' in charge.metadata:
                 new_donation.editor_name = charge.metadata.editor
         else:  # Organization payment
