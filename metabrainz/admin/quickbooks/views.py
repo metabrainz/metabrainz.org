@@ -4,11 +4,12 @@ import datetime
 import time
 from dateutil.parser import parse
 import quickbooks
+from intuitlib.enums import Scopes
 
 from flask import Blueprint, request, current_app, render_template, redirect, url_for, session, flash
 from flask_login import login_required
-from metabrainz.admin.quickbooks.quickbooks import session_manager, get_client
-from quickbooks import Oauth2SessionManager, QuickBooks
+from metabrainz.admin.quickbooks.quickbooks import auth_client, get_client
+from quickbooks import QuickBooks
 from quickbooks.objects.customer import Customer
 from quickbooks.objects.invoice import Invoice
 from quickbooks.objects.detailline import SalesItemLineDetail
@@ -31,9 +32,9 @@ def calculate_quarter_dates(year, quarter):
     return (date_of_first_day_of_quarter, date_of_last_day_of_quarter)
 
 
-def add_new_invoice(invoice, cust, start, end, today):
+def add_new_invoice(invoice, cust, start, end, today, qty, price):
     '''
-    Copy an invoice object and update some fields in the object
+    Copy an invoice object and update date fields in the object
     '''
     new_invoice = deepcopy(invoice)
     new_invoice['begin'] = start
@@ -41,12 +42,14 @@ def add_new_invoice(invoice, cust, start, end, today):
     new_invoice['date'] = today
     new_invoice['sortdate'] = today
     new_invoice['number'] = 'NEW'
+    new_invoice['qty'] = qty
+    new_invoice['price'] = price
     cust['invoices'].insert(0, new_invoice)
 
 
 def create_invoices(client, invoices):
     '''
-    Given a set of exiting invoices, fetch the invoice from QuickBooks, make a copy, updated it
+    Given a set of existing invoices, fetch the invoice from QuickBooks, make a copy, update it
     with new values and then have QuickBooks save the new invoice. Invoices are not sent,
     and must be sent via the QuickBooks web interface.
     '''
@@ -65,7 +68,11 @@ def create_invoices(client, invoices):
         new_invoice.ShipDate = None
         new_invoice.EInvoiceStatus = None
         new_invoice.MetaData = None
+        new_invoice.TotalAmt = None
         new_invoice.EmailStatus = "NeedToSend"
+        new_invoice.Line[0].SalesItemLineDetail.Qty = invoice['qty']
+        new_invoice.Line[0].SalesItemLineDetail.UnitPrice = invoice['price']
+        new_invoice.Line[0].Amount = "%d" % round(float(invoice['price']) * float(invoice['qty']))
         new_invoice.CustomField[1].StringValue = invoice['begin']
         new_invoice.CustomField[2].StringValue = invoice['end']
         new_invoice.save(qb=client)
@@ -82,24 +89,26 @@ def index():
 
     # Look up access tokens from sessions, or make the user login
     access_token = session.get('access_token', None)
+    refresh_token = session.get('refresh_token', "")
     realm = session.get('realm', None)
 
-    if not access_token:
+    if not access_token or not refresh_token:
         session['realm'] = None
+        session['access_token'] = None
+        session['refresh_token'] = None
         return render_template("quickbooks/login.html")
-
-    # I shouldn't have to do this, but it doesn't persist otherwise
-    session_manager.access_token = access_token
 
     refreshed = False
     while True:
         # Now fetch customers and invoices
         try:
-            client = get_client(realm)
+            client = get_client(realm, refresh_token)
             customers = Customer.filter(Active=True, qb=client)
             invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
+            break
 
         except quickbooks.exceptions.AuthorizationException as err:
+            current_app.logger.error("Auth failed. Refresh token: '%s'" % client.refresh_token)
             if not refreshed:
                 current_app.logger.debug("Auth failed, trying refresh")
                 refreshed = True
@@ -109,7 +118,6 @@ def index():
             flash("Authorization failed, please try again: %s" % err)
             current_app.logger.debug("Auth failed, logging out, starting over.")
             session['access_token'] = None
-            session['realm'] = None
             return redirect(url_for("quickbooks.index"))
             
         except quickbooks.exceptions.QuickbooksException as err:
@@ -170,7 +178,9 @@ def index():
             'end_dt' : end_dt,
             'service' : tier,
             'number' : invoice.DocNumber,
-            'currency' : invoice.CurrencyRef.value
+            'currency' : invoice.CurrencyRef.value,
+            'qty' : invoice.Line[0].SalesItemLineDetail.Qty,
+            'price' : invoice.Line[0].SalesItemLineDetail.UnitPrice
         })
 
     # Finally, classify customers into the three bins
@@ -185,6 +195,11 @@ def index():
         # we use those as hints to properly create new invoices or to ignore customers
         name = customer.DisplayName or customer.CompanyName;
         desc = customer.Notes.lower()
+        try:
+            price = invoices[0]['price']
+        except IndexError:
+            price = 0
+
         if desc.find("arrears") >= 0:
             name += " (arrears)"
             is_arrears = True
@@ -216,13 +231,20 @@ def index():
 
         # If the customer is not invoiced in arrears and the last invoice looks to be from last quarter -> ready to invoice
         if not is_arrears and invoices[0]['begin'] == pq_start and invoices[0]['end'] == pq_end:
-            add_new_invoice(invoices[0], cust, q_start, q_end, today)
+            add_new_invoice(invoices[0], cust, q_start, q_end, today, 3, price)
+            ready_to_invoice.append(cust)
+            continue
+
+        # If the customer is not invoiced in arrears and the last invoice is a partial invoice last quarter -> ready to invoice new customer
+        if not is_arrears and invoices[0]['end'] == pq_end:
+            cust['name'] += " (new customer)"
+            add_new_invoice(invoices[0], cust, q_start, q_end, today, 3, price)
             ready_to_invoice.append(cust)
             continue
 
         # If the customer is invoiced in arrears and the last invoice looks to be from last last quarter -> ready to invoice
         if is_arrears and invoices[0]['begin'] == ppq_start and invoices[0]['end'] == ppq_end:
-            add_new_invoice(invoices[0], cust, pq_start, pq_end, today)
+            add_new_invoice(invoices[0], cust, pq_start, pq_end, today, 3, price)
             ready_to_invoice.append(cust)
             continue
 
@@ -240,7 +262,7 @@ def index():
             if time.mktime(end_dt.timetuple()) <= time.time():
                 end_date = datetime.date(end_dt.year + 1, end_dt.month, end_dt.day).strftime("%m-%d-%Y")
                 begin_date = datetime.date(begin_dt.year + 1, begin_dt.month, begin_dt.day).strftime("%m-%d-%Y")
-                add_new_invoice(invoices[0], cust, begin_date, end_date, today)
+                add_new_invoice(invoices[0], cust, begin_date, end_date, today, 12, price)
                 ready_to_invoice.append(cust)
             else:
                 current.append(cust)
@@ -281,24 +303,24 @@ def submit():
         begin_date = request.form.get("begin_%d" % customer)
         end_date = request.form.get("end_%d" % customer)
         base_invoice = request.form.get("base_invoice_%d" % customer)
+        qty = request.form.get("qty_%d" % customer)
+        price = request.form.get("price_%d" % customer)
 
-        invoices.append( { 'customer' : customer_id, 'begin' : begin_date, 'end' : end_date, 'base_invoice' : base_invoice })
+        invoices.append( { 'customer' : customer_id, 'begin' : begin_date, 'end' : end_date, 'base_invoice' : base_invoice, 'qty' : qty, 'price' : price })
         customer += 1 
 
     # setup the access nonsense again
     access_token = session.get('access_token', None)
+    refresh_token = session.get('refresh_token', None)
     realm = session.get('realm', None)
 
     if not session['access_token']:
         flash("access token lost. log in again.")
         return render_template("quickbooks/login.html")
 
-    # I shouldn't have to do this, but it doesn't persist otherwise
-    session_manager.access_token = access_token
-
     # Now call create invoices and deal with possible errors
     try:
-        client = get_client(realm)
+        client = get_client(realm, refresh_token)
         create_invoices(client, invoices)
 
     except quickbooks.exceptions.AuthorizationException as err:
@@ -323,7 +345,7 @@ def login():
     '''
     Login to quickbooks, oauth2 callback
     '''
-    return redirect(session_manager.get_authorize_url(current_app.config["QUICKBOOKS_CALLBACK_URL"]))
+    return redirect(auth_client.get_authorization_url([Scopes.ACCOUNTING]))
 
 
 @quickbooks_bp.route('/logout')
@@ -346,10 +368,11 @@ def callback():
     '''
     code = request.args.get('code')
     realm = request.args.get('realmId')
+    refresh_token = request.args.get('realmId')
 
-    session_manager.get_access_tokens(code)
-    access_token = session_manager.access_token
-    session['access_token'] = access_token
+    auth_client.get_bearer_token(code, realm_id=realm)
+    session['access_token'] = auth_client.access_token
+    session['refresh_token'] = auth_client.refresh_token
     session['realm'] = realm
 
     return redirect(url_for("quickbooks.index"))

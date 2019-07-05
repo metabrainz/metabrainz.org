@@ -1,33 +1,33 @@
-from quickbooks import Oauth2SessionManager, QuickBooks
+from intuitlib.client import AuthClient
+from quickbooks import QuickBooks
 from flask import request, current_app
-from quickbooks import Oauth2SessionManager
 
-session_manager = None
+auth_client = None
 
 def init(app):
     '''
-    Create global session manager that manages QuickBooks sessions.
+    Create global auth client that manages QuickBooks sessions.
     '''
 
-    global session_manager
-    session_manager = Oauth2SessionManager(
-            client_id=app.config["QUICKBOOKS_CLIENT_ID"],
-            client_secret=app.config["QUICKBOOKS_CLIENT_SECRET"],
-            base_url=app.config["QUICKBOOKS_CALLBACK_URL"],
+    global auth_client
+    auth_client = AuthClient(
+        client_id=app.config["QUICKBOOKS_CLIENT_ID"],
+        client_secret=app.config["QUICKBOOKS_CLIENT_SECRET"],
+        environment=app.config["QUICKBOOKS_SANDBOX"],
+        redirect_uri=app.config["QUICKBOOKS_CALLBACK_URL"]
     )
 
 
-def get_client(realm):
+def get_client(realm, refresh_token):
     '''
-    Create the QuickBooks client object from the session manager.
+    Create the QuickBooks client object from the auth client.
     '''
 
-    global session_manager
-
+    global auth_client
     QuickBooks.enable_global()
     qb = QuickBooks(
-        sandbox=current_app.config["QUICKBOOKS_SANDBOX"],
-        session_manager=session_manager,
+        auth_client=auth_client,
+        refresh_token=refresh_token,
         company_id=realm
     )
 

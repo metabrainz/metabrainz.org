@@ -30,11 +30,12 @@ def create_app(debug=None, config_path = None):
         print("loading %s" % config_path)
         app.config.from_pyfile(config_path)
     else:
-        print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
-        app.config.from_pyfile(os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            '..', 'config.py'
-        ))
+        if not deploy_env:
+            print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
+            app.config.from_pyfile(os.path.join(
+                os.path.dirname(os.path.realpath(__file__)),
+                '..', 'config.py'
+            ))
 
     # Load configuration files: If we're running under a docker deployment, wait until 
     # the consul configuration is available.

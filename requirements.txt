@@ -16,5 +16,6 @@ reportlab==3.1.44
 six==1.10.0
 stripe==1.62.0
 python-dateutil==2.7.3
-#python-quickbooks==0.7.4
-git+https://github.com/metabrainz/python-quickbooks.git@1d7b7cb18
+python-quickbooks==0.8.0
+intuit-oauth==1.2.2
+#git+https://github.com/metabrainz/python-quickbooks.git@1d7b7cb18
