@@ -154,12 +154,14 @@ def index():
             begin_date = begin_dt.strftime("%m-%d-%Y")
         except ValueError:
             begin_date = ""
+            begin_dt = None
 
         try:
             end_dt = parse(invoice.CustomField[2].StringValue)
             end_date = end_dt.strftime("%m-%d-%Y")
         except ValueError:
             end_date = ""
+            end_dt = None
 
         try:
             tier = invoice.Line[0].SalesItemLineDetail.ItemRef.name
@@ -254,21 +256,24 @@ def index():
             continue
 
         # Check to see if this is an annual invoice
-        end_dt = invoices[0]['end_dt'] 
-        begin_dt = invoices[0]['begin_dt'] 
-        delta = end_dt - begin_dt
-        if delta.days > 359 and delta.days < 366:
-            cust['name'] += " (annual)"
-            if time.mktime(end_dt.timetuple()) <= time.time():
-                end_date = datetime.date(end_dt.year + 1, end_dt.month, end_dt.day).strftime("%m-%d-%Y")
-                begin_date = datetime.date(begin_dt.year + 1, begin_dt.month, begin_dt.day).strftime("%m-%d-%Y")
-                add_new_invoice(invoices[0], cust, begin_date, end_date, today, 12, price)
-                ready_to_invoice.append(cust)
-            else:
-                current.append(cust)
-                
+        try: 
+            end_dt = invoices[0]['end_dt'] 
+            begin_dt = invoices[0]['begin_dt'] 
+            delta = end_dt - begin_dt
+            if delta.days > 359 and delta.days < 366:
+                cust['name'] += " (annual)"
+                if time.mktime(end_dt.timetuple()) <= time.time():
+                    end_date = datetime.date(end_dt.year + 1, end_dt.month, end_dt.day).strftime("%m-%d-%Y")
+                    begin_date = datetime.date(begin_dt.year + 1, begin_dt.month, begin_dt.day).strftime("%m-%d-%Y")
+                    add_new_invoice(invoices[0], cust, begin_date, end_date, today, 12, price)
+                    ready_to_invoice.append(cust)
+                else:
+                    current.append(cust)
+                    
+                continue
+        except TypeError:
+            wtf.append(cust)
             continue
-
 
         # If the end date is after the curent date, then consider it current
         if time.mktime(end_dt.timetuple()) > time.time():
@@ -277,7 +282,6 @@ def index():
 
         # Everyone else, WTF?
         wtf.append(cust)
-
 
     return render_template("quickbooks/index.html", ready=ready_to_invoice, wtf=wtf, current=current)
 
@@ -325,21 +329,19 @@ def submit():
 
     except quickbooks.exceptions.AuthorizationException as err:
         flash("Authorization failed, please try again: %s" % err)
-        current_app.logger.debug(err)
         session['access_token'] = None
         session['realm'] = None
         return redirect(url_for("quickbooks.index"))
         
     except quickbooks.exceptions.QuickbooksException as err:
         flash("Query failed: %s" % err)
-        current_app.logger.debug(err)
         raise InternalServerError
 
     flash("Invoices created -- make sure to send them!")
     return redirect(url_for("quickbooks.index"))
 
 
-@quickbooks_bp.route('/login')
+@quickbooks_bp.route('/login/')
 @login_required
 def login():
     '''
@@ -361,7 +363,7 @@ def logout():
     return redirect(url_for("quickbooks.index"))
 
 
-@quickbooks_bp.route('/callback')
+@quickbooks_bp.route('/callback/')
 def callback():
     '''
     OAuth2 login callback function. the URL of this must match exactly what is in the QB App profile

@@ -158,6 +158,10 @@ def create_app(debug=None, config_path = None):
     from metabrainz.admin.quickbooks.views import quickbooks_bp
     app.register_blueprint(quickbooks_bp, url_prefix='/admin/quickbooks')
 
+    # QuickBooks admin section
+    from metabrainz.admin.quickbooks.views import quickbooks_bp
+    app.register_blueprint(quickbooks_bp, url_prefix='/admin/quickbooks')
+
     return app
 
 
