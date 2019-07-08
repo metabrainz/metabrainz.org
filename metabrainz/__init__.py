@@ -5,6 +5,7 @@ import sys
 
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
+from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
 
 # Check to see if we're running under a docker deployment. If so, don't second guess
@@ -153,14 +154,7 @@ def create_app(debug=None, config_path = None):
     admin.add_view(StatsView(name='Statistics', category='Statistics'))
     admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
     admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
-
-    # QuickBooks admin section
-    from metabrainz.admin.quickbooks.views import quickbooks_bp
-    app.register_blueprint(quickbooks_bp, url_prefix='/admin/quickbooks')
-
-    # QuickBooks admin section
-    from metabrainz.admin.quickbooks.views import quickbooks_bp
-    app.register_blueprint(quickbooks_bp, url_prefix='/admin/quickbooks')
+    admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
 
     return app
 

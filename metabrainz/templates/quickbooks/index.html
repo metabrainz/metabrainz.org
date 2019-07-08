@@ -7,12 +7,12 @@
     <h1 class="page-title">{{ _('Create Invoices') }}</h1>
 
     <p>
-      <a href="{{ url_for("quickbooks.logout") }}">logout from QuickBooks</a>
+      <a href="{{ url_for("quickbooks/.logout") }}">logout from QuickBooks</a>
     </p>
 
     <h3>Ready to invoice</h3>
     <div style="background: green; width: 100%; height: 5px"></div>
-    <form action="{{ url_for("quickbooks.index") }}" method="post">
+    <form action="{{ url_for("quickbooks/.index") }}" method="post">
     {{ section(ready, 1) }}
       <div class="pull-right">
          <button type="submit" class="btn btn-primary btn-lg">Create invoices</button>
