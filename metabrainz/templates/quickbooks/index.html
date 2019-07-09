@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Create Invoices') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <div id="qbo">
+    <h1 class="page-title">{{ _('Create Invoices') }}</h1>
+
+    <p>
+      <a href="{{ url_for("quickbooks/.logout") }}">logout from QuickBooks</a>
+    </p>
+
+    <h3>Ready to invoice</h3>
+    <div style="background: green; width: 100%; height: 5px"></div>
+    <form action="{{ url_for("quickbooks/.index") }}" method="post">
+    {{ section(ready, 1) }}
+      <div class="pull-right">
+         <button type="submit" class="btn btn-primary btn-lg">Create invoices</button>
+      </div>
+    </form>
+    <div style="clear: right"></div>
+
+    <h3>Uncertain</h3>
+    <div style="background: red; width: 100%; height: 5px"></div>
+    {{ section(wtf, 0) }}
+
+    <h3>Current</h3>
+    <div style="background: blue; width: 100%; height: 5px"></div>
+    {{ section(current, 0) }}
+
+  </div>
+
+{% endblock %}
+{% macro section(customers, show_check) -%}        
+  {% if customers %}
+    <table class="table">
+      {% for customer in customers %}
+        {% set outer_loop = loop %}
+        <tr>
+          <td><p style="font-weight: bold; font-size: 15pt;">{{ customer.name }}</p></br>
+            {% if customer.invoices %}
+              <table class="table table-striped table-bordered">
+                <tr>
+                  <th>num</th>
+                  <th>date</th>
+                  <th>begin</th>
+                  <th>end</th>
+                  <th>tier</th>
+                  <th>qty</th>
+                  <th>price</th>
+                  <th>amount</th>
+                  {% if show_check %}
+                     <th>create</th>
+                  {% endif %}
+                </tr>
+                {% for invoice in customer.invoices %}
+                  <tr>
+                    <td style="width: 9%; font-weight: bold;{%- if invoice.number == "NEW" -%} color: red;{%- endif -%}">{{ invoice.number }}</td>
+                    <td style="width: 14%">{{ invoice.date }}</td>
+                    <td style="width: 14%">{{ invoice.begin }}</td>
+                    <td style="width: 14%">{{ invoice.end }}</td>
+                    <td style="width: 18%">{{ invoice.service }}</td>
+                    <td style="width: 8%">{{ invoice.qty }}</td>
+                    <td style="width: 8%">{{ invoice.price|round }}</td>
+                    <td style="width: 12%">{{ (invoice.qty * invoice.price)|round }} {{ invoice.currency }}</td>
+                    {% if show_check %}
+                      <td style="width: 3%">
+                         {% if invoice.number == "NEW" %}
+                            <input type="checkbox" name="create_{{ outer_loop.index0 }}">
+                            <input type="hidden" name="customer_{{ outer_loop.index0 }}" value="{{ customer.id }}">
+                            <input type="hidden" name="base_invoice_{{ outer_loop.index0 }}" value="{{ invoice.id }}">
+                            <input type="hidden" name="begin_{{ outer_loop.index0 }}" value="{{ invoice.begin }}">
+                            <input type="hidden" name="end_{{ outer_loop.index0 }}" value="{{ invoice.end }}">
+                            <input type="hidden" name="qty_{{ outer_loop.index0 }}" value="{{ invoice.qty }}">
+                            <input type="hidden" name="price_{{ outer_loop.index0 }}" value="{{ invoice.price }}">
+                         {% endif %}
+                      </td>
+                    {% endif %}
+                  </tr>
+                {% endfor %}
+              </table>
+            {% else %}
+              <p>No invoices</p>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+{% else %}
+  <p>No matching customers.</p>
+{% endif %}
+{% endmacro %}

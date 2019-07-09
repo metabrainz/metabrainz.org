@@ -5,6 +5,7 @@ import sys
 
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
+from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
 
 # Check to see if we're running under a docker deployment. If so, don't second guess
@@ -30,11 +31,12 @@ def create_app(debug=None, config_path = None):
         print("loading %s" % config_path)
         app.config.from_pyfile(config_path)
     else:
-        print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
-        app.config.from_pyfile(os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            '..', 'config.py'
-        ))
+        if not deploy_env:
+            print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
+            app.config.from_pyfile(os.path.join(
+                os.path.dirname(os.path.realpath(__file__)),
+                '..', 'config.py'
+            ))
 
     # Load configuration files: If we're running under a docker deployment, wait until 
     # the consul configuration is available.
@@ -85,6 +87,10 @@ def create_app(debug=None, config_path = None):
     # Redis (cache)
     from brainzutils import cache
     cache.init(**app.config['REDIS'])
+
+    # quickbooks module setup
+    from metabrainz.admin.quickbooks import quickbooks
+    quickbooks.init(app)
 
     # MusicBrainz OAuth
     from metabrainz.users import login_manager, musicbrainz_login
@@ -145,6 +151,9 @@ def create_app(debug=None, config_path = None):
     admin.add_view(StatsView(name='Statistics', category='Statistics'))
     admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
     admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
+
+    if app.config["QUICKBOOKS_CLIENT_ID"]:
+        admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
 
     return app
 

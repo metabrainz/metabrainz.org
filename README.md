@@ -15,12 +15,12 @@ machine before following the instructions.
 
 ### Configuration
 
-Custom configuration must be stored in the file called `custom_config.py`.
-You can use an example one (`custom_config.py.example`) and tweak the
+The app configuration must be stored in the file called `config.py`.
+You can use an example one (`config.py.example`) and tweak the
 configuration:
 
-    $ cp custom_config.py.example custom_config.py
-    $ vim custom_config.py
+    $ cp config.py.example config.py
+    $ vim config.py
 
 You need to make sure that required variables are set.
 

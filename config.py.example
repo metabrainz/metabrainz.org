@@ -55,6 +55,11 @@ MUSICBRAINZ_BASE_URL = "https://musicbrainz.org/"
 MUSICBRAINZ_CLIENT_ID = ""
 MUSICBRAINZ_CLIENT_SECRET = ""
 
+# QUICKBOOKS OAUTH -- only needed if you ever want to create invoices. (read: never)
+QUICKBOOKS_SANDBOX = True
+QUICKBOOKS_CALLBACK_URL = "https://metabrainz.org/quickbooks/callback"
+QUICKBOOKS_CLIENT_ID = ""
+QUICKBOOKS_CLIENT_SECRET = ""
 
 # ADMIN SECTION
 # This is a list of MusicBrainz usernames of people that are allowed to access
@@ -95,6 +100,8 @@ SMTP_PORT = 25
 MAIL_FROM_DOMAIN = "metabrainz.org"
 
 # OTHER STUFF
+
+DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 # reCAPTCHA (https://www.google.com/recaptcha/)
 RECAPTCHA_PUBLIC_KEY = ""
