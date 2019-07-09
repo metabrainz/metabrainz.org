@@ -7,6 +7,10 @@ def init(app):
     Create global auth client that manages QuickBooks sessions.
     '''
 
+    if not app.config["QUICKBOOKS_CLIENT_ID"]:
+        app.logger.warn("No QUICKBOOKS_CLIENT_ID specified, not setting up QB invoice feature.")
+        return
+
     app.auth_client = AuthClient(
         client_id=app.config["QUICKBOOKS_CLIENT_ID"],
         client_secret=app.config["QUICKBOOKS_CLIENT_SECRET"],
