@@ -121,7 +121,7 @@ class QuickBooksView(BaseView):
                 session['access_token'] = None
                 return redirect(url_for("quickbooks/.index"))
 
-           except quickbooks.exceptions.QuickbooksException as err:
+            except quickbooks.exceptions.QuickbooksException as err:
                 flash("Query failed: %s" % err)
                 raise InternalServerError
 
