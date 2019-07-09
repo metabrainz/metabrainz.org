@@ -101,6 +101,8 @@ MAIL_FROM_DOMAIN = "metabrainz.org"
 
 # OTHER STUFF
 
+DEBUG_TB_INTERCEPT_REDIRECTS = False
+
 # reCAPTCHA (https://www.google.com/recaptcha/)
 RECAPTCHA_PUBLIC_KEY = ""
 RECAPTCHA_PRIVATE_KEY = ""

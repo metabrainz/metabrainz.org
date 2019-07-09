@@ -11,7 +11,7 @@ def init(app):
         app.logger.warn("No QUICKBOOKS_CLIENT_ID specified, not setting up QB invoice feature.")
         return
 
-    app.auth_client = AuthClient(
+    app.quickbooks_auth_client = AuthClient(
         client_id=app.config["QUICKBOOKS_CLIENT_ID"],
         client_secret=app.config["QUICKBOOKS_CLIENT_SECRET"],
         environment=app.config["QUICKBOOKS_SANDBOX"],
@@ -26,7 +26,7 @@ def get_client(realm, refresh_token):
 
     QuickBooks.enable_global()
     qb = QuickBooks(
-        auth_client=current_app.auth_client,
+        auth_client=current_app.quickbooks_auth_client,
         refresh_token=refresh_token,
         company_id=realm
     )

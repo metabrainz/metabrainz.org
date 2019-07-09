@@ -113,7 +113,7 @@ class QuickBooksView(BaseView):
                 if not refreshed:
                     current_app.logger.debug("Auth failed, trying refresh")
                     refreshed = True
-                    current_app.auth_client.refresh()
+                    current_app.quickbooks_auth_client.refresh()
                     continue
 
                 flash("Authorization failed, please try again: %s" % err)
@@ -318,7 +318,7 @@ class QuickBooksView(BaseView):
         refresh_token = session.get('refresh_token', None)
         realm = session.get('realm', None)
 
-        if not session['access_token']:
+        if access_token:
             flash("access token lost. log in again.")
             return render_template("quickbooks/login.html")
 
@@ -346,7 +346,7 @@ class QuickBooksView(BaseView):
         '''
         Login to quickbooks, oauth2 callback
         '''
-        return redirect(current_app.auth_client.get_authorization_url([Scopes.ACCOUNTING]))
+        return redirect(current_app.quickbooks_auth_client.get_authorization_url([Scopes.ACCOUNTING]))
 
 
     @expose('/logout/')
@@ -370,9 +370,9 @@ class QuickBooksView(BaseView):
         realm = request.args.get('realmId')
         refresh_token = request.args.get('realmId')
 
-        current_app.auth_client.get_bearer_token(code, realm_id=realm)
-        session['access_token'] = current_app.auth_client.access_token
-        session['refresh_token'] = current_app.auth_client.refresh_token
+        current_app.quickbooks_auth_client.get_bearer_token(code, realm_id=realm)
+        session['access_token'] = current_app.quickbooks_auth_client.access_token
+        session['refresh_token'] = current_app.quickbooks_auth_client.refresh_token
         session['realm'] = realm
 
         return redirect(url_for("quickbooks/.index"))

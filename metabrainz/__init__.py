@@ -78,9 +78,6 @@ def create_app(debug=None, config_path = None):
         sentry_config=app.config.get('LOG_SENTRY'),
     )
 
-    # Don't intercept redirects, which is fucking annoying
-    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-
     # Database
     from metabrainz import db
     db.init_db_engine(app.config["SQLALCHEMY_DATABASE_URI"])
@@ -154,7 +151,9 @@ def create_app(debug=None, config_path = None):
     admin.add_view(StatsView(name='Statistics', category='Statistics'))
     admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
     admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
-    admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
+
+    if app.config["QUICKBOOKS_CLIENT_ID"]:
+        admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
 
     return app
 

@@ -96,3 +96,5 @@ REPLICATION_PACKETS_DIR = "/data/replication_packets"
 JSON_DUMPS_DIR = "/data/json_dumps"
 
 USE_COMPILED_STYLING = True
+
+DEBUG_TB_INTERCEPT_REDIRECTS = False
