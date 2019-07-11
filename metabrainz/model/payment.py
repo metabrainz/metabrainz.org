@@ -334,12 +334,19 @@ class Payment(db.Model):
         )
 
         if charge.metadata.is_donation == "True":
-            charge.metadata.is_donation = True
+            charge.metadata.is_donation = 1
         if charge.metadata.is_donation == "False":
-            charge.metadata.is_donation = False
+            charge.metadata.is_donation = 0
         if charge.metadata.is_donation is True:
-            new_donation.can_contact = charge.metadata.can_contact == True
-            new_donation.anonymous = charge.metadata.anonymous == True
+            if charge.metadata.can_contact:
+                new_donation.can_contact = 1
+            else:
+                new_donation.can_contact = 0
+            if charge.metadata.anonymous:
+                new_donation.anonymous = 1
+            else:
+                new_donation.anonymous = 0
+
             if 'editor' in charge.metadata:
                 new_donation.editor_name = charge.metadata.editor
         else:  # Organization payment
