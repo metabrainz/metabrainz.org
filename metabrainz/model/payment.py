@@ -334,10 +334,11 @@ class Payment(db.Model):
         )
 
         if charge.metadata.is_donation == "True":
-            charge.metadata.is_donation = 1
+            new_donation.is_donation = 1
         if charge.metadata.is_donation == "False":
-            charge.metadata.is_donation = 0
-        if charge.metadata.is_donation is True:
+            new_donation.is_donation = 0
+
+        if new_donation.is_donation:
             if charge.metadata.can_contact:
                 new_donation.can_contact = 1
             else:
@@ -353,8 +354,11 @@ class Payment(db.Model):
             new_donation.invoice_number = charge.metadata.invoice_number
 
         db.session.add(new_donation)
-        db.session.commit()
-        logging.info('Stripe: Payment added. ID: %s.', new_donation.id)
+        try:
+            db.session.commit()
+            logging.info('Stripe: Payment added. ID: %s.', new_donation.id)
+        except TypeError as err:
+            logging.error("Cannot record payment: ", err)
 
         send_receipt(
             email=new_donation.email,
