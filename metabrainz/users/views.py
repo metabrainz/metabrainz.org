@@ -230,7 +230,12 @@ def musicbrainz_post():
     code = request.args.get('code')
     if not code:
         raise InternalServerError(gettext("Authorization code is missing!"))
-    mb_username, mb_email = musicbrainz_login.get_user(code)
+
+    try:
+        mb_username, mb_email = musicbrainz_login.get_user(code)
+    except KeyError:
+        raise BadRequest(gettext("Login failed!"))
+
     session.persist_data(**{
         SESSION_KEY_MB_USERNAME: mb_username,
         SESSION_KEY_MB_EMAIL: mb_email,
