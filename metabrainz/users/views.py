@@ -84,6 +84,12 @@ def signup_commercial():
     if not tier_id:
         flash.warning(gettext("You need to choose support tier before signing up!"))
         return redirect(url_for('.account_type'))
+
+    try:
+       tier_id = int(tier_id)
+    except ValueError:
+        tier_id = 0
+
     selected_tier = Tier.get(id=tier_id)
     if not selected_tier or not selected_tier.available:
         flash.error(gettext("You need to choose existing tier before signing up!"))

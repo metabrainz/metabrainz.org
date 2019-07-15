@@ -44,6 +44,9 @@ class UsersViewsTestCase(FlaskTestCase):
         resp = self.client.get(url_for('users.signup_commercial', tier_id=unavailable_tier.id))
         self.assertRedirects(resp, url_for('users.account_type'))
 
+        resp = self.client.get(url_for('users.signup_commercial', tier_id='8"'))
+        self.assertRedirects(resp, url_for('users.account_type'))
+
         # With missing tier
         resp = self.client.get(url_for('users.signup_commercial', tier_id=unavailable_tier.id + 1))
         self.assertRedirects(resp, url_for('users.account_type'))
