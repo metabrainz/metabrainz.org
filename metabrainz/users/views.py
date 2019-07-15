@@ -86,7 +86,7 @@ def signup_commercial():
         return redirect(url_for('.account_type'))
 
     try:
-        tier_id = int(tier_id)
+       tier_id = int(tier_id)
     except ValueError:
         tier_id = 0
 
