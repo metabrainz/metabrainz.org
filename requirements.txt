@@ -10,7 +10,7 @@ Flask-WTF==0.14.2
 psycopg2==2.7.3
 pytest-cov==2.5.1
 pytest==3.2.1
-pytz==2017.2
+pytz==2019.2
 rauth==0.7.3
 reportlab==3.1.44
 six==1.10.0
