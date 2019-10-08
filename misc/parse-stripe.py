@@ -48,7 +48,7 @@ for i, row in enumerate(reader):
     fee = -toFloat(row[9])
     net = amount - fee
     memo = row[1]
-    inv = row[52]
+    inv = row[54]
 
     text = sender
     if inv:
