@@ -318,7 +318,7 @@ class QuickBooksView(BaseView):
         refresh_token = session.get('refresh_token', None)
         realm = session.get('realm', None)
 
-        if access_token:
+        if not access_token:
             flash("access token lost. log in again.")
             return render_template("quickbooks/login.html")
 
