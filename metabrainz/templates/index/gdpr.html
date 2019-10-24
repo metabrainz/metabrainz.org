@@ -15,7 +15,7 @@
   </p>
   <p>
     The good news is that this regulation is roughly in line with our established practices: We’ve always held private information 
-    in a high regard and applied the sort of rules to ourselves as we wish to have our own private data treated. Luckily, this 
+    in a high regard and applied the sort of rules to ourselves as we wish to have our private data treated. Luckily, this 
     makes our compliance effort considerably easier. We’ve made two significant changes to how we treat your data and also adopted 
     terminology as used in the GDPR in order to use the same languages that many other sites are now adopting. Please keep reading 
     to find out the exact details of what we are doing to comply.
@@ -64,7 +64,7 @@
        <a href="https://github.com/metabrainz/musicbrainz-server/blob/master/lib/MusicBrainz/Server/Data/Editor.pm">How we delete 
        accounts in MusicBrainz</a> (warning, geek content ahead!)
      </li>
-     <li>Implement site wide user account deletion in 
+     <li>Implement site-wide user account deletion in 
          <a href="https://tickets.metabrainz.org/browse/MBS-9680">MusicBrainz</a>, 
          <a href="https://tickets.metabrainz.org/browse/AB-337">AcousticBrainz</a>, 
          <a href="https://tickets.metabrainz.org/browse/BB-260">BookBrainz</a>, 
@@ -77,27 +77,27 @@
   <h2>{{ _('Restriction of processing') }}</h2>
 
   <p>
-    Summary: <i>To allow the user to control how their personally identifying data is being used.</i>.
+    Summary: <i>To allow the user to control how their personally identifying data is being used.</i>
   </p>
   <p>
-    With the exception of the ListenBrainz and AcousticBrainz projects we do not process personally identifying data. Any personally 
-    identifying data that our projects store is for the purpose of being able to contact you about your contributions to our database 
+    Except for the ListenBrainz and AcousticBrainz projects, we do not process personally identifying data. Any personally 
+    identifying data that our projects store is to be able to contact you about your contributions to our database 
     (email address) or for voluntarily showing information about you to other users (biography, homepage, location, etc).
   </p>
   <p>
     The ListenBrainz project differs in that the Listens (metadata about what music you have listened to) are stored on our servers 
     and <a href="https://listenbrainz.org/data">made available to the public</a>. We believe Listens to be personally identifying 
-    data and furthermore we have goals of creating open source recommendation engines with this data, which is becomes processing the 
+    data and furthermore, we have goals of creating open source recommendation engines with this data, which is becomes processing the 
     user’s data. These two points are fundamental goals of the ListenBrainz project and we do not see a reasonable way to reach another 
     compromise position.
   </p>
   <p>
-    Because of this we are going to require users to either acknowledge that we may process their Listen data or alternatively to 
+    Because of this, we are going to require users to either acknowledge that we may process their Listen data or alternatively to 
     delete their account, including all of their Listens. Please note that if you decide to delete your ListenBrainz account, it may 
     take up to two weeks for all of your listens to no longer be included in our efforts to build a recommendation engine. Also, we 
     haven’t implemented the feature that automatically deletes Listen data from the 
     <a href="https://console.cloud.google.com/launcher/details/metabrainz/listenbrainz">public BigQuery data set</a>. If you wish to have 
-    your Listens removed there after deleting your ListenBrainz accounts, please request this by 
+    your Listens removed thereafter deleting your ListenBrainz accounts, please request this by 
     <a href="{{ url_for('index.contact') }}">contacting us</a>.
   </p>
   <p>
@@ -143,7 +143,7 @@
     Summary: <i>You have the right to access/download the data we store about you</i>.
   </p>
   <p>
-    With the exception of the ListenBrainz and AcousticBrainz projects we do not store personally identifying data beyond the 
+    Except for the ListenBrainz and AcousticBrainz projects, we do not store personally identifying data beyond the 
     information that is available in your public profile on each of our projects. Since this data is plainly available in your 
     profile we do not provide a means for you to export this data.
   </p>
@@ -154,8 +154,8 @@
      <li>
         <b>IP addresses</b>: If you visit one of our sites the IP address of your computer is stored in our web logs for 7 days 
         before our servers automatically delete them. This data is almost never used by anyone: the only time we look at the 
-        IP addresses is if our sites are adversely impacted by the actions of some unknown users. In that case we may investigate 
-        the logs in order to identify the IP address that needs to be blocked in order to restore the stability of our service. 
+        IP addresses is if our sites are adversely impacted by the actions of some unknown users. In that case, we may investigate 
+        the logs to identify the IP address that needs to be blocked in order to restore the stability of our service. 
         This data is not available to anyone but the contractors of the MetaBrainz Foundation and is not available to download 
         to anyone at all.
      </li>
