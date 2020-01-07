@@ -13,6 +13,7 @@ from quickbooks import QuickBooks
 from quickbooks.objects.customer import Customer
 from quickbooks.objects.invoice import Invoice
 from quickbooks.objects.detailline import SalesItemLineDetail
+from intuitlib.exceptions import AuthClientError
 from werkzeug.exceptions import BadRequest, InternalServerError
 
 
@@ -107,6 +108,15 @@ class QuickBooksView(BaseView):
                 customers = Customer.filter(Active=True, qb=client)
                 invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
                 break
+
+            except AuthClientError:
+                session['realm'] = None
+                session['access_token'] = None
+                session['refresh_token'] = None
+                flash("Authorization failed, please try again: %s" % err)
+                current_app.logger.debug("Auth failed, logging out, starting over.")
+                session['access_token'] = None
+                return redirect(url_for("quickbooks/.index"))
 
             except quickbooks.exceptions.AuthorizationException as err:
                 current_app.logger.error("Auth failed. Refresh token: '%s'" % client.refresh_token)
@@ -327,6 +337,11 @@ class QuickBooksView(BaseView):
             client = get_client(realm, refresh_token)
             self.create_invoices(client, invoices)
 
+        except AuthClientError:
+            flash("Authorization failed, please try again: %s" % err)
+            session['access_token'] = None
+            session['realm'] = None
+            return redirect(url_for("quickbooks/.index"))
         except quickbooks.exceptions.AuthorizationException as err:
             flash("Authorization failed, please try again: %s" % err)
             session['access_token'] = None
