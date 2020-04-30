@@ -170,6 +170,20 @@ class User(db.Model, UserMixin):
         return query.order_by(func.random()).limit(limit).all()
 
     @classmethod
+    def get_active_supporters(cls):
+        """Get list of users who are actively supporting us.
+
+        Returns:
+            List of users sorted by amount of monthly support
+        """
+        query = cls.query.filter(cls.is_commercial == True)
+        query = query.filter(cls.state == STATE_ACTIVE)
+        query = query.filter(cls.good_standing == True)
+        query = query.filter(cls.amount_pledged > 0)
+
+        return query.order_by(cls.amount_pledged.desc()).all()
+
+    @classmethod
     def search(cls, value):
         """Search users by their musicbrainz_id, org_name, contact_name,
         or contact_email.
