@@ -18,3 +18,6 @@ class AdminViewsTestCase(FlaskTestCase):
 
     def test_statsview_top_ips(self):
         self.assertStatus(self.client.get(url_for('statsview.top_ips')), 302)
+
+    def test_statsview_supporters(self):
+        self.assertStatus(self.client.get(url_for('statsview.supporters')), 302)

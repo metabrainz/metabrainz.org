@@ -165,23 +165,23 @@ class AccessLog(db.Model):
 
         """
         query = db.session.query(AccessLog).join(Token).join(User) \
-            .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
+            .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email, User.data_usage_desc) \
             .filter(User.is_commercial == False) \
             .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
             .filter(User.good_standing != True) \
             .add_columns(func.count("AccessLog.*").label("count")) \
-            .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
+            .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email, User.data_usage_desc) \
             .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         non_commercial = query.all()
 
         query = db.session.query(AccessLog).join(Token).join(User) \
-            .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
+            .with_entities(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email, User.data_usage_desc) \
             .filter(User.is_commercial == True) \
             .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
             .add_columns(func.count("AccessLog.*").label("count")) \
-            .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email) \
+            .group_by(AccessLog.ip_address, AccessLog.token, User.musicbrainz_id, User.id, User.contact_name, User.contact_email, User.data_usage_desc) \
             .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)

@@ -8,6 +8,7 @@ from metabrainz import flash
 from math import ceil
 import requests
 from requests.exceptions import RequestException
+from werkzeug.exceptions import BadRequest
 
 payments_bp = Blueprint('payments', __name__)
 
@@ -75,6 +76,17 @@ def cancel_recurring():
 
 @payments_bp.route('/donations/nag-check/<editor>')
 def nag_check(editor):
+    a, b = Payment.get_nag_days(editor)
+    return '%s,%s\n' % (a, b)
+
+
+@payments_bp.route('/donations/nag-check')
+def nag_check_with_param():
+
+    editor = request.args.get('editor')
+    if not editor:
+        raise BadRequest
+
     a, b = Payment.get_nag_days(editor)
     return '%s,%s\n' % (a, b)
 

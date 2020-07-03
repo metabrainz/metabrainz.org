@@ -28,7 +28,11 @@
               {% elif action.action == "deactivate" %}
                 revoked token owned by user
               {% endif %}
-              <a href="{{ url_for('usersview.details', user_id=action.token.owner.id) }}">{{ action.token.owner }}</a>
+              {% if action.token.owner %}
+                  <a href="{{ url_for('usersview.details', user_id=action.token.owner.id) }}">{{ action.token.owner }}</a>
+              {% else %}
+                  [ invalid owner row suppressed ]
+              {% endif %}
             {% endif %}
           </td>
           <td>{{ action.timestamp }}</td>
