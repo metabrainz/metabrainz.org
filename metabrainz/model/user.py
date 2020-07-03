@@ -177,7 +177,7 @@ class User(db.Model, UserMixin):
             List of users sorted by amount of monthly support
         """
         query = cls.query.filter(cls.is_commercial == True)
-        query = query.filter(cls.state == STATE_ACTIVE)
+        query = query.filter(or_(cls.state == STATE_ACTIVE, cls.state == STATE_LIMITED))
         query = query.filter(cls.good_standing == True)
         query = query.filter(cls.amount_pledged > 0)
 
