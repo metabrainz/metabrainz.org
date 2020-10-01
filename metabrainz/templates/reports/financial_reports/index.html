@@ -35,6 +35,8 @@
 
 <p>{{ _('Quarterly reports') }}</p>
 <ul>
+    <li>Q3 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2020_Q3.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
+    <li>Q3 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20200930.pdf') }}">{{ _('balance sheet') }}</a></li>
     <li>Q2 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2020_Q2.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>Q2 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20200630.pdf') }}">{{ _('balance sheet') }}</a></li>
     <li>Q1 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2020_Q1.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
