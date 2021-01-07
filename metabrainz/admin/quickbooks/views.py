@@ -109,17 +109,16 @@ class QuickBooksView(BaseView):
                 invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
                 break
 
-            except AuthClientError:
+            except AuthClientError as err:
                 session['realm'] = None
                 session['access_token'] = None
                 session['refresh_token'] = None
-                flash("Authorization failed, please try again: %s" % err)
+                flash("Authorization failed, please try again: %s" % str(err))
                 current_app.logger.debug("Auth failed, logging out, starting over.")
                 session['access_token'] = None
                 return redirect(url_for("quickbooks/.index"))
 
             except quickbooks.exceptions.AuthorizationException as err:
-                current_app.logger.error("Auth failed. Refresh token: '%s'" % client.refresh_token)
                 if not refreshed:
                     current_app.logger.debug("Auth failed, trying refresh")
                     refreshed = True
