@@ -1,0 +1,27 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h1>Active supporters</h1>
+
+    <p>
+       All active supporters, in good standing with pledged amounts greater than zero:
+    </p>
+    <table class="table table-striped table-condensed table-bordered" style="width: 50%">
+      <thead>
+      <tr>
+        <th>Company</th>
+        <th>Amount</th>
+      </tr>
+      </thead>
+      {% for supporter in supporters %}
+        <tr>
+          <td><a href="{{ url_for('usersview.details', user_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
+          <td class="text-right">{{ "${:,.2f}".format(supporter.amount_pledged) }}</td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td><strong>Total per month</strong></td>
+        <td class="text-right"><strong>{{ "${:,.2f}".format(total) }}</strong></td>
+      </tr>
+    </table>
+
+{% endblock %}

@@ -7,30 +7,30 @@
 
   <h2>{{ _('Introduction') }}</h2>
   <p>
-    The General Data Protection Regulation is a complex EU regulation that stipulates many points for protecting private data of 
+    The General Data Protection Regulation is a complex EU regulation that stipulates many points for protecting private data of
     users on the Internet. Even though this is an EU regulation, it has a worldwide impact due to the nature of the Internet.
-    The MetaBrainz Foundation with its collection of projects is also affected by this regulation. We’ve been learning and adapting 
+    The MetaBrainz Foundation with its collection of projects is also affected by this regulation. We’ve been learning and adapting
     our sites to be compliant with the GDPR – sadly this regulation isn’t entirely black and white and there is an incredible
     amount of room left for interpretation of these rules.
   </p>
   <p>
-    The good news is that this regulation is roughly in line with our established practices: We’ve always held private information 
-    in a high regard and applied the sort of rules to ourselves as we wish to have our private data treated. Luckily, this 
-    makes our compliance effort considerably easier. We’ve made two significant changes to how we treat your data and also adopted 
-    terminology as used in the GDPR in order to use the same languages that many other sites are now adopting. Please keep reading 
+    The good news is that this regulation is roughly in line with our established practices: We’ve always held private information
+    in a high regard and applied the sort of rules to ourselves as we wish to have our own private data treated. Luckily, this
+    makes our compliance effort considerably easier. We’ve made two significant changes to how we treat your data and also adopted
+    terminology as used in the GDPR in order to use the same languages that many other sites are now adopting. Please keep reading
     to find out the exact details of what we are doing to comply.
   </p>
   <p>
-    However, we do ask for your compassion and help in our process of complying with the GDPR. As we already mentioned, the GDPR is 
-    a complex set of rules that are not fully clarified yet. We’ve taken action on the steps that are clear to us and we’re following 
-    ongoing conversations on points that are in gray zones or unclear to us. We’ve made our best initial effort on compliance and 
-    promise to keep working on it as the picture becomes more clear. If you believe that we could improve our compliance, please 
-    <a href="{{ url_for('index.contact') }}">contact us</a> and let us know what we can do to improve. It would also help us if you 
+    However, we do ask for your compassion and help in our process of complying with the GDPR. As we already mentioned, the GDPR is
+    a complex set of rules that are not fully clarified yet. We’ve taken action on the steps that are clear to us and we’re following
+    ongoing conversations on points that are in gray zones or unclear to us. We’ve made our best initial effort on compliance and
+    promise to keep working on it as the picture becomes more clear. If you believe that we could improve our compliance, please
+    <a href="{{ url_for('index.contact') }}">contact us</a> and let us know what we can do to improve. It would also help us if you
     could provide concrete discussion or examples to help us understand and take action on your suggestion.
   </p>
   <p>
-    Finally, below are the key sections of the GDPR as we understand them and how they affect your data in our ecosystem. Where 
-    possible, we provide links for deeper understanding, links for you to examine our relevant code and links to tickets to follow 
+    Finally, below are the key sections of the GDPR as we understand them and how they affect your data in our ecosystem. Where
+    possible, we provide links for deeper understanding, links for you to examine our relevant code and links to tickets to follow
     the process of improving our compliance.
   </p>
 
@@ -40,19 +40,19 @@
     Summary: <i>Provide the user with the ability to remove their private data from our services</i>.
   </p>
   <p>
-    The most important aspect of the right to be forgotten is the ability to delete your account. Once you request for us to delete 
-    your account, we will remove any personally identifying information you may have provided us from your account (name, email 
-    address, gender, biography, URL, etc.). The visible name on your account will be changed to “Deleted User #####” and effectively 
+    The most important aspect of the right to be forgotten is the ability to delete your account. Once you request for us to delete
+    your account, we will remove any personally identifying information you may have provided us from your account (name, email
+    address, gender, biography, URL, etc.). The visible name on your account will be changed to “Deleted User #####” and effectively
     the account will no longer be identifiable as your account.
   </p>
   <p>
-    However, given the nature of our projects where we work on collaborative databases, your contributions that are not personally 
+    However, given the nature of our projects where we work on collaborative databases, your contributions that are not personally
     identifying are valuable assets to our database and these contributions will not be removed from our databases. But we will
     ensure that these contributions no longer contain personally identifying data.
   </p>
   <p>
-    Our process of automatically deleting your accounts across the MetaBrainz ecosystem is not complete yet (see below for a set of 
-    tickets where you can track our progress). If you would like to delete your accounts in the MetaBrainz ecosystem or mark a 
+    Our process of automatically deleting your accounts across the MetaBrainz ecosystem is not complete yet (see below for a set of
+    tickets where you can track our progress). If you would like to delete your accounts in the MetaBrainz ecosystem or mark a
     donation that is currently public as a private donation, please <a href="{{ url_for('index.contact') }}">contact us</a>
     and we will address your request as soon as possible.
   </p>
@@ -61,15 +61,15 @@
   </p>
   <ul>
      <li>
-       <a href="https://github.com/metabrainz/musicbrainz-server/blob/master/lib/MusicBrainz/Server/Data/Editor.pm">How we delete 
+       <a href="https://github.com/metabrainz/musicbrainz-server/blob/master/lib/MusicBrainz/Server/Data/Editor.pm">How we delete
        accounts in MusicBrainz</a> (warning, geek content ahead!)
      </li>
-     <li>Implement site-wide user account deletion in 
-         <a href="https://tickets.metabrainz.org/browse/MBS-9680">MusicBrainz</a>, 
-         <a href="https://tickets.metabrainz.org/browse/AB-337">AcousticBrainz</a>, 
-         <a href="https://tickets.metabrainz.org/browse/BB-260">BookBrainz</a>, 
-         <a href="https://tickets.metabrainz.org/browse/MEB-103">the MetaBrainz Site</a>, 
-         <a href="https://tickets.metabrainz.org/browse/LB-354">ListenBrainz</a>, and 
+     <li>Implement sitewide user account deletion in
+         <a href="https://tickets.metabrainz.org/browse/MBS-9680">MusicBrainz</a>,
+         <a href="https://tickets.metabrainz.org/browse/AB-337">AcousticBrainz</a>,
+         <a href="https://tickets.metabrainz.org/browse/BB-260">BookBrainz</a>,
+         <a href="https://tickets.metabrainz.org/browse/MEB-103">the MetaBrainz Site</a>,
+         <a href="https://tickets.metabrainz.org/browse/LB-354">ListenBrainz</a>, and
          <a href="https://tickets.metabrainz.org/browse/CB-307">CritiqueBrainz</a>.
      </li>
   </ul>
@@ -80,40 +80,40 @@
     Summary: <i>To allow the user to control how their personally identifying data is being used.</i>
   </p>
   <p>
-    Except for the ListenBrainz and AcousticBrainz projects, we do not process personally identifying data. Any personally 
-    identifying data that our projects store is to be able to contact you about your contributions to our database 
+    Except for the ListenBrainz and AcousticBrainz projects, we do not process personally identifying data. Any personally
+    identifying data that our projects store is for the purpose of being able to contact you about your contributions to our database
     (email address) or for voluntarily showing information about you to other users (biography, homepage, location, etc).
   </p>
   <p>
-    The ListenBrainz project differs in that the Listens (metadata about what music you have listened to) are stored on our servers 
-    and <a href="https://listenbrainz.org/data">made available to the public</a>. We believe Listens to be personally identifying 
-    data and furthermore, we have goals of creating open source recommendation engines with this data, which is becomes processing the 
-    user’s data. These two points are fundamental goals of the ListenBrainz project and we do not see a reasonable way to reach another 
+    The ListenBrainz project differs in that the Listens (metadata about what music you have listened to) are stored on our servers
+    and <a href="https://listenbrainz.org/data">made available to the public</a>. We believe Listens to be personally identifying
+    data and furthermore, we have goals of creating open source recommendation engines with this data, which is becomes processing the
+    user’s data. These two points are fundamental goals of the ListenBrainz project and we do not see a reasonable way to reach another
     compromise position.
   </p>
   <p>
-    Because of this, we are going to require users to either acknowledge that we may process their Listen data or alternatively to 
-    delete their account, including all of their Listens. Please note that if you decide to delete your ListenBrainz account, it may 
-    take up to two weeks for all of your listens to no longer be included in our efforts to build a recommendation engine. Also, we 
-    haven’t implemented the feature that automatically deletes Listen data from the 
-    <a href="https://console.cloud.google.com/launcher/details/metabrainz/listenbrainz">public BigQuery data set</a>. If you wish to have 
-    your Listens removed thereafter deleting your ListenBrainz accounts, please request this by 
+    Because of this, we are going to require users to either acknowledge that we may process their Listen data or alternatively to
+    delete their account, including all of their Listens. Please note that if you decide to delete your ListenBrainz account, it may
+    take up to two weeks for all of your listens to no longer be included in our efforts to build a recommendation engine. Also, we
+    haven’t implemented the feature that automatically deletes Listen data from the
+    <a href="https://console.cloud.google.com/launcher/details/metabrainz/listenbrainz">public BigQuery data set</a>. If you wish to have
+    your Listens removed thereafter deleting your ListenBrainz accounts, please request this by
     <a href="{{ url_for('index.contact') }}">contacting us</a>.
   </p>
   <p>
-    We have always made it clear that the data in ListenBrainz was to be public and that we plan to build new tools with your data, so 
+    We have always made it clear that the data in ListenBrainz was to be public and that we plan to build new tools with your data, so
     this should not come as a surprise to our users.
   </p>
   <p>
-    The AcousticBrainz project does not track who submits data to the database. If you create an account and use our data creation 
-    tools (e.g. create a dataset or participate in a challenge) then we link your participation and the things that you create to 
-    your account. If you choose to delete your account then we keep the non personally identifying data that you create, but anonymize 
+    The AcousticBrainz project does not track who submits data to the database. If you create an account and use our data creation
+    tools (e.g. create a dataset or participate in a challenge) then we link your participation and the things that you create to
+    your account. If you choose to delete your account then we keep the non personally identifying data that you create, but anonymize
     it so that it cannot be linked back to you.
   </p>
   <p>
-    The final point to restriction of processing is that we used to gather aggregate statistics about our web traffic (mostly to identify 
-    which browsers our sites need to support) in Google Analytics. Google Analytics has always been a contentious service in the eyes 
-    of our community, so we decided to stop using the service and implement the minor feature of browsers analysis on our own servers at 
+    The final point to restriction of processing is that we used to gather aggregate statistics about our web traffic (mostly to identify
+    which browsers our sites need to support) in Google Analytics. Google Analytics has always been a contentious service in the eyes
+    of our community, so we decided to stop using the service and implement the minor feature of browser analysis on our own servers at
     a later point in time.
   </p>
   <p>
@@ -121,17 +121,17 @@
   </p>
   <ul>
      <li>
-       <a href="https://listenbrainz.org/login">Disclaimer for ListenBrainz
+       <a href="https://listenbrainz.org/login">Disclaimer for ListenBrainz</a>
      </li>
      <li>
-       <a href="https://tickets.metabrainz.org/projects/LB/issues/LB-355">Delete Listens from BigQuery data</a>, 
+       <a href="https://tickets.metabrainz.org/projects/LB/issues/LB-355">Delete Listens from BigQuery data</a>,
        <a href="https://tickets.metabrainz.org/projects/LB/issues/LB-366">Remove BigQuery delete caveats from GDPR statement</a>
      </li>
      <li>
-       <a href="https://github.com/metabrainz/metabrainz.org/pull/303">Update our privacy policy</a>, 
-       <a href="https://tickets.metabrainz.org/browse/MBS-9679">turn off Google Analytics in MusicBrainz</a> and 
-       <a href="https://tickets.metabrainz.org/browse/BB-258">BookBrainz</a>, 
-       <a href="https://tickets.metabrainz.org/browse/MEB-101">remove the analytics account</a> and 
+       <a href="https://github.com/metabrainz/metabrainz.org/pull/303">Update our privacy policy</a>,
+       <a href="https://tickets.metabrainz.org/browse/MBS-9679">turn off Google Analytics in MusicBrainz</a> and
+       <a href="https://tickets.metabrainz.org/browse/BB-258">BookBrainz</a>,
+       <a href="https://tickets.metabrainz.org/browse/MEB-101">remove the analytics account</a> and
        <a href="https://tickets.metabrainz.org/browse/MEB-102">verify the deletion of the account</a>.
      </li>
   </ul>
@@ -143,8 +143,8 @@
     Summary: <i>You have the right to access/download the data we store about you</i>.
   </p>
   <p>
-    Except for the ListenBrainz and AcousticBrainz projects, we do not store personally identifying data beyond the 
-    information that is available in your public profile on each of our projects. Since this data is plainly available in your 
+    Except for the ListenBrainz and AcousticBrainz projects, we do not store personally identifying data beyond the
+    information that is available in your public profile on each of our projects. Since this data is plainly available in your
     profile we do not provide a means for you to export this data.
   </p>
   <p>
@@ -152,28 +152,28 @@
   </p>
   <ul>
      <li>
-        <b>IP addresses</b>: If you visit one of our sites the IP address of your computer is stored in our web logs for 7 days 
-        before our servers automatically delete them. This data is almost never used by anyone: the only time we look at the 
-        IP addresses is if our sites are adversely impacted by the actions of some unknown users. In that case, we may investigate 
-        the logs to identify the IP address that needs to be blocked in order to restore the stability of our service. 
-        This data is not available to anyone but the contractors of the MetaBrainz Foundation and is not available to download 
+        <b>IP addresses</b>: If you visit one of our sites the IP address of your computer is stored in our web logs for 7 days
+        before our servers automatically delete them. This data is almost never used by anyone: the only time we look at the
+        IP addresses is if our sites are adversely impacted by the actions of some unknown users. In that case, we may investigate
+        the logs to identify the IP address that needs to be blocked in order to restore the stability of our service.
+        This data is not available to anyone but the contractors of the MetaBrainz Foundation and is not available to download
         to anyone at all.
      </li>
      <li>
-        <b>ListenBrainz Listen data</b>: Users may <a href="https://listenbrainz.org/profile/export">export their ListenBrainz Listen 
-        data</a> directly from the site. The user Listen data is also included in the <a href="https://listenbrainz.org/data">ListenBrainz 
+        <b>ListenBrainz Listen data</b>: Users may <a href="https://listenbrainz.org/profile/export">export their ListenBrainz Listen
+        data</a> directly from the site. The user Listen data is also included in the <a href="https://listenbrainz.org/data">ListenBrainz
         data dumps</a> that are available for public download.
      </li>
   </ul>
 
   <p>
-    All of the non personally identifying data, such as your metadata contributions, are publicly visible, available for download 
-    and available via the project APIs. For details about this data, downloads and APIs please check the documentation for the 
+    All of the non personally identifying data, such as your metadata contributions, are publicly visible, available for download
+    and available via the project APIs. For details about this data, downloads and APIs please check the documentation for the
     respective projects you are interested in.
   </p>
   <p>
-    Anyone wishing to get a list of financial donations they have made to the MetaBrainz Foundation, please 
-    <a href="{{ url_for('index.contact') }}">contact us</a> and provide your MusicBrainz editor name so that we can look up 
+    Anyone wishing to get a list of financial donations they have made to the MetaBrainz Foundation, please
+    <a href="{{ url_for('index.contact') }}">contact us</a> and provide your MusicBrainz editor name so that we can look up
     your donations.
   </p>
 
@@ -183,12 +183,12 @@
     Summary: <i>You have the right to correct your data</i>.
   </p>
   <p>
-    All of our projects allow their users to update their personally identifying information in their profiles. Furthermore, most 
-    of our projects allow the editing of their own metadata contributions. If you find that some of your data is incorrect, please 
+    All of our projects allow their users to update their personally identifying information in their profiles. Furthermore, most
+    of our projects allow the editing of their own metadata contributions. If you find that some of your data is incorrect, please
     feel free to edit the data since we provide the tools to do so.
   </p>
   <p>
-    If anyone who has made a financial donation to the MetaBrainz Foundation would like to make their donation private, please 
+    If anyone who has made a financial donation to the MetaBrainz Foundation would like to make their donation private, please
     <a href="{{ url_for('index.contact') }}">contact us</a>.
   </p>
 
@@ -197,7 +197,7 @@
     Summary: <i>You have the right to be informed about how we use your data in plain English</i>.
   </p>
   <p>
-    Our privacy policy, as well as other policies, have always been written by humans for human consumption. We abhor legalese and 
+    Our privacy policy, as well as other policies, have always been written by humans for human consumption. We abhor legalese and
     not speaking in direct terms.
   </p>
   <p>
@@ -221,7 +221,7 @@
     Summary: <i>You have the right to access the data that we collect about you</i>.
   </p>
   <p>
-    All of our projects make all of the data we collect on your behalf, privately identifying or not, available to you. The 
+    All of our projects make all of the data we collect on your behalf, privately identifying or not, available to you. The
     only exception to this are the IP addresses we store for 7 days – see above for details.
   </p>
 

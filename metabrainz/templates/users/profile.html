@@ -79,7 +79,7 @@
       <p>
         {{ _('Reason:') }}
         {% if not current_user.good_standing %}
-          {{ _('Your account is in bad standing, which means that you are more than
+          {{ _('Your account sign-up is incomplete or your account is in bad standing, which means that you are more than
           60 days behind in support payments. If you think this is a mistake,
           please <a href="%(contact_url)s">contact us</a>.', contact_url=url_for('index.contact')) }}
         {% elif current_user.state == 'rejected' %}

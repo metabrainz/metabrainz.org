@@ -145,42 +145,6 @@
     </div>
 
     <div class="person">
-      <img class="pic" src="{{ url_for('static', filename='img/team/vansika.jpeg') }}" />
-      <div class="bio">
-        <h4>{{ _('<span class="name">Vansika Pareek</span> &mdash; Software Engineer') }}</h4>
-        <p>
-          {{ _('Vansika Pareek started working with MetaBrainz in January 2019 when she realized the amazing potential of the
-          intersection of music and technology. She works on the ListenBrainz project and music recommendation.
-          She is a poet, an artist and loves Badminton.') }}
-        </p>
-        <ul class="links">
-          <li><strong>IRC:</strong> pristine__</li>
-          <li><strong>GitHub:</strong> <a href="https://github.com/vansika">vansika</a></li>
-          <li><strong>Blog:</strong> <a href="https://broodingsecrets.wordpress.com">Brooding Secrets</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="person">
-      <img class="pic" src="{{ url_for('static', filename='img/team/param_singh.jpg') }}" />
-      <div class="bio">
-        <h4>{{ _('<span class="name">Param Singh</span> &mdash; Software Engineer') }}</h4>
-        <p>
-          {{ _('Param is a software engineer for MetaBrainz working mostly on the ListenBrainz project. Param
-          joined MetaBrainz as a Google Summer of Code student in 2017. Param loves both programming and music a
-          lot, so MetaBrainz was love at first sight for him. When not staring at a screen, Param plays some
-          chess and tries to listen to new music.') }}
-        </p>
-        <ul class="links">
-          <li><strong>IRC:</strong> iliekcomputers</li>
-          <li><strong>GitHub:</strong> <a href="https://github.com/paramsingh">paramsingh</a></li>
-          <li><strong>Last.fm:</strong> <a href="http://www.last.fm/user/singhparam">singhparam</a></li>
-          <li><strong>ListenBrainz:</strong> <a href="https://listenbrainz.org/user/iliekcomputers">iliekcomputers</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/nicolas_pelletier.jpg') }}"/>
       <div class="bio">
         <h4>{{ _('<span class="name">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  Software Engineer & Graphic Designer') }}</h4>
@@ -202,16 +166,48 @@
       </div>
     </div>
 
-    <h2>{{ _('Voluntary Project Leaders') }}</h2>
-
     <div class="person">
+      <img
+        alt="Alastair Porter's photo"
+        class="pic"
+        src="{{ url_for('static', filename='img/team/alastair_porter.jpg') }}"
+      />
       <div class="bio">
-        <h4>{{ _('<span class="name">Alastair Porter</span> &mdash; AcousticBrainz') }}</h4>
+        <h4>{{ _('<span class="name">Alastair Porter</span> &mdash; AcousticBrainz Lead &amp; Software Engineer') }}</h4>
         <p>
-          {{ _('Alastair is the project leader for <a href="%(ab_url)s">AcousticBrainz</a>.', ab_url='https://acousticbrainz.org/') }}
+          {{ _('Alastair has been involved with MusicBrainz for over a decade, starting by contributing data and later as the
+          developer of the <a href="%(pymb_url)s">python webservice bindings</a>.',
+          pymb_url="https://github.com/alastair/python-musicbrainzngs")}}
+        </p>
+        <p>
+          {{ _('In 2014 while at the <a href="%(mtg)s">Music Technology Group</a>, he collaborated with MetaBrainz in developing and
+          launching AcousticBrainz, and since then has worked on it as a volunteer. He now works with the MetaBrainz team
+          as the lead AcousticBrainz developer.',
+          mtg="https://www.upf.edu/web/mtg/") }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> alastairp</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>{{ _('Voluntary Project Leaders') }}</h2>
+
+    <div class="person">
+      <img class="pic" src="{{ url_for('static', filename='img/team/param_singh.jpg') }}" />
+      <div class="bio">
+        <h4>{{ _('<span class="name">Param Singh</span> &mdash; ListenBrainz team leader') }}</h4>
+        <p>
+          {{ _('Param is a software engineer in the role as lead on the ListenBrainz project. Param
+          joined MetaBrainz as a Google Summer of Code student in 2017 and has been part of MetaBrainz since then.
+          Param loves both programming and music a lot, so MetaBrainz was love at first sight for him.
+          When not staring at a screen, Param plays some chess and tries to listen to new music.') }}
+        </p>
+        <ul class="links">
+          <li><strong>IRC:</strong> iliekcomputers</li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/paramsingh">paramsingh</a></li>
+          <li><strong>Last.fm:</strong> <a href="http://www.last.fm/user/singhparam">singhparam</a></li>
+          <li><strong>ListenBrainz:</strong> <a href="https://listenbrainz.org/user/iliekcomputers">iliekcomputers</a></li>
         </ul>
       </div>
     </div>
@@ -265,5 +261,26 @@
         </ul>
       </div>
     </div>
+
+    <div class="person">
+      <img
+        alt="Kartik Ohri's photo"
+        class="pic"
+        src="{{ url_for('static', filename='img/team/kartik.jpeg') }}"
+      />
+      <div class="bio">
+        <h4>{{ _('<span class="name">Kartik Ohri</span> &mdash; MusicBrainz Android') }}</h4>
+        <p>
+          {{ _('Kartik joined the MetaBrainz community during Google Code-In 2018. Since then, there has been
+          no looking back and now Kartik is in charge of development of the MusicBrainz Android project. Recently, 
+          Kartik has also begun contributing to various other MetaBrainz projects as well.') }}
+        </p>
+        <ul class="links">
+          <li><strong>IRC:</strong> _lucifer</li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/amCap1712">amCap1712</a></li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 {% endblock %}

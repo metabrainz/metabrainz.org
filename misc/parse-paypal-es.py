@@ -41,6 +41,7 @@ for fields in reader:
     dat = fields[0].encode('utf8')
     dat = datetime.datetime.strptime(dat, '%d/%m/%Y').strftime('%m/%d/%Y')
     amount = fields[7].encode('utf8')
+    amount = amount.replace(",", ".")
     type = fields[4].encode('utf8')
     status = fields[5].encode('utf8')
     if status != 'Completed':
@@ -52,6 +53,7 @@ for fields in reader:
     out.writerow([dat, desc, amount])
 
     fee = fields[8].encode('utf8')
+    fee = fee.replace(",", ".")
     if fee and float(fee) != 0.0:
         out.writerow([dat, "PayPal fee", fee])
 

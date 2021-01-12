@@ -1,3 +1,4 @@
+from decimal import Decimal
 from flask import Response, request, redirect, url_for
 from flask_admin import expose
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms
@@ -5,6 +6,7 @@ from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJEC
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
+from metabrainz.model.user import User
 from metabrainz.db import user as db_user
 from metabrainz.db import payment as db_payment
 from metabrainz import flash
@@ -343,3 +345,18 @@ class StatsView(AdminBaseView):
                 i[1]
             ] for i in stats]}]),
             content_type='application/json; charset=utf-8')
+
+
+    @expose('/supporters/')
+    def supporters(self):
+
+        total = Decimal()
+        supporters = User.get_active_supporters()
+        for supporter in supporters:
+            total += supporter.amount_pledged
+            
+        return self.render(
+            'admin/stats/supporters.html',
+            supporters=supporters,
+            total=total
+        )

@@ -401,6 +401,7 @@ class PaymentAdminView(AdminModelView):
         'first_name',
         'last_name',
         'email',
+        'payment_date',
         'address_street',
         'address_city',
         'address_state',
