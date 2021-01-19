@@ -44,8 +44,8 @@ class AccessLogTestCase(FlaskTestCase):
         self.assertEqual(commercial[0][0], "10.1.1.59")
 
         # Check that we have the right number of counts
-        self.assertEqual(non_commercial[0][6], 2)
-        self.assertEqual(commercial[0][6], 1)
+        self.assertEqual(non_commercial[0][7], 2)
+        self.assertEqual(commercial[0][7], 1)
 
 
         non_commercial, commercial = AccessLog.top_tokens()
