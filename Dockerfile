@@ -1,4 +1,4 @@
-FROM metabrainz/python:3.6-1
+FROM metabrainz/python:3.8-20210115
 
 ##############
 # MetaBrainz #
@@ -26,6 +26,7 @@ RUN apt-get update \
                         libssl-dev \
      && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt /code/
+RUN pip3 install pip==20.2.4
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir uWSGI==2.0.15
 
