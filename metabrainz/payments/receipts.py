@@ -51,7 +51,7 @@ def send_receipt(email, date, amount, name, is_donation, editor_name=None):
     send_mail(
         subject=subject,
         text=text,
-        attachments=[(generate_recript(email, date, amount, name, is_donation, editor_name),
+        attachments=[(generate_receipt(email, date, amount, name, is_donation, editor_name),
                       'pdf', '%s.pdf' % attachment_file_name)],
         recipients=[email],
         from_addr=from_addr,
@@ -89,7 +89,7 @@ def _create_header_payment(canvas, document):
     canvas.line(52, 695, 550, 695)
 
 
-def generate_recript(email, date, amount, name, is_donation, editor_name):
+def generate_receipt(email, date, amount, name, is_donation, editor_name):
     """This function generates PDF file with a receipt.
 
     Returns:
@@ -106,8 +106,8 @@ def generate_recript(email, date, amount, name, is_donation, editor_name):
     else:
         from_email = "payments@metabrainz.org"
     address_par = Paragraph(
-        "3565 South Higuera St., Suite B<br/>"
-        "San Luis Obispo, CA 93401<br/><br/>"
+        "340 S Lemon Ave #6432<br/>"
+        "Walnut, CA 91789<br/><br/>"
         "%s<br/>"
         "https://metabrainz.org"
         % from_email,
@@ -157,7 +157,7 @@ def generate_recript(email, date, amount, name, is_donation, editor_name):
         details_par = Paragraph(
             "<br/><br/><br/><b>"
             "Donation date: %s<br/>"
-            "Donation amount: %s<br/>"
+            "Donation amount: %s USD<br/>"
             "Donation editor: %s"
             "</b>" % (date, amount, editor_name),
             details_style)
@@ -165,7 +165,7 @@ def generate_recript(email, date, amount, name, is_donation, editor_name):
         details_par = Paragraph(
             "<br/><br/><br/><b>"
             "Payment date: %s<br/>"
-            "Amount: %s"
+            "Amount: %s USD"
             "</b>" % (date, amount),
             details_style)
     story.append(details_par)
