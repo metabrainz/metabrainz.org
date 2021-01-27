@@ -149,7 +149,10 @@ def signup_commercial():
                 send_mail(
                     subject="[MetaBrainz] Sign up confirmation",
                     text='Dear %s,\n\nThank you for signing up!\n\nYour application'
-                         ' will be reviewed soon. We will send you updates via email.'
+                         ' will be reviewed soon and we will send you updates via email.'
+                         ' Please know that you may use our APIs and static data dumps for'
+                         ' evaluation purposes while your application is pending. You do not'
+                         ' need any API keys to do this.\n\n-- The MetaBrainz Team'
                          % new_user.contact_name,
                     recipients=[new_user.contact_email],
                 )
