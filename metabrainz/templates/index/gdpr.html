@@ -94,11 +94,7 @@
   <p>
     Because of this, we are going to require users to either acknowledge that we may process their Listen data or alternatively to
     delete their account, including all of their Listens. Please note that if you decide to delete your ListenBrainz account, it may
-    take up to two weeks for all of your listens to no longer be included in our efforts to build a recommendation engine. Also, we
-    haven’t implemented the feature that automatically deletes Listen data from the
-    <a href="https://console.cloud.google.com/launcher/details/metabrainz/listenbrainz">public BigQuery data set</a>. If you wish to have
-    your Listens removed thereafter deleting your ListenBrainz accounts, please request this by
-    <a href="{{ url_for('index.contact') }}">contacting us</a>.
+    take up to two weeks for all of your listens to no longer be included in our efforts to build a recommendation engine. 
   </p>
   <p>
     We have always made it clear that the data in ListenBrainz was to be public and that we plan to build new tools with your data, so
@@ -110,32 +106,6 @@
     your account. If you choose to delete your account then we keep the non personally identifying data that you create, but anonymize
     it so that it cannot be linked back to you.
   </p>
-  <p>
-    The final point to restriction of processing is that we used to gather aggregate statistics about our web traffic (mostly to identify
-    which browsers our sites need to support) in Google Analytics. Google Analytics has always been a contentious service in the eyes
-    of our community, so we decided to stop using the service and implement the minor feature of browser analysis on our own servers at
-    a later point in time.
-  </p>
-  <p>
-    Links:
-  </p>
-  <ul>
-     <li>
-       <a href="https://listenbrainz.org/login">Disclaimer for ListenBrainz</a>
-     </li>
-     <li>
-       <a href="https://tickets.metabrainz.org/projects/LB/issues/LB-355">Delete Listens from BigQuery data</a>,
-       <a href="https://tickets.metabrainz.org/projects/LB/issues/LB-366">Remove BigQuery delete caveats from GDPR statement</a>
-     </li>
-     <li>
-       <a href="https://github.com/metabrainz/metabrainz.org/pull/303">Update our privacy policy</a>,
-       <a href="https://tickets.metabrainz.org/browse/MBS-9679">turn off Google Analytics in MusicBrainz</a> and
-       <a href="https://tickets.metabrainz.org/browse/BB-258">BookBrainz</a>,
-       <a href="https://tickets.metabrainz.org/browse/MEB-101">remove the analytics account</a> and
-       <a href="https://tickets.metabrainz.org/browse/MEB-102">verify the deletion of the account</a>.
-     </li>
-  </ul>
-
 
   <h2>{{ _('Right to data portability / exporting your data') }}</h2>
 
