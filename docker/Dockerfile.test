@@ -21,7 +21,7 @@ RUN mkdir /code
 WORKDIR /code
 
 COPY requirements.txt /code/
-RUN pip3 install pip==20.2.4
+RUN pip3 install pip==21.0.1
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /code/
