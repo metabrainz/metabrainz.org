@@ -8,7 +8,7 @@ RUN mkdir /code
 WORKDIR /code
 
 # Node and dependencies
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
 COPY ./package.json /code/
 RUN npm install
