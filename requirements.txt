@@ -22,7 +22,7 @@ intuit-oauth==1.2.3
 email_validator==1.0.5
 idna==2.7
 Flask==1.1.2
-Jinja2==2.11.2
+Jinja2==2.11.3
 Flask-DebugToolbar==0.11.0
 Flask-UUID==0.2
 raven[flask]==6.10.0
