@@ -48,3 +48,6 @@ RUN chmod 755 /etc/service/uwsgi/run
 COPY ./docker/prod/uwsgi.ini /etc/uwsgi/uwsgi.ini
 
 EXPOSE 13031
+
+ARG GIT_COMMIT_SHA
+ENV GIT_SHA ${GIT_COMMIT_SHA}

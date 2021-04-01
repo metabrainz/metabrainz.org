@@ -33,7 +33,6 @@ REDIS = {
 
 # Logging
 LOG_FILE = None
-LOG_EMAIL = None
 LOG_SENTRY = None
 
 # MusicBrainz
