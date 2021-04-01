@@ -14,24 +14,24 @@ import csv
 def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
     csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
     for row in csv_reader:
-        yield [unicode(cell, 'utf-8') for cell in row]
+        yield [cell for cell in row]
 
 if len(sys.argv) != 3:
-    print "Usage parse-paypal-es.py <paypal csv file> <qbo csv file>"
+    print("Usage parse-paypal-es.py <paypal csv file> <qbo csv file>")
     sys.exit(-1)
 
 fp = None
 try:
     fp = open(sys.argv[1], "r")
 except IOError:
-    print "Cannot open input file %s" % sys.argv[1]
+    print("Cannot open input file %s" % sys.argv[1])
     sys.exit(0)
 
 _out = None
 try:
     _out = open(sys.argv[2], "w")
 except IOError:
-    print "Cannot open output file %s" % sys.argv[2]
+    print("Cannot open output file %s" % sys.argv[2])
     sys.exit(0)
 
 out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
@@ -49,13 +49,13 @@ while True:
 
     fields = lines[index]
 
-    desc = fields[3].encode('utf8')
-    dat = fields[0].encode('utf8')
-    gross = fields[7].encode('utf8')
-    fee = fields[8].encode('utf8')
-    net = fields[9].encode('utf8')
-    status = fields[5].encode('utf8')
-    typ = fields[4].encode('utf8')
+    desc = fields[3]
+    dat = fields[0]
+    gross = fields[7]
+    fee = fields[8]
+    net = fields[9]
+    status = fields[5]
+    typ = fields[4]
 
     if status != 'Completed':
         index += 1
@@ -65,15 +65,15 @@ while True:
         index += 1
         continue
 
-    currency = fields[6].encode('utf8')
+    currency = fields[6]
     if currency == 'USD' and typ != "General Currency Conversion":
         # Normal native currency transactions
         amount = gross
 
     elif currency != 'USD':
         # Received money in foreign currency
-        native = float(lines[index + 2][7].encode('utf8').replace(",", ""))
-        foreign = -float(lines[index + 1][7].encode('utf8').replace(",", ""))
+        native = float(lines[index + 2][7].replace(",", ""))
+        foreign = -float(lines[index + 1][7].replace(",", ""))
 
         #print "native %f, foreign %f" % (native, foreign)
 
@@ -92,9 +92,9 @@ while True:
         #print lines[index + 1]
         #print lines[index + 2]
 
-        native = float(lines[index][7].encode('utf8').replace(",", ""))
-        foreign = -float(lines[index + 1][7].encode('utf8').replace(",", ""))
-        desc = lines[index + 2][3].encode('utf8')
+        native = float(lines[index][7].replace(",", ""))
+        foreign = -float(lines[index + 1][7].replace(",", ""))
+        desc = lines[index + 2][3]
 
         #print "native %f, foreign %f" % (native, foreign)
 
@@ -114,7 +114,7 @@ while True:
     out.writerow([dat, desc, amount])
 
     desc = "PayPal Fee"
-    dat = fields[0].encode('utf8')
+    dat = fields[0]
     if fee and float(fee) != 0.0:
         out.writerow([dat, desc, fee])
 

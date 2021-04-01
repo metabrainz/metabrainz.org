@@ -13,24 +13,24 @@ from decimal import *
 def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
     csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
     for row in csv_reader:
-        yield [unicode(cell, 'utf-8') for cell in row]
+        yield [cell for cell in row]
 
 if len(sys.argv) != 3:
-    print "Usage parse-transferwise.py <transferwise csv file> <qbo csv file>"
+    print("Usage parse-transferwise.py <transferwise csv file> <qbo csv file>")
     sys.exit(-1)
 
 fp = None
 try:
     fp = open(sys.argv[1], "r")
 except IOError:
-    print "Cannot open input file %s" % sys.argv[1]
+    print("Cannot open input file %s" % sys.argv[1])
     sys.exit(0)
 
 _out = None
 try:
     _out = open(sys.argv[2], "w")
 except IOError:
-    print "Cannot open output file %s" % sys.argv[2]
+    print("Cannot open output file %s" % sys.argv[2])
     sys.exit(0)
 
 out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
@@ -45,15 +45,15 @@ lines = lines[1:]
 lines.reverse()
 
 for fields in lines:
-    desc = fields[10].encode('utf8')
+    desc = fields[10]
     if not desc:
-        desc = fields[11].encode('utf8')
+        desc = fields[11]
     if not desc:
-        desc = fields[4].encode('utf8')
-    dat = fields[1].encode('utf8')
-    amount = Decimal(fields[2].encode('utf8'))
-    fee = Decimal(fields[14].encode('utf8'))
-    refs = fields[5].encode('utf8').split(" ")
+        desc = fields[4]
+    dat = fields[1]
+    amount = Decimal(fields[2])
+    fee = Decimal(fields[14])
+    refs = fields[5].split(" ")
 
     amount += fee
 
