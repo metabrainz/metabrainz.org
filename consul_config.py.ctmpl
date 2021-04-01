@@ -58,9 +58,12 @@ QUICKBOOKS_CALLBACK_URL = '''{{template "KEY" "quickbooks/callback_url"}}'''
 QUICKBOOKS_CLIENT_ID = '''{{template "KEY" "quickbooks/client_id"}}'''
 QUICKBOOKS_CLIENT_SECRET = '''{{template "KEY" "quickbooks/client_secret"}}'''
 
+import os
+
 LOG_SENTRY = {
-    'dsn': '''{{template "KEY" "sentry/dsn_private"}}''',
+    'dsn': '''{{template "KEY" "sentry/dsn"}}''',
     'environment': '''{{template "KEY" "sentry/environment"}}''',
+    'release': os.getenv('GIT_SHA', None),
 }
 
 # reCAPTCHA (https://www.google.com/recaptcha/)
