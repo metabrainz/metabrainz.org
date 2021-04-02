@@ -336,7 +336,7 @@ class QuickBooksView(BaseView):
             client = get_client(realm, refresh_token)
             self.create_invoices(client, invoices)
 
-        except AuthClientError:
+        except AuthClientError as err:
             flash("Authorization failed, please try again: %s" % err)
             session['access_token'] = None
             session['realm'] = None
