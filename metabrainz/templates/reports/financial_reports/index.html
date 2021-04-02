@@ -31,6 +31,13 @@
     {{ _('We attempt to publish our balance sheets within the first week of the succeeding quarter, or as close to that as possible.') }}
 </p>
 
+<h3>2021</h3>
+<p>{{ _('Quarterly reports') }}</p>
+<ul>
+    <li>Q1 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2021_Q1.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
+    <li>Q1 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20210331.pdf') }}">{{ _('balance sheet') }}</a></li>
+</ul>
+
 <h3>2020</h3>
 
 <p>{{ _('Year end reports') }}</p>
