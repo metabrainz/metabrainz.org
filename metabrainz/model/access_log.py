@@ -11,7 +11,7 @@ import logging
 import pytz
 
 CLEANUP_RANGE_MINUTES = 60
-DIFFERENT_IP_LIMIT = 25
+DIFFERENT_IP_LIMIT = 50
 
 
 class AccessLog(db.Model):
