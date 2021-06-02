@@ -27,6 +27,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /code/
 
 CMD dockerize -wait tcp://db_test:5432 -timeout 60s \
-    py.test --junitxml=/data/test_report.xml \
-            --cov-report xml:/data/coverage.xml \
-            --cov-report html:/data/coverage-html
+    py.test --junitxml=reports/tests.xml
