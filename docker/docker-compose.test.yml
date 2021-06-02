@@ -7,7 +7,7 @@ services:
       context: ..
       dockerfile: ./docker/Dockerfile.test
     volumes:
-      - ..:/code:z
+      - ..:/code
     depends_on:
       - db_test
       - redis
