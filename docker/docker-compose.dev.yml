@@ -21,7 +21,6 @@ services:
     depends_on:
       - db
       - redis
-      - mail
 
   db:
     image: postgres:12.3
