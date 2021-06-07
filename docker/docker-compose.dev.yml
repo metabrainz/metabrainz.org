@@ -17,16 +17,14 @@ services:
       - ../data/logos:/code/metabrainz/static/img/user_logos
       - ..:/code
     ports:
-      - "80:80"
+      - "8000:80"
     depends_on:
       - db
       - redis
       - mail
 
   db:
-    build:
-      context: ./pg_custom/
-      dockerfile: Dockerfile
+    image: postgres:12.3
     volumes:
       - db:/var/lib/postgresql/data:z
     environment:

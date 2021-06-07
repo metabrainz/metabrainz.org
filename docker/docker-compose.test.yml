@@ -13,9 +13,7 @@ services:
       - redis
 
   db:
-    build:
-      context: ./pg_custom/
-      dockerfile: Dockerfile
+    image: postgres:12.3
     environment:
       POSTGRES_PASSWORD: postgres
 
