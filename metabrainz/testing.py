@@ -34,11 +34,9 @@ class FlaskTestCase(TestCase):
 
     def reset_db(self):
         self.drop_tables()
-        self.drop_types()
         self.init_db()
 
     def init_db(self):
-        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_types.sql'))
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_tables.sql'))
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_primary_keys.sql'))
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_foreign_keys.sql'))
@@ -46,6 +44,3 @@ class FlaskTestCase(TestCase):
 
     def drop_tables(self):
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'drop_tables.sql'))
-
-    def drop_types(self):
-        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'drop_types.sql'))
