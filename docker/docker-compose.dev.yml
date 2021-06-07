@@ -34,12 +34,3 @@ services:
 
   redis:
     image: redis:3.2.1
-
-  mail:
-    build:
-      context: ./smtp/
-      dockerfile: Dockerfile
-    environment:
-      MAILDOMAIN: metabrainz.org
-    ports:
-      - "25:25"
