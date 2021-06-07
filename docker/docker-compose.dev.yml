@@ -1,5 +1,9 @@
 # Docker Compose file for development
 version: "2"
+
+volumes:
+  db:
+
 services:
 
   web:
@@ -24,23 +28,11 @@ services:
       context: ./pg_custom/
       dockerfile: Dockerfile
     volumes:
-      - ../data/pgdata:/var/lib/postgresql/data/pgdata
+      - db:/var/lib/postgresql/data:z
     environment:
-      PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_USER: metabrainz
-      POSTGRES_PASSWORD: metabrainz
-      POSTGRES_DB: metabrainz
+      POSTGRES_PASSWORD: postgres
     ports:
       - "15432:5432"
-
-  db_test:
-    build:
-      context: ./pg_custom/
-      dockerfile: Dockerfile
-    environment:
-      POSTGRES_USER: metabrainz
-      POSTGRES_PASSWORD: metabrainz
-      POSTGRES_DB: metabrainz
 
   redis:
     image: redis:3.2.1
