@@ -9,6 +9,8 @@ SECRET_KEY = "CHANGE_THIS"
 SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@db:5432/metabrainz"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+POSTGRES_ADMIN_URI = "postgresql://postgres:postgres@db/postgres"
+
 # DATABASES
 
 # The name of a postgres user who has superuser privileges. Your local user should
