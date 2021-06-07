@@ -45,21 +45,7 @@ class FlaskTestCase(TestCase):
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_indexes.sql'))
 
     def drop_tables(self):
-        with db.engine.connect() as connection:
-            # TODO(roman): See if there's a better way to drop all tables.
-            connection.execute('DROP TABLE IF EXISTS payment      CASCADE;')
-            connection.execute('DROP TABLE IF EXISTS oauth_grant  CASCADE;')
-            connection.execute('DROP TABLE IF EXISTS oauth_token  CASCADE;')
-            connection.execute('DROP TABLE IF EXISTS oauth_client CASCADE;')
-            connection.execute('DROP TABLE IF EXISTS access_log   CASCADE;')
-            connection.execute('DROP TABLE IF EXISTS token_log    CASCADE;')
-            connection.execute('DROP TABLE IF EXISTS token        CASCADE;')
-            connection.execute('DROP TABLE IF EXISTS "user"       CASCADE;')
-            connection.execute('DROP TABLE IF EXISTS tier         CASCADE;')
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'drop_tables.sql'))
 
     def drop_types(self):
-        with db.engine.connect() as connection:
-            connection.execute('DROP TYPE IF EXISTS payment_method_types CASCADE;')
-            connection.execute('DROP TYPE IF EXISTS payment_currency CASCADE;')
-            connection.execute('DROP TYPE IF EXISTS state_types CASCADE;')
-            connection.execute('DROP TYPE IF EXISTS token_log_action_types CASCADE;')
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'drop_types.sql'))
