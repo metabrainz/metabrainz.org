@@ -9,7 +9,6 @@ import os
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'admin', 'sql')
 
 
-
 class FlaskTestCase(TestCase):
 
     def create_app(self):
