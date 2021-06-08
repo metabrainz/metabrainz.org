@@ -6,6 +6,23 @@ supporters, accepts donations from users and organizations, and provides
 access to the [replication packets](https://musicbrainz.org/doc/Replication_Mechanics)
 for MusicBrainz.
 
+## Doing a Release 
+Like other PythonBrainz, this repository also has GitHub Actions setup to help do a
+release. A docker image is built and pushed to docker hub whenever a release is made
+from GitHub. Following are the steps to do a release:
+
+1. Navigate to the [Releases](https://github.com/metabrainz/metabrainz.org/releases) page. 
+   More info about releases is available [here](https://docs.github.com/en/github/administering-a-repository/releasing-projects-on-github/managing-releases-in-a-repository#about-release-management).
+2. You should see a `Draft` Release at the top. Click on the `Edit` button next to it.
+3. In the `Tag Version` field, enter the tag you want to docker image to be tagged with. For example,
+    if you enter `v-2021-06-08.0` as the tag, the corresponding docker image will be `metabrainz/metabrainz:v-2021-06-08.0`.
+4. Click on `Publish release`.   
+   
+### Note:    
+1. The status of the build can be checked from the [Actions](https://github.com/metabrainz/metabrainz.org/actions) page.
+2. The release title field is ignored by the action. It can be set to any value we wish. We usually set it to the tag of
+that release.
+3. The release description is only updated with titles of merged PRs not commits pushed directly to master.   
 
 ## Development setup
 
