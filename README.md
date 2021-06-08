@@ -61,11 +61,11 @@ It must have the following structure:
 This command will build and start all the services that you will be able to
 use for development:
 
-    $ docker-compose -f docker/docker-compose.dev.yml up --build -d
+    $ ./develop.sh
 
 The first time you set up the application, the database needs to be initialized:
 
-    $ docker-compose -f docker/docker-compose.dev.yml run web python manage.py init_db
+    $ ./develop.sh manage init_db --create-db
 
 The web server should now be accessible at **http://localhost:80/**.
 
@@ -76,7 +76,7 @@ Due to the way development environment works with Docker, it's necessary to buil
 separately from building an image. To do that you need to start the development server
 (all the containers with Docker Compose) and attach to the `web` container:
 ```bash
-$ docker-compose -f docker/docker-compose.dev.yml exec web /bin/bash
+$ ./develop.sh exec -it web bash
 ```
 
 Then install npm modules and build CSS:
@@ -96,25 +96,21 @@ web# ./node_modules/.bin/lessc ./metabrainz/static/fonts/font_awesome/less/font-
 
 Once you have built and started all the services as mentioned above, run:
 
-`$ docker-compose -f docker/docker-compose.dev.yml run web python manage.py extract_strings`
+`$ ./develop.sh manage extract_strings`
 
 ### Compiling the strings
 
 The POT files are compiled automatically every time the services are built, but in case you make any changes to the POT files
 and want to compile the translation files again, run:
 
-`$ docker-compose -f docker/docker-compose.dev.yml run web python manage.py compile_translations`
+`$ ./develop.sh manage compile_translations`
 
 
 ## Testing
 
 To run all tests use:
 
-    $ py.test
-    
-or with Docker:
-
-    $ docker-compose -f docker/docker-compose.test.yml up --build --remove-orphans
+    $ ./test.sh
 
 ### Testing payments
 
