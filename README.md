@@ -6,6 +6,23 @@ supporters, accepts donations from users and organizations, and provides
 access to the [replication packets](https://musicbrainz.org/doc/Replication_Mechanics)
 for MusicBrainz.
 
+## Doing a Release 
+Like other PythonBrainz, this repository also has GitHub Actions setup to help do a
+release. A docker image is built and pushed to docker hub whenever a release is made
+from GitHub. Following are the steps to do a release:
+
+1. Navigate to the [Releases](https://github.com/metabrainz/metabrainz.org/releases) page. 
+   More info about releases is available [here](https://docs.github.com/en/github/administering-a-repository/releasing-projects-on-github/managing-releases-in-a-repository#about-release-management).
+2. You should see a `Draft` Release at the top. Click on the `Edit` button next to it.
+3. In the `Tag Version` field, enter the tag you want to docker image to be tagged with. For example,
+    if you enter `v-2021-06-08.0` as the tag, the corresponding docker image will be `metabrainz/metabrainz:v-2021-06-08.0`.
+4. Click on `Publish release`.   
+   
+### Note:    
+1. The status of the build can be checked from the [Actions](https://github.com/metabrainz/metabrainz.org/actions) page.
+2. The release title field is ignored by the action. It can be set to any value we wish. We usually set it to the tag of
+that release.
+3. The release description is only updated with titles of merged PRs not commits pushed directly to master.   
 
 ## Development setup
 
@@ -61,11 +78,11 @@ It must have the following structure:
 This command will build and start all the services that you will be able to
 use for development:
 
-    $ docker-compose -f docker/docker-compose.dev.yml up --build -d
+    $ ./develop.sh
 
 The first time you set up the application, the database needs to be initialized:
 
-    $ docker-compose -f docker/docker-compose.dev.yml run web python manage.py init_db
+    $ ./develop.sh manage init_db --create-db
 
 The web server should now be accessible at **http://localhost:80/**.
 
@@ -76,7 +93,7 @@ Due to the way development environment works with Docker, it's necessary to buil
 separately from building an image. To do that you need to start the development server
 (all the containers with Docker Compose) and attach to the `web` container:
 ```bash
-$ docker-compose -f docker/docker-compose.dev.yml exec web /bin/bash
+$ ./develop.sh exec -it web bash
 ```
 
 Then install npm modules and build CSS:
@@ -96,25 +113,21 @@ web# ./node_modules/.bin/lessc ./metabrainz/static/fonts/font_awesome/less/font-
 
 Once you have built and started all the services as mentioned above, run:
 
-`$ docker-compose -f docker/docker-compose.dev.yml run web python manage.py extract_strings`
+`$ ./develop.sh manage extract_strings`
 
 ### Compiling the strings
 
 The POT files are compiled automatically every time the services are built, but in case you make any changes to the POT files
 and want to compile the translation files again, run:
 
-`$ docker-compose -f docker/docker-compose.dev.yml run web python manage.py compile_translations`
+`$ ./develop.sh manage compile_translations`
 
 
 ## Testing
 
 To run all tests use:
 
-    $ py.test
-    
-or with Docker:
-
-    $ docker-compose -f docker/docker-compose.test.yml up --build --remove-orphans
+    $ ./test.sh
 
 ### Testing payments
 

@@ -33,30 +33,23 @@ def runserver(host, port, debug=False):
 @click.option("--force", "-f", is_flag=True, help="Drop existing database and user.")
 @click.option("--create-db", "-c", is_flag=True, help="Create database and extensions.")
 def init_db(force=False, create_db=False):
-    db_uri = application.config["SQLALCHEMY_DATABASE_URI"]
+    db.init_db_engine(application.config["POSTGRES_ADMIN_URI"])
 
     if force:
         click.echo('Dropping existing database... ', nl=False)
-        exit_code = _run_psql('drop_db.sql', db_uri)
-        if exit_code != 0:
-            raise Exception('Failed to drop existing database and user! Exit code: %i' % exit_code)
+        db.run_sql_script_without_transaction(os.path.join(ADMIN_SQL_DIR, 'drop_db.sql'))
         click.echo('Done.')
 
     if create_db:
-
         click.echo('Creating user and a database... ', nl=False)
-        exit_code = _run_psql('create_db.sql', db_uri)
-        if exit_code != 0:
-            raise Exception('Failed to create new database and user! Exit code: %i' % exit_code)
+        db.run_sql_script_without_transaction(os.path.join(ADMIN_SQL_DIR, 'create_db.sql'))
         click.echo('Done.')
 
         click.echo('Creating database extensions... ', nl=False)
-        exit_code = _run_psql('create_extensions.sql', db_uri, database='metabrainz')
-        if exit_code != 0:
-            raise Exception('Failed to create database extensions! Exit code: %i' % exit_code)
+        db.run_sql_script_without_transaction(os.path.join(ADMIN_SQL_DIR, 'create_extensions.sql'))
         click.echo('Done.')
 
-    db.init_db_engine(db_uri)
+    db.init_db_engine(application.config["SQLALCHEMY_DATABASE_URI"])
 
     click.echo('Creating types... ', nl=False)
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_types.sql'))

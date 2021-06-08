@@ -1,6 +1,15 @@
 #!/bin/bash
-docker-compose -f docker/docker-compose.test.yml up -d --build --remove-orphans db_test redis
-docker-compose -f docker/docker-compose.test.yml run --rm  web_test
+
+function invoke_docker_compose {
+    docker-compose -f docker/docker-compose.test.yml \
+        -p metabrainz_test \
+        "$@"
+}
+
+invoke_docker_compose up -d db redis
+invoke_docker_compose run --rm web \
+    dockerize -wait tcp://db:5432 -timeout 60s \
+    bash -c "python manage.py init_db --create-db && pytest --junitxml=reports/tests.xml"
 RET=$?
-docker-compose -f docker/docker-compose.test.yml down
+invoke_docker_compose down
 exit $RET
