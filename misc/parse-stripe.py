@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys, os
 import decimal
@@ -34,13 +34,10 @@ for i, row in enumerate(reader):
     if not i:
         continue
 
-    if row[1] == 'transfer':
+    if row[1] == 'payout':
         continue
 
-    if row[12].lower() == 'failed':
-        continue
-
-    date = row[3].split(' ')[0]
+    date = row[14].split(' ')[0]
     date = date.split('-')
     date = "%s/%s/%s" % (date[1], date[2], date[0])
     sender = row[25]
