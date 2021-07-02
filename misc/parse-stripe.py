@@ -50,8 +50,7 @@ for i, row in enumerate(reader):
     date = date.split('-')
     date = "%s/%s/%s" % (date[1], date[2], date[0])
     sender = row[41]
-    print(sender)
-    net = row[8]
+    gross = row[6]
     fee = row[7]
     memo = row[1]
     inv = row[43]
@@ -60,10 +59,12 @@ for i, row in enumerate(reader):
         sender += " (inv #%s)" % inv
 
     if row[9] == "contribution":
-        out.writerow([date, "Climate contribution", net])
+        out.writerow([date, "Climate contribution", gross])
+    elif row[9] == "fee":
+        out.writerow([date, "Stripe Friends & Family $20K (or local equiv.) Credit", gross])
     else:
         out.writerow([date, "Stripe fee", "-" + fee])
-        out.writerow([date, sender, net])
+        out.writerow([date, sender, gross])
 
 fp.close()
 _out.close()
