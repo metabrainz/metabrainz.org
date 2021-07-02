@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# Parse the report downloaded from https://dashboard.stripe.com/reports/balance
+
 import sys, os
 import decimal
 import csv
@@ -29,30 +31,39 @@ out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
 out.writerow(["Date","Description","Amount"])
 
 trans = []
+head = None
 reader = csv.reader(fp)
 for i, row in enumerate(reader):
     if not i:
+        head = row
         continue
 
     if row[1] == 'payout':
         continue
 
-    date = row[14].split(' ')[0]
+    for i, d in enumerate(zip(head, row)):
+        print("%d %-40s %s" % (i, d[0], d[1]))
+    print()
+
+
+    date = row[1].split(' ')[0]
     date = date.split('-')
     date = "%s/%s/%s" % (date[1], date[2], date[0])
-    sender = row[25]
-    amount = toFloat(row[7])
-    fee = -toFloat(row[9])
-    net = amount - fee
+    sender = row[41]
+    print(sender)
+    net = row[8]
+    fee = row[7]
     memo = row[1]
-    inv = row[54]
+    inv = row[43]
 
-    text = sender
     if inv:
-        text += " (inv #%s)" % inv
+        sender += " (inv #%s)" % inv
 
-    out.writerow([date, "Stripe fee", "%.2f" % fee])
-    out.writerow([date, text, amount])
+    if row[9] == "contribution":
+        out.writerow([date, "Climate contribution", net])
+    else:
+        out.writerow([date, "Stripe fee", "-" + fee])
+        out.writerow([date, sender, net])
 
 fp.close()
 _out.close()
