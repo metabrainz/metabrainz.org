@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/metabrainz/metabrainz.org/archive/master.zip"><img src="https://github.com/metabrainz/metabrainz-logos/blob/master/logos/MetaBrainz/SVG/MetaBrainz_logo.svg" alt="MusicBrainz Android"></a>
+  <a href="https://github.com/metabrainz/metabrainz.org/archive/master.zip"><img src="https://github.com/metabrainz/metabrainz-logos/blob/master/logos/MetaBrainz/SVG/MetaBrainz_logo.svg" alt="MetaBrainz"></a>
 </h1>
 
 <p align="center">
