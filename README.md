@@ -5,10 +5,10 @@
 
 <p align="center">
     <a href="https://github.com/metabrainz/metabrainz.org/commits/master">
-    <img src="https://img.shields.io/github/last-commit/metabrainz/musicbrainz-android.svg?style=flat-square&logo=github&logoColor=white"
+    <img src="https://img.shields.io/github/last-commit/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
          alt="GitHub last commit">
     <a href="https://github.com/metabrainz/metabrainz.org/issues">
-    <img src="https://img.shields.io/github/issues-raw/metabrainz/musicbrainz-android.svg?style=flat-square&logo=github&logoColor=white"
+    <img src="https://img.shields.io/github/issues-raw/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
          alt="GitHub issues">
     <a href="https://github.com/metabrainz/metabrainz.org/pulls">
     <img src="https://img.shields.io/github/issues-pr-raw/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
