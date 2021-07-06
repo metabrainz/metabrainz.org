@@ -6,13 +6,13 @@
 <p align="center">
     <a href="https://github.com/metabrainz/metabrainz.org/commits/master">
     <img src="https://img.shields.io/github/last-commit/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
-         alt="GitHub last commit">
+         alt="GitHub last commit"></a>
     <a href="https://github.com/metabrainz/metabrainz.org/issues">
     <img src="https://img.shields.io/github/issues-raw/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
-         alt="GitHub issues">
+         alt="GitHub issues"></a>
     <a href="https://github.com/metabrainz/metabrainz.org/pulls">
     <img src="https://img.shields.io/github/issues-pr-raw/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
-         alt="GitHub pull requests">
+         alt="GitHub pull requests"></a>
 </p>
 
 **Website for the [MetaBrainz Foundation](https://metabrainz.org/).** This is
