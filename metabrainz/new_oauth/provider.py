@@ -3,6 +3,7 @@ from authlib.integrations.sqla_oauth2 import (
     create_save_token_func
 )
 from authlib.integrations.flask_oauth2 import AuthorizationServer
+from authlib.oauth2.rfc7636 import CodeChallenge
 
 from metabrainz.new_oauth.authorization_grant import AuthorizationCodeGrant
 from metabrainz.new_oauth.models import db
@@ -17,5 +18,5 @@ save_token = create_save_token_func(db.session, OAuth2Token)
 #  with meb. Rationale: https://github.blog/2021-04-05-behind-githubs-new-authentication-token-formats/
 authorization_server = AuthorizationServer(query_client=query_client, save_token=save_token)
 
-authorization_server.register_grant(AuthorizationCodeGrant)
+authorization_server.register_grant(AuthorizationCodeGrant, [CodeChallenge(required=False)])
 
