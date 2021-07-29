@@ -8,12 +8,18 @@ from metabrainz.new_oauth.models.user import User
 class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
     def save_authorization_code(self, code, request):
         client = request.client
+
+        code_challenge = request.data.get('code_challenge')
+        code_challenge_method = request.data.get('code_challenge_method')
+
         auth_code = OAuth2AuthorizationCode(
             code=code,
             client_id=client.client_id,
             redirect_uri=request.redirect_uri,
             scope=request.scope,
             user_id=request.user.id,
+            code_challenge=code_challenge,
+            code_challenge_method=code_challenge_method,
         )
         db.session.add(auth_code)
         db.session.commit()
