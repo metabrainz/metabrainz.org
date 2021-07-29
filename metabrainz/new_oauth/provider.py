@@ -7,6 +7,7 @@ from authlib.oauth2.rfc6749 import ImplicitGrant
 from authlib.oauth2.rfc7636 import CodeChallenge
 
 from metabrainz.new_oauth.authorization_grant import AuthorizationCodeGrant
+from metabrainz.new_oauth.refresh_grant import RefreshTokenGrant
 from metabrainz.new_oauth.models import db
 from metabrainz.new_oauth.models.client import OAuth2Client
 from metabrainz.new_oauth.models.token import OAuth2Token
@@ -21,4 +22,4 @@ authorization_server = AuthorizationServer(query_client=query_client, save_token
 
 authorization_server.register_grant(AuthorizationCodeGrant, [CodeChallenge(required=False)])
 authorization_server.register_grant(ImplicitGrant)
-
+authorization_server.register_grant(RefreshTokenGrant)
