@@ -1,6 +1,7 @@
 from authlib.integrations.sqla_oauth2 import (
     create_query_client_func,
-    create_save_token_func
+    create_save_token_func,
+    create_revocation_endpoint
 )
 from authlib.integrations.flask_oauth2 import AuthorizationServer
 from authlib.oauth2.rfc6749 import ImplicitGrant
@@ -14,6 +15,7 @@ from metabrainz.new_oauth.models.token import OAuth2Token
 
 query_client = create_query_client_func(db.session, OAuth2Client)
 save_token = create_save_token_func(db.session, OAuth2Token)
+revoke_token = create_revocation_endpoint(db.session, OAuth2Token)
 
 # TODO: We can also configure the expiry time and token generation function
 #  for the server. Its simple and will also be nice to prefix our tokens
@@ -23,3 +25,4 @@ authorization_server = AuthorizationServer(query_client=query_client, save_token
 authorization_server.register_grant(AuthorizationCodeGrant, [CodeChallenge(required=False)])
 authorization_server.register_grant(ImplicitGrant)
 authorization_server.register_grant(RefreshTokenGrant)
+authorization_server.register_endpoint(revoke_token)
