@@ -2,6 +2,7 @@ from authlib.oauth2 import OAuth2Error
 from flask import Blueprint, request, render_template
 from flask_login import login_required, current_user
 
+from metabrainz.decorators import nocache, crossdomain
 from metabrainz.new_oauth.provider import authorization_server
 from metabrainz.utils import build_url
 
@@ -25,6 +26,13 @@ def authorize_prompt():
         return authorization_server.create_authorization_response(grant_user=current_user)
 
 
-@new_oauth_bp.route('/oauth/token', methods=['POST'])
-def issue_token():
+@new_oauth_bp.route('/token', methods=['POST'])
+@nocache
+@crossdomain()
+def oauth_token_handler():
     return authorization_server.create_token_response()
+
+
+@new_oauth_bp.route('/revoke', methods=['POST'])
+def revoke_token():
+    return authorization_server.create_endpoint_response('revocation')
