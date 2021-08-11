@@ -10,6 +10,8 @@ import requests
 from requests.exceptions import RequestException
 from werkzeug.exceptions import BadRequest
 
+from metabrainz.utils import get_int_query_param
+
 payments_bp = Blueprint('payments', __name__)
 
 
@@ -47,7 +49,7 @@ def payment(currency):
 
 @payments_bp.route('/donors')
 def donors():
-    page = int(request.args.get('page', default=1))
+    page = get_int_query_param('page', default=1)
     if page < 1:
         return redirect(url_for('.donors'))
     limit = 30
