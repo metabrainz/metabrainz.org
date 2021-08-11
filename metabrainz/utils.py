@@ -33,7 +33,16 @@ def build_url(base, additional_params=None):
     )
 
 
-def get_int_query_param(key, default):
+def get_int_query_param(key: str, default: int):
+    """ Get an integer query parameter from the current request
+        Args:
+            key: the key whose value to retrieve
+            default: the value to return in case the param is missing
+             or not a valid integer
+        Returns:
+            the value of query param if its available and a valid integer,
+             else the default value
+    """
     try:
         return int(request.args.get(key, default=default))
     except ValueError:
