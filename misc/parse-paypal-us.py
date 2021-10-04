@@ -3,6 +3,7 @@
 import sys
 import re
 import csv
+from decimal import Decimal, InvalidOperation
 
 # header
 
@@ -16,8 +17,8 @@ def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
     for row in csv_reader:
         yield [cell for cell in row]
 
-if len(sys.argv) != 3:
-    print("Usage parse-paypal-es.py <paypal csv file> <qbo csv file>")
+if len(sys.argv) not in [3,4]:
+    print("Usage parse-paypal-es.py <paypal csv file> <qbo csv file> [start balance]")
     sys.exit(-1)
 
 fp = None
@@ -34,6 +35,13 @@ except IOError:
     print("Cannot open output file %s" % sys.argv[2])
     sys.exit(0)
 
+balance = None
+try:
+    balance = Decimal(sys.argv[3])
+except InvalidOperation:
+    print("Cannot balance value, ignoring.")
+
+
 out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
 out.writerow(["Date","Description","Amount"])
 
@@ -43,6 +51,7 @@ for line in reader:
     lines.append(line)
 
 index = 1
+register = []
 while True:
     if index >= len(lines):
         break
@@ -113,6 +122,10 @@ while True:
     desc = desc.replace(",", " ")
     out.writerow([dat, desc, amount])
 
+    if balance is not None:
+        balance = balance + Decimal(str(net).replace(",", ""))
+        register.append("%s %-40s %10s %10s" % (dat, desc, str(net), str(balance)))
+
     desc = "PayPal Fee"
     dat = fields[0]
     if fee and float(fee) != 0.0:
@@ -122,3 +135,8 @@ while True:
 
 fp.close()
 _out.close()
+
+if register:
+    register.reverse()
+    for line in register:
+        print(line)

@@ -41,9 +41,9 @@ for i, row in enumerate(reader):
     if row[1] == 'payout':
         continue
 
-    for i, d in enumerate(zip(head, row)):
-        print("%d %-40s %s" % (i, d[0], d[1]))
-    print()
+#    for i, d in enumerate(zip(head, row)):
+#        print("%d %-40s %s" % (i, d[0], d[1]))
+#    print()
 
 
     date = row[1].split(' ')[0]

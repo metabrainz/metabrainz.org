@@ -52,6 +52,7 @@ for fields in lines:
         desc = fields[4]
     dat = fields[1]
     amount = Decimal(fields[2])
+    print(fields[14])
     fee = Decimal(fields[14])
     refs = fields[5].split(" ")
 
