@@ -78,7 +78,10 @@ class QuickBooksView(BaseView):
             new_invoice.Line[0].Amount = "%d" % round(float(invoice['price']) * float(invoice['qty']))
             new_invoice.CustomField[1].StringValue = invoice['begin']
             new_invoice.CustomField[2].StringValue = invoice['end']
-            new_invoice.save(qb=client)
+            try:
+                new_invoice.save(qb=client)
+            except quickbooks.exceptions.QuickbooksException as err:
+                flash("failed to create invoice for %s" % new_invoice.CustomerRef.name)
 
 
     @expose('/', methods=['GET'])
@@ -131,7 +134,7 @@ class QuickBooksView(BaseView):
                 return redirect(url_for("quickbooks/.index"))
 
             except quickbooks.exceptions.QuickbooksException as err:
-                flash("Query failed: %s" % err)
+                flash("Query failed loading all customers: %s" % err)
                 raise InternalServerError
 
         # Calculate a pile of dates, based on today date. Figure out
@@ -348,7 +351,7 @@ class QuickBooksView(BaseView):
             return redirect(url_for("quickbooks/.index"))
 
         except quickbooks.exceptions.QuickbooksException as err:
-            flash("Query failed: %s" % err)
+            flash("Failed to submit some invoices!" % err)
             raise InternalServerError
 
         flash("Invoices created -- make sure to send them!")
