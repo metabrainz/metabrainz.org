@@ -297,64 +297,70 @@ class Payment(db.Model):
         return options
 
     @classmethod
-    def log_stripe_charge(cls, charge):
+    def log_stripe_charge(cls, session):
         """Log successful Stripe charge.
 
         Args:
-            charge: The charge object from Stripe. More information about it is
+            session: The charge object from Stripe. More information about it is
                 available at https://stripe.com/docs/api/python#charge_object.
         """
-        logging.debug('Processing Stripe charge...')
+        logging.debug("Processing Stripe charge...")
+        metadata = session["metadata"]
 
-        bt = stripe.BalanceTransaction.retrieve(charge.balance_transaction)
+        payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
+                                                       expand=["charges.data.balance_transaction"])
+        charge = payment_intent["charges"]["data"][0]
 
-        if bt.currency.lower() not in SUPPORTED_CURRENCIES:
-            logging.warning("Unsupported currency: ", bt.currency)
+        details = charge["billing_details"]
+        address = details["address"]
+
+        transaction = charge["balance_transaction"]
+        currency = transaction["currency"].lower()
+        if currency not in SUPPORTED_CURRENCIES:
+            logging.warning("Unsupported currency: ", session["currency"])
             return
 
         new_donation = cls(
-            first_name=charge.source.name,
-            last_name='',
-            amount=bt.net / 100,  # cents should be converted
-            fee=bt.fee / 100,  # cents should be converted
-            currency=bt.currency.lower(),
-            transaction_id=charge.id,
+            first_name=details["name"],
+            last_name="",
+            amount=transaction["net"] / 100,  # cents should be converted
+            fee=transaction["fee"] / 100,  # cents should be converted
+            currency=currency,
+            transaction_id=charge["id"],
             payment_method=PAYMENT_METHOD_STRIPE,
-
-            is_donation=charge.metadata.is_donation,
-
-            email=charge.metadata.email,
-            address_street=charge.source.address_line1,
-            address_city=charge.source.address_city,
-            address_state=charge.source.address_state,
-            address_postcode=charge.source.address_zip,
-            address_country=charge.source.address_country,
+            is_donation=metadata["is_donation"],
+            email=details["email"],
+            address_street=address["line1"],  # TODO: stripe also gives line2, should we use it?
+            address_city=address["city"],
+            address_state=address["state"],
+            address_postcode=address["postal_code"],
+            address_country=address["country"],
         )
 
-        if charge.metadata.is_donation == "True":
+        if metadata["is_donation"] == "True":
             new_donation.is_donation = 1
-        if charge.metadata.is_donation == "False":
+        if metadata["is_donation"] == "False":
             new_donation.is_donation = 0
 
         if new_donation.is_donation:
-            if charge.metadata.can_contact:
+            if session.metadata.can_contact:
                 new_donation.can_contact = 1
             else:
                 new_donation.can_contact = 0
-            if charge.metadata.anonymous:
+            if session.metadata.anonymous:
                 new_donation.anonymous = 1
             else:
                 new_donation.anonymous = 0
 
-            if 'editor' in charge.metadata:
-                new_donation.editor_name = charge.metadata.editor
+            if "editor" in metadata:
+                new_donation.editor_name = metadata["editor"]
         else:  # Organization payment
-            new_donation.invoice_number = charge.metadata.invoice_number
+            new_donation.invoice_number = metadata["invoice_number"]
 
         db.session.add(new_donation)
         try:
             db.session.commit()
-            logging.info('Stripe: Payment added. ID: %s.', new_donation.id)
+            logging.info("Stripe: Payment added. ID: %s.", new_donation.id)
         except TypeError as err:
             logging.error("Cannot record payment: ", err)
 
