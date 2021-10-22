@@ -307,8 +307,9 @@ class Payment(db.Model):
             session: The charge object from Stripe. More information about it is
                 available at https://stripe.com/docs/api/python#charge_object.
         """
-        logging.debug("Processing Stripe charge...")
+        current_app.logger.debug("Processing Stripe charge...")
         metadata = session["metadata"]
+        current_app.logger.error(metadata)
 
         payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
                                                        expand=["charges.data.balance_transaction"])
@@ -350,11 +351,11 @@ class Payment(db.Model):
             new_donation.is_donation = 0
 
         if new_donation.is_donation:
-            if session.metadata.can_contact:
+            if metadata["can_contact"]:
                 new_donation.can_contact = 1
             else:
                 new_donation.can_contact = 0
-            if session.metadata.anonymous:
+            if metadata["anonymous"]:
                 new_donation.anonymous = 1
             else:
                 new_donation.anonymous = 0
