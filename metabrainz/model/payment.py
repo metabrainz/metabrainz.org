@@ -309,7 +309,6 @@ class Payment(db.Model):
         """
         current_app.logger.debug("Processing Stripe charge...")
         metadata = session["metadata"]
-        current_app.logger.error(metadata)
 
         payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
                                                        expand=["charges.data.balance_transaction"])
@@ -351,11 +350,11 @@ class Payment(db.Model):
             new_donation.is_donation = 0
 
         if new_donation.is_donation:
-            if metadata["can_contact"]:
+            if metadata["can_contact"] == "True":
                 new_donation.can_contact = 1
             else:
                 new_donation.can_contact = 0
-            if metadata["anonymous"]:
+            if metadata["anonymous"] == "True":
                 new_donation.anonymous = 1
             else:
                 new_donation.anonymous = 0
