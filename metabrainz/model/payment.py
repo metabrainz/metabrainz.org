@@ -1,4 +1,7 @@
 from __future__ import division
+
+from sqlalchemy import exists
+
 from metabrainz.model import db
 from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.payments.receipts import send_receipt
@@ -311,13 +314,17 @@ class Payment(db.Model):
                                                        expand=["charges.data.balance_transaction"])
         charge = payment_intent["charges"]["data"][0]
 
+        # Transaction already exists in the database, do not insert again
+        if db.session.query(exists().where(Payment.transaction_id == charge["id"])).scalar():
+            return
+
         details = charge["billing_details"]
         address = details["address"]
 
         transaction = charge["balance_transaction"]
         currency = transaction["currency"].lower()
         if currency not in SUPPORTED_CURRENCIES:
-            logging.warning("Unsupported currency: ", session["currency"])
+            current_app.logger.warning("Unsupported currency: ", session["currency"])
             return
 
         new_donation = cls(
