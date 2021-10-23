@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 from metabrainz.testing import FlaskTestCase
-from metabrainz.model import payment
 from metabrainz.model.payment import Payment
 from metabrainz.model import db
 from metabrainz.payments import Currency
@@ -377,7 +376,7 @@ class PaymentModelStripeTestCase(FlaskTestCase):
             "transfer_group": None
         }
 
-    @patch("stripe.PaymentIntent.retrieve")
+    @patch("Payment.stripe.PaymentIntent.retrieve")
     def test_log_stripe_charge_donation(self, mock_stripe):
         # Function should execute without any exceptions
         mock_stripe.return_value = self.payment_intent
@@ -391,7 +390,7 @@ class PaymentModelStripeTestCase(FlaskTestCase):
         Payment.log_stripe_charge(session)
         self.assertEqual(len(Payment.query.all()), 1)
 
-    @patch("stripe.PaymentIntent.retrieve")
+    @patch("Payment.stripe.PaymentIntent.retrieve")
     def test_log_stripe_charge_payment(self, mock_stripe):
         # Function should execute without any exceptions
         mock_stripe.return_value = self.payment_intent
