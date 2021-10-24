@@ -377,10 +377,10 @@ class PaymentModelStripeTestCase(FlaskTestCase):
             "transfer_group": None
         }
 
-    @patch("stripe.PaymentIntent.retrieve")
+    @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_donation(self, mock_stripe):
         # Function should execute without any exceptions
-        mock_stripe.return_value = self.payment_intent
+        mock_stripe.retrieve.return_value = self.payment_intent
         session = self.session_without_metadata.copy()
         session["metadata"] = {
             "is_donation": "True",
@@ -391,10 +391,10 @@ class PaymentModelStripeTestCase(FlaskTestCase):
         Payment.log_stripe_charge(session)
         self.assertEqual(len(Payment.query.all()), 1)
 
-    @patch("stripe.PaymentIntent.retrieve")
+    @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_payment(self, mock_stripe):
         # Function should execute without any exceptions
-        mock_stripe.return_value = self.payment_intent
+        mock_stripe.retrieve.return_value = self.payment_intent
         session = self.session_without_metadata.copy()
         session["metadata"] = {
             "is_donation": "False",
