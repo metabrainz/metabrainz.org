@@ -16,11 +16,7 @@ payments_bp = Blueprint('payments', __name__)
 @payments_bp.route('/donate')
 def donate():
     """Regular donation page."""
-    if current_app.config['PAYMENT_PRODUCTION']:
-        stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
-    else:
-        stripe_public_key = current_app.config['STRIPE_TEST_KEYS']['PUBLISHABLE']
-
+    stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
     return render_template('payments/donate.html', form=DonationForm(),
                            stripe_public_key=stripe_public_key)
 
@@ -37,10 +33,7 @@ def payment(currency):
     currency = currency.lower()
     if currency not in SUPPORTED_CURRENCIES:
         return redirect('.payment_selector')
-    if current_app.config['PAYMENT_PRODUCTION']:
-        stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
-    else:
-        stripe_public_key = current_app.config['STRIPE_TEST_KEYS']['PUBLISHABLE']
+    stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
     return render_template('payments/payment.html', form=PaymentForm(), currency=currency,
                            stripe_public_key=stripe_public_key)
 
