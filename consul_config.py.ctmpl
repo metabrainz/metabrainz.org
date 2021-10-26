@@ -41,7 +41,7 @@ PAYPAL_BUSINESS = '''{{template "KEY" "payments/paypal/business_email"}}'''
 STRIPE_KEYS = {
     "SECRET": '''{{template "KEY" "payments/stripe/prod/secret"}}''',
     "PUBLISHABLE": '''{{template "KEY" "payments/stripe/prod/publishable"}}''',
-    "WEBHOOK_SECRET": '''''',
+    "WEBHOOK_SECRET": '''{{template "KEY" "payments/stripe/prod/webhook_secret"}}''',
 }
 STRIPE_TEST_KEYS = {
     "SECRET": '''{{template "KEY" "payments/stripe/test/secret"}}''',
