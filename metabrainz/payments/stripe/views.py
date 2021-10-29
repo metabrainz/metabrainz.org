@@ -30,9 +30,11 @@ def pay():
         charge_metadata["editor"] = form.editor.data
         charge_metadata["anonymous"] = form.anonymous.data
         charge_metadata["can_contact"] = form.can_contact.data
+        description = "Donation to the MetaBrainz Foundation"
     else:
         # Using PaymentForm
         charge_metadata["invoice_number"] = form.invoice_number.data
+        description = f"Payment to the MetaBrainz Foundation for Invoice {form.invoice_number.data}"
 
     try:
         session = stripe.checkout.Session.create(
@@ -42,11 +44,15 @@ def pay():
                     "unit_amount": int(form.amount.data * 100), # amount in cents
                     "currency": form.currency.data,
                     "product_data": {
-                        "name": "MetaBrainz Foundation Donation"
+                        "name": "Support the MetaBrainz Foundation",
+                        "description": description
                     }
                 },
                 "quantity": 1
             }],
+            payment_intent_data={
+                "description": description
+            },
             payment_method_types=["card"],
             mode="payment",
             submit_type="donate" if is_donation else "pay",
