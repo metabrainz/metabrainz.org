@@ -300,7 +300,23 @@ class Payment(db.Model):
         return options
 
     @classmethod
-    def log_stripe_charge(cls, session):
+    def log_subscription_charge(cls, invoice):
+        """ Log successful Stripe charges for a recurring payment/donation """
+        charge = stripe.Charge.retrieve(invoice["charge"], expand=["balance_transaction"])
+        metadata = invoice["lines"]["data"][0]["metadata"]
+        return cls._log_stripe_charge(charge, metadata)
+
+    @classmethod
+    def log_one_time_charge(cls, session):
+        """ Log successful Stripe charge for one time payment/donation """
+        payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
+                                                       expand=["charges.data.balance_transaction"])
+        charge = payment_intent["charges"]["data"][0]
+        metadata = payment_intent["metadata"]
+        return cls._log_stripe_charge(charge, metadata)
+
+    @classmethod
+    def _log_stripe_charge(cls, charge, metadata):
         """Log successful Stripe charge.
 
         Args:
@@ -308,11 +324,6 @@ class Payment(db.Model):
                 available at https://stripe.com/docs/api/python#charge_object.
         """
         current_app.logger.debug("Processing Stripe charge...")
-        metadata = session["metadata"]
-
-        payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
-                                                       expand=["charges.data.balance_transaction"])
-        charge = payment_intent["charges"]["data"][0]
 
         # Transaction already exists in the database, do not insert again
         if db.session.query(exists().where(Payment.transaction_id == charge["id"])).scalar():
@@ -323,16 +334,16 @@ class Payment(db.Model):
 
         transaction = charge["balance_transaction"]
         currency = transaction["currency"].lower()
-        if currency not in SUPPORTED_CURRENCIES:
-            current_app.logger.warning("Unsupported currency: ", session["currency"])
-            return
+        # if currency not in SUPPORTED_CURRENCIES:
+        #     current_app.logger.warning("Unsupported currency: ", session["currency"])
+        #     return
 
         new_donation = cls(
             first_name=details["name"],
             last_name="",
             amount=transaction["net"] / 100,  # cents should be converted
             fee=transaction["fee"] / 100,  # cents should be converted
-            currency=currency,
+            currency="usd",
             transaction_id=charge["id"],
             payment_method=PAYMENT_METHOD_STRIPE,
             is_donation=metadata["is_donation"],
