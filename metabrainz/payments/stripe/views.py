@@ -65,10 +65,7 @@ def pay():
 def webhook():
     payload = request.data
     sig_header = request.headers.get("Stripe-Signature")
-    if current_app.config["PAYMENT_PRODUCTION"]:
-        webhook_secret = current_app.config["STRIPE_KEYS"]["WEBHOOK_SECRET"]
-    else:
-        webhook_secret = current_app.config["STRIPE_TEST_KEYS"]["WEBHOOK_SECRET"]
+    webhook_secret = current_app.config["STRIPE_KEYS"]["WEBHOOK_SECRET"]
 
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
