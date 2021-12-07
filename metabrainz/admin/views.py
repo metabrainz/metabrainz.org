@@ -20,6 +20,8 @@ import uuid
 import json
 import socket
 
+from metabrainz.utils import get_int_query_param
+
 
 class HomeView(AdminIndexView):
 
@@ -193,7 +195,7 @@ class CommercialUsersView(AdminBaseView):
 
     @expose('/')
     def index(self):
-        page = int(request.args.get('page', default=1))
+        page = get_int_query_param('page', default=1)
         if page < 1:
             return redirect(url_for('.index'))
         limit = 20
@@ -207,7 +209,7 @@ class PaymentsView(AdminBaseView):
 
     @expose('/')
     def list(self):
-        page = int(request.args.get('page', default=1))
+        page = get_int_query_param('page', default=1)
         is_donation_arg = request.args.get('is_donation')
         if is_donation_arg == "True":
             is_donation = True
@@ -283,12 +285,7 @@ class StatsView(AdminBaseView):
 
     @expose('/top-ips/')
     def top_ips(self):
-
-        days = 7
-        try:
-            days = int(request.args.get('days'))
-        except:
-            pass
+        days = get_int_query_param('days', default=7)
 
         non_commercial, commercial = AccessLog.top_ips(limit=100, days=days)
 
@@ -302,15 +299,9 @@ class StatsView(AdminBaseView):
             days=days
         )
 
-
     @expose('/top-tokens/')
     def top_tokens(self):
-
-        days = 7
-        try:
-            days = int(request.args.get('days'))
-        except:
-            pass
+        days = get_int_query_param('days', default=7)
 
         non_commercial, commercial = AccessLog.top_tokens(limit=100, days=days)
         return self.render(
@@ -323,7 +314,7 @@ class StatsView(AdminBaseView):
 
     @expose('/token-log')
     def token_log(self):
-        page = int(request.args.get('page', default=1))
+        page = get_int_query_param('page', default=1)
         if page < 1:
             return redirect(url_for('.token_log'))
         limit = 20

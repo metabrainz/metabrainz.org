@@ -3,6 +3,7 @@ import pprint
 import subprocess
 import sys
 
+import stripe
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
 from metabrainz.admin.quickbooks.views import QuickBooksView
@@ -154,6 +155,8 @@ def create_app(debug=None, config_path = None):
 
     if app.config["QUICKBOOKS_CLIENT_ID"]:
         admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
+
+    stripe.api_key = app.config["STRIPE_KEYS"]["SECRET"]
 
     return app
 

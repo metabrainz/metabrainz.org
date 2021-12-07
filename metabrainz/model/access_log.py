@@ -56,10 +56,16 @@ class AccessLog(db.Model):
                     cls.token == access_token) \
             .count()
         if count > DIFFERENT_IP_LIMIT:
+            email = db.session \
+                .query(User.contact_email) \
+                .join(Token) \
+                .filter(Token.value == access_token) \
+                .first()
             msg = ("Hourly access threshold exceeded for token %s\n\n"
+                   "The user associated with the token can be contacted at %s\n\n"
                    "This token has been used from %s different IP "
                    "addresses during the last %s minutes.") % \
-                  (access_token, count, CLEANUP_RANGE_MINUTES)
+                  (access_token, email, count, CLEANUP_RANGE_MINUTES)
             logging.info(msg)
             # Checking if notification for admins about this token abuse has
             # been sent in the last hour. This info is kept in cache.

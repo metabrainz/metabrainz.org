@@ -154,7 +154,7 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <script>
     $(document).ready(function () {
 
@@ -298,31 +298,12 @@
       ///////////
 
       // Stripe
-      var stripeHandler = StripeCheckout.configure({
-        key: "{{ stripe_public_key }}",
-        name: "MetaBrainz Foundation",
-        description: "Donation to the MetaBrainz Foundation",
-        address: "true",
-
-        token: function(token) {
-          form.attr("action", "{{ url_for('payments_stripe.pay', donation=True) }}");
-          $('<input>').attr({type: 'hidden', name: 'stripeToken', value: token.id}).appendTo(form);
-          $('<input>').attr({type: 'hidden', name: 'stripeEmail', value: token.email}).appendTo(form);
-          form.submit();
-        },
-
-        closed: function() {
-          setButtonsState(true);
-        }
-      });
       buttons.stripe.on('click', function(e) {
         setButtonsState(false);
-        stripeHandler.open({
-          amount: amount.val() * 100 // cents
-        });
         e.preventDefault();
+        form.attr("action", "{{ url_for('payments_stripe.pay', donation=True) }}");
+        form.submit();
       });
-      $(window).on('popstate', function() { stripeHandler.close(); });
 
       // PayPal
       buttons.paypal.on('click', function(e) {

@@ -4,6 +4,8 @@ import random
 import string
 import subprocess
 
+from flask import request
+
 
 def reformat_datetime(value, format='%x %X %Z'):
     return value.strftime(format)
@@ -29,3 +31,19 @@ def build_url(base, additional_params=None):
         (url.scheme, url.netloc, url.path, url.params,
          urlencode(query_params), url.fragment)
     )
+
+
+def get_int_query_param(key: str, default: int):
+    """ Get an integer query parameter from the current request
+        Args:
+            key: the key whose value to retrieve
+            default: the value to return in case the param is missing
+             or not a valid integer
+        Returns:
+            the value of query param if its available and a valid integer,
+             else the default value
+    """
+    try:
+        return int(request.args.get(key, default=default))
+    except ValueError:
+        return default

@@ -39,12 +39,9 @@ PAYPAL_ACCOUNT_IDS = {
 PAYPAL_BUSINESS = '''{{template "KEY" "payments/paypal/business_email"}}'''
 
 STRIPE_KEYS = {
-    "SECRET": '''{{template "KEY" "payments/stripe/prod/secret"}}''',
-    "PUBLISHABLE": '''{{template "KEY" "payments/stripe/prod/publishable"}}''',
-}
-STRIPE_TEST_KEYS = {
-    "SECRET": '''{{template "KEY" "payments/stripe/test/secret"}}''',
-    "PUBLISHABLE": '''{{template "KEY" "payments/stripe/test/publishable"}}''',
+    "SECRET": '''{{template "KEY" "payments/stripe/secret"}}''',
+    "PUBLISHABLE": '''{{template "KEY" "payments/stripe/publishable"}}''',
+    "WEBHOOK_SECRET": '''{{template "KEY" "payments/stripe/webhook_secret"}}''',
 }
 
 # MusicBrainz Base URL must have a trailing slash.
@@ -80,6 +77,8 @@ MAIL_FROM_DOMAIN = '''{{template "KEY" "mail_from_domain"}}'''
 
 # See http://flask.pocoo.org/docs/0.10/config/#builtin-configuration-values
 PREFERRED_URL_SCHEME = '''{{template "KEY" "preferred_url_scheme"}}'''
+
+SERVER_BASE_URL = f"{PREFERRED_URL_SCHEME}://{MAIL_FROM_DOMAIN}"
 
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [

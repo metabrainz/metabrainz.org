@@ -1,4 +1,19 @@
-# metabrainz.org
+<h1 align="center">
+  <br>
+  <a href="https://github.com/metabrainz/metabrainz.org/archive/master.zip"><img src="https://github.com/metabrainz/metabrainz-logos/blob/master/logos/MetaBrainz/SVG/MetaBrainz_logo.svg" alt="MetaBrainz"></a>
+</h1>
+
+<p align="center">
+    <a href="https://github.com/metabrainz/metabrainz.org/commits/master">
+    <img src="https://img.shields.io/github/last-commit/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
+         alt="GitHub last commit"></a>
+    <a href="https://github.com/metabrainz/metabrainz.org/issues">
+    <img src="https://img.shields.io/github/issues-raw/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
+         alt="GitHub issues"></a>
+    <a href="https://github.com/metabrainz/metabrainz.org/pulls">
+    <img src="https://img.shields.io/github/issues-pr-raw/metabrainz/metabrainz.org.svg?style=flat-square&logo=github&logoColor=white"
+         alt="GitHub pull requests"></a>
+</p>
 
 **Website for the [MetaBrainz Foundation](https://metabrainz.org/).** This is
 a Flask-based web application that provides info about the foundation and its

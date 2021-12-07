@@ -1,13 +1,13 @@
-from flask import Blueprint, request, current_app, redirect, url_for
+from flask import Blueprint, request, current_app, redirect, url_for, jsonify
+
+from metabrainz.model import Payment
 from metabrainz.payments.forms import DonationForm, PaymentForm
-from metabrainz.model.payment import Payment
-import logging
 import stripe
 
 payments_stripe_bp = Blueprint('payments_stripe', __name__)
 
 
-@payments_stripe_bp.route('/', methods=['POST'])
+@payments_stripe_bp.route("/", methods=["POST"])
 def pay():
     """Payment page for Stripe.
 
@@ -20,45 +20,69 @@ def pay():
         form = PaymentForm()
 
     if not form.validate():
-        return redirect(url_for('payments.error', is_donation=is_donation))
-
-    if current_app.config['PAYMENT_PRODUCTION']:
-        stripe.api_key = current_app.config['STRIPE_KEYS']['SECRET']
-    else:
-        stripe.api_key = current_app.config['STRIPE_TEST_KEYS']['SECRET']
-
-    # Get the credit card details submitted by the form
-    token = request.form['stripeToken']
+        return redirect(url_for("payments.error", is_donation=is_donation))
 
     charge_metadata = {
-        'email': request.form['stripeEmail'],
-        'is_donation': is_donation,
+        "is_donation": is_donation,
     }
     if is_donation:
-        charge_description = "Donation to the MetaBrainz Foundation"
         # Using DonationForm
-        charge_metadata['editor'] = form.editor.data
-        charge_metadata['anonymous'] = form.anonymous.data
-        charge_metadata['can_contact'] = form.can_contact.data
+        charge_metadata["editor"] = form.editor.data
+        charge_metadata["anonymous"] = form.anonymous.data
+        charge_metadata["can_contact"] = form.can_contact.data
+        description = "Donation to the MetaBrainz Foundation"
     else:
-        charge_description = "Payment to the MetaBrainz Foundation"
         # Using PaymentForm
-        charge_metadata['invoice_number'] = form.invoice_number.data
+        charge_metadata["invoice_number"] = form.invoice_number.data
+        description = f"Payment to the MetaBrainz Foundation for Invoice {form.invoice_number.data}"
 
-    # Create the charge on Stripe's servers - this will charge the donor's card
     try:
-        charge = stripe.Charge.create(
-            amount=int(form.amount.data * 100),  # amount in cents
-            currency='USD',
-            card=token,
-            description=charge_description,
-            metadata=charge_metadata,
+        session = stripe.checkout.Session.create(
+            billing_address_collection="required",
+            line_items=[{
+                "price_data": {
+                    "unit_amount": int(form.amount.data * 100), # amount in cents
+                    "currency": form.currency.data,
+                    "product_data": {
+                        "name": "Support the MetaBrainz Foundation",
+                        "description": description
+                    }
+                },
+                "quantity": 1
+            }],
+            payment_intent_data={
+                "description": description
+            },
+            payment_method_types=["card"],
+            mode="payment",
+            submit_type="donate" if is_donation else "pay",
+            # stripe wants absolute urls so url_for doesn't suffice
+            success_url=f'{current_app.config["SERVER_BASE_URL"]}/payment/complete?is_donation={is_donation}',
+            cancel_url=f'{current_app.config["SERVER_BASE_URL"]}/payment/cancelled?is_donation={is_donation}',
+            metadata=charge_metadata
         )
-    except stripe.CardError as e:
-        # The card has been declined
-        logging.info(e)
-        return redirect(url_for('payments.error', is_donation=is_donation))
+        return redirect(session.url, code=303)
+    except Exception as e:
+        current_app.logger.error(e, exc_info=True)
+        return redirect(url_for("payments.error", is_donation=is_donation))
 
-    Payment.log_stripe_charge(charge)
 
-    return redirect(url_for('payments.complete', is_donation=is_donation))
+@payments_stripe_bp.route("/webhook/", methods=["POST"])
+def webhook():
+    payload = request.data
+    sig_header = request.headers.get("Stripe-Signature")
+    webhook_secret = current_app.config["STRIPE_KEYS"]["WEBHOOK_SECRET"]
+
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
+    except ValueError:
+        current_app.logger.error("Invalid Stripe Payload", exc_info=True)
+        return jsonify({"error": "invalid payload"}), 400
+    except stripe.error.SignatureVerificationError:
+        current_app.logger.error("Stripe signature error, possibly fake event", exc_info=True)
+        return jsonify({"error": "invalid signature"}), 400
+
+    if event["type"] == "checkout.session.completed":
+        Payment.log_stripe_charge(event["data"]["object"])
+
+    return jsonify({"status": "ok"})
