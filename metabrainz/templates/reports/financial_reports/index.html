@@ -32,8 +32,17 @@
 </p>
 
 <h3>2021</h3>
+
+<p>{{ _('Year end reports') }}</p>
+<ul>
+    <li><a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20211231.pdf') }}">{{ _('balance sheet') }}</a></li>
+    <li><a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2021.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
+</ul>
+
 <p>{{ _('Quarterly reports') }}</p>
 <ul>
+    <li>Q4 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2021_Q4.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
+    <li>Q4 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20211231.pdf') }}">{{ _('balance sheet') }}</a></li>
     <li>Q3 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2021_Q3.pdf') }}">{{ _('profit &amp; loss') }}</a></li>
     <li>Q3 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_balance_sheet_20210930.pdf') }}">{{ _('balance sheet') }}</a></li>
     <li>Q2 <a href="{{ url_for('financial_reports.static', filename='MetaBrainz_Foundation_profit_loss_2021_Q2.pdf') }}">{{ _('profit &amp; loss') }}</a></li>

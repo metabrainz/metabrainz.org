@@ -3,14 +3,14 @@
 # Parse the report downloaded from https://dashboard.stripe.com/reports/balance
 
 import sys, os
-import decimal
+from decimal import Decimal
 import csv
 
 def toFloat(svalue):
     return float(svalue.replace(",", ""))
 
-if len(sys.argv) != 3:
-    print("Usage parse-stripe.py <stripe csv file> <qbo csv file>")
+if len(sys.argv) < 4:
+    print("Usage parse-stripe.py <stripe csv file> <qbo csv file> [beginning balance]")
     sys.exit(-1)
 
 fp = None
@@ -27,6 +27,11 @@ except IOError:
     print("Cannot open output file %s" % sys.argv[2])
     exit(0)
 
+try:
+    balance = Decimal(sys.argv[3])
+except IndexError:
+    balance = None
+
 out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
 out.writerow(["Date","Description","Amount"])
 
@@ -41,30 +46,42 @@ for i, row in enumerate(reader):
     if row[1] == 'payout':
         continue
 
-#    for i, d in enumerate(zip(head, row)):
-#        print("%d %-40s %s" % (i, d[0], d[1]))
-#    print()
+    for i, d in enumerate(zip(head, row)):
+        print("%d %-40s %s" % (i, d[0], d[1]))
+    print()
 
+    continue
 
-    date = row[1].split(' ')[0]
+    date = row[8].split(' ')[0]
     date = date.split('-')
     date = "%s/%s/%s" % (date[1], date[2], date[0])
-    sender = row[41]
-    gross = row[6]
-    fee = row[7]
+    gross = Decimal(row[3])
+    fee = Decimal(row[4])
+
+    if row[1] == "contribution":
+        sender = "Climate contribution"
+        if balance is not None:
+            balance = balance + gross
+            print("%s %-40s %10s %10s" % (date, sender, str(gross), str(balance)))
+        out.writerow([date, sender, gross])
+        continue
+
+    sender = row[19]
+    if not sender or sender.strip() == "":
+        sender = row[42]
     memo = row[1]
     inv = row[43]
 
     if inv:
         sender += " (inv #%s)" % inv
 
-    if row[9] == "contribution":
-        out.writerow([date, "Climate contribution", gross])
-    elif row[9] == "fee":
-        out.writerow([date, "Stripe Friends & Family $20K (or local equiv.) Credit", gross])
-    else:
-        out.writerow([date, "Stripe fee", "-" + fee])
-        out.writerow([date, sender, gross])
+    out.writerow([date, "Stripe fee", "-" + str(fee)])
+    out.writerow([date, sender, str(gross)])
+    if balance is not None:
+        balance = balance + gross
+        print("%s %-40s %10s %10s" % (date, sender, str(gross), str(balance)))
+        balance = balance - fee
+        print("%s %-40s %10s %10s" % (date, "Stripe fee", str(-fee), str(balance)))
 
 fp.close()
 _out.close()
