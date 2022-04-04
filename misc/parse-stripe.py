@@ -46,17 +46,15 @@ for i, row in enumerate(reader):
     if row[1] == 'payout':
         continue
 
-    for i, d in enumerate(zip(head, row)):
-        print("%d %-40s %s" % (i, d[0], d[1]))
-    print()
+#    for i, d in enumerate(zip(head, row)):
+#        print("%d %-40s %s" % (i, d[0], d[1]))
+#    print()
 
-    continue
-
-    date = row[8].split(' ')[0]
+    date = row[3].split(' ')[0]
     date = date.split('-')
     date = "%s/%s/%s" % (date[1], date[2], date[0])
-    gross = Decimal(row[3])
-    fee = Decimal(row[4])
+    gross = Decimal(row[4])
+    fee = Decimal(row[9])
 
     if row[1] == "contribution":
         sender = "Climate contribution"
@@ -66,13 +64,13 @@ for i, row in enumerate(reader):
         out.writerow([date, sender, gross])
         continue
 
-    sender = row[19]
+    sender = row[25]
     if not sender or sender.strip() == "":
-        sender = row[42]
+        sender = row[17]
     memo = row[1]
-    inv = row[43]
 
-    if inv:
+    if row[1].find("Invoice") >= 0:
+        inv = row[1][row[1].find("Invoice") + 8:]
         sender += " (inv #%s)" % inv
 
     out.writerow([date, "Stripe fee", "-" + str(fee)])

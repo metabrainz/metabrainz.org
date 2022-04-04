@@ -38,7 +38,7 @@ except IOError:
 balance = None
 try:
     balance = Decimal(sys.argv[3])
-except InvalidOperation:
+except (InvalidOperation, IndexError):
     print("Cannot balance value, ignoring.")
 
 
