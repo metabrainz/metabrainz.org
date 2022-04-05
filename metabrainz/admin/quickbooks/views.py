@@ -81,7 +81,7 @@ class QuickBooksView(BaseView):
             try:
                 new_invoice.save(qb=client)
             except quickbooks.exceptions.QuickbooksException as err:
-                flash("failed to create invoice for %s" % new_invoice.CustomerRef.name)
+                flash("failed to create invoice for %s (%s)" % (new_invoice.CustomerRef.name, str(err)))
 
 
     @expose('/', methods=['GET'])

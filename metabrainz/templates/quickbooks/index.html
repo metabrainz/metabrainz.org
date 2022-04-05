@@ -66,7 +66,7 @@
                     {% if show_check %}
                       <td style="width: 3%">
                          {% if invoice.number == "NEW" %}
-                            <input type="checkbox" name="create_{{ outer_loop.index0 }}">
+                            <input type="checkbox" CHECKED name="create_{{ outer_loop.index0 }}">
                             <input type="hidden" name="customer_{{ outer_loop.index0 }}" value="{{ customer.id }}">
                             <input type="hidden" name="base_invoice_{{ outer_loop.index0 }}" value="{{ invoice.id }}">
                             <input type="hidden" name="begin_{{ outer_loop.index0 }}" value="{{ invoice.begin }}">
