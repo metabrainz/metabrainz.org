@@ -73,6 +73,14 @@ class MusicBrainzViewsTestCase(FlaskTestCase):
         open(os.path.join(self.path, 'replication-1.tar.bz2'), 'a').close()
         self.assert200(self.client.get(url_for('api_musicbrainz.replication_hourly', packet_number=1, token=self.token)))
 
+    def test_replication_hourly_v2(self):
+        self.assert400(self.client.get(url_for('api_musicbrainz.replication_hourly_v2', packet_number=1)))
+        self.assert403(self.client.get(url_for('api_musicbrainz.replication_hourly_v2', packet_number=1, token='fake')))
+        self.assert404(self.client.get(url_for('api_musicbrainz.replication_hourly_v2', packet_number=1, token=self.token)))
+
+        open(os.path.join(self.path, 'replication-1-v2.tar.bz2'), 'a').close()
+        self.assert200(self.client.get(url_for('api_musicbrainz.replication_hourly_v2', packet_number=1, token=self.token)))
+
     def test_replication_hourly_signature(self):
         self.assert400(self.client.get(url_for('api_musicbrainz.replication_hourly_signature', packet_number=1)))
         self.assert403(self.client.get(url_for('api_musicbrainz.replication_hourly_signature', packet_number=1, token='fake')))
@@ -80,6 +88,14 @@ class MusicBrainzViewsTestCase(FlaskTestCase):
 
         open(os.path.join(self.path, 'replication-1.tar.bz2.asc'), 'a').close()
         self.assert200(self.client.get(url_for('api_musicbrainz.replication_hourly_signature', packet_number=1, token=self.token)))
+
+    def test_replication_hourly_signature_v2(self):
+        self.assert400(self.client.get(url_for('api_musicbrainz.replication_hourly_signature_v2', packet_number=1)))
+        self.assert403(self.client.get(url_for('api_musicbrainz.replication_hourly_signature_v2', packet_number=1, token='fake')))
+        self.assert404(self.client.get(url_for('api_musicbrainz.replication_hourly_signature_v2', packet_number=1, token=self.token)))
+
+        open(os.path.join(self.path, 'replication-1-v2.tar.bz2.asc'), 'a').close()
+        self.assert200(self.client.get(url_for('api_musicbrainz.replication_hourly_signature_v2', packet_number=1, token=self.token)))
 
     def test_json_dump(self):
         self.assert400(self.client.get(url_for('api_musicbrainz.json_dump', packet_number=1, entity_name='artist')))

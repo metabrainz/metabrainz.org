@@ -96,12 +96,12 @@ def replication_info():
     })
 
 
-@api_musicbrainz_bp.route('/replication-<int:packet_number>.tar.bz2')
-@token_required
-@tracked
-def replication_hourly(packet_number):
+def _replication_hourly(packet_number, v2):
     directory = current_app.config['REPLICATION_PACKETS_DIR']
-    filename = 'replication-%s.tar.bz2' % packet_number
+    if v2:
+        filename = 'replication-%s-v2.tar.bz2' % packet_number
+    else:
+        filename = 'replication-%s.tar.bz2' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
         return Response("Can't find specified replication packet!\n", status=404)
 
@@ -111,11 +111,12 @@ def replication_hourly(packet_number):
         return send_from_directory(directory, filename, mimetype=MIMETYPE_ARCHIVE_BZ2)
 
 
-@api_musicbrainz_bp.route('/replication-<int:packet_number>.tar.bz2.asc')
-@token_required
-def replication_hourly_signature(packet_number):
+def _replication_hourly_signature(packet_number, v2):
     directory = current_app.config['REPLICATION_PACKETS_DIR']
-    filename = 'replication-%s.tar.bz2.asc' % packet_number
+    if v2:
+        filename = 'replication-%s-v2.tar.bz2.asc' % packet_number
+    else:
+        filename = 'replication-%s.tar.bz2.asc' % packet_number
     if not os.path.isfile(safe_join(directory, filename)):
         return Response("Can't find signature for a specified replication packet!\n", status=404)
 
@@ -123,6 +124,32 @@ def replication_hourly_signature(packet_number):
         return _redirect_to_nginx(os.path.join(NGINX_INTERNAL_LOCATION, filename))
     else:
         return send_from_directory(directory, filename, mimetype=MIMETYPE_SIGNATURE)
+
+
+@api_musicbrainz_bp.route('/replication-<int:packet_number>.tar.bz2')
+@token_required
+@tracked
+def replication_hourly(packet_number):
+    return _replication_hourly(packet_number, v2=False)
+
+
+@api_musicbrainz_bp.route('/replication-<int:packet_number>-v2.tar.bz2')
+@token_required
+@tracked
+def replication_hourly_v2(packet_number):
+    return _replication_hourly(packet_number, v2=True)
+
+
+@api_musicbrainz_bp.route('/replication-<int:packet_number>.tar.bz2.asc')
+@token_required
+def replication_hourly_signature(packet_number):
+    return _replication_hourly_signature(packet_number, v2=False)
+
+
+@api_musicbrainz_bp.route('/replication-<int:packet_number>-v2.tar.bz2.asc')
+@token_required
+def replication_hourly_signature_v2(packet_number):
+    return _replication_hourly_signature(packet_number, v2=True)
 
 
 @api_musicbrainz_bp.route('/json-dumps/json-dump-<int:packet_number>/<entity_name>.tar.xz')
