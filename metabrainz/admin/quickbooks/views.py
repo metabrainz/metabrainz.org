@@ -72,6 +72,8 @@ class QuickBooksView(BaseView):
             new_invoice.EInvoiceStatus = None
             new_invoice.MetaData = None
             new_invoice.TotalAmt = None
+            new_invoice.SyncToken = None
+            new_invoice.LinkedTxn = None
             new_invoice.EmailStatus = "NeedToSend"
             new_invoice.Line[0].SalesItemLineDetail.Qty = invoice['qty']
             new_invoice.Line[0].SalesItemLineDetail.UnitPrice = invoice['price']
@@ -207,7 +209,7 @@ class QuickBooksView(BaseView):
             invoices = sorted(invoices, key=lambda invoice: invoice['sortdate'], reverse=True)
 
             # If there are comments in the customer notes field that indicates # arrears or # donotinvoice,
-            # we use those as hints to properly create new invoices or to ignore customers
+            # or donotsend we use those as hints to properly create new invoices or to ignore customers
             name = customer.DisplayName or customer.CompanyName;
             desc = customer.Notes.lower()
             try:
