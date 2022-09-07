@@ -3,12 +3,12 @@ from copy import deepcopy
 import datetime 
 import time
 from dateutil.parser import parse
+
 import quickbooks
 from intuitlib.enums import Scopes
 from flask import request, current_app, render_template, redirect, url_for, session, flash
 from flask_login import login_required
 from flask_admin import expose, BaseView
-from metabrainz.admin.quickbooks.quickbooks import get_client
 from quickbooks import QuickBooks
 from quickbooks.objects.customer import Customer
 from quickbooks.objects.invoice import Invoice
@@ -16,6 +16,8 @@ from quickbooks.objects.detailline import SalesItemLineDetail
 from intuitlib.exceptions import AuthClientError
 from werkzeug.exceptions import BadRequest, InternalServerError
 
+from metabrainz.admin.quickbooks.quickbooks import get_client
+from brainzutils import cache
 
 class QuickBooksView(BaseView):
 
@@ -298,8 +300,11 @@ class QuickBooksView(BaseView):
             # Everyone else, WTF?
             wtf.append(cust)
 
-        return render_template("quickbooks/index.html", ready=ready_to_invoice, wtf=wtf, current=current)
+        cache.set("qb_realm", session['realm'], 3600)
+        cache.set("qb_access_token", session['access_token'], 3600)
+        cache.set("qb_refresh_token", session['refresh_token'], 3600)
 
+        return render_template("quickbooks/index.html", ready=ready_to_invoice, wtf=wtf, current=current)
 
     @expose('/', methods=['POST'])
     def submit(self):
