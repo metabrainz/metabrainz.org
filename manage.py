@@ -2,6 +2,7 @@
 from metabrainz import db
 from metabrainz import create_app
 from metabrainz.model.access_log import AccessLog
+from metabrainz.invoices import QuickBooksInvoiceSender
 import urllib.parse
 import subprocess
 import os
@@ -93,6 +94,15 @@ def compile_translations():
 def cleanup_logs():
     with create_app().app_context():
         AccessLog.remove_old_ip_addr_records()
+
+
+@cli.command()
+def send_invoices():
+    """ Send invoices that are prepared, but unsent in QuickBooks."""
+
+    with create_app().app_context():
+        qb = QuickBooksInvoiceSender()
+        qb.send_invoices()
 
 
 def _run_psql(script, uri, database=None):

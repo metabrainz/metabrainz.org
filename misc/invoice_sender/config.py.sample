@@ -1,8 +1,0 @@
-QUICKBOOKS_CLIENT_ID = "Q0EaTWj4QrMS8ZgbBSFLta5sMjHhpmLlej8ky0SyuS4ZdHxzQO"
-QUICKBOOKS_CLIENT_SECRET = "AMSZmVxvf1qQYmkKVthsWoCZbigcigqu4x2wOs41"
-QUICKBOOKS_SANDBOX = "production"
-QUICKBOOKS_REDIRECT_URI = "https://metabrainz.org/admin/quickbooks/callback"
-
-REDIS_HOST = "trille.metabrainz.org"
-REDIS_PORT = 16679
-REDIS_NAMESPACE = "MEB"
