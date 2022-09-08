@@ -1,7 +1,9 @@
 import datetime 
+import io
 import time
 from decimal import Decimal
 
+from flask import current_app
 from intuitlib.enums import Scopes
 from intuitlib.client import AuthClient
 from quickbooks import QuickBooks
@@ -11,7 +13,6 @@ from quickbooks.objects.detailline import SalesItemLineDetail
 from quickbooks import exceptions
 from intuitlib.exceptions import AuthClientError
 
-import config
 from brainzutils import cache
 from metabrainz.mail import send_mail
 
@@ -24,14 +25,14 @@ Thanks!
 The MetaBrainz Foundation ( accounting@metabrainz.org ) 
 
 
-================
+================================
 Invoice Summary:
 
 Invoice number: %s
 Invoice date: %s
 Due date: %s
 Invoice amount: %s%s
-================
+================================
 
 Please see the attached PDF file for full details."""
 
@@ -40,12 +41,11 @@ class QuickBooksInvoiceSender():
     def __init__(self):
         QuickBooks.enable_global()
         self.auth_client = AuthClient(
-            client_id=config.QUICKBOOKS_CLIENT_ID,
-            client_secret=config.QUICKBOOKS_CLIENT_SECRET,
-            environment=config.QUICKBOOKS_SANDBOX,
-            redirect_uri=config.QUICKBOOKS_REDIRECT_URI
+            client_id=current_app.config["QUICKBOOKS_CLIENT_ID"],
+            client_secret=current_app.config["QUICKBOOKS_CLIENT_SECRET"],
+            environment=current_app.config["QUICKBOOKS_SANDBOX"],
+            redirect_uri=current_app.config["QUICKBOOKS_CALLBACK_URL"]
         )
-        cache.init(host=config.REDIS_HOST, port=config.REDIS_PORT, namespace=config.REDIS_NAMESPACE)
 
 
     def get_client(self):
@@ -89,10 +89,11 @@ class QuickBooksInvoiceSender():
                             "%.2f" % float(invoice.TotalAmt),
                             invoice.CurrencyRef.value)
         pdf = invoice.download_pdf(qb=client)
+        pdf = io.BytesIO(pdf)
         send_mail(
-            subject="Invoice %s from The MetaBrainz Foundation" % Invoice.DocNumber)
+            subject="Invoice %s from The MetaBrainz Foundation" % invoice.DocNumber,
             text=text,
-            attachments=[pdf, 'pdf', '%s.pdf' % Invoice.DocNumber],
+            attachments=[(pdf, 'pdf', '%s.pdf' % invoice.DocNumber)],
             recipients=emails,
             from_addr="accounting@metabrainz.org",
             from_name="MetaBrainz Accounting Department"
@@ -147,7 +148,3 @@ class QuickBooksInvoiceSender():
 
             self.send_invoice(client, invoice, customer)
             print("  invoice sent!")
-
-
-qb = QuickBooksInvoiceSender()
-qb.send_invoices()

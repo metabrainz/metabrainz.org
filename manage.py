@@ -2,7 +2,7 @@
 from metabrainz import db
 from metabrainz import create_app
 from metabrainz.model.access_log import AccessLog
-from metabrainz.invoices import QuickBooksInvoiceSender
+from metabrainz.invoices.send_invoices import QuickBooksInvoiceSender
 import urllib.parse
 import subprocess
 import os
