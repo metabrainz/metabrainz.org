@@ -16,6 +16,7 @@ from intuitlib.exceptions import AuthClientError
 from brainzutils import cache
 from metabrainz.mail import send_mail
 
+SEND_DELAY = 5
 MAIL_BODY = """To: %s %s (%s)
 
 Here is your next invoice! For information on how to pay us, please see https://metabrainz.org/payment
@@ -78,6 +79,7 @@ class QuickBooksInvoiceSender():
             return False
 
     def send_invoice(self, client, invoice, customer):
+        print("  sending invoice")
         emails = [ e.strip() for e in str(invoice.BillEmail).split(",") ]
         emails.append("accounting@metabrainz.org")
         text = MAIL_BODY % (customer.GivenName,
@@ -98,6 +100,9 @@ class QuickBooksInvoiceSender():
             from_addr="accounting@metabrainz.org",
             from_name="MetaBrainz Accounting Department"
         )
+        self.mark_invoice_sent(client, invoice)
+        print("  wait")
+        time.sleep(SEND_DELAY)
 
     def send_invoices(self):
 
