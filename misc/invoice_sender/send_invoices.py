@@ -2,7 +2,8 @@
 
 import datetime 
 import time
-from brainzutils import cache
+from decimal import Decimal
+
 from intuitlib.enums import Scopes
 from intuitlib.client import AuthClient
 from quickbooks import QuickBooks
@@ -13,9 +14,28 @@ from quickbooks import exceptions
 from intuitlib.exceptions import AuthClientError
 
 import config
+from brainzutils import cache
+from metabrainz.mail import send_mail
 
-from icecream import ic
+MAIL_BODY = """To: %s %s (%s)
 
+Here is your next invoice! For information on how to pay us, please see https://metabrainz.org/payment
+
+Thanks!
+
+The MetaBrainz Foundation ( accounting@metabrainz.org ) 
+
+
+================
+Invoice Summary:
+
+Invoice number: %s
+Invoice date: %s
+Due date: %s
+Invoice amount: %s%s
+================
+
+Please see the attached PDF file for full details."""
 
 class QuickBooksInvoiceSender():
 
@@ -58,6 +78,27 @@ class QuickBooksInvoiceSender():
         except exceptions.ValidationException as err:
             print(err.detail)
             return False
+
+    def send_invoice(self, client, invoice, customer):
+        emails = [ e.strip() for e in str(invoice.BillEmail).split(",") ]
+        emails.append("accounting@metabrainz.org")
+        text = MAIL_BODY % (customer.GivenName,
+                            customer.FamilyName,
+                            customer.DisplayName,
+                            invoice.DocNumber,
+                            invoice.TxnDate,
+                            invoice.DueDate,
+                            "%.2f" % float(invoice.TotalAmt),
+                            invoice.CurrencyRef.value)
+        pdf = invoice.download_pdf(qb=client)
+        send_mail(
+            subject="Invoice %s from The MetaBrainz Foundation" % Invoice.DocNumber)
+            text=text,
+            attachments=[pdf, 'pdf', '%s.pdf' % Invoice.DocNumber],
+            recipients=emails,
+            from_addr="accounting@metabrainz.org",
+            from_name="MetaBrainz Accounting Department"
+        )
 
     def send_invoices(self):
 
@@ -103,7 +144,11 @@ class QuickBooksInvoiceSender():
                         break
                     else:
                         break
-            
+
+                continue
+
+            self.send_invoice(client, invoice, customer)
+            print("  invoice sent!")
 
 
 qb = QuickBooksInvoiceSender()
