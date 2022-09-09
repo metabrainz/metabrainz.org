@@ -58,7 +58,7 @@ class QuickBooksInvoiceSender():
 
         if not refresh_token or not realm:
             print("Could not fetch OAuth credentials from redis.")
-            print("Load https://test.metabrainz.org/admin/quickbooks/ to push the credentials to redis.")
+            print("Load https://metabrainz.org/admin/quickbooks/ to push the credentials to redis.")
             return None
 
         return QuickBooks(
