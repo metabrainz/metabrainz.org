@@ -1,4 +1,4 @@
-import datetime 
+import datetime
 import io
 import time
 from decimal import Decimal
@@ -37,7 +37,9 @@ Invoice amount: %s%s
 
 Please see the attached PDF file for full details."""
 
+
 class QuickBooksInvoiceSender():
+    """ This class uses the QuickBooks API to sent invoices from our own mail ifrastructure. """
 
     def __init__(self):
         QuickBooks.enable_global()
@@ -48,8 +50,9 @@ class QuickBooksInvoiceSender():
             redirect_uri=current_app.config["QUICKBOOKS_CALLBACK_URL"]
         )
 
-
     def get_client(self):
+        """ Create the client object from the cached credientials and return it. """
+
         refresh_token = cache.get("qb_refresh_token")
         realm = cache.get("qb_realm")
 
@@ -65,11 +68,13 @@ class QuickBooksInvoiceSender():
         )
 
     def mark_invoice_sent(self, client, invoice):
+        """ Given the client and invoice, mark this invoice as sent """
+
         invoice.EmailStatus = "EmailSent"
         if invoice.DeliveryInfo is None:
             invoice.DeliveryInfo = DeliveryInfo()
             invoice.DeliveryInfo.DeliveryType = "Email"
-            
+
         invoice.DeliveryInfo.DeliveryTime = datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%dT%H:%M:%S")
         try:
             invoice.save(qb=client)
@@ -79,8 +84,10 @@ class QuickBooksInvoiceSender():
             return False
 
     def send_invoice(self, client, invoice, customer):
+        """ Given a client, invoice and its customer object, send the invoice to the customer. """
+
         print("  sending invoice")
-        emails = [ e.strip() for e in str(invoice.BillEmail).split(",") ]
+        emails = [e.strip() for e in str(invoice.BillEmail).split(",")]
         emails.append("accounting@metabrainz.org")
         text = MAIL_BODY % (customer.GivenName,
                             customer.FamilyName,
@@ -105,6 +112,9 @@ class QuickBooksInvoiceSender():
         time.sleep(SEND_DELAY)
 
     def send_invoices(self):
+        """ Main entry point that inspects the last 300 invoices, marks voided ones as sent (as to 
+            ignore them in future runs, asks for feedback about invoices that are unclear and sends
+            the rest. """
 
         client = self.get_client()
         if not client:
@@ -136,7 +146,7 @@ class QuickBooksInvoiceSender():
                     print("  Send [s], Mark sent [m], Ignore [i]:", end="")
                     resp = input().strip().lower()
                     if resp is None or len(resp) == 0 or resp[0] not in "smi":
-                        print("  select one of the given options!")  
+                        print("  select one of the given options!")
 
                     if resp[0] == "s":
                         self.send_invoice(client, invoice)
