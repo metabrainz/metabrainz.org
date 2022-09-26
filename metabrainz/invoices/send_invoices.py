@@ -57,8 +57,8 @@ class QuickBooksInvoiceSender():
         realm = cache.get("qb_realm")
 
         if not refresh_token or not realm:
-            print("Could not fetch OAuth credentials from redis.")
-            print("Load https://metabrainz.org/admin/quickbooks/ to push the credentials to redis.")
+            current_app.logger.info("Could not fetch OAuth credentials from redis.")
+            current_app.logger.info("Load https://metabrainz.org/admin/quickbooks/ to push the credentials to redis.")
             return None
 
         return QuickBooks(
@@ -80,13 +80,13 @@ class QuickBooksInvoiceSender():
             invoice.save(qb=client)
             return True
         except exceptions.ValidationException as err:
-            print(err.detail)
+            current_app.logger.info(err.detail)
             return False
 
     def send_invoice(self, client, invoice, customer):
         """ Given a client, invoice and its customer object, send the invoice to the customer. """
 
-        print("  sending invoice")
+        current_app.logger.info("  sending invoice")
         emails = [e.strip() for e in str(invoice.BillEmail).split(",")]
         emails.append("accounting@metabrainz.org")
         text = MAIL_BODY % (customer.GivenName,
@@ -108,7 +108,7 @@ class QuickBooksInvoiceSender():
             from_name="MetaBrainz Accounting Department"
         )
         self.mark_invoice_sent(client, invoice)
-        print("  wait")
+        current_app.logger.info("  wait")
         time.sleep(SEND_DELAY)
 
     def send_invoices(self):
@@ -122,44 +122,42 @@ class QuickBooksInvoiceSender():
 
         invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
         if not invoices:
-            print("Cannot fetch list of invoices")
+            current_app.logger.info("Cannot fetch list of invoices")
             return
 
         for invoice in invoices:
             if invoice.EmailStatus == "EmailSent":
                 continue
 
-            print("Invoice %s with status %s" % (invoice.DocNumber, invoice.EmailStatus))
+            current_app.logger.info("Invoice %s with status %s" % (invoice.DocNumber, invoice.EmailStatus))
             if float(invoice.TotalAmt) == 0.0:
-                print("  marking zero amount invoice %s as sent." % invoice.DocNumber)
-                self.mark_invoice_sent(self, client, invoice)
+                current_app.logger.info("  marking zero amount invoice %s as sent." % invoice.DocNumber)
+                self.mark_invoice_sent(client, invoice)
                 continue
 
             customer = Customer.get(int(invoice.CustomerRef.value), qb=client)
             if customer.Notes.find("donotsend") >= 0:
-                print("  marking donotsend invoice %s as sent, without sending." % invoice.DocNumber)
+                current_app.logger.info("  marking donotsend invoice %s as sent, without sending." % invoice.DocNumber)
                 self.mark_invoice_sent(client, invoice)
 
             if invoice.EmailStatus == "NotSet":
-                print("  To '%s' marked as NotSet." % customer.DisplayName)
+                current_app.logger.info("  To '%s' marked as NotSet." % customer.DisplayName)
                 while True:
-                    print("  Send [s], Mark sent [m], Ignore [i]:", end="")
-                    resp = input().strip().lower()
+                    resp = input("  Send [s], Mark sent [m], Ignore [i]:").strip().lower()
                     if resp is None or len(resp) == 0 or resp[0] not in "smi":
-                        print("  select one of the given options!")
+                        current_app.logger.info("  select one of the given options!")
+                        continue
 
                     if resp[0] == "s":
-                        self.send_invoice(client, invoice)
-                        print("  invoice sent!")
-                        break
+                        self.send_invoice(client, invoice, customer)
+                        current_app.logger.info("  invoice sent!")
                     elif resp[0] == "m":
                         self.mark_invoice_sent(client, invoice)
-                        print("  invoice marked as sent, without being sent!")
-                        break
-                    else:
-                        break
+                        current_app.logger.info("  invoice marked as sent, without being sent!")
+
+                    break
 
                 continue
 
             self.send_invoice(client, invoice, customer)
-            print("  invoice sent!")
+            current_app.logger.info("  invoice sent!")
