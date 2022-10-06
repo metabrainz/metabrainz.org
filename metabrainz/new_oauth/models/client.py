@@ -1,5 +1,5 @@
 from authlib.oauth2.rfc6749 import ClientMixin
-from sqlalchemy import Column, Text, ForeignKey, Integer, ARRAY, Identity
+from sqlalchemy import Column, Text, ForeignKey, Integer, ARRAY, Identity, DateTime, func
 from sqlalchemy.orm import relationship
 
 
@@ -21,6 +21,7 @@ class OAuth2Client(Base, ClientMixin):
     description = Column(Text, nullable=False)
     website = Column(Text)
     redirect_uris = Column(ARRAY(Text), nullable=False)
+    client_id_issued_at = Column(DateTime(timezone=True), nullable=False, default=func.now())
 
     user = relationship('OAuth2User')
 

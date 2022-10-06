@@ -1,5 +1,3 @@
-import time
-
 from authlib.oauth2 import OAuth2Error
 from flask import Blueprint, request, render_template, redirect
 from flask_login import login_required, current_user
@@ -21,11 +19,9 @@ def create_client():
     form = ApplicationForm()
     if form.validate_on_submit():
         client_id = gen_salt(24)
-        client_id_issued_at = int(time.time())
         client = OAuth2Client(
             client_id=client_id,
-            client_id_issued_at=client_id_issued_at,
-            user_id=current_user.id,
+            owner_id=current_user.id,
         )
         client_metadata = {
             "client_name": form.client_name,
@@ -78,3 +74,7 @@ def oauth_token_handler():
 @new_oauth_bp.route('/revoke', methods=['POST'])
 def revoke_token():
     return authorization_server.create_endpoint_response('revocation')
+
+
+def split_by_crlf(s):
+    return [v for v in s.splitlines() if v]
