@@ -1,4 +1,5 @@
 from authlib.oauth2.rfc6749 import AuthorizationCodeMixin
+from authlib.oauth2.rfc6749.util import scope_to_list
 from sqlalchemy import Column, Integer, ForeignKey, Text, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import Identity
@@ -31,8 +32,7 @@ class OAuth2AuthorizationCode(Base, AuthorizationCodeMixin):
     scopes = relationship("OAuth2Scope", secondary=OAuth2CodeScope)
 
     def get_redirect_uri(self):
-        pass
+        return self.redirect_uri
 
     def get_scope(self):
-        pass
-
+        return scope_to_list([s.name for s in self.scopes])
