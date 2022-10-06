@@ -1,15 +1,89 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ _('Log in') }} - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Sign in') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">{{ _('Log in') }}</h1>
+  <section id="login-page">
+      <div class="login-page-container">
+        <div class="icon-pills">
+          <div class="icon-pill">
+            <img src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" />
+          </div>
+          <div class="icon-pill">
+            <img src="{{ url_for('static', filename='img/projects/critiquebrainz.svg') }}" />
+          </div>
+          <div class="icon-pill">
+            <img src="{{ url_for('static', filename='img/projects/picard.svg') }}" />
+          </div>
+          <div class="icon-pill">
+            <img src="{{ url_for('static', filename='img/projects/listenbrainz.svg') }}" />
+          </div>
+          <div class="icon-pill">
+            <img src="{{ url_for('static', filename='img/projects/bookbrainz.svg') }}" />
+          </div>
+        </div>
+        <div class="login-card-container">
 
-  <p>{{ _('To log in you need to have a MusicBrainz account.') }}</p>
+          <div class="login-card">
+            <h1 class="page-title text-center">{{ _('Sign in') }}</h1>
+            <form>
+              <div class="form-group">
+                <label class="form-label" htmlFor="yourUsername">
+                  Username
+                </label>
+                <div>
+                  <input
+                    class="form-control"
+                    id="yourUsername"
+                    name="username"
+                    required
+                    type="text"
+                  />
+                </div>
+              </div>
 
-  <hr />
-  <div class="well" style="max-width: 400px; margin: 0 auto;">
-    <a href="{{ url_for('supporters.musicbrainz', next=request.args.get('next')) }}"
-       class="btn btn-primary btn-lg btn-block">{{ _('Log in with MusicBrainz') }}</a>
-  </div>
+              <div class="form-group">
+                <label class="form-label" htmlFor="yourPassword">
+                  Password
+                </label>
+                <input
+                  class="form-control"
+                  id="yourPassword"
+                  name="passwword"
+                  required
+                  type="password"
+                />
+              </div>
+
+              <div class="login-card-bottom">
+                <small class="checkbox">
+                  <label htmlFor="rememberMe">
+                    <input
+                      id="rememberMe"
+                      name="remember"
+                      type="checkbox"
+                      value="true"
+                    />
+                    Remember me
+                  </label>
+                </small>
+                <a class="small" href="#">
+                  I forgot my username / password
+                </a>
+              </div>
+
+              <button class="btn btn-primary btn-block" type="submit">
+                Sign in
+              </button>
+            </form>
+
+          </div>
+          <div class="create-account-card">
+            <dix class="small">
+              Don‘t have an account?<a href="#"> Create a free MetaBrainz account </a>to access MusicBrainz, ListenBrainz, CritiqueBrainz, and more.
+            </dix>
+          </div>
+        </div>
+    </div>
+  </section>
 {% endblock %}
