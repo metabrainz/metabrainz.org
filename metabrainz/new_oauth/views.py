@@ -1,11 +1,13 @@
 from authlib.oauth2 import OAuth2Error
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 
 from metabrainz.decorators import nocache, crossdomain
 from metabrainz.new_oauth.forms import ApplicationForm
 from metabrainz.new_oauth.models.client import OAuth2Client
 from metabrainz.new_oauth.models.scope import get_scopes
+from metabrainz.new_oauth.models.token import OAuth2Token
+from metabrainz.new_oauth.models.user import OAuth2User
 from metabrainz.new_oauth.provider import authorization_server
 from metabrainz.new_oauth.models import db
 from metabrainz.utils import build_url
@@ -56,9 +58,12 @@ def authorize_prompt():
     redirect_uri = request.args.get('redirect_uri')
     if request.method == 'GET':  # Client requests access
         try:
-            grant = authorization_server.validate_consent_request(end_user=current_user)
+            grant = authorization_server.get_consent_grant(end_user=current_user)
         except OAuth2Error as error:
-            return error.error  # FIXME: Add oauth error page
+            return jsonify({
+                "error": error.error,
+                "description": error.description
+            })  # FIXME: Add oauth error page
         return render_template('oauth/prompt.html', client=grant.client, scope=grant.request.scope,
                                cancel_url=build_url(redirect_uri, {"error": "access_denied"}),
                                hide_navbar_links=True, hide_footer=True)
@@ -77,6 +82,38 @@ def oauth_token_handler():
 @new_oauth_bp.route('/revoke', methods=['POST'])
 def revoke_token():
     return authorization_server.create_endpoint_response("revocation")
+
+
+@new_oauth_bp.route('/userinfo', methods=['GET'])
+def user_info():
+    auth_header = request.headers.get("Authorization")
+    if not auth_header:
+        return jsonify({"error": "missing auth header"}), 401
+    try:
+        token = auth_header.split(" ")[1]
+    except (ValueError, KeyError):
+        return jsonify({"error": "invalid auth header"}), 401
+
+    token = db.session\
+        .query(OAuth2Token)\
+        .filter_by(access_token=token)\
+        .one_or_none()
+
+    if token is None:
+        return jsonify({"error": "invalid access token"}), 403
+
+    if token.is_expired():
+        return jsonify({"error": "expired access token"}), 403
+
+    user = db.session\
+        .query(OAuth2User)\
+        .filter_by(id=token.user_id)\
+        .first()
+
+    return {
+        "sub": user.name,
+        "metabrainz_user_id": user.id
+    }
 
 
 def split_by_crlf(s):
