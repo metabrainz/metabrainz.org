@@ -2,6 +2,7 @@ from authlib.oauth2.rfc6749 import grants
 
 from metabrainz.new_oauth.models import db
 from metabrainz.new_oauth.models.code import OAuth2AuthorizationCode
+from metabrainz.new_oauth.models.scope import get_scopes
 from metabrainz.new_oauth.models.user import OAuth2User
 
 
@@ -15,11 +16,13 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         code_challenge = request.data.get('code_challenge')
         code_challenge_method = request.data.get('code_challenge_method')
 
+        scopes = get_scopes(db.session, request.scope)
+
         auth_code = OAuth2AuthorizationCode(
             code=code,
             client_id=client.client_id,
             redirect_uri=request.redirect_uri,
-            scope=request.scope,
+            scopes=scopes,
             user_id=request.user.id,
             code_challenge=code_challenge,
             code_challenge_method=code_challenge_method,
@@ -29,8 +32,10 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         return auth_code
 
     def query_authorization_code(self, code, client):
-        item = OAuth2AuthorizationCode.query.filter_by(
-            code=code, client_id=client.client_id).first()
+        item = db.session\
+            .query(OAuth2AuthorizationCode)\
+            .filter_by(code=code, client_id=client.client_id)\
+            .first()
         if item and not item.is_expired():
             return item
 
@@ -39,4 +44,8 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         db.session.commit()
 
     def authenticate_user(self, authorization_code):
-        return OAuth2User.query.get(authorization_code.user_id)
+        # TODO: fix impl
+        # return db.session\
+        #     .query(OAuth2User)\
+        #     .filter_by(user_id=authorization_code.user_id)
+        pass

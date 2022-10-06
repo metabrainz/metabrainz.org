@@ -8,12 +8,20 @@ from metabrainz.new_oauth.models.user import OAuth2User
 class RefreshTokenGrant(grants.RefreshTokenGrant):
 
     def authenticate_refresh_token(self, refresh_token):
-        token = OAuth2Token.query.filter_by(refresh_token=refresh_token).first()
+        token = db.session\
+            .query(OAuth2Token)\
+            .filter_by(refresh_token=refresh_token)\
+            .first()
         if token and token.is_refresh_token_active():
             return token
 
     def authenticate_user(self, credential):
-        return OAuth2User.query.get(credential.user_id)
+        # TODO: fix impl
+        # return db.session\
+        #     .query(OAuth2User)\
+        #     .filter_by(user_id=credential.user_id)\
+        #     .first()
+        pass
 
     def revoke_old_credential(self, credential):
         credential.revoked = True
