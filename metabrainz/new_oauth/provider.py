@@ -7,10 +7,9 @@ from authlib.integrations.flask_oauth2 import AuthorizationServer
 
 from metabrainz.new_oauth.models import db
 from metabrainz.new_oauth.models.client import OAuth2Client
-from metabrainz.new_oauth.models.token import OAuth2Token
+from metabrainz.new_oauth.models.token import OAuth2Token, save_token
 
 query_client = create_query_client_func(db.session, OAuth2Client)
-save_token = create_save_token_func(db.session, OAuth2Token)
 revoke_token = create_revocation_endpoint(db.session, OAuth2Token)
 
 # TODO: We can also configure the expiry time and token generation function

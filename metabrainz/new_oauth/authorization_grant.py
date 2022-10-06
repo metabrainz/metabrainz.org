@@ -11,8 +11,6 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
     TOKEN_ENDPOINT_AUTH_METHODS = ['none', 'client_secret_post']
 
     def save_authorization_code(self, code, request):
-        client = request.client
-
         code_challenge = request.data.get('code_challenge')
         code_challenge_method = request.data.get('code_challenge_method')
 
@@ -20,7 +18,7 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
 
         auth_code = OAuth2AuthorizationCode(
             code=code,
-            client_id=client.client_id,
+            client_id=request.client.id,
             redirect_uri=request.redirect_uri,
             scopes=scopes,
             user_id=request.user.id,
@@ -32,12 +30,11 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         return auth_code
 
     def query_authorization_code(self, code, client):
-        item = db.session\
+        # TODO: Consider adding expiry for auth code
+        return db.session\
             .query(OAuth2AuthorizationCode)\
-            .filter_by(code=code, client_id=client.client_id)\
+            .filter_by(code=code, client_id=client.id)\
             .first()
-        if item and not item.is_expired():
-            return item
 
     def delete_authorization_code(self, authorization_code):
         db.session.delete(authorization_code)
@@ -47,5 +44,5 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         # TODO: Do we need to verify the client_id / client_secret associated with the code here?
         return db.session\
             .query(OAuth2User)\
-            .filter_by(user_id=authorization_code.user_id)\
+            .filter_by(id=authorization_code.user_id)\
             .first()

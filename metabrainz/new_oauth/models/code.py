@@ -1,6 +1,6 @@
 from authlib.oauth2.rfc6749 import AuthorizationCodeMixin
 from authlib.oauth2.rfc6749.util import scope_to_list
-from sqlalchemy import Column, Integer, ForeignKey, Text, DateTime
+from sqlalchemy import Column, Integer, ForeignKey, Text, DateTime, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import Identity
 
@@ -25,7 +25,7 @@ class OAuth2AuthorizationCode(Base, AuthorizationCodeMixin):
     response_type = Column(Text, nullable=False)
     code_challenge = Column(Text)
     code_challenge_method = Column(Text)
-    granted_at = Column(DateTime(timezone=True))
+    granted_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
 
     user = relationship(OAuth2User)
     client = relationship(OAuth2Client)
