@@ -25,14 +25,12 @@ def create_client():
             owner_id=current_user.id,
             name=form.client_name,
             website=form["client_uri"],
-            redirect_uris=split_by_crlf(form["redirect_uri"]),
-
+            redirect_uris=split_by_crlf(form["redirect_uri"])
         )
         # TODO: Fix use of these columns
         client_metadata = {
             "grant_types": split_by_crlf(form["grant_type"]),
             "response_types": split_by_crlf(form["response_type"]),
-            "scope": form["scope"],
             "token_endpoint_auth_method": form["token_endpoint_auth_method"]
         }
 
