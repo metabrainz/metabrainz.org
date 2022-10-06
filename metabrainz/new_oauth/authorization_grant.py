@@ -44,7 +44,7 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         db.session.commit()
 
     def authenticate_user(self, authorization_code):
-        # TODO: fix impl
+        # TODO: fix authenticate_user
         # return db.session\
         #     .query(OAuth2User)\
         #     .filter_by(user_id=authorization_code.user_id)

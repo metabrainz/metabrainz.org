@@ -23,3 +23,6 @@ class OAuth2User(Base):
     password = Column(Text, nullable=False)
     ha1 = Column(Text, nullable=False)
     deleted = Column(Boolean, default=False)
+
+    def get_user_id(self):
+        return self.id
