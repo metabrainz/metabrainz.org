@@ -9,11 +9,22 @@ from flask import send_from_directory, request
 from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
 
+from metabrainz.new_oauth.authorization_grant import AuthorizationCodeGrant
+from metabrainz.new_oauth.provider import authorization_server, revoke_token
+
+from authlib.oauth2.rfc6749 import ImplicitGrant
+from authlib.oauth2.rfc7636 import CodeChallenge
+
+from metabrainz.new_oauth.authorization_grant import AuthorizationCodeGrant
+from metabrainz.new_oauth.refresh_grant import RefreshTokenGrant
+
+
 # Check to see if we're running under a docker deployment. If so, don't second guess
 # the config file setup and just wait for the correct configuration to be generated.
 deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
+
 
 def create_app(debug=None, config_path = None):
 
@@ -120,6 +131,14 @@ def create_app(debug=None, config_path = None):
         LOGO_UPLOAD_SET,
     ])
 
+    from metabrainz.new_oauth.models import db as new_oauth_db
+
+    @app.before_first_request
+    def create_tables():
+        new_oauth_db.create_all()
+
+    config_oauth(app)
+
     # Blueprints
     _register_blueprints(app)
 
@@ -193,9 +212,21 @@ def _register_blueprints(app):
 
     from metabrainz.oauth.views import oauth_bp
     app.register_blueprint(oauth_bp, url_prefix='/oauth')
+    from metabrainz.new_oauth.views import new_oauth_bp
+    app.register_blueprint(new_oauth_bp, url_prefix='/new-oauth')
     from metabrainz.api.views.index import api_index_bp
     app.register_blueprint(api_index_bp, url_prefix='/api')
     from metabrainz.api.views.user import api_user_bp
     app.register_blueprint(api_user_bp, url_prefix='/api/user')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')
+
+
+def config_oauth(app):
+    authorization_server.init_app(app)
+
+    authorization_server.register_grant(AuthorizationCodeGrant, [CodeChallenge(required=False)])
+    authorization_server.register_grant(ImplicitGrant)
+    authorization_server.register_grant(RefreshTokenGrant)
+    authorization_server.register_endpoint(revoke_token)
+

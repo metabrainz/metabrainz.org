@@ -11,6 +11,8 @@ services:
       context: ..
       dockerfile: ./docker/Dockerfile.dev
     command: python /code/manage.py runserver -h 0.0.0.0 -p 80
+    environment:
+      AUTHLIB_INSECURE_TRANSPORT: true
     volumes:
       - ../data/replication_packets:/data/replication_packets
       - ../data/json_dumps:/data/json_dumps
