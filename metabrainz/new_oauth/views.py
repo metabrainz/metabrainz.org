@@ -5,6 +5,7 @@ from flask_login import login_required, current_user
 from metabrainz.decorators import nocache, crossdomain
 from metabrainz.new_oauth.forms import ApplicationForm
 from metabrainz.new_oauth.models.client import OAuth2Client
+from metabrainz.new_oauth.models.scope import get_scopes
 from metabrainz.new_oauth.provider import authorization_server
 from metabrainz.new_oauth.models import db
 from metabrainz.utils import build_url
@@ -22,20 +23,21 @@ def create_client():
         client = OAuth2Client(
             client_id=client_id,
             owner_id=current_user.id,
+            name=form.client_name,
+            website=form["client_uri"],
+            redirect_uris=split_by_crlf(form["redirect_uri"]),
+
         )
+        # TODO: Fix use of these columns
         client_metadata = {
-            "client_name": form.client_name,
-            "client_uri": form["client_uri"],
             "grant_types": split_by_crlf(form["grant_type"]),
-            "redirect_uris": split_by_crlf(form["redirect_uri"]),
             "response_types": split_by_crlf(form["response_type"]),
             "scope": form["scope"],
             "token_endpoint_auth_method": form["token_endpoint_auth_method"]
         }
-        client.set_client_metadata(client_metadata)
 
-        if form['token_endpoint_auth_method'] == 'none':
-            client.client_secret = ''
+        if form["token_endpoint_auth_method"] == "none":
+            client.client_secret = ""
         else:
             client.client_secret = gen_salt(48)
 
@@ -58,9 +60,10 @@ def authorize_prompt():
         except OAuth2Error as error:
             return error.error  # FIXME: Add oauth error page
         return render_template('oauth/prompt.html', client=grant.client, scope=grant.request.scope,
-                               cancel_url=build_url(redirect_uri, dict(error='access_denied')),
+                               cancel_url=build_url(redirect_uri, {"error": "access_denied"}),
                                hide_navbar_links=True, hide_footer=True)
-    if request.method == 'POST':  # User grants access to the client
+    else:
+        # TODO: Validate that user grants access to the client
         return authorization_server.create_authorization_response(grant_user=current_user)
 
 
@@ -73,7 +76,7 @@ def oauth_token_handler():
 
 @new_oauth_bp.route('/revoke', methods=['POST'])
 def revoke_token():
-    return authorization_server.create_endpoint_response('revocation')
+    return authorization_server.create_endpoint_response("revocation")
 
 
 def split_by_crlf(s):

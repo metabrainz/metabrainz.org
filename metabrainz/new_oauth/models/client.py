@@ -26,28 +26,30 @@ class OAuth2Client(Base, ClientMixin):
     user = relationship('OAuth2User')
 
     def get_client_id(self):
-        pass
+        return self.client_id
 
     def get_default_redirect_uri(self):
-        pass
+        if self.redirect_uris:
+            return self.redirect_uris[0]
+        return None
 
     def get_allowed_scope(self, scope):
-        pass
+        pass  # TODO: Fix allowed scopes
 
     def check_redirect_uri(self, redirect_uri):
-        pass
+        return redirect_uri in self.redirect_uris
 
     def has_client_secret(self):
-        pass
+        return bool(self.client_secret)
 
     def check_client_secret(self, client_secret):
-        pass
+        return self.client_secret == client_secret
 
     def check_token_endpoint_auth_method(self, method):
-        pass
+        return True  # TODO: Fix token endpoint auth
 
     def check_response_type(self, response_type):
-        pass
+        return True  # TODO: Fix response types
 
     def check_grant_type(self, grant_type):
-        pass
+        return True  # TODO: Fix grant types
