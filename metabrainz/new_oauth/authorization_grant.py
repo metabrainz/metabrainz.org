@@ -2,10 +2,13 @@ from authlib.oauth2.rfc6749 import grants
 
 from metabrainz.new_oauth.models import db
 from metabrainz.new_oauth.models.code import OAuth2AuthorizationCode
-from metabrainz.new_oauth.models.user import User
+from metabrainz.new_oauth.models.user import OAuth2User
 
 
 class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
+
+    TOKEN_ENDPOINT_AUTH_METHODS = ['none', 'client_secret_post']
+
     def save_authorization_code(self, code, request):
         client = request.client
 
@@ -36,4 +39,4 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         db.session.commit()
 
     def authenticate_user(self, authorization_code):
-        return User.query.get(authorization_code.user_id)
+        return OAuth2User.query.get(authorization_code.user_id)
