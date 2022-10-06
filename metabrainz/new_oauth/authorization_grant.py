@@ -44,8 +44,8 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         db.session.commit()
 
     def authenticate_user(self, authorization_code):
-        # TODO: fix authenticate_user
-        # return db.session\
-        #     .query(OAuth2User)\
-        #     .filter_by(user_id=authorization_code.user_id)
-        pass
+        # TODO: Do we need to verify the client_id / client_secret associated with the code here?
+        return db.session\
+            .query(OAuth2User)\
+            .filter_by(user_id=authorization_code.user_id)\
+            .first()
