@@ -1,4 +1,5 @@
 import sqlalchemy.orm
+from authlib.oauth2.rfc6749.util import scope_to_list
 from sqlalchemy import Integer, Text
 from sqlalchemy.sql.schema import Identity, Column
 
@@ -18,5 +19,5 @@ class OAuth2Scope(Base):
 
 def get_scopes(session: sqlalchemy.orm.Session, scope) -> list[OAuth2Scope]:
     """ Given a comma separated scope string return associated scope objects from db """
-    scopes = scope.split(",")
+    scopes = scope_to_list(scope)
     return session.query(OAuth2Scope).filter(OAuth2Scope.name.in_(scopes))
