@@ -3,8 +3,11 @@ from metabrainz.new_oauth.models import db
 
 
 class OAuth2AuthorizationCode(db.Model, OAuth2AuthorizationCodeMixin):
-    __tablename__ = 'oauth2_code'
+    __tablename__ = 'code'
+    __table_args__ = {
+        'schema': 'oauth'
+    }
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
-    user = db.relationship('User')
+    user_id = db.Column(db.Integer, db.ForeignKey('oauth.user.id', ondelete='CASCADE'))
+    user = db.relationship('OAuth2User')
