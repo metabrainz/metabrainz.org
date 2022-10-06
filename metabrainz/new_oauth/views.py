@@ -1,5 +1,5 @@
 from authlib.oauth2 import OAuth2Error
-from flask import Blueprint, request, render_template, redirect
+from flask import Blueprint, request, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
 from metabrainz.decorators import nocache, crossdomain
@@ -23,28 +23,30 @@ def create_client():
         client = OAuth2Client(
             client_id=client_id,
             owner_id=current_user.id,
-            name=form.client_name,
-            website=form["client_uri"],
-            redirect_uris=split_by_crlf(form["redirect_uri"])
+            name=form.client_name.data,
+            description=form.description.data,
+            website=form.website.data,
+            redirect_uris=[form.redirect_uri.data]
         )
         # TODO: Fix use of these columns
-        client_metadata = {
-            "grant_types": split_by_crlf(form["grant_type"]),
-            "response_types": split_by_crlf(form["response_type"]),
-            "token_endpoint_auth_method": form["token_endpoint_auth_method"]
-        }
+        # client_metadata = {
+        #     "grant_types": split_by_crlf(form["grant_type"]),
+        #     "response_types": split_by_crlf(form["response_type"]),
+        #     "token_endpoint_auth_method": form["token_endpoint_auth_method"]
+        # }
 
-        if form["token_endpoint_auth_method"] == "none":
-            client.client_secret = ""
-        else:
-            client.client_secret = gen_salt(48)
+        # if form["token_endpoint_auth_method"] == "none":
+        #     client.client_secret = ""
+        # else:
+        #     client.client_secret = gen_salt(48)
 
+        client.client_secret = gen_salt(48)
         db.session.add(client)
         db.session.commit()
     else:
         return render_template('oauth/create_client.html', form=form)
 
-    return redirect('/')
+    return redirect(url_for("index.home"))
 
 
 @new_oauth_bp.route('/authorize', methods=['GET', 'POST'])

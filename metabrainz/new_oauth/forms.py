@@ -18,10 +18,10 @@ class ApplicationForm(FlaskForm):
         validators.InputRequired(message=lazy_gettext("Homepage field is empty.")),
         validators.URL(require_tld=False, message=lazy_gettext("Homepage is not a valid URI."))
     ])
-    redirect_uri = FieldList(StringField(lazy_gettext('Authorization callback URL'), [
+    redirect_uri = StringField(lazy_gettext('Authorization callback URL'), [
         validators.InputRequired(message=lazy_gettext("Authorization callback URL field is empty.")),
         validators.URL(require_tld=False, message=lazy_gettext("Authorization callback URL is invalid."))
-    ]))
+    ])
 
     def validate_redirect_uri(self, field):
         if not field.data.startswith(("http://", "https://")):
