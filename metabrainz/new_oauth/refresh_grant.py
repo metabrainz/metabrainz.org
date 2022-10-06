@@ -2,7 +2,7 @@ from authlib.oauth2.rfc6749 import grants
 
 from metabrainz.new_oauth.models import db
 from metabrainz.new_oauth.models.token import OAuth2Token
-from metabrainz.new_oauth.models.user import User
+from metabrainz.new_oauth.models.user import OAuth2User
 
 
 class RefreshTokenGrant(grants.RefreshTokenGrant):
@@ -13,7 +13,7 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
             return token
 
     def authenticate_user(self, credential):
-        return User.query.get(credential.user_id)
+        return OAuth2User.query.get(credential.user_id)
 
     def revoke_old_credential(self, credential):
         credential.revoked = True

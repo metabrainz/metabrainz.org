@@ -1,12 +1,54 @@
+import time
+
 from authlib.oauth2 import OAuth2Error
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, redirect
 from flask_login import login_required, current_user
 
 from metabrainz.decorators import nocache, crossdomain
+from metabrainz.new_oauth.forms import ApplicationForm
+from metabrainz.new_oauth.models.client import OAuth2Client
 from metabrainz.new_oauth.provider import authorization_server
+from metabrainz.new_oauth.models import db
 from metabrainz.utils import build_url
+from werkzeug.security import gen_salt
 
 new_oauth_bp = Blueprint('new_oauth', __name__)
+
+
+@new_oauth_bp.route('/create_client', methods=('GET', 'POST'))
+@login_required
+def create_client():
+    form = ApplicationForm()
+    if form.validate_on_submit():
+        client_id = gen_salt(24)
+        client_id_issued_at = int(time.time())
+        client = OAuth2Client(
+            client_id=client_id,
+            client_id_issued_at=client_id_issued_at,
+            user_id=current_user.id,
+        )
+        client_metadata = {
+            "client_name": form.client_name,
+            "client_uri": form["client_uri"],
+            "grant_types": split_by_crlf(form["grant_type"]),
+            "redirect_uris": split_by_crlf(form["redirect_uri"]),
+            "response_types": split_by_crlf(form["response_type"]),
+            "scope": form["scope"],
+            "token_endpoint_auth_method": form["token_endpoint_auth_method"]
+        }
+        client.set_client_metadata(client_metadata)
+
+        if form['token_endpoint_auth_method'] == 'none':
+            client.client_secret = ''
+        else:
+            client.client_secret = gen_salt(48)
+
+        db.session.add(client)
+        db.session.commit()
+    else:
+        return render_template('oauth/create_client.html', form=form)
+
+    return redirect('/')
 
 
 @new_oauth_bp.route('/authorize', methods=['GET', 'POST'])
