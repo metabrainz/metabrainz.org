@@ -45,7 +45,7 @@ class OAuth2Client(Base, ClientMixin):
     def check_client_secret(self, client_secret):
         return self.client_secret == client_secret
 
-    def check_token_endpoint_auth_method(self, method):
+    def check_endpoint_auth_method(self, method, endpoint):
         return True  # TODO: Fix token endpoint auth
 
     def check_response_type(self, response_type):

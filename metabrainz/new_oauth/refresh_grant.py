@@ -19,7 +19,7 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
         # TODO: Do we need to verify the client_id / client_secret / token associated with the code here?
         return db.session\
             .query(OAuth2User)\
-            .filter_by(user_id=credential.user_id)\
+            .filter_by(id=credential.user_id)\
             .first()
 
     def revoke_old_credential(self, credential):

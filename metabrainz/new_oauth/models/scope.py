@@ -20,4 +20,4 @@ class OAuth2Scope(Base):
 def get_scopes(session: sqlalchemy.orm.Session, scope):
     """ Given a comma separated scope string return associated scope objects from db """
     scopes = scope_to_list(scope)
-    return session.query(OAuth2Scope).filter(OAuth2Scope.name.in_(scopes))
+    return session.query(OAuth2Scope).filter(OAuth2Scope.name.in_(scopes)).all()
