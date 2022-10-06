@@ -1,11 +1,11 @@
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 
 from authlib.oauth2.rfc6749 import TokenMixin
 from authlib.oauth2.rfc6749.util import scope_to_list
 from sqlalchemy import func, Column, Integer, DateTime, Text, ForeignKey, Boolean, Identity
 from sqlalchemy.orm import relationship
 
-from metabrainz.new_oauth.models import Base
+from metabrainz.new_oauth.models import Base, db
 from metabrainz.new_oauth.models.client import OAuth2Client
 from metabrainz.new_oauth.models.relation_scope import OAuth2TokenScope
 from metabrainz.new_oauth.models.user import OAuth2User
@@ -31,7 +31,7 @@ class OAuth2Token(Base, TokenMixin):
     scopes = relationship("OAuth2Scope", secondary=OAuth2TokenScope)
 
     def get_client_id(self):
-        return self.client_id
+        return self.client.client_id
 
     def get_scope(self):
         return scope_to_list([s.name for s in self.scopes])
@@ -43,4 +43,22 @@ class OAuth2Token(Base, TokenMixin):
         return self.issued_at + timedelta(seconds=self.expires_in)
 
     def is_refresh_token_active(self):
-        return self.revoked
+        return not self.revoked
+
+    def check_client(self, client):
+        return self.client_id == client.id
+
+    def is_expired(self):
+        return datetime.now(tz=timezone.utc) >= self.get_expires_at()
+
+
+def save_token(token_data, request):
+    # TODO: Handle refresh token
+    token = OAuth2Token(
+        client_id=request.client.id,
+        user_id=request.user.id,
+        access_token=token_data["access_token"],
+        expires_in=token_data["expires_in"]
+    )
+    db.session.add(token)
+    db.session.commit()
