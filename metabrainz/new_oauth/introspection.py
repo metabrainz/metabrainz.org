@@ -16,7 +16,7 @@ class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
             token = base_query.filter_by(access_token=token).first()
             if not token:
                 token = base_query.filter_by(refresh_token=token).first()
-            return token
+        return token
 
     def introspect_token(self, token):
         return {
