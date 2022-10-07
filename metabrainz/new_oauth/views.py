@@ -116,7 +116,7 @@ def user_info():
     }
 
 
-@new_oauth_bp.route('/oauth/introspect', methods=['POST'])
+@new_oauth_bp.route('/introspect', methods=['POST'])
 def introspect_token():
     return authorization_server.create_endpoint_response("introspection")
 

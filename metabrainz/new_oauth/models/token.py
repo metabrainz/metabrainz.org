@@ -51,6 +51,9 @@ class OAuth2Token(Base, TokenMixin):
     def is_expired(self):
         return datetime.now(tz=timezone.utc) >= self.get_expires_at()
 
+    def is_revoked(self):
+        return self.revoked
+
 
 def save_token(token_data, request):
     # TODO: Handle refresh token
