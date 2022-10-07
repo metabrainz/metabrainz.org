@@ -5,7 +5,6 @@ from flask_login import login_required, current_user
 from metabrainz.decorators import nocache, crossdomain
 from metabrainz.new_oauth.forms import ApplicationForm
 from metabrainz.new_oauth.models.client import OAuth2Client
-from metabrainz.new_oauth.models.scope import get_scopes
 from metabrainz.new_oauth.models.token import OAuth2Token
 from metabrainz.new_oauth.models.user import OAuth2User
 from metabrainz.new_oauth.provider import authorization_server
@@ -86,6 +85,7 @@ def revoke_token():
 
 @new_oauth_bp.route('/userinfo', methods=['GET'])
 def user_info():
+    # TODO: Discuss merging with introspection endpoint
     auth_header = request.headers.get("Authorization")
     if not auth_header:
         return jsonify({"error": "missing auth header"}), 401
@@ -114,6 +114,11 @@ def user_info():
         "sub": user.name,
         "metabrainz_user_id": user.id
     }
+
+
+@new_oauth_bp.route('/oauth/introspect', methods=['POST'])
+def introspect_token():
+    return authorization_server.create_endpoint_response("introspection")
 
 
 def split_by_crlf(s):
