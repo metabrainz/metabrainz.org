@@ -11,7 +11,7 @@ from flask_login import login_required
 from flask_admin import expose, BaseView
 from quickbooks import QuickBooks
 from quickbooks.objects.customer import Customer
-from quickbooks.objects.invoice import Invoice
+from quickbooks.objects.invoice import Invoice, DeliveryInfo
 from quickbooks.objects.detailline import SalesItemLineDetail
 from intuitlib.exceptions import AuthClientError
 from werkzeug.exceptions import BadRequest, InternalServerError
@@ -82,10 +82,14 @@ class QuickBooksView(BaseView):
             new_invoice.Line[0].Amount = "%d" % round(float(invoice['price']) * float(invoice['qty']))
             new_invoice.CustomField[1].StringValue = invoice['begin']
             new_invoice.CustomField[2].StringValue = invoice['end']
+            new_invoice.DeliveryInfo = DeliveryInfo()
+            new_invoice.DeliveryInfo.DeliveryType = "Email"
+            new_invoice.DeliveryInfo.DeliveryTime = datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%dT%H:%M:%S")
+
             try:
                 new_invoice.save(qb=client)
             except quickbooks.exceptions.QuickbooksException as err:
-                flash("failed to create invoice for %s (%s)" % (new_invoice.CustomerRef.name, str(err)))
+                flash("failed to create invoice for %s (%s -- %s)" % (new_invoice.CustomerRef.name, str(err), err.detail))
 
 
     @expose('/', methods=['GET'])
