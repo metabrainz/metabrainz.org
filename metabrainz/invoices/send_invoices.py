@@ -139,6 +139,7 @@ class QuickBooksInvoiceSender():
             if customer.Notes.find("donotsend") >= 0:
                 current_app.logger.info("  marking donotsend invoice %s as sent, without sending." % invoice.DocNumber)
                 self.mark_invoice_sent(client, invoice)
+                continue
 
             if invoice.EmailStatus == "NotSet":
                 current_app.logger.info("  To '%s' marked as NotSet." % customer.DisplayName)
