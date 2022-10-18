@@ -162,3 +162,16 @@ class QuickBooksInvoiceSender():
 
             self.send_invoice(client, invoice, customer)
             current_app.logger.info("  invoice sent!")
+
+    def send_invoice_reminders(self):
+        client = self.get_client()
+        if not client:
+            return
+
+        invoices = Invoice.query("select * from invoice order by metadata.createtime desc where balance > 0.0 maxresults 300", qb=client)
+        if not invoices:
+            current_app.logger.info("Cannot fetch list of invoices")
+            return
+
+        for invoice in invoices:
+            current_app.logger.info("Invoice %s with balance %s" % (invoice.DocNumber, invoice.Balance))
