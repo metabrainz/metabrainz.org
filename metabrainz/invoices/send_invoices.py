@@ -38,6 +38,34 @@ Invoice amount: %s%s
 Please see the attached PDF file for full details."""
 
 
+REMINDER_MAIL_BODY = """To: %s %s (%s)
+
+Hello!
+
+Our records show that the attached invoices remains outstanding or not marked as paid. We frequently
+do not get invoice numbers attached to the payments we receive, which makes reconciling invoices
+difficult, so please bear with us if you've made payment already. If you think we've sent you this
+reminder in error, we apologize -- please send us a note on which date you made payment on this invoice and
+which service you used to pay the invoice and we will get it credited.
+
+For information on how to pay us, please see https://metabrainz.org/payment
+
+Thanks!
+
+The MetaBrainz Foundation ( accounting@metabrainz.org ) 
+
+
+================================
+Invoice Summary:
+
+Invoice number: %s
+Invoice date: %s
+Due date: %s
+Invoice amount: %s%s
+================================
+
+Please see the attached PDF file for full details."""
+
 class QuickBooksInvoiceSender():
     """ This class uses the QuickBooks API to sent invoices from our own mail ifrastructure. """
 
@@ -108,6 +136,7 @@ class QuickBooksInvoiceSender():
             from_name="MetaBrainz Accounting Department"
         )
         self.mark_invoice_sent(client, invoice)
+
         current_app.logger.info("  wait")
         time.sleep(SEND_DELAY)
 
@@ -118,6 +147,7 @@ class QuickBooksInvoiceSender():
 
         client = self.get_client()
         if not client:
+            current_app.logger.info("Cannot get client -- have you logged into QuickBooks web within the last hour?")
             return
 
         invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
@@ -163,15 +193,53 @@ class QuickBooksInvoiceSender():
             self.send_invoice(client, invoice, customer)
             current_app.logger.info("  invoice sent!")
 
+    def send_invoice_reminder(self, client, invoice, customer):
+        """ Given a client, invoice and its customer object, send the invoice to the customer. """
+
+        current_app.logger.info("  sending invoice")
+        emails = [e.strip() for e in str(invoice.BillEmail).split(",")]
+        emails.append("accounting@metabrainz.org")
+        text = REMINDER_MAIL_BODY % (customer.GivenName,
+                                     customer.FamilyName,
+                                     customer.DisplayName,
+                                     invoice.DocNumber,
+                                     invoice.TxnDate,
+                                     invoice.DueDate,
+                                     "%.2f" % float(invoice.TotalAmt),
+                                     invoice.CurrencyRef.value)
+        pdf = invoice.download_pdf(qb=client)
+        pdf = io.BytesIO(pdf)
+        send_mail(
+            subject="Invoice %s reminder from The MetaBrainz Foundation" % invoice.DocNumber,
+            text=text,
+            attachments=[(pdf, 'pdf', '%s.pdf' % invoice.DocNumber)],
+            recipients=emails,
+            from_addr="accounting@metabrainz.org",
+            from_name="MetaBrainz Accounting Department"
+        )
+
+        current_app.logger.info("  wait")
+        time.sleep(SEND_DELAY)
+
     def send_invoice_reminders(self):
         client = self.get_client()
         if not client:
+            current_app.logger.info("Cannot get client -- have you logged into QuickBooks web within the last hour?")
             return
 
-        invoices = Invoice.query("select * from invoice order by metadata.createtime desc where balance > 0.0 maxresults 300", qb=client)
+        due_date = datetime.datetime.now() - datetime.timedelta(days=182)
+        due_date = "%d-%02d-%02d" % (due_date.year, due_date.month, due_date.day)
+        invoices = Invoice.query(f"select * from invoice where balance > '0.0' and duedate < '{due_date}' order by metadata.createtime desc maxresults 300", qb=client)
         if not invoices:
             current_app.logger.info("Cannot fetch list of invoices")
             return
 
+        current_app.logger.info(f"fetched %d invoices" % len(invoices))
         for invoice in invoices:
-            current_app.logger.info("Invoice %s with balance %s" % (invoice.DocNumber, invoice.Balance))
+            customer = Customer.get(int(invoice.CustomerRef.value), qb=client)
+            if customer.Notes.find("donotsend") >= 0:
+                current_app.logger.info("skipping donotsend invoice %s." % invoice.DocNumber)
+                continue
+
+            current_app.logger.info("Invoice %s with balance %s due on %s" % (invoice.DocNumber, invoice.Balance, invoice.DueDate))
+            self.send_invoice_reminder(client, invoice, customer)
