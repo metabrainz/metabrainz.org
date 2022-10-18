@@ -8,6 +8,8 @@ import subprocess
 import os
 import click
 
+import logging
+
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'admin', 'sql')
 
 cli = click.Group()
@@ -103,6 +105,16 @@ def send_invoices():
     with create_app().app_context():
         qb = QuickBooksInvoiceSender()
         qb.send_invoices()
+
+
+@cli.command()
+def send_invoice_reminders():
+    """ Send invoices reminders about invoices that remain unpaid."""
+
+    logging.getLogger().setLevel(logging.DEBUG)
+    with create_app().app_context():
+        qb = QuickBooksInvoiceSender()
+        qb.send_invoice_reminders()
 
 
 def _run_psql(script, uri, database=None):
