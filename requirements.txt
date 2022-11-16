@@ -14,7 +14,7 @@ pytest-cov==2.11.0
 pytest==6.2.1
 pytz==2019.2
 rauth==0.7.3
-reportlab==3.1.44
+reportlab==3.6.12
 six==1.15.0
 stripe==2.60.0
 python-dateutil==2.8.0
