@@ -1,6 +1,6 @@
 git+https://github.com/metabrainz/brainzutils-python.git@v1.18.1
 click==6.7
-Werkzeug==1.0.1
+Werkzeug==2.2.3
 Flask-Admin==1.5.7
 Flask-Babel==2.0.0
 Flask-Login==0.4.1
