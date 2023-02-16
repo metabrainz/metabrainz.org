@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, send_from_directory, current_app
-from flask.helpers import safe_join
+from werkzeug.utils import safe_join
 from werkzeug.wrappers import Response
 from werkzeug.urls import iri_to_uri
 from metabrainz.api.decorators import token_required, tracked
