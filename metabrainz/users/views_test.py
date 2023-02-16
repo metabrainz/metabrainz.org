@@ -1,3 +1,4 @@
+from urllib.parse import urlparse
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model.tier import Tier
 from flask import url_for
@@ -34,7 +35,7 @@ class UsersViewsTestCase(FlaskTestCase):
 
     def test_signup_commercial(self):
         resp = self.client.get(url_for('users.signup_commercial'))
-        self.assertRedirects(resp, url_for('users.account_type'))
+        self.assertEqual(resp.location, urlparse(url_for('users.account_type')).path)
 
         unavailable_tier = Tier.create(
             name="Unavailable tier",
@@ -42,14 +43,14 @@ class UsersViewsTestCase(FlaskTestCase):
             available=False,
         )
         resp = self.client.get(url_for('users.signup_commercial', tier_id=unavailable_tier.id))
-        self.assertRedirects(resp, url_for('users.account_type'))
+        self.assertEqual(resp.location, url_for('users.account_type'))
 
         resp = self.client.get(url_for('users.signup_commercial', tier_id='8"'))
-        self.assertRedirects(resp, url_for('users.account_type'))
+        self.assertEqual(resp.location, url_for('users.account_type'))
 
         # With missing tier
         resp = self.client.get(url_for('users.signup_commercial', tier_id=unavailable_tier.id + 1))
-        self.assertRedirects(resp, url_for('users.account_type'))
+        self.assertEqual(resp.location, url_for('users.account_type'))
 
     def test_musicbrainz(self):
         self.assertStatus(self.client.get(url_for('users.musicbrainz')), 302)
