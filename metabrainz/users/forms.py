@@ -1,11 +1,11 @@
-from flask_wtf import Form, RecaptchaField
+from flask_wtf import FlaskForm, RecaptchaField
 from flask_babel import gettext
 from wtforms import StringField, BooleanField, TextAreaField, RadioField, validators
 from wtforms.fields.html5 import EmailField, URLField, DecimalField
 from wtforms.validators import DataRequired, Length
 
 
-class UserSignUpForm(Form):
+class UserSignUpForm(FlaskForm):
     """Base sign up form for new users.
 
     Contains common fields required from both commercial and non-commercial
@@ -64,7 +64,7 @@ class CommercialSignUpForm(UserSignUpForm):
     amount_pledged = DecimalField()
 
 
-class UserEditForm(Form):
+class UserEditForm(FlaskForm):
     """User profile editing form."""
     contact_name = StringField(gettext("Name"), [
         validators.DataRequired(message=gettext("Contact name field is empty.")),

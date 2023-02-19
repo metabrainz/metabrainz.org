@@ -1,4 +1,4 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, BooleanField, SelectField, TextAreaField
 from wtforms.fields.html5 import EmailField, URLField, DecimalField
@@ -20,7 +20,7 @@ LOGO_UPLOAD_SET = UploadSet(
 )
 
 
-class UserEditForm(Form):
+class UserEditForm(FlaskForm):
     # General info
     musicbrainz_id = StringField("MusicBrainz Username")
     contact_name = StringField("Name")
@@ -64,6 +64,6 @@ class UserEditForm(Form):
     def __init__(self, defaults=None, **kwargs):
         for key, val in defaults.items():
             kwargs.setdefault(key, val)
-        Form.__init__(self, **kwargs)
+        FlaskForm.__init__(self, **kwargs)
         self.tier.choices = [(str(t["id"]), t["name"]) for t in db_tier.get_all()]
         self.tier.choices.insert(0, ("None", "None"))
