@@ -22,7 +22,7 @@ class UserSignUpForm(FlaskForm):
 
     def __init__(self, default_email=None, **kwargs):
         kwargs.setdefault('contact_email', default_email)
-        Form.__init__(self, **kwargs)
+        FlaskForm.__init__(self, **kwargs)
 
 
 class NonCommercialSignUpForm(UserSignUpForm):
