@@ -5,58 +5,86 @@
 {% block content %}
   <h1 class="page-title">MetaBrainz Database Dumps</h1>
 
-  <p> 
-  intro guff here.
+  <p>
+    All of our data dumps are available under Creative Commons licenses.
   </p>
 
-  <h2>Database Dumps</h2>
-
+  <p>
+    However, in order to 
+    keep the MetaBrainz Foundation operating to update and improve these data sets, <b>we require
+    support from our commercial users</b>. Without this support, these datasets cannot be maintained,
+    so we rely on financial support from commercial users. Even though a data set may be available
+    under the Creative Commons Zero (CC0) license (public domain), we still require commercial
+    users to support us, on a moral basis, not a legal one!
+  </p>
 
   <a id="musicbrainz"><h3>MusicBrainz Postgres Data Dumps</h3></a>
 
   <p>
-     The MusicBrainz data dumps include all public portions of the data from our MusicBrainz project.
-     This includes but is not limited to artists, releases, labels, the relationships between them and
-     much more data that you can find in the MusicBrainz database. In addition, there is a full history
-     of all the changes that the MusicBrainz community has made to the data.
+     This data dump includes all public portions of the data from our MusicBrainz project. All artists,
+     releases, recordings, labels and the relationships between them, and much more data, including
+     everything needed to run your own copy of MusicBrainz, is included.
   </p>
 
   <p> 
-     These data dumps are intended to be imported into a Postgres database; we recommend that you use the
-     musicbrainz-docker project to import these dumps. Working with them on their own or attempting to
-     import that data into some other database system represents a non-trivial amount of work and we
-     strongly recommend against doing that.
+     The MusicBrainz data dumps include all public portions of the data from our MusicBrainz project.
+     This includes (but is not limited to) artists, releases, labels, the relationships between them
+     and much more data that you can find in the MusicBrainz database. In addition, there is a full
+     history of all the changes that the MusicBrainz community has made to the data, and average
+     ratings and tag counts (including genre tags) added by the community are also made available.
   </p> 
 
   <p>
-     MetaBrainz provides full database exports of the MusicBrainz database updated regularly and can be
-     kept in sync with the main MusicBrainz database via the Live Data Feed. The MusicBrainz data dumps
-     can be found on the MusicBrainz FTP Server and more information on the contents of the various dump
-     files, including licensing information, can be found in the MusicBrainz documentation.
+     These data dumps are intended to be imported into a PostgreSQL database; we recommend that you use
+     the <a href="https://github.com/metabrainz/musicbrainz-docker">musicbrainz-docker</a> project to
+     import these dumps. Working with them on their own or attempting to import that data into a different
+     database system than PostgreSQL represents a non-trivial amount of work and we strongly recommend
+     against doing that.
+  </p> 
+
+  <p>
+     MetaBrainz provides full database exports of the MusicBrainz database twice a week. More regular
+     (and comfortable) updates are possible by keeping a local mirror in sync with the main MusicBrainz
+     database via the <a href="https://musicbrainz.org/doc/Live_Data_Feed">Live Data Feed</a>. The
+     MusicBrainz data dumps can be found on the
+     <a href="http://ftp.musicbrainz.org/pub/musicbrainz/data/fullexport/">MusicBrainz FTP Server</a>
+     and more information on the contents of the various dump files, including licensing information,
+     can be found in the MusicBrainz documentation.
   </p> 
 
   <div class="dataset-summary">
     <div class="dataset-summary-heading">Dataset summary</div>
     <table>
         <tr>
+            <td>Documentation:</td>
+            <td><a href="https://musicbrainz.org/doc/MusicBrainz_Database/Download">MusicBrainz Database Page</a></td>
+        </tr>
+        <tr>
             <td>Where to download:</td>
-            <td><a href="https://musicbrainz.org/doc/MusicBrainz_Database/Download">MusicBrainz Download Page</a></td>
+            <td><a href="https://musicbrainz.org/doc/MusicBrainz_Database/Download">MusicBrainz Database Page</a></td>
         </tr>
         <tr>
             <td>Update frequency:</td>
-            <td>Twice a week, sundays and thursdays.</td>
+            <td>Twice a week, Saturdays and Wednesdays.</td>
         </tr>
         <tr>
             <td>Licenses:</td>
             <td>
-              <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0</a> for Core Data / 
-              <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC Attribution-NonCommercial-ShareAlike 3.0</a></li>
+              <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero (CC0)</a> for Core Data / <br>
+              <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC Attribution-NonCommercial-ShareAlike 3.0</a>
               for supplementary data.
-            </td>t
+            </td>
         </tr>
         <tr>
             <td>Format:</td>
             <td>XZ compressed Postgres table dumps</td>
+        </tr>
+        <tr>
+            <td>Commercial use:</td>
+            <td>
+              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
+              strongly urged, even for CC0 data.<a/>
+            </td>
         </tr>
     </table>
   </div>
@@ -69,30 +97,41 @@
   </p> 
 
   <p>
-     These JSON dumps can be downloaded from the MusicBrainz FTP Server, and more information on the
-     contents of the dumps can be found in the MusicBrainz documentation. These dumps are CC0 licensed
-     but we ask commercial users to support us in order to help fund the creation and maintenance of
-     these datasets.
-  </p> 
+     There are individual dump files for each of the following data entities in MusicBrainz: Area, Artist, Event,
+     Instrument, Label, Place, Recording, Release Group, Release, Series and Work. Please note that 
+     in order to make these data dumps easy to import, the data is not normalized and will contain duplicate
+     data.
+  </p>
 
   <div class="dataset-summary">
     <div class="dataset-summary-heading">Dataset summary</div>
     <table>
         <tr>
+            <td>Documentation:</td>
+            <td><a href="https://musicbrainz.org/doc/Development/JSON_Data_Dumps">JSON Data Dumps page</a></td>
+        </tr>
+        <tr>
             <td>Where to download:</td>
-            <td><a href="https://musicbrainz.org/doc/Development/JSON_Data_Dumps">JSON Data Dumps</a> page</td>
+            <td><a href="https://musicbrainz.org/doc/Development/JSON_Data_Dumps">JSON Data Dumps page</a></td>
         </tr>
         <tr>
             <td>Update frequency:</td>
-            <td>Twice a week, sundays and thursdays.</td>
+            <td>Twice a week, Saturdays and Wednesdays.</td>
         </tr>
         <tr>
             <td>Licenses:</td>
-            <td><a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0</a></td>
+            <td><a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero (CC0)</a></td>
         </tr>
         <tr>
             <td>Format:</td>
             <td>XZ compressed JSONL (one JSON document per line)</td>
+        </tr>
+        <tr>
+            <td>Commercial use:</td>
+            <td>
+              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
+              strongly urged, even for CC0 data.<a/>
+            </td>
         </tr>
     </table>
   </div>
@@ -109,18 +148,18 @@
      This dataset can be used to create study music consumption patterns, create new music data-sets.
      ListenBrainz itself is using this data to power a music recommendation engine and to create other
      derived data-sets.. The provided data dumps contain 100s of millions of listens in the ListenBrainz
-     database and is rather large. Due to its size, we cannot provide this data in other formats.
-  </p> 
-
-  <p>
-     The ListenBrainz project creates new data dumps every two weeks, on the 1st and 15th of every month.
-     These data dumps are CC0 licensed and can be downloaded from the MusicBrainz FTP Server. For more
-     information, please visit the ListenBrainz website and the ListenBrainz data dumps documentation.
+     database and is rather large. Due to its size, we cannot provide this data in other formats and
+     only twice a month. Incremental daily dumps are also available, which provide listen data that 
+     was added since the last full dump, one dump file for each day.
   </p> 
 
   <div class="dataset-summary">
     <div class="dataset-summary-heading">Dataset summary</div>
     <table>
+        <tr>
+            <td>Documentation:</td>
+            <td><a href="https://listenbrainz.readthedocs.io/en/latest/users/listenbrainz-dumps.html">ListenBrainz Data Dumps Documentation</a></td>
+        </tr>
         <tr>
             <td>Where to download:</td>
             <td><a href="https://listenbrainz.org/data/">ListenBrainz Data Page</a></td>
@@ -131,11 +170,18 @@
         </tr>
         <tr>
             <td>Licenses:</td>
-            <td><a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0</td>
+            <td><a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero (CC0)</td>
         </tr>
         <tr>
             <td>Format:</td>
             <td>XZ compressed Postgres table dumps</td>
+        </tr>
+        <tr>
+            <td>Commercial use:</td>
+            <td>
+              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
+              strongly urged, even for CC0 data.<a/>
+            </td>
         </tr>
     </table>
   </div>
@@ -168,11 +214,20 @@
         </tr>
         <tr>
             <td>Licenses:</td>
-            <td>TBC!  <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC Attribution-NonCommercial-ShareAlike 3.0</a></li>
+            <td>
+              <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC Attribution-NonCommercial-ShareAlike 3.0</a> and 
+              <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC Attribution-ShareAlike 3.0</a></td>
         </tr>
         <tr>
             <td>Format:</td>
-            <td>XZ compressed Postgres table dumps</td>
+            <td>bzip2 compressed Postgres table dumps and JSON dumps</td>
+        </tr>
+        <tr>
+            <td>Commercial use:</td>
+            <td>
+              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
+              strongly urged, even for CC0 data.<a/>
+            </td>
         </tr>
     </table>
   </div>
