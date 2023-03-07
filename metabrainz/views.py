@@ -93,3 +93,11 @@ def shop():
 @index_bp.route('/datasets')
 def datasets():
     return render_template('index/datasets.html')
+
+@index_bp.route('/datasets/postgres-dumps')
+def postgres_dumps():
+    return render_template('index/datasets/postgres-dumps.html')
+
+@index_bp.route('/datasets/derived-dumps')
+def derived_dumps():
+    return render_template('index/datasets/derived-dumps.html')

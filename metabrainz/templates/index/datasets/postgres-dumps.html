@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Datasets') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">MetaBrainz Database Dumps</h1>
+
+  <p> 
+  intro guff here.
+  </p>
+
+  <h2>Database Dumps</h2>
+
+
+  <a id="musicbrainz"><h3>MusicBrainz Postgres Data Dumps</h3></a>
+
+  <p>
+     The MusicBrainz data dumps include all public portions of the data from our MusicBrainz project.
+     This includes but is not limited to artists, releases, labels, the relationships between them and
+     much more data that you can find in the MusicBrainz database. In addition, there is a full history
+     of all the changes that the MusicBrainz community has made to the data.
+  </p>
+
+  <p> 
+     These data dumps are intended to be imported into a Postgres database; we recommend that you use the
+     musicbrainz-docker project to import these dumps. Working with them on their own or attempting to
+     import that data into some other database system represents a non-trivial amount of work and we
+     strongly recommend against doing that.
+  </p> 
+
+  <p>
+     MetaBrainz provides full database exports of the MusicBrainz database updated regularly and can be
+     kept in sync with the main MusicBrainz database via the Live Data Feed. The MusicBrainz data dumps
+     can be found on the MusicBrainz FTP Server and more information on the contents of the various dump
+     files, including licensing information, can be found in the MusicBrainz documentation.
+  </p> 
+
+  <a id="musicbrainz-json"><h3>MusicBrainz JSON Data Dumps</h3></a>
+  <p>
+     MetaBrainz also provides access to the music metadata in the MusicBrainz database in the easily
+     consumable format of JSON documents. If you simply cannot work with Postgres and you prefer to work
+     with a document oriented data store, then this data dump is suited for this purpose.
+  </p> 
+
+  <p>
+     These JSON dumps can be downloaded from the MusicBrainz FTP Server, and more information on the
+     contents of the dumps can be found in the MusicBrainz documentation. These dumps are CC0 licensed
+     but we ask commercial users to support us in order to help fund the creation and maintenance of
+     these datasets.
+  </p> 
+
+  <a id="listenbrainz"><h3>ListenBrainz Postgres Data Dumps</h3></a>
+
+  <p>
+     The ListenBrainz project serves as an archive where users can store their music listening history.
+     ListenBrainz then provides users with insights into their listening behaviors by creating detailed
+     statistics reports from the provided data as well as other social features focused on music.
+  </p> 
+
+  <p>
+     This dataset can be used to create study music consumption patterns, create new music data-sets.
+     ListenBrainz itself is using this data to power a music recommendation engine and to create other
+     derived data-sets.. The provided data dumps contain 100s of millions of listens in the ListenBrainz
+     database and is rather large. Due to its size, we cannot provide this data in other formats.
+  </p> 
+
+  <p>
+     The ListenBrainz project creates new data dumps every two weeks, on the 1st and 15th of every month.
+     These data dumps are CC0 licensed and can be downloaded from the MusicBrainz FTP Server. For more
+     information, please visit the ListenBrainz website and the ListenBrainz data dumps documentation.
+  </p> 
+  
+  <a id="critiquebrainz"><h3>CritiqueBrainz Postgres Data Dumps</h3></a>
+
+  <p>
+     CritiqueBrainz is a repository for Creative Commons licensed music and book reviews. It fills the gap
+     between the factual music metadata in the MusicBrainz database and book metadata in the BookBrainz
+     database, the opinions about music from music critics and books from book critics, listeners and
+     readers by providing a platform that archives Creative Commons licensed reviews.
+  </p> 
+
+  <p>
+     The MetaBrainz foundation provides full dumps of the CritiqueBrainz database as well as JSON dumps
+     containing reviews in an easily consumable format. These datasets are updated every day and can be
+     downloaded from the MusicBrainz FTP Server.
+  </p> 
+
+{% endblock %}
