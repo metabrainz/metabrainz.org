@@ -10,28 +10,23 @@
   </p>
 
   <p>
-    However, in order to 
-    keep the MetaBrainz Foundation operating to update and improve these data sets, <b>we require
-    support from our commercial users</b>. Without this support, these datasets cannot be maintained,
-    so we rely on financial support from commercial users. Even though a data set may be available
-    under the Creative Commons Zero (CC0) license (public domain), we still require commercial
-    users to support us, on a moral basis, not a legal one!
+    However, in order to keep the MetaBrainz Foundation operating so that these datasets
+    can be maintained and updated further, <b>we require
+    <a href="{{ url_for('users.account_type') }}">financial support</a>
+    from our commercial users</b>. Without this support, the future of the datasets
+    cannot be guaranteed. As such, even when a specific dataset is available
+    under the Creative Commons Zero (CC0) license (public domain), we still need
+    commercial users of the data to support us, on a moral basis rather than a legal one!
   </p>
 
-  <a id="musicbrainz"><h3>MusicBrainz Postgres Data Dumps</h3></a>
-
-  <p>
-     This data dump includes all public portions of the data from our MusicBrainz project. All artists,
-     releases, recordings, labels and the relationships between them, and much more data, including
-     everything needed to run your own copy of MusicBrainz, is included.
-  </p>
+  <a id="musicbrainz"><h3>MusicBrainz PostgreSQL Data Dumps</h3></a>
 
   <p> 
      The MusicBrainz data dumps include all public portions of the data from our MusicBrainz project.
-     This includes (but is not limited to) artists, releases, labels, the relationships between them
-     and much more data that you can find in the MusicBrainz database. In addition, there is a full
-     history of all the changes that the MusicBrainz community has made to the data, and average
-     ratings and tag counts (including genre tags) added by the community are also made available.
+     This includes artists, releases, labels and the relationships between them, and much more data
+     that you can find in the MusicBrainz database. In addition, there is a full history of
+     all the changes that the MusicBrainz community has made to the data, and average ratings
+     and tag counts (including genre tags) added by the community are also made available.
   </p> 
 
   <p>
@@ -44,12 +39,14 @@
 
   <p>
      MetaBrainz provides full database exports of the MusicBrainz database twice a week. More regular
-     (and comfortable) updates are possible by keeping a local mirror in sync with the main MusicBrainz
-     database via the <a href="https://musicbrainz.org/doc/Live_Data_Feed">Live Data Feed</a>. The
+     (and comfortable) updates are available via the <a href="https://musicbrainz.org/doc/Live_Data_Feed">Live Data Feed</a>,
+     which allows keeping a local mirror in sync with the main MusicBrainz database every hour. The
      MusicBrainz data dumps can be found on the
      <a href="http://ftp.musicbrainz.org/pub/musicbrainz/data/fullexport/">MusicBrainz FTP Server</a>
      and more information on the contents of the various dump files, including licensing information,
-     can be found in the MusicBrainz documentation.
+     can be found in the
+     <a href="https://musicbrainz.org/doc/MusicBrainz%20Database/Download">database download page</a>
+     on MusicBrainz itself.
   </p> 
 
   <div class="dataset-summary">
@@ -57,33 +54,33 @@
     <table>
         <tr>
             <td>Documentation:</td>
-            <td><a href="https://musicbrainz.org/doc/MusicBrainz_Database/Download">MusicBrainz Database Page</a></td>
+            <td><a href="https://musicbrainz.org/doc/MusicBrainz_Database/Download">MusicBrainz Database page</a></td>
         </tr>
         <tr>
             <td>Where to download:</td>
-            <td><a href="https://musicbrainz.org/doc/MusicBrainz_Database/Download">MusicBrainz Database Page</a></td>
+            <td><a href="https://musicbrainz.org/doc/MusicBrainz_Database/Download">MusicBrainz Database page</a></td>
         </tr>
         <tr>
             <td>Update frequency:</td>
-            <td>Twice a week, Saturdays and Wednesdays.</td>
+            <td>Twice a week, Wednesdays and Saturdays.</td>
         </tr>
         <tr>
             <td>Licenses:</td>
             <td>
-              <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero (CC0)</a> for Core Data / <br>
+              <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero (CC0)</a> for core data / <br>
               <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC Attribution-NonCommercial-ShareAlike 3.0</a>
               for supplementary data.
             </td>
         </tr>
         <tr>
             <td>Format:</td>
-            <td>XZ compressed Postgres table dumps</td>
+            <td>XZ compressed PostgreSQL table dumps</td>
         </tr>
         <tr>
             <td>Commercial use:</td>
             <td>
-              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
-              strongly urged, even for CC0 data.<a/>
+              Allowed, but <a href="{{ url_for('users.account_type') }}">financial support<a/>
+              strongly urged, even for CC0 data.
             </td>
         </tr>
     </table>
@@ -92,15 +89,15 @@
   <a id="musicbrainz-json"><h3>MusicBrainz JSON Data Dumps</h3></a>
   <p>
      MetaBrainz also provides access to the music metadata in the MusicBrainz database in the easily
-     consumable format of JSON documents. If you simply cannot work with Postgres and you prefer to work
-     with a document oriented data store, then this data dump is suited for this purpose.
-  </p> 
+     consumable format of JSON documents. If you simply cannot work with PostgreSQL or you prefer
+     to work with a document oriented data store, then this data dump is for you.
+    </p> 
 
   <p>
-     There are individual dump files for each of the following data entities in MusicBrainz: Area, Artist, Event,
-     Instrument, Label, Place, Recording, Release Group, Release, Series and Work. Please note that 
-     in order to make these data dumps easy to import, the data is not normalized and will contain duplicate
-     data.
+     There are individual dump files for each of the following data entities in MusicBrainz:
+     Area, Artist, Event, Instrument, Label, Place, Recording, Release Group, Release, Series and Work.
+     Please note that in order to make these data dumps easy to import, the data is not normalized
+     and will contain duplicate data.
   </p>
 
   <div class="dataset-summary">
@@ -129,14 +126,14 @@
         <tr>
             <td>Commercial use:</td>
             <td>
-              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
-              strongly urged, even for CC0 data.<a/>
+              Allowed, but <a href="{{ url_for('users.account_type') }}">financial support<a/>
+              strongly urged, even for CC0 data.
             </td>
         </tr>
     </table>
   </div>
 
-  <a id="listenbrainz"><h3>ListenBrainz Postgres Data Dumps</h3></a>
+  <a id="listenbrainz"><h3>ListenBrainz PostgreSQL Data Dumps</h3></a>
 
   <p>
      The ListenBrainz project serves as an archive where users can store their music listening history.
@@ -145,12 +142,13 @@
   </p> 
 
   <p>
-     This dataset can be used to create study music consumption patterns, create new music data-sets.
+     This dataset can be used to create study music consumption patterns, and to create new music datasets.
      ListenBrainz itself is using this data to power a music recommendation engine and to create other
-     derived data-sets.. The provided data dumps contain 100s of millions of listens in the ListenBrainz
-     database and is rather large. Due to its size, we cannot provide this data in other formats and
-     only twice a month. Incremental daily dumps are also available, which provide listen data that 
-     was added since the last full dump, one dump file for each day.
+     derived datasets. The provided data dumps contain all the hundreds of millions of listens
+     in the ListenBrainz database and as such are rather large. Due to its size, we cannot provide this data
+     in other formats and we update the full dumps only twice a month. Incremental daily dumps
+     are also available, which provide all the listen data that was added since the last full dump
+     and come out every day.
   </p> 
 
   <div class="dataset-summary">
@@ -158,15 +156,15 @@
     <table>
         <tr>
             <td>Documentation:</td>
-            <td><a href="https://listenbrainz.readthedocs.io/en/latest/users/listenbrainz-dumps.html">ListenBrainz Data Dumps Documentation</a></td>
+            <td><a href="https://listenbrainz.readthedocs.io/en/latest/users/listenbrainz-dumps.html">ListenBrainz data dumps documentation</a></td>
         </tr>
         <tr>
             <td>Where to download:</td>
-            <td><a href="https://listenbrainz.org/data/">ListenBrainz Data Page</a></td>
+            <td><a href="https://listenbrainz.org/data/">ListenBrainz data page</a></td>
         </tr>
         <tr>
             <td>Update frequency:</td>
-            <td>Twice a month, on the 1st and 15th.</td>
+            <td>Twice a month, on the 1st and 15th, with incremental dumps daily.</td>
         </tr>
         <tr>
             <td>Licenses:</td>
@@ -174,25 +172,25 @@
         </tr>
         <tr>
             <td>Format:</td>
-            <td>XZ compressed Postgres table dumps</td>
+            <td>XZ compressed PostgreSQL table dumps</td>
         </tr>
         <tr>
             <td>Commercial use:</td>
             <td>
-              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
-              strongly urged, even for CC0 data.<a/>
+              Allowed, but <a href="{{ url_for('users.account_type') }}">financial support<a/>
+              strongly urged, even for CC0 data.
             </td>
         </tr>
     </table>
   </div>
   
-  <a id="critiquebrainz"><h3>CritiqueBrainz Postgres Data Dumps</h3></a>
+  <a id="critiquebrainz"><h3>CritiqueBrainz PostgreSQL Data Dumps</h3></a>
 
   <p>
-     CritiqueBrainz is a repository for Creative Commons licensed music and book reviews. It fills the gap
-     between the factual music metadata in the MusicBrainz database and book metadata in the BookBrainz
-     database, the opinions about music from music critics and books from book critics, listeners and
-     readers by providing a platform that archives Creative Commons licensed reviews.
+     CritiqueBrainz is a repository for Creative Commons licensed music and book reviews. It allows connecting
+     the factual music metadata in the MusicBrainz database and book metadata in the BookBrainz database
+     with the opinions about music from music critics and listeners and books from book critics and
+     readers by providing a platform to store their reviews.
   </p> 
 
   <p>
@@ -206,7 +204,7 @@
     <table>
         <tr>
             <td>Where to download:</td>
-            <td><a href="http://ftp.musicbrainz.org/pub/musicbrainz/critiquebrainz/">CritiqueBrainz Download Page</a></td>
+            <td><a href="http://ftp.musicbrainz.org/pub/musicbrainz/critiquebrainz/">CritiqueBrainz FTP page</a></td>
         </tr>
         <tr>
             <td>Update frequency:</td>
@@ -221,13 +219,13 @@
         </tr>
         <tr>
             <td>Format:</td>
-            <td>bzip2 compressed Postgres table dumps and JSON dumps</td>
+            <td>bzip2 compressed PostgreSQL table dumps and JSON dumps</td>
         </tr>
         <tr>
             <td>Commercial use:</td>
             <td>
-              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
-              strongly urged, even for CC0 data.<a/>
+              Allowed, but <a href="{{ url_for('users.account_type') }}">financial support<a/>
+              strongly urged, even for CC0 data.
             </td>
         </tr>
     </table>
