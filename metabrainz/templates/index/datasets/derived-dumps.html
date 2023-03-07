@@ -6,62 +6,63 @@
   <h1 class="page-title">MetaBrainz Derived Dumps</h1>
 
   <p> 
-    On this page we describe several datasets with the term Canonical. Since
+    On this page we describe several datasets with the term “canonical”. Since
     MusicBrainz aims to catalog all released music, the database contains a lot
     of different versions of releases or different versions of recordings. We
     find it important to collect all of these different versions, but in the end
     it is too much data for most of our users. Fortunately, it is easy to combine
-    multiple pieces of well structured data into something that fits a user's
+    multiple pieces of well structured data into something that fits a user’s
     desired end-use.
   </p>
 
   <p> 
     However, sometimes it can be challenging to work out which of the many
-    releases/recordings are the only that “most people will think of the most
+    releases/recordings is the one that “most people will think of the most
     representative version”. Even defining what this means is incredibly difficult,
     but we’ve attempted to do just that and we’re using the results of this work in
     our production systems on ListenBrainz to map incoming listens to MusicBrainz entries.
   </p>
 
   <p> 
-    For the sake of describing our datasets, please consider that canonical implies
+    When looking at the descriptions our datasets, please consider that “canonical” implies
     <em>the most representative version</em>. Each of our canonical datasets has a
-    more detailed description of what canonical means in that given dataset.
+    more detailed description of what “canonical” means in that given dataset.
   </p>
 
   <p>
-    As with our database dumps, in order keep the MetaBrainz Foundation operating to
-    update and improve these data sets, <b>we require support from our commercial users</b>.
-    Without this support, these datasets cannot be maintained, so we rely on financial
-    support from commercial users. Even though a data set may be available
-    under the Creative Commons Zero (CC0) license (public domain), we still require commercial
-    users to support us, on a moral basis, not a legal one!
+    As with our database dumps, in order to keep the MetaBrainz Foundation operating
+    so that these datasets can be maintained and updated further, <b>we require
+    <a href="{{ url_for('users.account_type') }}">financial support</a>
+    from our commercial users</b>. Without this support, the future of the datasets
+    cannot be guaranteed. As such, even when a specific dataset is available
+    under the Creative Commons Zero (CC0) license (public domain), we still need
+    commercial users of the data to support us, on a moral basis rather than a legal one!
   </p>
 
   <a id="canonical"><h2>MusicBrainz Canonical Data Dumps</h2></a>
 
   <p>
-    The MusicBrainz Canonical data dump contains information about MusicBrainz Recordings,
+    The MusicBrainz canonical data dump contains information about MusicBrainz Recordings,
     Releases, and Artists. The dataset has been developed to make it easier to reason about
-    the core metadata in the MusicBrainz database, providing one single record for each musical
-    recording in the database.
+    the core metadata in the MusicBrainz database, providing one single record for each
+    set of mostly equivalent releases and recordings in the database.
   </p>
 
   <p>
-    Because of the nature of the MusicBrainz database it contains many instances where a single
-    Release (album) has metadata for many different versions of the same album, or many versions
-    of a recording due to remasters, live recordings and alternate versions.
+    Because of the nature of the MusicBrainz database it contains many instances where metadata
+    exists for many different versions (formats, reissues) of the same album, or many versions
+    (live recordings, alternate versions) of a recording.
   </p>
 
   <p>
     However for some tasks such as music recommendation, it’s often useful to be able to use a
     single identifier when talking about a recording or a release, both in order to improve the
-    quality of a training dataset for machine learning or when providing results to an end user.
+    quality of a training dataset for machine learning and when providing results to an end user.
   </p>
 
   <p>
-    The MusicBrainz Canonical data dump provides a mapping of all Releases and Recordings in the
-    MusicBrainz database to a single “Canonical” version.
+    The MusicBrainz canonical data dump provides a mapping of all Releases and Recordings in the
+    MusicBrainz database to a single “canonical” version.
   </p>
 
   <div class="dataset-summary">
@@ -77,7 +78,7 @@
         </tr>
         <tr>
             <td>Update frequency:</td>
-            <td>Twice a month, on the 1st and 15th day of every monnth.</td>
+            <td>Twice a month, on the 1st and 15th.</td>
         </tr>
         <tr>
             <td>Licenses:</td>
@@ -90,8 +91,8 @@
         <tr>
             <td>Commercial use:</td>
             <td>
-              Allowed, but <a href="https://test.metabrainz.org/supporters/account-type">financial support
-              strongly urged, even for CC0 data.<a/>
+              Allowed, but <a href="{{ url_for('users.account_type') }}">financial support</a>
+              strongly urged, even for CC0 data.
             </td>
         </tr>
     </table>
@@ -100,7 +101,7 @@
   <a id="mhld"><h2>Music Listening History Dataset+</h2></a>
 
   <p>
-   The MetaBrainz team has also released the Music Listening Histories Dataset+ dataset, originally based on 
+   The MetaBrainz team has also released the Music Listening Histories Dataset+ dataset, an improved version of 
    the original MLHD, released by the 
    <a href="https://ddmal.music.mcgill.ca/research/The_Music_Listening_Histories_Dataset_(MLHD)/">DDMAL Lab at McGill Univeristy</a>.
   </p>
@@ -113,10 +114,10 @@
   <ol>
       <li>
         <p>
-          <b>Follow redirects</b>: In MusicBrainz there are times when a data entity was correctly entered and it must be deleted
-          from the database. In order to not lose the old MBID, we enter an entry into our <em>redirect</em> tables, keeping track
-          of all old MBIDs. In the MHLD+ data set, we checked each recording and ensured that the dataset contains the most recent
-          and correct version.
+          <b>Follow redirects</b>: In MusicBrainz there are times when a data entity was entered more than once, so any duplicates
+          must be deleted from the database. In order to not lose the old MBID, we enter an entry into our <em>redirect</em> tables,
+          keeping track of all of them. In the MHLD+ data set, we checked each recording and ensured that the dataset contains
+          the most recent and correct version.
         </p>
       </li>
       <li>
@@ -128,7 +129,7 @@
       <li>
         <p>
           <b>Lookup correct Artist and Releases</b>: Once we identified the canonical recordings, we looked up the canonical
-          release and the correct Artist MBID for each of the datapoints. The original matching algorithm often conflated
+          release and the correct artist MBID for each of the datapoints. The original matching algorithm often conflated
           two similarly named artists as the same artist, greatly dimishing the value of this dataset.
         </p>
       </li>
