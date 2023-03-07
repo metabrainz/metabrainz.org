@@ -8,11 +8,11 @@
     <div class="col-md-12">
       <h1 class="page-title">{{ _('The MetaBrainz Datasets') }}</h1>
      
-      <p> 
+      <p>
         The MetaBrainz core mission aims to curate and maintain public data sets that anyone
         can download and use for their own purposes. We ask
-        <a href="{{ url_for('users.account_type') }}">commercial users</a> to 
-        <a href="{{ url_for('users.account_type') }}">support us</a> in order to help fund the
+        <a href="{{ url_for('users.account_type') }}">commercial users</a> to
+         <a href="{{ url_for('users.account_type') }}">support us</a> in order to help fund the
         creation and maintenance of these datasets, but personal use of our datasets will always be
         free, though we do appreciate end user donations as well.
       </p>
@@ -27,17 +27,17 @@
 
   <div class="row">
 
-    <div class="col-md-6 dataset-card">
-      <div class="row">
-        <div class="col-md-3" style="padding-top: 3.5em;">
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
           <img class="logo" src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz logo" />
         </div>
-        <div class="col-md-9 dataset-card-text">
+        <div class="dataset-card-text">
             <h4><span class="dataset-card-heading">MusicBrainz Postgres Data</span></h4>
             <p>
               This data dump includes all public portions of the data from our MusicBrainz project.
               All artists, releases, recordings, labels and the relationships between them, and
-              much more data, including everything needed to run your own copy of MusicBrainz is 
+              much more data, including everything needed to run your own copy of MusicBrainz is
               included.
             </p>
             <p>
@@ -47,12 +47,12 @@
       </div>
     </div>
 
-    <div class="col-md-6 dataset-card">
-      <div class="row">
-        <div class="col-md-3" style="padding-top: 3.5em;">
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
           <img class="logo" src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz logo" />
         </div>
-        <div class="col-md-9 dataset-card-text">
+        <div class="dataset-card-text">
             <h4><span class="dataset-card-heading">MusicBrainz JSON Data</span></h4>
             <p>
               We also provides MusicBrainz database in the easily consumable format of JSON documents. If you
@@ -70,17 +70,17 @@
 
   <div class="row">
 
-    <div class="col-md-6 dataset-card">
-      <div class="row">
-        <div class="col-md-3" style="padding-top: 3.5em;">
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
           <img class="logo" src="{{ url_for('static', filename='img/projects/listenbrainz.svg') }}" alt="ListenBrainz logo" />
         </div>
-        <div class="col-md-9 dataset-card-text">
+        <div class="dataset-card-text">
             <h4><span class="dataset-card-heading">ListenBrainz Postgres Data</span></h4>
             <p>
               ListenBrainz collects user listening information and creates insights for its users
               about their own listeing habits as well as providing various tools for discovering new
-              music. All of this data, also indexed against MusicBrainz is available for 
+              music. All of this data, also indexed against MusicBrainz is available for
               download.
             </p>
             <p>
@@ -90,16 +90,16 @@
       </div>
     </div>
 
-    <div class="col-md-6 dataset-card">
-      <div class="row">
-        <div class="col-md-3" style="padding-top: 3.5em;">
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
           <img class="logo" src="{{ url_for('static', filename='img/projects/critiquebrainz.svg') }}" alt="CritiqueBrainz logo" />
         </div>
-        <div class="col-md-9 dataset-card-text">
+        <div class="dataset-card-text">
             <h4><span class="dataset-card-heading">CritiqueBrainz Postgres Data</span></h4>
             <p>
               The <a href="https://critiquebrainz.org">CritiqueBrainz project</a> collects user reviews of music and
-              books, based on the data of the <a href="https://musicbrainz.org">MusicBrainz</a> and 
+              books, based on the data of the <a href="https://musicbrainz.org">MusicBrainz</a> and
               <a href="https://bookbrainz.org">BookBrainz</a> projects. All of the reviews and everything
               necessary to run your own copy of CritiqueBrainz is included in these data dumps.
             </p>
@@ -125,12 +125,12 @@
 
   <div class="row">
 
-    <div class="col-md-6 dataset-card">
-      <div class="row">
-        <div class="col-md-3" style="padding-top: 3.5em;">
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
           <img class="logo" src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz logo" />
         </div>
-        <div class="col-md-9 dataset-card-text">
+        <div class="dataset-card-text">
             <h4><span class="dataset-card-heading">MusicBrainz Canonical Data Dumps</span></h4>
             <p>
               These dumps contain canonical MusicBrainz data, which makes it easier to reason about the core
@@ -144,18 +144,18 @@
       </div>
     </div>
 
-    <div class="col-md-6 dataset-card">
-      <div class="row">
-        <div class="col-md-3" style="padding-top: 3.5em;">
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
           <img class="logo" src="{{ url_for('static', filename='img/projects/critiquebrainz.svg') }}" alt="CritiqueBrainz logo" />
         </div>
-        <div class="col-md-9 dataset-card-text">
+        <div class="dataset-card-text">
             <h4><span class="dataset-card-heading">MHLD+ Data Dump</span></h4>
             <p>
-               The Music Listening Histories Dataset collects a large number of music listening
-               events assembled from more than 27 billion time-stamped logs extracted from Last.fm.
-               Using the MusicBrainz Canonical data we cleaned up errors in the data
-               to form an improved data set.
+                The Music Listening Histories Dataset collects a large number of music listening
+                events assembled from more than 27 billion time-stamped logs extracted from Last.fm.
+                Using the MusicBrainz Canonical data we cleaned up errors in the data
+                to form an improved data set.
             </p>
             <p>
               <a href="/datasets/musicbrainz-json-dump">Read more...</a>
