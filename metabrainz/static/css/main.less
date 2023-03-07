@@ -234,7 +234,7 @@ h1.page-title, h2.page-title {
   }
 }
 
-// Team page 
+// Team page
 #team {
   .person {
     .clearfix;
@@ -397,21 +397,27 @@ table.finances td:nth-child(2) {
     border-radius: 5px;
     margin-top: 1em;
     margin-bottom: 1em;
+    display: flex;
+    padding: 0.5em;
+    align-items: center;
+    
+    .dataset-card-logo {
+      width: 100%;
+      padding: 0.7em;
+    }
+
+    .dataset-card-text {
+      > p:first-of-type {
+          margin: 0 15px 10px 0px;
+      }
+    }
+    
+    .dataset-card-heading {
+        color: #eb743b;
+        font-weight: bold;
+    }
 }
 
-.dataset-card-text {
-    padding-right: 30px;
-    padding-left: 0px;
-}
-
-.dataset-card > p {
-    margin: 0 15px 10px 0px;
-}
-
-.dataset-card-heading {
-    color: #eb743b;
-    font-weight: bold;
-}
 
 @media (max-width: 400px) {
   #data {
