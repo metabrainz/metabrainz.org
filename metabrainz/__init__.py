@@ -1,10 +1,10 @@
 import os
 import pprint
-import subprocess
 import sys
 
 import stripe
 from brainzutils.flask import CustomFlask
+from brainzutils import sentry
 from flask import send_from_directory, request
 from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
@@ -73,10 +73,9 @@ def create_app(debug=None, config_path = None):
     print('Configuration values are as follows: ')
     print(pprint.pformat(app.config, indent=4))
 
-    app.init_loggers(
-        file_config=app.config.get('LOG_FILE'),
-        sentry_config=app.config.get('LOG_SENTRY'),
-    )
+    sentry_config = app.config.get('LOG_SENTRY')
+    if sentry_config:
+        sentry.init_sentry(**sentry_config)
 
     # Database
     from metabrainz import db
