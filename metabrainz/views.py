@@ -101,3 +101,11 @@ def postgres_dumps():
 @index_bp.route('/datasets/derived-dumps')
 def derived_dumps():
     return render_template('index/datasets/derived-dumps.html')
+
+@index_bp.route('/datasets/signup')
+def signup():
+    return render_template('index/datasets/signup.html')
+
+@index_bp.route('/datasets/download')
+def download():
+    return render_template('index/datasets/download.html')

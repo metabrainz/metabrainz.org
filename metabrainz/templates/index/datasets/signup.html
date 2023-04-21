@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Please sign up') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">Please sign up</h1>
+
+  <p>
+    Please to be signing up. This data helps us serve you bettter.
+  </p>
+
+  <div>
+      <a href="{{ url_for("users.signup_commercial") }}">
+         <button type="button" class="btn btn-default btn-lg">OK, I'll sign up!</button>
+      </a>
+  </div>
+  <div>
+      <a href="{{ url_for("index.download") }}">
+         <button type="button" class="btn btn-default btn-lg">Naaaah, just give me the data!</button>
+      </a>
+  </div>
+
+{% endblock %}

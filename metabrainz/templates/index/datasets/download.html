@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Download Datasets') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">Download data dumps</h1>
+
+  <div>
+      You can download our data sets from the following locations:
+  </div>
+
+  <h3>MetaBrainz Database Dumps</h3>
+
+  <table>
+        <tr>
+            <td>MusicBrainz PostgreSQL Data Dumps</td>
+            <td><a href="http://data.metabrainz.org/pub/musicbrainz/data/fullexport/">http://data.metabrainz.org/pub/musicbrainz/data/fullexport/</a>
+        </tr>
+
+        <tr>
+            <td>MusicBrainz JSON Data Dumps</td>
+            <td><a href="http://data.metabrainz.org/pub/musicbrainz/data/json-dumps/">http://data.metabrainz.org/pub/musicbrainz/data/json-dumps/</a></td>
+        </tr>
+
+        <tr>
+            <td>Full ListenBrainz PostgreSQL Data Dumps</td>
+            <td><a href="http://data.metabrainz.org/pub/musicbrainz/listenbrainz/fullexport/">http://data.metabrainz.org/pub/musicbrainz/listenbrainz/fullexport/</a></td>
+        </tr>
+
+        <tr>
+            <td>Incremental ListenBrainz PostgreSQL Data Dumps</td>
+            <td><a href="http://data.metabrainz.org/pub/musicbrainz/listenbrainz/incremental/">http://data.metabrainz.org/pub/musicbrainz/listenbrainz/incremental/</a></td>
+        </tr>
+
+        <tr>
+            <td>CritiqueBrainz PostgreSQL Data Dumps</td>
+            <td><a href="http://data.musicbrainz.org/pub/musicbrainz/critiquebrainz/">http://data.musicbrainz.org/pub/musicbrainz/critiquebrainz/</a></td>
+        </tr>
+  </table>
+
+  <h3>MetaBrainz Derived Dumps</h3>
+
+  <table>
+        <tr>
+            <td>MusicBrainz Canonical Data Dumps</td>
+            <td><a href="http://data.metabrainz.org/pub/musicbrainz/canonical_data/">http://data.metabrainz.org/pub/musicbrainz/canonical_data/</a></td>
+        </tr>
+
+        <tr>
+            <td>Music Listening History Dataset+</td>
+            <td><a href="http://data.metabrainz.org/pub/musicbrainz/listenbrainz/mlhd/">http://data.metabrainz.org/pub/musicbrainz/listenbrainz/mlhd/</a></td>
+        </tr>
+  </table>
+
+
+{% endblock %}
