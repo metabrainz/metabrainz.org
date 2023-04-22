@@ -9,3 +9,5 @@ from .token_log import TokenLog
 from .access_log import AccessLog
 from .tier import Tier
 from .payment import Payment
+from .dataset import Dataset
+from .dataset_user import DatasetUser
