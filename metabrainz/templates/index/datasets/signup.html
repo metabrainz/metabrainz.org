@@ -3,21 +3,43 @@
 {% block title %}{{ _('Please sign up') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">Please sign up</h1>
+  <h1 class="page-title">Please sign up!</h1>
 
   <p>
-    Please to be signing up. This data helps us serve you bettter.
+     Before you begin your data download, please consider signing up with us to give us a little
+     information about how you plan to use our data. As per our <a href="/privacy">Privacy Policy</a>,
+     we will never share any of the sign-up information with anyone -- we use this data internally
+     to understand how and who is using our data so that we can improve these datasets to better
+     meet your needs.
   </p>
 
-  <div>
-      <a href="{{ url_for("users.signup_commercial") }}">
-         <button type="button" class="btn btn-default btn-lg">OK, I'll sign up!</button>
-      </a>
-  </div>
-  <div>
+  <p>
+    <b>Commercial users</b>: If you plan to use our data in a commercial setting you are required
+    to sign up with us and to financially support us in an effort to keep the MetaBrainz Foundation
+    operating and creating more data. For more information on how we define commercial use, please
+    click the signup button below.
+  </p>
+
+  <p style="margin-bottom: 2em">
+    <b>Non-commercial users</b>: If you plan to use our data in a personal project, you are not required
+    to sign up, but we would really appreciate it if you would sign up, so that we may better understand
+    our data users.
+  </p>
+
+  <div class="row">
+
+    <div class="col-md-6" style="text-align: center">
       <a href="{{ url_for("index.download") }}">
-         <button type="button" class="btn btn-default btn-lg">Naaaah, just give me the data!</button>
+         <button type="button" class="btn btn-default btn-lg">Just give me the data!</button>
       </a>
+    </div>
+
+    <div class="col-md-6" style="text-align: center">
+      <a href="{{ url_for("users.signup_commercial") }}">
+         <button type="button" class="btn btn-success btn-lg">OK, I'll sign up!</button>
+      </a>
+    </div>
+
   </div>
 
 {% endblock %}
