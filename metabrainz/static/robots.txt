@@ -7,3 +7,4 @@ Disallow: /profile
 Disallow: /api/
 Disallow: /static/img
 Disallow: /donors
+Disallow: /datasets/download
