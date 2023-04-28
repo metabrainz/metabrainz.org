@@ -443,7 +443,7 @@ table.finances td:nth-child(2) {
     }
 
     td {
-        padding: 0 3px 0 3px; 
+        padding: 0 3px 0 3px;
         font-size: 11pt;
     }
 
@@ -454,9 +454,31 @@ table.finances td:nth-child(2) {
 }
 
 
-.dataset-panel.panel .panel-heading {
+.dataset-panel.panel .panel-heading,
+#dataset-signup .panel .panel-heading {
     margin-top: 0;
     margin-bottom: 0;
     font-weight: 500;
     color: #EB743B;
+}
+
+#dataset-signup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  max-width: calc(100% - 2em);
+
+  > * {
+    // panel elements
+    flex:1;
+    min-width: 400px;
+    margin: 0 1em 1em;
+  }
+  .buttons {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
 }
