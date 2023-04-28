@@ -17,6 +17,10 @@
       background: desaturate(@background, 15%);
     }
   }
+  &.btn-outline{
+    color:@background;
+    background-color:transparent
+  }
 }
 
 .btn-link:before {
@@ -32,6 +36,11 @@
 .btn-sm, .btn-xs {
   // line-height: ensure proper height of button next to small input
   .button-size(@padding-small-vertical; @padding-small-horizontal * 1.5; @font-size-small; @line-height-small; .25rem);
+}
+
+.btn-md {
+  // line-height: ensure proper height of button next to small input
+  .button-size(@padding-large-vertical; @padding-large-horizontal; 16px; @line-height-base; .25rem);
 }
 
 .btn-xs {
