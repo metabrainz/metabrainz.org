@@ -5,10 +5,9 @@
 }
 
 .button-variant(@color; @background:transparent; @border:@background) {
-  color: @background;
+  color: @color;
   background: @background;
   border-color: @background;
-  background-color: transparent;
   &:hover, &:focus, &:active, &.active, .open .dropdown-toggle& {
     background: lighten(@background, 7%);
   }
