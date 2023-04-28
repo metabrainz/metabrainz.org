@@ -10,6 +10,13 @@ CREATE TABLE tier (
   "primary"  BOOLEAN           NOT NULL
 );
 
+CREATE TABLE dataset (
+    id          INTEGER GENERATED ALWAYS AS IDENTITY,
+    name        TEXT NOT NULL,
+    description TEXT,
+    project     dataset_project_type NOT NULL
+);
+
 CREATE TABLE "user" (
   id               SERIAL            NOT NULL, -- PK
   is_commercial    BOOLEAN           NOT NULL,
@@ -35,6 +42,12 @@ CREATE TABLE "user" (
   good_standing    BOOLEAN           NOT NULL,
   in_deadbeat_club BOOLEAN           NOT NULL,
   featured         BOOLEAN           NOT NULL
+);
+
+CREATE TABLE dataset_user (
+    id          INTEGER GENERATED ALWAYS AS IDENTITY,
+    user_id     INTEGER NOT NULL,
+    dataset_id  INTEGER NOT NULL
 );
 
 CREATE TABLE token (

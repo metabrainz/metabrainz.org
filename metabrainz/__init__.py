@@ -1,10 +1,10 @@
 import os
 import pprint
-import subprocess
 import sys
 
 import stripe
 from brainzutils.flask import CustomFlask
+from brainzutils import sentry
 from flask import send_from_directory, request
 from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
@@ -73,10 +73,9 @@ def create_app(debug=None, config_path = None):
     print('Configuration values are as follows: ')
     print(pprint.pformat(app.config, indent=4))
 
-    app.init_loggers(
-        file_config=app.config.get('LOG_FILE'),
-        sentry_config=app.config.get('LOG_SENTRY'),
-    )
+    sentry_config = app.config.get('LOG_SENTRY')
+    if sentry_config:
+        sentry.init_sentry(**sentry_config)
 
     # Database
     from metabrainz import db
@@ -134,9 +133,11 @@ def create_app(debug=None, config_path = None):
     from metabrainz.model.user import UserAdminView
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
+    from metabrainz.model.dataset import DatasetAdminView
     admin.add_view(UserAdminView(model.db.session, category='Users', endpoint="user_model"))
     admin.add_view(PaymentAdminView(model.db.session, category='Payments', endpoint="payment_model"))
     admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
+    admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
 
     # Custom stuff
     from metabrainz.admin.views import CommercialUsersView

@@ -23,3 +23,8 @@ CREATE TYPE payment_currency AS ENUM (
   'usd',
   'eur'
 );
+
+CREATE TYPE dataset_project_type AS ENUM (
+  'musicbrainz',
+  'listenbrainz'
+);

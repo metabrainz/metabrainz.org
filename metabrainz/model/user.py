@@ -76,6 +76,8 @@ class User(db.Model, UserMixin):
     tokens = db.relationship("Token", backref="owner", lazy="dynamic")
     token_log_records = db.relationship("TokenLog", backref="user", lazy="dynamic")
 
+    datasets = db.relationship("Dataset", secondary="dataset_user")
+
     def __str__(self):
         if self.is_commercial:
             return "%s (#%s)" % (self.org_name, self.id)
@@ -97,6 +99,7 @@ class User(db.Model, UserMixin):
             contact_name=kwargs.pop('contact_name'),
             contact_email=kwargs.pop('contact_email'),
             data_usage_desc=kwargs.pop('data_usage_desc'),
+            datasets=kwargs.pop('datasets', None),
             org_desc=kwargs.pop('org_desc', None),
 
             org_name=kwargs.pop('org_name', None),
@@ -210,6 +213,9 @@ class User(db.Model, UserMixin):
         contact_email = kwargs.pop('contact_email')
         if contact_email is not None:
             self.contact_email = contact_email
+        datasets = kwargs.pop('datasets', None)
+        if datasets is not None:
+            self.datasets = datasets
         if kwargs:
             raise TypeError('Unexpected **kwargs: %r' % kwargs)
         db.session.commit()
@@ -290,6 +296,7 @@ class UserAdminView(AdminModelView):
         address_postcode='Postal code',
         address_country='Country',
         in_deadbeat_club='In Deadbeat Club',
+        datasets='Datasets'
     )
     column_descriptions = dict(
         featured='Indicates if this user is publicly displayed on the website. '
@@ -304,7 +311,7 @@ class UserAdminView(AdminModelView):
     )
     column_list = (
         'is_commercial', 'musicbrainz_id', 'org_name', 'tier', 'featured',
-        'good_standing', 'state',
+        'good_standing', 'state', 'datasets'
     )
     form_columns = (
         'musicbrainz_id',

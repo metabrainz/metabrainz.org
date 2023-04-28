@@ -9,5 +9,7 @@ ALTER TABLE payment ADD CONSTRAINT payment_pkey PRIMARY KEY (id);
 ALTER TABLE oauth_client ADD CONSTRAINT oauth_client_pkey PRIMARY KEY (client_id);
 ALTER TABLE oauth_grant ADD CONSTRAINT oauth_grant_pkey PRIMARY KEY (id);
 ALTER TABLE oauth_token ADD CONSTRAINT oauth_token_pkey PRIMARY KEY (id);
+ALTER TABLE dataset ADD CONSTRAINT dataset_pkey PRIMARY KEY (id);
+ALTER TABLE dataset_user ADD CONSTRAINT dataset_user_pkey PRIMARY KEY (id);
 
 COMMIT;
