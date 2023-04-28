@@ -133,9 +133,11 @@ def create_app(debug=None, config_path = None):
     from metabrainz.model.user import UserAdminView
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
+    from metabrainz.model.dataset import DatasetAdminView
     admin.add_view(UserAdminView(model.db.session, category='Users', endpoint="user_model"))
     admin.add_view(PaymentAdminView(model.db.session, category='Payments', endpoint="payment_model"))
     admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
+    admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
 
     # Custom stuff
     from metabrainz.admin.views import CommercialUsersView

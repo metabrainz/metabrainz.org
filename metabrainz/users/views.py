@@ -1,13 +1,15 @@
-from flask import Blueprint, request, redirect, render_template, url_for, jsonify
+from flask import Blueprint, request, redirect, render_template, url_for, jsonify, current_app
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_babel import gettext
 from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 from metabrainz.mail import send_mail, MailException
+from metabrainz.model import Dataset
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
 from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.users import musicbrainz_login, login_forbidden
-from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, UserEditForm
+from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, UserEditForm, CommercialUserEditForm, \
+    NonCommercialUserEditForm
 from metabrainz import flash, session
 import logging
 
@@ -181,8 +183,9 @@ def signup_noncommercial():
         })
         return redirect(url_for(".signup"))
     mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
+    available_datasets = Dataset.query.all()
 
-    form = NonCommercialSignUpForm(default_email=mb_email)
+    form = NonCommercialSignUpForm(available_datasets, default_email=mb_email)
     if form.validate_on_submit():
         # Checking if this user already exists
         new_user = User.get(musicbrainz_id=mb_username)
@@ -193,6 +196,7 @@ def signup_noncommercial():
                 contact_name=form.contact_name.data,
                 contact_email=form.contact_email.data,
                 data_usage_desc=form.usage_desc.data,
+                datasets=form.datasets.data
             )
             flash.success(gettext("Thanks for signing up!"))
             try:
@@ -262,17 +266,31 @@ def profile():
 @users_bp.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
-    form = UserEditForm()
+    if current_user.is_commercial:
+        form = CommercialUserEditForm()
+    else:
+        available_datasets = Dataset.query.all()
+        form = NonCommercialUserEditForm(available_datasets)
+
     if form.validate_on_submit():
-        current_user.update(
-            contact_name=form.contact_name.data,
-            contact_email=form.contact_email.data,
-        )
+        kwargs = {
+            "contact_name": form.contact_name.data,
+            "contact_email": form.contact_email.data
+        }
+
+        if not current_user.is_commercial:
+            kwargs["datasets"] = form.datasets.data
+
+        current_user.update(**kwargs)
         flash.success("Profile updated.")
         return redirect(url_for('.profile'))
     else:
         form.contact_name.data = current_user.contact_name
         form.contact_email.data = current_user.contact_email
+
+        if not current_user.is_commercial and current_user.datasets:
+            form.datasets.data = [dataset.id for dataset in current_user.datasets]
+
     return render_template('users/profile-edit.html', form=form)
 
 

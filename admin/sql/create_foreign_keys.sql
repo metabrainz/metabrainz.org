@@ -10,6 +10,16 @@ ALTER TABLE "user"
   REFERENCES tier (id) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE SET NULL;
 
+ALTER TABLE dataset_user
+    ADD CONSTRAINT dataset_user_user_id_fkey FOREIGN KEY (user_id)
+    REFERENCES "user" (id) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE dataset_user
+    ADD CONSTRAINT dataset_user_dataset_id_fkey FOREIGN KEY (dataset_id)
+    REFERENCES "dataset" (id) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE NO ACTION;
+
 ALTER TABLE token_log
   ADD CONSTRAINT token_log_token_value_fkey FOREIGN KEY (token_value)
   REFERENCES token (value) MATCH SIMPLE

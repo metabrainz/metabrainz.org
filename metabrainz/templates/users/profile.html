@@ -45,6 +45,13 @@
       <p>
         <strong>{{ _('Name:') }}</strong> {{ current_user.contact_name }}<br />
         <strong>{{ _('Email:') }}</strong> {{ current_user.contact_email }}<br />
+        {% if not current_user.is_commercial %}
+          <strong>{{ _('Datasets used:') }}</strong>
+          {% if current_user.datasets %}
+            {{ current_user.datasets|map(attribute="name")|join(", ") }}
+          {% endif %}
+          <br/>
+        {% endif %}
       </p>
       <p>
         <a href="{{ url_for('users.profile_edit') }}" class="btn btn-xs btn-primary">
