@@ -467,18 +467,22 @@ table.finances td:nth-child(2) {
   flex-wrap: wrap;
   align-items: stretch;
   max-width: calc(100% - 2em);
-
-  > * {
-    // panel elements
+  .panel{
     flex:1;
     min-width: 400px;
     margin: 0 1em 1em;
+    .panel-body{
+      min-height: 230px;
+      display: flex;
+      flex-direction: column;
+      .buttons {
+        margin-top:auto;
+      }
+    }
   }
   .buttons {
-    margin-top: 1em;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-wrap: wrap;
-    align-items: flex-start;
   }
 }

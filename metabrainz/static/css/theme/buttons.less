@@ -5,10 +5,9 @@
 }
 
 .button-variant(@color; @background:transparent; @border:@background) {
-  color: @background;
+  color: @color;
   background: @background;
   border-color: @background;
-  background-color: transparent;
   &:hover, &:focus, &:active, &.active, .open .dropdown-toggle& {
     background: lighten(@background, 7%);
   }
@@ -17,6 +16,10 @@
       color: lighten(@color, 10%);
       background: desaturate(@background, 15%);
     }
+  }
+  &.btn-outline{
+    color:@background;
+    background-color:transparent
   }
 }
 
@@ -33,6 +36,11 @@
 .btn-sm, .btn-xs {
   // line-height: ensure proper height of button next to small input
   .button-size(@padding-small-vertical; @padding-small-horizontal * 1.5; @font-size-small; @line-height-small; .25rem);
+}
+
+.btn-md {
+  // line-height: ensure proper height of button next to small input
+  .button-size(@padding-large-vertical; @padding-large-horizontal; 16px; @line-height-base; .25rem);
 }
 
 .btn-xs {
