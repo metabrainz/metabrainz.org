@@ -26,5 +26,6 @@ CREATE TYPE payment_currency AS ENUM (
 
 CREATE TYPE dataset_project_type AS ENUM (
   'musicbrainz',
-  'listenbrainz'
+  'listenbrainz',
+  'critiquebrainz'
 );
