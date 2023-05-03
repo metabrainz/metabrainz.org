@@ -114,6 +114,18 @@
       When you generate a new token, your current token is revoked.') }}
     </p>
     <p>{{ _('See the <a href="%(api_docs_url)s">API documentation</a> for more information.', api_docs_url=url_for('api_index.info')) }}</p>
+    <h2>{{ _('Data Download') }}</h2>
+
+    <p>
+      Go to the <a href="{{ url_for("index.download") }}">Datasets download page</a> to download any of our datasets.
+    </p>
+
+    {% if not current_user.is_commercial %}
+      <p>
+         Thank you for registering with us -- we really appreciated it!
+      </p>
+    {% endif %}
+
   {% endif %}
 {% endblock %}
 
