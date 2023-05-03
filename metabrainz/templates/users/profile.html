@@ -102,7 +102,7 @@
   {% endif %}
 
   {% if current_user.state == 'active' %}
-    <h2>{{ _('Access token') }}</h2>
+    <h2>{{ _('Live Data Feed Access token') }}</h2>
     <p>
       <code id="token" style="margin-right:4px; {{ 'display:none;' if not current_user.token }}">{{ current_user.token.value }}</code>
       <a id="btn-generate-token" class="btn btn-default btn-xs" href="#" role="button">{{ _('Generate new token') }}</a>
