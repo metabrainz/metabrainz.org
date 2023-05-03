@@ -23,6 +23,10 @@ SESSION_KEY_MB_EMAIL = 'mb_email'
 ACCOUNT_TYPE_COMMERCIAL = 'commercial'
 ACCOUNT_TYPE_NONCOMMERCIAL = 'noncommercial'
 
+def log(msg):
+    with open("/tmp/log.txt", "a+") as l:
+        l.write(msg + "\n")
+
 
 @users_bp.route('/supporters')
 def supporters_list():
@@ -82,6 +86,7 @@ def signup_commercial():
     Commercial users need to choose support tier before filling out the form.
     `tier_id` argument with ID of a tier of choice is required there.
     """
+    log("signup commercial")
     tier_id = request.args.get('tier_id')
     if not tier_id:
         flash.warning(gettext("You need to choose support tier before signing up!"))
@@ -159,7 +164,7 @@ def signup_commercial():
                     recipients=[new_user.contact_email],
                 )
             except MailException as e:
-                logging.error(e)
+                log(e)
                 flash.warning(gettext(
                     "Failed to send welcome email to you. We are looking into it. "
                     "Sorry for inconvenience!"
@@ -175,12 +180,14 @@ def signup_commercial():
 @users_bp.route('/signup/noncommercial', methods=('GET', 'POST'))
 @login_forbidden
 def signup_noncommercial():
+    log("signup noncommercial")
     """Sign up endpoint for non-commercial users."""
     mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
     if not mb_username:
         session.persist_data(**{
             SESSION_KEY_ACCOUNT_TYPE: ACCOUNT_TYPE_NONCOMMERCIAL,
         })
+        log("signup noncommercial 1st redirect")
         return redirect(url_for(".signup"))
     mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
     available_datasets = Dataset.query.all()
@@ -208,7 +215,7 @@ def signup_noncommercial():
                     recipients=[new_user.contact_email],
                 )
             except MailException as e:
-                logging.error(e)
+                log(e)
                 flash.warning(gettext(
                     "Failed to send welcome email to you. We are looking into it. "
                     "Sorry for inconvenience!"
@@ -216,6 +223,7 @@ def signup_noncommercial():
         else:
             flash.info(gettext("You already have a MetaBrainz account!"))
         login_user(new_user)
+        log("signup noncommercial 2nd redirect")
         return redirect(url_for('.profile'))
 
     return render_template("users/signup-non-commercial.html", form=form, mb_username=mb_username)
@@ -260,6 +268,7 @@ def musicbrainz_post():
 @users_bp.route('/profile')
 @login_required
 def profile():
+    log("user profile")
     return render_template("users/profile.html")
 
 

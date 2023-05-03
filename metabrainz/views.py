@@ -82,7 +82,7 @@ def gdpr_statement():
 
 @index_bp.route('/about/customers.html')
 def about_customers_redirect():
-    return redirect(url_for('users.supporters_list') , 301)
+    return redirect(url_for('users.supporters_list'), 301)
 
 
 @index_bp.route('/shop')
@@ -94,17 +94,21 @@ def shop():
 def datasets():
     return render_template('index/datasets.html')
 
+
 @index_bp.route('/datasets/postgres-dumps')
 def postgres_dumps():
     return render_template('index/datasets/postgres-dumps.html')
+
 
 @index_bp.route('/datasets/derived-dumps')
 def derived_dumps():
     return render_template('index/datasets/derived-dumps.html')
 
+
 @index_bp.route('/datasets/signup')
 def signup():
     return render_template('index/datasets/signup.html')
+
 
 @index_bp.route('/datasets/download')
 def download():

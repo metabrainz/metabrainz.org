@@ -72,3 +72,19 @@ class IndexViewsTestCase(FlaskTestCase):
     def test_datasets(self):
         response = self.client.get(url_for('index.datasets'))
         self.assert200(response)
+
+    def test_postgres_dumps(self):
+        response = self.client.get(url_for('index.postgres_dumps'))
+        self.assert200(response)
+
+    def test_derived_dumps(self):
+        response = self.client.get(url_for('index.derived_dumps'))
+        self.assert200(response)
+
+    def test_dataset_signup(self):
+        response = self.client.get(url_for('index.signup'))
+        self.assert200(response)
+
+    def test_dataset_download(self):
+        response = self.client.get(url_for('index.download'))
+        self.assert200(response)
