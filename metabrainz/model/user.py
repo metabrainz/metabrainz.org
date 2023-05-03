@@ -99,7 +99,7 @@ class User(db.Model, UserMixin):
             contact_name=kwargs.pop('contact_name'),
             contact_email=kwargs.pop('contact_email'),
             data_usage_desc=kwargs.pop('data_usage_desc'),
-            datasets=kwargs.pop('datasets', None),
+            datasets=kwargs.pop('datasets', []),
             org_desc=kwargs.pop('org_desc', None),
 
             org_name=kwargs.pop('org_name', None),
