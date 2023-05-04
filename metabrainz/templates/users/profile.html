@@ -21,6 +21,11 @@
     </span>
   </p>
 
+  <p>
+    NOTE: If you would like to change your account from non-commercial to commercial, please
+    <a href="{{ url_for("index.contact") }}">contact us</a>.
+  </p>
+
   <div class="row">
     {% if current_user.is_commercial %}
       <div class="col-md-7">
@@ -40,7 +45,7 @@
       </div>
     {% endif %}
 
-    <div class="col-md-5">
+    <div class="col-md-12">
       <h3>{{ _('Contact information') }}</h3>
       <p>
         <strong>{{ _('Name:') }}</strong> {{ current_user.contact_name }}<br />
@@ -54,8 +59,8 @@
         {% endif %}
       </p>
       <p>
-        <a href="{{ url_for('users.profile_edit') }}" class="btn btn-xs btn-primary">
-          {{ _('Edit contact information') }}
+        <a href="{{ url_for('users.profile_edit') }}" class="btn btn-lg btn-primary">
+          {{ _('Edit datasets/contact information') }}
         </a>
       </p>
     </div>
@@ -101,30 +106,43 @@
     {% endif %}
   {% endif %}
 
-  {% if current_user.state == 'active' %}
-    <h2>{{ _('Live Data Feed Access token') }}</h2>
-    <p>
-      <code id="token" style="margin-right:4px; {{ 'display:none;' if not current_user.token }}">{{ current_user.token.value }}</code>
-      <a id="btn-generate-token" class="btn btn-default btn-xs" href="#" role="button">{{ _('Generate new token') }}</a>
-    </p>
-    <p class="text-muted" style="font-style: italic;">
-      {{ _('This access token should be considered private. Don\'t check this token
-      into any publicly visible version control systems and similar places.
-      If the token has been exposed, you should immediately generate a new one!
-      When you generate a new token, your current token is revoked.') }}
-    </p>
-    <p>{{ _('See the <a href="%(api_docs_url)s">API documentation</a> for more information.', api_docs_url=url_for('api_index.info')) }}</p>
     <h2>{{ _('Data Download') }}</h2>
-
-    <p>
-      Go to the <a href="{{ url_for("index.download") }}">Datasets download page</a> to download any of our datasets.
-    </p>
 
     {% if not current_user.is_commercial %}
       <p>
          Thank you for registering with us -- we really appreciated it!
       </p>
     {% endif %}
+
+    <p>
+      Please proceed to our download page to download our datasets:
+    </p>
+
+    <p>
+      <a href="{{ url_for("index.download") }}" class="btn btn-lg btn-primary">Download Datasets</a>
+    </p>
+
+  {% if current_user.state == 'active' %}
+    <h2>{{ _('Live Data Feed Access token') }}</h2>
+    <p style="font-style: italic; color: #444">
+      {{ _('This access token should be considered private. Don\'t check this token
+      into any publicly visible version control systems and similar places.
+      If the token has been exposed, you should immediately generate a new one!
+      When you generate a new token, your current token is revoked.') }}
+    </p>
+    <div class="dataset-summary">
+      <p>
+       {% if  current_user.token %}
+          <div id="token" style="font-size:14pt; padding: .5em; color: #AA0000">{{ current_user.token.value }}</div>
+       {% else %}
+          <div id="token" style="font-size:14pt; padding: .5em; color: #AA0000">[ there is no valid token currently ]</div>
+       {% endif %}
+      </p>
+      <p>
+        <a id="btn-generate-token" class="btn btn-default" href="#" role="button">{{ _('Generate new token') }}</a>
+      </p>
+    </div>
+    <p>{{ _('See the <a href="%(api_docs_url)s">API documentation</a> for more information.', api_docs_url=url_for('api_index.info')) }}</p>
 
   {% endif %}
 {% endblock %}

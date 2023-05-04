@@ -90,10 +90,15 @@
         <div class="checkbox">
           <label id="agreement">
             {{ form.agreement(required="required") }}
-            {{ _('I agree to use the Live Data Feed for non-commercial (less than $500
-            income per year) or personal uses only. I also agree to treat my access
-            token as a secret and will not share this token publicly or commit it
-            to a source code repository.') }}
+            <p>
+              I agree to use the MetaBrainz data for non-commercial (less than $500
+              income per year) or personal uses only.
+            </p>
+            <p>
+              I also agree that if I generate a Live Data Feed access token, that I
+              treat my access token as a secret and will not share this token publicly
+              or commit it to a source code repository.
+            </p>
           </label>
         </div>
       </div>

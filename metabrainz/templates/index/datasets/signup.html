@@ -21,7 +21,7 @@
     click the signup button below.
     
         <div class="buttons">
-          <a class="btn btn-md btn-success" href="{{ url_for("users.account_type") }}">
+          <a class="btn btn-md btn-success" href="{{ url_for("users.account_type") + "#commercial" }}">
             Sign up
           </a>
         </div>
@@ -31,7 +31,7 @@
       <h4 class="panel-heading">Non-commercial users</h4>
       <div class="panel-body">If you plan to use our data in a personal project, you are not required to sign up, but we would really appreciate it if you would sign up, so that we may better understand our data users.
         <div class="buttons" >
-          <a class="btn btn-md btn-success" href="{{ url_for("users.account_type") }}">
+          <a class="btn btn-md btn-success" href="{{ url_for("users.account_type") + "#non-commercial" }}">
             OK, I'll sign up!
           </a>
           

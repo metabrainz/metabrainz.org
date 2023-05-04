@@ -1,6 +1,9 @@
 import datetime
 from flask import Blueprint, render_template, redirect, url_for
+from flask_login import current_user
 from metabrainz.model.user import User
+from metabrainz import session
+from metabrainz.users.views import SESSION_KEY_MB_USERNAME
 
 index_bp = Blueprint('index', __name__)
 
@@ -107,6 +110,9 @@ def derived_dumps():
 
 @index_bp.route('/datasets/signup')
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for("index.download"))
+
     return render_template('index/datasets/signup.html')
 
 
