@@ -21,10 +21,12 @@
     </span>
   </p>
 
-  <p>
-    NOTE: If you would like to change your account from non-commercial to commercial, please
-    <a href="{{ url_for("index.contact") }}">contact us</a>.
-  </p>
+  {% if not current_user.is_commercial %}
+     <p>
+       NOTE: If you would like to change your account from non-commercial to commercial, please
+       <a href="{{ url_for("index.contact") }}">contact us</a>.
+     </p>
+  {% endif %}
 
   <div class="row">
     {% if current_user.is_commercial %}
@@ -60,7 +62,11 @@
       </p>
       <p>
         <a href="{{ url_for('users.profile_edit') }}" class="btn btn-lg btn-primary">
-          {{ _('Edit datasets/contact information') }}
+          {% if current_user.is_commercial %}
+             Edit contact information
+          {% else %}
+             Edit datasets/contact information
+          {% endif %}
         </a>
       </p>
     </div>
@@ -106,6 +112,7 @@
     {% endif %}
   {% endif %}
 
+  {% if current_user.state in ('active', 'limited') and current_user.good_standing %}
     <h2>{{ _('Data Download') }}</h2>
 
     {% if not current_user.is_commercial %}
@@ -121,6 +128,7 @@
     <p>
       <a href="{{ url_for("index.download") }}" class="btn btn-lg btn-primary">Download Datasets</a>
     </p>
+  {% endif %}
 
   {% if current_user.state == 'active' %}
     <h2>{{ _('Live Data Feed Access token') }}</h2>
