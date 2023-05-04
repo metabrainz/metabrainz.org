@@ -141,6 +141,7 @@ def signup_commercial():
 
                 tier_id=tier_id,
                 amount_pledged=form.amount_pledged.data,
+                datasets=[]
             )
             flash.success(gettext(
                 "Thanks for signing up! Your application will be reviewed "
