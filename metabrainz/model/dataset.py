@@ -19,7 +19,7 @@ class Dataset(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text)
-    project = db.Column(ENUM('musicbrainz', 'listenbrainz', name='dataset_project_type'), nullable=False)
+    project = db.Column(ENUM('musicbrainz', 'listenbrainz', 'critiquebrainz', name='dataset_project_type'), nullable=False)
 
     def __str__(self):
         return self.name
