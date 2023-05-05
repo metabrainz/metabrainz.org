@@ -1,6 +1,9 @@
 import datetime
 from flask import Blueprint, render_template, redirect, url_for
+from flask_login import current_user
 from metabrainz.model.user import User
+from metabrainz import session
+from metabrainz.users.views import SESSION_KEY_MB_USERNAME
 
 index_bp = Blueprint('index', __name__)
 
@@ -82,7 +85,7 @@ def gdpr_statement():
 
 @index_bp.route('/about/customers.html')
 def about_customers_redirect():
-    return redirect(url_for('users.supporters_list') , 301)
+    return redirect(url_for('users.supporters_list'), 301)
 
 
 @index_bp.route('/shop')
@@ -93,3 +96,26 @@ def shop():
 @index_bp.route('/datasets')
 def datasets():
     return render_template('index/datasets.html')
+
+
+@index_bp.route('/datasets/postgres-dumps')
+def postgres_dumps():
+    return render_template('index/datasets/postgres-dumps.html')
+
+
+@index_bp.route('/datasets/derived-dumps')
+def derived_dumps():
+    return render_template('index/datasets/derived-dumps.html')
+
+
+@index_bp.route('/datasets/signup')
+def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for("index.download"))
+
+    return render_template('index/datasets/signup.html')
+
+
+@index_bp.route('/datasets/download')
+def download():
+    return render_template('index/datasets/download.html')

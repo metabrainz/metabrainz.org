@@ -234,7 +234,7 @@ h1.page-title, h2.page-title {
   }
 }
 
-// Team page 
+// Team page
 #team {
   .person {
     .clearfix;
@@ -389,38 +389,100 @@ table.finances td:nth-child(2) {
 }
 
 // Datasets page
-#data {
-  display: flex;
-  .column {
-    margin: 20px;
-    .dataset {
-      .clearfix;
-      padding-bottom: 20px;
-      span.name {
-        font-weight: bold;
-        color: @orange;
-      }
-      img.logo {
-        float: left;
-        width: 100px;
-        .pull-left;
-        margin-right: 10px;
-        margin-top: 15px;
-      }
-      .info {
-      @media (min-width: @grid-float-breakpoint) {
-        margin-left: 142px;
-      }
-      ul.links {
-        .list-unstyled;
+.dataset-card {
+    background: #eee;
+    height: 16em;
+    filter: drop-shadow(0px 4px 4px fade(#000, 25%));
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    padding: 0.5em;
+    align-items: center;
+    
+    .dataset-card-logo {
+      width: 100%;
+      padding: 0.7em;
+    }
+
+    .dataset-card-text {
+      > p:first-of-type {
+          margin: 0 15px 10px 0px;
       }
     }
-  }
+    
+    .dataset-card-heading {
+        color: #eb743b;
+        font-weight: bold;
+    }
 }
-}
+
 
 @media (max-width: 400px) {
   #data {
     flex-direction: column;
+  }
+}
+
+.dataset-summary {
+    background: #eee;
+    filter: drop-shadow(0px 4px 4px fade(#000, 25%));
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-top: 1em;
+    margin-bottom: 3em;
+    padding: 1em;
+    align-items: center;
+
+    .dataset-summary-heading {
+        color: #eb743b;
+        font-weight: bold;
+        font-size: 15pt;
+        margin-bottom: 15px;
+    }
+
+    td {
+        padding: 0 3px 0 3px;
+        font-size: 11pt;
+    }
+
+    td:nth-child(1){
+        font-weight: bold;
+        text-align: right;
+    }
+}
+
+
+.dataset-panel.panel .panel-heading,
+#dataset-signup .panel .panel-heading {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #EB743B;
+}
+
+#dataset-signup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  max-width: calc(100% - 2em);
+  .panel{
+    flex:1;
+    min-width: 400px;
+    margin: 0 1em 1em;
+    .panel-body{
+      min-height: 230px;
+      display: flex;
+      flex-direction: column;
+      .buttons {
+        margin-top:auto;
+      }
+    }
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
   }
 }

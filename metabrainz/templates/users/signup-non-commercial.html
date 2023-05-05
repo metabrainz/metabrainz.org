@@ -8,7 +8,7 @@
   <p>
     {{ _('Please be aware that misuse of the non-commercial service for commercial purposes will
     result in us revoking your access token and then billing you for your commercial use of our
-    Live Data Feed.') }}
+    datasets or the Live Data Feed.') }}
   </p>
 
   {% for field in form.errors %}
@@ -90,10 +90,15 @@
         <div class="checkbox">
           <label id="agreement">
             {{ form.agreement(required="required") }}
-            {{ _('I agree to use the Live Data Feed for non-commercial (less than $500
-            income per year) or personal uses only. I also agree to treat my access
-            token as a secret and will not share this token publicly or commit it
-            to a source code repository.') }}
+            <p>
+              I agree to use the MetaBrainz data for non-commercial (less than $500
+              income per year) or personal uses only.
+            </p>
+            <p>
+              I also agree that if I generate a Live Data Feed access token, then I will
+              treat my access token as a secret and will not share this token publicly
+              or commit it to a source code repository.
+            </p>
           </label>
         </div>
       </div>

@@ -3,102 +3,205 @@
 {% block title %}{{ _('Datasets') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">{{ _('The MetaBrainz Datasets') }}</h1>
 
-  <p> 
-    We ask <a href="{{ url_for('users.account_type') }}">commercial users</a> to <a href="{{ url_for('users.account_type') }}">
-    support us</a> in order to help fund the creation and maintenance of these datasets. 
-    The MetaBrainz Foundation provides free, open access to various types of useful data gathered and verified by volunteers. 
-    Here, we list and describe the various datasets we maintain.
-  </p>
-<div id="data">
-  <div class="column">
-    <div class="dataset">
-      <img class="logo" src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz logo" />
-      <div class="info">
-        <h4><span class="name">MusicBrainz Data Dumps</span></h4>
-        <p>
-          The MusicBrainz Database is built on the PostgreSQL relational database engine and contains all of MusicBrainz' 
-          music metadata. This data includes but is not limited to artists, releases, labels and the relationships between them.
-          In addition, there is a full history of all the changes that the MusicBrainz community has made to the data.
-        </p>
-        <p>
-          MetaBrainz provides full database exports of the MusicBrainz database updated regularly and can be kept in sync 
-          with the main MusicBrainz database via the <a href="https://musicbrainz.org/doc/Live_Data_Feed">Live Data Feed</a>. 
-          The MusicBrainz data dumps can be found on the <a href="http://ftp.musicbrainz.org/pub/musicbrainz/data/fullexport/">
-          MusicBrainz FTP Server</a> and more information on the contents of the various dump files can be found in the 
-          <a href="https://musicbrainz.org/doc/MusicBrainz_Database/Download">MusicBrainz documentation</a>.
-        </p>
-      </div>
-    </div>
-    <div class="dataset">
-      <img class="logo" src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz logo" />
-      <div class="info">
-        <h4><span class="name">MusicBrainz JSON</span></h4>
-        <p>
-          MetaBrainz also provides access to the music metadata in the MusicBrainz database in the easily consumable format of JSON documents. 
-          These JSON dumps can be downloaded from the <a href="http://ftp.musicbrainz.org/pub/musicbrainz/data/json-dumps/">
-          MusicBrainz FTP Server</a>, and more information on the contents of the dumps can be found in the 
-          <a href="https://musicbrainz.org/doc/Development/JSON_Data_Dumps">MusicBrainz documentation</a>.
-          These dumps are <a href="https://creativecommons.org/share-your-work/public-domain/cc0/">
-          CC0 licensed</a> but we ask <a href="{{ url_for('users.account_type') }}">commercial users</a> to
-          <a href="{{ url_for('users.account_type') }}">support us</a> in order to help fund the creation and maintenance of these datasets.
-        </p>
-      </div>
-    </div>
-    <div class="dataset">
-      <img class="logo" src="{{ url_for('static', filename='img/projects/listenbrainz.svg') }}" alt="ListenBrainz logo" />
-      <div class="info">
-        <h4><span class="name">ListenBrainz</span></h4>
-        <p>
-          The <a href="https://listenbrainz.org">ListenBrainz</a> project serves as an archive where users can store their music listening history. 
-          This dataset can be used to create new music recommendation engines. The provided data dumps contains over
-          a 100 million listens in the ListenBrainz database. 
-          Also provided is access to a live feed of the ListenBrainz data on Google's BigQuery service.
-        </p>
-        <p>
-          The ListenBrainz project creates new data dumps every two weeks, on the 1st and 15th of every month. 
-          These data dumps are <a href="https://creativecommons.org/share-your-work/public-domain/cc0/">CC0 licensed</a> 
-          and can be downloaded from the <a href="http://ftp.musicbrainz.org/pub/musicbrainz/listenbrainz/fullexport/">
-          MusicBrainz FTP Server</a>. For more information, please visit the <a href="https://listenbrainz.org">
-          ListenBrainz website</a> and the <a href="https://listenbrainz.readthedocs.io/en/latest/dev/listenbrainz-dumps.html">
-          ListenBrainz data dumps documentation</a>.
-        </p>
-      </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="page-title">{{ _('The MetaBrainz Datasets') }}</h1>
+     
+      <p>
+        The MetaBrainz core mission is to curate and maintain public datasets that anyone can download
+        and use for their own purposes. We ask <a href="{{ url_for('users.account_type') }}">commercial users</a> to
+         <a href="{{ url_for('users.account_type') }}">support us</a> in order to help fund the
+        creation and maintenance of these datasets, but personal use of our datasets will always be free,
+        though we do appreciate <a href="{{ url_for('payments.donate') }}">end user donations</a> as well.
+      </p>
+
+      <p>
+        Our available datasets fit into two main categories: Main project data dumps, containing the entirety of the
+        data for a given project, and derived data dumps that are based on the data in our main project databases
+        and have a more specific purpose.
+      </p>
+
+      <h2>Database Dumps</h2>
     </div>
   </div>
-  <div class="column">
-    <div class="dataset">
-      <img class="logo" src="{{ url_for('static', filename='img/projects/acousticbrainz.svg') }}" alt="AcousticBrainz logo" />
-      <div class="info">
-        <h4><span class="name">AcousticBrainz</span></h4>
-        <p>
-          The <a href="https://acousticbrainz.org">AcousticBrainz</a> project aims to crowdsource acoustic information for all music globally and make it available publicly. 
-          This information describes the acoustic characteristics of music, includes low-level
-          spectral information as well as information for genres, moods, keys, scales and much more.
-        </p>
-        <p>
-          The MetaBrainz Foundation provides dumps of the data in the AcousticBrainz database regularly. 
-          These dumps are seperated into low-level and high-level archives, each containing different types of information about music. 
-          A download of the full AcousticBrainz database dump is also provided. 
-          For more information, please visit the <a href="http://acousticbrainz.org/download">AcousticBrainz downloads page</a>.
-        </p>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
+          <a href="/datasets/postgres-dumps#musicbrainz">
+            <img class="logo" src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz logo" />
+          </a>
+        </div>
+        <div class="dataset-card-text">
+            <h4>
+              <a href="/datasets/postgres-dumps#musicbrainz">
+                <span class="dataset-card-heading">MusicBrainz PostgreSQL Data</span>
+              </a>
+            </h4>
+            <p>
+              This data dump includes all public portions of the data from our MusicBrainz project.
+              All artists, releases, recordings, labels and the relationships between them, and
+              much more data, including everything needed to run your own copy of MusicBrainz is
+              included.
+            </p>
+            <p>
+              <a href="/datasets/postgres-dumps#musicbrainz">Read more...</a>
+            </p>
+        </div>
       </div>
     </div>
-    <div class="dataset">
-      <img class="logo" src="{{ url_for('static', filename='img/projects/critiquebrainz.svg') }}" alt="CritiqueBrainz logo" />
-      <div class="info">
-        <h4><span class="name">CritiqueBrainz</span></h4>
-        <p>
-          <a href="https://critiquebrainz.org">CritiqueBrainz</a> is a repository for Creative Commons licensed music and book reviews. It fills the gap between the factual music metadata in the MusicBrainz database and book metadata in the BookBrainz database, the opinions 
-          about music from music critics and books from book critics, listeners and readers by providing a platform that archives Creative Commons licensed reviews.
-        </p>
-        <p>
-          The MetaBrainz foundation provides full dumps of the CritiqueBrainz database as well as JSON dumps containing reviews in an easily consumable format. These datasets are updated every day and can be downloaded from the
-          <a href="ftp://ftp.musicbrainz.org/pub/musicbrainz/critiquebrainz/">MusicBrainz FTP Server</a>.
-        </p>
+
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
+          <a href="/datasets/postgres-dumps#musicbrainz-json">
+            <img class="logo" src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz logo" />
+          </a>
+        </div>
+        <div class="dataset-card-text">
+            <h4>
+              <a href="/datasets/postgres-dumps#musicbrainz-json">
+                <span class="dataset-card-heading">MusicBrainz JSON Data</span>
+              </a>
+            </h4>
+            <p>
+              We also provide the MusicBrainz data in the easily consumable format of JSON documents. If you
+              simply cannot work with PostgreSQL or you prefer to work with a document oriented data store, then this
+              data dump is for you.
+            </p>
+            <p>
+              <a href="/datasets/postgres-dumps#musicbrainz-json">Read more...</a>
+            </p>
+        </div>
       </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
+          <a href="/datasets/postgres-dumps#listenbrainz">
+            <img class="logo" src="{{ url_for('static', filename='img/projects/listenbrainz.svg') }}" alt="ListenBrainz logo" />
+          </a>
+        </div>
+        <div class="dataset-card-text">
+            <h4>
+              <a href="/datasets/postgres-dumps#listenbrainz">
+                <span class="dataset-card-heading">ListenBrainz PostgreSQL Data</span>
+              </a>
+            </h4>
+            <p>
+              ListenBrainz collects user listening information and creates insights for its users
+              about their own listening habits, as well as providing various tools for discovering new
+              music. All of this data, indexed against MusicBrainz, is available for
+              download.
+            </p>
+            <p>
+              <a href="/datasets/postgres-dumps#listenbrainz">Read more...</a>
+            </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
+          <a href="/datasets/postgres-dumps#critiquebrainz">
+            <img class="logo" src="{{ url_for('static', filename='img/projects/critiquebrainz.svg') }}" alt="CritiqueBrainz logo" />
+          </a>
+        </div>
+        <div class="dataset-card-text">
+            <h4>
+              <a href="/datasets/postgres-dumps#critiquebrainz">
+                <span class="dataset-card-heading">CritiqueBrainz PostgreSQL Data</span>
+              </a>
+            </h4>
+            <p>
+              The <a href="https://critiquebrainz.org">CritiqueBrainz project</a> collects user reviews of music and
+              books, based on the data of the <a href="https://musicbrainz.org">MusicBrainz</a> and
+              <a href="https://bookbrainz.org">BookBrainz</a> projects. All of the reviews and everything
+              necessary to run your own copy of CritiqueBrainz is included in these data dumps.
+            </p>
+            <p>
+              <a href="/datasets/postgres-dumps#critiquebrainz">Read more...</a>
+            </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Derived Dumps</h2>
+  
+      <p>
+        We have also made available the following <em>derived dumps</em> that take data from one project
+        and transform it into a new dataset that solves a different problem.
+      </p>
     </div>
   </div>
-</div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
+          <a href="/datasets/derived-dumps#canonical">
+            <img class="logo" src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz logo" />
+          </a>
+        </div>
+        <div class="dataset-card-text">
+            <h4>
+              <a href="/datasets/derived-dumps#canonical">
+                <span class="dataset-card-heading">MusicBrainz Canonical Data Dumps</span>
+              </a>
+            </h4>
+            <p>
+              These dumps contain canonical MusicBrainz data, which makes it easier to reason about the core
+              metadata in MusicBrainz, providing one single record for each musical recording and release in
+              the database. This dataset is useful for matching data to or from MusicBrainz.
+            </p>
+            <p>
+              <a href="/datasets/derived-dumps#canonical">Read more...</a>
+            </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="dataset-card">
+        <div class="dataset-card-logo">
+          <a href="/datasets/derived-dumps#mhld">
+            <img class="logo" src="{{ url_for('static', filename='img/projects/listenbrainz.svg') }}" alt="ListenBrainz logo" />
+          </a>
+        </div>
+        <div class="dataset-card-text">
+            <h4>
+              <a href="/datasets/derived-dumps#mhld">
+                <span class="dataset-card-heading">MHLD+ Data Dump</span>
+              </a>
+            </h4>
+            <p>
+                The Music Listening Histories Dataset collects a large number of music listening
+                events assembled from more than 27 billion time-stamped logs extracted from Last.fm.
+                Using the MusicBrainz canonical data, we cleaned up errors in the data
+                in order to provide an improved version of this dataset.
+            </p>
+            <p>
+              <a href="/datasets/derived-dumps#mhld">Read more...</a>
+            </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
 {% endblock %}

@@ -23,7 +23,6 @@ SESSION_KEY_MB_EMAIL = 'mb_email'
 ACCOUNT_TYPE_COMMERCIAL = 'commercial'
 ACCOUNT_TYPE_NONCOMMERCIAL = 'noncommercial'
 
-
 @users_bp.route('/supporters')
 def supporters_list():
     return render_template('users/supporters-list.html', tiers=Tier.get_available(sort=True, sort_desc=True))
@@ -142,6 +141,7 @@ def signup_commercial():
 
                 tier_id=tier_id,
                 amount_pledged=form.amount_pledged.data,
+                datasets=[]
             )
             flash.success(gettext(
                 "Thanks for signing up! Your application will be reviewed "

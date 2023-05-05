@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Datasets') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">MetaBrainz Derived Dumps</h1>
+
+  <p> 
+    On this page we describe several datasets with the term “canonical”. Since
+    MusicBrainz aims to catalog all released music, the database contains a lot
+    of different versions of releases or different versions of recordings. We
+    find it important to collect all of these different versions, but in the end
+    it is too much data for most of our users. Fortunately, it is easy to combine
+    multiple pieces of well structured data into something that fits a user’s
+    desired end-use.
+  </p>
+
+  <p> 
+    However, sometimes it can be challenging to work out which of the many
+    releases/recordings is the one that “most people will think of the most
+    representative version”. Even defining what this means is incredibly difficult,
+    but we’ve attempted to do just that and we’re using the results of this work in
+    our production systems on ListenBrainz to map incoming listens to MusicBrainz entries.
+  </p>
+
+  <p> 
+    When looking at the descriptions our datasets, please consider that “canonical” implies
+    <em>the most representative version</em>. Each of our canonical datasets has a
+    more detailed description of what “canonical” means in that given dataset.
+  </p>
+
+  <p>
+    As with our database dumps, in order to keep the MetaBrainz Foundation operating
+    so that these datasets can be maintained and updated further, <b>we require
+    <a href="{{ url_for('users.account_type') }}">financial support</a>
+    from our commercial users</b>. Without this support, the future of the datasets
+    cannot be guaranteed. As such, even when a specific dataset is available
+    under the Creative Commons Zero (CC0) license (public domain), we still need
+    commercial users of the data to support us, on a moral basis rather than a legal one!
+  </p>
+
+  <a id="canonical"><h2>MusicBrainz Canonical Data Dumps</h2></a>
+
+  <p>
+    The MusicBrainz canonical data dump contains information about MusicBrainz Recordings,
+    Releases, and Artists. The dataset has been developed to make it easier to reason about
+    the core metadata in the MusicBrainz database, providing one single record for each
+    set of mostly equivalent releases and recordings in the database.
+  </p>
+
+  <p>
+    Because of the nature of the MusicBrainz database it contains many instances where metadata
+    exists for many different versions (formats, reissues) of the same album, or many versions
+    (live recordings, alternate versions) of a recording.
+  </p>
+
+  <p>
+    However for some tasks such as music recommendation, it’s often useful to be able to use a
+    single identifier when talking about a recording or a release, both in order to improve the
+    quality of a training dataset for machine learning and when providing results to an end user.
+  </p>
+
+  <p>
+    The MusicBrainz canonical data dump provides a mapping of all Releases and Recordings in the
+    MusicBrainz database to a single “canonical” version.
+  </p>
+
+  <div class="dataset-summary">
+    <div class="pull-right">
+      <a href="{{ url_for("index.signup") }}">
+        <button type="button"
+                class="btn btn-success btn-lg"
+                style="background: #5aa854;color: #fffbfe; border-color: #326b30">
+          Download
+        </button>
+      </a>
+    </div>
+    <div class="dataset-summary-heading">Dataset summary</div>
+    <table>
+        <tr>
+            <td>Documentation:</td>
+            <td><a href="https://musicbrainz.org/doc/Canonical_MusicBrainz_data">Canonical MusicBrainz Data documentation</td>
+        </tr>
+        <tr>
+            <td>Commercial use:</td>
+            <td>
+              Allowed, but <a href="{{ url_for('users.account_type') }}">financial support<a/>
+              strongly urged, even for CC0 data.
+            </td>
+        </tr>
+        <tr>
+            <td>Update frequency:</td>
+            <td>Twice a month, on the 1st and 15th.</td>
+        </tr>
+        <tr>
+            <td>Licenses:</td>
+            <td><a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero (CC0)</a></td>
+        </tr>
+        <tr>
+            <td>Format:</td>
+            <td>zstd compressed CSV files</td>
+        </tr>
+    </table>
+  </div>
+
+  <a id="mhld"><h2>Music Listening History Dataset+</h2></a>
+
+  <p>
+   The MetaBrainz team has also released the Music Listening Histories Dataset+ dataset, an improved version of 
+   the original MLHD, released by the 
+   <a href="https://ddmal.music.mcgill.ca/research/The_Music_Listening_Histories_Dataset_(MLHD)/">DDMAL Lab at McGill Univeristy</a>.
+  </p>
+
+  <p>
+   The original MLHD dataset contained a number of errors that were due to poor data matching algorithms when this data was
+   originally collected. Problems that we encountered and fixed in the dataset:
+  </p>
+
+  <ol>
+      <li>
+        <p>
+          <b>Follow redirects</b>: In MusicBrainz there are times when a data entity was entered more than once, so any duplicates
+          must be deleted from the database. In order to not lose the old MBID, we enter an entry into our <em>redirect</em> tables,
+          keeping track of all of them. In the MHLD+ dataset, we checked each recording and ensured that the dataset contains
+          the most recent and correct version.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Identify Canonical Recordings</b>: Using our cannonical datasets (see above) we've identified all the canonical
+          versions of releases and recordings and used them, rather than the non-canonical versions.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Lookup correct Artist and Releases</b>: Once we identified the canonical recordings, we looked up the canonical
+          release and the correct artist MBID for each of the datapoints. The original matching algorithm often conflated
+          two similarly named artists as the same artist, greatly dimishing the value of this dataset.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Other data problems</b>: Some entries in the dataset has some data elements missing, making those data points useless.
+          We've removed all the data points that contained errors that could not be positively resolved into the MusicBrainz database.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Better compression</b>: The dataset is compressed using zstandard, resulting in a 50% reduction in compressed size on disk.
+        </p>
+      </li>
+  </ol>
+
+  <div class="dataset-summary">
+    <div class="pull-right">
+      <a href="{{ url_for("index.signup") }}">
+         <button type="button"
+                 class="btn btn-success btn-lg"
+                 style="background: #5aa854;color: #fffbfe; border-color: #326b30">
+           Download
+         </button>
+      </a>
+    </div>
+    <div class="dataset-summary-heading">Dataset summary</div>
+    <table>
+        <tr>
+            <td>Documentation:</td>
+            <td><a href="https://musicbrainz.org/doc/MLHD%2B">Music Listening History Dataset+ documentation</td>
+        </tr>
+        <tr>
+            <td>Commercial use:</td>
+            <td>
+                Not allowed, as per 
+                <a href="https://ddmal.music.mcgill.ca/research/The_Music_Listening_Histories_Dataset_(MLHD)/">original dataset terms</a>.
+            </td>
+        </tr>
+        <tr>
+            <td>Update frequency:</td>
+            <td>Never <span style="font-size: 6pt; color: #888">gonna give you up...</span></td>
+        </tr>
+        <tr>
+            <td>Licenses:</td>
+            <td>None. Non-commercial use only.</td>
+        </tr>
+        <tr>
+            <td>Format:</td>
+            <td>zstd compressed CSV files</td>
+        </tr>
+    </table>
+  </div>
+
+{% endblock %}

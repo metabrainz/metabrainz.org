@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Please sign up') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">Please sign up!</h1>
+
+  <p>
+     Before you begin your data download, please consider signing up with us to give us a little
+     information about how you plan to use our data. As per our <a href="/privacy">Privacy Policy</a>,
+     we will never share any of the sign-up information with anyone -- we use this data internally
+     to understand how and who is using our data so that we can improve these datasets to better
+     meet your needs.
+  </p>
+  <div id="dataset-signup">
+    <div class="panel panel-warning" >
+      <h4 class="panel-heading">Commercial users</h4>
+      <div class="panel-body">If you plan to use our data in a commercial setting you are required
+    to sign up with us and to financially support us in an effort to keep the MetaBrainz Foundation
+    operating and creating more data. For more information on how we define commercial use, please
+    click the signup button below.
+    
+        <div class="buttons">
+          <a class="btn btn-md btn-success" href="{{ url_for("users.account_type") + "#commercial" }}">
+            Sign up
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-warning" >
+      <h4 class="panel-heading">Non-commercial users</h4>
+      <div class="panel-body">If you plan to use our data in a personal project, you are not required to sign up, but we would really appreciate it if you would sign up, so that we may better understand our data users.
+        <div class="buttons" >
+          <a class="btn btn-md btn-success" href="{{ url_for("users.account_type") + "#non-commercial" }}">
+            OK, I'll sign up!
+          </a>
+          
+          <a class="btn btn-md btn-default btn-outline" href="{{ url_for("index.download") }}">
+            Just give me the data
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
