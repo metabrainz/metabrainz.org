@@ -9,6 +9,7 @@ from metabrainz.admin import AdminModelView
 class DatasetType(Enum):
     MUSICBRAINZ = 'musicbrainz'
     LISTENBRAINZ = 'listenbrainz'
+    CRITIQUEBRAINZ = 'critiquebrainz'
 
 
 class Dataset(db.Model):
