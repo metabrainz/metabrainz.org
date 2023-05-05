@@ -6,25 +6,22 @@
   <h1 class="page-title">{{ _('Support us') }}</h1>
 
   <p>
-    {{ _('If you rely on data from MetaBrainz, please remember that we rely on contributions 
-    to keep providing it. For commercial use of our data or to get access to the
-    <a href="%(mb_data_feed)s">MusicBrainz Live Data Feed</a>,
-    please choose between non-commercial and commercial use below. You will need a
-    <a href="%(mb_register_url)s">MusicBrainz account</a> with a verified email address to sign-up.',
-    mb_data_feed='https://musicbrainz.org/doc/Live_Data_Feed', mb_register_url='https://musicbrainz.org/register') }}
+    Do you rely on data from MetaBrainz? We rely on contributions to keep providing it. For commercial
+    use of our data or to get access to the <a href="https://musicbrainz.org/register">MusicBrainz Live
+    Data Feed</a>, please choose between non-commercial and commercial use below. You will need a 
+    <a href="https://musicbrainz.org/register">MusicBrainz account</a> with a verified email address to
+    sign-up.
   </p>
-  <p>
- 
 
   <h3 id="non-commercial">{{ _('Non-commercial / Personal') }}</h3>
 
   <p>
-    {{ _('Non-commercial includes personal use and university course assignment use of our data. 
-    If you are an open source developer, a small non-profit or are using our data as part of an official 
-    university or research project, please sign up as a commercial user using the non-profit tier below.
-    If you are a non-profit with more than 10 employees/contractors or a pre-revenue start-up and expect 
-    to have revenue in the future, please sign up with a commercial account &mdash; see below for more 
-    details. Please <a href="%(donate_url)s">consider making a donation</a> to support
+    Non-commercial includes personal use and university course assignment use of our data. If you are an
+    open source developer, a small non-profit, or are using our data as part of an official university or
+    research project, please sign up as a commercial user using the non-profit tier below. If you are a
+    non-profit with more than 10 employees/contractors, or a pre-revenue start-up and expect to have
+    revenue in the future, please sign up with a commercial account - see below for more details.
+    Please <a href="%(donate_url)s">consider making a donation</a> to support
     our efforts!', donate_url=url_for('payments.donate')) }}
   </p>
 
@@ -36,14 +33,12 @@
   <h3 id="commercial" >{{ _('Commercial') }}</h3>
 
   <p>
-    {{ _('If you are a company with a current revenue stream or an expected revenue stream, 
-    please select a support tier below that fits your current situation. We welcome working 
-    with companies that are just getting started and we\'re happy for your support for MetaBrainz to grow as
-    you grow. If you would like to use our data, but are not ready to state this publicly
-    yet, please sign up for the <em>Stealth start-up</em> tier; we will keep your
-    data-usage confidential and contact you to discuss your future plans. If you are an established company, 
-    please choose a tier that appropriately fits the size and revenue of your company to properly support
-    our non-profit foundation.') }}
+     If you are a company with a current revenue stream or an expected revenue stream, please select a
+     support tier below that fits your current situation. We welcome working with companies that are just
+     getting started and we're happy for your MetaBrainz support to grow as you grow. If you would like
+     to use our data, but are not ready to state this publicly yet, sign up for the stealth start-up tier;
+     we will keep your data-usage confidential and contact you to discuss your plans. If you are an
+     established company, choose the tier that appropriately fits the size and revenue of your company.   
   </p>
 
   {% if tiers %}

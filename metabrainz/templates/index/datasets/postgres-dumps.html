@@ -6,47 +6,39 @@
   <h1 class="page-title">MetaBrainz Database Dumps</h1>
 
   <p>
-    All of our data dumps are available under Creative Commons licenses.
+    All data dumps are available under Creative Commons licenses.
   </p>
 
   <p>
-    However, in order to keep the MetaBrainz Foundation operating so that these datasets
-    can be maintained and updated further, <b>we require
-    <a href="{{ url_for('users.account_type') }}">financial support</a>
-    from our commercial users</b>. Without this support, the future of the datasets
-    cannot be guaranteed. As such, even when a specific dataset is available
-    under the Creative Commons Zero (CC0) license (public domain), we still need
-    commercial users of the data to support us, on a moral basis rather than a legal one!
+    In order to keep the MetaBrainz Foundation operating, and these datasets maintained and
+    updated, we require <b>we require <a href="{{ url_for('users.account_type') }}">financial support</a>
+    from our commercial users</b>. Without this support these datasets would not be possible. As
+    such, even when a dataset is available under the Creative Commons Zero (CC0) license (public
+    domain), we need the support of commercial users.
   </p>
 
   <h3 id="musicbrainz">MusicBrainz PostgreSQL Data Dumps</h3>
 
   <p> 
-     The MusicBrainz data dumps include all public portions of the data from our MusicBrainz project.
-     This includes artists, releases, labels and the relationships between them, and much more data
-     that you can find in the MusicBrainz database. In addition, there is a full history of
-     all the changes that the MusicBrainz community has made to the data, and average ratings
-     and tag counts (including genre tags) added by the community are also made available.
+     MusicBrainz data dumps include all public data from our MusicBrainz project. This includes artists,
+     releases, labels and the relationships between them and much, much more. In addition, we provide a
+     full history of changes that the MusicBrainz community has made to the data, and the average ratings
+     and tag counts (including genre tags) added by the community.
   </p> 
 
   <p>
      These data dumps are intended to be imported into a PostgreSQL database; we recommend that you use
      the <a href="https://github.com/metabrainz/musicbrainz-docker">musicbrainz-docker</a> project to
-     import these dumps. Working with them on their own or attempting to import that data into a different
-     database system than PostgreSQL represents a non-trivial amount of work and we strongly recommend
-     against doing that.
+     import these dumps. We do not recommend working with them on their own, or attempting to import the
+     data into a different database system than PostgreSQL, which represents a non-trivial amount of work.
   </p> 
 
+
   <p>
-     MetaBrainz provides full database exports of the MusicBrainz database twice a week. More regular
-     (and comfortable) updates are available via the <a href="https://musicbrainz.org/doc/Live_Data_Feed">Live Data Feed</a>,
-     which allows keeping a local mirror in sync with the main MusicBrainz database every hour. The
-     MusicBrainz data dumps can be found on the
-     <a href="http://ftp.musicbrainz.org/pub/musicbrainz/data/fullexport/">MusicBrainz FTP Server</a>
-     and more information on the contents of the various dump files, including licensing information,
-     can be found in the
-     <a href="https://musicbrainz.org/doc/MusicBrainz%20Database/Download">database download page</a>
-     on MusicBrainz itself.
+     MetaBrainz provides full database exports of the MusicBrainz database twice a week. More regular (and
+     comfortable) updates are available via the <a href="https://musicbrainz.org/doc/Live_Data_Feed">Live Data Feed</a>,
+     which allows keeping a local mirror in sync with the main MusicBrainz database every hour. The MusicBrainz
+     data dumps and documentation for them can be found on our <a href="/datasets">datasets page</a>.
   </p> 
 
   <div class="dataset-summary">
@@ -93,16 +85,15 @@
 
   <a id="musicbrainz-json"><h3>MusicBrainz JSON Data Dumps</h3></a>
   <p>
-     MetaBrainz also provides access to the music metadata in the MusicBrainz database in the easily
-     consumable format of JSON documents. If you simply cannot work with PostgreSQL or you prefer
-     to work with a document oriented data store, then this data dump is for you.
+     MetaBrainz provides access to the music metadata in the MusicBrainz database in the easily consumable
+     format of JSON documents. If you cannot work with PostgreSQL or you prefer to work with a document
+     oriented data store, then this data dump is for you.
     </p> 
 
   <p>
-     There are individual dump files for each of the following data entities in MusicBrainz:
-     Area, Artist, Event, Instrument, Label, Place, Recording, Release Group, Release, Series and Work.
-     Please note that in order to make these data dumps easy to import, the data is not normalized
-     and will contain duplicate data.
+     There are individual dump files for each of the following data entities in MusicBrainz: Area, Artist,
+     Event, Instrument, Label, Place, Recording, Release Group, Release, Series and Work. Please note that
+     the data is not normalized and will contain duplicate data, in order to make the data dumps easy to import.
   </p>
 
   <div class="dataset-summary">
@@ -146,19 +137,21 @@
   <a id="listenbrainz"><h3>ListenBrainz PostgreSQL Data Dumps</h3></a>
 
   <p>
-     The ListenBrainz project serves as an archive where users can store their music listening history.
-     ListenBrainz then provides users with insights into their listening behaviors by creating detailed
-     statistics reports from the provided data as well as other social features focused on music.
+    The ListenBrainz project serves as an archive where users can store their music listening history.
+    ListenBrainz provides these users with insights into their listening behaviors by creating detailed
+    statistics reports, as well as providing other music-focused social features.
   </p> 
 
   <p>
-     This dataset can be used to create study music consumption patterns, and to create new music datasets.
-     ListenBrainz itself is using this data to power a music recommendation engine and to create other
-     derived datasets. The provided data dumps contain all the hundreds of millions of listens
-     in the ListenBrainz database and as such are rather large. Due to its size, we cannot provide this data
-     in other formats and we update the full dumps only twice a month. Incremental daily dumps
-     are also available, which provide all the listen data that was added since the last full dump
-     and come out every day.
+    This dataset can be used to create and study music consumption patterns, and to create new music
+    datasets. ListenBrainz itself is using this data to power a music recommendation engine and to create
+    other derived datasets.
+  </p> 
+
+  <p>
+    The data dumps are large, containing hundreds of millions of listens. Due to its size, we cannot provide
+    this data in other formats and we update the full dumps only twice a month. Incremental dumps are also
+    available daily, which provide all the listen data that was added since the last full dump.
   </p> 
 
   <div class="dataset-summary">
@@ -202,16 +195,13 @@
   <a id="critiquebrainz"><h3>CritiqueBrainz PostgreSQL Data Dumps</h3></a>
 
   <p>
-     CritiqueBrainz is a repository for Creative Commons licensed music and book reviews. It allows connecting
-     the factual music metadata in the MusicBrainz database and book metadata in the BookBrainz database
-     with the opinions about music from music critics and listeners and books from book critics and
-     readers by providing a platform to store their reviews.
+    CritiqueBrainz is a repository for Creative Commons licensed music and book reviews. It connects
+    factual metadata from the MusicBrainz and BookBrainz databases with opinions from critics, listeners,
+    and readers by providing a platform for their reviews.
   </p> 
-
   <p>
-     The MetaBrainz foundation provides full dumps of the CritiqueBrainz database as well as JSON dumps
-     containing reviews in an easily consumable format. These datasets are updated every day and can be
-     downloaded from the MusicBrainz FTP Server.
+    MetaBrainz provides full dumps of the CritiqueBrainz database as well as JSON dumps containing reviews
+    in an easily consumable format. These datasets are updated every day.
   </p> 
 
   <div class="dataset-summary">
