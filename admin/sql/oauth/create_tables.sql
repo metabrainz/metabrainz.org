@@ -39,3 +39,9 @@ CREATE TABLE oauth.code (
     code_challenge_method TEXT,
     granted_at      TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
+
+ -- TODO: add relevant fields to user model
+CREATE TABLE oauth."user" (
+    id              INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL
+);
+
