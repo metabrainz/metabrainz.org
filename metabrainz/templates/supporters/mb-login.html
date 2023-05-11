@@ -72,7 +72,7 @@
                 </a>
               </div>
               
-              <button class="btn btn-primary center-block" type="submit" style="font-size: 1.1em;">
+              <button class="btn btn-primary main-action-button" type="submit">
                 Sign in
               </button>
             </form>
@@ -80,7 +80,7 @@
           </div>
           <div class="auth-card-footer">
             <dix class="small">
-              Don‘t have an account?<a href="#"> Create a free MetaBrainz account </a>to access MusicBrainz, ListenBrainz, CritiqueBrainz, and more.
+              Don‘t have an account?<a href="{{ url_for('users.signup') }}"> Create a free MetaBrainz account </a>to access MusicBrainz, ListenBrainz, CritiqueBrainz, and more.
             </dix>
           </div>
         </div>
