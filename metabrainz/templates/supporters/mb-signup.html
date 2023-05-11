@@ -23,13 +23,13 @@
         </div>
       </div>
       <div class="auth-card-container">
-
+      
         <div class="auth-card">
-          <h1 class="page-title text-center">{{ _('Sign up') }}</h1>
+          <h1 class="page-title text-center">{{ _('Create your account') }}</h1>
           <form role="form" method="POST">
             <div class="form-group">
               <label class="form-label" htmlFor="yourUsername">
-                Username <small>(public)</small>
+                Username <span class="small help-block" style="display: inline-block;">(public)</span>
               </label>
               <div>
                 <input
@@ -82,17 +82,16 @@
               />
             </div>
 
-            <div class="auth-card-bottom">
-              <p>
+            <div>
                 Please note that your contributions will be released into the public domain or licensed for use.
                 We will never share your personal information.
-              </p>
+              <br/>
               <a class="small" href="#" data-toggle="modal" data-target="#conditions-modal" data-backdrop="false">
                 Click here to read more
               </a>
             </div>
-
-            <button class="btn btn-primary center-block" type="submit" style="font-size: 1.1em;">
+            
+            <button class="btn btn-primary main-action-button" type="submit">
               Create account
             </button>
           </form>
@@ -114,11 +113,11 @@
               </div>
             </div>
           </div>
-
+          
         </div>
         <div class="auth-card-footer">
           <dix class="small">
-            Already have an account? <a href="#">Sign in </a>
+            Already have an account? <a href="{{ url_for('users.login') }}">Sign in </a>
           </dix>
         </div>
       </div>
