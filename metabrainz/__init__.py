@@ -149,8 +149,6 @@ def create_app(debug=None, config_path = None):
         LOGO_UPLOAD_SET,
     ])
 
-    from metabrainz.new_oauth.models import db as new_oauth_db
-    new_oauth_db.create_all()
     config_oauth(app)
 
     # Blueprints
