@@ -150,11 +150,7 @@ def create_app(debug=None, config_path = None):
     ])
 
     from metabrainz.new_oauth.models import db as new_oauth_db
-
-    @app.before_first_request
-    def create_tables():
-        new_oauth_db.create_all()
-
+    new_oauth_db.create_all()
     config_oauth(app)
 
     # Blueprints
