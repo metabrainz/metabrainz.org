@@ -13,7 +13,7 @@ from metabrainz.model import Dataset
 from metabrainz.model.supporter import Supporter, InactiveSupporterException
 from metabrainz.model.tier import Tier
 from metabrainz.model.token import TokenGenerationLimitException
-from metabrainz.new_oauth.models import db
+from metabrainz.model import db
 from metabrainz.new_oauth.models.user import OAuth2User
 from metabrainz.supporter import musicbrainz_login, login_forbidden
 from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
