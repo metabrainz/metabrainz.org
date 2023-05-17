@@ -32,7 +32,7 @@ CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 bcrypt = Bcrypt()
 
 
-def create_app(debug=None, config_path = None):
+def create_app(debug=None, config_path=None):
 
     app = CustomFlask(
         import_name=__name__,
