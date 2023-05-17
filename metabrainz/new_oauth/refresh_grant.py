@@ -1,6 +1,6 @@
 from authlib.oauth2.rfc6749 import grants
 
-from metabrainz.new_oauth.models import db
+from metabrainz.model import db
 from metabrainz.new_oauth.models.token import OAuth2Token
 from metabrainz.new_oauth.models.user import OAuth2User
 

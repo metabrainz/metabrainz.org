@@ -5,13 +5,13 @@ from authlib.oauth2.rfc6749.util import scope_to_list
 from sqlalchemy import func, Column, Integer, DateTime, Text, ForeignKey, Boolean, Identity
 from sqlalchemy.orm import relationship
 
-from metabrainz.new_oauth.models import Base, db
+from metabrainz.model import db
 from metabrainz.new_oauth.models.client import OAuth2Client
 from metabrainz.new_oauth.models.relation_scope import OAuth2TokenScope
 from metabrainz.new_oauth.models.user import OAuth2User
 
 
-class OAuth2Token(Base, TokenMixin):
+class OAuth2Token(db.Model, TokenMixin):
     __tablename__ = "token"
     __table_args__ = {
         "schema": "oauth"

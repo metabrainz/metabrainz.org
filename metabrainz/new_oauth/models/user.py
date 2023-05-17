@@ -1,10 +1,10 @@
 from flask_login import UserMixin
 from sqlalchemy import Column, Integer, Identity, Text, DateTime, func, Date, Boolean
 
-from metabrainz.new_oauth.models import Base
+from metabrainz.model import db
 
 
-class OAuth2User(Base, UserMixin):
+class OAuth2User(db.Model, UserMixin):
     __tablename__ = "user"
     __table_args__ = {
         "schema": "oauth"
