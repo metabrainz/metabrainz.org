@@ -26,7 +26,7 @@ deploy_env = os.environ.get('DEPLOY_ENV', '')
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 
-def create_app(debug=None, config_path = None):
+def create_app(debug=None, config_path=None):
 
     app = CustomFlask(
         import_name=__name__,
@@ -36,7 +36,7 @@ def create_app(debug=None, config_path = None):
     # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-    print("Starting metabrainz service with %s environment." % deploy_env);
+    print("Starting metabrainz service with %s environment." % deploy_env)
 
     # This is used to run tests, but not for dev or deployment
     if config_path:

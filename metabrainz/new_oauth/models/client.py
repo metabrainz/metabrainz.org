@@ -3,10 +3,10 @@ from sqlalchemy import Column, Text, ForeignKey, Integer, ARRAY, Identity, DateT
 from sqlalchemy.orm import relationship
 
 
-from metabrainz.new_oauth.models import Base
+from metabrainz.model import db
 
 
-class OAuth2Client(Base, ClientMixin):
+class OAuth2Client(db.Model, ClientMixin):
 
     __tablename__ = 'client'
     __table_args__ = {

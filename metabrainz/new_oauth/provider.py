@@ -5,7 +5,7 @@ from authlib.integrations.sqla_oauth2 import (
 from authlib.integrations.flask_oauth2 import AuthorizationServer
 
 from metabrainz.new_oauth.introspection import OAuth2IntrospectionEndpoint
-from metabrainz.new_oauth.models import db
+from metabrainz.model import db
 from metabrainz.new_oauth.models.client import OAuth2Client
 from metabrainz.new_oauth.models.token import OAuth2Token, save_token
 
