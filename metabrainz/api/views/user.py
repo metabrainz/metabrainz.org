@@ -1,14 +1,14 @@
 from flask import Blueprint, jsonify
 from metabrainz.oauth import oauth_provider
-from metabrainz.model.user import User
+from metabrainz.model.supporter import Supporter
 
-api_user_bp = Blueprint('api_user', __name__)
+api_supporter_bp = Blueprint('api_supporter', __name__)
 
 
-@api_user_bp.route('/')
+@api_supporter_bp.route('/')
 @oauth_provider.require_auth()
-def user(user_id):
-    user = User.get(id=user_id)
+def supporter(supporter_id):
+    supporter = Supporter.get(id=supporter_id)
     return jsonify({
-        "username": user.musicbrainz_id,
+        "username": supporter.musicbrainz_id,
     })

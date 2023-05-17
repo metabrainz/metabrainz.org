@@ -9,19 +9,19 @@
 
   {% if not current_user or current_user.is_anonymous %}
     <p class="text-center">
-      <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
+      <a href="{{ url_for('supporters.signup_commercial', tier_id=tier.id) }}"
          class="btn btn-primary">{{ _('Sign up for this tier') }}</a>
     </p>
   {% endif %}
 
-  {% set users = tier.get_featured_users() %}
-  {% if users|length > 0 %}
+  {% set supporters = tier.get_featured_supporters() %}
+  {% if supporters|length > 0 %}
     <h3>{{ _('Supporters on this tier') }}</h3>
-    <div class="users-grid">
-      {% for user in users %}
+    <div class="supporters-grid">
+      {% for user in supporters %}
         <div class="user {{ 'bad-standing' if not user.good_standing }}">
           {% if not user.good_standing %}
-            <a href="{{ url_for('users.bad_standing') }}"
+            <a href="{{ url_for('supporters.bad_standing') }}"
                title="{{ _('This supporter is behind on their payments.') }}">
           {% elif user.website_url %}
             <a href="{{ user.website_url }}">

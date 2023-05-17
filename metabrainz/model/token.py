@@ -31,8 +31,8 @@ class Token(db.Model):
 
     @classmethod
     def generate_token(cls, owner_id):
-        """Generates new token for a specified user and revokes all other
-        tokens owned by this user.
+        """Generates new token for a specified supporter and revokes all other
+        tokens owned by this supporter.
 
         Returns:
             Value of the new token.
@@ -59,10 +59,10 @@ class Token(db.Model):
 
     @classmethod
     def revoke_tokens(cls, owner_id):
-        """Revokes all tokens owned by a specified user.
+        """Revokes all tokens owned by a specified supporter.
 
         Args:
-            owner_id: ID of a user.
+            owner_id: ID of a supporter.
         """
         tokens = db.session.query(cls).filter(
             cls.owner_id == owner_id,

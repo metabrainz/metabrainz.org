@@ -127,28 +127,28 @@ def create_app(debug=None, config_path = None):
 
     from flask_admin import Admin
     from metabrainz.admin.views import HomeView
-    admin = Admin(app, index_view=HomeView(name='Pending users'), template_mode='bootstrap3')
+    admin = Admin(app, index_view=HomeView(name='Pending supporters'), template_mode='bootstrap3')
 
     # Models
-    from metabrainz.model.user import UserAdminView
+    from metabrainz.model.supporter import SupporterAdminView
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
     from metabrainz.model.dataset import DatasetAdminView
-    admin.add_view(UserAdminView(model.db.session, category='Users', endpoint="user_model"))
+    admin.add_view(SupporterAdminView(model.db.session, category='Supporters', endpoint="supporter_model"))
     admin.add_view(PaymentAdminView(model.db.session, category='Payments', endpoint="payment_model"))
     admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
     admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
 
     # Custom stuff
-    from metabrainz.admin.views import CommercialUsersView
-    from metabrainz.admin.views import UsersView
+    from metabrainz.admin.views import CommercialSupportersView
+    from metabrainz.admin.views import SupportersView
     from metabrainz.admin.views import PaymentsView
     from metabrainz.admin.views import TokensView
     from metabrainz.admin.views import StatsView
-    admin.add_view(CommercialUsersView(name='Commercial users', category='Users'))
-    admin.add_view(UsersView(name='Search', category='Users'))
+    admin.add_view(CommercialSupportersView(name='Commercial supporters', category='Supporters'))
+    admin.add_view(SupportersView(name='Search', category='Supporters'))
     admin.add_view(PaymentsView(name='All', category='Payments'))
-    admin.add_view(TokensView(name='Access tokens', category='Users'))
+    admin.add_view(TokensView(name='Access tokens', category='Supporters'))
     admin.add_view(StatsView(name='Statistics', category='Statistics'))
     admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
     admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
@@ -172,7 +172,7 @@ def _register_blueprints(app):
     from metabrainz.views import index_bp
     from metabrainz.reports.financial_reports.views import financial_reports_bp
     from metabrainz.reports.annual_reports.views import annual_reports_bp
-    from metabrainz.users.views import users_bp
+    from metabrainz.users.views import supporters_bp
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
@@ -180,7 +180,7 @@ def _register_blueprints(app):
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
-    app.register_blueprint(users_bp)
+    app.register_blueprint(supporters_bp)
     app.register_blueprint(payments_bp)
     # FIXME(roman): These URLs aren't named very correct since they receive payments
     # from organizations as well as regular donations:
@@ -195,7 +195,7 @@ def _register_blueprints(app):
     app.register_blueprint(oauth_bp, url_prefix='/oauth')
     from metabrainz.api.views.index import api_index_bp
     app.register_blueprint(api_index_bp, url_prefix='/api')
-    from metabrainz.api.views.user import api_user_bp
-    app.register_blueprint(api_user_bp, url_prefix='/api/user')
+    from metabrainz.api.views.user import api_supporter_bp
+    app.register_blueprint(api_supporter_bp, url_prefix='/api/user')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')

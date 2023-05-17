@@ -50,7 +50,7 @@ class IndexViewsTestCase(FlaskTestCase):
         resp = self.client.get(url_for('index.about_customers_redirect'))
 
         # Changed to assertEqual since assertRedirect kept doing stupid shit
-        self.assertEqual(resp.location, urlparse(url_for('users.supporters_list')).path)
+        self.assertEqual(resp.location, urlparse(url_for('supporters.supporters_list')).path)
 
     def test_flask_debugtoolbar(self):
         """ Test if flask debugtoolbar is loaded correctly

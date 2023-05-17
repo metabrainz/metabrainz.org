@@ -1,19 +1,21 @@
-from flask import Blueprint, request, redirect, render_template, url_for, jsonify, current_app
-from flask_login import login_user, logout_user, login_required, current_user
-from flask_babel import gettext
-from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
-from metabrainz.mail import send_mail, MailException
-from metabrainz.model import Dataset
-from metabrainz.model.tier import Tier
-from metabrainz.model.user import User, InactiveUserException
-from metabrainz.model.token import TokenGenerationLimitException
-from metabrainz.users import musicbrainz_login, login_forbidden
-from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, UserEditForm, CommercialUserEditForm, \
-    NonCommercialUserEditForm
-from metabrainz import flash, session
 import logging
 
-users_bp = Blueprint('users', __name__)
+from flask import Blueprint, request, redirect, render_template, url_for, jsonify
+from flask_babel import gettext
+from flask_login import login_user, logout_user, login_required, current_user
+from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
+
+from metabrainz import flash, session
+from metabrainz.mail import send_mail, MailException
+from metabrainz.model import Dataset
+from metabrainz.model.supporter import Supporter, InactiveSupporterException
+from metabrainz.model.tier import Tier
+from metabrainz.model.token import TokenGenerationLimitException
+from metabrainz.users import musicbrainz_login, login_forbidden
+from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
+    NonCommercialSupporterEditForm
+
+supporters_bp = Blueprint('supporters', __name__)
 
 SESSION_KEY_ACCOUNT_TYPE = 'account_type'
 SESSION_KEY_TIER_ID = 'account_tier'
@@ -23,26 +25,27 @@ SESSION_KEY_MB_EMAIL = 'mb_email'
 ACCOUNT_TYPE_COMMERCIAL = 'commercial'
 ACCOUNT_TYPE_NONCOMMERCIAL = 'noncommercial'
 
-@users_bp.route('/supporters')
+
+@supporters_bp.route('/supporters')
 def supporters_list():
     return render_template('users/supporters-list.html', tiers=Tier.get_available(sort=True, sort_desc=True))
 
 
-@users_bp.route('/supporters/bad')
+@supporters_bp.route('/supporters/bad')
 def bad_standing():
     return render_template('users/bad-standing.html')
 
 
-@users_bp.route('/supporters/account-type')
+@supporters_bp.route('/supporters/account-type')
 def account_type():
     return render_template(
         'users/account-type.html',
         tiers=Tier.get_available(sort=True),
-        featured_users=User.get_featured()
+        featured_supporters=Supporter.get_featured()
     )
 
 
-@users_bp.route('/supporters/tiers/<int:tier_id>')
+@supporters_bp.route('/supporters/tiers/<int:tier_id>')
 def tier(tier_id):
     t = Tier.get(id=tier_id)
     if not t or not t.available:
@@ -50,7 +53,7 @@ def tier(tier_id):
     return render_template('users/tier.html', tier=t)
 
 
-@users_bp.route('/signup')
+@supporters_bp.route('/signup')
 @login_forbidden
 def signup():
     mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
@@ -73,12 +76,12 @@ def signup():
         return redirect(url_for(".signup_noncommercial"))
 
 
-@users_bp.route('/signup/commercial', methods=('GET', 'POST'))
+@supporters_bp.route('/signup/commercial', methods=('GET', 'POST'))
 @login_forbidden
 def signup_commercial():
-    """Sign up endpoint for commercial users.
+    """Sign up endpoint for commercial supporters.
 
-    Commercial users need to choose support tier before filling out the form.
+    Commercial supporters need to choose support tier before filling out the form.
     `tier_id` argument with ID of a tier of choice is required there.
     """
     tier_id = request.args.get('tier_id')
@@ -117,10 +120,10 @@ def signup_commercial():
         return True
 
     if form.validate_on_submit() and custom_validation(form):
-        # Checking if this user already exists
-        new_user = User.get(musicbrainz_id=mb_username)
-        if not new_user:
-            new_user = User.add(
+        # Checking if this supporter already exists
+        new_supporter = Supporter.get(musicbrainz_id=mb_username)
+        if not new_supporter:
+            new_supporter = Supporter.add(
                 is_commercial=True,
                 musicbrainz_id=mb_username,
                 contact_name=form.contact_name.data,
@@ -155,8 +158,8 @@ def signup_commercial():
                          ' Please know that you may use our APIs and static data dumps for'
                          ' evaluation purposes while your application is pending. You do not'
                          ' need any API keys to do this.\n\n-- The MetaBrainz Team'
-                         % new_user.contact_name,
-                    recipients=[new_user.contact_email],
+                         % new_supporter.contact_name,
+                    recipients=[new_supporter.contact_email],
                 )
             except MailException as e:
                 logging.error(e)
@@ -166,16 +169,16 @@ def signup_commercial():
                 ))
         else:
             flash.info(gettext("You already have a MetaBrainz account!"))
-        login_user(new_user)
+        login_user(new_supporter)
         return redirect(url_for('.profile'))
 
     return render_template("users/signup-commercial.html", form=form, tier=selected_tier, mb_username=mb_username)
 
 
-@users_bp.route('/signup/noncommercial', methods=('GET', 'POST'))
+@supporters_bp.route('/signup/noncommercial', methods=('GET', 'POST'))
 @login_forbidden
 def signup_noncommercial():
-    """Sign up endpoint for non-commercial users."""
+    """Sign up endpoint for non-commercial supporters."""
     mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
     if not mb_username:
         session.persist_data(**{
@@ -187,10 +190,10 @@ def signup_noncommercial():
 
     form = NonCommercialSignUpForm(available_datasets, default_email=mb_email)
     if form.validate_on_submit():
-        # Checking if this user already exists
-        new_user = User.get(musicbrainz_id=mb_username)
-        if not new_user:
-            new_user = User.add(
+        # Checking if this supporter already exists
+        new_supporter = Supporter.get(musicbrainz_id=mb_username)
+        if not new_supporter:
+            new_supporter = Supporter.add(
                 is_commercial=False,
                 musicbrainz_id=mb_username,
                 contact_name=form.contact_name.data,
@@ -204,8 +207,8 @@ def signup_noncommercial():
                     subject="[MetaBrainz] Sign up confirmation",
                     text='Dear %s,\n\nThank you for signing up!\n\nYou can now generate '
                          'an access token for the MetaBrainz API on your profile page.'
-                         % new_user.contact_name,
-                    recipients=[new_user.contact_email],
+                         % new_supporter.contact_name,
+                    recipients=[new_supporter.contact_email],
                 )
             except MailException as e:
                 logging.error(e)
@@ -215,20 +218,20 @@ def signup_noncommercial():
                 ))
         else:
             flash.info(gettext("You already have a MetaBrainz account!"))
-        login_user(new_user)
+        login_user(new_supporter)
         return redirect(url_for('.profile'))
 
     return render_template("users/signup-non-commercial.html", form=form, mb_username=mb_username)
 
 
-@users_bp.route('/login/musicbrainz')
+@supporters_bp.route('/login/musicbrainz')
 @login_forbidden
 def musicbrainz():
     session.session['next'] = request.args.get('next')
     return redirect(musicbrainz_login.get_authentication_uri())
 
 
-@users_bp.route('/login/musicbrainz/post')
+@supporters_bp.route('/login/musicbrainz/post')
 @login_forbidden
 def musicbrainz_post():
     """MusicBrainz OAuth2 callback endpoint."""
@@ -239,7 +242,7 @@ def musicbrainz_post():
         raise InternalServerError(gettext("Authorization code is missing!"))
 
     try:
-        mb_username, mb_email = musicbrainz_login.get_user(code)
+        mb_username, mb_email = musicbrainz_login.get_supporter(code)
     except KeyError:
         raise BadRequest(gettext("Login failed!"))
 
@@ -247,9 +250,9 @@ def musicbrainz_post():
         SESSION_KEY_MB_USERNAME: mb_username,
         SESSION_KEY_MB_EMAIL: mb_email,
     })
-    user = User.get(musicbrainz_id=mb_username)
-    if user:  # Checking if user is already signed up
-        login_user(user)
+    supporter = Supporter.get(musicbrainz_id=mb_username)
+    if supporter:  # Checking if user is already signed up
+        login_user(supporter)
         next = session.session.get('next')
         return redirect(next) if next else redirect(url_for('.profile'))
     else:
@@ -257,20 +260,20 @@ def musicbrainz_post():
         return redirect(url_for('.signup'))
 
 
-@users_bp.route('/profile')
+@supporters_bp.route('/profile')
 @login_required
 def profile():
     return render_template("users/profile.html")
 
 
-@users_bp.route('/profile/edit', methods=['GET', 'POST'])
+@supporters_bp.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
     if current_user.is_commercial:
-        form = CommercialUserEditForm()
+        form = CommercialSupporterEditForm()
     else:
         available_datasets = Dataset.query.all()
-        form = NonCommercialUserEditForm(available_datasets)
+        form = NonCommercialSupporterEditForm(available_datasets)
 
     if form.validate_on_submit():
         kwargs = {
@@ -294,24 +297,24 @@ def profile_edit():
     return render_template('users/profile-edit.html', form=form)
 
 
-@users_bp.route('/profile/regenerate-token', methods=['POST'])
+@supporters_bp.route('/profile/regenerate-token', methods=['POST'])
 @login_required
 def regenerate_token():
     try:
         return jsonify({'token': current_user.generate_token()})
-    except InactiveUserException:
+    except InactiveSupporterException:
         raise BadRequest(gettext("Can't generate new token unless account is active."))
     except TokenGenerationLimitException as e:
         return jsonify({'error': e.message}), 429  # https://tools.ietf.org/html/rfc6585#page-3
 
 
-@users_bp.route('/login')
+@supporters_bp.route('/login')
 @login_forbidden
 def login():
     return render_template('users/mb-login.html')
 
 
-@users_bp.route('/logout')
+@supporters_bp.route('/logout')
 @login_required
 def logout():
     logout_user()

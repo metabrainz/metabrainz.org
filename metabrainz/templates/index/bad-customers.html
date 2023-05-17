@@ -5,7 +5,7 @@
 {% block content %}
   <div id="bad-customers">
 
-    <h1 class="page-title">{{ _('Our not-so-favorite commercial data users') }}</h1>
+    <h1 class="page-title">{{ _('Our not-so-favorite commercial data supporters') }}</h1>
 
     <p>
       {{ _('The following companies use our data, but have declined to support us on an ongoing basis.') }}
@@ -20,16 +20,16 @@
       {{ _('If a company you like appears on this list, please contact that company and ask them why
       they have declined to support us. If you are with a company listed below and would like to
       get off this list, you can do so by <a href="%(account_type_url)s">signing up
-      for support</a>.', account_type_url=url_for('users.account_type')) }}
+      for support</a>.', account_type_url=url_for('supporters.account_type')) }}
     </p>
     <p>
       {{ _('Do you know of other companies using our data? We\'d love to know and ask them for support!
       Please <a href="%(contact_url)s">let us know</a>!', contact_url=url_for('index.contact')) }}
     </p>
 
-    {% if bad_users %}
-      <div class="users-grid">
-        {% for user in bad_users %}
+    {% if bad_supporters %}
+      <div class="supporters-grid">
+        {% for user in bad_supporters %}
           <div class="user">
             <div class="logo-container">
               {% if user.website_url %}<a href="{{ user.website_url }}" rel="nofollow">{% endif %}
@@ -51,7 +51,7 @@
     {% else %}
       <div class="well well-lg">
         <p><strong>{{ _('Nice!!') }}</strong></p>
-        <p>{{ _('There are currently no not-so-favorite commercial data users!') }}</p>
+        <p>{{ _('There are currently no not-so-favorite commercial data supporters!') }}</p>
         <p>
           {{ _('... either that, or maybe we\'re working to convince some companies to do the
           "right thing"... :)') }}

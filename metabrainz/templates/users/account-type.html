@@ -26,7 +26,7 @@
   </p>
 
   <p class="text-center">
-    <a href="{{ url_for('users.signup_noncommercial') }}"
+    <a href="{{ url_for('supporters.signup_noncommercial') }}"
        class="btn btn-default" role="button">{{ _('Non-commercial') }}</a>
   </p>
 
@@ -55,9 +55,9 @@
                     <div class="price">{{ _('$%(tier_price)s/month and up', tier_price=tier.price) }}</div>
                     <div class="description">{{ tier.short_desc }}</div>
                     <div class="buttons">
-                      <p><a href="{{ url_for('users.tier', tier_id=tier.id) }}"
+                      <p><a href="{{ url_for('supporters.tier', tier_id=tier.id) }}"
                             class="btn btn-default btn-block" role="button">{{ _('More info') }}</a></p>
-                      <p><a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
+                      <p><a href="{{ url_for('supporters.signup_commercial', tier_id=tier.id) }}"
                             class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a></p>
                     </div>
                   </div>
@@ -74,10 +74,10 @@
         <div class="thumbnail">
           <div class="caption">
             {# Last tier should be the most expensive. Exactly what we need! #}
-            {% set featured_users = tiers[-1].get_featured_users(limit=4, with_logos=True) %}
-            <div id="featured-users">
+            {% set featured_supporters = tiers[-1].get_featured_supporters(limit=4, with_logos=True) %}
+            <div id="featured-supporters">
               <h3>{{ _('Some of our Unicorn members') }}</h3>
-              {% for user in featured_users %}
+              {% for user in featured_supporters %}
                 <div class="logo-container">
                   {% if user.logo_filename %}
                     <span><img src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}" /></span>
@@ -87,7 +87,7 @@
                 </div>
               {% endfor %}
             </div>
-            <em><a href="{{ url_for('users.supporters_list') }}">{{ _('See all our supporters') }}</a></em>
+            <em><a href="{{ url_for('supporters.supporters_list') }}">{{ _('See all our supporters') }}</a></em>
           </div>
         </div>
 
@@ -101,9 +101,9 @@
               <td>{{ tier.short_desc }}</td>
               <td>{{ _('$%(tier_price)s/month and up', tier_price=tier.price) }}</td>
               <td>
-                <a href="{{ url_for('users.tier', tier_id=tier.id) }}"
+                <a href="{{ url_for('supporters.tier', tier_id=tier.id) }}"
                    class="btn btn-default btn-xs" role="button">{{ _('More info') }}</a>
-                <a href="{{ url_for('users.signup_commercial', tier_id=tier.id) }}"
+                <a href="{{ url_for('supporters.signup_commercial', tier_id=tier.id) }}"
                    class="btn btn-primary btn-xs" role="button">{{ _('Sign up') }}</a>
               </td>
             </tr>

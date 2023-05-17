@@ -1,9 +1,7 @@
 import datetime
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user
-from metabrainz.model.user import User
-from metabrainz import session
-from metabrainz.users.views import SESSION_KEY_MB_USERNAME
+from metabrainz.model.supporter import Supporter
 
 index_bp = Blueprint('index', __name__)
 
@@ -12,8 +10,8 @@ index_bp = Blueprint('index', __name__)
 def home():
     return render_template(
         'index/index.html',
-        good_users=User.get_featured(limit=4, with_logos=True),
-        bad_users=User.get_featured(in_deadbeat_club=True, limit=4),
+        good_supporters=Supporter.get_featured(limit=4, with_logos=True),
+        bad_supporters=Supporter.get_featured(in_deadbeat_club=True, limit=4),
     )
 
 
@@ -69,7 +67,7 @@ def sponsors():
 def bad_customers():
     return render_template(
         'index/bad-customers.html',
-        bad_users=User.get_featured(in_deadbeat_club=True),
+        bad_supporters=Supporter.get_featured(in_deadbeat_club=True),
     )
 
 
@@ -85,7 +83,7 @@ def gdpr_statement():
 
 @index_bp.route('/about/customers.html')
 def about_customers_redirect():
-    return redirect(url_for('users.supporters_list'), 301)
+    return redirect(url_for('supporters.supporters_list'), 301)
 
 
 @index_bp.route('/shop')

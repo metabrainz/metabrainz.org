@@ -1,42 +1,42 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h1>Users</h1>
+  <h1>supporters</h1>
   <hr />
 
   <div class="row">
     <div class="col-sm-8 pull-left">
       <h2 style="margin-top:0px;">
-        User
-        {% if user.is_commercial %}
-          <strong>{{ user.org_name }}</strong>
-          ({{ user.musicbrainz_id }})
+        Supporter
+        {% if supporter.is_commercial %}
+          <strong>{{ supporter.org_name }}</strong>
+          ({{ supporter.musicbrainz_id }})
         {% else %}
-          {{ user.musicbrainz_id }}
+          {{ supporter.musicbrainz_id }}
         {% endif %}
         <small>
-          #{{ user.id }}
+          #{{ supporter.id }}
         </small>
       </h2>
-      <p class="text-muted"><em>Created on {{ user.created }}.</em></p>
+      <p class="text-muted"><em>Created on {{ supporter.created }}.</em></p>
     </div>
-    {% if user.logo_filename %}
+    {% if supporter.logo_filename %}
       <div class="col-sm-4 pull-right">
-        <img src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}" style="max-width:280px;max-height:73px;" />
+        <img src="{{ url_for('static', filename='img/user_logos/'+supporter.logo_filename) }}" style="max-width:280px;max-height:73px;" />
       </div>
-    {% elif user.org_logo_url %}
+    {% elif supporter.org_logo_url %}
       <div class="col-sm-4 pull-right">
-        <img src="{{ user.org_logo_url }}" style="max-width:280px;max-height:73px;" />
+        <img src="{{ supporter.org_logo_url }}" style="max-width:280px;max-height:73px;" />
       </div>
     {% endif %}
   </div>
 
-  <form method="POST" action="{{ url_for('user_model.delete_view') }}">
-    <input id="id" name="id" type="hidden" value="{{ user.id }}">
-    <input id="url" name="url" type="hidden" value="{{ url_for('user_model.index_view') }}">
-    <a href="{{ url_for('usersview.edit', user_id=user.id) }}"
-       class="btn btn-primary" role="button">Edit user</a>
-    <button onclick="return confirm('Are you sure you want to delete this user?');"
-            class="btn btn-danger">Delete user</button>
+  <form method="POST" action="{{ url_for('supporter_model.delete_view') }}">
+    <input id="id" name="id" type="hidden" value="{{ supporter.id }}">
+    <input id="url" name="url" type="hidden" value="{{ url_for('supporter_model.index_view') }}">
+    <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}"
+       class="btn btn-primary" role="button">Edit supporter</a>
+    <button onclick="return confirm('Are you sure you want to delete this supporter?');"
+            class="btn btn-danger">Delete supporter</button>
   </form>
 
   <h3>General info</h3>
@@ -44,7 +44,7 @@
 
     <div class="form-group col-md-6">
       <label>MusicBrainz Username</label>
-      <input class="form-control" type="text" value="{{ user.musicbrainz_id }}" readonly>
+      <input class="form-control" type="text" value="{{ supporter.musicbrainz_id }}" readonly>
       <div style="padding-top: 7px">
         <em class="text-muted">
           Determines which MusicBrainz user manages this MetaBrainz account.
@@ -56,11 +56,11 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Name</label>
-        <input class="form-control" type="text" value="{{ user.contact_name }}" readonly>
+        <input class="form-control" type="text" value="{{ supporter.contact_name }}" readonly>
       </div>
       <div class="form-group">
         <label>Email</label>
-        <input class="form-control" type="email" value="{{ user.contact_email }}" readonly>
+        <input class="form-control" type="email" value="{{ supporter.contact_email }}" readonly>
       </div>
     </div>
 
@@ -70,18 +70,18 @@
   <div class="row">
     <div class="form-group col-md-6">
       <label>State</label>
-      <input class="form-control" type="text" value="{{ user.state }}" readonly>
+      <input class="form-control" type="text" value="{{ supporter.state }}" readonly>
       <div style="padding-top: 7px">
         <em class="text-muted">
-          State determines whether this user has access to the MetaBrainz Live Data Feed API.
+          State determines whether this supporter has access to the MetaBrainz Live Data Feed API.
         </em>
       </div>
     </div>
     <div class="col-md-6">
       <ul class="text-muted">
         <li><code>Active</code> - Full access to the API</li>
-        <li><code>Pending</code> - New user waiting for approval</li>
-        <li><code>Waiting</code> - Old user in the waiting list (for approval)</li>
+        <li><code>Pending</code> - New supporter waiting for approval</li>
+        <li><code>Waiting</code> - Old supporter in the waiting list (for approval)</li>
         <li><code>Rejected</code> - Rejected access the API</li>
         <li><code>Limited</code> - Cannot access the API</li>
       </ul>
@@ -92,55 +92,55 @@
   <div class="row">
 
     <div style="font-size:15px;font-weight:bold;margin-bottom:20px" class="col-md-12">
-      {% if user.is_commercial %}
-        This is a commercial user
+      {% if supporter.is_commercial %}
+        This is a commercial supporter
       {% else %}
-        This is <u>not</u> a commercial user
+        This is <u>not</u> a commercial supporter
       {% endif %}
     </div>
 
-    {% if user.is_commercial %}
+    {% if supporter.is_commercial %}
       <div class="col-md-6">
         <div class="form-group">
           <label>Organization name</label>
-          <input class="form-control" type="text" value="{{ user.org_name }}" readonly>
+          <input class="form-control" type="text" value="{{ supporter.org_name }}" readonly>
         </div>
         <div class="form-group">
           <label>URL of the organization's API (if exists)</label>
-          <input class="form-control" type="url" value="{{ user.api_url }}" readonly>
+          <input class="form-control" type="url" value="{{ supporter.api_url }}" readonly>
         </div>
       </div>
       <div class="form-group col-md-6">
         <label>Description</label>
-        <textarea class="form-control" rows="5" readonly>{{ user.org_desc }}</textarea>
+        <textarea class="form-control" rows="5" readonly>{{ supporter.org_desc }}</textarea>
       </div>
     {% endif %}
 
   </div>
 
-  {% if user.is_commercial %}
+  {% if supporter.is_commercial %}
 
     <h4>Address</h4>
     <div class="row">
       <div class="form-group col-md-6">
         <label>Street</label>
-        <input class="form-control" type="text" value="{{ user.address_street }}" readonly>
+        <input class="form-control" type="text" value="{{ supporter.address_street }}" readonly>
       </div>
       <div class="form-group col-md-6">
         <label>City</label>
-        <input class="form-control" type="text" value="{{ user.address_city }}" readonly>
+        <input class="form-control" type="text" value="{{ supporter.address_city }}" readonly>
       </div>
       <div class="form-group col-md-6">
         <label>Postcode</label>
-        <input class="form-control" type="text" value="{{ user.address_postcode }}" readonly>
+        <input class="form-control" type="text" value="{{ supporter.address_postcode }}" readonly>
       </div>
       <div class="form-group col-md-6">
         <label>State / Province</label>
-        <input class="form-control" type="text" value="{{ user.address_state }}" readonly>
+        <input class="form-control" type="text" value="{{ supporter.address_state }}" readonly>
       </div>
       <div class="form-group col-md-6">
         <label>Country</label>
-        <input class="form-control" type="text" value="{{ user.address_country }}" readonly>
+        <input class="form-control" type="text" value="{{ supporter.address_country }}" readonly>
       </div>
     </div>
 
@@ -148,13 +148,13 @@
     <div class="row">
       <div class="form-group col-md-6">
         <label>Tier</label>
-        <input class="form-control" type="text" value="{{ user.tier }}" readonly>
+        <input class="form-control" type="text" value="{{ supporter.tier }}" readonly>
       </div>
       <div class="form-group col-md-6">
         <label>Amount pledged</label>
         <div class="input-group">
           <span class="input-group-addon">$</span>
-          <input class="form-control" type="number" value="{{ user.amount_pledged }}" readonly>
+          <input class="form-control" type="number" value="{{ supporter.amount_pledged }}" readonly>
         </div>
       </div>
     </div>
@@ -163,54 +163,54 @@
     <div class="row">
 
     <div style="font-size:15px;font-weight:bold;margin-bottom:20px" class="col-md-12">
-      {% if user.featured %}
-        This user is featured on the website
+      {% if supporter.featured %}
+        This supporter is featured on the website
       {% else %}
-        This user is <u>not</u> featured on the website
+        This supporter is <u>not</u> featured on the website
       {% endif %}
     </div>
 
-    {% if user.featured %}
+    {% if supporter.featured %}
 
       <div class="col-md-6">
         <div class="form-group">
           <label>Website URL</label>
-          <input class="form-control" type="url" value="{{ user.website_url }}" readonly>
+          <input class="form-control" type="url" value="{{ supporter.website_url }}" readonly>
         </div>
         <dl class="dl-horizontal">
-          <dt class="text-success">Good standing</dt><dd>{{ 'Yes' if user.good_standing else 'No' }}</dd>
-          <dt class="text-warning">In the Deadbeat Club</dt><dd>{{ 'Yes' if user.in_deadbeat_club else 'No' }}</dd>
+          <dt class="text-success">Good standing</dt><dd>{{ 'Yes' if supporter.good_standing else 'No' }}</dd>
+          <dt class="text-warning">In the Deadbeat Club</dt><dd>{{ 'Yes' if supporter.in_deadbeat_club else 'No' }}</dd>
         </dl>
       </div>
 
       <div class="form-group col-md-6">
         <label>Data usage description</label>
-        <textarea class="form-control" id="usage_desc" name="usage_desc" rows="4" readonly>{{ user.data_usage_desc }}</textarea>
+        <textarea class="form-control" id="usage_desc" name="usage_desc" rows="4" readonly>{{ supporter.data_usage_desc }}</textarea>
       </div>
 
     {% endif %}
 
   {% endif %}
 
-  {% if user.state == 'pending' or user.state == 'waiting' %}
+  {% if supporter.state == 'pending' or supporter.state == 'waiting' %}
     <h3>State modification</h3>
     <div>
       <p>
-        <a href="{{ url_for('usersview.approve', user_id=user.id) }}"
+        <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id) }}"
            class="btn btn-success" role="button">Approve</a>
-        <a href="{{ url_for('usersview.approve', user_id=user.id, limited=True) }}"
-           title="This user is not going to have access to the API."
+        <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id, limited=True) }}"
+           title="This supporter is not going to have access to the API."
            class="btn btn-warning" role="button">Approve (limited)</a>
-        {% if user.state != 'waiting' %}
-          <a href="{{ url_for('usersview.wait', user_id=user.id) }}"
+        {% if supporter.state != 'waiting' %}
+          <a href="{{ url_for('supportersview.wait', supporter_id=supporter.id) }}"
              class="btn btn-warning" role="button">Put into waiting list</a>
         {% endif %}
-        <a href="{{ url_for('usersview.reject', user_id=user.id) }}"
+        <a href="{{ url_for('supportersview.reject', supporter_id=supporter.id) }}"
            class="btn btn-danger" role="button">Reject</a>
       </p>
       <p class="text-muted">
         <em>
-          You will be redirected to the next pending user after approving
+          You will be redirected to the next pending supporter after approving
           or rejecting this one.
         </em>
       </p>
@@ -221,8 +221,8 @@
   {% if active_tokens %}
     <p class="text-muted">
       <em>
-        If you need to revoke existing tokens <b>and</b> prevent user from
-        generating new ones, <a href="{{ url_for('user_model.edit_view', id=user.id) }}">
+        If you need to revoke existing tokens <b>and</b> prevent supporter from
+        generating new ones, <a href="{{ url_for('supporter_model.edit_view', id=supporter.id) }}">
         set their status</a> to <code>rejected</code>.
       </em>
     </p>
@@ -238,14 +238,14 @@
         <tr>
           <td>{{ token.value }}</td>
           <td>{{ token.created }}</td>
-          <td><a href="{{ url_for('usersview.revoke_token', token_value=token.value) }}"
+          <td><a href="{{ url_for('supportersview.revoke_token', token_value=token.value) }}"
                  class="btn btn-warning" role="button"
                  title="Revoke this access token">Revoke</a></td>
         </tr>
       {% endfor %}
     </table>
   {% else %}
-    This user has no active access tokens.
+    This supporter has no active access tokens.
   {% endif %}
 
   <h3>Hourly API usage</h3>
@@ -258,7 +258,7 @@
   <script src="{{ url_for('static', filename="js/highstock.js") }}"></script>
   <script>
     $(function () {
-      $.getJSON('{{ url_for('usersview.details_stats', user_id=user.id) }}', function (data) {
+      $.getJSON('{{ url_for('supportersview.details_stats', supporter_id=supporter.id) }}', function (data) {
         $("#chart").highcharts("StockChart", {
           rangeSelector: { selected: 1 },
           series: data,

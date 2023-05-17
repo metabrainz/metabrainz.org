@@ -2,12 +2,11 @@ from decimal import Decimal
 from flask import Response, request, redirect, url_for
 from flask_admin import expose
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms
-from metabrainz.model.user import User, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
+from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
-from metabrainz.model.user import User
-from metabrainz.db import user as db_user
+from metabrainz.db import supporter as db_supporter
 from metabrainz.db import payment as db_payment
 from metabrainz import flash
 from brainzutils import cache
@@ -29,56 +28,56 @@ class HomeView(AdminIndexView):
     def index(self):
         return self.render(
             'admin/home.html',
-            pending_users=User.get_all(state=STATE_PENDING),
-            waiting_users=User.get_all(state=STATE_WAITING),
+            pending_supporters=Supporter.get_all(state=STATE_PENDING),
+            waiting_supporters=Supporter.get_all(state=STATE_WAITING),
         )
 
 
-class UsersView(AdminBaseView):
+class SupportersView(AdminBaseView):
 
     @expose('/')
     def index(self):
         value = request.args.get('value')
-        results = User.search(value) if value else []
+        results = Supporter.search(value) if value else []
         return self.render('admin/users/index.html',
                            value=value, results=results)
 
-    @expose('/<int:user_id>')
-    def details(self, user_id):
-        user = User.get(id=user_id)
-        active_tokens = Token.get_all(owner_id=user.id, is_active=True)
+    @expose('/<int:supporter_id>')
+    def details(self, supporter_id):
+        supporter = Supporter.get(id=supporter_id)
+        active_tokens = Token.get_all(owner_id=supporter.id, is_active=True)
         return self.render(
             'admin/users/details.html',
-            user=user,
+            supporter=supporter,
             active_tokens=active_tokens,
         )
 
-    @expose('/<int:user_id>/edit', methods=('GET', 'POST'))
-    def edit(self, user_id):
-        user = User.get(id=user_id)
+    @expose('/<int:supporter_id>/edit', methods=('GET', 'POST'))
+    def edit(self, supporter_id):
+        supporter = Supporter.get(id=supporter_id)
 
-        form = forms.UserEditForm(defaults={
-            'musicbrainz_id': user.musicbrainz_id,
-            'contact_name': user.contact_name,
-            'contact_email': user.contact_email,
-            'state': user.state,
-            'is_commercial': user.is_commercial,
-            'org_name': user.org_name,
-            'org_desc': user.org_desc,
-            'api_url': user.api_url,
-            'address_street': user.address_street,
-            'address_city': user.address_city,
-            'address_state': user.address_state,
-            'address_postcode': user.address_postcode,
-            'address_country': user.address_country,
-            'tier': user.tier_id,
-            'amount_pledged': user.amount_pledged or 0,
-            'featured': user.featured,
-            'website_url': user.website_url,
-            'logo_url': user.org_logo_url,
-            'usage_desc': user.data_usage_desc,
-            'good_standing': user.good_standing,
-            'in_deadbeat_club': user.in_deadbeat_club,
+        form = forms.SupporterEditForm(defaults={
+            'musicbrainz_id': supporter.musicbrainz_id,
+            'contact_name': supporter.contact_name,
+            'contact_email': supporter.contact_email,
+            'state': supporter.state,
+            'is_commercial': supporter.is_commercial,
+            'org_name': supporter.org_name,
+            'org_desc': supporter.org_desc,
+            'api_url': supporter.api_url,
+            'address_street': supporter.address_street,
+            'address_city': supporter.address_city,
+            'address_state': supporter.address_state,
+            'address_postcode': supporter.address_postcode,
+            'address_country': supporter.address_country,
+            'tier': supporter.tier_id,
+            'amount_pledged': supporter.amount_pledged or 0,
+            'featured': supporter.featured,
+            'website_url': supporter.website_url,
+            'logo_url': supporter.org_logo_url,
+            'usage_desc': supporter.data_usage_desc,
+            'good_standing': supporter.good_standing,
+            'in_deadbeat_club': supporter.in_deadbeat_club,
         })
 
         if form.validate_on_submit():
@@ -107,30 +106,30 @@ class UsersView(AdminBaseView):
             }
             if form.logo.data:
                 extension = os.path.splitext(secure_filename(form.logo.data.filename))[1]
-                # Using a random UUID instead of user ID here so that we don't unnecessarily expose them.
+                # Using a random UUID instead of supporter ID here so that we don't unnecessarily expose them.
                 logo_filename = '%s%s' % (uuid.uuid4(), extension)
                 update_data['logo_filename'] = logo_filename
                 image_storage = form.logo.data  # type: werkzeug.datastructures.FileStorage
-                if user.logo_filename:
+                if supporter.logo_filename:
                     # Deleting old logo
                     try:
-                        os.remove(os.path.join(forms.LOGO_STORAGE_DIR, user.logo_filename))
+                        os.remove(os.path.join(forms.LOGO_STORAGE_DIR, supporter.logo_filename))
                     except OSError as e:
                         logging.warning(e)
                 # Saving new one
                 image_storage.save(os.path.join(forms.LOGO_STORAGE_DIR, logo_filename))
-            db_user.update(user_id=user.id, **update_data)
-            return redirect(url_for('.details', user_id=user.id))
+            db_supporter.update(supporter_id=supporter.id, **update_data)
+            return redirect(url_for('.details', supporter_id=supporter.id))
 
         return self.render(
             'admin/users/edit.html',
-            user=user,
+            supporter=supporter,
             form=form,
         )
 
-    @expose('/<int:user_id>/stats')
-    def details_stats(self, user_id):
-        stats = AccessLog.get_hourly_usage(user_id=user_id)
+    @expose('/<int:supporter_id>/stats')
+    def details_stats(self, supporter_id):
+        stats = AccessLog.get_hourly_usage(supporter_id=supporter_id)
         return Response(json.dumps([{'data': [[
                 time.mktime(i[0].utctimetuple()) * 1000,
                 i[1]
@@ -139,47 +138,47 @@ class UsersView(AdminBaseView):
 
     @expose('/approve')
     def approve(self):
-        user_id = request.args.get('user_id')
+        supporter_id = request.args.get('supporter_id')
         if request.args.get('limited'):
-            User.get(id=user_id).set_state(STATE_LIMITED)
+            Supporter.get(id=supporter_id).set_state(STATE_LIMITED)
         else:
-            User.get(id=user_id).set_state(STATE_ACTIVE)
-        flash.info('User #%s has been approved.' % user_id)
+            Supporter.get(id=supporter_id).set_state(STATE_ACTIVE)
+        flash.info('Supporter #%s has been approved.' % supporter_id)
 
-        # Redirecting to the next pending user
-        next_user = User.get(state=STATE_PENDING)
-        if next_user:
-            return redirect(url_for('.details', user_id=next_user.id))
+        # Redirecting to the next pending supporter
+        next_supporter = Supporter.get(state=STATE_PENDING)
+        if next_supporter:
+            return redirect(url_for('.details', supporter_id=next_supporter.id))
         else:
-            flash.info('No more pending users.')
+            flash.info('No more pending supporters.')
             return redirect(url_for('.index'))
 
     @expose('/reject')
     def reject(self):
-        user_id = request.args.get('user_id')
-        User.get(id=user_id).set_state(STATE_REJECTED)
-        flash.warning('User #%s has been rejected.' % user_id)
+        supporter_id = request.args.get('supporter_id')
+        Supporter.get(id=supporter_id).set_state(STATE_REJECTED)
+        flash.warning('Supporter #%s has been rejected.' % supporter_id)
 
-        # Redirecting to the next pending user
-        next_user = User.get(state=STATE_PENDING)
-        if next_user:
-            return redirect(url_for('.details', user_id=next_user.id))
+        # Redirecting to the next pending supporter
+        next_supporter = Supporter.get(state=STATE_PENDING)
+        if next_supporter:
+            return redirect(url_for('.details', supporter_id=next_supporter.id))
         else:
-            flash.info('No more pending users.')
+            flash.info('No more pending supporters.')
             return redirect(url_for('.index'))
 
     @expose('/wait')
     def wait(self):
-        user_id = request.args.get('user_id')
-        User.get(id=user_id).set_state(STATE_WAITING)
-        flash.info('User #%s has been put into the waiting list.' % user_id)
+        supporter_id = request.args.get('supporter_id')
+        Supporter.get(id=supporter_id).set_state(STATE_WAITING)
+        flash.info('Supporter #%s has been put into the waiting list.' % supporter_id)
 
-        # Redirecting to the next pending user
-        next_user = User.get(state=STATE_PENDING)
-        if next_user:
-            return redirect(url_for('.details', user_id=next_user.id))
+        # Redirecting to the next pending supporter
+        next_supporter = Supporter.get(state=STATE_PENDING)
+        if next_supporter:
+            return redirect(url_for('.details', supporter_id=next_supporter.id))
         else:
-            flash.info('No more pending users.')
+            flash.info('No more pending supporters.')
             return redirect(url_for('.index'))
 
     @expose('/revoke-token')
@@ -188,10 +187,10 @@ class UsersView(AdminBaseView):
         token = Token.get(value=token_value)
         token.revoke()
         flash.info('Token %s has been revoked.' % token_value)
-        return redirect(url_for('.details', user_id=token.owner_id))
+        return redirect(url_for('.details', supporter_id=token.owner_id))
 
 
-class CommercialUsersView(AdminBaseView):
+class CommercialSupportersView(AdminBaseView):
 
     @expose('/')
     def index(self):
@@ -200,8 +199,8 @@ class CommercialUsersView(AdminBaseView):
             return redirect(url_for('.index'))
         limit = 20
         offset = (page - 1) * limit
-        users, count = User.get_all_commercial(limit=limit, offset=offset)
-        return self.render('admin/commercial-users/index.html', users=users,
+        supporters, count = Supporter.get_all_commercial(limit=limit, offset=offset)
+        return self.render('admin/commercial-users/index.html', supporters=supporters,
                            page=page, limit=limit, count=count)
 
 
@@ -244,7 +243,7 @@ class StatsView(AdminBaseView):
     def overview(self):
         return self.render(
             'admin/stats/overview.html',
-            active_user_count=AccessLog.active_user_count(),
+            active_supporter_count=AccessLog.active_supporter_count(),
             top_downloaders=AccessLog.top_downloaders(10),
             token_actions=TokenLog.list(10)[0],
         )
@@ -259,23 +258,23 @@ class StatsView(AdminBaseView):
 
 
     @staticmethod
-    def lookup_ips(users):
+    def lookup_ips(supporters):
         """ Try to lookup and cache as many reverse DNS as possible in a window of time """
 
         data = []
         timeout = time.monotonic() + StatsView.IP_ADDR_TIMEOUT
-        for user in users:
-            row = list(user)
+        for supporter in supporters:
+            row = list(supporter)
 
-            reverse = cache.get(user[0])
+            reverse = cache.get(supporter[0])
             if not reverse: 
                 if time.monotonic() < timeout:
-                    reverse = StatsView.dns_lookup(user[0])
+                    reverse = StatsView.dns_lookup(supporter[0])
                 else:
                     reverse = None
 
             if reverse:
-                cache.set(user[0], reverse, 3600)
+                cache.set(supporter[0], reverse, 3600)
                 row[0] = reverse
 
             data.append(row)
@@ -342,12 +341,12 @@ class StatsView(AdminBaseView):
     def supporters(self):
 
         total = Decimal()
-        supporters = User.get_active_supporters()
+        supporters = Supporter.get_active_supporters()
         for supporter in supporters:
             total += supporter.amount_pledged
             
         return self.render(
-            'admin/stats/supporters.html',
+            'admin/stats/users.html',
             supporters=supporters,
             total=total
         )

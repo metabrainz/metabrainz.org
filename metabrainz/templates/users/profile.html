@@ -61,7 +61,7 @@
         {% endif %}
       </p>
       <p>
-        <a href="{{ url_for('users.profile_edit') }}" class="btn btn-lg btn-primary">
+        <a href="{{ url_for('supporters.profile_edit') }}" class="btn btn-lg btn-primary">
           {% if current_user.is_commercial %}
              Edit contact information
           {% else %}
@@ -168,7 +168,7 @@
           if (ignoreConfirmation || confirm("{{ _('Are you sure you want to generate new access token? Current token will be revoked!') }}")) {
             $.ajax({
               type: "POST",
-              url: "{{ url_for('users.regenerate_token') }}",
+              url: "{{ url_for('supporters.regenerate_token') }}",
               success: function (data) {
                 token.html(data.token);
                 token.show();

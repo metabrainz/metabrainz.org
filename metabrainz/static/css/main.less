@@ -65,11 +65,11 @@ h1.page-title, h2.page-title {
 
   #more-intro { margin-bottom: @section-margin; }
 
-  .featured-users {
+  .featured-supporters {
     display: flex;
     flex-flow: row wrap;
     justify-content: left;
-    .user {
+    .supporter {
       width: 199px;
       height: 100px;
       margin-left: 18px;
@@ -130,26 +130,26 @@ h1.page-title, h2.page-title {
       .thumbnail { border-color: fade(@brand-secondary, 40%); }
     }
   }
-  #featured-users {
+  #featured-supporters {
     .clearfix;
     margin-bottom: 12px;
     h3 { margin-bottom: 0px; }
-    @featured-user-height: 80px;
-    @featured-user-width: 168px;
+    @featured-supporter-height: 80px;
+    @featured-supporter-width: 168px;
     .logo-container {
       .pull-left;
-      height: @featured-user-height;
-      width: @featured-user-width;
+      height: @featured-supporter-height;
+      width: @featured-supporter-width;
       margin-left: 21px;
       margin-right: 21px;
-      line-height: @featured-user-height;
+      line-height: @featured-supporter-height;
       > span {
         display: inline-block;
         vertical-align: middle;
         line-height: normal;
         img {
-          max-height: @featured-user-height;
-          max-width: @featured-user-width;
+          max-height: @featured-supporter-height;
+          max-width: @featured-supporter-width;
           display: block;
           margin: auto;
         }
@@ -166,15 +166,15 @@ h1.page-title, h2.page-title {
   }
 }
 
-.users-grid {
+.supporters-grid {
   display: flex;
   flex-flow: row wrap;
   justify-content: left;
-  @user-width: 158px;
-  .user {
+  @supporter-width: 158px;
+  .supporter {
     margin-left: 15px;
     margin-right: 15px;
-    @media (min-width: @grid-float-breakpoint) { width: @user-width; }
+    @media (min-width: @grid-float-breakpoint) { width: @supporter-width; }
     @media (max-width: @grid-float-breakpoint) {
       padding-bottom: 12px;
       margin: 0 auto;
@@ -182,7 +182,7 @@ h1.page-title, h2.page-title {
     .logo-container {
       margin: 0 auto;
       height: 100px;
-      width: @user-width;
+      width: @supporter-width;
       line-height: 100px;
       text-align: center;
       .name {
