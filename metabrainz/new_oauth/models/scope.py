@@ -3,10 +3,10 @@ from authlib.oauth2.rfc6749.util import scope_to_list
 from sqlalchemy import Integer, Text
 from sqlalchemy.sql.schema import Identity, Column
 
-from metabrainz.new_oauth.models import Base
+from metabrainz.model import db
 
 
-class OAuth2Scope(Base):
+class OAuth2Scope(db.Model):
     __tablename__ = 'scope'
     __table_args__ = {
         'schema': 'oauth'
