@@ -67,18 +67,18 @@
                 <li><a href="{{ url_for('annual_reports.index') }}">{{ _('Annual Reports') }}</a></li>
                 <li><a href="{{ url_for('payments.donors') }}">{{ _('Donors') }}</a></li>
                 <li><a href="{{ url_for('index.sponsors') }}">{{ _('Sponsors') }}</a></li>
-                <li><a href="{{ url_for('users.supporters_list') }}">{{ _('Supporters') }}</a></li>
+                <li><a href="{{ url_for('supporters.supporters_list') }}">{{ _('Supporters') }}</a></li>
               </ul>
             </div>
             <div class="col-sm-2">
-              <div class="title"><a href="{{ url_for('users.supporters_list') }}">{{ _('Users') }}</a></div>
+              <div class="title"><a href="{{ url_for('supporters.supporters_list') }}">{{ _('Supporters') }}</a></div>
               <ul>
                 {% if not current_user or current_user.is_anonymous %}
-                  <li><a href="{{ url_for('users.login') }}">{{ _('Sign in') }}</a></li>
+                  <li><a href="{{ url_for('supporters.login') }}">{{ _('Sign in') }}</a></li>
                 {% else %}
-                  <li><a href="{{ url_for('users.logout') }}">{{ _('Sign out') }}</a></li>
+                  <li><a href="{{ url_for('supporters.logout') }}">{{ _('Sign out') }}</a></li>
                 {% endif %}
-                <li><a href="{{ url_for('users.profile') }}">{{ _('Access your account') }}</a></li>
+                <li><a href="{{ url_for('supporters.profile') }}">{{ _('Access your account') }}</a></li>
                 <li><a href="{{ url_for('api_index.info') }}">{{ _('API') }}</a></li>
               </ul>
             </div>

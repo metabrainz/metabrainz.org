@@ -14,7 +14,7 @@
       </thead>
       {% for supporter in supporters %}
         <tr>
-          <td><a href="{{ url_for('usersview.details', user_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
+          <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
           <td class="text-right">{{ "${:,.2f}".format(supporter.amount_pledged) }}</td>
         </tr>
       {% endfor %}

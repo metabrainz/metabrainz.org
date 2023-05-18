@@ -1,6 +1,6 @@
 from metabrainz.testing import FlaskTestCase
-from metabrainz.model import AccessLog, db, User
-from metabrainz.model.user import STATE_ACTIVE
+from metabrainz.model import AccessLog, db, Supporter
+from metabrainz.model.supporter import STATE_ACTIVE
 from flask import current_app
 import copy
 
@@ -11,28 +11,27 @@ class AccessLogTestCase(FlaskTestCase):
         super(AccessLogTestCase, self).setUp()
 
     def test_access_log(self):
-
-        user_0 = User.add(is_commercial=False, 
-            musicbrainz_id = "mb_test", 
-            contact_name = "Mr. Test",
-            contact_email = "test@musicbrainz.org",
-            data_usage_desc = "poop!",
-            org_desc = "foo!",
-        )
-        user_0.set_state(STATE_ACTIVE)
-        token_0 = user_0.generate_token() 
+        supporter_0 = Supporter.add(is_commercial=False,
+                                    musicbrainz_id="mb_test",
+                                    contact_name="Mr. Test",
+                                    contact_email="test@musicbrainz.org",
+                                    data_usage_desc="poop!",
+                                    org_desc="foo!",
+                                    )
+        supporter_0.set_state(STATE_ACTIVE)
+        token_0 = supporter_0.generate_token()
         AccessLog.create_record(token_0, "10.1.1.69")
         AccessLog.create_record(token_0, "10.1.1.69")
 
-        user_1 = User.add(is_commercial=True, 
-            musicbrainz_id = "mb_commercial", 
-            contact_name = "Mr. Commercial",
-            contact_email = "testc@musicbrainz.org",
-            data_usage_desc = "poop!",
-            org_desc = "foo!"
-        )
-        user_1.set_state(STATE_ACTIVE)
-        token_1 = user_1.generate_token() 
+        supporter_1 = Supporter.add(is_commercial=True,
+                                    musicbrainz_id="mb_commercial",
+                                    contact_name="Mr. Commercial",
+                                    contact_email="testc@musicbrainz.org",
+                                    data_usage_desc="poop!",
+                                    org_desc="foo!"
+                                    )
+        supporter_1.set_state(STATE_ACTIVE)
+        token_1 = supporter_1.generate_token()
         AccessLog.create_record(token_1, "10.1.1.59")
 
         non_commercial, commercial = AccessLog.top_ips()
@@ -46,7 +45,6 @@ class AccessLogTestCase(FlaskTestCase):
         # Check that we have the right number of counts
         self.assertEqual(non_commercial[0][7], 2)
         self.assertEqual(commercial[0][7], 1)
-
 
         non_commercial, commercial = AccessLog.top_tokens()
 

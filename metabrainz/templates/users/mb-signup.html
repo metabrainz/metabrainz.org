@@ -13,7 +13,7 @@
 
   <hr />
   <div class="well" style="max-width: 400px; margin: 0 auto;">
-    <a href="{{ url_for('users.musicbrainz', next=request.args.get('next')) }}"
+    <a href="{{ url_for('supporters.musicbrainz', next=request.args.get('next')) }}"
        class="btn btn-primary btn-lg btn-block">{{ _('Sign up with MusicBrainz') }}</a>
   </div>
 {% endblock %}

@@ -1,20 +1,20 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h1>Users</h1>
+  <h1>Supporters</h1>
   <hr />
 
   <h2>
-    Edit user #{{ user.id }}
+    Edit supporter #{{ supporter.id }}
     <small>
-      {% if user.is_commercial %}
-        <strong>{{ user.org_name }}</strong>
-        ({{ user.musicbrainz_id }})
+      {% if supporter.is_commercial %}
+        <strong>{{ supporter.org_name }}</strong>
+        ({{ supporter.musicbrainz_id }})
       {% else %}
-        {{ user.musicbrainz_id }}
+        {{ supporter.musicbrainz_id }}
       {% endif %}
     </small>
   </h2>
-  <p class="text-muted"><em>Created on {{ user.created }}.</em></p>
+  <p class="text-muted"><em>Created on {{ supporter.created }}.</em></p>
 
   {% for field in form.errors %}
     {% for error in form.errors[field] %}
@@ -33,8 +33,8 @@
         {{ form.musicbrainz_id(class="form-control") }}
         <div style="padding-top: 7px">
           <em class="text-muted">
-            Determines which MusicBrainz user manages this MetaBrainz account.
-            Can be changed to switch the owner. Only one user can be an owner.
+            Determines which MusicBrainz supporter manages this MetaBrainz account.
+            Can be changed to switch the owner. Only one supporter can be an owner.
           </em>
         </div>
       </div>
@@ -59,15 +59,15 @@
         {{ form.state(class="form-control") }}
         <div style="padding-top: 7px">
           <em class="text-muted">
-            State determines whether this user has access to the MetaBrainz Live Data Feed API.
+            State determines whether this supporter has access to the MetaBrainz Live Data Feed API.
           </em>
         </div>
       </div>
       <div class="col-md-6">
         <ul class="text-muted">
           <li><code>Active</code> - Full access to the API</li>
-          <li><code>Pending</code> - New user waiting for approval</li>
-          <li><code>Waiting</code> - Old user in the waiting list (for approval)</li>
+          <li><code>Pending</code> - New supporter waiting for approval</li>
+          <li><code>Waiting</code> - Old supporter in the waiting list (for approval)</li>
           <li><code>Rejected</code> - Rejected access the API</li>
           <li><code>Limited</code> - Cannot access the API</li>
         </ul>
@@ -85,7 +85,7 @@
           </label>
           <div style="padding-top: 7px">
             <em class="text-muted">
-              If this user is commercial, all the information below should be filled in.
+              If this supporter is commercial, all the information below should be filled in.
             </em>
           </div>
         </div>
@@ -159,7 +159,7 @@
           </label>
           <div style="padding-top: 7px">
             <em class="text-muted">
-              If this user is featured, it will show up in the public list on
+              If this supporter is featured, it will show up in the public list on
               the website. All the information below should be filled in if
               this is checked.
             </em>

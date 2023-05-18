@@ -3,7 +3,7 @@
   <h1>Statistics</h1>
 
   <p>
-    <strong>Active users:  {{ active_user_count }}</strong>
+    <strong>Active supporters:  {{ active_supporter_count }}</strong>
     <em class="text-muted">(used API in the last 24 hours)</em>
   </p>
 
@@ -11,10 +11,10 @@
     <p>
       <strong>Top downloaders (last 24 hours):</strong>
       <ol>
-        {% for user, req_count in top_downloaders %}
+        {% for supporter, req_count in top_downloaders %}
           <li>
-            <a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.musicbrainz_id }}</a>
-            {{ '('+user.org_name+')' if user.is_commercial }}
+            <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.musicbrainz_id }}</a>
+            {{ '('+supporter.org_name+')' if supporter.is_commercial }}
             - {{ req_count }} requests
           </li>
         {% endfor %}
@@ -28,8 +28,12 @@
       <ol>
         {% for action in token_actions %}
           <li>
-            <a href="{{ url_for('usersview.details', user_id=action.user.id) }}">{{ action.user.musicbrainz_id }}</a>
-            {% if action.user.id == action.token.owner.id %}
+            {% if action.supporter %}
+              <a href="{{ url_for('supportersview.details', supporter_id=action.supporter.id) }}">{{ action.supporter.musicbrainz_id }}</a>
+            {% else %}
+              Deleted Supporter
+            {% endif %}
+            {% if action.supporter.id == action.token.owner.id %}
               {% if action.action == "create" %}
                 generated their token:
               {% elif action.action == "deactivate" %}
@@ -37,12 +41,12 @@
               {% endif %}
             {% else %}
               {% if action.action == "create" %}
-                generated new token for user
+                generated new token for supporter
               {% elif action.action == "deactivate" %}
-                revoked token owned by user
+                revoked token owned by supporter
               {% endif %}
               {% if action.token.owner %}
-                  <a href="{{ url_for('usersview.details', user_id=action.token.owner.id) }}">{{ action.token.owner }}</a>:
+                  <a href="{{ url_for('supportersview.details', supporter_id=action.token.owner.id) }}">{{ action.token.owner }}</a>:
               {% else %}
                   [ invalid owner row suppressed ]
               {% endif %}

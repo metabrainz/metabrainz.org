@@ -2,7 +2,7 @@
 {% block body %}
   <h2>Welcome!</h2>
 
-  {% macro print_table(users) %}
+  {% macro print_table(supporters) %}
     <table class="table table-striped">
       <thead>
       <tr>
@@ -14,30 +14,30 @@
         <th>Applied on</th>
       </tr>
       </thead>
-      {% for user in users %}
+      {% for supporter in supporters %}
         <tr>
-          <td><a href="{{ url_for('usersview.details', user_id=user.id) }}">{{ user.org_name }}</a></td>
-          <td>{{ user.contact_name }}</td>
-          <td>{{ user.contact_email }}</td>
-          <td>{{ user.musicbrainz_id }}</td>
-          <td>{{ user.tier }}</td>
-          <td>{{ user.created }}</td>
+          <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
+          <td>{{ supporter.contact_name }}</td>
+          <td>{{ supporter.contact_email }}</td>
+          <td>{{ supporter.musicbrainz_id }}</td>
+          <td>{{ supporter.tier }}</td>
+          <td>{{ supporter.created }}</td>
         </tr>
       {% endfor %}
     </table>
   {% endmacro %}
 
 
-  <h3>Commercial users pending approval</h3>
-  {% if pending_users %}
-    {{ print_table(pending_users) }}
+  <h3>Commercial supporters pending approval</h3>
+  {% if pending_supporters %}
+    {{ print_table(pending_supporters) }}
   {% else %}
     None! Go take a break. :)
   {% endif %}
 
-  <h3>Commercial users in the waiting list</h3>
-  {% if waiting_users %}
-    {{ print_table(waiting_users) }}
+  <h3>Commercial supporters in the waiting list</h3>
+  {% if waiting_supporters %}
+    {{ print_table(waiting_supporters) }}
   {% else %}
     None! Go take a break. :)
   {% endif %}

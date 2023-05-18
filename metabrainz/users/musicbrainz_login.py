@@ -19,8 +19,8 @@ def init(base_url, client_id, client_secret):
     )
 
 
-def get_user(authorization_code):
-    """Fetches info about current user.
+def get_supporter(authorization_code):
+    """Fetches info about current supporter.
 
     Returns:
         MusicBrainz username and email address.
@@ -29,7 +29,7 @@ def get_user(authorization_code):
         'code': authorization_code,
         'grant_type': 'authorization_code',
         'redirect_uri': url_for(
-            'users.musicbrainz_post',
+            'supporters.musicbrainz_post',
             _external=True,
             _scheme=current_app.config['PREFERRED_URL_SCHEME'],
         )
@@ -45,7 +45,7 @@ def get_authentication_uri():
     params = {
         'response_type': 'code',
         'redirect_uri': url_for(
-            'users.musicbrainz_post',
+            'supporters.musicbrainz_post',
             _external=True,
             _scheme=current_app.config['PREFERRED_URL_SCHEME'],
         ),

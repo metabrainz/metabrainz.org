@@ -153,7 +153,7 @@ def cancelled():
 def error():
     """Error page for payments.
 
-    Users should be redirected there when errors occur during payment process.
+    Supporters/Users should be redirected there when errors occur during payment process.
     """
     if request.args.get("is_donation") == "True":
         flash.error(gettext(

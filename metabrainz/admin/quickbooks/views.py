@@ -100,7 +100,7 @@ class QuickBooksView(BaseView):
         Send all this to the caller to render.
         '''
 
-        # Look up access tokens from sessions, or make the user login
+        # Look up access tokens from sessions, or make the supporter login
         access_token = session.get('access_token', None)
         refresh_token = session.get('refresh_token', "")
         realm = session.get('realm', None)

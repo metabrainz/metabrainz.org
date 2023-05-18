@@ -33,11 +33,11 @@ class DatasetsField(SelectMultipleField):
         self.data = [datasets_dict.get(x) for x in self.data]
 
 
-class UserSignUpForm(FlaskForm):
-    """Base sign up form for new users.
+class SupporterSignUpForm(FlaskForm):
+    """Base sign up form for new supporters.
 
     Contains common fields required from both commercial and non-commercial
-    users.
+    supporters.
     """
     contact_name = StringField(validators=[DataRequired(gettext("Contact name is required!"))])
     contact_email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])
@@ -56,8 +56,8 @@ class UserSignUpForm(FlaskForm):
         FlaskForm.__init__(self, **kwargs)
 
 
-class NonCommercialSignUpForm(UserSignUpForm):
-    """Sign up form for non-commercial users."""
+class NonCommercialSignUpForm(SupporterSignUpForm):
+    """Sign up form for non-commercial supporters."""
     datasets = DatasetsField()
 
     def __init__(self, available_datasets, default_email=None, **kwargs):
@@ -66,8 +66,8 @@ class NonCommercialSignUpForm(UserSignUpForm):
         self.descriptions = {d.id: d.description for d in available_datasets}
 
 
-class CommercialSignUpForm(UserSignUpForm):
-    """Sign up form for commercial users."""
+class CommercialSignUpForm(SupporterSignUpForm):
+    """Sign up form for commercial supporters."""
     org_name = StringField(gettext("Organization name"), validators=[
         DataRequired(gettext("You need to specify the name of your organization."))
     ])
@@ -100,8 +100,8 @@ class CommercialSignUpForm(UserSignUpForm):
     amount_pledged = DecimalField()
 
 
-class UserEditForm(FlaskForm):
-    """User profile editing form."""
+class SupporterEditForm(FlaskForm):
+    """Supporter profile editing form."""
     contact_name = StringField(gettext("Name"), [
         validators.DataRequired(message=gettext("Contact name field is empty.")),
     ])
@@ -112,7 +112,7 @@ class UserEditForm(FlaskForm):
     ])
 
 
-class NonCommercialUserEditForm(UserEditForm):
+class NonCommercialSupporterEditForm(SupporterEditForm):
     datasets = DatasetsField()
 
     def __init__(self, available_datasets, **kwargs):
@@ -121,5 +121,5 @@ class NonCommercialUserEditForm(UserEditForm):
         self.descriptions = {d.id: d.description for d in available_datasets}
 
 
-class CommercialUserEditForm(UserEditForm):
+class CommercialSupporterEditForm(SupporterEditForm):
     pass

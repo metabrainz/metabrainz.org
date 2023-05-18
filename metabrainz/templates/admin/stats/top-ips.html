@@ -7,36 +7,36 @@
   </div>
   <h1>Top IP addresses -- {{ days }} days</h1>
 
-    <h2>Non commercial users</h2>
+    <h2>Non commercial supporters</h2>
     <p>
-       Users in good standing are not listed here.
+       Supporters in good standing are not listed here.
     </p>
-    {{ user_list(non_commercial, True) }}
+    {{ supporter_list(non_commercial, True) }}
 
-    <h2>Commercial users</h2>
-    {{ user_list(commercial, False) }}
+    <h2>Commercial supporters</h2>
+    {{ supporter_list(commercial, False) }}
 
 {% endblock %}
 
-{% macro user_list(users, show_usage) -%}
-  {% if users %}
+{% macro supporter_list(supporters, show_usage) -%}
+  {% if supporters %}
     <table class="table table-striped table-condensed">
       <thead>
       <tr>
         <th>IP</th>
-        <th>User</th>
+        <th>Supporter</th>
         <th>Name</th>
         <th>Email</th>
         <th>Data usage</th>
         <th>Count</th>
       </tr>
       </thead>
-      {% for ip, token, user_name, user_id, contact_name, contact_email, data_usage_desc, count in users %}
+      {% for ip, token, supporter_name, supporter_id, contact_name, contact_email, data_usage_desc, count in supporters %}
         <tr>
           <td>
             {{ ip }}
           </td>
-          <td><a href="{{ url_for('usersview.details', user_id=user_id) }}">{{ user_name }}</a></td>
+          <td><a href="{{ url_for('supportersview.details', supporter_id=supporter_id) }}">{{ supporter_name }}</a></td>
           <td>{{ contact_name }}</td>
           <td>{{ contact_email }}</td>
           <td>
