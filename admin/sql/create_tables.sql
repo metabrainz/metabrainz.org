@@ -17,7 +17,7 @@ CREATE TABLE dataset (
     project     dataset_project_type NOT NULL
 );
 
-CREATE TABLE "user" (
+CREATE TABLE supporter (
   id               SERIAL            NOT NULL, -- PK
   is_commercial    BOOLEAN           NOT NULL,
   musicbrainz_id   CHARACTER VARYING UNIQUE,
@@ -44,10 +44,10 @@ CREATE TABLE "user" (
   featured         BOOLEAN           NOT NULL
 );
 
-CREATE TABLE dataset_user (
-    id          INTEGER GENERATED ALWAYS AS IDENTITY,
-    user_id     INTEGER NOT NULL,
-    dataset_id  INTEGER NOT NULL
+CREATE TABLE dataset_supporter (
+    id              INTEGER GENERATED ALWAYS AS IDENTITY,
+    supporter_id    INTEGER NOT NULL,
+    dataset_id      INTEGER NOT NULL
 );
 
 CREATE TABLE token (
@@ -58,10 +58,10 @@ CREATE TABLE token (
 );
 
 CREATE TABLE token_log (
-  token_value CHARACTER VARYING        NOT NULL, -- PK
-  "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, -- PK
-  action      token_log_action_types   NOT NULL, -- PK
-  user_id     INTEGER
+  token_value   CHARACTER VARYING        NOT NULL, -- PK
+  "timestamp"   TIMESTAMP WITH TIME ZONE NOT NULL, -- PK
+  action        token_log_action_types   NOT NULL, -- PK
+  supporter_id  INTEGER
 );
 
 CREATE TABLE access_log (

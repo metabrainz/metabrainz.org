@@ -11,8 +11,8 @@ from metabrainz.model import Dataset
 from metabrainz.model.supporter import Supporter, InactiveSupporterException
 from metabrainz.model.tier import Tier
 from metabrainz.model.token import TokenGenerationLimitException
-from metabrainz.users import musicbrainz_login, login_forbidden
-from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
+from metabrainz.supporter import musicbrainz_login, login_forbidden
+from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
     NonCommercialSupporterEditForm
 
 supporters_bp = Blueprint('supporters', __name__)
@@ -251,7 +251,7 @@ def musicbrainz_post():
         SESSION_KEY_MB_EMAIL: mb_email,
     })
     supporter = Supporter.get(musicbrainz_id=mb_username)
-    if supporter:  # Checking if user is already signed up
+    if supporter:  # Checking if supporter is already signed up
         login_user(supporter)
         next = session.session.get('next')
         return redirect(next) if next else redirect(url_for('.profile'))
