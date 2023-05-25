@@ -2,7 +2,7 @@ BEGIN;
 
 ALTER TABLE token
   ADD CONSTRAINT token_owner_id_fkey FOREIGN KEY (owner_id)
-  REFERENCES "supporter" (id) MATCH SIMPLE
+  REFERENCES supporter (id) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE SET NULL;
 
 ALTER TABLE supporter
