@@ -6,7 +6,7 @@ from metabrainz.decorators import nocache, crossdomain
 from metabrainz.new_oauth.forms import ApplicationForm
 from metabrainz.new_oauth.models.client import OAuth2Client
 from metabrainz.new_oauth.models.token import OAuth2Token
-from metabrainz.new_oauth.models.user import OAuth2User
+from metabrainz.model.user import OAuth2User
 from metabrainz.new_oauth.provider import authorization_server
 from metabrainz.model import db
 from metabrainz.utils import build_url
