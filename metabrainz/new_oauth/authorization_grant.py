@@ -3,7 +3,7 @@ from authlib.oauth2.rfc6749 import grants
 from metabrainz.model import db
 from metabrainz.new_oauth.models.code import OAuth2AuthorizationCode
 from metabrainz.new_oauth.models.scope import get_scopes
-from metabrainz.new_oauth.models.user import OAuth2User
+from metabrainz.model.user import User
 
 
 class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
@@ -43,6 +43,6 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
     def authenticate_user(self, authorization_code):
         # TODO: Do we need to verify the client_id / client_secret associated with the code here?
         return db.session\
-            .query(OAuth2User)\
+            .query(User)\
             .filter_by(id=authorization_code.user_id)\
             .first()

@@ -2,7 +2,7 @@ from authlib.oauth2.rfc6749 import grants
 
 from metabrainz.model import db
 from metabrainz.new_oauth.models.token import OAuth2Token
-from metabrainz.new_oauth.models.user import OAuth2User
+from metabrainz.model.user import User
 
 
 class RefreshTokenGrant(grants.RefreshTokenGrant):
@@ -18,7 +18,7 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
     def authenticate_user(self, credential):
         # TODO: Do we need to verify the client_id / client_secret / token associated with the code here?
         return db.session\
-            .query(OAuth2User)\
+            .query(User)\
             .filter_by(id=credential.user_id)\
             .first()
 
