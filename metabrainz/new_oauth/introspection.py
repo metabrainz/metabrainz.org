@@ -6,7 +6,7 @@ from metabrainz.new_oauth.models.token import OAuth2Token
 
 class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
 
-    def query_token(self, token_str, token_type_hint):
+    def query_token(self, token_str, token_type_hint, client):
         base_query = db.session.query(OAuth2Token)
         if token_type_hint == 'access_token':
             token = base_query.filter_by(access_token=token_str).first()
