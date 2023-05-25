@@ -11,8 +11,8 @@ from metabrainz.model import Dataset
 from metabrainz.model.supporter import Supporter, InactiveSupporterException
 from metabrainz.model.tier import Tier
 from metabrainz.model.token import TokenGenerationLimitException
-from metabrainz.users import musicbrainz_login, login_forbidden
-from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
+from metabrainz.supporter import musicbrainz_login, login_forbidden
+from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
     NonCommercialSupporterEditForm
 
 supporters_bp = Blueprint('supporters', __name__)
