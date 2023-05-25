@@ -38,7 +38,7 @@ def update(supporter_id, **kwargs):
 
     with db.engine.connect() as connection:
         connection.execute(sqlalchemy.text("""
-            UPDATE "user"
+            UPDATE supporter
                SET musicbrainz_id = :musicbrainz_id,
                    contact_name = :contact_name,
                    contact_email = :contact_email,

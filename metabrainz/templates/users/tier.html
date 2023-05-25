@@ -18,27 +18,27 @@
   {% if supporters|length > 0 %}
     <h3>{{ _('Supporters on this tier') }}</h3>
     <div class="supporters-grid">
-      {% for user in supporters %}
-        <div class="user {{ 'bad-standing' if not user.good_standing }}">
-          {% if not user.good_standing %}
+      {% for supporter in supporters %}
+        <div class="supporter {{ 'bad-standing' if not supporter.good_standing }}">
+          {% if not supporter.good_standing %}
             <a href="{{ url_for('supporters.bad_standing') }}"
                title="{{ _('This supporter is behind on their payments.') }}">
-          {% elif user.website_url %}
-            <a href="{{ user.website_url }}">
+          {% elif supporter.website_url %}
+            <a href="{{ supporter.website_url }}">
           {% endif %}
             <div class="logo-container">
-              {% if user.logo_filename %}
-                <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}" />
-              {% elif user.org_logo_url %}
-                <img class="logo" src="{{ user.org_logo_url }}"/>
+              {% if supporter.logo_filename %}
+                <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+supporter.logo_filename) }}" />
+              {% elif supporter.org_logo_url %}
+                <img class="logo" src="{{ supporter.org_logo_url }}"/>
               {% else %}
-                <div class="name">{{ user.org_name }}</div>
+                <div class="name">{{ supporter.org_name }}</div>
               {% endif %}
             </div>
-            {% if user.data_usage_desc %}
-              <div class="description">{{ user.data_usage_desc }}</div>
+            {% if supporter.data_usage_desc %}
+              <div class="description">{{ supporter.data_usage_desc }}</div>
             {% endif %}
-          {% if not user.good_standing or (user.good_standing and user.website_url) %}
+          {% if not supporter.good_standing or (supporter.good_standing and supporter.website_url) %}
             </a>
           {% endif %}
         </div>

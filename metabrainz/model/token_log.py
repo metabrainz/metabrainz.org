@@ -20,7 +20,7 @@ class TokenLog(db.Model):
         ),
         primary_key=True,
     )
-    supporter_id = db.Column("user_id", db.Integer, db.ForeignKey('user.id', ondelete="SET NULL", onupdate="CASCADE"))
+    supporter_id = db.Column(db.Integer, db.ForeignKey('supporter.id', ondelete="SET NULL", onupdate="CASCADE"))
     supporter = db.relationship("Supporter", back_populates="token_log_records")
 
     @classmethod

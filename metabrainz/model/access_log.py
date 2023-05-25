@@ -110,8 +110,8 @@ class AccessLog(db.Model):
                 'SELECT max(access_log."timestamp") as ts, count(access_log.*) '
                 'FROM access_log '
                 'JOIN token ON access_log.token = token.value '
-                'JOIN "user" ON token.owner_id = "user".id '
-                'WHERE "user".id = %s '
+                'JOIN supporter ON token.owner_id = supporter.id '
+                'WHERE supporter.id = %s '
                 'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
                 '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
                 'ORDER BY ts',

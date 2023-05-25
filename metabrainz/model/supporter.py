@@ -32,7 +32,7 @@ class Supporter(db.Model, UserMixin):
     or rejected). All non-commercial supporters have active state by default, but
     commercial supporters need to be approved by one of the admins first.
     """
-    __tablename__ = 'user'
+    __tablename__ = 'supporter'
 
     # Common columns used by both commercial and non-commercial supporters:
     id = db.Column(db.Integer, primary_key=True)
@@ -76,7 +76,7 @@ class Supporter(db.Model, UserMixin):
     tokens = db.relationship("Token", backref="owner", lazy="dynamic")
     token_log_records = db.relationship("TokenLog", back_populates="supporter", lazy="dynamic")
 
-    datasets = db.relationship("Dataset", secondary="dataset_user")
+    datasets = db.relationship("Dataset", secondary="dataset_supporter")
 
     def __str__(self):
         if self.is_commercial:

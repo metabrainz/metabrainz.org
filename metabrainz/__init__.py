@@ -195,7 +195,7 @@ def _register_blueprints(app):
     app.register_blueprint(oauth_bp, url_prefix='/oauth')
     from metabrainz.api.views.index import api_index_bp
     app.register_blueprint(api_index_bp, url_prefix='/api')
-    from metabrainz.api.views.user import api_supporter_bp
-    app.register_blueprint(api_supporter_bp, url_prefix='/api/user')
+    from metabrainz.api.views.supporter import api_supporter_bp
+    app.register_blueprint(api_supporter_bp, url_prefix='/api/supporter')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')

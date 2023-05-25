@@ -29,21 +29,21 @@
 
     {% if bad_supporters %}
       <div class="supporters-grid">
-        {% for user in bad_supporters %}
-          <div class="user">
+        {% for supporter in bad_supporters %}
+          <div class="supporter">
             <div class="logo-container">
-              {% if user.website_url %}<a href="{{ user.website_url }}" rel="nofollow">{% endif %}
-              {% if user.logo_filename %}
-                <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}"/>
-              {% elif user.org_logo_url %}
-                <img class="logo" src="{{ user.org_logo_url }}"/>
+              {% if supporter.website_url %}<a href="{{ supporter.website_url }}" rel="nofollow">{% endif %}
+              {% if supporter.logo_filename %}
+                <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+supporter.logo_filename) }}"/>
+              {% elif supporter.org_logo_url %}
+                <img class="logo" src="{{ supporter.org_logo_url }}"/>
               {% else %}
-                <div class="name">{{ user.org_name }}</div>
+                <div class="name">{{ supporter.org_name }}</div>
               {% endif %}
-              {% if user.website_url %}</a>{% endif %}
+              {% if supporter.website_url %}</a>{% endif %}
             </div>
-            {% if user.data_usage_desc %}
-              <div class="description">{{ user.data_usage_desc }}</div>
+            {% if supporter.data_usage_desc %}
+              <div class="description">{{ supporter.data_usage_desc }}</div>
             {% endif %}
           </div>
         {% endfor %}

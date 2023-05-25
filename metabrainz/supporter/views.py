@@ -251,7 +251,7 @@ def musicbrainz_post():
         SESSION_KEY_MB_EMAIL: mb_email,
     })
     supporter = Supporter.get(musicbrainz_id=mb_username)
-    if supporter:  # Checking if user is already signed up
+    if supporter:  # Checking if supporter is already signed up
         login_user(supporter)
         next = session.session.get('next')
         return redirect(next) if next else redirect(url_for('.profile'))
