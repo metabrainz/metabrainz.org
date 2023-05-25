@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function invoke_docker_compose {
-    docker-compose -f docker/docker-compose.test.yml \
+    docker compose -f docker/docker-compose.test.yml \
         -p metabrainz_test \
         "$@"
 }

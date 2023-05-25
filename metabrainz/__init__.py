@@ -92,7 +92,7 @@ def create_app(debug=None, config_path = None):
     quickbooks.init(app)
 
     # MusicBrainz OAuth
-    from metabrainz.users import login_manager, musicbrainz_login
+    from metabrainz.supporter import login_manager, musicbrainz_login
     login_manager.init_app(app)
     musicbrainz_login.init(
         app.config['MUSICBRAINZ_BASE_URL'],
@@ -172,7 +172,7 @@ def _register_blueprints(app):
     from metabrainz.views import index_bp
     from metabrainz.reports.financial_reports.views import financial_reports_bp
     from metabrainz.reports.annual_reports.views import annual_reports_bp
-    from metabrainz.users.views import supporters_bp
+    from metabrainz.supporter.views import supporters_bp
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
