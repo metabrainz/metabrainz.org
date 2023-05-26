@@ -29,7 +29,7 @@
           <div class="h4 text-center">access all MetaBrainz projects</div>
           <form role="form" method="POST">
             <div class="form-group">
-              <label class="form-label" htmlFor="yourUsername">
+              <label class="form-label" for="yourUsername">
                 Username <span class="small help-block" style="display: inline-block;">(public)</span>
               </label>
               <div>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" htmlFor="yourUsername">
+              <label class="form-label" for="yourUsername">
                 E-mail address
               </label>
               <div>
@@ -59,7 +59,7 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" htmlFor="yourPassword">
+              <label class="form-label" for="yourPassword">
                 Password
               </label>
               <input
@@ -71,7 +71,7 @@
               />
             </div>
             <div class="form-group">
-              <label class="form-label" htmlFor="confirmPassword">
+              <label class="form-label" for="confirmPassword">
                 Confirm password
               </label>
               <input
@@ -117,9 +117,9 @@
           
         </div>
         <div class="auth-card-footer">
-          <dix class="small">
-            Already have an account? <a href="{{ url_for('users.login') }}">Sign in </a>
-          </dix>
+          <div class="small">
+            Already have an account? <a href="{{ url_for('supporters.login') }}">Sign in </a>
+          </div>
         </div>
       </div>
   </div>
