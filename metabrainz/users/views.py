@@ -7,7 +7,7 @@ from metabrainz.model import Dataset
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User, InactiveUserException
 from metabrainz.model.token import TokenGenerationLimitException
-from metabrainz.new_oauth.models import db
+from metabrainz.model import db
 from metabrainz.new_oauth.models.user import OAuth2User
 from metabrainz.users import musicbrainz_login, login_forbidden
 from metabrainz.users.forms import CommercialSignUpForm, NonCommercialSignUpForm, UserEditForm, CommercialUserEditForm, \
@@ -310,8 +310,7 @@ def regenerate_token():
 @users_bp.route('/login')
 @login_forbidden
 def login():
-    login_user(db.session.query(OAuth2User).filter_by(name='test1').first())
-    return redirect(url_for('index.home'))
+    return render_template('users/mb-login.html')
 
 
 @users_bp.route('/logout')
