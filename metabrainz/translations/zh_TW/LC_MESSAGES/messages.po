@@ -1,0 +1,2805 @@
+# Translations template for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# riotism, 2017
+# Jonathan Jonathan <email address hidden>, 2020
+# Shen-Ta Hsieh(BestSteve) <email address hidden>, 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-01-27 14:44+0100\n"
+"PO-Revision-Date: 2017-01-19 20:40+0000\n"
+"Last-Translator: Shen-Ta Hsieh(BestSteve) <email address hidden>, 2022\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/musicbrainz/teams/13846/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: metabrainz/payments/forms.py:9
+msgid "You need to specify amount!"
+msgstr "請輸入付款金額！"
+
+#: metabrainz/payments/forms.py:21
+msgid "You need to specify invoice number!"
+msgstr "請輸入發票編號！"
+
+#: metabrainz/payments/views.py:105
+msgid ""
+"Thank you for making a donation to the MetaBrainz Foundation. Your support "
+"is greatly appreciated! It may take some time before your donation appears "
+"in the list due to processing delays."
+msgstr "您已向MetaBrainz基金會捐款，我們非常感謝您的支持！由於我們還要處理您的捐款，您的名字可能要過一段時間才能在列表中出現。"
+
+#: metabrainz/payments/views.py:112
+msgid ""
+"Thank you for making a payment to the MetaBrainz Foundation. Your support is"
+" greatly appreciated!"
+msgstr "您已向MetaBrainz基金會付款，我們非常感謝您的支持！"
+
+#: metabrainz/payments/views.py:123
+msgid ""
+"We're sorry to see that you won't be donating today. We hope that you'll "
+"change your mind!"
+msgstr ""
+"We're sorry to see that you won't be donating today. We hope that you'll "
+"change your mind!"
+
+#: metabrainz/payments/views.py:129
+msgid ""
+"We're sorry to see that you won't be paying today. We hope that you'll "
+"change your mind!"
+msgstr ""
+"We're sorry to see that you won't be paying today. We hope that you'll "
+"change your mind!"
+
+#: metabrainz/payments/views.py:143
+msgid ""
+"We're sorry, but it appears we've run into an error and can't process your "
+"donation."
+msgstr "抱歉，我們遇到一些問題，暫時未能處理您的捐款。"
+
+#: metabrainz/payments/views.py:149
+msgid ""
+"We're sorry, but it appears we've run into an error and can't process your "
+"payment."
+msgstr "抱歉，我們遇到一些問題，暫時未能處理您的付款。"
+
+#: metabrainz/reports/annual_reports/views.py:25
+msgid "Requested annual report was not found."
+msgstr "找不到所要的年度報告。"
+
+#: metabrainz/templates/base.html:48
+msgid "Foundation"
+msgstr "基金會"
+
+#: metabrainz/templates/base.html:50
+#: metabrainz/templates/index/projects.html:3
+#: metabrainz/templates/navbar.html:24
+msgid "Projects"
+msgstr "專案"
+
+#: metabrainz/templates/base.html:51 metabrainz/templates/index/team.html:3
+#: metabrainz/templates/navbar.html:25
+msgid "Team"
+msgstr "團隊"
+
+#: metabrainz/templates/base.html:52
+#: metabrainz/templates/index/sponsors.html:3
+#: metabrainz/templates/index/sponsors.html:6
+#: metabrainz/templates/index/sponsors.html:20
+#: metabrainz/templates/navbar.html:29
+msgid "Sponsors"
+msgstr "贊助商"
+
+#: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:28
+#: metabrainz/templates/users/supporters-list.html:3
+#: metabrainz/templates/users/supporters-list.html:6
+msgid "Supporters"
+msgstr "支持者"
+
+#: metabrainz/templates/base.html:54 metabrainz/templates/index/privacy.html:6
+msgid "Privacy Policy"
+msgstr "隱私政策"
+
+#: metabrainz/templates/base.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:3
+#: metabrainz/templates/reports/financial_reports/index.html:6
+msgid "Finances"
+msgstr "財務"
+
+#: metabrainz/templates/base.html:60 metabrainz/templates/navbar.html:33
+#: metabrainz/templates/reports/annual_reports/view.html:4
+msgid "Annual Reports"
+msgstr "年度報告"
+
+#: metabrainz/templates/base.html:61 metabrainz/templates/navbar.html:35
+#: metabrainz/templates/payments/donors.html:6
+msgid "Donors"
+msgstr "捐助者"
+
+#: metabrainz/templates/base.html:65
+msgid "Users"
+msgstr "用戶"
+
+#: metabrainz/templates/base.html:68
+msgid "Sign in"
+msgstr "登入"
+
+#: metabrainz/templates/base.html:70 metabrainz/templates/navbar.html:53
+msgid "Sign out"
+msgstr "登出"
+
+#: metabrainz/templates/base.html:72
+msgid "Access your account"
+msgstr "進入您的帳號"
+
+#: metabrainz/templates/base.html:73
+msgid "API"
+msgstr "API"
+
+#: metabrainz/templates/base.html:78
+msgid "Contact us"
+msgstr "聯繫我們"
+
+#: metabrainz/templates/base.html:80
+msgid "Blog"
+msgstr "部落格"
+
+#: metabrainz/templates/base.html:81
+msgid "Twitter"
+msgstr "Twitter"
+
+#: metabrainz/templates/base.html:86
+#, python-format
+msgid ""
+"Sponsored by <a href=\"%(google_url)s\">Google</a>,\n"
+"            <a href=\"%(osuosl_url)s\">OSUOSL</a> and\n"
+"            <a href=\"%(sponsors_url)s\">others&hellip;</a>"
+msgstr ""
+"由<a href=\"%(google_url)s\">Google</a>、<a "
+"href=\"%(osuosl_url)s\">OSUOSL</a><a href=\"%(sponsors_url)s\">及其他機構</a>贊助"
+
+#: metabrainz/templates/navbar.html:7
+msgid "Toggle navigation"
+msgstr "顯示/隱藏導航列"
+
+#: metabrainz/templates/navbar.html:21
+msgid "About "
+msgstr "關於"
+
+#: metabrainz/templates/navbar.html:23
+msgid "The Foundation"
+msgstr "基金會"
+
+#: metabrainz/templates/navbar.html:31
+msgid "Reports "
+msgstr "報告"
+
+#: metabrainz/templates/navbar.html:34
+msgid "Financial Reports"
+msgstr "財政報告"
+
+#: metabrainz/templates/navbar.html:38
+msgid "Donate"
+msgstr "捐款"
+
+#: metabrainz/templates/navbar.html:45
+#: metabrainz/templates/users/account-type.html:65
+#: metabrainz/templates/users/account-type.html:111
+#: metabrainz/templates/users/mb-signup.html:3
+#: metabrainz/templates/users/mb-signup.html:6
+#: metabrainz/templates/users/signup-commercial.html:3
+#: metabrainz/templates/users/signup-non-commercial.html:3
+#: metabrainz/templates/users/signup-non-commercial.html:87
+msgid "Sign up"
+msgstr "註冊"
+
+#: metabrainz/templates/navbar.html:52
+msgid "Your profile"
+msgstr "您的用戶頁"
+
+#: metabrainz/templates/api/info.html:8
+msgid "MetaBrainz API"
+msgstr "MetaBrainz API"
+
+#: metabrainz/templates/api/info.html:11
+#, python-format
+msgid ""
+"All endpoints require an access token which you can get from your\n"
+"    <a href=\"%(profile_url)s\">profile page</a>."
+msgstr "所有終端都需要一個訪問令牌，您可以從您的 <a href=\"%(profile_url)s\">個人資料頁面</a>取得。"
+
+#: metabrainz/templates/api/info.html:15
+msgid "MusicBrainz Live Data Feed"
+msgstr "MusicBrainz 實時數據源"
+
+#: metabrainz/templates/api/info.html:16
+msgid "There are three endpoints for fetching replication packets:"
+msgstr "目前有三個終端來取得複製封包："
+
+#: metabrainz/templates/api/info.html:18
+msgid "Hourly:"
+msgstr "每小時："
+
+#: metabrainz/templates/api/info.html:29
+msgid "Daily:"
+msgstr "每天："
+
+#: metabrainz/templates/api/info.html:40
+msgid "Weekly:"
+msgstr "每週："
+
+#: metabrainz/templates/api/info.html:51
+msgid ""
+"It is possible to get a signature for each replication packet. Just replace\n"
+"      <code>.tar.bz2</code> with <code>.asc</code>."
+msgstr "您可對每個複製封包取得簽章。只要把 <code>.tar.bz2</code> 取代為 <code>.asc</code>。"
+
+#: metabrainz/templates/api/info.html:55
+msgid "You can find the latest replication packet numbers from this endpoint:"
+msgstr "您可以從這個終端找報最新的複製封包編號："
+
+#: metabrainz/templates/errors/base.html:8
+msgid "Back to home page"
+msgstr "回到首頁"
+
+#: metabrainz/templates/index/about.html:3
+msgid "About"
+msgstr "關於"
+
+#: metabrainz/templates/index/about.html:6
+msgid "About the MetaBrainz Foundation"
+msgstr "關於 MetaBrainz 基金會"
+
+#: metabrainz/templates/index/about.html:11
+msgid ""
+"The MetaBrainz Foundation is a 501(c)(3) tax-exempt non-profit founded in\n"
+"        December 2004 and based in San Luis Obispo, California, that believes in\n"
+"        free, open access to data."
+msgstr ""
+"MetaBrainz "
+"基金會是一個501(c)(3)免稅非營利機構，深信數據應自由和開放地被大眾使用。基金會於2004年12月成立，總部位於美國加州聖路易斯-奧比斯保。"
+
+#: metabrainz/templates/index/about.html:16
+msgid ""
+"The MetaBrainz Foundation has been set up to build community maintained\n"
+"        databases and make them available in the public domain or under Creative\n"
+"        Commons licenses. Our data is mostly gathered by volunteers, and verified\n"
+"        by a voting system to make sure it is consistent and correct. All\n"
+"        non-commercial use is free, but commercial users are asked to pay for\n"
+"        regular updates of the data in order to help fund the project. We\n"
+"        encourage all data users to contribute to the data gathering process so\n"
+"        that our data can be as comprehensive as possible."
+msgstr ""
+"MetaBrainz "
+"基金會的成立的目的是為了建立由社群維護的資料庫，並在公共領域或根據創用CC條款發布。我們的資料大多是由志工蒐集，然後透過投票系統驗證，以確保資料一致和正確。所有的非商業用途都免費，但商業用戶需要支付定期更新資訊的費用，來讓我們能夠繼續營運專案。我們鼓勵所有資料使用者參與蒐集資料，來讓我們的資料變得更全面。"
+
+#: metabrainz/templates/index/about.html:26
+#, python-format
+msgid ""
+"The MetaBrainz Foundation believes in <a href=\"%(financial_reports_url)s\">\n"
+"        transparent finances</a> and has several <a href=\"%(supporters_url)s\">\n"
+"        commercial supporters</a> who pay for timely and convenient access to\n"
+"        data. The MetaBrainz Foundation is also supported by a number of\n"
+"        <a href=\"%(sponsors_url)s\">sponsors</a> who provide\n"
+"        funds in order for the foundation to accomplish its goals."
+msgstr ""
+"MetaBrainz 基金會注重<a href=\"%(financial_reports_url)s\">透明的財務資訊</a>，並有幾個<a "
+"href=\"%(supporters_url)s\">商業支持者</a>透過付費來取得即時、方便的資料。MetaBrainz 基金會也得到了一些<a "
+"href=\"%(sponsors_url)s\">贊助機構</a>的支援，以讓我們能夠實現基金會的目標。"
+
+#: metabrainz/templates/index/about.html:42
+msgid "Board of Directors"
+msgstr "董事會"
+
+#: metabrainz/templates/index/about.html:43
+msgid "Our board of directors consists of:"
+msgstr "我們的董事會有以下成員："
+
+#: metabrainz/templates/index/about.html:45
+#, python-format
+msgid ""
+"Director Nick Ashton-Hart, Executive Director of the <a "
+"href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
+"Alliance</a>"
+msgstr ""
+"Nick Ashton-Hart董事，<a href=\"%(internet_ecosys_url)s\">Internet &amp; "
+"Digital Ecosystem Alliance</a>的執行董事"
+
+#: metabrainz/templates/index/about.html:46
+#, python-format
+msgid ""
+"Director <a href=\"%(paul_url)s\">Paul Bennun</a> of <a "
+"href=\"%(somethin_else_url)s\">Somethin' Else</a>"
+msgstr ""
+"<a href=\"%(paul_url)s\">Paul Bennun</a>董事，<a "
+"href=\"%(somethin_else_url)s\">Somethin’ Else</a>"
+
+#: metabrainz/templates/index/about.html:47
+#, python-format
+msgid ""
+"Director <a href=\"%(cory_url)s\">Cory Doctorow</a>, Sci-Fi author and "
+"editor of the <a href=\"%(boing_url)s\">Boing Boing</a> weblog"
+msgstr ""
+"<a href=\"%(cory_url)s\">Cory Doctorow</a>董事，科幻作者及《<a "
+"href=\"%(boing_url)s\">Boing Boing</a>》部落格的編輯"
+
+#: metabrainz/templates/index/about.html:48
+#, python-format
+msgid ""
+"Director <a href=\"%(sophie_url)s\">Sophie Goossens</a> of <a "
+"href=\"%(ab_url)s\">August &amp; Debouzy</a>"
+msgstr ""
+"<a href=\"%(sophie_url)s\">Sophie Goossens</a>董事，<a "
+"href=\"%(ab_url)s\">August &amp; Debouzy</a>"
+
+#: metabrainz/templates/index/about.html:49
+#, python-format
+msgid ""
+"Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
+"href=\"%(audio_net_url)s\">Audio Network</a>"
+msgstr ""
+"<a href=\"%(matthew_url)s\">Matthew Hawn</a>董事，<a "
+"href=\"%(audio_net_url)s\">Audio Network</a>"
+
+#: metabrainz/templates/index/about.html:50
+#, python-format
+msgid ""
+"Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
+"Ljungberg</a> of the <a href=\"%(m4p5_url)s\">Music 4.5 seminar series</a> "
+"put on by <a href=\"%(two_pears_url)s\">2 Pears</a>"
+msgstr ""
+"<a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>董事及財務主管，曾負責<a "
+"href=\"%(two_pears_url)s\">2 Pears</a>的<a href=\"%(m4p5_url)s\">Music 4.5 "
+"講座系列</a>"
+
+#: metabrainz/templates/index/about.html:51
+#, python-format
+msgid ""
+"Executive Director <a href=\"%(mayhem_url)s\">Robert Kaye</a> of the "
+"MetaBrainz Foundation"
+msgstr "<a href=\"%(mayhem_url)s\">Robert Kaye</a>執行董事，MetaBrainz基金會"
+
+#: metabrainz/templates/index/about.html:52
+#, python-format
+msgid ""
+"Secretary <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>, "
+"Community Manager of the MetaBrainz Foundation"
+msgstr ""
+"<a href=\"%(freso_url)s\">Frederik “Freso” S. "
+"Olesen</a>祕書，MetaBrainz基金會的社群管理員"
+
+#: metabrainz/templates/index/about.html:55
+msgid "Our directors emeritus include:"
+msgstr "我們的榮譽董事有："
+
+#: metabrainz/templates/index/about.html:58
+#, python-format
+msgid ""
+"Director Emeritus <a href=\"%(lessig_url)s\">Lawrence Lessig</a> of the <a "
+"href=\"%(berkman_url)s\">Berkman Center for Internet and Society</a> and <a "
+"href=\"%(cc_url)s\">Creative Commons</a>"
+msgstr ""
+"<a href=\"%(lessig_url)s\">Lawrence Lessig</a>榮譽董事，<a "
+"href=\"%(berkman_url)s\">Berkman Center for Internet and Society</a>及<a "
+"href=\"%(cc_url)s\">創用CC</a>"
+
+#: metabrainz/templates/index/about.html:59
+#, python-format
+msgid ""
+"Director Emeritus <a href=\"%(joi_url)s\">Joichi Ito</a> of <a "
+"href=\"%(neoteny_url)s\">Neoteny Co. Ltd.</a>"
+msgstr ""
+"<a href=\"%(joi_url)s\">伊藤穰一</a>榮譽董事，<a href=\"%(neoteny_url)s\">Neoteny Co."
+" Ltd.</a>"
+
+#: metabrainz/templates/index/about.html:62
+msgid "Officers"
+msgstr "基金會人員"
+
+#: metabrainz/templates/index/about.html:63
+msgid "The officers of this company are:"
+msgstr "公司的人員有："
+
+#: metabrainz/templates/index/about.html:65
+msgid "President Robert Kaye"
+msgstr "Robert Kaye董事長"
+
+#: metabrainz/templates/index/about.html:66
+#, python-format
+msgid "Treasurer <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+msgstr "<a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>財務主管"
+
+#: metabrainz/templates/index/about.html:67
+#, python-format
+msgid "Secretary <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>"
+msgstr "<a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>祕書"
+
+#: metabrainz/templates/index/bad-customers.html:3
+msgid "Bad customers"
+msgstr "壞顧客"
+
+#: metabrainz/templates/index/bad-customers.html:8
+msgid "Our not-so-favorite commercial data users"
+msgstr "我們不是很喜歡的商業資料使用者"
+
+#: metabrainz/templates/index/bad-customers.html:11
+msgid ""
+"The following companies use our data, but have declined to support us on an "
+"ongoing basis."
+msgstr "以下的企業是我們資料的使用者，但卻長期拒絕支持我們。"
+
+#: metabrainz/templates/index/bad-customers.html:14
+msgid ""
+"All of our projects require support from end-user donations and commercial support. Our free\n"
+"      data-sets provide incredible value to these companies giving them a business advantage.\n"
+"      We believe that companies that use our data to conduct their business should provide financial\n"
+"      support so that we may continue to cover our expenses and pay our staff."
+msgstr ""
+"我們所有專案都需要來自終端使用者的捐贈和商業使用者的支援。我們免費資料集為這些公司提供大量的商業優勢。我們相信，使用我們的資料來拓展業務的公司應該提供我們財務上的支援，以使我們能夠繼續支付費用以及員工薪水。"
+
+#: metabrainz/templates/index/bad-customers.html:20
+#, python-format
+msgid ""
+"If a company you like appears on this list, please contact that company and ask them why\n"
+"      they have declined to support us. If you are with a company listed below and would like to\n"
+"      get off this list, you can do so by <a href=\"%(account_type_url)s\">signing up\n"
+"      for support</a>."
+msgstr ""
+"如果您喜愛的公司出現在名單中，請連絡該公司並詢問他們為什麼會拒絕支援我們。如果您是以下公司的員工，且希望離開這個名單，請<a "
+"href=\"%(account_type_url)s\">註冊為我們的支援者</a>。"
+
+#: metabrainz/templates/index/bad-customers.html:26
+#, python-format
+msgid ""
+"Do you know of other companies using our data? We'd love to know and ask them for support!\n"
+"      Please <a href=\"%(contact_url)s\">let us know</a>!"
+msgstr ""
+"您會否認識一些其他使用我們數據的公司？我們對它們非常感興趣，並想尋求它們的支持！\n"
+"請<a href=\"%(contact_url)s\">告訴我們</a>！"
+
+#: metabrainz/templates/index/bad-customers.html:53
+msgid "Nice!!"
+msgstr "太好了！"
+
+#: metabrainz/templates/index/bad-customers.html:54
+msgid "There are currently no not-so-favorite commercial data users!"
+msgstr "我們都很喜歡現在的商業數據用戶！"
+
+#: metabrainz/templates/index/bad-customers.html:56
+msgid ""
+"... either that, or maybe we're working to convince some companies to do the\n"
+"          \"right thing\"... :)"
+msgstr "……或許，我們正在遊說某企業去做「應做的事」…… :)"
+
+#: metabrainz/templates/index/contact.html:3
+#: metabrainz/templates/index/contact.html:6
+msgid "Contact"
+msgstr "聯繫"
+
+#: metabrainz/templates/index/contact.html:8
+msgid "Found a bug in one of our projects?"
+msgstr "在我們的專案裡找到錯誤？"
+
+#: metabrainz/templates/index/contact.html:10
+#, python-format
+msgid ""
+"Found a broken link or something that doesn't work as you expect it to? You can report issues in our\n"
+"    <a href=\"%(bug_tracker_url)s\">bug tracker</a>, or let us know on IRC or\n"
+"    by email. Contact details are provided below. Please include details such as what happened, what you expected\n"
+"    to happen, and the URLs of any pages involved."
+msgstr ""
+"您是否找到一個失效的鏈結，或其他非預期行為？您可以在我們的<a "
+"href=\"%(bug_tracker_url)s\">錯誤追蹤系統</a>中回報、或是透過 IRC "
+"或電子郵件來通知我們。請在報告中描述事發經過、預期的行為和相關的網址等細節。"
+
+#: metabrainz/templates/index/contact.html:16
+msgid "Have a question about MusicBrainz?"
+msgstr "對 MusicBrainz 有任何疑問嗎？"
+
+#: metabrainz/templates/index/contact.html:18
+#, python-format
+msgid ""
+"Please check the <a href=\"%(general_faq_url)s\">General FAQ</a>, or one of the other pages\n"
+"    of <a href=\"%(faq_url)s\">frequently asked questions</a>, to see if\n"
+"    your question has already been answered. If you're using <a href=\"%(picard_homepage)s\">MusicBrainz\n"
+"    Picard</a>, check its <a href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
+msgstr ""
+"請先檢查<a href=\"%(general_faq_url)s\">一般常見問題</a>或其他<a "
+"href=\"%(faq_url)s\">常見問題</a>頁，看看您的問題是不是已經被解答。如果您正在使用<a "
+"href=\"%(picard_homepage)s\">MusicBrainz Picard</a>，請參見它的<a "
+"href=\"%(picard_troubleshooting)s\">疑難排除頁</a>。"
+
+#: metabrainz/templates/index/contact.html:25
+msgid "Data removal requests"
+msgstr "要求移除資料"
+
+#: metabrainz/templates/index/contact.html:27
+#, python-format
+msgid ""
+"MusicBrainz does not edit or remove factual data upon request. Please read our\n"
+"    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more information."
+msgstr ""
+"MusicBrainz 不會按要求編輯或移除知識性的資料。想瞭解更多，請參見我們的<a "
+"href=\"%(dr_policy_url)s\">資料移除政策</a>。"
+
+#: metabrainz/templates/index/contact.html:30
+msgid "Copyright issues"
+msgstr "著作權問題"
+
+#: metabrainz/templates/index/contact.html:32
+#, python-format
+msgid ""
+"If you believe that MusicBrainz violates your copyright, you may\n"
+"    <a href=\"%(cr_violation_url)s\">report a copyright violation</a>. Please note\n"
+"    that MusicBrainz provides data about recordings, <i>not the music itself</i>. If you find your music listed in\n"
+"    MusicBrainz <b>it does not mean that we have access to or provide access to the music files themselves</b>. If\n"
+"    you still think that we're infringing your copyright, you must provide us with a link to where you can download\n"
+"    the infringing material from our website. If you cannot provide us a link, we cannot help you."
+msgstr ""
+"如果您認為MusicBrainz侵犯了您的著作權，您可以<a "
+"href=\"%(cr_violation_url)s\">彙報侵權</a>。請注意，MusicBrainz提供音樂的資料，而<i>不是音樂本身</i>。"
+" "
+"如果您在MusicBrainz找到您的音樂，<b>這不代表我們提供或持有該音樂的檔案</b>。如果您依然認為我們侵犯了您的著作權，您必須提供一個連結，以示您能夠在我們的網站下載侵權資料。如果您未能提供連結，我們不可為您提供任何幫助。"
+
+#: metabrainz/templates/index/contact.html:40
+msgid "Contact details"
+msgstr "聯繫詳情"
+
+#: metabrainz/templates/index/contact.html:42
+msgid "Please do not contact us with the following topics:"
+msgstr "請不要就關於以下問題聯繫我們："
+
+#: metabrainz/templates/index/contact.html:44
+msgid ""
+"We cannot license any of the music listed in MusicBrainz, since we have neither the music itself nor the\n"
+"        rights to license the music."
+msgstr "我們不可以為MusicBrainz中的音樂授權，因為我們沒有該音樂，也沒有該音樂授權的權利。"
+
+#: metabrainz/templates/index/contact.html:46
+msgid "We are not distributing any of the music listed in MusicBrainz."
+msgstr "我們沒有發行MusicBrainz中的音樂。"
+
+#: metabrainz/templates/index/contact.html:47
+msgid ""
+"We are not interested in your advertising, SEO optimization, or software monetization services. Please\n"
+"        do not offer us <b>any</b> services!"
+msgstr "我們對您的廣告、搜尋引擎最佳化及軟件營利服務都沒有興趣。請不要為我們提供<b>任何</b>服務！"
+
+#: metabrainz/templates/index/contact.html:53
+msgid ""
+"If you disregard this agreement and contact us about one of the\n"
+"      disallowed topics, we reserve the right to make fun of you."
+msgstr "如果您不理會本協議，且就以上問題聯繫我們，我們保留取笑您的權利。"
+
+#: metabrainz/templates/index/contact.html:58
+msgid "E-mail us"
+msgstr "以電郵聯絡我們"
+
+#: metabrainz/templates/index/contact.html:60
+msgid "I agree with the rules above, show me the email address"
+msgstr "我同意以上條款，請顯示電郵地址"
+
+#: metabrainz/templates/index/contact.html:63
+msgid "You can reach the MetaBrainz staff directly at the following address:"
+msgstr "您可以透過以下地址直接接觸MetaBrainz的員工："
+
+#: metabrainz/templates/index/contact.html:69
+msgid "Forums"
+msgstr "討論區"
+
+#: metabrainz/templates/index/contact.html:71
+#, python-format
+msgid ""
+"Please come ask your questions at our <a href=\"%(forums_url)s\">forums</a>! We would love to\n"
+"    answer any questions you may have."
+msgstr "歡迎到我們的<a href=\"%(forums_url)s\">討論區</a>發問，我們非常樂意回答您的疑問！"
+
+#: metabrainz/templates/index/contact.html:75
+msgid "IRC"
+msgstr "IRC"
+
+#: metabrainz/templates/index/contact.html:77
+#, python-format
+msgid ""
+"The MetaBrainz/MusicBrainz team, as well as MusicBrainz users, hang out in the\n"
+"    <strong><a href=\"%(irc_url)s\">#metabrainz</a></strong>\n"
+"    channel on IRC chat at irc.libera.chat. If you don't have an IRC client\n"
+"    installed, consider using this\n"
+"    <a href=\"%(irc_webchat_url)s\">webchat client</a>\n"
+"    instead. Please feel free to browse the\n"
+"    <a href=\"%(chatlogs_url)s\">IRC log archives</a>."
+msgstr ""
+"MetaBrainz/MusicBrainz 團隊，以及 MusicBrainz 使用者，都在 IRC 聊天伺服器 irc.libera.chat 的 "
+"<strong><a href=\"%(irc_url)s\">#metabrainz</a></strong> 頻道活動。如果您沒有安裝 IRC "
+"客戶端應用程式，可以考慮使用這個 <a href=\"%(irc_webchat_url)s\">webchat 客戶端</a>來替代。您也可以隨時瀏覽"
+" <a href=\"%(chatlogs_url)s\">IRC 聊天歷史紀錄</a>。"
+
+#: metabrainz/templates/index/contact.html:89
+msgid "Mailing address"
+msgstr "地址"
+
+#: metabrainz/templates/index/index.html:6
+msgid "Welcome to MetaBrainz!"
+msgstr "歡迎來到MetaBrainz！"
+
+#: metabrainz/templates/index/index.html:10
+msgid ""
+"The MetaBrainz Foundation is a non-profit that believes in free, open\n"
+"        access to data. It has been set up to build community maintained\n"
+"        databases and make them available in the public domain or under Creative\n"
+"        Commons licenses."
+msgstr ""
+"MetaBrainz基金會是一個非營利機構，深信大眾應可以自由和開放地使用數據。基金會旨在設立由社區管理的資料庫，並在公眾領域或以創用CC條款發布。"
+
+#: metabrainz/templates/index/index.html:16
+#, python-format
+msgid ""
+"Our data is mostly gathered by volunteers and verified\n"
+"        by peer review to ensure it is consistent and correct. All\n"
+"        <a href=\"%(account_type_url)s\">non-commercial use</a> of this data is free,\n"
+"        but <a href=\"%(account_type_url)s\">commercial users</a> are asked to\n"
+"        <a href=\"%(account_type_url)s\">support us</a> in order to help fund the\n"
+"        project. We encourage all data users to contribute to the data gathering process so\n"
+"        that our data can be as comprehensive as possible."
+msgstr ""
+"我們的數據大部分經志願者蒐集，透過相互評審以確保資料一貫和準確。數據可免費作<a "
+"href=\"%(account_type_url)s\">非商業用途</a>，但我們要求<a "
+"href=\"%(account_type_url)s\">商業用戶</a><a "
+"href=\"%(account_type_url)s\">支持我們</a>，以讓我們能夠繼續營運各專案。我們鼓勵所有數據用戶參與蒐集數據，好使我們的數據變得更全面。"
+
+#: metabrainz/templates/index/index.html:34
+msgid ""
+"An open music encyclopedia that collects music metadata and makes it\n"
+"              available to the public"
+msgstr "收集和公開音樂元數據的開放百科全書"
+
+#: metabrainz/templates/index/index.html:36
+#, python-format
+msgid ""
+"Sign up to use the <a href=\"%(account_type_url)s\">Live Data Feed</a></em>"
+msgstr "使用<a href=\"%(account_type_url)s\">實時數據源</a>必須先註冊</em>"
+
+#: metabrainz/templates/index/index.html:45
+msgid "A cross-platform music tagger"
+msgstr "跨平臺音樂標籤器"
+
+#: metabrainz/templates/index/index.html:53
+msgid "A crowdsourced collection of acoustic information"
+msgstr "眾包的聲學資訊庫"
+
+#: metabrainz/templates/index/index.html:61
+msgid "An open record of user listening habits"
+msgstr "用戶聆聽習慣的公開紀錄"
+
+#: metabrainz/templates/index/index.html:69
+msgid "A repository for Creative Commons licensed music reviews"
+msgstr "為創用CC音樂評論而設的文庫"
+
+#: metabrainz/templates/index/index.html:77
+msgid ""
+"An open encyclopedia which contains information about published literature"
+msgstr "紀錄出版文學的開放百科全書"
+
+#: metabrainz/templates/index/index.html:85
+msgid "A repository of music cover art that is freely and easily accessible"
+msgstr "自由和容易存取的音樂封套庫"
+
+#: metabrainz/templates/index/index.html:92
+#: metabrainz/templates/payments/donors.html:66
+msgid "Previous"
+msgstr "上一頁"
+
+#: metabrainz/templates/index/index.html:96
+msgid "Next"
+msgstr "下一頁"
+
+#: metabrainz/templates/index/index.html:103
+#, python-format
+msgid ""
+"The MetaBrainz Foundation believes in <a href=\"%(financial_reports_url)s\">\n"
+"        transparent finances</a> and is supported by <a href=\"%(donations_url)s\">end user\n"
+"        donations</a> and a number of <a href=\"%(sponsors_url)s\">sponsors</a>\n"
+"        who provide funds in order for the foundation to accomplish its goals. The foundation also\n"
+"        has several <a href=\"%(supporters_url)s\"> commercial supporters</a>\n"
+"        who make use of our data sets."
+msgstr ""
+"MetaBrainz基金會認為<a "
+"href=\"%(financial_reports_url)s\">財政透明</a>是非常重要的。基金會接受來自<a "
+"href=\"%(donations_url)s\">用戶</a>和<a "
+"href=\"%(sponsors_url)s\">贊助商</a>的資金，以確保基金會能夠達到其設立的目標。此外，<a "
+"href=\"%(supporters_url)s\">商業支持者</a>也透過使用我們的數據，支持基金會的運作。"
+
+#: metabrainz/templates/index/index.html:137
+#, python-format
+msgid ""
+"Unfortunately, some companies listed below use data we provide without contributing back.\n"
+"        <a href=\"%(bad_customers_url)s\">Find out more</a> about them or\n"
+"        <a href=\"%(account_type_url)s\">sign up</a>!"
+msgstr ""
+"下列的某些公司不幸地使用數據的同時，沒有作出任何貢獻。\n"
+"        <a href=\"%(bad_customers_url)s\">瞭解</a>這些公司或\n"
+"        <a href=\"%(account_type_url)s\">註冊</a>！"
+
+#: metabrainz/templates/index/index.html:160
+#, python-format
+msgid ""
+"To get more information about the foundation, go to the\n"
+"      <a href=\"%(about_url)s\">about</a> page."
+msgstr "如要取得更多關於基金會的資訊，請參見<a href=\"%(about_url)s\">關於</a>頁。"
+
+#: metabrainz/templates/index/privacy.html:3
+msgid "Privacy"
+msgstr "隱私"
+
+#: metabrainz/templates/index/privacy.html:8
+msgid "Summary"
+msgstr "摘要"
+
+#: metabrainz/templates/index/privacy.html:10
+msgid ""
+"The MetaBrainz Foundation will not collect any private information unless\n"
+"    you choose to donate to support the MusicBrainz project. Any personal\n"
+"    information you choose to provide during the donation process will not be\n"
+"    revealed to anyone else, unless you give us permission to list your name on\n"
+"    our donations page. We will not contact you unless you give us permission\n"
+"    to do so when you make a donation."
+msgstr ""
+"除非您選擇捐助 MusicBrainz "
+"專案，否則MetaBrainz基金會不會收集任何個人資料。您在捐助過程中所提供的個人資料不會透露於第三人，除非您允許我們在捐助頁面上顯示您的名字。我們有您捐助時的允許才會聯繫您。"
+
+#: metabrainz/templates/index/privacy.html:18
+msgid "MetaBrainz donors"
+msgstr "MetaBrainz的捐助者"
+
+#: metabrainz/templates/index/privacy.html:20
+msgid ""
+"When you make a donation to the MetaBrainz Foundation, we are legally\n"
+"    required to collect your personal information and keep it in our records\n"
+"    in case we ever get audited by the IRS. We will not disclose your personal\n"
+"    information to anyone else, ever."
+msgstr ""
+"當您向MetaBrainz基金會捐款時，法律要求我們收集及記錄您的個人資料，以供美國國家稅務局審計帳目。我們永遠不會向稅務局外的人透露您的個人資料。"
+
+#: metabrainz/templates/index/privacy.html:26
+msgid ""
+"We believe in transparent finances, which means that we list all donations\n"
+"    made to us on this site. We will only list your name and the amount of the\n"
+"    donation, unless you chose to be anonymous during the donation process."
+msgstr "我們深信財務狀況應該是透明的。因此，我們會在網站列出所有捐款。除非您選擇保持匿名，我們只會顯示您的名字和您的捐款金額。"
+
+#: metabrainz/templates/index/privacy.html:31
+msgid "Web and FTP access logs (all users)"
+msgstr "網絡和FTP訪問紀錄（所有用戶）"
+
+#: metabrainz/templates/index/privacy.html:33
+msgid ""
+"Like just about all web sites, we keep logs of all web requests made\n"
+"    against our servers. These logs include the usual stuff: your IP address,\n"
+"    your browser's \"User-Agent\" string, and which page you requested."
+msgstr "與大部分其他網站一樣，我們會記錄所有向我們伺服器發送的Web請求。這些紀錄包含以下資訊：您的IP位址、瀏覽器的使用者代理字串和請求的頁面。"
+
+#: metabrainz/templates/index/privacy.html:38
+msgid ""
+"Reasonable exceptions may apply to the above policy, for example to comply\n"
+"    with applicable laws. The MusicBrainz/MetaBrainz server administrators\n"
+"    (about three people in all) can of course see any information on the system\n"
+"    they want to, but to be honest they're probably not interested enough to look."
+msgstr ""
+"我們會因為某些原因（如要遵循法律規定）對以上政策作合理的例外處理。MusicBrainz/MetaBrainz的伺服器管理員（大概有三人）當然可以檢視系統上的任何資訊，但老實說，他們應該不會對您的資訊感興趣。"
+
+#: metabrainz/templates/index/projects.html:6
+msgid "MetaBrainz Projects"
+msgstr "MetaBrainz專案"
+
+#: metabrainz/templates/index/projects.html:17
+msgid "MusicBrainz"
+msgstr "MusicBrainz"
+
+#: metabrainz/templates/index/projects.html:19
+#, python-format
+msgid ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a> is a community-maintained open source music encyclopedia that\n"
+"            collects music metadata and makes it available to the public."
+msgstr ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a>是一個由社群管理的開源音樂百科全書，在收集音樂元數據後，供公眾閱覽和使用。"
+
+#: metabrainz/templates/index/projects.html:32
+msgid "MusicBrainz Picard"
+msgstr "MusicBrainz Picard"
+
+#: metabrainz/templates/index/projects.html:34
+#, python-format
+msgid ""
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> is an open-source software application for\n"
+"            identifying, tagging, and organizing digital audio recordings."
+msgstr ""
+"<a href=\"%(picard_url)s\">MusicBrainz "
+"Picard</a>是一個開源軟件，能讓使用者識別、標籤和整理數位音訊錄音。"
+
+#: metabrainz/templates/index/projects.html:47
+msgid "Cover Art Archive"
+msgstr "Cover Art Archive"
+
+#: metabrainz/templates/index/projects.html:49
+#, python-format
+msgid ""
+"<a href=\"%(caa_url)s\">Cover Art Archive</a> is a database of cover art corresponding with the\n"
+"            releases in MusicBrainz. It is a joint project with the <a href=\"%(archive_org_url)s\">Internet Archive</a>."
+msgstr ""
+"<a href=\"%(caa_url)s\">Cover Art "
+"Archive</a>是一個資料庫，存放MusicBrainz裡專輯的封套。這是一個與<a "
+"href=\"%(archive_org_url)s\">Internet Archive</a>合作的專案。"
+
+#: metabrainz/templates/index/projects.html:63
+msgid "CritiqueBrainz"
+msgstr "CritiqueBrainz"
+
+#: metabrainz/templates/index/projects.html:65
+#, python-format
+msgid ""
+"<a href=\"%(cb_url)s\">CritiqueBrainz</a> fills the gap between music critics and raw data by\n"
+"            providing a platform created for the sole purpose of Creative Commons licensed reviews."
+msgstr "<a href=\"%(cb_url)s\">CritiqueBrainz</a>是一個發表創用CC評論的平臺，讓音樂評論家能夠接觸原始數據。"
+
+#: metabrainz/templates/index/projects.html:78
+msgid "AcousticBrainz"
+msgstr "AcousticBrainz"
+
+#: metabrainz/templates/index/projects.html:80
+#, python-format
+msgid ""
+"<a href=\"%(ab_url)s\">AcousticBrainz</a> crowd sources acoustic information for all music in\n"
+"            the world and makes it available to the public. It is a joint effort with\n"
+"            <a href=\"%(mtg_url)s\">Music Technology Group</a> at <a href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
+"            in Barcelona."
+msgstr ""
+"<a href=\"%(ab_url)s\">AcousticBrainz</a>眾包和公開世界上所有音樂的聲學資訊。此專案與巴塞隆納<a "
+"href=\"%(upf_url)s\">龐培法布拉大學</a>的<a href=\"%(mtg_url)s\">音樂科技小組</a>合作。"
+
+#: metabrainz/templates/index/projects.html:95
+msgid "BookBrainz"
+msgstr "BookBrainz"
+
+#: metabrainz/templates/index/projects.html:97
+#, python-format
+msgid ""
+"<a href=\"%(bb_url)s\">BookBrainz</a> is an online encyclopedia containing information about published\n"
+"            literature. Its aim is to collect and store data about every publication ever written."
+msgstr ""
+"<a "
+"href=\"%(bb_url)s\">BookBrainz</a>是一個載有出版文學資料的線上百科全書，目的收集和儲存有史以來所有出版文學的數據。"
+
+#: metabrainz/templates/index/projects.html:110
+msgid "ListenBrainz"
+msgstr "ListenBrainz"
+
+#: metabrainz/templates/index/projects.html:112
+#, python-format
+msgid ""
+"<a href=\"%(lb_url)s\">ListenBrainz</a> is an open source music website that allows users to import\n"
+"            their listen history. One of the goals is for this data to be used for building open music recommendation systems."
+msgstr ""
+"<a "
+"href=\"%(lb_url)s\">ListenBrainz</a>是一個開源的音樂網站，讓用戶導入他們的聆聽紀錄。專案其中一個目標是使用這些紀錄打造一個開放的音樂推薦系統。"
+
+#: metabrainz/templates/index/projects.html:125
+msgid "MessyBrainz"
+msgstr "MessyBrainz"
+
+#: metabrainz/templates/index/projects.html:127
+#, python-format
+msgid ""
+"<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifies unclean metadata, and where possible,\n"
+"            links it to stable MusicBrainz identifiers. MessyBrainz is currently being used for AcousticBrainz and ListenBrainz."
+msgstr ""
+"<a "
+"href=\"%(messybrainz_url)s\">MessyBrainz</a>找出雜亂的元數據，並儘可能將它連繫至穩定的MusicBrainz識別碼MessyBrainz當前用於AcousticBrainz和ListenBrainz。"
+
+#: metabrainz/templates/index/sponsors.html:9
+msgid ""
+"The MetaBrainz Foundation wishes to offer a huge thank you to all of our\n"
+"    sponsors and partners for their support in helping MusicBrainz operate."
+msgstr "MetaBrainz基金會萬分感謝所有贊助者和合作夥伴支持MusicBrainz的運作。"
+
+#: metabrainz/templates/index/sponsors.html:13
+msgid ""
+"Some of the following organizations and individuals have provided funding,\n"
+"    others have supported us by providing access to tools and technologies that\n"
+"    have helped us grow. In either case they played a significant role in the\n"
+"    success and growth of MusicBrainz."
+msgstr "以下的機構和個人曾經為我們提供資金或透過提供工具和科技支持我們的運作，對MusicBrainz的成功和成長扮演了重要的角色。"
+
+#: metabrainz/templates/index/sponsors.html:18
+msgid "We would not exist without you — <b>Thank You!</b>"
+msgstr "沒有你們，我們不會在這裡——<b>感謝！</b>"
+
+#: metabrainz/templates/index/sponsors.html:26
+#, python-format
+msgid ""
+"<b><a href=\"%(google_url)s\">Google</a></b> has been an extremely supportive\n"
+"        sponsor. They've donated over <b>$320,000</b>."
+msgstr ""
+"<b><a "
+"href=\"%(google_url)s\">Google</a></b>是一個極力支持我們的贊助商，已經作出超過<b>$320,000</b>的捐款。"
+
+#: metabrainz/templates/index/sponsors.html:34
+#, python-format
+msgid ""
+"The <b><a href=\"%(osuosl_url)s\">OSU Open Source Lab</a></b> hosts the FTP\n"
+"        mirror server that handles the distribution of the\n"
+"        <a href=\"%(mb_db_url)s\">MusicBrainz Database</a>\n"
+"        and virtual machines, thus saving us considerable load and bandwidth costs."
+msgstr ""
+"<b><a href=\"%(osuosl_url)s\">OSU Open Source Lab</a></b>為我們存放負責發布<a "
+"href=\"%(mb_db_url)s\">MusicBrainz資料庫</a>虛擬機器的FTP鏡像伺服器，節省許多與負載和頻寬相關的費用。"
+
+#: metabrainz/templates/index/sponsors.html:44
+#, python-format
+msgid ""
+"<b><a href=\"%(dotsrc_url)s\">DotSrc</a></b> hosts an\n"
+"        <a href=\"%(mb_ftp_url)s\">EU mirror of our FTP site</a>.\n"
+"        This gives better download speeds of our large data sets for users in Europe."
+msgstr ""
+"<b><a href=\"%(dotsrc_url)s\">DotSrc</a></b>為我們存放<a "
+"href=\"%(mb_ftp_url)s\">歐盟的鏡像FTP網站</a>，讓位於歐洲的用戶更快地下載大型數據集。"
+
+#: metabrainz/templates/index/sponsors.html:53
+#, python-format
+msgid ""
+"<b><a href=\"%(layer42_url)s\">Layer42</a></b> generously hosts a test server for\n"
+"        us, free of charge!"
+msgstr "<b><a href=\"%(layer42_url)s\">Layer42</a></b>免費代管我們的測試伺服器。"
+
+#: metabrainz/templates/index/sponsors.html:61
+#, python-format
+msgid ""
+"<b><a href=\"%(github_url)s\">GitHub</a></b> provides us with a free Bronze\n"
+"        account for hosting our sysadmin repositories."
+msgstr "<b><a href=\"%(github_url)s\">Github</a></b>為我們提供一個免費的銅級帳號，寄存我們的系統管理員倉庫。"
+
+#: metabrainz/templates/index/sponsors.html:69
+#, python-format
+msgid ""
+"<b><a href=\"%(pipedrive_url)s\">Pipedrive</a></b> provides us with a free\n"
+"        account to help keep track of commercial users and supporters."
+msgstr ""
+"<b><a href=\"%(pipedrive_url)s\">Pipedrive</a></b>為我們設立免費帳號，方便我們管理商業用戶和支持者。"
+
+#: metabrainz/templates/index/sponsors.html:76
+msgid "Special thanks"
+msgstr "特別感謝"
+
+#: metabrainz/templates/index/sponsors.html:78
+msgid ""
+"In our past, we've had a lot of people support us with many different levels of support:\n"
+"    Access to conferences, covering travel expenses, large personal donations and countless\n"
+"    meals. These have become too numerous to list, but we wanted to note a few individuals\n"
+"    who have made a big difference for us."
+msgstr ""
+"我們在過去得到很多人在不同方面的支持，如租借會議場地、支付旅費、作出大量個人捐款和提供無數次的餐飲服務，等等。這些貢獻雖數之不盡，但我們想在這裡特別感謝為我們作出巨大貢獻的幾位人士。"
+
+#: metabrainz/templates/index/sponsors.html:84
+#, python-format
+msgid ""
+"Richard Jones of <a href=\"%(last_fm_url)s\">Last.fm fame</a> donated <b>$50,000</b> in 2010,\n"
+"    <a href=\"%(oracle_url)s\">Sun Microsystems</a> &amp; Paul Lamere donated a database\n"
+"    server and <a href=\"%(oreilly_url)s\">O'Reilly Media</a> gave MusicBrainz $500 to\n"
+"    start off a bank account for the project before the MetaBrainz Foundation existed.\n"
+"    <a href=\"%(ed_url)s\">Ed Cavazos</a> periodically provides pro-bono\n"
+"    legal advice for the occasional Intellectual Property questions that MetaBrainz faces.\n"
+"    <a href=\"%(dan_url)s\">Dan Appleman</a> provides\n"
+"    periodic help crafting contracts for licensing our data.\n"
+"    <a href=\"%(dw_url)s\">Digital West Networks Inc.</a> was our main\n"
+"    hosting provider between 2006 and 2016 and gave us a discount because of our non-profit status."
+msgstr ""
+"2010年，<a href=\"%(last_fm_url)s\">Last.fm</a>創辦人之一的Richard "
+"Jones向MusicBrainz捐助了<b>$50,000</b>，<a href=\"%(oracle_url)s\">昇陽電腦</a>和Paul "
+"Lamere則捐助了一個資料庫伺服器。<a "
+"href=\"%(oreilly_url)s\">歐萊禮</a>在MetaBrainz基金會尚未成立的時候捐助$500，讓MusicBrainz能夠開設銀行賬戶。MetaBrainz"
+" 基金會不時會遇到有關智慧財產權的問題，<a href=\"%(ed_url)s\">Ed "
+"Cavazos</a>會定期就這些問題提供義務法律諮詢。此外，<a href=\"%(dan_url)s\">Dan "
+"Appleman</a>會定期為我們訂立授權數據使用的契約。最後，我們要感謝2006年至2016年間的主要寄存服務提供者<a "
+"href=\"%(dw_url)s\">Digital West Networks Inc.</a>。它們考慮到我們並不營利，提供了優惠服務。"
+
+#: metabrainz/templates/index/sponsors.html:100
+msgid ""
+"Thanks to everyone who has helped make the MetaBrainz Foundation what it is "
+"today!"
+msgstr "感謝成就了今天的MetaBrainz基金會的所有人！"
+
+#: metabrainz/templates/index/team.html:6
+msgid "The MetaBrainz Team"
+msgstr "MetaBrainz團隊"
+
+#: metabrainz/templates/index/team.html:12
+msgid "<span class=\"name\">Robert Kaye</span> &mdash; Executive Director"
+msgstr "<span class=\"name\">Robert Kaye</span> &mdash; 執行董事"
+
+#: metabrainz/templates/index/team.html:14
+#, python-format
+msgid ""
+"Robert is the founder and lead geek for <a href=\"%(mb_url)s\">MusicBrainz</a>, and Executive Director of\n"
+"          the MetaBrainz Foundation, the non-profit organization that pays the bills for MusicBrainz. After studying Computer\n"
+"          Engineering at Cal Poly, San Luis Obispo, he joined Xing Technology where he shaped the MP3 efforts and then spent\n"
+"          time for the dot com boom on EMusic’s FreeAmp team. While at EMusic he started working on MusicBrainz, the open music\n"
+"          encyclopedia, and fell in love with Open Source software."
+msgstr ""
+"Robert是<a "
+"href=\"%(mb_url)s\">MusicBrainz</a>的創辦人和首席極客，也是負責應付MusicBrainz開支的非營利機構MetaBrainz基金會的執行董事。在加州理工州立大學完成電腦工程學位後，Robert加入了"
+" Xing "
+"Technology，鑽研MP3技術。後來，他在網路泡沫時期加入了EMusic的FreeAmp團隊。Robert在EMusic工作的時候開始建立MusicBrainz，也同時愛上了開源軟件。"
+
+#: metabrainz/templates/index/team.html:21
+#, python-format
+msgid ""
+"Robert is also an active hardware hacker, creating art projects for Burning Man and Nowhere. He is the co-founder of\n"
+"          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created Bartendro the open source cocktail robot."
+msgstr ""
+"Robert也是一名活躍的硬件駭客，在Burning Man和Nowhere展示其藝術專案。他是 <a "
+"href=\"%(pr_url)s\">Party Robotics</a>的創辦人之一，並參與建造開源雞尾酒機器人Bartendro。"
+
+#: metabrainz/templates/index/team.html:26
+msgid "He lives in Barcelona, Spain."
+msgstr "他住在西班牙巴塞隆納。"
+
+#: metabrainz/templates/index/team.html:39
+msgid "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr "<span class=\"name\">Michael Wiencek</span> &mdash; 高級開發者"
+
+#: metabrainz/templates/index/team.html:41
+msgid ""
+"Michael is the senior developer for MusicBrainz, residing in his hometown of Chicago. He heard about MusicBrainz when\n"
+"          he was still in grammar school, started editing in high school as his music collection got unwieldy, and participated\n"
+"          in three GSoC projects during college. In his copious free time he enjoys going to concerts, making music no one will\n"
+"          ever hear, binge-watching old TV shows, and being the best drummer in the world on Rock Band 4."
+msgstr ""
+"Michael是MusicBrainz的高級開發者，現住在家鄉芝加哥。他小學時首次接觸MusicBrainz，在高中的時候，他開始編輯MusicBrainz，以處理他日漸豐富的音樂珍藏。到了大學，Michael更參與了三個GSoC計畫。在他的空閒時間，Michael會去看演唱會、製作沒人會聽的音樂、瘋狂觀看舊電視劇和在《搖滾樂團"
+" 4》中做世界上最厲害的鼓手。"
+
+#: metabrainz/templates/index/team.html:57
+msgid ""
+"<span class=\"name\">Frederik “Freso” S. Olesen</span> &mdash; Community "
+"Manager"
+msgstr "<span class=\"name\">Frederik “Freso” S. Olesen</span> &mdash; 社群管理員"
+
+#: metabrainz/templates/index/team.html:59
+#, python-format
+msgid ""
+"Hired in the fall of 2015 as the MetaBrainz Community Manager, Freso is in charge of most of the public communication\n"
+"          channels (IRC, forums, blog, etc.) and various community projects (like the Google Code-in). He has been a\n"
+"          <a href=\"%(mb_freso_url)s\">MusicBrainz contributor since 2006</a> and an open source enthusiast for\n"
+"          even longer."
+msgstr ""
+"Freso於2015年秋季被聘任為MetaBrainz的社群管理員，負責管理 IRC、討論區、部落格等主要公眾聯繫管道，以及多種如Google "
+"Code-in等的社群專案。他長期支持開源理念，<a href=\"%(mb_freso_url)s\">在2006 "
+"年成為了MusicBrainz貢獻者的其中一員</a>。"
+
+#: metabrainz/templates/index/team.html:65
+#, python-format
+msgid ""
+"On the rare occasions that he is not found in front of a monitor of some sort, Freso can be found\n"
+"          <a href=\"%(mb_freso_artist)s\">playing music</a> or (far more commonly)\n"
+"          dancing to it. He has even taught some dance classes and workshops in\n"
+"          <a href=\"%(bboy_url)s\">b-boying</a>!"
+msgstr ""
+"On the rare occasions that he is not found in front of a monitor of some sort, Freso can be found\n"
+"          <a href=\"%(mb_freso_artist)s\">playing music</a> or (far more commonly)\n"
+"          dancing to it. He has even taught some dance classes and workshops in\n"
+"          <a href=\"%(bboy_url)s\">b-boying</a>!"
+
+#: metabrainz/templates/index/team.html:73
+msgid ""
+"Freso was born and raised in Copenhagen, Denmark but has recently moved to Barcelona to be closer to the rest of\n"
+"          the MetaBrainz team."
+msgstr "Freso生於丹麥哥本哈根，最近移居至巴塞隆納，與其他MetaBrainz的成員住的更近。"
+
+#: metabrainz/templates/index/team.html:87
+msgid ""
+"<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer "
+"Support"
+msgstr "<span class=\"name\">Nicolás Tamargo</span> &mdash; 樣式領袖及客戶聯繫"
+
+#: metabrainz/templates/index/team.html:89
+#, python-format
+msgid ""
+"Nicolás is the leader of everything style-related in MusicBrainz (all except for fashion), and is in charge of\n"
+"          answering (or delegating!) support requests. When he's not actively working for MetaBrainz, he's busy\n"
+"          <a href=\"%(mb_editors_url)s\">editing MusicBrainz</a>, devouring ice cream, and following\n"
+"          the <a href=\"%(tartu_url)s\">world's best football team</a> around the country."
+msgstr ""
+"Nicolás負責管理關於MusicBrainz樣式的所有事項，特別是應付幫助請求和分配幫助請求有關的工作。在公餘時間，他會選擇<a "
+"href=\"%(mb_editors_url)s\">編輯MusicBrainz</a>、吃冰淇淋或在國內追蹤<a "
+"href=\"%(tartu_url)s\">世界上最棒的足球隊</a>。"
+
+#: metabrainz/templates/index/team.html:96
+msgid "He lives in Tartu, Estonia."
+msgstr "他住在愛沙尼亞塔爾圖。"
+
+#: metabrainz/templates/index/team.html:108
+msgid "<span class=\"name\">Roman Tsukanov</span> &mdash; Software Engineer"
+msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; 軟件工程師"
+
+#: metabrainz/templates/index/team.html:110
+#, python-format
+msgid ""
+"Roman first became associated with MetaBrainz through Google Summer of Code program, where he was instrumental\n"
+"          in the birth of <a href=\"%(cb_url)s\">CritiqueBrainz</a>. He wrote the updated MetaBrainz\n"
+"          website. Currently works on MusicBrainz, AcousticBrainz, and other projects."
+msgstr ""
+"Roman透過Google Summer of Code計畫首次接觸MetaBrainz。他在該計畫專注開發<a "
+"href=\"%(cb_url)s\">CritiqueBrainz</a>，對CritiqueBrainz的誕生作出極大貢獻。此外，他更編寫了MetaBrainz的新網站。Roman現在的工作包含MusicBrainz、AcousticBrainz以及其他專案。"
+
+#: metabrainz/templates/index/team.html:115
+msgid ""
+"Roman joined the MetaBrainz team as a software engineer in 2015. He currently lives and studies music technology\n"
+"          in Barcelona, Spain."
+msgstr "2015年，Roman以軟件工程師的身分加入MetaBrainz。他現在西班牙巴塞隆納生活和攻讀音樂科技。"
+
+#: metabrainz/templates/index/team.html:129
+msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
+msgstr "<span class=\"name\">Laurent Monin</span> &mdash; 系統管理員"
+
+#: metabrainz/templates/index/team.html:131
+msgid ""
+"A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz and Picard in attempts to codify his vast\n"
+"          collection of over 1500 CDs. In addition to being a music fanatic, Laurent has been programming on anything with\n"
+"          more than 1 bit since 1982 and has been an esteemed Linux system administrator since 1998."
+msgstr ""
+"Laurent "
+"Monin是一名超級音樂愛好者，在嘗試整理他1500多張CD的時候才了解到MusicBrainz和Picard的存在。此外，Laurent自1982年開始參與程式設計，只要是多於1位元的東西，他都不放過。1998年，他成為了一名受人尊敬的Linux系統管理員。"
+
+#: metabrainz/templates/index/team.html:136
+#, python-format
+msgid ""
+"With his extensive repertoire of skills and passions, Laurent has actively contributed to a myriad of open source\n"
+"          projects, notably <a href=\"%(elinks_url)s\">ELinks</a> and\n"
+"          <a href=\"%(geeqie_url)s\">Geeqie</a>, and loves to tinker with the hardware of various audio\n"
+"          gadgets, including amplifiers and loudspeakers. However, Laurent's contributions do not end there. He currently\n"
+"          sustains the MetaBrainz servers while residing near Besançon, France."
+msgstr ""
+"With his extensive repertoire of skills and passions, Laurent has actively contributed to a myriad of open source\n"
+"          projects, notably <a href=\"%(elinks_url)s\">ELinks</a> and\n"
+"          <a href=\"%(geeqie_url)s\">Geeqie</a>, and loves to tinker with the hardware of various audio\n"
+"          gadgets, including amplifiers and loudspeakers. However, Laurent's contributions do not end there. He currently\n"
+"          sustains the MetaBrainz servers while residing near Besançon, France."
+
+#: metabrainz/templates/index/team.html:153
+msgid "<span class=\"name\">Elizabeth Bigger</span> &mdash; Supporter Catalyst"
+msgstr "<span class=\"name\">Elizabeth Bigger</span>&mdash; 支持者聯繫人 "
+
+#: metabrainz/templates/index/team.html:155
+msgid ""
+"Elizabeth lives in Barcelona, Spain and joined the MetaBrainz team to manage the relationships with our \n"
+"          supporters. When not working for MetaBrainz, Elizabeth enjoys researching and developing computational textiles and\n"
+"          attending the International Symposium of Wearable Computing. She continuously struggles to find balance between her \n"
+"          cheese obsession, tinkering with power tools and learning the art of weaving."
+msgstr ""
+"Elizabeth住在西班牙巴塞隆納，在MetaBrainz管理基金會與支持者的關係。工作意外，Elizabeth喜歡研究及研發計算紡織品和參加國際穿戴式電腦研討會。她興趣繁多，不斷在迷戀起司、修理電動工具和學習梭織之間嘗試尋找平衡點。"
+
+#: metabrainz/templates/index/team.html:166
+msgid "Voluntary Project Leaders"
+msgstr "志願專案領袖"
+
+#: metabrainz/templates/index/team.html:171
+msgid "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
+msgstr "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
+
+#: metabrainz/templates/index/team.html:173
+#, python-format
+msgid ""
+"Ben is one of the two project leads and the main programmer for <a href=\"%(bb_url)s\">BookBrainz</a>,\n"
+"          a volunteer project doing for books what MusicBrainz does for music. He started programming C++ 9 years ago, and now\n"
+"          knows Python and Node.js too, although he is currently studying for a degree in Electronics Engineering at the\n"
+"          <a href=\"%(surrey_url)s\"> University of Surrey</a>. Ben has been editing MusicBrainz for the past 4 years,\n"
+"          attending the last three summits, and has contributed code to<a href=\"%(mutagen_url)s\">\n"
+"          mutagen</a> and <a href=\"%(beets_url)s\">beets</a> besides BookBrainz."
+msgstr ""
+"Ben是BookBrainz兩個專案領袖之一，也是<a "
+"href=\"%(bb_url)s\">BookBrainz</a>的主要程式設計師。BookBrainz是一個志願者專案，與MusicBrainz相似，蒐集書籍的元數據。雖然在九年前，他已經開始以C++編寫程式，現在也認識Python和Node.js，但他現在卻在<a"
+" "
+"href=\"%(surrey_url)s\">薩里大學</a>就讀電子工程。Ben在過去四年不斷編輯MusicBrainz，參與過去三個高峰會，也為<a"
+" href=\"%(mutagen_url)s\">mutagen</a>和<a "
+"href=\"%(beets_url)s\">beets</a>貢獻原始碼。"
+
+#: metabrainz/templates/index/team.html:185
+#, python-format
+msgid ""
+"In his spare time, Ben likes to design quadrotors,\n"
+"          <a href=\"%(race_surrey_url)s\"> racing cars</a>,\n"
+"          artificial intelligence, <a href=\"%(opengrow_url)s\">vegetation simulators</a> and music\n"
+"          software. However, none of them are finished yet!"
+msgstr ""
+"在他空閒的時間，Ben喜歡設計四軸飛行機、<a href=\"%(race_surrey_url)s\">賽車</a>、人工智慧、<a "
+"href=\"%(opengrow_url)s\">植被模擬器</a>和音樂軟件。可是，至今沒有一項是建好的！"
+
+#: metabrainz/templates/index/team.html:202
+msgid "<span class=\"name\">Sean Burke</span> &mdash; BookBrainz"
+msgstr "<span class=\"name\">Sean Burke</span> &mdash; BookBrainz"
+
+#: metabrainz/templates/index/team.html:204
+#, python-format
+msgid ""
+"Sean is the other of the two project leaders for <a href=\"%(bb_url)s\">BookBrainz</a>. He speaks\n"
+"          Irish and is currently trying to learn to play the bodhrán."
+msgstr "Sean是<a href=\"%(bb_url)s\">BookBrainz</a>兩位專案領袖的另外一位。他會說愛爾蘭語，正學習山羊皮鼓。"
+
+#: metabrainz/templates/index/team.html:215
+msgid "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+
+#: metabrainz/templates/index/team.html:217
+#, python-format
+msgid ""
+"Alastair is the project leader for <a "
+"href=\"%(ab_url)s\">AcousticBrainz</a>."
+msgstr "Alastair是<a href=\"%(ab_url)s\">AcousticBrainz</a>的專案領袖。"
+
+#: metabrainz/templates/oauth/prompt.html:4
+msgid "OAuth Authorization"
+msgstr "OAuth授權"
+
+#: metabrainz/templates/oauth/prompt.html:10
+msgid "This app requested permission to access:"
+msgstr "此程式要求批准以下存取權："
+
+#: metabrainz/templates/oauth/prompt.html:19
+msgid "Your identity on MetaBrainz"
+msgstr "您在MetaBrainz的身份"
+
+#: metabrainz/templates/oauth/prompt.html:32
+msgid "Allow access"
+msgstr "批准存取權"
+
+#: metabrainz/templates/oauth/prompt.html:33
+msgid "Cancel"
+msgstr "取消"
+
+#: metabrainz/templates/payments/cancel_recurring.html:3
+#: metabrainz/templates/payments/cancel_recurring.html:6
+msgid "Cancelling recurring payments"
+msgstr "取消定期付款"
+
+#: metabrainz/templates/payments/cancel_recurring.html:9
+msgid ""
+"In case you want to cancel recurring donation (payment) that you set up before,\n"
+"    you'll need to go to a service which you used to pay."
+msgstr ""
+"In case you want to cancel recurring donation (payment) that you set up before,\n"
+"    you'll need to go to a service which you used to pay."
+
+#: metabrainz/templates/payments/cancel_recurring.html:14
+msgid "Here are links to more information:"
+msgstr "更多資訊："
+
+#: metabrainz/templates/payments/donate.html:3
+#: metabrainz/templates/payments/donate.html:7
+msgid "Make a Donation"
+msgstr "捐款支持"
+
+#: metabrainz/templates/payments/donate.html:10
+#, python-format
+msgid ""
+"If you feel that our projects are a worthwhile effort, please consider contributing money to the\n"
+"      MetaBrainz Foundation, which is a <a href=\"%(wikipedia_non_profit_url)s\">\n"
+"      501(c)(3) tax-exempt non-profit</a> based in California. All of your donations will be tax-deductible\n"
+"      and you will receive a receipt that you can use to deduct your donation off your taxes if you are a\n"
+"      US taxpayer."
+msgstr ""
+"If you feel that our projects are a worthwhile effort, please consider contributing money to the\n"
+"      MetaBrainz Foundation, which is a <a href=\"%(wikipedia_non_profit_url)s\">\n"
+"      501(c)(3) tax-exempt non-profit</a> based in California. All of your donations will be tax-deductible\n"
+"      and you will receive a receipt that you can use to deduct your donation off your taxes if you are a\n"
+"      US taxpayer."
+
+#: metabrainz/templates/payments/donate.html:18
+msgid ""
+"Your donations will be used to operate projects of the MetaBrainz Foundation. This includes paying\n"
+"      for ongoing expenses like hosting, hardware, maintaining a modest office, and paying a minimal\n"
+"      salary for MetaBrainz employees."
+msgstr ""
+"您的捐款會支持我們繼續運營MetaBrainz基金會的專案，\n"
+"包括支付網頁寄存、硬件維護、辦公室管理和支付MetaBrainz員工的基本薪酬等恆常開支。"
+
+#: metabrainz/templates/payments/donate.html:23
+#, python-format
+msgid ""
+"Where has my contribution gone? See our <a "
+"href=\"%(finance_reports_url)s\">transparent finances</a>."
+msgstr "我的捐款都去哪裡了？請參見我們透明的<a href=\"%(finance_reports_url)s\">財政報告</a>。"
+
+#: metabrainz/templates/payments/donate.html:24
+#, python-format
+msgid ""
+"Who else is contributing? See our list of <a "
+"href=\"%(donors_url)s\">donors</a>."
+msgstr "還有誰在捐款？請參見<a href=\"%(donors_url)s\">捐助者</a>列表。"
+
+#: metabrainz/templates/payments/donate.html:28
+#, python-format
+msgid ""
+"<b>Be careful!</b> This is a development version of the website. Do NOT\n"
+"        use your real credit card credentials! If you want to send an actual\n"
+"        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
+msgstr ""
+"<b>在注意！</b>此是網站的開發版，請不要使用您的信用卡資料！如果您要作出捐款，請前往<a "
+"href=\"%(mb_url)s\">metabrainz.org</a>。"
+
+#: metabrainz/templates/payments/donate.html:39
+#: metabrainz/templates/payments/payment.html:36
+msgid "Amount"
+msgstr "金額"
+
+#: metabrainz/templates/payments/donate.html:46
+#, python-format
+msgid ""
+"If you would like to make a large donation, please contact us at\n"
+"            <a href=\"%(mail_link)s\">donations@metabrainz.org</a>\n"
+"            before you do."
+msgstr ""
+"如果您想作出一次大額捐款，請先透過<a href=\"%(mail_link)s\">donations@metabrainz.org</a>聯繫我們。"
+
+#: metabrainz/templates/payments/donate.html:57
+msgid "I want this to be a recurring monthly donation"
+msgstr "我想這設為每月定期捐款"
+
+#: metabrainz/templates/payments/donate.html:65
+msgid "MusicBrainz username"
+msgstr "MusicBrainz用戶名"
+
+#: metabrainz/templates/payments/donate.html:74
+msgid "Email me about future fundraising events"
+msgstr "向我發出關於未來籌款活動的電郵"
+
+#: metabrainz/templates/payments/donate.html:75
+msgid "This will be very seldom"
+msgstr "我們不會經常發送電郵給您。"
+
+#: metabrainz/templates/payments/donate.html:83
+msgid "I would like this donation to be anonymous"
+msgstr "我想以匿名捐款"
+
+#: metabrainz/templates/payments/donate.html:84
+msgid "Your name won't appear in the donors list"
+msgstr "您不會出現在捐助者名單上"
+
+#: metabrainz/templates/payments/donate.html:92
+msgid "Donate with Credit Card"
+msgstr "以信用卡捐款"
+
+#: metabrainz/templates/payments/donate.html:108
+#, python-format
+msgid ""
+"The personal information provided to the MetaBrainz Foundation during the\n"
+"        donation process will not be shared with anyone. For more information,\n"
+"        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
+"        privacy policy</a>."
+msgstr ""
+"您在捐款時向MetaBrainz基金會提供的個人資料不會分享給其他人。想瞭解更多，請參見我們的<a "
+"href=\"%(privacy_policy_url)s\">隱私政策</a>。"
+
+#: metabrainz/templates/payments/donate.html:117
+#, python-format
+msgid ""
+"To find out how to cancel recurring donations take a look at\n"
+"        <a href=\"%(cancel_recurring_url)s\">this page</a>."
+msgstr "請參見<a href=\"%(cancel_recurring_url)s\">此頁</a>瞭解如何取消定期捐款。"
+
+#: metabrainz/templates/payments/donate.html:122
+msgid "Other ways to donate"
+msgstr "透過其他方式捐款"
+
+#: metabrainz/templates/payments/donate.html:124
+#: metabrainz/templates/payments/payment.html:100
+msgid "Non-US Bank transfer"
+msgstr "非美國銀行轉帳"
+
+#: metabrainz/templates/payments/donate.html:125
+msgid ""
+"You can make a donation, or recurring donations, via bank transfer to the "
+"following IBAN:"
+msgstr "您可以透過銀行轉賬至以下IBAN，作出定期或一次性的捐款："
+
+#: metabrainz/templates/payments/donate.html:127
+#, python-format
+msgid ""
+"Please indicate your name and use the word %(donation_fixed_string)s in the "
+"description field."
+msgstr "請表明您的姓名，以及在描述欄中使用「%(donation_fixed_string)s」一詞。"
+
+#: metabrainz/templates/payments/donate.html:129
+#: metabrainz/templates/payments/payment.html:105
+msgid "US Check"
+msgstr "美國支票"
+
+#: metabrainz/templates/payments/donate.html:130
+msgid ""
+"If you would like to donate using a check drawn on a US bank, please send "
+"them to:"
+msgstr ""
+"If you would like to donate using a check drawn on a US bank, please send "
+"them to:"
+
+#: metabrainz/templates/payments/donate.html:137
+#: metabrainz/templates/payments/payment.html:113
+msgid ""
+"Please make checks payable to the <strong>MetaBrainz Foundation</strong>."
+msgstr "請列明支票收款人為「<strong>MetaBrainz Foundation</strong>」。"
+
+#: metabrainz/templates/payments/donate.html:140
+msgid ""
+"If you use Flattr to donate to your favourite projects, you can click below "
+"to Flattr MetaBrainz:"
+msgstr "如果您使用Flattr去捐助您喜歡的專案，請按一下下方的連結，透過Flattr捐助MetaBrainz："
+
+#: metabrainz/templates/payments/donate.html:215
+msgid ""
+"Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you"
+msgstr "在這裡輸入您的MusicBrainz用戶名，Picard和MusicBrainz以後就不會再煩您了"
+
+#: metabrainz/templates/payments/donate.html:230
+msgid "MusicBrainz is currently unavailable."
+msgstr "現時不可使用MusicBrainz。"
+
+#: metabrainz/templates/payments/donate.html:231
+msgid "Please, make sure that your username is correct."
+msgstr "請確保用戶名正確。"
+
+#: metabrainz/templates/payments/donate.html:233
+msgid "Your donation will be associated with this account."
+msgstr "您的捐款將會與此帳號相連。"
+
+#: metabrainz/templates/payments/donate.html:235
+msgid "We can't find this account. Please, make sure it's correct"
+msgstr "我們找不到此帳號，請檢查帳號是否正確。"
+
+#: metabrainz/templates/payments/donors.html:3
+#: metabrainz/templates/reports/financial_reports/index.html:23
+msgid "Donations"
+msgstr "捐款"
+
+#: metabrainz/templates/payments/donors.html:11
+msgid "by date"
+msgstr "按日期排序"
+
+#: metabrainz/templates/payments/donors.html:14
+msgid "by amount"
+msgstr "按金額排序"
+
+#: metabrainz/templates/payments/donors.html:20
+msgid "No donations. :("
+msgstr "沒有捐款。:("
+
+#: metabrainz/templates/payments/donors.html:25
+msgid "Date"
+msgstr "日期"
+
+#: metabrainz/templates/payments/donors.html:26
+msgid "Donor"
+msgstr "捐助者"
+
+#: metabrainz/templates/payments/donors.html:27
+msgid "Donation"
+msgstr "捐款"
+
+#: metabrainz/templates/payments/donors.html:28
+msgid "Fee"
+msgstr "費用"
+
+#: metabrainz/templates/payments/donors.html:61
+msgid "First"
+msgstr "首次"
+
+#: metabrainz/templates/payments/payment.html:3
+#: metabrainz/templates/payments/payment.html:7
+msgid "Make a Payment"
+msgstr "付款"
+
+#: metabrainz/templates/payments/payment.html:10
+#, python-format
+msgid ""
+"<b>This page is for organizations!</b> Payments made here will not show up\n"
+"      in the list of donations. If you want to make a donation instead, go to\n"
+"      <a href=\"%(donate_url)s\">donation page</a>."
+msgstr ""
+"<b>此網頁是為機構而設的！</b>捐助人名單不會顯示在這裡完成的付款。如果您要作出捐款，請前往<a "
+"href=\"%(donate_url)s\">捐款頁</a>。"
+
+#: metabrainz/templates/payments/payment.html:16
+msgid ""
+"Your payments will be used to operate projects of the MetaBrainz Foundation. This includes paying\n"
+"      for ongoing expenses like hosting, hardware, maintaining a modest office, and paying a minimal\n"
+"      salary for MetaBrainz employees."
+msgstr ""
+"您的捐款會支持我們繼續運營MetaBrainz基金會的專案，\n"
+"包括支付網頁寄存、硬件維護、辦公室管理和支付MetaBrainz員工的基本薪酬等恆常開支。"
+
+#: metabrainz/templates/payments/payment.html:21
+#, python-format
+msgid ""
+"<p>Where has your contribution gone? See our <a "
+"href=\"%(financial_reports_url)s\">transparent finances</a>.</p>"
+msgstr "<p>您的捐助都去哪裡了？請參見我們的<a href=\"%(financial_reports_url)s\">透明財政</a>。</p>"
+
+#: metabrainz/templates/payments/payment.html:25
+#, python-format
+msgid ""
+"<b>Be careful!</b> This is a development version of the website. Do NOT\n"
+"        use your real credit card credentials! If you want to send an actual\n"
+"        payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
+msgstr ""
+"<b>注意！</b>此是網站的開發版，請不要使用您的信用卡資料！如果您要付款，請前往<a "
+"href=\"%(mb_url)s\">metabrainz.org</a>。"
+
+#: metabrainz/templates/payments/payment.html:43
+#, python-format
+msgid ""
+"If you would like to make a large payment, please contact us at\n"
+"            <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
+"            before you do."
+msgstr ""
+"如果您想作出一次大型付款，請先透過<a href=\"%(mail_link)s\">payments@metabrainz.org</a>與我們聯繫。"
+
+#: metabrainz/templates/payments/payment.html:51
+msgid "Invoice number"
+msgstr "發票編號"
+
+#: metabrainz/templates/payments/payment.html:60
+msgid "Make this a recurring monthly payment"
+msgstr "將此付款設為定期付款"
+
+#: metabrainz/templates/payments/payment.html:68
+msgid "Pay with Credit Card"
+msgstr "以信用卡支付"
+
+#: metabrainz/templates/payments/payment.html:84
+#, python-format
+msgid ""
+"The personal information provided to the MetaBrainz Foundation during the\n"
+"        payment process will not be shared with anyone. For more information,\n"
+"        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
+"        privacy policy</a>."
+msgstr ""
+"在付款過程中向MetaBrainz基金會提供的個人資料不會向任何人透露。詳情請參見我們的<a "
+"href=\"%(privacy_policy_url)s\">隱私政策</a>。"
+
+#: metabrainz/templates/payments/payment.html:93
+#, python-format
+msgid ""
+"To find out how to cancel recurring payments take a look at\n"
+"        <a href=\"%(cancel_recurring_url)s\">this page</a>."
+msgstr "請參見<a href=\"%(cancel_recurring_url)s\">此頁</a>瞭解如何取消定期付款。"
+
+#: metabrainz/templates/payments/payment.html:98
+msgid "Other ways to pay"
+msgstr "其他支付方法"
+
+#: metabrainz/templates/payments/payment.html:101
+msgid ""
+"You can make a payment, or recurring payments, via bank transfer to the "
+"following IBAN:"
+msgstr "您可以透過銀行轉賬至以下IBAN，作出定期或一次性的付款："
+
+#: metabrainz/templates/payments/payment.html:103
+msgid ""
+"Please specify the invoice number(s) you are paying in the description field"
+" of the transfer."
+msgstr "請在轉賬的描述欄中，標明付款相應的發票編號。"
+
+#: metabrainz/templates/payments/payment.html:106
+msgid ""
+"If you would like to pay us using a check drawn on a US bank, please send "
+"them to:"
+msgstr ""
+"If you would like to pay us using a check drawn on a US bank, please send "
+"them to:"
+
+#: metabrainz/templates/reports/annual_reports/view.html:2
+msgid "Annual Report"
+msgstr "年度報告"
+
+#: metabrainz/templates/reports/financial_reports/index.html:9
+msgid ""
+"The MetaBrainz Foundation practices a policy of <i>transparent finances</i> where the finances of the non-profit\n"
+"    are freely available on this web site. This financial philosophy allows the monetary contributors to MetaBrainz\n"
+"    and information contributors to MusicBrainz to see how the non-profit spends the donations and license fees it\n"
+"    collects. Since MusicBrainz was built with volunteer effort and MetaBrainz is supported in part by volunteer\n"
+"    donations, we believe that our contributors have the right to see how the non-profit manages its finances."
+msgstr ""
+"The MetaBrainz Foundation practices a policy of <i>transparent finances</i> where the finances of the non-profit\n"
+"    are freely available on this web site. This financial philosophy allows the monetary contributors to MetaBrainz\n"
+"    and information contributors to MusicBrainz to see how the non-profit spends the donations and license fees it\n"
+"    collects. Since MusicBrainz was built with volunteer effort and MetaBrainz is supported in part by volunteer\n"
+"    donations, we believe that our contributors have the right to see how the non-profit manages its finances."
+
+#: metabrainz/templates/reports/financial_reports/index.html:17
+msgid ""
+"The non-profit publishes all aspects of its finances, as far as that is possible. In some cases, third parties\n"
+"    making payments to the non-profit require us to not disclose the sums paid to us for various activities. For\n"
+"    instance, one affiliate of MetaBrainz prevents us from publishing the details of earnings from an affiliate\n"
+"    program. In these cases we will anonymize these payments before publishing on this site."
+msgstr ""
+"The non-profit publishes all aspects of its finances, as far as that is possible. In some cases, third parties\n"
+"    making payments to the non-profit require us to not disclose the sums paid to us for various activities. For\n"
+"    instance, one affiliate of MetaBrainz prevents us from publishing the details of earnings from an affiliate\n"
+"    program. In these cases we will anonymize these payments before publishing on this site."
+
+#: metabrainz/templates/reports/financial_reports/index.html:25
+#, python-format
+msgid ""
+"Please visit our <a href=\"%(donors_url)s\">donation tracker</a> to view a list of all the\n"
+"    donations that we have received."
+msgstr "我們的<a href=\"%(donors_url)s\">捐款追蹤器</a>列出所有向我們作出的捐助。"
+
+#: metabrainz/templates/reports/financial_reports/index.html:29
+msgid "Reports"
+msgstr "報告"
+
+#: metabrainz/templates/reports/financial_reports/index.html:31
+msgid ""
+"We attempt to publish our balance sheets within the first week of the "
+"succeeding month, or as close to that as possible."
+msgstr "如情況許可，我們會儘量在下一個月的首個星期公布財務狀況表。"
+
+#: metabrainz/templates/reports/financial_reports/index.html:35
+#: metabrainz/templates/reports/financial_reports/index.html:64
+#: metabrainz/templates/reports/financial_reports/index.html:93
+#: metabrainz/templates/reports/financial_reports/index.html:122
+#: metabrainz/templates/reports/financial_reports/index.html:151
+#: metabrainz/templates/reports/financial_reports/index.html:180
+#: metabrainz/templates/reports/financial_reports/index.html:209
+#: metabrainz/templates/reports/financial_reports/index.html:238
+#: metabrainz/templates/reports/financial_reports/index.html:267
+#: metabrainz/templates/reports/financial_reports/index.html:296
+#: metabrainz/templates/reports/financial_reports/index.html:325
+#: metabrainz/templates/reports/financial_reports/index.html:347
+msgid "Year end reports"
+msgstr "年終報告"
+
+#: metabrainz/templates/reports/financial_reports/index.html:37
+#: metabrainz/templates/reports/financial_reports/index.html:49
+#: metabrainz/templates/reports/financial_reports/index.html:50
+#: metabrainz/templates/reports/financial_reports/index.html:51
+#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:53
+#: metabrainz/templates/reports/financial_reports/index.html:54
+#: metabrainz/templates/reports/financial_reports/index.html:55
+#: metabrainz/templates/reports/financial_reports/index.html:56
+#: metabrainz/templates/reports/financial_reports/index.html:57
+#: metabrainz/templates/reports/financial_reports/index.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:59
+#: metabrainz/templates/reports/financial_reports/index.html:60
+#: metabrainz/templates/reports/financial_reports/index.html:66
+#: metabrainz/templates/reports/financial_reports/index.html:78
+#: metabrainz/templates/reports/financial_reports/index.html:79
+#: metabrainz/templates/reports/financial_reports/index.html:80
+#: metabrainz/templates/reports/financial_reports/index.html:81
+#: metabrainz/templates/reports/financial_reports/index.html:82
+#: metabrainz/templates/reports/financial_reports/index.html:83
+#: metabrainz/templates/reports/financial_reports/index.html:84
+#: metabrainz/templates/reports/financial_reports/index.html:85
+#: metabrainz/templates/reports/financial_reports/index.html:86
+#: metabrainz/templates/reports/financial_reports/index.html:87
+#: metabrainz/templates/reports/financial_reports/index.html:88
+#: metabrainz/templates/reports/financial_reports/index.html:89
+#: metabrainz/templates/reports/financial_reports/index.html:95
+#: metabrainz/templates/reports/financial_reports/index.html:107
+#: metabrainz/templates/reports/financial_reports/index.html:108
+#: metabrainz/templates/reports/financial_reports/index.html:109
+#: metabrainz/templates/reports/financial_reports/index.html:110
+#: metabrainz/templates/reports/financial_reports/index.html:111
+#: metabrainz/templates/reports/financial_reports/index.html:112
+#: metabrainz/templates/reports/financial_reports/index.html:113
+#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:115
+#: metabrainz/templates/reports/financial_reports/index.html:116
+#: metabrainz/templates/reports/financial_reports/index.html:117
+#: metabrainz/templates/reports/financial_reports/index.html:118
+#: metabrainz/templates/reports/financial_reports/index.html:124
+#: metabrainz/templates/reports/financial_reports/index.html:136
+#: metabrainz/templates/reports/financial_reports/index.html:137
+#: metabrainz/templates/reports/financial_reports/index.html:138
+#: metabrainz/templates/reports/financial_reports/index.html:139
+#: metabrainz/templates/reports/financial_reports/index.html:140
+#: metabrainz/templates/reports/financial_reports/index.html:141
+#: metabrainz/templates/reports/financial_reports/index.html:142
+#: metabrainz/templates/reports/financial_reports/index.html:143
+#: metabrainz/templates/reports/financial_reports/index.html:144
+#: metabrainz/templates/reports/financial_reports/index.html:145
+#: metabrainz/templates/reports/financial_reports/index.html:146
+#: metabrainz/templates/reports/financial_reports/index.html:147
+#: metabrainz/templates/reports/financial_reports/index.html:153
+#: metabrainz/templates/reports/financial_reports/index.html:165
+#: metabrainz/templates/reports/financial_reports/index.html:166
+#: metabrainz/templates/reports/financial_reports/index.html:167
+#: metabrainz/templates/reports/financial_reports/index.html:168
+#: metabrainz/templates/reports/financial_reports/index.html:169
+#: metabrainz/templates/reports/financial_reports/index.html:170
+#: metabrainz/templates/reports/financial_reports/index.html:171
+#: metabrainz/templates/reports/financial_reports/index.html:172
+#: metabrainz/templates/reports/financial_reports/index.html:173
+#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:175
+#: metabrainz/templates/reports/financial_reports/index.html:176
+#: metabrainz/templates/reports/financial_reports/index.html:182
+#: metabrainz/templates/reports/financial_reports/index.html:194
+#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:196
+#: metabrainz/templates/reports/financial_reports/index.html:197
+#: metabrainz/templates/reports/financial_reports/index.html:198
+#: metabrainz/templates/reports/financial_reports/index.html:199
+#: metabrainz/templates/reports/financial_reports/index.html:200
+#: metabrainz/templates/reports/financial_reports/index.html:201
+#: metabrainz/templates/reports/financial_reports/index.html:202
+#: metabrainz/templates/reports/financial_reports/index.html:203
+#: metabrainz/templates/reports/financial_reports/index.html:204
+#: metabrainz/templates/reports/financial_reports/index.html:205
+#: metabrainz/templates/reports/financial_reports/index.html:211
+#: metabrainz/templates/reports/financial_reports/index.html:223
+#: metabrainz/templates/reports/financial_reports/index.html:224
+#: metabrainz/templates/reports/financial_reports/index.html:225
+#: metabrainz/templates/reports/financial_reports/index.html:226
+#: metabrainz/templates/reports/financial_reports/index.html:227
+#: metabrainz/templates/reports/financial_reports/index.html:228
+#: metabrainz/templates/reports/financial_reports/index.html:229
+#: metabrainz/templates/reports/financial_reports/index.html:230
+#: metabrainz/templates/reports/financial_reports/index.html:231
+#: metabrainz/templates/reports/financial_reports/index.html:232
+#: metabrainz/templates/reports/financial_reports/index.html:233
+#: metabrainz/templates/reports/financial_reports/index.html:234
+#: metabrainz/templates/reports/financial_reports/index.html:240
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:253
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:255
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:258
+#: metabrainz/templates/reports/financial_reports/index.html:259
+#: metabrainz/templates/reports/financial_reports/index.html:260
+#: metabrainz/templates/reports/financial_reports/index.html:261
+#: metabrainz/templates/reports/financial_reports/index.html:262
+#: metabrainz/templates/reports/financial_reports/index.html:263
+#: metabrainz/templates/reports/financial_reports/index.html:269
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:282
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:284
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:287
+#: metabrainz/templates/reports/financial_reports/index.html:288
+#: metabrainz/templates/reports/financial_reports/index.html:289
+#: metabrainz/templates/reports/financial_reports/index.html:290
+#: metabrainz/templates/reports/financial_reports/index.html:291
+#: metabrainz/templates/reports/financial_reports/index.html:292
+#: metabrainz/templates/reports/financial_reports/index.html:298
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:311
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:313
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:316
+#: metabrainz/templates/reports/financial_reports/index.html:317
+#: metabrainz/templates/reports/financial_reports/index.html:318
+#: metabrainz/templates/reports/financial_reports/index.html:319
+#: metabrainz/templates/reports/financial_reports/index.html:320
+#: metabrainz/templates/reports/financial_reports/index.html:321
+#: metabrainz/templates/reports/financial_reports/index.html:327
+#: metabrainz/templates/reports/financial_reports/index.html:349
+msgid "balance sheet"
+msgstr "財務狀況表"
+
+#: metabrainz/templates/reports/financial_reports/index.html:38
+#: metabrainz/templates/reports/financial_reports/index.html:42
+#: metabrainz/templates/reports/financial_reports/index.html:43
+#: metabrainz/templates/reports/financial_reports/index.html:44
+#: metabrainz/templates/reports/financial_reports/index.html:45
+#: metabrainz/templates/reports/financial_reports/index.html:49
+#: metabrainz/templates/reports/financial_reports/index.html:50
+#: metabrainz/templates/reports/financial_reports/index.html:51
+#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:53
+#: metabrainz/templates/reports/financial_reports/index.html:54
+#: metabrainz/templates/reports/financial_reports/index.html:55
+#: metabrainz/templates/reports/financial_reports/index.html:56
+#: metabrainz/templates/reports/financial_reports/index.html:57
+#: metabrainz/templates/reports/financial_reports/index.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:59
+#: metabrainz/templates/reports/financial_reports/index.html:60
+#: metabrainz/templates/reports/financial_reports/index.html:67
+#: metabrainz/templates/reports/financial_reports/index.html:71
+#: metabrainz/templates/reports/financial_reports/index.html:72
+#: metabrainz/templates/reports/financial_reports/index.html:73
+#: metabrainz/templates/reports/financial_reports/index.html:74
+#: metabrainz/templates/reports/financial_reports/index.html:78
+#: metabrainz/templates/reports/financial_reports/index.html:79
+#: metabrainz/templates/reports/financial_reports/index.html:80
+#: metabrainz/templates/reports/financial_reports/index.html:81
+#: metabrainz/templates/reports/financial_reports/index.html:82
+#: metabrainz/templates/reports/financial_reports/index.html:83
+#: metabrainz/templates/reports/financial_reports/index.html:84
+#: metabrainz/templates/reports/financial_reports/index.html:85
+#: metabrainz/templates/reports/financial_reports/index.html:86
+#: metabrainz/templates/reports/financial_reports/index.html:87
+#: metabrainz/templates/reports/financial_reports/index.html:88
+#: metabrainz/templates/reports/financial_reports/index.html:89
+#: metabrainz/templates/reports/financial_reports/index.html:96
+#: metabrainz/templates/reports/financial_reports/index.html:100
+#: metabrainz/templates/reports/financial_reports/index.html:101
+#: metabrainz/templates/reports/financial_reports/index.html:102
+#: metabrainz/templates/reports/financial_reports/index.html:103
+#: metabrainz/templates/reports/financial_reports/index.html:107
+#: metabrainz/templates/reports/financial_reports/index.html:108
+#: metabrainz/templates/reports/financial_reports/index.html:109
+#: metabrainz/templates/reports/financial_reports/index.html:110
+#: metabrainz/templates/reports/financial_reports/index.html:111
+#: metabrainz/templates/reports/financial_reports/index.html:112
+#: metabrainz/templates/reports/financial_reports/index.html:113
+#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:115
+#: metabrainz/templates/reports/financial_reports/index.html:116
+#: metabrainz/templates/reports/financial_reports/index.html:117
+#: metabrainz/templates/reports/financial_reports/index.html:118
+#: metabrainz/templates/reports/financial_reports/index.html:125
+#: metabrainz/templates/reports/financial_reports/index.html:129
+#: metabrainz/templates/reports/financial_reports/index.html:130
+#: metabrainz/templates/reports/financial_reports/index.html:131
+#: metabrainz/templates/reports/financial_reports/index.html:132
+#: metabrainz/templates/reports/financial_reports/index.html:136
+#: metabrainz/templates/reports/financial_reports/index.html:137
+#: metabrainz/templates/reports/financial_reports/index.html:138
+#: metabrainz/templates/reports/financial_reports/index.html:139
+#: metabrainz/templates/reports/financial_reports/index.html:140
+#: metabrainz/templates/reports/financial_reports/index.html:141
+#: metabrainz/templates/reports/financial_reports/index.html:142
+#: metabrainz/templates/reports/financial_reports/index.html:143
+#: metabrainz/templates/reports/financial_reports/index.html:144
+#: metabrainz/templates/reports/financial_reports/index.html:145
+#: metabrainz/templates/reports/financial_reports/index.html:146
+#: metabrainz/templates/reports/financial_reports/index.html:147
+#: metabrainz/templates/reports/financial_reports/index.html:154
+#: metabrainz/templates/reports/financial_reports/index.html:158
+#: metabrainz/templates/reports/financial_reports/index.html:159
+#: metabrainz/templates/reports/financial_reports/index.html:160
+#: metabrainz/templates/reports/financial_reports/index.html:161
+#: metabrainz/templates/reports/financial_reports/index.html:165
+#: metabrainz/templates/reports/financial_reports/index.html:166
+#: metabrainz/templates/reports/financial_reports/index.html:167
+#: metabrainz/templates/reports/financial_reports/index.html:168
+#: metabrainz/templates/reports/financial_reports/index.html:169
+#: metabrainz/templates/reports/financial_reports/index.html:170
+#: metabrainz/templates/reports/financial_reports/index.html:171
+#: metabrainz/templates/reports/financial_reports/index.html:172
+#: metabrainz/templates/reports/financial_reports/index.html:173
+#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:175
+#: metabrainz/templates/reports/financial_reports/index.html:176
+#: metabrainz/templates/reports/financial_reports/index.html:183
+#: metabrainz/templates/reports/financial_reports/index.html:187
+#: metabrainz/templates/reports/financial_reports/index.html:188
+#: metabrainz/templates/reports/financial_reports/index.html:189
+#: metabrainz/templates/reports/financial_reports/index.html:190
+#: metabrainz/templates/reports/financial_reports/index.html:194
+#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:196
+#: metabrainz/templates/reports/financial_reports/index.html:197
+#: metabrainz/templates/reports/financial_reports/index.html:198
+#: metabrainz/templates/reports/financial_reports/index.html:199
+#: metabrainz/templates/reports/financial_reports/index.html:200
+#: metabrainz/templates/reports/financial_reports/index.html:201
+#: metabrainz/templates/reports/financial_reports/index.html:202
+#: metabrainz/templates/reports/financial_reports/index.html:203
+#: metabrainz/templates/reports/financial_reports/index.html:204
+#: metabrainz/templates/reports/financial_reports/index.html:205
+#: metabrainz/templates/reports/financial_reports/index.html:212
+#: metabrainz/templates/reports/financial_reports/index.html:216
+#: metabrainz/templates/reports/financial_reports/index.html:217
+#: metabrainz/templates/reports/financial_reports/index.html:218
+#: metabrainz/templates/reports/financial_reports/index.html:219
+#: metabrainz/templates/reports/financial_reports/index.html:223
+#: metabrainz/templates/reports/financial_reports/index.html:224
+#: metabrainz/templates/reports/financial_reports/index.html:225
+#: metabrainz/templates/reports/financial_reports/index.html:226
+#: metabrainz/templates/reports/financial_reports/index.html:227
+#: metabrainz/templates/reports/financial_reports/index.html:228
+#: metabrainz/templates/reports/financial_reports/index.html:229
+#: metabrainz/templates/reports/financial_reports/index.html:230
+#: metabrainz/templates/reports/financial_reports/index.html:231
+#: metabrainz/templates/reports/financial_reports/index.html:232
+#: metabrainz/templates/reports/financial_reports/index.html:233
+#: metabrainz/templates/reports/financial_reports/index.html:234
+#: metabrainz/templates/reports/financial_reports/index.html:241
+#: metabrainz/templates/reports/financial_reports/index.html:245
+#: metabrainz/templates/reports/financial_reports/index.html:246
+#: metabrainz/templates/reports/financial_reports/index.html:247
+#: metabrainz/templates/reports/financial_reports/index.html:248
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:253
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:255
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:258
+#: metabrainz/templates/reports/financial_reports/index.html:259
+#: metabrainz/templates/reports/financial_reports/index.html:260
+#: metabrainz/templates/reports/financial_reports/index.html:261
+#: metabrainz/templates/reports/financial_reports/index.html:262
+#: metabrainz/templates/reports/financial_reports/index.html:263
+#: metabrainz/templates/reports/financial_reports/index.html:270
+#: metabrainz/templates/reports/financial_reports/index.html:274
+#: metabrainz/templates/reports/financial_reports/index.html:275
+#: metabrainz/templates/reports/financial_reports/index.html:276
+#: metabrainz/templates/reports/financial_reports/index.html:277
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:282
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:284
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:287
+#: metabrainz/templates/reports/financial_reports/index.html:288
+#: metabrainz/templates/reports/financial_reports/index.html:289
+#: metabrainz/templates/reports/financial_reports/index.html:290
+#: metabrainz/templates/reports/financial_reports/index.html:291
+#: metabrainz/templates/reports/financial_reports/index.html:292
+#: metabrainz/templates/reports/financial_reports/index.html:299
+#: metabrainz/templates/reports/financial_reports/index.html:303
+#: metabrainz/templates/reports/financial_reports/index.html:304
+#: metabrainz/templates/reports/financial_reports/index.html:305
+#: metabrainz/templates/reports/financial_reports/index.html:306
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:311
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:313
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:316
+#: metabrainz/templates/reports/financial_reports/index.html:317
+#: metabrainz/templates/reports/financial_reports/index.html:318
+#: metabrainz/templates/reports/financial_reports/index.html:319
+#: metabrainz/templates/reports/financial_reports/index.html:320
+#: metabrainz/templates/reports/financial_reports/index.html:321
+#: metabrainz/templates/reports/financial_reports/index.html:328
+#: metabrainz/templates/reports/financial_reports/index.html:350
+msgid "profit &amp; loss"
+msgstr "利潤及虧損"
+
+#: metabrainz/templates/reports/financial_reports/index.html:40
+#: metabrainz/templates/reports/financial_reports/index.html:69
+#: metabrainz/templates/reports/financial_reports/index.html:98
+#: metabrainz/templates/reports/financial_reports/index.html:127
+#: metabrainz/templates/reports/financial_reports/index.html:156
+#: metabrainz/templates/reports/financial_reports/index.html:185
+#: metabrainz/templates/reports/financial_reports/index.html:214
+#: metabrainz/templates/reports/financial_reports/index.html:243
+#: metabrainz/templates/reports/financial_reports/index.html:272
+#: metabrainz/templates/reports/financial_reports/index.html:301
+msgid "Quarterly reports"
+msgstr "季度報告"
+
+#: metabrainz/templates/reports/financial_reports/index.html:47
+#: metabrainz/templates/reports/financial_reports/index.html:76
+#: metabrainz/templates/reports/financial_reports/index.html:105
+#: metabrainz/templates/reports/financial_reports/index.html:134
+#: metabrainz/templates/reports/financial_reports/index.html:163
+#: metabrainz/templates/reports/financial_reports/index.html:192
+#: metabrainz/templates/reports/financial_reports/index.html:221
+#: metabrainz/templates/reports/financial_reports/index.html:250
+#: metabrainz/templates/reports/financial_reports/index.html:279
+#: metabrainz/templates/reports/financial_reports/index.html:308
+msgid "Monthly reports"
+msgstr "每月報告"
+
+#: metabrainz/templates/reports/financial_reports/index.html:49
+#: metabrainz/templates/reports/financial_reports/index.html:78
+#: metabrainz/templates/reports/financial_reports/index.html:107
+#: metabrainz/templates/reports/financial_reports/index.html:136
+#: metabrainz/templates/reports/financial_reports/index.html:165
+#: metabrainz/templates/reports/financial_reports/index.html:194
+#: metabrainz/templates/reports/financial_reports/index.html:223
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:332
+#: metabrainz/templates/reports/financial_reports/index.html:354
+#: metabrainz/templates/reports/financial_reports/index.html:370
+msgid "December"
+msgstr "12月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:50
+#: metabrainz/templates/reports/financial_reports/index.html:79
+#: metabrainz/templates/reports/financial_reports/index.html:108
+#: metabrainz/templates/reports/financial_reports/index.html:137
+#: metabrainz/templates/reports/financial_reports/index.html:166
+#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:224
+#: metabrainz/templates/reports/financial_reports/index.html:253
+#: metabrainz/templates/reports/financial_reports/index.html:282
+#: metabrainz/templates/reports/financial_reports/index.html:311
+#: metabrainz/templates/reports/financial_reports/index.html:333
+#: metabrainz/templates/reports/financial_reports/index.html:355
+msgid "November"
+msgstr "11月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:51
+#: metabrainz/templates/reports/financial_reports/index.html:80
+#: metabrainz/templates/reports/financial_reports/index.html:109
+#: metabrainz/templates/reports/financial_reports/index.html:138
+#: metabrainz/templates/reports/financial_reports/index.html:167
+#: metabrainz/templates/reports/financial_reports/index.html:196
+#: metabrainz/templates/reports/financial_reports/index.html:225
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:334
+#: metabrainz/templates/reports/financial_reports/index.html:356
+msgid "October"
+msgstr "10月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:81
+#: metabrainz/templates/reports/financial_reports/index.html:110
+#: metabrainz/templates/reports/financial_reports/index.html:139
+#: metabrainz/templates/reports/financial_reports/index.html:168
+#: metabrainz/templates/reports/financial_reports/index.html:197
+#: metabrainz/templates/reports/financial_reports/index.html:226
+#: metabrainz/templates/reports/financial_reports/index.html:255
+#: metabrainz/templates/reports/financial_reports/index.html:284
+#: metabrainz/templates/reports/financial_reports/index.html:313
+#: metabrainz/templates/reports/financial_reports/index.html:335
+#: metabrainz/templates/reports/financial_reports/index.html:357
+msgid "September"
+msgstr "9月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:53
+#: metabrainz/templates/reports/financial_reports/index.html:82
+#: metabrainz/templates/reports/financial_reports/index.html:111
+#: metabrainz/templates/reports/financial_reports/index.html:140
+#: metabrainz/templates/reports/financial_reports/index.html:169
+#: metabrainz/templates/reports/financial_reports/index.html:198
+#: metabrainz/templates/reports/financial_reports/index.html:227
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:336
+#: metabrainz/templates/reports/financial_reports/index.html:358
+msgid "August"
+msgstr "8月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:54
+#: metabrainz/templates/reports/financial_reports/index.html:83
+#: metabrainz/templates/reports/financial_reports/index.html:112
+#: metabrainz/templates/reports/financial_reports/index.html:141
+#: metabrainz/templates/reports/financial_reports/index.html:170
+#: metabrainz/templates/reports/financial_reports/index.html:199
+#: metabrainz/templates/reports/financial_reports/index.html:228
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:337
+#: metabrainz/templates/reports/financial_reports/index.html:359
+msgid "July"
+msgstr "7月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:55
+#: metabrainz/templates/reports/financial_reports/index.html:84
+#: metabrainz/templates/reports/financial_reports/index.html:113
+#: metabrainz/templates/reports/financial_reports/index.html:142
+#: metabrainz/templates/reports/financial_reports/index.html:171
+#: metabrainz/templates/reports/financial_reports/index.html:200
+#: metabrainz/templates/reports/financial_reports/index.html:229
+#: metabrainz/templates/reports/financial_reports/index.html:258
+#: metabrainz/templates/reports/financial_reports/index.html:287
+#: metabrainz/templates/reports/financial_reports/index.html:316
+#: metabrainz/templates/reports/financial_reports/index.html:338
+#: metabrainz/templates/reports/financial_reports/index.html:360
+msgid "June"
+msgstr "6月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:56
+#: metabrainz/templates/reports/financial_reports/index.html:85
+#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:143
+#: metabrainz/templates/reports/financial_reports/index.html:172
+#: metabrainz/templates/reports/financial_reports/index.html:201
+#: metabrainz/templates/reports/financial_reports/index.html:230
+#: metabrainz/templates/reports/financial_reports/index.html:259
+#: metabrainz/templates/reports/financial_reports/index.html:288
+#: metabrainz/templates/reports/financial_reports/index.html:317
+#: metabrainz/templates/reports/financial_reports/index.html:339
+#: metabrainz/templates/reports/financial_reports/index.html:361
+msgid "May"
+msgstr "5月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:57
+#: metabrainz/templates/reports/financial_reports/index.html:86
+#: metabrainz/templates/reports/financial_reports/index.html:115
+#: metabrainz/templates/reports/financial_reports/index.html:144
+#: metabrainz/templates/reports/financial_reports/index.html:173
+#: metabrainz/templates/reports/financial_reports/index.html:202
+#: metabrainz/templates/reports/financial_reports/index.html:231
+#: metabrainz/templates/reports/financial_reports/index.html:260
+#: metabrainz/templates/reports/financial_reports/index.html:289
+#: metabrainz/templates/reports/financial_reports/index.html:318
+#: metabrainz/templates/reports/financial_reports/index.html:340
+#: metabrainz/templates/reports/financial_reports/index.html:362
+msgid "April"
+msgstr "4月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:87
+#: metabrainz/templates/reports/financial_reports/index.html:116
+#: metabrainz/templates/reports/financial_reports/index.html:145
+#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:203
+#: metabrainz/templates/reports/financial_reports/index.html:232
+#: metabrainz/templates/reports/financial_reports/index.html:261
+#: metabrainz/templates/reports/financial_reports/index.html:290
+#: metabrainz/templates/reports/financial_reports/index.html:319
+#: metabrainz/templates/reports/financial_reports/index.html:341
+#: metabrainz/templates/reports/financial_reports/index.html:363
+msgid "March"
+msgstr "3月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:59
+#: metabrainz/templates/reports/financial_reports/index.html:88
+#: metabrainz/templates/reports/financial_reports/index.html:117
+#: metabrainz/templates/reports/financial_reports/index.html:146
+#: metabrainz/templates/reports/financial_reports/index.html:175
+#: metabrainz/templates/reports/financial_reports/index.html:204
+#: metabrainz/templates/reports/financial_reports/index.html:233
+#: metabrainz/templates/reports/financial_reports/index.html:262
+#: metabrainz/templates/reports/financial_reports/index.html:291
+#: metabrainz/templates/reports/financial_reports/index.html:320
+#: metabrainz/templates/reports/financial_reports/index.html:342
+#: metabrainz/templates/reports/financial_reports/index.html:364
+msgid "February"
+msgstr "2月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:60
+#: metabrainz/templates/reports/financial_reports/index.html:89
+#: metabrainz/templates/reports/financial_reports/index.html:118
+#: metabrainz/templates/reports/financial_reports/index.html:147
+#: metabrainz/templates/reports/financial_reports/index.html:176
+#: metabrainz/templates/reports/financial_reports/index.html:205
+#: metabrainz/templates/reports/financial_reports/index.html:234
+#: metabrainz/templates/reports/financial_reports/index.html:263
+#: metabrainz/templates/reports/financial_reports/index.html:292
+#: metabrainz/templates/reports/financial_reports/index.html:321
+#: metabrainz/templates/reports/financial_reports/index.html:343
+#: metabrainz/templates/reports/financial_reports/index.html:365
+msgid "January"
+msgstr "1月"
+
+#: metabrainz/templates/reports/financial_reports/index.html:330
+#: metabrainz/templates/reports/financial_reports/index.html:352
+msgid "Monthly balance sheets"
+msgstr "每月財務狀況表"
+
+#: metabrainz/templates/users/account-type.html:3
+msgid "Support"
+msgstr "支持"
+
+#: metabrainz/templates/users/account-type.html:6
+msgid "Support us"
+msgstr "支持我們"
+
+#: metabrainz/templates/users/account-type.html:9
+#, python-format
+msgid ""
+"For commercial use of our data or to get access to the\n"
+"    <a href=\"%(mb_data_feed)s\">MusicBrainz Live Data Feed</a>,\n"
+"    please choose between non-commercial and commercial use below. You will need a\n"
+"    <a href=\"%(mb_register_url)s\">MusicBrainz account</a> with a verified email address to sign-up."
+msgstr ""
+"如您要將數據用於商業用途或使用<a "
+"href=\"%(mb_data_feed)s\">MusicBrainz實時數據源</a>，請根據您的情況在下方選擇非商用服務或商用服務。您必須有一個有已認證電郵地址的<a"
+" href=\"%(mb_register_url)s\">MusicBrainz帳號</a>進行註冊。"
+
+#: metabrainz/templates/users/account-type.html:16
+msgid ""
+"<strong>Open source developers and non-profits</strong>: Please sign up as a\n"
+"    commercial user using the free non-profit tier below. This allows us to give you credit\n"
+"    for your open source project or your non-profit."
+msgstr "<strong>開源開發者和非營利機構</strong>應該註冊為免費非營利等級的商業用戶，以便識別其作為開源專案或非營利機構之性質。"
+
+#: metabrainz/templates/users/account-type.html:21
+msgid "Non-commercial / Personal"
+msgstr "非商業或個人用戶"
+
+#: metabrainz/templates/users/account-type.html:24
+#, python-format
+msgid ""
+"Non-commercial use includes personal use of our data sets and use by companies that\n"
+"    don't anticipate earning more than $500 in a given year. If you are a pre-revenue\n"
+"    start-up and expect to have more than $500 of revenue in the future, please sign up\n"
+"    with a commercial account &mdash; see below for more details. Please\n"
+"    <a href=\"%(donate_url)s\">consider making a donation</a> to support\n"
+"    our efforts!"
+msgstr ""
+"Non-commercial use includes personal use of our data sets and use by companies that\n"
+"    don't anticipate earning more than $500 in a given year. If you are a pre-revenue\n"
+"    start-up and expect to have more than $500 of revenue in the future, please sign up\n"
+"    with a commercial account &mdash; see below for more details. Please\n"
+"    <a href=\"%(donate_url)s\">consider making a donation</a> to support\n"
+"    our efforts!"
+
+#: metabrainz/templates/users/account-type.html:34
+#: metabrainz/templates/users/signup-non-commercial.html:25
+msgid "Non-commercial"
+msgstr "註冊為非商業用戶"
+
+#: metabrainz/templates/users/account-type.html:37
+#: metabrainz/templates/users/signup-commercial.html:25
+msgid "Commercial"
+msgstr "商業用戶"
+
+#: metabrainz/templates/users/account-type.html:40
+msgid ""
+"If you are a company with more than $500 income in a year, please select a support\n"
+"    tier below that fits your current situation. We welcome working with companies that\n"
+"    are just getting started and we're happy for your support for MetaBrainz to grow as\n"
+"    you grow. If you would like to use our data, but are not ready to state this publicly\n"
+"    yet, please sign up for the <em>Stealth start up</em> tier; we will keep your\n"
+"    data-usage confidential and contact you to discuss your future plans."
+msgstr ""
+"如果您的公司每年收入超過$500，請視乎您的狀況選擇以下的支持等級。MetaBrainz歡迎與初創企業合作，也很開心您公司在成長的階段也支持我們的成長。如果您想使用我們的數據，但不願公開為我們服務的用戶，請註冊為<em>隱形初創企業級</em>的支持者；我們會將您使用數據的情況保密，以及就您的未來動向聯繫您。"
+
+#: metabrainz/templates/users/account-type.html:59
+#: metabrainz/templates/users/account-type.html:106
+#: metabrainz/templates/users/signup-commercial.html:29
+#, python-format
+msgid "$%(tier_price)s/month and up"
+msgstr "每月$%(tier_price)s或以上"
+
+#: metabrainz/templates/users/account-type.html:63
+#: metabrainz/templates/users/account-type.html:109
+msgid "More info"
+msgstr "更多資料"
+
+#: metabrainz/templates/users/account-type.html:79
+msgid "Some of our Unicorn members"
+msgstr "我們一些獨角獸成員"
+
+#: metabrainz/templates/users/account-type.html:90
+msgid "See all our supporters"
+msgstr "參見所有支持者"
+
+#: metabrainz/templates/users/account-type.html:96
+msgid "View all tiers"
+msgstr "檢視所有等級"
+
+#: metabrainz/templates/users/account-type.html:117
+msgid "View featured tiers"
+msgstr "檢視特色等級"
+
+#: metabrainz/templates/users/account-type.html:124
+#, python-format
+msgid ""
+"If you are not sure which tier to pick, please\n"
+"      <a href=\"%(contact_url)s\">contact us</a>."
+msgstr "如果您不確定應該選哪一等級，請<a href=\"%(contact_url)s\">聯繫我們</a>。"
+
+#: metabrainz/templates/users/bad-standing.html:3
+#: metabrainz/templates/users/bad-standing.html:6
+msgid "Bad standing"
+msgstr "不良紀錄"
+
+#: metabrainz/templates/users/bad-standing.html:8
+msgid ""
+"Companies that are in <i>bad standing</i> have previously agreed to support\n"
+"  MetaBrainz and are using one of our data-sets, but are behind in their\n"
+"  payments by more than 60 days."
+msgstr "有不良紀錄的企業是我們資料庫的用戶，曾經同意支持MetaBrainz，但在付款期限超過60天後尚未付款。"
+
+#: metabrainz/templates/users/mb-login.html:3
+#: metabrainz/templates/users/mb-login.html:6
+msgid "Log in"
+msgstr "登入"
+
+#: metabrainz/templates/users/mb-login.html:8
+msgid "To log in you need to have a MusicBrainz account."
+msgstr "如要登入，您必須有一個MusicBrainz帳號。"
+
+#: metabrainz/templates/users/mb-login.html:13
+msgid "Log in with MusicBrainz"
+msgstr "透過MusicBrainz登入"
+
+#: metabrainz/templates/users/mb-signup.html:9
+msgid ""
+"Please sign in with the MusicBrainz account that will be associated with\n"
+"    your MetaBrainz profile. If you don't have a MusicBrainz account or wish to\n"
+"    use a new MusicBrainz account, you can register on the page linked below."
+msgstr ""
+"Please sign in with the MusicBrainz account that will be associated with\n"
+"    your MetaBrainz profile. If you don't have a MusicBrainz account or wish to\n"
+"    use a new MusicBrainz account, you can register on the page linked below."
+
+#: metabrainz/templates/users/mb-signup.html:17
+msgid "Sign up with MusicBrainz"
+msgstr "透過MusicBrainz註冊"
+
+#: metabrainz/templates/users/profile-edit.html:3
+msgid "Edit"
+msgstr "編輯"
+
+#: metabrainz/templates/users/profile-edit.html:3
+#: metabrainz/templates/users/profile-edit.html:6
+#: metabrainz/templates/users/profile.html:3
+#: metabrainz/templates/users/profile.html:6
+msgid "Your Profile"
+msgstr "您的帳號"
+
+#: metabrainz/templates/users/profile-edit.html:7
+#: metabrainz/templates/users/profile.html:51
+msgid "Edit contact information"
+msgstr "編輯聯繫資料"
+
+#: metabrainz/templates/users/profile-edit.html:29
+msgid "Update"
+msgstr "更新"
+
+#: metabrainz/templates/users/profile.html:27
+msgid "Organization information"
+msgstr "組織資料"
+
+#: metabrainz/templates/users/profile.html:29
+#: metabrainz/templates/users/profile.html:46
+msgid "Name:"
+msgstr "名稱："
+
+#: metabrainz/templates/users/profile.html:31
+msgid "Website URL:"
+msgstr "網址："
+
+#: metabrainz/templates/users/profile.html:33
+msgid "API URL:"
+msgstr "API網址："
+
+#: metabrainz/templates/users/profile.html:37
+#, python-format
+msgid ""
+"Please <a href=\"%(contact_url)s\">contact us</a>\n"
+"          if you wish for us to update this information."
+msgstr "如果您想我們更新此資訊，請<a href=\"%(contact_url)s\">聯繫我們</a>。"
+
+#: metabrainz/templates/users/profile.html:44
+msgid "Contact information"
+msgstr "聯繫資料"
+
+#: metabrainz/templates/users/profile.html:47
+msgid "Email:"
+msgstr "電郵："
+
+#: metabrainz/templates/users/profile.html:59
+msgid "Data use permission granted"
+msgstr "已批准使用數據"
+
+#: metabrainz/templates/users/profile.html:61
+msgid ""
+"You have permission to use any of the data published by the MetaBrainz\n"
+"        Foundation. This includes data dumps released under a Creative Commons\n"
+"        non-commercial license. Thank you for your support!"
+msgstr ""
+"You have permission to use any of the data published by the MetaBrainz\n"
+"        Foundation. This includes data dumps released under a Creative Commons\n"
+"        non-commercial license. Thank you for your support!"
+
+#: metabrainz/templates/users/profile.html:66
+msgid ""
+"Please note that if your support falls behind by more than 60 days, this\n"
+"        permission may be withdrawn. You can always check your current permission\n"
+"        status on this page."
+msgstr ""
+"Please note that if your support falls behind by more than 60 days, this\n"
+"        permission may be withdrawn. You can always check your current permission\n"
+"        status on this page."
+
+#: metabrainz/templates/users/profile.html:71
+msgid "No data use permission granted"
+msgstr "沒有批准使用數據"
+
+#: metabrainz/templates/users/profile.html:73
+msgid ""
+"You <strong>DO NOT</strong> currently have permission to use data\n"
+"        released under a Creative Commons non-commercial license."
+msgstr "您現在<strong>沒有</strong>權利使用以創用CC非商業用途授權條款發布的數據。"
+
+#: metabrainz/templates/users/profile.html:77
+msgid "Reason:"
+msgstr "原因："
+
+#: metabrainz/templates/users/profile.html:79
+#, python-format
+msgid ""
+"Your account is in bad standing, which means that you are more than\n"
+"          60 days behind in support payments. If you think this is a mistake,\n"
+"          please <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+"您的帳號有不良紀錄，表示您在付款期限超過60天後尚未付款。如果您沒有拖欠付款，請<a "
+"href=\"%(contact_url)s\">聯絡我們</a>。"
+
+#: metabrainz/templates/users/profile.html:83
+msgid "Your application for using the Live Data Feed has been rejected."
+msgstr "您對使用實時數據源的申請已經被拒絕。"
+
+#: metabrainz/templates/users/profile.html:85
+msgid "Your application for using the Live Data Feed is still pending."
+msgstr "您對使用實時數據源的申請正等候回覆。"
+
+#: metabrainz/templates/users/profile.html:87
+msgid "Your application for using the Live Data Feed is in the waiting list."
+msgstr "您對使用實時數據源的申請已被列入輪候名單。"
+
+#: metabrainz/templates/users/profile.html:89
+msgid "Unknown. :("
+msgstr "不明 :("
+
+#: metabrainz/templates/users/profile.html:96
+msgid "Access token"
+msgstr "訪問令牌"
+
+#: metabrainz/templates/users/profile.html:99
+msgid "Generate new token"
+msgstr "產生新令牌"
+
+#: metabrainz/templates/users/profile.html:102
+msgid ""
+"This access token should be considered private. Don't check this token\n"
+"      into any publicly visible version control systems and similar places.\n"
+"      If the token has been exposed, you should immediately generate a new one!\n"
+"      When you generate a new token, your current token is revoked."
+msgstr ""
+"This access token should be considered private. Don't check this token\n"
+"      into any publicly visible version control systems and similar places.\n"
+"      If the token has been exposed, you should immediately generate a new one!\n"
+"      When you generate a new token, your current token is revoked."
+
+#: metabrainz/templates/users/profile.html:107
+#, python-format
+msgid ""
+"See the <a href=\"%(api_docs_url)s\">API documentation</a> for more "
+"information."
+msgstr "如要更多資訊，請查閱我們的<a href=\"%(api_docs_url)s\">API說明文件</a>。"
+
+#: metabrainz/templates/users/profile.html:121
+msgid ""
+"Are you sure you want to generate new access token? Current token will be "
+"revoked!"
+msgstr "您確定要產生新的訪問令牌？您現在的令牌將會被撤銷。"
+
+#: metabrainz/templates/users/profile.html:131
+msgid "Failed to generate new access token!"
+msgstr "無法產生新訪問令牌！"
+
+#: metabrainz/templates/users/signup-commercial.html:6
+msgid "Sign up <small>Commercial</small>"
+msgstr "<small>商用</small>註冊"
+
+#: metabrainz/templates/users/signup-commercial.html:9
+msgid ""
+"<strong>Note:</strong> Signing up for any tier other than the <i>Stealth startup</i> tier\n"
+"    will publicly list your company on this web site. However, we will not publish any of\n"
+"    your private details."
+msgstr "<strong>請注意：</strong>我們會在本網站公開<i>隱形初創企業級</i>以外的支持者，但不會公開您的個人資料。"
+
+#: metabrainz/templates/users/signup-commercial.html:24
+#: metabrainz/templates/users/signup-non-commercial.html:24
+msgid "Account type"
+msgstr "帳號類型"
+
+#: metabrainz/templates/users/signup-commercial.html:26
+msgid "Selected tier"
+msgstr "已選取的等級"
+
+#: metabrainz/templates/users/signup-commercial.html:32
+msgid "Change account type or tier"
+msgstr "更改帳號類型或等級"
+
+#: metabrainz/templates/users/signup-commercial.html:46
+#, python-format
+msgid ""
+"If you don't have an organization name, you probably want to sign up as a\n"
+"          <a href=\"%(signup_url)s\">non-commercial / personal</a> user."
+msgstr "如果您沒有一個組織名稱，您可能更適合註冊為<a href=\"%(signup_url)s\">非商業或個人</a>用戶。"
+
+#: metabrainz/templates/users/signup-commercial.html:55
+#: metabrainz/templates/users/signup-non-commercial.html:33
+msgid "MusicBrainz Account"
+msgstr "MusicBrainz帳號"
+
+#: metabrainz/templates/users/signup-commercial.html:78
+msgid "(preferably in SVG format)"
+msgstr "（請儘量提交SVG檔案）"
+
+#: metabrainz/templates/users/signup-commercial.html:81
+msgid ""
+"Image should be about 250 pixels wide on a white or transparent\n"
+"          background. We will host it on our site."
+msgstr "我們會在網站展示您的標誌。圖片寬度應該位於250像素左右，附白色或透明背景。"
+
+#: metabrainz/templates/users/signup-commercial.html:92
+msgid ""
+"URL to where developers can use your APIs using MusicBrainz IDs, if "
+"available.."
+msgstr ""
+"URL to where developers can use your APIs using MusicBrainz IDs, if "
+"available.."
+
+#: metabrainz/templates/users/signup-commercial.html:103
+#: metabrainz/templates/users/signup-non-commercial.html:62
+msgid "(max 150 characters)"
+msgstr "（最多150個字元）"
+
+#: metabrainz/templates/users/signup-commercial.html:109
+#, python-format
+msgid ""
+"If you would like to support us with more than $%(tier_price)d,\n"
+"        please enter the actual amount here:"
+msgstr "如果您願意支付多於$%(tier_price)d，以示支持，請在這裡輸入金額："
+
+#: metabrainz/templates/users/signup-commercial.html:120
+msgid "Billing address"
+msgstr "帳單地址"
+
+#: metabrainz/templates/users/signup-commercial.html:183
+msgid ""
+"I agree to treat my access token as a secret and will not share\n"
+"            this token publicly or commit it to a publicly visible source code repository."
+msgstr "我也同意將訪問令牌保密，不會將令牌公開或提交至任何公開的原始碼庫。"
+
+#: metabrainz/templates/users/signup-commercial.html:192
+msgid ""
+"The following information will be shown publicly: organization name,\n"
+"        logo, website and API URLs, data usage description."
+msgstr "以下資訊將會被公開：組織名稱、標誌、網站和API網址，以及關於數據使用的描述。"
+
+#: metabrainz/templates/users/signup-commercial.html:199
+msgid ""
+"We'll send you more details about payment process once your application\n"
+"        is approved."
+msgstr "我們會在批准您的申請後，向您發送更多有關付款過程的資訊。"
+
+#: metabrainz/templates/users/signup-non-commercial.html:6
+msgid "Sign up <small>non-commercial</small>"
+msgstr "<small>非商用</small>註冊"
+
+#: metabrainz/templates/users/signup-non-commercial.html:9
+msgid ""
+"Please be aware that misuse of the non-commercial service for commercial purposes will\n"
+"    result in us revoking your access token and then billing you for your commercial use of our\n"
+"    Live Data Feed."
+msgstr "請注意，如果我們發現您將非商用服務用於商業用途，我們將會撤銷您的訪問令牌，以及要求您繳付商用實時數據源的費用。"
+
+#: metabrainz/templates/users/signup-non-commercial.html:27
+msgid "Change account type"
+msgstr "更改帳號類型"
+
+#: metabrainz/templates/users/signup-non-commercial.html:42
+#: metabrainz/users/forms.py:69
+msgid "Name"
+msgstr "名稱"
+
+#: metabrainz/templates/users/signup-non-commercial.html:49
+#: metabrainz/users/forms.py:72
+msgid "Email"
+msgstr "電郵"
+
+#: metabrainz/templates/users/signup-non-commercial.html:72
+msgid ""
+"I agree to use the Live Data Feed for non-commercial (less than $500\n"
+"            income per year) or personal uses only. I also agree to treat my access\n"
+"            token as a secret and will not share this token publicly or commit it\n"
+"            to a source code repository."
+msgstr ""
+"我同意實時數據源只可用於個人或非商業（每年收入少於$500\n"
+"）用途。我也同意將訪問\n"
+"令牌保密，不會將令牌\n"
+"公開或提交至任何原始碼庫。"
+
+#: metabrainz/templates/users/supporters-list.html:9
+#, python-format
+msgid ""
+"The following organizations make use of the data-sets published by MetaBrainz and\n"
+"    are supporting us financially or through some other reciprocal agreement. There are also\n"
+"    organizations that make use of our data that have explicitly declined to support us. There\n"
+"    may also be other organizations making use of our data that we don't know about yet. If you\n"
+"    know of a company using our data, please <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+"The following organizations make use of the data-sets published by MetaBrainz and\n"
+"    are supporting us financially or through some other reciprocal agreement. There are also\n"
+"    organizations that make use of our data that have explicitly declined to support us. There\n"
+"    may also be other organizations making use of our data that we don't know about yet. If you\n"
+"    know of a company using our data, please <a href=\"%(contact_url)s\">contact us</a>."
+
+#: metabrainz/templates/users/supporters-list.html:21
+#: metabrainz/templates/users/tier.html:3
+#: metabrainz/templates/users/tier.html:6
+#, python-format
+msgid "%(tier_name)s tier"
+msgstr "%(tier_name)s級"
+
+#: metabrainz/templates/users/supporters-list.html:30
+#: metabrainz/templates/users/tier.html:25
+msgid "This user has bad standing"
+msgstr "此用戶有不良紀錄"
+
+#: metabrainz/templates/users/tier.html:13
+msgid "Sign up for this tier"
+msgstr "註冊為此等級的支持者"
+
+#: metabrainz/templates/users/tier.html:19
+msgid "Supporters on this tier"
+msgstr "此等級的支持者"
+
+#: metabrainz/users/forms.py:14
+msgid "Contact name is required!"
+msgstr "請提供聯繫人姓名！"
+
+#: metabrainz/users/forms.py:15
+msgid "Email address is required!"
+msgstr "請提供電郵地址！"
+
+#: metabrainz/users/forms.py:16
+msgid "How are you using our data?"
+msgstr "您會如何使用我們的數據？"
+
+#: metabrainz/users/forms.py:17
+msgid "Please, tell us how you (will) use our data."
+msgstr "請告訴我們您會如何使用我們的數據。"
+
+#: metabrainz/users/forms.py:18
+msgid "Please, limit usage description to 150 characters."
+msgstr "請以少於150個字元描述您會如何使用數據。"
+
+#: metabrainz/users/forms.py:20
+msgid "You need to accept the agreement!"
+msgstr "您需要接受協議！"
+
+#: metabrainz/users/forms.py:35
+msgid "Organization name"
+msgstr "組織名稱"
+
+#: metabrainz/users/forms.py:36
+msgid "You need to specify the name of your organization."
+msgstr "請提供機構的名稱。"
+
+#: metabrainz/users/forms.py:38
+msgid "Organization description"
+msgstr "組織描述"
+
+#: metabrainz/users/forms.py:39
+msgid "You need to provide description of your organization."
+msgstr "請提供對機構的描述。"
+
+#: metabrainz/users/forms.py:42
+msgid "Website URL"
+msgstr "網址"
+
+#: metabrainz/users/forms.py:43
+msgid "You need to specify website of the organization."
+msgstr "請輸入組織的網站。"
+
+#: metabrainz/users/forms.py:45
+msgid "Logo image URL"
+msgstr "標誌圖片網址"
+
+#: metabrainz/users/forms.py:46
+msgid "API URL"
+msgstr "API網址"
+
+#: metabrainz/users/forms.py:48
+msgid "Street"
+msgstr "街道"
+
+#: metabrainz/users/forms.py:49
+msgid "You need to specify street."
+msgstr "請輸入街道。"
+
+#: metabrainz/users/forms.py:51
+msgid "City"
+msgstr "城市"
+
+#: metabrainz/users/forms.py:52
+msgid "You need to specify city."
+msgstr "請輸入城市。"
+
+#: metabrainz/users/forms.py:54
+msgid "State / Province"
+msgstr "州 / 省"
+
+#: metabrainz/users/forms.py:55
+msgid "You need to specify state/province."
+msgstr "請輸入州或省。"
+
+#: metabrainz/users/forms.py:57
+msgid "Postcode"
+msgstr "郵遞區號"
+
+#: metabrainz/users/forms.py:58
+msgid "You need to specify postcode."
+msgstr "請輸入郵遞區號。"
+
+#: metabrainz/users/forms.py:60
+msgid "Country"
+msgstr "國家"
+
+#: metabrainz/users/forms.py:61
+msgid "You need to specify country."
+msgstr "請輸入國家。"
+
+#: metabrainz/users/forms.py:70
+msgid "Contact name field is empty."
+msgstr "不可留空聯繫名稱。"
+
+#: metabrainz/users/forms.py:74
+msgid "Email field is not a valid email address."
+msgstr "電郵地址不正確。"
+
+#: metabrainz/users/forms.py:75
+msgid "Contact email field is empty."
+msgstr "不可留空聯繫電郵地址。"
+
+#: metabrainz/users/views.py:48
+msgid "Can't find tier with a specified ID."
+msgstr "Can't find tier with a specified ID."
+
+#: metabrainz/users/views.py:62 metabrainz/users/views.py:68
+msgid "Please select account type to sign up."
+msgstr "註冊前，請先選擇帳號類型。"
+
+#: metabrainz/users/views.py:85
+msgid "You need to choose support tier before signing up!"
+msgstr "請先選擇支持等級！"
+
+#: metabrainz/users/views.py:89
+msgid "You need to choose existing tier before signing up!"
+msgstr "請先選擇現有的等級！"
+
+#: metabrainz/users/views.py:105
+msgid ""
+"Custom amount must be more than threshold amountfor selected tier or equal "
+"to it!"
+msgstr "自訂金額必須等於或多於已選取的等級之金額限制。"
+
+#: metabrainz/users/views.py:138
+msgid ""
+"Thanks for signing up! Your application will be reviewed soon. We will send "
+"you updates via email."
+msgstr "感謝您的註冊！我們很快就會審視您的申請，並會透過電郵通知您審視的進度。"
+
+#: metabrainz/users/views.py:152 metabrainz/users/views.py:199
+msgid ""
+"Failed to send welcome email to you. We are looking into it. Sorry for "
+"inconvenience!"
+msgstr "我們未能夠發送您的歡迎電郵，並正在調查原因。造成不便，敬請見諒！"
+
+#: metabrainz/users/views.py:157 metabrainz/users/views.py:204
+msgid "You already have a MetaBrainz account!"
+msgstr "您已經有一個MetaBrainz帳號！"
+
+#: metabrainz/users/views.py:188
+msgid "Thanks for signing up!"
+msgstr "感謝您的註冊！"
+
+#: metabrainz/users/views.py:223
+msgid "Login failed!"
+msgstr "登入失敗！"
+
+#: metabrainz/users/views.py:226
+msgid "Authorization code is missing!"
+msgstr "找不到授權碼！"
+
+#: metabrainz/users/views.py:270
+msgid "Can't generate new token unless account is active."
+msgstr "只可為活躍的帳號產生新令牌。"
