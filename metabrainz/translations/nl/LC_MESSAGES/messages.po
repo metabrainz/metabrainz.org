@@ -1,0 +1,3077 @@
+# Translations template for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Heimen Stoffels <email address hidden>, 2020
+# Maurits Meulenbelt, 2021
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-01-27 14:44+0100\n"
+"PO-Revision-Date: 2017-01-19 20:40+0000\n"
+"Last-Translator: Maurits Meulenbelt, 2021\n"
+"Language-Team: Dutch (https://app.transifex.com/musicbrainz/teams/13846/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: metabrainz/payments/forms.py:9
+msgid "You need to specify amount!"
+msgstr "Geef een bedrag op!"
+
+#: metabrainz/payments/forms.py:21
+msgid "You need to specify invoice number!"
+msgstr "Geef een factuurnummer op!"
+
+#: metabrainz/payments/views.py:105
+msgid ""
+"Thank you for making a donation to the MetaBrainz Foundation. Your support "
+"is greatly appreciated! It may take some time before your donation appears "
+"in the list due to processing delays."
+msgstr ""
+"Bedankt voor je donatie aan de MetaBrainz Foundation. Je steun wordt zeer "
+"gewaardeerd! Vanwege de tijd die het kost om de donatie te verwerken, kan "
+"het even duren voordat je donatie op de lijst komt."
+
+#: metabrainz/payments/views.py:112
+msgid ""
+"Thank you for making a payment to the MetaBrainz Foundation. Your support is"
+" greatly appreciated!"
+msgstr ""
+"Bedankt voor je betaling aan de MetaBrainz Foundation. Je steun wordt zeer "
+"gewaardeerd!"
+
+#: metabrainz/payments/views.py:123
+msgid ""
+"We're sorry to see that you won't be donating today. We hope that you'll "
+"change your mind!"
+msgstr ""
+"Jammer dat je vandaag niet doneert. We hopen dat je nog van gedachten "
+"verandert!"
+
+#: metabrainz/payments/views.py:129
+msgid ""
+"We're sorry to see that you won't be paying today. We hope that you'll "
+"change your mind!"
+msgstr ""
+"Jammer dat je vandaag niet betaalt. We hopen dat je nog van gedachten "
+"verandert!"
+
+#: metabrainz/payments/views.py:143
+msgid ""
+"We're sorry, but it appears we've run into an error and can't process your "
+"donation."
+msgstr ""
+"Het lijkt er op dat er iets is misgegaan waardoor we je donatie niet kunnen "
+"verwerken."
+
+#: metabrainz/payments/views.py:149
+msgid ""
+"We're sorry, but it appears we've run into an error and can't process your "
+"payment."
+msgstr ""
+"Het lijkt er op dat er iets is misgegaan waardoor we je betaling niet kunnen"
+" verwerken."
+
+#: metabrainz/reports/annual_reports/views.py:25
+msgid "Requested annual report was not found."
+msgstr "Het opgevraagde jaarverslag is niet aangetroffen."
+
+#: metabrainz/templates/base.html:48
+msgid "Foundation"
+msgstr "Stichting"
+
+#: metabrainz/templates/base.html:50
+#: metabrainz/templates/index/projects.html:3
+#: metabrainz/templates/navbar.html:24
+msgid "Projects"
+msgstr "Projecten"
+
+#: metabrainz/templates/base.html:51 metabrainz/templates/index/team.html:3
+#: metabrainz/templates/navbar.html:25
+msgid "Team"
+msgstr "Team"
+
+#: metabrainz/templates/base.html:52
+#: metabrainz/templates/index/sponsors.html:3
+#: metabrainz/templates/index/sponsors.html:6
+#: metabrainz/templates/index/sponsors.html:20
+#: metabrainz/templates/navbar.html:29
+msgid "Sponsors"
+msgstr "Sponsoren"
+
+#: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:28
+#: metabrainz/templates/users/supporters-list.html:3
+#: metabrainz/templates/users/supporters-list.html:6
+msgid "Supporters"
+msgstr "Partners"
+
+#: metabrainz/templates/base.html:54 metabrainz/templates/index/privacy.html:6
+msgid "Privacy Policy"
+msgstr "Privacybeleid"
+
+#: metabrainz/templates/base.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:3
+#: metabrainz/templates/reports/financial_reports/index.html:6
+msgid "Finances"
+msgstr "Financiën"
+
+#: metabrainz/templates/base.html:60 metabrainz/templates/navbar.html:33
+#: metabrainz/templates/reports/annual_reports/view.html:4
+msgid "Annual Reports"
+msgstr "Jaarverslagen"
+
+#: metabrainz/templates/base.html:61 metabrainz/templates/navbar.html:35
+#: metabrainz/templates/payments/donors.html:6
+msgid "Donors"
+msgstr "Donateurs"
+
+#: metabrainz/templates/base.html:65
+msgid "Users"
+msgstr "Gebruikers"
+
+#: metabrainz/templates/base.html:68
+msgid "Sign in"
+msgstr "Inloggen"
+
+#: metabrainz/templates/base.html:70 metabrainz/templates/navbar.html:53
+msgid "Sign out"
+msgstr "Uitloggen"
+
+#: metabrainz/templates/base.html:72
+msgid "Access your account"
+msgstr "Toegang tot je account"
+
+#: metabrainz/templates/base.html:73
+msgid "API"
+msgstr "API"
+
+#: metabrainz/templates/base.html:78
+msgid "Contact us"
+msgstr "Contact"
+
+#: metabrainz/templates/base.html:80
+msgid "Blog"
+msgstr "Weblog"
+
+#: metabrainz/templates/base.html:81
+msgid "Twitter"
+msgstr "Twitter"
+
+#: metabrainz/templates/base.html:86
+#, python-format
+msgid ""
+"Sponsored by <a href=\"%(google_url)s\">Google</a>,\n"
+"            <a href=\"%(osuosl_url)s\">OSUOSL</a> and\n"
+"            <a href=\"%(sponsors_url)s\">others&hellip;</a>"
+msgstr ""
+"Gesponsord door <a href=\"%(google_url)s\">Google</a>, <a "
+"href=\"%(osuosl_url)s\">OSUOSL</a> en <a "
+"href=\"%(sponsors_url)s\">anderen&hellip;</a>"
+
+#: metabrainz/templates/navbar.html:7
+msgid "Toggle navigation"
+msgstr "Navigatie tonen/verbergen"
+
+#: metabrainz/templates/navbar.html:21
+msgid "About "
+msgstr "Over"
+
+#: metabrainz/templates/navbar.html:23
+msgid "The Foundation"
+msgstr "De stichting"
+
+#: metabrainz/templates/navbar.html:31
+msgid "Reports "
+msgstr "Verslagen"
+
+#: metabrainz/templates/navbar.html:34
+msgid "Financial Reports"
+msgstr "Financiële verslagen"
+
+#: metabrainz/templates/navbar.html:38
+msgid "Donate"
+msgstr "Doneren"
+
+#: metabrainz/templates/navbar.html:45
+#: metabrainz/templates/users/account-type.html:65
+#: metabrainz/templates/users/account-type.html:111
+#: metabrainz/templates/users/mb-signup.html:3
+#: metabrainz/templates/users/mb-signup.html:6
+#: metabrainz/templates/users/signup-commercial.html:3
+#: metabrainz/templates/users/signup-non-commercial.html:3
+#: metabrainz/templates/users/signup-non-commercial.html:87
+msgid "Sign up"
+msgstr "Registreren"
+
+#: metabrainz/templates/navbar.html:52
+msgid "Your profile"
+msgstr "Mijn profiel"
+
+#: metabrainz/templates/api/info.html:8
+msgid "MetaBrainz API"
+msgstr "MetaBrainz-API"
+
+#: metabrainz/templates/api/info.html:11
+#, python-format
+msgid ""
+"All endpoints require an access token which you can get from your\n"
+"    <a href=\"%(profile_url)s\">profile page</a>."
+msgstr ""
+"Voor alle eindpunten is een toegangssleutel vereist. Deze is te vinden op je"
+" <a href=\"%(profile_url)s\">profielpagina</a>."
+
+#: metabrainz/templates/api/info.html:15
+msgid "MusicBrainz Live Data Feed"
+msgstr "Live-gegevensfeed van MusicBrainz"
+
+#: metabrainz/templates/api/info.html:16
+msgid "There are three endpoints for fetching replication packets:"
+msgstr ""
+"De replicatiepakketten kunnen van drie verschillende eindpunten worden "
+"verkregen:"
+
+#: metabrainz/templates/api/info.html:18
+msgid "Hourly:"
+msgstr "Elk uur:"
+
+#: metabrainz/templates/api/info.html:29
+msgid "Daily:"
+msgstr "Dagelijks:"
+
+#: metabrainz/templates/api/info.html:40
+msgid "Weekly:"
+msgstr "Wekelijks:"
+
+#: metabrainz/templates/api/info.html:51
+msgid ""
+"It is possible to get a signature for each replication packet. Just replace\n"
+"      <code>.tar.bz2</code> with <code>.asc</code>."
+msgstr ""
+"Je kunt voor elk replicatiepakket een handtekening krijgen. Daarvoor hoef je"
+" alleen maar <code>.tar.bz2</code> door <code>.asc</code> te vervangen."
+
+#: metabrainz/templates/api/info.html:55
+msgid "You can find the latest replication packet numbers from this endpoint:"
+msgstr ""
+"Je kunt de recentste volgnummers van replicatiepakketten hier verkrijgen:"
+
+#: metabrainz/templates/errors/base.html:8
+msgid "Back to home page"
+msgstr "Terug naar de startpagina"
+
+#: metabrainz/templates/index/about.html:3
+msgid "About"
+msgstr "Over"
+
+#: metabrainz/templates/index/about.html:6
+msgid "About the MetaBrainz Foundation"
+msgstr "Over de MetaBrainz Foundation"
+
+#: metabrainz/templates/index/about.html:11
+msgid ""
+"The MetaBrainz Foundation is a 501(c)(3) tax-exempt non-profit founded in\n"
+"        December 2004 and based in San Luis Obispo, California, that believes in\n"
+"        free, open access to data."
+msgstr ""
+"De MetaBrainz Foundation is een stichting zonder winstoogmerk "
+"(geclassificeerd als 501(c)(3)-organisatie), opgericht in december 2004 en "
+"gevestigd in San Luis Obispo, Californië. We geloven in gratis en vrij "
+"toegankelijke data."
+
+#: metabrainz/templates/index/about.html:16
+msgid ""
+"The MetaBrainz Foundation has been set up to build community maintained\n"
+"        databases and make them available in the public domain or under Creative\n"
+"        Commons licenses. Our data is mostly gathered by volunteers, and verified\n"
+"        by a voting system to make sure it is consistent and correct. All\n"
+"        non-commercial use is free, but commercial users are asked to pay for\n"
+"        regular updates of the data in order to help fund the project. We\n"
+"        encourage all data users to contribute to the data gathering process so\n"
+"        that our data can be as comprehensive as possible."
+msgstr ""
+"De MetaBrainz Foundation is opgezet om door de gemeenschap onderhouden "
+"databases op te bouwen en in het publiek domein of onder Creative Commons-"
+"licenties beschikbaar te maken. De gegevens worden vooral door vrijwilligers"
+" verzameld, en met een stemsysteem op consistentie en juistheid "
+"gecontroleerd. Niet-commercieel gebruik is gratis, maar commerciële "
+"gebruikers worden verzocht om voor regelmatige updates te betalen, zodat het"
+" project gefinancierd kan worden. We moedigen alle gebruikers aan om bij te "
+"dragen aan het verzamelen van de gegevens, zodat onze database zo uitgebreid"
+" mogelijk kan zijn."
+
+#: metabrainz/templates/index/about.html:26
+#, python-format
+msgid ""
+"The MetaBrainz Foundation believes in <a href=\"%(financial_reports_url)s\">\n"
+"        transparent finances</a> and has several <a href=\"%(supporters_url)s\">\n"
+"        commercial supporters</a> who pay for timely and convenient access to\n"
+"        data. The MetaBrainz Foundation is also supported by a number of\n"
+"        <a href=\"%(sponsors_url)s\">sponsors</a> who provide\n"
+"        funds in order for the foundation to accomplish its goals."
+msgstr ""
+"De MetaBrainz Foundation gelooft in <a "
+"href=\"%(financial_reports_url)s\">transparante financiën</a>, en heeft "
+"meerdere <a href=\"%(supporters_url)s\">commerciële partners</a> die betalen"
+" voor tijdige en gemakkelijke toegang tot onze database. We worden ook "
+"gesteund door een aantal <a href=\"%(sponsors_url)s\">sponsors</a> die geld "
+"beschikbaar stellen, zodat onze stichting haar doelen kan bereiken."
+
+#: metabrainz/templates/index/about.html:42
+msgid "Board of Directors"
+msgstr "Raad van Bestuur"
+
+#: metabrainz/templates/index/about.html:43
+msgid "Our board of directors consists of:"
+msgstr "Onze Raad van Bestuur bestaat uit:"
+
+#: metabrainz/templates/index/about.html:45
+#, python-format
+msgid ""
+"Director Nick Ashton-Hart, Executive Director of the <a "
+"href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
+"Alliance</a>"
+msgstr ""
+"Directeur Nick Ashton-Hart, uitvoerend directeur van de <a "
+"href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
+"Alliance</a>"
+
+#: metabrainz/templates/index/about.html:46
+#, python-format
+msgid ""
+"Director <a href=\"%(paul_url)s\">Paul Bennun</a> of <a "
+"href=\"%(somethin_else_url)s\">Somethin' Else</a>"
+msgstr ""
+"Directeur <a href=\"%(paul_url)s\">Paul Bennun</a> van <a "
+"href=\"%(somethin_else_url)s\">Somethin’ Else</a>"
+
+#: metabrainz/templates/index/about.html:47
+#, python-format
+msgid ""
+"Director <a href=\"%(cory_url)s\">Cory Doctorow</a>, Sci-Fi author and "
+"editor of the <a href=\"%(boing_url)s\">Boing Boing</a> weblog"
+msgstr ""
+"Directeur <a href=\"%(cory_url)s\">Cory Doctorow</a>, sciencefictionauteur "
+"en redacteur van het weblog <a href=\"%(boing_url)s\">Boing Boing</a>"
+
+#: metabrainz/templates/index/about.html:48
+#, python-format
+msgid ""
+"Director <a href=\"%(sophie_url)s\">Sophie Goossens</a> of <a "
+"href=\"%(ab_url)s\">August &amp; Debouzy</a>"
+msgstr ""
+"Directeur <a href=\"%(sophie_url)s\">Sophie Goossens</a> van <a "
+"href=\"%(ab_url)s\">August &amp; Debouzy</a>"
+
+#: metabrainz/templates/index/about.html:49
+#, python-format
+msgid ""
+"Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
+"href=\"%(audio_net_url)s\">Audio Network</a>"
+msgstr ""
+"Directeur <a href=\"%(matthew_url)s\">Matthew Hawn</a> van <a "
+"href=\"%(audio_net_url)s\">Audio Network</a>"
+
+#: metabrainz/templates/index/about.html:50
+#, python-format
+msgid ""
+"Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
+"Ljungberg</a> of the <a href=\"%(m4p5_url)s\">Music 4.5 seminar series</a> "
+"put on by <a href=\"%(two_pears_url)s\">2 Pears</a>"
+msgstr ""
+"Directeur en penningmeester <a href=\"%(rassami_url)s\">Rassami Hok "
+"Ljungberg</a> van de <a href=\"%(m4p5_url)s\">Music 4.5 seminarserie</a>, "
+"opgezet door <a href=\"%(two_pears_url)s\">2 Pears</a>"
+
+#: metabrainz/templates/index/about.html:51
+#, python-format
+msgid ""
+"Executive Director <a href=\"%(mayhem_url)s\">Robert Kaye</a> of the "
+"MetaBrainz Foundation"
+msgstr ""
+"Uitvoerend directeur <a href=\"%(mayhem_url)s\">Robert Kaye</a> van de "
+"MetaBrainz Foundation"
+
+#: metabrainz/templates/index/about.html:52
+#, python-format
+msgid ""
+"Secretary <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>, "
+"Community Manager of the MetaBrainz Foundation"
+msgstr ""
+"Secretaris <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>, "
+"communitymanager van de MetaBrainz Foundation"
+
+#: metabrainz/templates/index/about.html:55
+msgid "Our directors emeritus include:"
+msgstr "Onze directeurs in ruste:"
+
+#: metabrainz/templates/index/about.html:58
+#, python-format
+msgid ""
+"Director Emeritus <a href=\"%(lessig_url)s\">Lawrence Lessig</a> of the <a "
+"href=\"%(berkman_url)s\">Berkman Center for Internet and Society</a> and <a "
+"href=\"%(cc_url)s\">Creative Commons</a>"
+msgstr ""
+"Directeur in ruste <a href=\"%(lessig_url)s\">Lawrence Lessig</a> van de <a "
+"href=\"%(berkman_url)s\">Berkman Center for Internet and Society</a> en <a "
+"href=\"%(cc_url)s\">Creative Commons</a>"
+
+#: metabrainz/templates/index/about.html:59
+#, python-format
+msgid ""
+"Director Emeritus <a href=\"%(joi_url)s\">Joichi Ito</a> of <a "
+"href=\"%(neoteny_url)s\">Neoteny Co. Ltd.</a>"
+msgstr ""
+"Directeur in ruste <a href=\"%(joi_url)s\">Joichi Ito</a> van <a "
+"href=\"%(neoteny_url)s\">Neoteny Co. Ltd.</a>"
+
+#: metabrainz/templates/index/about.html:62
+msgid "Officers"
+msgstr "Functionarissen"
+
+#: metabrainz/templates/index/about.html:63
+msgid "The officers of this company are:"
+msgstr "Onze functionarissen zijn:"
+
+#: metabrainz/templates/index/about.html:65
+msgid "President Robert Kaye"
+msgstr "Voorzitter Robert Kaye"
+
+#: metabrainz/templates/index/about.html:66
+#, python-format
+msgid "Treasurer <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+msgstr "Penningmeester <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+
+#: metabrainz/templates/index/about.html:67
+#, python-format
+msgid "Secretary <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>"
+msgstr "Secretaris <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>"
+
+#: metabrainz/templates/index/bad-customers.html:3
+msgid "Bad customers"
+msgstr "Slechte klanten"
+
+#: metabrainz/templates/index/bad-customers.html:8
+msgid "Our not-so-favorite commercial data users"
+msgstr "Commerciële gebruikers waar we niet zo blij mee zijn"
+
+#: metabrainz/templates/index/bad-customers.html:11
+msgid ""
+"The following companies use our data, but have declined to support us on an "
+"ongoing basis."
+msgstr ""
+"De volgende bedrijven gebruiken onze gegevens, maar willen ons niet blijvend"
+" steunen."
+
+#: metabrainz/templates/index/bad-customers.html:14
+msgid ""
+"All of our projects require support from end-user donations and commercial support. Our free\n"
+"      data-sets provide incredible value to these companies giving them a business advantage.\n"
+"      We believe that companies that use our data to conduct their business should provide financial\n"
+"      support so that we may continue to cover our expenses and pay our staff."
+msgstr ""
+"Al onze projecten zijn afhankelijk van gebruikersdonaties of steun van "
+"commerciële partijen. Onze gratis gegevens hebben een enorme meerwaarde voor"
+" deze bedrijven, die daarmee een commercieel voordeel behalen. Wij vinden "
+"dat bedrijven die onze gegevens in hun bedrijfsvoering gebruiken ons "
+"financieel zouden moeten steunen, zodat wij onze kosten en ons personeel "
+"kunnen betalen."
+
+#: metabrainz/templates/index/bad-customers.html:20
+#, python-format
+msgid ""
+"If a company you like appears on this list, please contact that company and ask them why\n"
+"      they have declined to support us. If you are with a company listed below and would like to\n"
+"      get off this list, you can do so by <a href=\"%(account_type_url)s\">signing up\n"
+"      for support</a>."
+msgstr ""
+"Als een van je favoriete bedrijven op deze lijst staat, kan je helpen door "
+"ze te vragen waarom ze ons niet willen steunen. Als je voor een bedrijf op "
+"deze lijst werkt en van de lijst af wil, kan je dat doen door <a "
+"href=\"%(account_type_url)s\">je voor ondersteuning in te schrijven</a>."
+
+#: metabrainz/templates/index/bad-customers.html:26
+#, python-format
+msgid ""
+"Do you know of other companies using our data? We'd love to know and ask them for support!\n"
+"      Please <a href=\"%(contact_url)s\">let us know</a>!"
+msgstr ""
+"Ken je andere bedrijven die onze gegevens gebruiken? Dan horen we dat graag,"
+" zodat we ze om hun steun kunnen vragen. <a href=\"%(contact_url)s\">Laat "
+"het ons weten!</a>"
+
+#: metabrainz/templates/index/bad-customers.html:53
+msgid "Nice!!"
+msgstr "Mooi!"
+
+#: metabrainz/templates/index/bad-customers.html:54
+msgid "There are currently no not-so-favorite commercial data users!"
+msgstr "We zijn op het moment blij met al onze commerciële gebruikers!"
+
+#: metabrainz/templates/index/bad-customers.html:56
+msgid ""
+"... either that, or maybe we're working to convince some companies to do the\n"
+"          \"right thing\"... :)"
+msgstr ""
+"… of misschien proberen we nu wel een paar bedrijven zo ver te krijgen dat "
+"ze zich netjes gedragen … :-)"
+
+#: metabrainz/templates/index/contact.html:3
+#: metabrainz/templates/index/contact.html:6
+msgid "Contact"
+msgstr "Contact"
+
+#: metabrainz/templates/index/contact.html:8
+msgid "Found a bug in one of our projects?"
+msgstr "Heb je een bug in een van onze projecten gevonden?"
+
+#: metabrainz/templates/index/contact.html:10
+#, python-format
+msgid ""
+"Found a broken link or something that doesn't work as you expect it to? You can report issues in our\n"
+"    <a href=\"%(bug_tracker_url)s\">bug tracker</a>, or let us know on IRC or\n"
+"    by email. Contact details are provided below. Please include details such as what happened, what you expected\n"
+"    to happen, and the URLs of any pages involved."
+msgstr ""
+"Heb je een kapotte link gevonden of werkt iets niet zoals je had verwacht? "
+"Je kan dit soort problemen in onze <a "
+"href=\"%(bug_tracker_url)s\">bugtracker</a> melden, of het ons laten weten "
+"via IRC of een e-mail. Hieronder staat contactinformatie. Het is belangrijk "
+"dat je toevoegt wat er precies gebeurde, wat je verwacht had dat er zou "
+"gebeuren en de URL’s van de pagina’s waarop het gebeurde."
+
+#: metabrainz/templates/index/contact.html:16
+msgid "Have a question about MusicBrainz?"
+msgstr "Heb je een vraag over MusicBrainz?"
+
+#: metabrainz/templates/index/contact.html:18
+#, python-format
+msgid ""
+"Please check the <a href=\"%(general_faq_url)s\">General FAQ</a>, or one of the other pages\n"
+"    of <a href=\"%(faq_url)s\">frequently asked questions</a>, to see if\n"
+"    your question has already been answered. If you're using <a href=\"%(picard_homepage)s\">MusicBrainz\n"
+"    Picard</a>, check its <a href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
+msgstr ""
+"Kijk bij de <a href=\"%(general_faq_url)s\">algemene veelgestelde "
+"vragen</a>, of een van de andere pagina’s met <a "
+"href=\"%(faq_url)s\">veelgestelde vragen</a> om te zien of je vraag al eens "
+"is beantwoord. Als je <a href=\"%(picard_homepage)s\">MusicBrainz Picard</a>"
+" gebruikt, kan je op de <a "
+"href=\"%(picard_troubleshooting)s\">helppagina</a> kijken."
+
+#: metabrainz/templates/index/contact.html:25
+msgid "Data removal requests"
+msgstr "Gegevens verwijderen"
+
+#: metabrainz/templates/index/contact.html:27
+#, python-format
+msgid ""
+"MusicBrainz does not edit or remove factual data upon request. Please read our\n"
+"    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more information."
+msgstr ""
+"MusicBrainz verwijdert of wijzigt geen feitelijk correcte gegevens op "
+"verzoek. Zie ons <a href=\"%(dr_policy_url)s\">verwijderingsbeleid</a> voor "
+"meer informatie."
+
+#: metabrainz/templates/index/contact.html:30
+msgid "Copyright issues"
+msgstr "Auteursrechtproblemen"
+
+#: metabrainz/templates/index/contact.html:32
+#, python-format
+msgid ""
+"If you believe that MusicBrainz violates your copyright, you may\n"
+"    <a href=\"%(cr_violation_url)s\">report a copyright violation</a>. Please note\n"
+"    that MusicBrainz provides data about recordings, <i>not the music itself</i>. If you find your music listed in\n"
+"    MusicBrainz <b>it does not mean that we have access to or provide access to the music files themselves</b>. If\n"
+"    you still think that we're infringing your copyright, you must provide us with a link to where you can download\n"
+"    the infringing material from our website. If you cannot provide us a link, we cannot help you."
+msgstr ""
+"Als je denkt dat MusicBrainz je auteursrecht schendt, kan je <a "
+"href=\"%(cr_violation_url)s\">de schending rapporteren</a>. Let wel dat "
+"MusicBrainz informatie over opnames beschikbaar stelt, <i>en niet de muziek "
+"zelf</i>. Als je muziek op MusicBrainz wordt vermeld, <b>betekent dat niet "
+"dat we toegang hebben tot de muziekbestanden zelf of deze beschikbaar "
+"maken</b>. Als je toch denkt dat we inbreuk op je auteursrecht maken, moet "
+"je ons een link geven naar de plek waar inbreuk makend materiaal van onze "
+"website te downloaden is. Zonder die link kunnen we je niet helpen."
+
+#: metabrainz/templates/index/contact.html:40
+msgid "Contact details"
+msgstr "Contactinformatie"
+
+#: metabrainz/templates/index/contact.html:42
+msgid "Please do not contact us with the following topics:"
+msgstr "Neem niet over de volgende onderwerpen contact met ons op:"
+
+#: metabrainz/templates/index/contact.html:44
+msgid ""
+"We cannot license any of the music listed in MusicBrainz, since we have neither the music itself nor the\n"
+"        rights to license the music."
+msgstr ""
+"We kunnen geen licenties verlenen voor de muziek die op MusicBrainz wordt "
+"vermeld, omdat we noch de muziek zelf, noch het recht hebben om er licenties"
+" voor te verlenen."
+
+#: metabrainz/templates/index/contact.html:46
+msgid "We are not distributing any of the music listed in MusicBrainz."
+msgstr "We distribueren de muziek die op MusicBrainz wordt vermeld niet."
+
+#: metabrainz/templates/index/contact.html:47
+msgid ""
+"We are not interested in your advertising, SEO optimization, or software monetization services. Please\n"
+"        do not offer us <b>any</b> services!"
+msgstr ""
+"We zijn niet geïnteresseerd in je advertenties, SEO-optimalisaties of "
+"diensten om met software geld te verdienen. Bied ons <b>geen</b> diensten "
+"aan!"
+
+#: metabrainz/templates/index/contact.html:53
+msgid ""
+"If you disregard this agreement and contact us about one of the\n"
+"      disallowed topics, we reserve the right to make fun of you."
+msgstr ""
+"Als je deze regels negeert en ons toch over deze onderwerpen benadert, "
+"hebben wij het recht om je belachelijk te maken."
+
+#: metabrainz/templates/index/contact.html:58
+msgid "E-mail us"
+msgstr "Een e-mail sturen"
+
+#: metabrainz/templates/index/contact.html:60
+msgid "I agree with the rules above, show me the email address"
+msgstr "Ik ben het met de regels eens, laat het e-mailadres zien"
+
+#: metabrainz/templates/index/contact.html:63
+msgid "You can reach the MetaBrainz staff directly at the following address:"
+msgstr "Je kan ons direct op het volgende e-mailadres bereiken:"
+
+#: metabrainz/templates/index/contact.html:69
+msgid "Forums"
+msgstr "Forum"
+
+#: metabrainz/templates/index/contact.html:71
+#, python-format
+msgid ""
+"Please come ask your questions at our <a href=\"%(forums_url)s\">forums</a>! We would love to\n"
+"    answer any questions you may have."
+msgstr ""
+"Stel ons je vraag op ons <a href=\"%(forums_url)s\">forum</a>! We "
+"beantwoorden graag al je vragen."
+
+#: metabrainz/templates/index/contact.html:75
+msgid "IRC"
+msgstr "IRC"
+
+#: metabrainz/templates/index/contact.html:77
+#, python-format
+msgid ""
+"The MetaBrainz/MusicBrainz team, as well as MusicBrainz users, hang out in the\n"
+"    <strong><a href=\"%(irc_url)s\">#metabrainz</a></strong>\n"
+"    channel on IRC chat at irc.libera.chat. If you don't have an IRC client\n"
+"    installed, consider using this\n"
+"    <a href=\"%(irc_webchat_url)s\">webchat client</a>\n"
+"    instead. Please feel free to browse the\n"
+"    <a href=\"%(chatlogs_url)s\">IRC log archives</a>."
+msgstr ""
+"Het team van MetaBrainz en MusicBrainz en veel gebruikers zijn te vinden in "
+"het IRC-kanaal <strong><a href=\"%(irc_url)s\">#metabrainz</a></strong> op "
+"irc.libera.chat. Als je geen IRC-programma op je computer hebt, kan je dit "
+"<a href=\"%(irc_webchat_url)s\">webchatprogramma</a> gebruiken. Je kan ook "
+"door onze <a href=\"%(chatlogs_url)s\">IRC-logarchieven</a> bladeren."
+
+#: metabrainz/templates/index/contact.html:89
+msgid "Mailing address"
+msgstr "Postadres"
+
+#: metabrainz/templates/index/index.html:6
+msgid "Welcome to MetaBrainz!"
+msgstr "Welkom bij MetaBrainz!"
+
+#: metabrainz/templates/index/index.html:10
+msgid ""
+"The MetaBrainz Foundation is a non-profit that believes in free, open\n"
+"        access to data. It has been set up to build community maintained\n"
+"        databases and make them available in the public domain or under Creative\n"
+"        Commons licenses."
+msgstr ""
+"De MetaBrainz Foundation is een stichting zonder winstoogmerk en gelooft in "
+"gratis en vrij toegankelijke gegevens. De stichting is opgezet om door de "
+"gemeenschap onderhouden databases op de bouwen en in het publiek domein of "
+"onder Creative Commons-licenties beschikbaar te maken."
+
+#: metabrainz/templates/index/index.html:16
+#, python-format
+msgid ""
+"Our data is mostly gathered by volunteers and verified\n"
+"        by peer review to ensure it is consistent and correct. All\n"
+"        <a href=\"%(account_type_url)s\">non-commercial use</a> of this data is free,\n"
+"        but <a href=\"%(account_type_url)s\">commercial users</a> are asked to\n"
+"        <a href=\"%(account_type_url)s\">support us</a> in order to help fund the\n"
+"        project. We encourage all data users to contribute to the data gathering process so\n"
+"        that our data can be as comprehensive as possible."
+msgstr ""
+"Onze gegevens worden vooral door vrijwilligers verzameld en op consistentie "
+"en juistheid gecontroleerd. Al het <a href=\"%(account_type_url)s\">niet-"
+"commercieel gebruik</a> van de gegevens is gratis, maar <a "
+"href=\"%(account_type_url)s\">commerciële gebruikers</a> worden verzocht om "
+"ons <a href=\"%(account_type_url)s\">te steunen</a>, zodat we het project "
+"kunnen financieren. We moedigen alle gebruikers aan op bij te dragen aan het"
+" verzamelen van gegevens, zodat onze database zo uitgebreid mogelijk kan "
+"zijn."
+
+#: metabrainz/templates/index/index.html:34
+msgid ""
+"An open music encyclopedia that collects music metadata and makes it\n"
+"              available to the public"
+msgstr ""
+"Een open muziekencyclopedie waarin metagegevens over muziek worden verzameld"
+" en aan het publiek beschikbaar worden gesteld"
+
+#: metabrainz/templates/index/index.html:36
+#, python-format
+msgid ""
+"Sign up to use the <a href=\"%(account_type_url)s\">Live Data Feed</a></em>"
+msgstr ""
+"Registreer je om onze <a href=\"%(account_type_url)s\">live "
+"gegevensfeed</a></em> te kunnen gebruiken"
+
+#: metabrainz/templates/index/index.html:45
+msgid "A cross-platform music tagger"
+msgstr "Een platformoverschrijdende tagger voor muziek"
+
+#: metabrainz/templates/index/index.html:53
+msgid "A crowdsourced collection of acoustic information"
+msgstr "Een door gebruikers opgebouwde collectie akoestische informatie"
+
+#: metabrainz/templates/index/index.html:61
+msgid "An open record of user listening habits"
+msgstr "Een open register met luistergewoontes van gebruikers"
+
+#: metabrainz/templates/index/index.html:69
+msgid "A repository for Creative Commons licensed music reviews"
+msgstr "Een verzameling muziekrecensies met een Creative Commons-licentie"
+
+#: metabrainz/templates/index/index.html:77
+msgid ""
+"An open encyclopedia which contains information about published literature"
+msgstr "Een open encyclopedie met informatie over gepubliceerde literatuur"
+
+#: metabrainz/templates/index/index.html:85
+msgid "A repository of music cover art that is freely and easily accessible"
+msgstr "Een gratis en toegankelijke verzameling afbeeldingen van platenhoezen"
+
+#: metabrainz/templates/index/index.html:92
+#: metabrainz/templates/payments/donors.html:66
+msgid "Previous"
+msgstr "Vorige"
+
+#: metabrainz/templates/index/index.html:96
+msgid "Next"
+msgstr "Volgende"
+
+#: metabrainz/templates/index/index.html:103
+#, python-format
+msgid ""
+"The MetaBrainz Foundation believes in <a href=\"%(financial_reports_url)s\">\n"
+"        transparent finances</a> and is supported by <a href=\"%(donations_url)s\">end user\n"
+"        donations</a> and a number of <a href=\"%(sponsors_url)s\">sponsors</a>\n"
+"        who provide funds in order for the foundation to accomplish its goals. The foundation also\n"
+"        has several <a href=\"%(supporters_url)s\"> commercial supporters</a>\n"
+"        who make use of our data sets."
+msgstr ""
+"De MetaBrainz Foundation gelooft in <a "
+"href=\"%(financial_reports_url)s\">transparante financiën</a> en wordt "
+"ondersteund door <a href=\"%(donations_url)s\">gebruikersdonaties</a> en een"
+" aantal <a href=\"%(sponsors_url)s\">sponsors</a> die geld ter beschikking "
+"stellen waarmee we onze doelen kunnen bereiken. De stichting heeft ook een "
+"aantal <a href=\"%(supporters_url)s\">commerciële partners</a> die onze "
+"gegevens gebruiken."
+
+#: metabrainz/templates/index/index.html:137
+#, python-format
+msgid ""
+"Unfortunately, some companies listed below use data we provide without contributing back.\n"
+"        <a href=\"%(bad_customers_url)s\">Find out more</a> about them or\n"
+"        <a href=\"%(account_type_url)s\">sign up</a>!"
+msgstr ""
+"Jammer genoeg zijn er bedrijven die onze gegevens gebruiken zonder daar iets"
+" voor terug te doen. <a href=\"%(bad_customers_url)s\">Kom meer over deze "
+"bedrijven te weten</a> of <a href=\"%(account_type_url)s\">registreer "
+"je</a>!"
+
+#: metabrainz/templates/index/index.html:160
+#, python-format
+msgid ""
+"To get more information about the foundation, go to the\n"
+"      <a href=\"%(about_url)s\">about</a> page."
+msgstr ""
+"Kijk op onze <a href=\"%(about_url)s\">informatiepagina</a> voor meer "
+"informatie over de stichting."
+
+#: metabrainz/templates/index/privacy.html:3
+msgid "Privacy"
+msgstr "Privacy"
+
+#: metabrainz/templates/index/privacy.html:8
+msgid "Summary"
+msgstr "Samenvatting"
+
+#: metabrainz/templates/index/privacy.html:10
+msgid ""
+"The MetaBrainz Foundation will not collect any private information unless\n"
+"    you choose to donate to support the MusicBrainz project. Any personal\n"
+"    information you choose to provide during the donation process will not be\n"
+"    revealed to anyone else, unless you give us permission to list your name on\n"
+"    our donations page. We will not contact you unless you give us permission\n"
+"    to do so when you make a donation."
+msgstr ""
+"Tenzij je ervoor hebt gekozen om een donatie aan het MusicBrainz-project te "
+"doen, verzamelt de MetaBrainz Foundation geen privéinformatie. Persoonlijke "
+"gegevens die je bij een donatie verstrekt, wordt met niemand gedeeld, tenzij"
+" je ons toestemming geeft om je naam op de donatiepagina te zetten. We "
+"zullen geen contact met je opnemen, tenzij je ons hiervoor bij een donatie "
+"toestemming hebt gegeven."
+
+#: metabrainz/templates/index/privacy.html:18
+msgid "MetaBrainz donors"
+msgstr "Donateurs"
+
+#: metabrainz/templates/index/privacy.html:20
+msgid ""
+"When you make a donation to the MetaBrainz Foundation, we are legally\n"
+"    required to collect your personal information and keep it in our records\n"
+"    in case we ever get audited by the IRS. We will not disclose your personal\n"
+"    information to anyone else, ever."
+msgstr ""
+"De Amerikaanse belastingdienst verplicht ons om de persoonsgegevens van "
+"donateurs te bewaren. Maar behalve met de belastingdienst zullen we je "
+"privéinformatie nooit met anderen delen."
+
+#: metabrainz/templates/index/privacy.html:26
+msgid ""
+"We believe in transparent finances, which means that we list all donations\n"
+"    made to us on this site. We will only list your name and the amount of the\n"
+"    donation, unless you chose to be anonymous during the donation process."
+msgstr ""
+"We geloven in transparante financiën, dus we vermelden alle donaties op onze"
+" website. We zullen alleen je naam en het bedrag vermelden, tenzij je bij de"
+" donatie aangeeft anoniem te willen blijven."
+
+#: metabrainz/templates/index/privacy.html:31
+msgid "Web and FTP access logs (all users)"
+msgstr "Toegangslogboeken voor web en ftp (alle gebruikers)"
+
+#: metabrainz/templates/index/privacy.html:33
+msgid ""
+"Like just about all web sites, we keep logs of all web requests made\n"
+"    against our servers. These logs include the usual stuff: your IP address,\n"
+"    your browser's \"User-Agent\" string, and which page you requested."
+msgstr ""
+"Net als bijna alle websites houden we logboeken bij met alle webverzoeken "
+"aan onze servers. Hierin staan de gebruikelijke dingen: je IP-adres, de "
+"gebruikersagent van je browser en welke pagina je hebt opgevraagd."
+
+#: metabrainz/templates/index/privacy.html:38
+msgid ""
+"Reasonable exceptions may apply to the above policy, for example to comply\n"
+"    with applicable laws. The MusicBrainz/MetaBrainz server administrators\n"
+"    (about three people in all) can of course see any information on the system\n"
+"    they want to, but to be honest they're probably not interested enough to look."
+msgstr ""
+"Er kunnen redelijke uitzonderingen op het bovenstaande beleid van toepassing"
+" zijn, bijvoorbeeld om aan bepaalde wetten te voldoen. De serverbeheerders "
+"van MusicBrainz en Metabrainz (in totaal zo’n drie mensen) kunnen natuurlijk"
+" alle systeeminformatie inzien als ze dat willen, maar waarschijnlijk vinden"
+" ze dat toch niet zo interessant."
+
+#: metabrainz/templates/index/projects.html:6
+msgid "MetaBrainz Projects"
+msgstr "Onze projecten"
+
+#: metabrainz/templates/index/projects.html:17
+msgid "MusicBrainz"
+msgstr "MusicBrainz"
+
+#: metabrainz/templates/index/projects.html:19
+#, python-format
+msgid ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a> is a community-maintained open source music encyclopedia that\n"
+"            collects music metadata and makes it available to the public."
+msgstr ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a> is een door de gemeenschap "
+"onderhouden open muziekencyclopedie waarin informatie over muziek wordt "
+"verzameld en aan het publiek beschikbaar wordt gesteld."
+
+#: metabrainz/templates/index/projects.html:32
+msgid "MusicBrainz Picard"
+msgstr "MusicBrainz Picard"
+
+#: metabrainz/templates/index/projects.html:34
+#, python-format
+msgid ""
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> is an open-source software application for\n"
+"            identifying, tagging, and organizing digital audio recordings."
+msgstr ""
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> is een opensourceprogramma"
+" voor het identificeren, taggen en organiseren van digitale geluidsopnames."
+
+#: metabrainz/templates/index/projects.html:47
+msgid "Cover Art Archive"
+msgstr "Cover Art Archive"
+
+#: metabrainz/templates/index/projects.html:49
+#, python-format
+msgid ""
+"<a href=\"%(caa_url)s\">Cover Art Archive</a> is a database of cover art corresponding with the\n"
+"            releases in MusicBrainz. It is a joint project with the <a href=\"%(archive_org_url)s\">Internet Archive</a>."
+msgstr ""
+"Het <a href=\"%(caa_url)s\">Cover Art Archive</a> is een verzameling "
+"afbeeldingen van uitgaves op MusicBrainz. Het is een gezamenlijk project met"
+" het <a href=\"%(archive_org_url)s\">Internet Archive</a>."
+
+#: metabrainz/templates/index/projects.html:63
+msgid "CritiqueBrainz"
+msgstr "CritiqueBrainz"
+
+#: metabrainz/templates/index/projects.html:65
+#, python-format
+msgid ""
+"<a href=\"%(cb_url)s\">CritiqueBrainz</a> fills the gap between music critics and raw data by\n"
+"            providing a platform created for the sole purpose of Creative Commons licensed reviews."
+msgstr ""
+"<a href=\"%(cb_url)s\">CritiqueBrainz</a> vult het gat tussen muziekcritici "
+"en ruwe gegevens door een platform speciaal voor recensies met Creative "
+"Commons-licenties te bieden."
+
+#: metabrainz/templates/index/projects.html:78
+msgid "AcousticBrainz"
+msgstr "AcousticBrainz"
+
+#: metabrainz/templates/index/projects.html:80
+#, python-format
+msgid ""
+"<a href=\"%(ab_url)s\">AcousticBrainz</a> crowd sources acoustic information for all music in\n"
+"            the world and makes it available to the public. It is a joint effort with\n"
+"            <a href=\"%(mtg_url)s\">Music Technology Group</a> at <a href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
+"            in Barcelona."
+msgstr ""
+"Op <a href=\"%(ab_url)s\">AcousticBrainz</a> wordt akoestische informatie "
+"over muziek uit de hele wereld verzameld en aan het publiek beschikbaar "
+"gesteld. Het is een gezamenlijke inspanning met de <a "
+"href=\"%(mtg_url)s\">Music Technology Group</a> van de <a "
+"href=\"%(upf_url)s\">Universitat Pompeu Fabra</a> in Barcelona."
+
+#: metabrainz/templates/index/projects.html:95
+msgid "BookBrainz"
+msgstr "BookBrainz"
+
+#: metabrainz/templates/index/projects.html:97
+#, python-format
+msgid ""
+"<a href=\"%(bb_url)s\">BookBrainz</a> is an online encyclopedia containing information about published\n"
+"            literature. Its aim is to collect and store data about every publication ever written."
+msgstr ""
+"<a href=\"%(bb_url)s\">BookBrainz</a> is een online encyclopedie met "
+"informatie over gepubliceerde literatuur. Het doel is om informatie te "
+"verzamelen over alle publicaties die ooit zijn geschreven."
+
+#: metabrainz/templates/index/projects.html:110
+msgid "ListenBrainz"
+msgstr "ListenBrainz"
+
+#: metabrainz/templates/index/projects.html:112
+#, python-format
+msgid ""
+"<a href=\"%(lb_url)s\">ListenBrainz</a> is an open source music website that allows users to import\n"
+"            their listen history. One of the goals is for this data to be used for building open music recommendation systems."
+msgstr ""
+"<a href=\"%(lb_url)s\">ListenBrainz</a> is een opensource-muziekwebsite "
+"waarop gebruikers hun luistergeschiedenis kunnen importeren. Het doel van "
+"deze informatie is om open aanbevelingssystemen voor muziek te creëren."
+
+#: metabrainz/templates/index/projects.html:125
+msgid "MessyBrainz"
+msgstr "MessyBrainz"
+
+#: metabrainz/templates/index/projects.html:127
+#, python-format
+msgid ""
+"<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifies unclean metadata, and where possible,\n"
+"            links it to stable MusicBrainz identifiers. MessyBrainz is currently being used for AcousticBrainz and ListenBrainz."
+msgstr ""
+"<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identificeert vervuilde "
+"metagegevens, en probeert deze aan stabiele MusicBrainz-identificatoren te "
+"koppelen. MessyBrainz wordt nu gebruikt voor AcousticBrainz en ListenBrainz."
+
+#: metabrainz/templates/index/sponsors.html:9
+msgid ""
+"The MetaBrainz Foundation wishes to offer a huge thank you to all of our\n"
+"    sponsors and partners for their support in helping MusicBrainz operate."
+msgstr ""
+"De MetaBrainz Foundation wil al onze sponsors en partners enorm bedanken "
+"voor hun steun waarmee MusicBrainz kan blijven draaien."
+
+#: metabrainz/templates/index/sponsors.html:13
+msgid ""
+"Some of the following organizations and individuals have provided funding,\n"
+"    others have supported us by providing access to tools and technologies that\n"
+"    have helped us grow. In either case they played a significant role in the\n"
+"    success and growth of MusicBrainz."
+msgstr ""
+"Sommige van de volgende organisaties en personen hebben geld beschikbaar "
+"gesteld, anderen hebben ons toegang tot hulpmiddelen en technologie gegeven "
+"waarmee we hebben kunnen groeien. In ieder geval hebben ze een belangrijke "
+"rol gespeeld in het succes en de groei van MusicBrainz."
+
+#: metabrainz/templates/index/sponsors.html:18
+msgid "We would not exist without you — <b>Thank You!</b>"
+msgstr "Zonder jullie zouden we niet kunnen bestaan. <b>Bedankt!</b>"
+
+#: metabrainz/templates/index/sponsors.html:26
+#, python-format
+msgid ""
+"<b><a href=\"%(google_url)s\">Google</a></b> has been an extremely supportive\n"
+"        sponsor. They've donated over <b>$320,000</b>."
+msgstr ""
+"<b><a href=\"%(google_url)s\">Google</a></b> is altijd al een enorm "
+"behulpzame sponsor geweest. Ze hebben meer dan <b>$320.000</b> gedoneerd."
+
+#: metabrainz/templates/index/sponsors.html:34
+#, python-format
+msgid ""
+"The <b><a href=\"%(osuosl_url)s\">OSU Open Source Lab</a></b> hosts the FTP\n"
+"        mirror server that handles the distribution of the\n"
+"        <a href=\"%(mb_db_url)s\">MusicBrainz Database</a>\n"
+"        and virtual machines, thus saving us considerable load and bandwidth costs."
+msgstr ""
+"Het <b><a href=\"%(osuosl_url)s\">OSU Open Source Lab</a></b> verzorgt de "
+"ftp-spiegelserver die verantwoordelijk is voor de distributie van de <a "
+"href=\"%(mb_db_url)s\">MusicBrainz-database</a> en virtuele machines, "
+"waarmee ons aanzienlijke serverkosten worden bespaard."
+
+#: metabrainz/templates/index/sponsors.html:44
+#, python-format
+msgid ""
+"<b><a href=\"%(dotsrc_url)s\">DotSrc</a></b> hosts an\n"
+"        <a href=\"%(mb_ftp_url)s\">EU mirror of our FTP site</a>.\n"
+"        This gives better download speeds of our large data sets for users in Europe."
+msgstr ""
+"<b><a href=\"%(dotsrc_url)s\">DotSrc</a></b> verzorgt een <a "
+"href=\"%(mb_ftp_url)s\">EU-spiegelserver van onze ftp-site</a>, waardoor "
+"Europese gebruikers onze gegevens sneller kunnen downloaden."
+
+#: metabrainz/templates/index/sponsors.html:53
+#, python-format
+msgid ""
+"<b><a href=\"%(layer42_url)s\">Layer42</a></b> generously hosts a test server for\n"
+"        us, free of charge!"
+msgstr ""
+"<b><a href=\"%(layer42_url)s\">Layer42</a></b> is zo vriendelijk om voor ons"
+" een testserver te hosten, helemaal gratis!"
+
+#: metabrainz/templates/index/sponsors.html:61
+#, python-format
+msgid ""
+"<b><a href=\"%(github_url)s\">GitHub</a></b> provides us with a free Bronze\n"
+"        account for hosting our sysadmin repositories."
+msgstr ""
+"<b><a href=\"%(github_url)s\">GitHub</a></b> voorziet ons van een gratis "
+"Bronze Account om onze sysadmin-opslagplaats te hosten."
+
+#: metabrainz/templates/index/sponsors.html:69
+#, python-format
+msgid ""
+"<b><a href=\"%(pipedrive_url)s\">Pipedrive</a></b> provides us with a free\n"
+"        account to help keep track of commercial users and supporters."
+msgstr ""
+"<b><a href=\"%(pipedrive_url)s\">Pipedrive</a></b> voorziet ons van een "
+"gratis account om commerciële gebruikers en partners bij te houden."
+
+#: metabrainz/templates/index/sponsors.html:76
+msgid "Special thanks"
+msgstr "Speciale dank"
+
+#: metabrainz/templates/index/sponsors.html:78
+msgid ""
+"In our past, we've had a lot of people support us with many different levels of support:\n"
+"    Access to conferences, covering travel expenses, large personal donations and countless\n"
+"    meals. These have become too numerous to list, but we wanted to note a few individuals\n"
+"    who have made a big difference for us."
+msgstr ""
+"In het verleden hebben veel mensen ons op verschillende manieren gesteund: "
+"Toegang tot conferenties, het betalen van reiskosten, grote persoonlijke "
+"donaties en talloze maaltijden. Dit zijn er nu te veel om op te noemen, maar"
+" we willen er toch een paar mensen uitlichten die erg belangrijk voor ons "
+"zijn geweest."
+
+#: metabrainz/templates/index/sponsors.html:84
+#, python-format
+msgid ""
+"Richard Jones of <a href=\"%(last_fm_url)s\">Last.fm fame</a> donated <b>$50,000</b> in 2010,\n"
+"    <a href=\"%(oracle_url)s\">Sun Microsystems</a> &amp; Paul Lamere donated a database\n"
+"    server and <a href=\"%(oreilly_url)s\">O'Reilly Media</a> gave MusicBrainz $500 to\n"
+"    start off a bank account for the project before the MetaBrainz Foundation existed.\n"
+"    <a href=\"%(ed_url)s\">Ed Cavazos</a> periodically provides pro-bono\n"
+"    legal advice for the occasional Intellectual Property questions that MetaBrainz faces.\n"
+"    <a href=\"%(dan_url)s\">Dan Appleman</a> provides\n"
+"    periodic help crafting contracts for licensing our data.\n"
+"    <a href=\"%(dw_url)s\">Digital West Networks Inc.</a> was our main\n"
+"    hosting provider between 2006 and 2016 and gave us a discount because of our non-profit status."
+msgstr ""
+"Richard Jones, <a href=\"%(last_fm_url)s\">bekend van Last.fm</a>, doneerde "
+"in 2010 <b>$50.000</b>. <a href=\"%(oracle_url)s\">Sun Microsystems</a> "
+"&amp; Paul Lamere doneerden een databaseserver en <a "
+"href=\"%(oreilly_url)s\">O’Reilly Media</a> gaf MusicBrainz $500 om een "
+"bankrekening voor het project te openen toen de MetaBrainz Foundation nog "
+"niet bestond. <a href=\"%(ed_url)s\">Ed Cavazos</a> geeft ons af en toe pro "
+"bono juridisch advies als MetaBrainz tegen een vraagstuk over intellectueel "
+"eigendom aanloopt. <a href=\"%(dan_url)s\">Dan Appleman</a> helpt ons af en "
+"toe met het opstellen van contracten voor licenties op onze gegevens. <a "
+"href=\"%(dw_url)s\">Digital West Networks Inc.</a> was tussen 2006 en 2016 "
+"onze belangrijkste webhoster en gaf ons korting omdat we geen winstoogmerk "
+"hebben."
+
+#: metabrainz/templates/index/sponsors.html:100
+msgid ""
+"Thanks to everyone who has helped make the MetaBrainz Foundation what it is "
+"today!"
+msgstr ""
+"Bedankt aan iedereen die geholpen heeft om de MetaBrainz Foundation te "
+"ontwikkelen tot wat ze nu is!"
+
+#: metabrainz/templates/index/team.html:6
+msgid "The MetaBrainz Team"
+msgstr "Het MetaBrainz-team"
+
+#: metabrainz/templates/index/team.html:12
+msgid "<span class=\"name\">Robert Kaye</span> &mdash; Executive Director"
+msgstr "<span class=\"name\">Robert Kaye</span>: uitvoerend directeur"
+
+#: metabrainz/templates/index/team.html:14
+#, python-format
+msgid ""
+"Robert is the founder and lead geek for <a href=\"%(mb_url)s\">MusicBrainz</a>, and Executive Director of\n"
+"          the MetaBrainz Foundation, the non-profit organization that pays the bills for MusicBrainz. After studying Computer\n"
+"          Engineering at Cal Poly, San Luis Obispo, he joined Xing Technology where he shaped the MP3 efforts and then spent\n"
+"          time for the dot com boom on EMusic’s FreeAmp team. While at EMusic he started working on MusicBrainz, the open music\n"
+"          encyclopedia, and fell in love with Open Source software."
+msgstr ""
+"Robert is de oprichter en oppernerd van <a "
+"href=\"%(mb_url)s\">MusicBrainz</a>, en uitvoerend directeur van de "
+"MetaBrainz Foundation, de stichting zonder winstoogmerk die MusicBrainz’ "
+"rekeningen betaalt. Nadat hij aan de Cal Poly in San Luis Obispo "
+"computertechniek had gestudeerd, werkte hij bij Xing Technology, waar hij "
+"werkte aan mp3-toepassingen binnen het bedrijf. Tijdens de dotcom-boom "
+"werkte hij voor het FreeAmp-team van EMusic. Tijdens zijn periode bij EMusic"
+" begon hij aan MusicBrainz te werken, en werd hij verliefd op "
+"opensourcesoftware."
+
+#: metabrainz/templates/index/team.html:21
+#, python-format
+msgid ""
+"Robert is also an active hardware hacker, creating art projects for Burning Man and Nowhere. He is the co-founder of\n"
+"          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created Bartendro the open source cocktail robot."
+msgstr ""
+"Robert is ook een actieve hardwarehacker, en hij maakt kunstprojecten voor "
+"Burning Man en Nowhere. Hij is de mede-oprichter van <a "
+"href=\"%(pr_url)s\">Party Robotics</a>, waar hij samen met anderen de "
+"opensource-cocktailrobot Bartendro bouwde."
+
+#: metabrainz/templates/index/team.html:26
+msgid "He lives in Barcelona, Spain."
+msgstr "Hij woont in Barcelona."
+
+#: metabrainz/templates/index/team.html:39
+msgid "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr "<span class=\"name\">Michael Wiencek</span>: hoofdontwikkelaar"
+
+#: metabrainz/templates/index/team.html:41
+msgid ""
+"Michael is the senior developer for MusicBrainz, residing in his hometown of Chicago. He heard about MusicBrainz when\n"
+"          he was still in grammar school, started editing in high school as his music collection got unwieldy, and participated\n"
+"          in three GSoC projects during college. In his copious free time he enjoys going to concerts, making music no one will\n"
+"          ever hear, binge-watching old TV shows, and being the best drummer in the world on Rock Band 4."
+msgstr ""
+"Michael is MusicBrainz’ hoofdontwikkelaar en woont in de stad waar hij "
+"opgroeide: Chicago. Hij raakte bij MusicBrainz als redacteur betrokken toen "
+"zijn muziekverzameling tijdens zijn middelbare schooltijd steeds "
+"onhandelbaarder werd, en als student deed hij mee aan drie GSoC-projecten. "
+"In alle vrije tijd die hij heeft, gaat hij graag naar concerten, maakt hij "
+"muziek die niemand ooit zal horen, kijkt hij urenlang oude tv-programma’s en"
+" is hij ’s werelds beste drummer in Rock Band 4."
+
+#: metabrainz/templates/index/team.html:57
+msgid ""
+"<span class=\"name\">Frederik “Freso” S. Olesen</span> &mdash; Community "
+"Manager"
+msgstr "<span class=\"name\">Frederik “Freso” S. Olesen</span>: communitymanager"
+
+#: metabrainz/templates/index/team.html:59
+#, python-format
+msgid ""
+"Hired in the fall of 2015 as the MetaBrainz Community Manager, Freso is in charge of most of the public communication\n"
+"          channels (IRC, forums, blog, etc.) and various community projects (like the Google Code-in). He has been a\n"
+"          <a href=\"%(mb_freso_url)s\">MusicBrainz contributor since 2006</a> and an open source enthusiast for\n"
+"          even longer."
+msgstr ""
+"Sinds de herfst van 2015 is Freso bij MetaBrainz in dienst als "
+"communitymanager. Hij heeft de leiding over de meeste publieke "
+"communicatiekanalen (IRC, forum, blog, etc.) en verschillende "
+"gemeenschapsprojecten (zoals Google Code-in). Hij draagt al sinds <a "
+"href=\"%(mb_freso_url)s\">2006 bij aan MusicBrainz</a> en is al veel langer "
+"een liefhebber van open source."
+
+#: metabrainz/templates/index/team.html:65
+#, python-format
+msgid ""
+"On the rare occasions that he is not found in front of a monitor of some sort, Freso can be found\n"
+"          <a href=\"%(mb_freso_artist)s\">playing music</a> or (far more commonly)\n"
+"          dancing to it. He has even taught some dance classes and workshops in\n"
+"          <a href=\"%(bboy_url)s\">b-boying</a>!"
+msgstr ""
+"Als hij een keertje niet voor een of ander beeldscherm zit, is Freso <a "
+"href=\"%(mb_freso_artist)s\">muziek aan het maken</a> of (en dat gebeurt "
+"vaker) is hij aan het dansen. Hij heeft zelfs danslessen en <a "
+"href=\"%(bboy_url)s\">b-boy</a>-workshops gegeven!"
+
+#: metabrainz/templates/index/team.html:73
+msgid ""
+"Freso was born and raised in Copenhagen, Denmark but has recently moved to Barcelona to be closer to the rest of\n"
+"          the MetaBrainz team."
+msgstr ""
+"Freso werd geboren in Kopenhagen en groeide daar ook op. Onlangs is hij naar"
+" Barcelona verhuisd om dichter bij de rest van het MetaBrainz-team te zijn."
+
+#: metabrainz/templates/index/team.html:87
+msgid ""
+"<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer "
+"Support"
+msgstr ""
+"<span class=\"name\">Nicolás Tamargo</span>: stijlleider en klantenservice"
+
+#: metabrainz/templates/index/team.html:89
+#, python-format
+msgid ""
+"Nicolás is the leader of everything style-related in MusicBrainz (all except for fashion), and is in charge of\n"
+"          answering (or delegating!) support requests. When he's not actively working for MetaBrainz, he's busy\n"
+"          <a href=\"%(mb_editors_url)s\">editing MusicBrainz</a>, devouring ice cream, and following\n"
+"          the <a href=\"%(tartu_url)s\">world's best football team</a> around the country."
+msgstr ""
+"Nicolás heeft de leiding over alles wat bij MusicBrainz met stijl te maken "
+"heeft (behalve mode), en beantwoordt (of delegeert!) "
+"ondersteuningsverzoeken. Als hij niet voor MetaBrainz aan het werk is, <a "
+"href=\"%(mb_editors_url)s\">bewerkt hij MusicBrainz</a>, eet hij ijs of "
+"volgt hij <a href=\"%(tartu_url)s\">’s werelds beste voetbalteam</a> door "
+"het hele land."
+
+#: metabrainz/templates/index/team.html:96
+msgid "He lives in Tartu, Estonia."
+msgstr "Hij woont in Tartu in Estland."
+
+#: metabrainz/templates/index/team.html:108
+msgid "<span class=\"name\">Roman Tsukanov</span> &mdash; Software Engineer"
+msgstr "<span class=\"name\">Roman Tsukanov</span>: softwareontwikkelaar"
+
+#: metabrainz/templates/index/team.html:110
+#, python-format
+msgid ""
+"Roman first became associated with MetaBrainz through Google Summer of Code program, where he was instrumental\n"
+"          in the birth of <a href=\"%(cb_url)s\">CritiqueBrainz</a>. He wrote the updated MetaBrainz\n"
+"          website. Currently works on MusicBrainz, AcousticBrainz, and other projects."
+msgstr ""
+"Roman raakte bij MetaBrainz betrokken door het Google Summer of Code-"
+"programma, waarin hij de drijvende kracht achter het opzetten van <a "
+"href=\"%(cb_url)s\">CritiqueBrainz</a> was. Hij maakte de nieuwe MetaBrainz-"
+"website en werkt nu aan MusicBrainz, AcousticBrainz en andere projecten."
+
+#: metabrainz/templates/index/team.html:115
+msgid ""
+"Roman joined the MetaBrainz team as a software engineer in 2015. He currently lives and studies music technology\n"
+"          in Barcelona, Spain."
+msgstr ""
+"Roman begon in 2015 bij MetaBrainz als softwareontwikkelaar. Hij woont nu in"
+" Bacelona en studeert daar muziektechnologie."
+
+#: metabrainz/templates/index/team.html:129
+msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
+msgstr "<span class=\"name\">Laurent Monin</span>: systeembeheerder"
+
+#: metabrainz/templates/index/team.html:131
+msgid ""
+"A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz and Picard in attempts to codify his vast\n"
+"          collection of over 1500 CDs. In addition to being a music fanatic, Laurent has been programming on anything with\n"
+"          more than 1 bit since 1982 and has been an esteemed Linux system administrator since 1998."
+msgstr ""
+"Laurent Monin is een devoot muziekliefhebber, en stuitte op MusicBrainz en "
+"Picard toen hij zijn enorme collectie van meer dan 1500 cd’s wilde "
+"classificeren. Behalve dat hij een muziekfanaat is, programmeert hij al "
+"sinds 1982 op alles met meer dan één bit en is hij al sinds 1998 een "
+"gerespecteerd Linux-systeembeheerder."
+
+#: metabrainz/templates/index/team.html:136
+#, python-format
+msgid ""
+"With his extensive repertoire of skills and passions, Laurent has actively contributed to a myriad of open source\n"
+"          projects, notably <a href=\"%(elinks_url)s\">ELinks</a> and\n"
+"          <a href=\"%(geeqie_url)s\">Geeqie</a>, and loves to tinker with the hardware of various audio\n"
+"          gadgets, including amplifiers and loudspeakers. However, Laurent's contributions do not end there. He currently\n"
+"          sustains the MetaBrainz servers while residing near Besançon, France."
+msgstr ""
+"Dankzij zijn uitgebreide verzameling vaardigheden en passies heeft Laurent "
+"al aan ontelbare opensourceprojecten meegewerkt, vooral <a "
+"href=\"%(elinks_url)s\">ELinks</a> en <a href=\"%(geeqie_url)s\">Geeqie</a>."
+" Ook prutst hij graag met uiteenlopende audioapparatuur, zoals versterkers "
+"en luidsprekers. Hij onderhoudt tegenwoordig onze servers en woont in de "
+"buurt van Besançon in Frankrijk."
+
+#: metabrainz/templates/index/team.html:153
+msgid "<span class=\"name\">Elizabeth Bigger</span> &mdash; Supporter Catalyst"
+msgstr "<span class=\"name\">Elizabeth Bigger</span>: Partnerkatalysator"
+
+#: metabrainz/templates/index/team.html:155
+msgid ""
+"Elizabeth lives in Barcelona, Spain and joined the MetaBrainz team to manage the relationships with our \n"
+"          supporters. When not working for MetaBrainz, Elizabeth enjoys researching and developing computational textiles and\n"
+"          attending the International Symposium of Wearable Computing. She continuously struggles to find balance between her \n"
+"          cheese obsession, tinkering with power tools and learning the art of weaving."
+msgstr ""
+"Elizabeth woont in Barcelona en kwam bij MetaBrainz in dienst om contact met"
+" onze partners te onderhouden. Als ze niet voor MetaBrainz werkt, onderzoekt"
+" en ontwikkelt ze computergestuurde ontwerp- en productiemethodes voor "
+"textiel en textiel met ingebedde elektronica. Ook is ze vaak op het "
+"International Symposium of Wearable Computing te vinden. De rest van de tijd"
+" probeert ze een balans te vinden tussen haar kaasobsessie, knutselen met "
+"elektrisch gereedschap en leren weven."
+
+#: metabrainz/templates/index/team.html:166
+msgid "Voluntary Project Leaders"
+msgstr "Vrijwillige projectleiders"
+
+#: metabrainz/templates/index/team.html:171
+msgid "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
+msgstr "<span class=\"name\">Ben Ockmore</span>: BookBrainz"
+
+#: metabrainz/templates/index/team.html:173
+#, python-format
+msgid ""
+"Ben is one of the two project leads and the main programmer for <a href=\"%(bb_url)s\">BookBrainz</a>,\n"
+"          a volunteer project doing for books what MusicBrainz does for music. He started programming C++ 9 years ago, and now\n"
+"          knows Python and Node.js too, although he is currently studying for a degree in Electronics Engineering at the\n"
+"          <a href=\"%(surrey_url)s\"> University of Surrey</a>. Ben has been editing MusicBrainz for the past 4 years,\n"
+"          attending the last three summits, and has contributed code to<a href=\"%(mutagen_url)s\">\n"
+"          mutagen</a> and <a href=\"%(beets_url)s\">beets</a> besides BookBrainz."
+msgstr ""
+"Ben is een van de twee projectleiders en de belangrijkste programmeur van <a"
+" href=\"%(bb_url)s\">BookBrainz</a>. BookBrainz is voor boeken wat "
+"MusicBrainz is voor muziek. Hij begon negen jaar geleden C++ te "
+"programmeren, en kan nu ook met Python en Node.js overweg. Daarnaast "
+"studeert hij elektronicatechniek aan de <a "
+"href=\"%(surrey_url)s\">universiteit van Surrey</a>. Ben bewerkt MusicBrainz"
+" al vier jaar, was bij de laatste drie toppen en naast BookBrainz heeft hij "
+"ook aan <a href=\"%(mutagen_url)s\">mutagen</a> en <a "
+"href=\"%(beets_url)s\">beets</a> code bijgedragen."
+
+#: metabrainz/templates/index/team.html:185
+#, python-format
+msgid ""
+"In his spare time, Ben likes to design quadrotors,\n"
+"          <a href=\"%(race_surrey_url)s\"> racing cars</a>,\n"
+"          artificial intelligence, <a href=\"%(opengrow_url)s\">vegetation simulators</a> and music\n"
+"          software. However, none of them are finished yet!"
+msgstr ""
+"In zijn vrije tijd ontwerpt Ben graag quadcopters, <a "
+"href=\"%(race_surrey_url)s\">raceauto’s</a>, kunstmatige intelligentie, <a "
+"href=\"%(opengrow_url)s\">vegetatiesimulators</a> en muzieksoftware. Maar "
+"die zijn allemaal nog niet af!"
+
+#: metabrainz/templates/index/team.html:202
+msgid "<span class=\"name\">Sean Burke</span> &mdash; BookBrainz"
+msgstr "<span class=\"name\">Sean Burke</span>: BookBrainz"
+
+#: metabrainz/templates/index/team.html:204
+#, python-format
+msgid ""
+"Sean is the other of the two project leaders for <a href=\"%(bb_url)s\">BookBrainz</a>. He speaks\n"
+"          Irish and is currently trying to learn to play the bodhrán."
+msgstr ""
+"Sean is de andere projectleider van <a href=\"%(bb_url)s\">BookBrainz</a>. "
+"Hij spreekt Iers en leert nu de bodhrán te bespelen."
+
+#: metabrainz/templates/index/team.html:215
+msgid "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr "<span class=\"name\">Alastair Porter</span>: AcousticBrainz"
+
+#: metabrainz/templates/index/team.html:217
+#, python-format
+msgid ""
+"Alastair is the project leader for <a "
+"href=\"%(ab_url)s\">AcousticBrainz</a>."
+msgstr ""
+"Alastair is de projectleider van <a href=\"%(ab_url)s\">AcousticBrainz</a>."
+
+#: metabrainz/templates/oauth/prompt.html:4
+msgid "OAuth Authorization"
+msgstr "OAuth-machtiging"
+
+#: metabrainz/templates/oauth/prompt.html:10
+msgid "This app requested permission to access:"
+msgstr "Dit programma vraagt toegang tot:"
+
+#: metabrainz/templates/oauth/prompt.html:19
+msgid "Your identity on MetaBrainz"
+msgstr "Je identiteit op MetaBrainz"
+
+#: metabrainz/templates/oauth/prompt.html:32
+msgid "Allow access"
+msgstr "Toegang toestaan"
+
+#: metabrainz/templates/oauth/prompt.html:33
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: metabrainz/templates/payments/cancel_recurring.html:3
+#: metabrainz/templates/payments/cancel_recurring.html:6
+msgid "Cancelling recurring payments"
+msgstr "Periodieke betalingen annuleren"
+
+#: metabrainz/templates/payments/cancel_recurring.html:9
+msgid ""
+"In case you want to cancel recurring donation (payment) that you set up before,\n"
+"    you'll need to go to a service which you used to pay."
+msgstr ""
+"Als je een eerder ingestelde periodieke donatie of betaling wil annuleren, "
+"moet dat via de dienst die je voor de donatie of betaling gebruikt."
+
+#: metabrainz/templates/payments/cancel_recurring.html:14
+msgid "Here are links to more information:"
+msgstr "Hier kan je meer informatie vinden:"
+
+#: metabrainz/templates/payments/donate.html:3
+#: metabrainz/templates/payments/donate.html:7
+msgid "Make a Donation"
+msgstr "Doneren"
+
+#: metabrainz/templates/payments/donate.html:10
+#, python-format
+msgid ""
+"If you feel that our projects are a worthwhile effort, please consider contributing money to the\n"
+"      MetaBrainz Foundation, which is a <a href=\"%(wikipedia_non_profit_url)s\">\n"
+"      501(c)(3) tax-exempt non-profit</a> based in California. All of your donations will be tax-deductible\n"
+"      and you will receive a receipt that you can use to deduct your donation off your taxes if you are a\n"
+"      US taxpayer."
+msgstr ""
+"Overweeg om aan de MetaBrainz Foundation te doneren als je vindt dat onze "
+"projecten de moeite waard zijn. Als je in de Verenigde Staten "
+"belastingplichtig bent, kan je de donatie van de belasting aftrekken omdat "
+"de MetaBrainz Foundation een stichting zonder winstoogmerk is die als <a "
+"href=\"%(wikipedia_non_profit_url)s\">501(c)(3)-organisatie</a> staat "
+"geregistreerd."
+
+#: metabrainz/templates/payments/donate.html:18
+msgid ""
+"Your donations will be used to operate projects of the MetaBrainz Foundation. This includes paying\n"
+"      for ongoing expenses like hosting, hardware, maintaining a modest office, and paying a minimal\n"
+"      salary for MetaBrainz employees."
+msgstr ""
+"Je donaties zullen worden gebruikt om de projecten van de MetaBrainz "
+"Foundation te financieren. Hieronder vallen lopende kosten zoals hosting, "
+"hardware, het onderhouden van een bescheiden kantoor en het betalen van een "
+"minimaal salaris aan onze werknemers."
+
+#: metabrainz/templates/payments/donate.html:23
+#, python-format
+msgid ""
+"Where has my contribution gone? See our <a "
+"href=\"%(finance_reports_url)s\">transparent finances</a>."
+msgstr ""
+"Wat is er met mijn donatie gebeurt? Zie onze <a "
+"href=\"%(finance_reports_url)s\">transparante financiën</a>."
+
+#: metabrainz/templates/payments/donate.html:24
+#, python-format
+msgid ""
+"Who else is contributing? See our list of <a "
+"href=\"%(donors_url)s\">donors</a>."
+msgstr ""
+"Wie doneren er nog meer? Zie onze lijst met <a "
+"href=\"%(donors_url)s\">donateurs</a>."
+
+#: metabrainz/templates/payments/donate.html:28
+#, python-format
+msgid ""
+"<b>Be careful!</b> This is a development version of the website. Do NOT\n"
+"        use your real credit card credentials! If you want to send an actual\n"
+"        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
+msgstr ""
+"<b>Pas op!</b> Dit is een ontwikkelversie van de website. Gebruik GEEN echte"
+" creditcardgegevens! Ga naar <a href=\"%(mb_url)s\">metabrainz.org</a> om "
+"een echte donatie te doen."
+
+#: metabrainz/templates/payments/donate.html:39
+#: metabrainz/templates/payments/payment.html:36
+msgid "Amount"
+msgstr "Bedrag"
+
+#: metabrainz/templates/payments/donate.html:46
+#, python-format
+msgid ""
+"If you would like to make a large donation, please contact us at\n"
+"            <a href=\"%(mail_link)s\">donations@metabrainz.org</a>\n"
+"            before you do."
+msgstr ""
+"Neem als je een grote donatie wil doen eerst contact op met <a "
+"href=\"%(mail_link)s\">donations@metabrainz.org</a>."
+
+#: metabrainz/templates/payments/donate.html:57
+msgid "I want this to be a recurring monthly donation"
+msgstr "Ik wil deze donatie elke maand doen"
+
+#: metabrainz/templates/payments/donate.html:65
+msgid "MusicBrainz username"
+msgstr "Gebruikersnaam op MusicBrainz"
+
+#: metabrainz/templates/payments/donate.html:74
+msgid "Email me about future fundraising events"
+msgstr "E-mail me over toekomstige fondsenwervingen"
+
+#: metabrainz/templates/payments/donate.html:75
+msgid "This will be very seldom"
+msgstr "Dit zal heel zelden gebeuren"
+
+#: metabrainz/templates/payments/donate.html:83
+msgid "I would like this donation to be anonymous"
+msgstr "Ik wil deze donatie anoniem doen"
+
+#: metabrainz/templates/payments/donate.html:84
+msgid "Your name won't appear in the donors list"
+msgstr "Je naam verschijnt niet in de lijst met donateurs"
+
+#: metabrainz/templates/payments/donate.html:92
+msgid "Donate with Credit Card"
+msgstr "Creditcard"
+
+#: metabrainz/templates/payments/donate.html:108
+#, python-format
+msgid ""
+"The personal information provided to the MetaBrainz Foundation during the\n"
+"        donation process will not be shared with anyone. For more information,\n"
+"        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
+"        privacy policy</a>."
+msgstr ""
+"De persoonsgegevens die je tijdens het doneren aan de MetaBrainz Foundation "
+"overhandigt, zullen niet met derden worden gedeeld. Zie ons <a "
+"href=\"%(privacy_policy_url)s\">privacybeleid</a> voor meer informatie."
+
+#: metabrainz/templates/payments/donate.html:117
+#, python-format
+msgid ""
+"To find out how to cancel recurring donations take a look at\n"
+"        <a href=\"%(cancel_recurring_url)s\">this page</a>."
+msgstr ""
+"Informatie over het annuleren van periodieke donaties kan je <a "
+"href=\"%(cancel_recurring_url)s\">hier</a> vinden."
+
+#: metabrainz/templates/payments/donate.html:122
+msgid "Other ways to donate"
+msgstr "Andere manieren om te doneren"
+
+#: metabrainz/templates/payments/donate.html:124
+#: metabrainz/templates/payments/payment.html:100
+msgid "Non-US Bank transfer"
+msgstr "Overschrijvingen van buiten de VS"
+
+#: metabrainz/templates/payments/donate.html:125
+msgid ""
+"You can make a donation, or recurring donations, via bank transfer to the "
+"following IBAN:"
+msgstr ""
+"Je kan het volgende IBAN gebruiken om eenmalige en periodieke donaties over "
+"te maken:"
+
+#: metabrainz/templates/payments/donate.html:127
+#, python-format
+msgid ""
+"Please indicate your name and use the word %(donation_fixed_string)s in the "
+"description field."
+msgstr ""
+"Vermeld je naam en het woord %(donation_fixed_string)s in de omschrijving."
+
+#: metabrainz/templates/payments/donate.html:129
+#: metabrainz/templates/payments/payment.html:105
+msgid "US Check"
+msgstr "Amerikaanse cheque"
+
+#: metabrainz/templates/payments/donate.html:130
+msgid ""
+"If you would like to donate using a check drawn on a US bank, please send "
+"them to:"
+msgstr ""
+"Als je wil doneren met een cheque van een Amerikaanse bank, moet je die "
+"sturen naar:"
+
+#: metabrainz/templates/payments/donate.html:137
+#: metabrainz/templates/payments/payment.html:113
+msgid ""
+"Please make checks payable to the <strong>MetaBrainz Foundation</strong>."
+msgstr ""
+"Zorg ervoor dat de cheque wordt uitgeschreven op naam van de "
+"<strong>MetaBrainz Foundation</strong>."
+
+#: metabrainz/templates/payments/donate.html:140
+msgid ""
+"If you use Flattr to donate to your favourite projects, you can click below "
+"to Flattr MetaBrainz:"
+msgstr ""
+"Als je Flattr gebruikt om aan je favoriete projecten te doneren, kan je "
+"MetaBrainz met de knop hieronder aan je Flattr toevoegen."
+
+#: metabrainz/templates/payments/donate.html:215
+msgid ""
+"Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you"
+msgstr ""
+"Voer je MusicBrainz-gebruikersnaam in zodat Picard en MusicBrainz je niet "
+"meer lastig vallen"
+
+#: metabrainz/templates/payments/donate.html:230
+msgid "MusicBrainz is currently unavailable."
+msgstr "MusicBrainz is nu niet beschikbaar."
+
+#: metabrainz/templates/payments/donate.html:231
+msgid "Please, make sure that your username is correct."
+msgstr "Zorg ervoor dat je gebruikersnaam klopt."
+
+#: metabrainz/templates/payments/donate.html:233
+msgid "Your donation will be associated with this account."
+msgstr "Je donatie wordt aan deze gebruiker gekoppeld."
+
+#: metabrainz/templates/payments/donate.html:235
+msgid "We can't find this account. Please, make sure it's correct"
+msgstr "We kunnen deze gebruiker niet vinden. Controleer of de naam klopt."
+
+#: metabrainz/templates/payments/donors.html:3
+#: metabrainz/templates/reports/financial_reports/index.html:23
+msgid "Donations"
+msgstr "Donaties"
+
+#: metabrainz/templates/payments/donors.html:11
+msgid "by date"
+msgstr "op datum"
+
+#: metabrainz/templates/payments/donors.html:14
+msgid "by amount"
+msgstr "op bedrag"
+
+#: metabrainz/templates/payments/donors.html:20
+msgid "No donations. :("
+msgstr "Geen donaties :-("
+
+#: metabrainz/templates/payments/donors.html:25
+msgid "Date"
+msgstr "Datum"
+
+#: metabrainz/templates/payments/donors.html:26
+msgid "Donor"
+msgstr "Donateur"
+
+#: metabrainz/templates/payments/donors.html:27
+msgid "Donation"
+msgstr "Donatie"
+
+#: metabrainz/templates/payments/donors.html:28
+msgid "Fee"
+msgstr "Provisie"
+
+#: metabrainz/templates/payments/donors.html:61
+msgid "First"
+msgstr "Eerste"
+
+#: metabrainz/templates/payments/payment.html:3
+#: metabrainz/templates/payments/payment.html:7
+msgid "Make a Payment"
+msgstr "Doe een betaling"
+
+#: metabrainz/templates/payments/payment.html:10
+#, python-format
+msgid ""
+"<b>This page is for organizations!</b> Payments made here will not show up\n"
+"      in the list of donations. If you want to make a donation instead, go to\n"
+"      <a href=\"%(donate_url)s\">donation page</a>."
+msgstr ""
+"<b>Deze pagina is voor organisaties!</b> Betalingen die hier worden gedaan, "
+"komen niet in de lijst met donaties te staan. Ga naar de <a "
+"href=\"%(donate_url)s\">donatiepagina</a> als je een donatie wil doen."
+
+#: metabrainz/templates/payments/payment.html:16
+msgid ""
+"Your payments will be used to operate projects of the MetaBrainz Foundation. This includes paying\n"
+"      for ongoing expenses like hosting, hardware, maintaining a modest office, and paying a minimal\n"
+"      salary for MetaBrainz employees."
+msgstr ""
+"Je betalingen zullen worden gebruikt om de projecten van de MetaBrainz "
+"Foundation te financieren. Hieronder vallen lopende kosten zoals hosting, "
+"hardware, het onderhouden van een bescheiden kantoor en het betalen van een "
+"minimaal salaris aan onze werknemers."
+
+#: metabrainz/templates/payments/payment.html:21
+#, python-format
+msgid ""
+"<p>Where has your contribution gone? See our <a "
+"href=\"%(financial_reports_url)s\">transparent finances</a>.</p>"
+msgstr ""
+"<p>Wat is er met mijn geld gebeurd? Zie onze <a "
+"href=\"%(financial_reports_url)s\">transparante financiën</a>.</p>"
+
+#: metabrainz/templates/payments/payment.html:25
+#, python-format
+msgid ""
+"<b>Be careful!</b> This is a development version of the website. Do NOT\n"
+"        use your real credit card credentials! If you want to send an actual\n"
+"        payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
+msgstr ""
+"<b>Pas op!</b> Dit is een ontwikkelversie van de website. Gebruik GEEN echte"
+" creditcardgegevens! Ga naar <a href=\"%(mb_url)s\">metabrainz.org</a> om "
+"een echte betaling te doen."
+
+#: metabrainz/templates/payments/payment.html:43
+#, python-format
+msgid ""
+"If you would like to make a large payment, please contact us at\n"
+"            <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
+"            before you do."
+msgstr ""
+"Neem als je een grote betaling wil doen eerst contact op met <a "
+"href=\"%(mail_link)s\">payments@metabrainz.org</a>."
+
+#: metabrainz/templates/payments/payment.html:51
+msgid "Invoice number"
+msgstr "Factuurnummer"
+
+#: metabrainz/templates/payments/payment.html:60
+msgid "Make this a recurring monthly payment"
+msgstr "Deze betaling maandelijks doen"
+
+#: metabrainz/templates/payments/payment.html:68
+msgid "Pay with Credit Card"
+msgstr "Creditcard"
+
+#: metabrainz/templates/payments/payment.html:84
+#, python-format
+msgid ""
+"The personal information provided to the MetaBrainz Foundation during the\n"
+"        payment process will not be shared with anyone. For more information,\n"
+"        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
+"        privacy policy</a>."
+msgstr ""
+"De persoonsgegevens die je tijdens het betalen aan de MetaBrainz Foundation "
+"overhandigt, zullen niet met derden worden gedeeld. Zie ons <a "
+"href=\"%(privacy_policy_url)s\">privacybeleid</a> voor meer informatie."
+
+#: metabrainz/templates/payments/payment.html:93
+#, python-format
+msgid ""
+"To find out how to cancel recurring payments take a look at\n"
+"        <a href=\"%(cancel_recurring_url)s\">this page</a>."
+msgstr ""
+"Informatie over het annuleren van periodieke betalingen kan je <a "
+"href=\"%(cancel_recurring_url)s\">hier</a> vinden."
+
+#: metabrainz/templates/payments/payment.html:98
+msgid "Other ways to pay"
+msgstr "Andere manieren om te betalen"
+
+#: metabrainz/templates/payments/payment.html:101
+msgid ""
+"You can make a payment, or recurring payments, via bank transfer to the "
+"following IBAN:"
+msgstr ""
+"Je kan het volgende IBAN gebruiken om eenmalige en periodieke betalingen "
+"over te maken:"
+
+#: metabrainz/templates/payments/payment.html:103
+msgid ""
+"Please specify the invoice number(s) you are paying in the description field"
+" of the transfer."
+msgstr ""
+"Vermeld het factuurnummer of de factuurnummers in de omschrijving van de "
+"overboeking."
+
+#: metabrainz/templates/payments/payment.html:106
+msgid ""
+"If you would like to pay us using a check drawn on a US bank, please send "
+"them to:"
+msgstr ""
+"Als je wil betalen met een cheque van een Amerikaanse bank, moet je die "
+"sturen naar:"
+
+#: metabrainz/templates/reports/annual_reports/view.html:2
+msgid "Annual Report"
+msgstr "Jaarverslag"
+
+#: metabrainz/templates/reports/financial_reports/index.html:9
+msgid ""
+"The MetaBrainz Foundation practices a policy of <i>transparent finances</i> where the finances of the non-profit\n"
+"    are freely available on this web site. This financial philosophy allows the monetary contributors to MetaBrainz\n"
+"    and information contributors to MusicBrainz to see how the non-profit spends the donations and license fees it\n"
+"    collects. Since MusicBrainz was built with volunteer effort and MetaBrainz is supported in part by volunteer\n"
+"    donations, we believe that our contributors have the right to see how the non-profit manages its finances."
+msgstr ""
+"De MetaBrainz Foundation voert een <i>transparant financieel beleid</i>, en "
+"de financiën van de stichting worden op deze website openbaar gemaakt. "
+"Dankzij deze filosofie kunnen mensen die geld en informatie aan MetaBrainz "
+"bijdragen zien hoe het geld van donaties en geïnde licentievergoedingen "
+"wordt besteed. Omdat MusicBrainz door vrijwilligers wordt bijgehouden en "
+"MetaBrainz deels door donaties wordt ondersteund, vinden we dat deze mensen "
+"het recht hebben om te zien hoe wij onze financiën beheren."
+
+#: metabrainz/templates/reports/financial_reports/index.html:17
+msgid ""
+"The non-profit publishes all aspects of its finances, as far as that is possible. In some cases, third parties\n"
+"    making payments to the non-profit require us to not disclose the sums paid to us for various activities. For\n"
+"    instance, one affiliate of MetaBrainz prevents us from publishing the details of earnings from an affiliate\n"
+"    program. In these cases we will anonymize these payments before publishing on this site."
+msgstr ""
+"Voor zover mogelijk publiceren we alle aspecten van onze financiën. In "
+"sommige gevallen vereisen derden die aan ons betalingen doen dat we de "
+"bedragen voor verschillende activiteiten niet openbaar maken. Zo staat één "
+"van onze partners niet toe dat we details over inkomsten uit een "
+"partnerprogramma publiceren. In zulke gevallen zullen we deze betalingen "
+"voor publicatie anonimiseren."
+
+#: metabrainz/templates/reports/financial_reports/index.html:25
+#, python-format
+msgid ""
+"Please visit our <a href=\"%(donors_url)s\">donation tracker</a> to view a list of all the\n"
+"    donations that we have received."
+msgstr ""
+"Zie onze <a href=\"%(donors_url)s\">donatiepagina</a> voor een lijst met "
+"alle ontvangen donaties."
+
+#: metabrainz/templates/reports/financial_reports/index.html:29
+msgid "Reports"
+msgstr "Verslagen"
+
+#: metabrainz/templates/reports/financial_reports/index.html:31
+msgid ""
+"We attempt to publish our balance sheets within the first week of the "
+"succeeding month, or as close to that as possible."
+msgstr ""
+"We proberen onze balansen in de eerste week van de volgende maand te "
+"publiceren, of zo kort mogelijk op deze week."
+
+#: metabrainz/templates/reports/financial_reports/index.html:35
+#: metabrainz/templates/reports/financial_reports/index.html:64
+#: metabrainz/templates/reports/financial_reports/index.html:93
+#: metabrainz/templates/reports/financial_reports/index.html:122
+#: metabrainz/templates/reports/financial_reports/index.html:151
+#: metabrainz/templates/reports/financial_reports/index.html:180
+#: metabrainz/templates/reports/financial_reports/index.html:209
+#: metabrainz/templates/reports/financial_reports/index.html:238
+#: metabrainz/templates/reports/financial_reports/index.html:267
+#: metabrainz/templates/reports/financial_reports/index.html:296
+#: metabrainz/templates/reports/financial_reports/index.html:325
+#: metabrainz/templates/reports/financial_reports/index.html:347
+msgid "Year end reports"
+msgstr "Jaarverslagen"
+
+#: metabrainz/templates/reports/financial_reports/index.html:37
+#: metabrainz/templates/reports/financial_reports/index.html:49
+#: metabrainz/templates/reports/financial_reports/index.html:50
+#: metabrainz/templates/reports/financial_reports/index.html:51
+#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:53
+#: metabrainz/templates/reports/financial_reports/index.html:54
+#: metabrainz/templates/reports/financial_reports/index.html:55
+#: metabrainz/templates/reports/financial_reports/index.html:56
+#: metabrainz/templates/reports/financial_reports/index.html:57
+#: metabrainz/templates/reports/financial_reports/index.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:59
+#: metabrainz/templates/reports/financial_reports/index.html:60
+#: metabrainz/templates/reports/financial_reports/index.html:66
+#: metabrainz/templates/reports/financial_reports/index.html:78
+#: metabrainz/templates/reports/financial_reports/index.html:79
+#: metabrainz/templates/reports/financial_reports/index.html:80
+#: metabrainz/templates/reports/financial_reports/index.html:81
+#: metabrainz/templates/reports/financial_reports/index.html:82
+#: metabrainz/templates/reports/financial_reports/index.html:83
+#: metabrainz/templates/reports/financial_reports/index.html:84
+#: metabrainz/templates/reports/financial_reports/index.html:85
+#: metabrainz/templates/reports/financial_reports/index.html:86
+#: metabrainz/templates/reports/financial_reports/index.html:87
+#: metabrainz/templates/reports/financial_reports/index.html:88
+#: metabrainz/templates/reports/financial_reports/index.html:89
+#: metabrainz/templates/reports/financial_reports/index.html:95
+#: metabrainz/templates/reports/financial_reports/index.html:107
+#: metabrainz/templates/reports/financial_reports/index.html:108
+#: metabrainz/templates/reports/financial_reports/index.html:109
+#: metabrainz/templates/reports/financial_reports/index.html:110
+#: metabrainz/templates/reports/financial_reports/index.html:111
+#: metabrainz/templates/reports/financial_reports/index.html:112
+#: metabrainz/templates/reports/financial_reports/index.html:113
+#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:115
+#: metabrainz/templates/reports/financial_reports/index.html:116
+#: metabrainz/templates/reports/financial_reports/index.html:117
+#: metabrainz/templates/reports/financial_reports/index.html:118
+#: metabrainz/templates/reports/financial_reports/index.html:124
+#: metabrainz/templates/reports/financial_reports/index.html:136
+#: metabrainz/templates/reports/financial_reports/index.html:137
+#: metabrainz/templates/reports/financial_reports/index.html:138
+#: metabrainz/templates/reports/financial_reports/index.html:139
+#: metabrainz/templates/reports/financial_reports/index.html:140
+#: metabrainz/templates/reports/financial_reports/index.html:141
+#: metabrainz/templates/reports/financial_reports/index.html:142
+#: metabrainz/templates/reports/financial_reports/index.html:143
+#: metabrainz/templates/reports/financial_reports/index.html:144
+#: metabrainz/templates/reports/financial_reports/index.html:145
+#: metabrainz/templates/reports/financial_reports/index.html:146
+#: metabrainz/templates/reports/financial_reports/index.html:147
+#: metabrainz/templates/reports/financial_reports/index.html:153
+#: metabrainz/templates/reports/financial_reports/index.html:165
+#: metabrainz/templates/reports/financial_reports/index.html:166
+#: metabrainz/templates/reports/financial_reports/index.html:167
+#: metabrainz/templates/reports/financial_reports/index.html:168
+#: metabrainz/templates/reports/financial_reports/index.html:169
+#: metabrainz/templates/reports/financial_reports/index.html:170
+#: metabrainz/templates/reports/financial_reports/index.html:171
+#: metabrainz/templates/reports/financial_reports/index.html:172
+#: metabrainz/templates/reports/financial_reports/index.html:173
+#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:175
+#: metabrainz/templates/reports/financial_reports/index.html:176
+#: metabrainz/templates/reports/financial_reports/index.html:182
+#: metabrainz/templates/reports/financial_reports/index.html:194
+#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:196
+#: metabrainz/templates/reports/financial_reports/index.html:197
+#: metabrainz/templates/reports/financial_reports/index.html:198
+#: metabrainz/templates/reports/financial_reports/index.html:199
+#: metabrainz/templates/reports/financial_reports/index.html:200
+#: metabrainz/templates/reports/financial_reports/index.html:201
+#: metabrainz/templates/reports/financial_reports/index.html:202
+#: metabrainz/templates/reports/financial_reports/index.html:203
+#: metabrainz/templates/reports/financial_reports/index.html:204
+#: metabrainz/templates/reports/financial_reports/index.html:205
+#: metabrainz/templates/reports/financial_reports/index.html:211
+#: metabrainz/templates/reports/financial_reports/index.html:223
+#: metabrainz/templates/reports/financial_reports/index.html:224
+#: metabrainz/templates/reports/financial_reports/index.html:225
+#: metabrainz/templates/reports/financial_reports/index.html:226
+#: metabrainz/templates/reports/financial_reports/index.html:227
+#: metabrainz/templates/reports/financial_reports/index.html:228
+#: metabrainz/templates/reports/financial_reports/index.html:229
+#: metabrainz/templates/reports/financial_reports/index.html:230
+#: metabrainz/templates/reports/financial_reports/index.html:231
+#: metabrainz/templates/reports/financial_reports/index.html:232
+#: metabrainz/templates/reports/financial_reports/index.html:233
+#: metabrainz/templates/reports/financial_reports/index.html:234
+#: metabrainz/templates/reports/financial_reports/index.html:240
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:253
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:255
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:258
+#: metabrainz/templates/reports/financial_reports/index.html:259
+#: metabrainz/templates/reports/financial_reports/index.html:260
+#: metabrainz/templates/reports/financial_reports/index.html:261
+#: metabrainz/templates/reports/financial_reports/index.html:262
+#: metabrainz/templates/reports/financial_reports/index.html:263
+#: metabrainz/templates/reports/financial_reports/index.html:269
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:282
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:284
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:287
+#: metabrainz/templates/reports/financial_reports/index.html:288
+#: metabrainz/templates/reports/financial_reports/index.html:289
+#: metabrainz/templates/reports/financial_reports/index.html:290
+#: metabrainz/templates/reports/financial_reports/index.html:291
+#: metabrainz/templates/reports/financial_reports/index.html:292
+#: metabrainz/templates/reports/financial_reports/index.html:298
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:311
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:313
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:316
+#: metabrainz/templates/reports/financial_reports/index.html:317
+#: metabrainz/templates/reports/financial_reports/index.html:318
+#: metabrainz/templates/reports/financial_reports/index.html:319
+#: metabrainz/templates/reports/financial_reports/index.html:320
+#: metabrainz/templates/reports/financial_reports/index.html:321
+#: metabrainz/templates/reports/financial_reports/index.html:327
+#: metabrainz/templates/reports/financial_reports/index.html:349
+msgid "balance sheet"
+msgstr "balans"
+
+#: metabrainz/templates/reports/financial_reports/index.html:38
+#: metabrainz/templates/reports/financial_reports/index.html:42
+#: metabrainz/templates/reports/financial_reports/index.html:43
+#: metabrainz/templates/reports/financial_reports/index.html:44
+#: metabrainz/templates/reports/financial_reports/index.html:45
+#: metabrainz/templates/reports/financial_reports/index.html:49
+#: metabrainz/templates/reports/financial_reports/index.html:50
+#: metabrainz/templates/reports/financial_reports/index.html:51
+#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:53
+#: metabrainz/templates/reports/financial_reports/index.html:54
+#: metabrainz/templates/reports/financial_reports/index.html:55
+#: metabrainz/templates/reports/financial_reports/index.html:56
+#: metabrainz/templates/reports/financial_reports/index.html:57
+#: metabrainz/templates/reports/financial_reports/index.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:59
+#: metabrainz/templates/reports/financial_reports/index.html:60
+#: metabrainz/templates/reports/financial_reports/index.html:67
+#: metabrainz/templates/reports/financial_reports/index.html:71
+#: metabrainz/templates/reports/financial_reports/index.html:72
+#: metabrainz/templates/reports/financial_reports/index.html:73
+#: metabrainz/templates/reports/financial_reports/index.html:74
+#: metabrainz/templates/reports/financial_reports/index.html:78
+#: metabrainz/templates/reports/financial_reports/index.html:79
+#: metabrainz/templates/reports/financial_reports/index.html:80
+#: metabrainz/templates/reports/financial_reports/index.html:81
+#: metabrainz/templates/reports/financial_reports/index.html:82
+#: metabrainz/templates/reports/financial_reports/index.html:83
+#: metabrainz/templates/reports/financial_reports/index.html:84
+#: metabrainz/templates/reports/financial_reports/index.html:85
+#: metabrainz/templates/reports/financial_reports/index.html:86
+#: metabrainz/templates/reports/financial_reports/index.html:87
+#: metabrainz/templates/reports/financial_reports/index.html:88
+#: metabrainz/templates/reports/financial_reports/index.html:89
+#: metabrainz/templates/reports/financial_reports/index.html:96
+#: metabrainz/templates/reports/financial_reports/index.html:100
+#: metabrainz/templates/reports/financial_reports/index.html:101
+#: metabrainz/templates/reports/financial_reports/index.html:102
+#: metabrainz/templates/reports/financial_reports/index.html:103
+#: metabrainz/templates/reports/financial_reports/index.html:107
+#: metabrainz/templates/reports/financial_reports/index.html:108
+#: metabrainz/templates/reports/financial_reports/index.html:109
+#: metabrainz/templates/reports/financial_reports/index.html:110
+#: metabrainz/templates/reports/financial_reports/index.html:111
+#: metabrainz/templates/reports/financial_reports/index.html:112
+#: metabrainz/templates/reports/financial_reports/index.html:113
+#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:115
+#: metabrainz/templates/reports/financial_reports/index.html:116
+#: metabrainz/templates/reports/financial_reports/index.html:117
+#: metabrainz/templates/reports/financial_reports/index.html:118
+#: metabrainz/templates/reports/financial_reports/index.html:125
+#: metabrainz/templates/reports/financial_reports/index.html:129
+#: metabrainz/templates/reports/financial_reports/index.html:130
+#: metabrainz/templates/reports/financial_reports/index.html:131
+#: metabrainz/templates/reports/financial_reports/index.html:132
+#: metabrainz/templates/reports/financial_reports/index.html:136
+#: metabrainz/templates/reports/financial_reports/index.html:137
+#: metabrainz/templates/reports/financial_reports/index.html:138
+#: metabrainz/templates/reports/financial_reports/index.html:139
+#: metabrainz/templates/reports/financial_reports/index.html:140
+#: metabrainz/templates/reports/financial_reports/index.html:141
+#: metabrainz/templates/reports/financial_reports/index.html:142
+#: metabrainz/templates/reports/financial_reports/index.html:143
+#: metabrainz/templates/reports/financial_reports/index.html:144
+#: metabrainz/templates/reports/financial_reports/index.html:145
+#: metabrainz/templates/reports/financial_reports/index.html:146
+#: metabrainz/templates/reports/financial_reports/index.html:147
+#: metabrainz/templates/reports/financial_reports/index.html:154
+#: metabrainz/templates/reports/financial_reports/index.html:158
+#: metabrainz/templates/reports/financial_reports/index.html:159
+#: metabrainz/templates/reports/financial_reports/index.html:160
+#: metabrainz/templates/reports/financial_reports/index.html:161
+#: metabrainz/templates/reports/financial_reports/index.html:165
+#: metabrainz/templates/reports/financial_reports/index.html:166
+#: metabrainz/templates/reports/financial_reports/index.html:167
+#: metabrainz/templates/reports/financial_reports/index.html:168
+#: metabrainz/templates/reports/financial_reports/index.html:169
+#: metabrainz/templates/reports/financial_reports/index.html:170
+#: metabrainz/templates/reports/financial_reports/index.html:171
+#: metabrainz/templates/reports/financial_reports/index.html:172
+#: metabrainz/templates/reports/financial_reports/index.html:173
+#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:175
+#: metabrainz/templates/reports/financial_reports/index.html:176
+#: metabrainz/templates/reports/financial_reports/index.html:183
+#: metabrainz/templates/reports/financial_reports/index.html:187
+#: metabrainz/templates/reports/financial_reports/index.html:188
+#: metabrainz/templates/reports/financial_reports/index.html:189
+#: metabrainz/templates/reports/financial_reports/index.html:190
+#: metabrainz/templates/reports/financial_reports/index.html:194
+#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:196
+#: metabrainz/templates/reports/financial_reports/index.html:197
+#: metabrainz/templates/reports/financial_reports/index.html:198
+#: metabrainz/templates/reports/financial_reports/index.html:199
+#: metabrainz/templates/reports/financial_reports/index.html:200
+#: metabrainz/templates/reports/financial_reports/index.html:201
+#: metabrainz/templates/reports/financial_reports/index.html:202
+#: metabrainz/templates/reports/financial_reports/index.html:203
+#: metabrainz/templates/reports/financial_reports/index.html:204
+#: metabrainz/templates/reports/financial_reports/index.html:205
+#: metabrainz/templates/reports/financial_reports/index.html:212
+#: metabrainz/templates/reports/financial_reports/index.html:216
+#: metabrainz/templates/reports/financial_reports/index.html:217
+#: metabrainz/templates/reports/financial_reports/index.html:218
+#: metabrainz/templates/reports/financial_reports/index.html:219
+#: metabrainz/templates/reports/financial_reports/index.html:223
+#: metabrainz/templates/reports/financial_reports/index.html:224
+#: metabrainz/templates/reports/financial_reports/index.html:225
+#: metabrainz/templates/reports/financial_reports/index.html:226
+#: metabrainz/templates/reports/financial_reports/index.html:227
+#: metabrainz/templates/reports/financial_reports/index.html:228
+#: metabrainz/templates/reports/financial_reports/index.html:229
+#: metabrainz/templates/reports/financial_reports/index.html:230
+#: metabrainz/templates/reports/financial_reports/index.html:231
+#: metabrainz/templates/reports/financial_reports/index.html:232
+#: metabrainz/templates/reports/financial_reports/index.html:233
+#: metabrainz/templates/reports/financial_reports/index.html:234
+#: metabrainz/templates/reports/financial_reports/index.html:241
+#: metabrainz/templates/reports/financial_reports/index.html:245
+#: metabrainz/templates/reports/financial_reports/index.html:246
+#: metabrainz/templates/reports/financial_reports/index.html:247
+#: metabrainz/templates/reports/financial_reports/index.html:248
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:253
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:255
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:258
+#: metabrainz/templates/reports/financial_reports/index.html:259
+#: metabrainz/templates/reports/financial_reports/index.html:260
+#: metabrainz/templates/reports/financial_reports/index.html:261
+#: metabrainz/templates/reports/financial_reports/index.html:262
+#: metabrainz/templates/reports/financial_reports/index.html:263
+#: metabrainz/templates/reports/financial_reports/index.html:270
+#: metabrainz/templates/reports/financial_reports/index.html:274
+#: metabrainz/templates/reports/financial_reports/index.html:275
+#: metabrainz/templates/reports/financial_reports/index.html:276
+#: metabrainz/templates/reports/financial_reports/index.html:277
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:282
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:284
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:287
+#: metabrainz/templates/reports/financial_reports/index.html:288
+#: metabrainz/templates/reports/financial_reports/index.html:289
+#: metabrainz/templates/reports/financial_reports/index.html:290
+#: metabrainz/templates/reports/financial_reports/index.html:291
+#: metabrainz/templates/reports/financial_reports/index.html:292
+#: metabrainz/templates/reports/financial_reports/index.html:299
+#: metabrainz/templates/reports/financial_reports/index.html:303
+#: metabrainz/templates/reports/financial_reports/index.html:304
+#: metabrainz/templates/reports/financial_reports/index.html:305
+#: metabrainz/templates/reports/financial_reports/index.html:306
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:311
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:313
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:316
+#: metabrainz/templates/reports/financial_reports/index.html:317
+#: metabrainz/templates/reports/financial_reports/index.html:318
+#: metabrainz/templates/reports/financial_reports/index.html:319
+#: metabrainz/templates/reports/financial_reports/index.html:320
+#: metabrainz/templates/reports/financial_reports/index.html:321
+#: metabrainz/templates/reports/financial_reports/index.html:328
+#: metabrainz/templates/reports/financial_reports/index.html:350
+msgid "profit &amp; loss"
+msgstr "winst &amp; en verlies"
+
+#: metabrainz/templates/reports/financial_reports/index.html:40
+#: metabrainz/templates/reports/financial_reports/index.html:69
+#: metabrainz/templates/reports/financial_reports/index.html:98
+#: metabrainz/templates/reports/financial_reports/index.html:127
+#: metabrainz/templates/reports/financial_reports/index.html:156
+#: metabrainz/templates/reports/financial_reports/index.html:185
+#: metabrainz/templates/reports/financial_reports/index.html:214
+#: metabrainz/templates/reports/financial_reports/index.html:243
+#: metabrainz/templates/reports/financial_reports/index.html:272
+#: metabrainz/templates/reports/financial_reports/index.html:301
+msgid "Quarterly reports"
+msgstr "Kwartaalverslagen"
+
+#: metabrainz/templates/reports/financial_reports/index.html:47
+#: metabrainz/templates/reports/financial_reports/index.html:76
+#: metabrainz/templates/reports/financial_reports/index.html:105
+#: metabrainz/templates/reports/financial_reports/index.html:134
+#: metabrainz/templates/reports/financial_reports/index.html:163
+#: metabrainz/templates/reports/financial_reports/index.html:192
+#: metabrainz/templates/reports/financial_reports/index.html:221
+#: metabrainz/templates/reports/financial_reports/index.html:250
+#: metabrainz/templates/reports/financial_reports/index.html:279
+#: metabrainz/templates/reports/financial_reports/index.html:308
+msgid "Monthly reports"
+msgstr "Maandverslagen"
+
+#: metabrainz/templates/reports/financial_reports/index.html:49
+#: metabrainz/templates/reports/financial_reports/index.html:78
+#: metabrainz/templates/reports/financial_reports/index.html:107
+#: metabrainz/templates/reports/financial_reports/index.html:136
+#: metabrainz/templates/reports/financial_reports/index.html:165
+#: metabrainz/templates/reports/financial_reports/index.html:194
+#: metabrainz/templates/reports/financial_reports/index.html:223
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:332
+#: metabrainz/templates/reports/financial_reports/index.html:354
+#: metabrainz/templates/reports/financial_reports/index.html:370
+msgid "December"
+msgstr "December"
+
+#: metabrainz/templates/reports/financial_reports/index.html:50
+#: metabrainz/templates/reports/financial_reports/index.html:79
+#: metabrainz/templates/reports/financial_reports/index.html:108
+#: metabrainz/templates/reports/financial_reports/index.html:137
+#: metabrainz/templates/reports/financial_reports/index.html:166
+#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:224
+#: metabrainz/templates/reports/financial_reports/index.html:253
+#: metabrainz/templates/reports/financial_reports/index.html:282
+#: metabrainz/templates/reports/financial_reports/index.html:311
+#: metabrainz/templates/reports/financial_reports/index.html:333
+#: metabrainz/templates/reports/financial_reports/index.html:355
+msgid "November"
+msgstr "November"
+
+#: metabrainz/templates/reports/financial_reports/index.html:51
+#: metabrainz/templates/reports/financial_reports/index.html:80
+#: metabrainz/templates/reports/financial_reports/index.html:109
+#: metabrainz/templates/reports/financial_reports/index.html:138
+#: metabrainz/templates/reports/financial_reports/index.html:167
+#: metabrainz/templates/reports/financial_reports/index.html:196
+#: metabrainz/templates/reports/financial_reports/index.html:225
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:334
+#: metabrainz/templates/reports/financial_reports/index.html:356
+msgid "October"
+msgstr "Oktober"
+
+#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:81
+#: metabrainz/templates/reports/financial_reports/index.html:110
+#: metabrainz/templates/reports/financial_reports/index.html:139
+#: metabrainz/templates/reports/financial_reports/index.html:168
+#: metabrainz/templates/reports/financial_reports/index.html:197
+#: metabrainz/templates/reports/financial_reports/index.html:226
+#: metabrainz/templates/reports/financial_reports/index.html:255
+#: metabrainz/templates/reports/financial_reports/index.html:284
+#: metabrainz/templates/reports/financial_reports/index.html:313
+#: metabrainz/templates/reports/financial_reports/index.html:335
+#: metabrainz/templates/reports/financial_reports/index.html:357
+msgid "September"
+msgstr "September"
+
+#: metabrainz/templates/reports/financial_reports/index.html:53
+#: metabrainz/templates/reports/financial_reports/index.html:82
+#: metabrainz/templates/reports/financial_reports/index.html:111
+#: metabrainz/templates/reports/financial_reports/index.html:140
+#: metabrainz/templates/reports/financial_reports/index.html:169
+#: metabrainz/templates/reports/financial_reports/index.html:198
+#: metabrainz/templates/reports/financial_reports/index.html:227
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:336
+#: metabrainz/templates/reports/financial_reports/index.html:358
+msgid "August"
+msgstr "Augustus"
+
+#: metabrainz/templates/reports/financial_reports/index.html:54
+#: metabrainz/templates/reports/financial_reports/index.html:83
+#: metabrainz/templates/reports/financial_reports/index.html:112
+#: metabrainz/templates/reports/financial_reports/index.html:141
+#: metabrainz/templates/reports/financial_reports/index.html:170
+#: metabrainz/templates/reports/financial_reports/index.html:199
+#: metabrainz/templates/reports/financial_reports/index.html:228
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:337
+#: metabrainz/templates/reports/financial_reports/index.html:359
+msgid "July"
+msgstr "Juli"
+
+#: metabrainz/templates/reports/financial_reports/index.html:55
+#: metabrainz/templates/reports/financial_reports/index.html:84
+#: metabrainz/templates/reports/financial_reports/index.html:113
+#: metabrainz/templates/reports/financial_reports/index.html:142
+#: metabrainz/templates/reports/financial_reports/index.html:171
+#: metabrainz/templates/reports/financial_reports/index.html:200
+#: metabrainz/templates/reports/financial_reports/index.html:229
+#: metabrainz/templates/reports/financial_reports/index.html:258
+#: metabrainz/templates/reports/financial_reports/index.html:287
+#: metabrainz/templates/reports/financial_reports/index.html:316
+#: metabrainz/templates/reports/financial_reports/index.html:338
+#: metabrainz/templates/reports/financial_reports/index.html:360
+msgid "June"
+msgstr "Juni"
+
+#: metabrainz/templates/reports/financial_reports/index.html:56
+#: metabrainz/templates/reports/financial_reports/index.html:85
+#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:143
+#: metabrainz/templates/reports/financial_reports/index.html:172
+#: metabrainz/templates/reports/financial_reports/index.html:201
+#: metabrainz/templates/reports/financial_reports/index.html:230
+#: metabrainz/templates/reports/financial_reports/index.html:259
+#: metabrainz/templates/reports/financial_reports/index.html:288
+#: metabrainz/templates/reports/financial_reports/index.html:317
+#: metabrainz/templates/reports/financial_reports/index.html:339
+#: metabrainz/templates/reports/financial_reports/index.html:361
+msgid "May"
+msgstr "Mei"
+
+#: metabrainz/templates/reports/financial_reports/index.html:57
+#: metabrainz/templates/reports/financial_reports/index.html:86
+#: metabrainz/templates/reports/financial_reports/index.html:115
+#: metabrainz/templates/reports/financial_reports/index.html:144
+#: metabrainz/templates/reports/financial_reports/index.html:173
+#: metabrainz/templates/reports/financial_reports/index.html:202
+#: metabrainz/templates/reports/financial_reports/index.html:231
+#: metabrainz/templates/reports/financial_reports/index.html:260
+#: metabrainz/templates/reports/financial_reports/index.html:289
+#: metabrainz/templates/reports/financial_reports/index.html:318
+#: metabrainz/templates/reports/financial_reports/index.html:340
+#: metabrainz/templates/reports/financial_reports/index.html:362
+msgid "April"
+msgstr "April"
+
+#: metabrainz/templates/reports/financial_reports/index.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:87
+#: metabrainz/templates/reports/financial_reports/index.html:116
+#: metabrainz/templates/reports/financial_reports/index.html:145
+#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:203
+#: metabrainz/templates/reports/financial_reports/index.html:232
+#: metabrainz/templates/reports/financial_reports/index.html:261
+#: metabrainz/templates/reports/financial_reports/index.html:290
+#: metabrainz/templates/reports/financial_reports/index.html:319
+#: metabrainz/templates/reports/financial_reports/index.html:341
+#: metabrainz/templates/reports/financial_reports/index.html:363
+msgid "March"
+msgstr "Maart"
+
+#: metabrainz/templates/reports/financial_reports/index.html:59
+#: metabrainz/templates/reports/financial_reports/index.html:88
+#: metabrainz/templates/reports/financial_reports/index.html:117
+#: metabrainz/templates/reports/financial_reports/index.html:146
+#: metabrainz/templates/reports/financial_reports/index.html:175
+#: metabrainz/templates/reports/financial_reports/index.html:204
+#: metabrainz/templates/reports/financial_reports/index.html:233
+#: metabrainz/templates/reports/financial_reports/index.html:262
+#: metabrainz/templates/reports/financial_reports/index.html:291
+#: metabrainz/templates/reports/financial_reports/index.html:320
+#: metabrainz/templates/reports/financial_reports/index.html:342
+#: metabrainz/templates/reports/financial_reports/index.html:364
+msgid "February"
+msgstr "Februari"
+
+#: metabrainz/templates/reports/financial_reports/index.html:60
+#: metabrainz/templates/reports/financial_reports/index.html:89
+#: metabrainz/templates/reports/financial_reports/index.html:118
+#: metabrainz/templates/reports/financial_reports/index.html:147
+#: metabrainz/templates/reports/financial_reports/index.html:176
+#: metabrainz/templates/reports/financial_reports/index.html:205
+#: metabrainz/templates/reports/financial_reports/index.html:234
+#: metabrainz/templates/reports/financial_reports/index.html:263
+#: metabrainz/templates/reports/financial_reports/index.html:292
+#: metabrainz/templates/reports/financial_reports/index.html:321
+#: metabrainz/templates/reports/financial_reports/index.html:343
+#: metabrainz/templates/reports/financial_reports/index.html:365
+msgid "January"
+msgstr "Januari"
+
+#: metabrainz/templates/reports/financial_reports/index.html:330
+#: metabrainz/templates/reports/financial_reports/index.html:352
+msgid "Monthly balance sheets"
+msgstr "Maandelijkse balansen"
+
+#: metabrainz/templates/users/account-type.html:3
+msgid "Support"
+msgstr "Steun ons"
+
+#: metabrainz/templates/users/account-type.html:6
+msgid "Support us"
+msgstr "Steun ons"
+
+#: metabrainz/templates/users/account-type.html:9
+#, python-format
+msgid ""
+"For commercial use of our data or to get access to the\n"
+"    <a href=\"%(mb_data_feed)s\">MusicBrainz Live Data Feed</a>,\n"
+"    please choose between non-commercial and commercial use below. You will need a\n"
+"    <a href=\"%(mb_register_url)s\">MusicBrainz account</a> with a verified email address to sign-up."
+msgstr ""
+"Om onze gegevens voor commerciële doeleinden te gebruiken of om toegang tot "
+"de <a href=\"%(mb_data_feed)s\">live gegevensfeed van MusicBrainz</a> te "
+"krijgen, moet je hieronder kiezen tussen commercieel en niet-commercieel "
+"gebruik. Om je te registreren heb je een <a "
+"href=\"%(mb_register_url)s\">MusicBrainz-account</a> met een geverifieerd "
+"e-mailadres nodig."
+
+#: metabrainz/templates/users/account-type.html:16
+msgid ""
+"<strong>Open source developers and non-profits</strong>: Please sign up as a\n"
+"    commercial user using the free non-profit tier below. This allows us to give you credit\n"
+"    for your open source project or your non-profit."
+msgstr ""
+"<strong>Ontwikkelaars van opensourcesoftware en non-profits</strong>: "
+"registreer je hieronder als commercieel gebruiker met het non-profitniveau. "
+"Op die manier kunnen we je opensourceproject of organisatie vermelden."
+
+#: metabrainz/templates/users/account-type.html:21
+msgid "Non-commercial / Personal"
+msgstr "Niet-commercieel / persoonlijk"
+
+#: metabrainz/templates/users/account-type.html:24
+#, python-format
+msgid ""
+"Non-commercial use includes personal use of our data sets and use by companies that\n"
+"    don't anticipate earning more than $500 in a given year. If you are a pre-revenue\n"
+"    start-up and expect to have more than $500 of revenue in the future, please sign up\n"
+"    with a commercial account &mdash; see below for more details. Please\n"
+"    <a href=\"%(donate_url)s\">consider making a donation</a> to support\n"
+"    our efforts!"
+msgstr ""
+"Onder niet-commercieel gebruik verstaan we persoonlijk gebruik van onze "
+"gegevens en het gebruik door bedrijven die verwachten niet meer dan $500 per"
+" jaar te verdienen. Als je een startende onderneming hebt die nog geen winst"
+" maakt, maar in de toekomst verwacht meer dan $500 per jaar winst te gaan "
+"maken, moet je een commercieel account registreren. Zie hieronder voor meer "
+"informatie. Overweeg <a href=\"%(donate_url)s\">om een donatie te doen</a> "
+"om onze inspanningen te steunen!"
+
+#: metabrainz/templates/users/account-type.html:34
+#: metabrainz/templates/users/signup-non-commercial.html:25
+msgid "Non-commercial"
+msgstr "Niet-commercieel"
+
+#: metabrainz/templates/users/account-type.html:37
+#: metabrainz/templates/users/signup-commercial.html:25
+msgid "Commercial"
+msgstr "Commercieel"
+
+#: metabrainz/templates/users/account-type.html:40
+msgid ""
+"If you are a company with more than $500 income in a year, please select a support\n"
+"    tier below that fits your current situation. We welcome working with companies that\n"
+"    are just getting started and we're happy for your support for MetaBrainz to grow as\n"
+"    you grow. If you would like to use our data, but are not ready to state this publicly\n"
+"    yet, please sign up for the <em>Stealth start up</em> tier; we will keep your\n"
+"    data-usage confidential and contact you to discuss your future plans."
+msgstr ""
+"Als je een bedrijf hebt met meer dan $500 aan inkomsten per jaar, moet je "
+"een ondersteuningsniveau selecteren dat bij je huidige situatie past. We "
+"werken graag samen met startende bedrijven en we zijn blij met je steun, "
+"zodat we samen kunnen groeien. Als je onze data wil gebruiken, maar dit nog "
+"niet openbaar wil maken, kan je je als <em>stealth startup</em> registeren. "
+"Dan houden we je gebruik van onze data geheim en nemen we contact met je op "
+"om je toekomstplannen te bespreken."
+
+#: metabrainz/templates/users/account-type.html:59
+#: metabrainz/templates/users/account-type.html:106
+#: metabrainz/templates/users/signup-commercial.html:29
+#, python-format
+msgid "$%(tier_price)s/month and up"
+msgstr "vanaf $%(tier_price)s per maand"
+
+#: metabrainz/templates/users/account-type.html:63
+#: metabrainz/templates/users/account-type.html:109
+msgid "More info"
+msgstr "Meer informatie"
+
+#: metabrainz/templates/users/account-type.html:79
+msgid "Some of our Unicorn members"
+msgstr "Een paar van onze Eenhoorns"
+
+#: metabrainz/templates/users/account-type.html:90
+msgid "See all our supporters"
+msgstr "Al onze partners"
+
+#: metabrainz/templates/users/account-type.html:96
+msgid "View all tiers"
+msgstr "Bekijk alle niveaus"
+
+#: metabrainz/templates/users/account-type.html:117
+msgid "View featured tiers"
+msgstr "Bekijk de belangrijkste niveaus"
+
+#: metabrainz/templates/users/account-type.html:124
+#, python-format
+msgid ""
+"If you are not sure which tier to pick, please\n"
+"      <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+"<a href=\"%(contact_url)s\">Neem contact met ons op</a> als je niet zeker "
+"weet welk niveau je moet kiezen."
+
+#: metabrainz/templates/users/bad-standing.html:3
+#: metabrainz/templates/users/bad-standing.html:6
+msgid "Bad standing"
+msgstr "Slechte naam"
+
+#: metabrainz/templates/users/bad-standing.html:8
+msgid ""
+"Companies that are in <i>bad standing</i> have previously agreed to support\n"
+"  MetaBrainz and are using one of our data-sets, but are behind in their\n"
+"  payments by more than 60 days."
+msgstr ""
+"Bedrijven met een <i>slechte naam</i> hebben in het verleden afgesproken om "
+"MetaBrainz te steunen en gebruiken onze data, maar lopen meer dan 60 dagen "
+"achter met betalen."
+
+#: metabrainz/templates/users/mb-login.html:3
+#: metabrainz/templates/users/mb-login.html:6
+msgid "Log in"
+msgstr "Aanmelden"
+
+#: metabrainz/templates/users/mb-login.html:8
+msgid "To log in you need to have a MusicBrainz account."
+msgstr "Om je aan te melden, heb je een MusicBrainz-account nodig."
+
+#: metabrainz/templates/users/mb-login.html:13
+msgid "Log in with MusicBrainz"
+msgstr "Met MusicBrainz aanmelden"
+
+#: metabrainz/templates/users/mb-signup.html:9
+msgid ""
+"Please sign in with the MusicBrainz account that will be associated with\n"
+"    your MetaBrainz profile. If you don't have a MusicBrainz account or wish to\n"
+"    use a new MusicBrainz account, you can register on the page linked below."
+msgstr ""
+"Meld je aan met het MusicBrainz-account dat je voor je MetaBrainz-profiel "
+"wil gebruiken. Als je nog geen MusicBrainz-account hebt of een nieuwe "
+"MusicBrainz-account wil gebruiken, kan je je via die pagina ook registreren."
+
+#: metabrainz/templates/users/mb-signup.html:17
+msgid "Sign up with MusicBrainz"
+msgstr "Aanmelden met MusicBrainz"
+
+#: metabrainz/templates/users/profile-edit.html:3
+msgid "Edit"
+msgstr "Bewerken"
+
+#: metabrainz/templates/users/profile-edit.html:3
+#: metabrainz/templates/users/profile-edit.html:6
+#: metabrainz/templates/users/profile.html:3
+#: metabrainz/templates/users/profile.html:6
+msgid "Your Profile"
+msgstr "Je profiel"
+
+#: metabrainz/templates/users/profile-edit.html:7
+#: metabrainz/templates/users/profile.html:51
+msgid "Edit contact information"
+msgstr "Contactinformatie bewerken"
+
+#: metabrainz/templates/users/profile-edit.html:29
+msgid "Update"
+msgstr "Bijwerken"
+
+#: metabrainz/templates/users/profile.html:27
+msgid "Organization information"
+msgstr "Informatie over de organisatie"
+
+#: metabrainz/templates/users/profile.html:29
+#: metabrainz/templates/users/profile.html:46
+msgid "Name:"
+msgstr "Naam:"
+
+#: metabrainz/templates/users/profile.html:31
+msgid "Website URL:"
+msgstr "Website:"
+
+#: metabrainz/templates/users/profile.html:33
+msgid "API URL:"
+msgstr "API-URL:"
+
+#: metabrainz/templates/users/profile.html:37
+#, python-format
+msgid ""
+"Please <a href=\"%(contact_url)s\">contact us</a>\n"
+"          if you wish for us to update this information."
+msgstr ""
+"<a href=\"%(contact_url)s\">Neem contact met ons op</a> als we deze "
+"informatie moeten bijwerken."
+
+#: metabrainz/templates/users/profile.html:44
+msgid "Contact information"
+msgstr "Contactinformatie"
+
+#: metabrainz/templates/users/profile.html:47
+msgid "Email:"
+msgstr "E-mail:"
+
+#: metabrainz/templates/users/profile.html:59
+msgid "Data use permission granted"
+msgstr "Toestemming voor het gebruik van onze data verleend"
+
+#: metabrainz/templates/users/profile.html:61
+msgid ""
+"You have permission to use any of the data published by the MetaBrainz\n"
+"        Foundation. This includes data dumps released under a Creative Commons\n"
+"        non-commercial license. Thank you for your support!"
+msgstr ""
+"Je hebt toestemming om alle door de MetaBrainz Foundation gepubliceerde data"
+" te gebruiken. Dit geldt ook voor datadumps die onder een niet-commerciële "
+"Creative Commons-licentie zijn vrijgegeven. Bedankt voor je steun!"
+
+#: metabrainz/templates/users/profile.html:66
+msgid ""
+"Please note that if your support falls behind by more than 60 days, this\n"
+"        permission may be withdrawn. You can always check your current permission\n"
+"        status on this page."
+msgstr ""
+"Houd er rekening mee dat we de toestemming kunnen intrekken als je meer dan "
+"60 dagen achterloopt met betalen. Je kan altijd op deze pagina zien wat je "
+"status is."
+
+#: metabrainz/templates/users/profile.html:71
+msgid "No data use permission granted"
+msgstr "Geen toestemming voor het gebruik van onze data verleend"
+
+#: metabrainz/templates/users/profile.html:73
+msgid ""
+"You <strong>DO NOT</strong> currently have permission to use data\n"
+"        released under a Creative Commons non-commercial license."
+msgstr ""
+"Je hebt nu <strong>GEEN</strong> toestemming om data met een niet-"
+"commerciële Creative Commons-licentie te gebruiken."
+
+#: metabrainz/templates/users/profile.html:77
+msgid "Reason:"
+msgstr "Reden:"
+
+#: metabrainz/templates/users/profile.html:79
+#, python-format
+msgid ""
+"Your account is in bad standing, which means that you are more than\n"
+"          60 days behind in support payments. If you think this is a mistake,\n"
+"          please <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+"Je account heeft een slechte naam, wat betekent dat je meer dan 60 dagen "
+"achterloopt met betalen. Als je denkt dat dit een fout is, kan je <a "
+"href=\"%(contact_url)s\">contact met ons opnemen</a>."
+
+#: metabrainz/templates/users/profile.html:83
+msgid "Your application for using the Live Data Feed has been rejected."
+msgstr "Je aanvraag voor het gebruiken van de live gegevensfeed is afgewezen."
+
+#: metabrainz/templates/users/profile.html:85
+msgid "Your application for using the Live Data Feed is still pending."
+msgstr "Je aanvraag voor het gebruiken van de live gegevensfeed loopt nog."
+
+#: metabrainz/templates/users/profile.html:87
+msgid "Your application for using the Live Data Feed is in the waiting list."
+msgstr ""
+"Je aanvraag voor het gebruiken van de live gegevensfeed staat op de "
+"wachtlijst."
+
+#: metabrainz/templates/users/profile.html:89
+msgid "Unknown. :("
+msgstr "Onbekend. :-("
+
+#: metabrainz/templates/users/profile.html:96
+msgid "Access token"
+msgstr "Toegangstoken"
+
+#: metabrainz/templates/users/profile.html:99
+msgid "Generate new token"
+msgstr "Nieuwe token aanmaken"
+
+#: metabrainz/templates/users/profile.html:102
+msgid ""
+"This access token should be considered private. Don't check this token\n"
+"      into any publicly visible version control systems and similar places.\n"
+"      If the token has been exposed, you should immediately generate a new one!\n"
+"      When you generate a new token, your current token is revoked."
+msgstr ""
+"Deze toegangstoken moet als persoonlijk worden beschouwd. Plaats deze token "
+"niet in openbare versiebeheersystemen of andere openbare locaties. Als de "
+"token zichtbaar is geweest, moet je onmiddellijk een nieuwe aanmaken! Als je"
+" een nieuwe token aanmaakt, wordt de oude ingetrokken."
+
+#: metabrainz/templates/users/profile.html:107
+#, python-format
+msgid ""
+"See the <a href=\"%(api_docs_url)s\">API documentation</a> for more "
+"information."
+msgstr ""
+"Zie de <a href=\"%(api_docs_url)s\">API-documentatie</a> voor meer "
+"informatie."
+
+#: metabrainz/templates/users/profile.html:121
+msgid ""
+"Are you sure you want to generate new access token? Current token will be "
+"revoked!"
+msgstr ""
+"Weet je zeker dat je een nieuwe toegangstoken wil aanmaken? De oude wordt "
+"dan ingetrokken!"
+
+#: metabrainz/templates/users/profile.html:131
+msgid "Failed to generate new access token!"
+msgstr "Het aanmaken van een nieuwe toegangstoken is mislukt!"
+
+#: metabrainz/templates/users/signup-commercial.html:6
+msgid "Sign up <small>Commercial</small>"
+msgstr "Registreren als <small>commerciële gebruiker</small>"
+
+#: metabrainz/templates/users/signup-commercial.html:9
+msgid ""
+"<strong>Note:</strong> Signing up for any tier other than the <i>Stealth startup</i> tier\n"
+"    will publicly list your company on this web site. However, we will not publish any of\n"
+"    your private details."
+msgstr ""
+"<strong>Let op:</strong> als je je registreert voor een ander niveau dan de "
+"<i>stealth startup</i>, wordt de naam van je bedrijf op deze website "
+"gepubliceerd. Maar we zullen geen persoonsgegevens publiceren."
+
+#: metabrainz/templates/users/signup-commercial.html:24
+#: metabrainz/templates/users/signup-non-commercial.html:24
+msgid "Account type"
+msgstr "Soort account"
+
+#: metabrainz/templates/users/signup-commercial.html:26
+msgid "Selected tier"
+msgstr "Geselecteerde niveau"
+
+#: metabrainz/templates/users/signup-commercial.html:32
+msgid "Change account type or tier"
+msgstr "Soort of niveau van je account wijzigen"
+
+#: metabrainz/templates/users/signup-commercial.html:46
+#, python-format
+msgid ""
+"If you don't have an organization name, you probably want to sign up as a\n"
+"          <a href=\"%(signup_url)s\">non-commercial / personal</a> user."
+msgstr ""
+"Als je organisatie geen naam heeft, kan je je waarschijnlijk beter als <a "
+"href=\"%(signup_url)s\">niet-commerciële of persoonlijke</a> gebruiker "
+"registreren."
+
+#: metabrainz/templates/users/signup-commercial.html:55
+#: metabrainz/templates/users/signup-non-commercial.html:33
+msgid "MusicBrainz Account"
+msgstr "MusicBrainz-account"
+
+#: metabrainz/templates/users/signup-commercial.html:78
+msgid "(preferably in SVG format)"
+msgstr "(bij voorkeur als SVG-bestand)"
+
+#: metabrainz/templates/users/signup-commercial.html:81
+msgid ""
+"Image should be about 250 pixels wide on a white or transparent\n"
+"          background. We will host it on our site."
+msgstr ""
+"De afbeelding moet ongeveer 250 pixels breed zijn en een witte of "
+"transparante achtergrond hebben. We hosten de afbeelding zelf."
+
+#: metabrainz/templates/users/signup-commercial.html:92
+msgid ""
+"URL to where developers can use your APIs using MusicBrainz IDs, if "
+"available.."
+msgstr ""
+"URL van je API’s die van MusicBrainz-ID’s gebruik maken, als je die hebt …"
+
+#: metabrainz/templates/users/signup-commercial.html:103
+#: metabrainz/templates/users/signup-non-commercial.html:62
+msgid "(max 150 characters)"
+msgstr "(maximaal 150 tekens)"
+
+#: metabrainz/templates/users/signup-commercial.html:109
+#, python-format
+msgid ""
+"If you would like to support us with more than $%(tier_price)d,\n"
+"        please enter the actual amount here:"
+msgstr ""
+"Als je ons voor meer dan $%(tier_price)d wil ondersteunen, kan je het "
+"precieze bedrag hier invullen:"
+
+#: metabrainz/templates/users/signup-commercial.html:120
+msgid "Billing address"
+msgstr "Factuuradres"
+
+#: metabrainz/templates/users/signup-commercial.html:183
+msgid ""
+"I agree to treat my access token as a secret and will not share\n"
+"            this token publicly or commit it to a publicly visible source code repository."
+msgstr ""
+"Ik beloof mijn toegangstoken geheim te houden en deze niet openbaar te delen"
+" of in een openbare opslagplaats voor broncodes te plaatsen."
+
+#: metabrainz/templates/users/signup-commercial.html:192
+msgid ""
+"The following information will be shown publicly: organization name,\n"
+"        logo, website and API URLs, data usage description."
+msgstr ""
+"De volgende informatie zal openbaar worden gemakt: naam van de organisatie, "
+"logo, URL’s van de website en API en een beschrijving van het datagebruik."
+
+#: metabrainz/templates/users/signup-commercial.html:199
+msgid ""
+"We'll send you more details about payment process once your application\n"
+"        is approved."
+msgstr ""
+"Zodra je registratie is goedgekeurd, zullen we je meer informatie over het "
+"betaalproces sturen."
+
+#: metabrainz/templates/users/signup-non-commercial.html:6
+msgid "Sign up <small>non-commercial</small>"
+msgstr "Registreren als <small>niet-commerciële gebruiker</small>"
+
+#: metabrainz/templates/users/signup-non-commercial.html:9
+msgid ""
+"Please be aware that misuse of the non-commercial service for commercial purposes will\n"
+"    result in us revoking your access token and then billing you for your commercial use of our\n"
+"    Live Data Feed."
+msgstr ""
+"Let wel dat het voor commerciële doeleinden misbruiken van een niet-"
+"commerciële account ertoe zal leiden dat we je toegangstoken zullen "
+"intrekken en het commercieel gebruik van onze live gegevensfeed in rekening "
+"zullen brengen."
+
+#: metabrainz/templates/users/signup-non-commercial.html:27
+msgid "Change account type"
+msgstr "Soort account wijzigen"
+
+#: metabrainz/templates/users/signup-non-commercial.html:42
+#: metabrainz/users/forms.py:69
+msgid "Name"
+msgstr "Naam"
+
+#: metabrainz/templates/users/signup-non-commercial.html:49
+#: metabrainz/users/forms.py:72
+msgid "Email"
+msgstr "E-mail"
+
+#: metabrainz/templates/users/signup-non-commercial.html:72
+msgid ""
+"I agree to use the Live Data Feed for non-commercial (less than $500\n"
+"            income per year) or personal uses only. I also agree to treat my access\n"
+"            token as a secret and will not share this token publicly or commit it\n"
+"            to a source code repository."
+msgstr ""
+"Ik beloof dat ik de live gegevensfeed voor alleen niet-commercieel gebruik "
+"(minder dan $500 aan inkomsten per jaar) zal gebruiken. Ik beloof ook dat ik"
+" mijn toegangstoken geheim zal houden en niet openbaar zal delen of in een "
+"openbare opslagplaats voor broncodes zal plaatsen."
+
+#: metabrainz/templates/users/supporters-list.html:9
+#, python-format
+msgid ""
+"The following organizations make use of the data-sets published by MetaBrainz and\n"
+"    are supporting us financially or through some other reciprocal agreement. There are also\n"
+"    organizations that make use of our data that have explicitly declined to support us. There\n"
+"    may also be other organizations making use of our data that we don't know about yet. If you\n"
+"    know of a company using our data, please <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+"De volgende organisaties gebruiken door MetaBrainz gepubliceerde gegevens en"
+" ondersteunen ons financieel of met een andere afgesproken tegenprestatie. "
+"Er zijn ook organisaties die onze gegevens gebruiken maar weigeren om ons te"
+" steunen, en organisaties die onze gegevens gebruiken zonder dat we het "
+"weten. <a href=\"%(contact_url)s\">Neem contact met ons op</a> als je een "
+"organisatie kent die onze gegevens gebruikt."
+
+#: metabrainz/templates/users/supporters-list.html:21
+#: metabrainz/templates/users/tier.html:3
+#: metabrainz/templates/users/tier.html:6
+#, python-format
+msgid "%(tier_name)s tier"
+msgstr "%(tier_name)s-niveau"
+
+#: metabrainz/templates/users/supporters-list.html:30
+#: metabrainz/templates/users/tier.html:25
+msgid "This user has bad standing"
+msgstr "Deze gebruiker heeft een slechte naam"
+
+#: metabrainz/templates/users/tier.html:13
+msgid "Sign up for this tier"
+msgstr "Registreer je voor dit niveau"
+
+#: metabrainz/templates/users/tier.html:19
+msgid "Supporters on this tier"
+msgstr "Partners op dit niveau"
+
+#: metabrainz/users/forms.py:14
+msgid "Contact name is required!"
+msgstr "De naam van de contactpersoon is verplicht!"
+
+#: metabrainz/users/forms.py:15
+msgid "Email address is required!"
+msgstr "Het e-mailadres is verplicht!"
+
+#: metabrainz/users/forms.py:16
+msgid "How are you using our data?"
+msgstr "Hoe gebruik je onze data?"
+
+#: metabrainz/users/forms.py:17
+msgid "Please, tell us how you (will) use our data."
+msgstr "Vertel ons hoe je onze data (gaat) gebruiken."
+
+#: metabrainz/users/forms.py:18
+msgid "Please, limit usage description to 150 characters."
+msgstr "De beschrijving van het gebruik mag maximaal 150 tekens zijn."
+
+#: metabrainz/users/forms.py:20
+msgid "You need to accept the agreement!"
+msgstr "Je moet de overeenkomst accepteren!"
+
+#: metabrainz/users/forms.py:35
+msgid "Organization name"
+msgstr "Naam van de organisatie"
+
+#: metabrainz/users/forms.py:36
+msgid "You need to specify the name of your organization."
+msgstr "Je moet de naam van je organisatie opgeven."
+
+#: metabrainz/users/forms.py:38
+msgid "Organization description"
+msgstr "Beschrijving van de organisatie"
+
+#: metabrainz/users/forms.py:39
+msgid "You need to provide description of your organization."
+msgstr "Je moet een beschrijving van je organisatie opgeven."
+
+#: metabrainz/users/forms.py:42
+msgid "Website URL"
+msgstr "Website:"
+
+#: metabrainz/users/forms.py:43
+msgid "You need to specify website of the organization."
+msgstr "Je moet de website van je organisatie opgeven."
+
+#: metabrainz/users/forms.py:45
+msgid "Logo image URL"
+msgstr "Logo-URL:"
+
+#: metabrainz/users/forms.py:46
+msgid "API URL"
+msgstr "API-URL:"
+
+#: metabrainz/users/forms.py:48
+msgid "Street"
+msgstr "Straatnaam"
+
+#: metabrainz/users/forms.py:49
+msgid "You need to specify street."
+msgstr "Je moet een straatnaam opgeven."
+
+#: metabrainz/users/forms.py:51
+msgid "City"
+msgstr "Stad"
+
+#: metabrainz/users/forms.py:52
+msgid "You need to specify city."
+msgstr "Je moet een stad opgeven."
+
+#: metabrainz/users/forms.py:54
+msgid "State / Province"
+msgstr "Staat of provincie"
+
+#: metabrainz/users/forms.py:55
+msgid "You need to specify state/province."
+msgstr "Je moet een staat of provincie opgeven."
+
+#: metabrainz/users/forms.py:57
+msgid "Postcode"
+msgstr "Postcode"
+
+#: metabrainz/users/forms.py:58
+msgid "You need to specify postcode."
+msgstr "Je moet een postcode opgeven."
+
+#: metabrainz/users/forms.py:60
+msgid "Country"
+msgstr "Land"
+
+#: metabrainz/users/forms.py:61
+msgid "You need to specify country."
+msgstr "Je moet een land opgeven."
+
+#: metabrainz/users/forms.py:70
+msgid "Contact name field is empty."
+msgstr "De naam van de contactpersoon is leeg."
+
+#: metabrainz/users/forms.py:74
+msgid "Email field is not a valid email address."
+msgstr "Het e-mailadres is niet geldig."
+
+#: metabrainz/users/forms.py:75
+msgid "Contact email field is empty."
+msgstr "Het e-mailadres van de contactpersoon is leeg."
+
+#: metabrainz/users/views.py:48
+msgid "Can't find tier with a specified ID."
+msgstr "Een niveau met dit ID kan niet worden gevonden."
+
+#: metabrainz/users/views.py:62 metabrainz/users/views.py:68
+msgid "Please select account type to sign up."
+msgstr "Selecteer een soort account om je te registreren."
+
+#: metabrainz/users/views.py:85
+msgid "You need to choose support tier before signing up!"
+msgstr "Voordat je je registreert moet je een ondersteuningsniveau kiezen!"
+
+#: metabrainz/users/views.py:89
+msgid "You need to choose existing tier before signing up!"
+msgstr "Voordat je je registreert moet je een bestaand niveau kiezen!"
+
+#: metabrainz/users/views.py:105
+msgid ""
+"Custom amount must be more than threshold amountfor selected tier or equal "
+"to it!"
+msgstr ""
+"Het zelf gekozen bedrag moet even hoog of hoger zijn dan het minimumbedrag "
+"voor het geselecteerde niveau!"
+
+#: metabrainz/users/views.py:138
+msgid ""
+"Thanks for signing up! Your application will be reviewed soon. We will send "
+"you updates via email."
+msgstr ""
+"Bedankt voor je registratie! Je registratie wordt binnenkort behandeld. We "
+"zullen je per e-mail op de hoogte houden."
+
+#: metabrainz/users/views.py:152 metabrainz/users/views.py:199
+msgid ""
+"Failed to send welcome email to you. We are looking into it. Sorry for "
+"inconvenience!"
+msgstr ""
+"Het is ons niet gelukt om je een welkomstmail te sturen. We gaan het "
+"oplossen. Excuses voor het ongemak!"
+
+#: metabrainz/users/views.py:157 metabrainz/users/views.py:204
+msgid "You already have a MetaBrainz account!"
+msgstr "Je hebt al een MetaBrainz-account!"
+
+#: metabrainz/users/views.py:188
+msgid "Thanks for signing up!"
+msgstr "Bedankt voor je registratie!"
+
+#: metabrainz/users/views.py:223
+msgid "Login failed!"
+msgstr "Aanmelden mislukt!"
+
+#: metabrainz/users/views.py:226
+msgid "Authorization code is missing!"
+msgstr "De machtigingscode ontbreekt!"
+
+#: metabrainz/users/views.py:270
+msgid "Can't generate new token unless account is active."
+msgstr "We kunnen geen nieuwe token aanmaken als je account niet actief is."
