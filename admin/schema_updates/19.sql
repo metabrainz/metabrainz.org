@@ -1,7 +1,7 @@
 BEGIN;
 
 ALTER TABLE "user" RENAME TO supporter;
-ALTER TABLE dataseet_user RENAME TO dataset_supporter;
+ALTER TABLE dataset_user RENAME TO dataset_supporter;
 
 ALTER TABLE dataset_supporter RENAME COLUMN user_id TO supporter_id;
 ALTER TABLE token_log RENAME COLUMN user_id TO supporter_id;
@@ -14,4 +14,4 @@ ALTER TABLE token_log RENAME CONSTRAINT token_log_user_id_fkey TO token_log_supp
 ALTER TABLE supporter RENAME CONSTRAINT user_pkey TO supporter_pkey;
 ALTER TABLE dataset_supporter RENAME CONSTRAINT dataset_user_pkey TO dataset_supporter_pkey;
 
-END;
+COMMIT;
