@@ -33,7 +33,7 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assert404(self.client.get(url_for('supporters.tier', tier_id=t.id + 1)))
 
     def test_signup(self):
-        self.assert200(self.client.get(url_for('supporters.signup')))
+        self.assert200(self.client.get(url_for('users.signup')))
 
     def test_signup_commercial(self):
         resp = self.client.get(url_for('supporters.signup_commercial'))
@@ -77,10 +77,10 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertStatus(self.client.get(url_for('supporters.regenerate_token')), 405)
 
     def test_login(self):
-        self.assert200(self.client.get(url_for('supporters.login')))
+        self.assert200(self.client.get(url_for('users.login')))
 
     def test_logout(self):
-        self.assertStatus(self.client.get(url_for('supporters.logout')), 302)
+        self.assertStatus(self.client.get(url_for('users.logout')), 302)
 
     def test_bad_standing(self):
         self.assert200(self.client.get(url_for('supporters.bad_standing')))

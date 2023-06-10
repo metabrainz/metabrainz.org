@@ -4,6 +4,7 @@ email_validator==2.1.1
 Flask==3.0.2
 Flask-Admin==1.6.1
 Flask-Babel==4.0.0
+Flask-Bcrypt==1.0.1
 Flask-DebugToolbar@git+https://github.com/amCap1712/flask-debugtoolbar.git@f42bb238cd3fbc79c51b93c341164c2be820025e
 Flask-Login==0.6.3
 Flask-SQLAlchemy==3.0.5
