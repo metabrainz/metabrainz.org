@@ -16,6 +16,7 @@ from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.supporter import musicbrainz_login, login_forbidden
 from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
     NonCommercialSupporterEditForm
+from metabrainz.user.forms import UserLoginForm, UserSignupForm
 
 supporters_bp = Blueprint('supporters', __name__)
 
@@ -54,7 +55,6 @@ def tier(tier_id):
         raise NotFound(gettext("Can't find tier with a specified ID."))
     return render_template('supporters/tier.html', tier=t)
 
-
 @supporters_bp.route('/signup')
 @login_forbidden
 def signup():
@@ -63,19 +63,27 @@ def signup():
         # Show template with a link to MusicBrainz OAuth page
         return render_template('supporters/mb-signup.html')
 
-    account_type = session.fetch_data(SESSION_KEY_ACCOUNT_TYPE)
-    if not account_type:
-        flash.info(gettext("Please select account type to sign up."))
-        return redirect(url_for(".account_type"))
-
-    if account_type == ACCOUNT_TYPE_COMMERCIAL:
-        tier_id = session.fetch_data(SESSION_KEY_TIER_ID)
-        if not tier_id:
-            flash.info(gettext("Please select account type to sign up."))
-            return redirect(url_for(".account_type"))
-        return redirect(url_for(".signup_commercial", tier_id=tier_id))
-    else:
-        return redirect(url_for(".signup_noncommercial"))
+# @supporters_bp.route('/signup')
+# @login_forbidden
+# def signup():
+#     mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
+#     if mb_username is None:
+#         # Show template with a link to MusicBrainz OAuth page
+#         return render_template('users/mb-signup.html', form=UserSignupForm())
+#
+#     account_type = session.fetch_data(SESSION_KEY_ACCOUNT_TYPE)
+#     if not account_type:
+#         flash.info(gettext("Please select account type to sign up."))
+#         return redirect(url_for(".account_type"))
+#
+#     if account_type == ACCOUNT_TYPE_COMMERCIAL:
+#         tier_id = session.fetch_data(SESSION_KEY_TIER_ID)
+#         if not tier_id:
+#             flash.info(gettext("Please select account type to sign up."))
+#             return redirect(url_for(".account_type"))
+#         return redirect(url_for(".signup_commercial", tier_id=tier_id))
+#     else:
+#         return redirect(url_for(".signup_noncommercial"))
 
 
 @supporters_bp.route('/signup/commercial', methods=('GET', 'POST'))
@@ -348,10 +356,10 @@ def regenerate_token():
         return jsonify({'error': e.message}), 429  # https://tools.ietf.org/html/rfc6585#page-3
 
 
-@supporters_bp.route('/login')
-@login_forbidden
-def login():
-    return render_template('supporters/mb-login.html')
+# @supporters_bp.route('/login')
+# @login_forbidden
+# def login():
+#     return render_template('supporters/login.html', form=UserLoginForm())
 
 
 @supporters_bp.route('/logout')

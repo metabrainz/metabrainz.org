@@ -6,6 +6,7 @@ import stripe
 from brainzutils.flask import CustomFlask
 from brainzutils import sentry
 from flask import send_from_directory, request
+from flask_bcrypt import Bcrypt
 from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
 
@@ -18,7 +19,10 @@ deploy_env = os.environ.get('DEPLOY_ENV', '')
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 
-def create_app(debug=None, config_path=None):
+bcrypt = Bcrypt()
+
+
+def create_app(debug=None, config_path = None):
 
     app = CustomFlask(
         import_name=__name__,
@@ -103,6 +107,9 @@ def create_app(debug=None, config_path=None):
     from metabrainz.admin.quickbooks import quickbooks
     quickbooks.init(app)
 
+    # bcrypt setup
+    bcrypt.init_app(app)
+
     # MusicBrainz OAuth
     from metabrainz.supporter import login_manager, musicbrainz_login
     login_manager.init_app(app)
@@ -185,6 +192,7 @@ def _register_blueprints(app):
     from metabrainz.reports.financial_reports.views import financial_reports_bp
     from metabrainz.reports.annual_reports.views import annual_reports_bp
     from metabrainz.supporter.views import supporters_bp
+    from metabrainz.user.views import users_bp
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
@@ -193,6 +201,7 @@ def _register_blueprints(app):
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
     app.register_blueprint(supporters_bp)
+    app.register_blueprint(users_bp)
     app.register_blueprint(payments_bp)
 
     # FIXME(roman): These URLs aren't named very correct since they receive payments
