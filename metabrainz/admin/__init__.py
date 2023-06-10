@@ -12,7 +12,7 @@ class AuthMixin(object):
 
     def _handle_view(self, name, **kwargs):
         if not self.is_accessible():
-            return redirect(url_for('supporters.login', next=request.url))
+            return redirect(url_for('users.login', next=request.url))
 
 
 class AdminBaseView(AuthMixin, BaseView): pass
