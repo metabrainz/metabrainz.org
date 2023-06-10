@@ -5,6 +5,13 @@ DEBUG = True  # set to False in production mode
 
 SECRET_KEY = "CHANGE_THIS"
 
+EMAIL_VERIFICATION_SECRET_KEY = "CHANGE THIS"
+
+# Bcrypt
+BCRYPT_HASH_PREFIX = "2a"
+BCRYPT_LOG_ROUNDS = 12
+
+
 # DATABASE
 SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@db:5432/metabrainz"
 SQLALCHEMY_TRACK_MODIFICATIONS = False

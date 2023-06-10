@@ -57,7 +57,7 @@
         <ul class="nav navbar-nav navbar-right">
           {% if not current_user or current_user.is_anonymous %}
             <li class="support-link"><a href="{{ url_for('supporters.account_type') }}">{{ _('Register') }}</a></li>
-            <li><a href="{{ url_for('supporters.login') }}">{{ _('Sign in') }}</a></li>
+            <li><a href="{{ url_for('users.login') }}">{{ _('Sign in') }}</a></li>
           {% else %}
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -65,7 +65,7 @@
               </a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ url_for('supporters.profile', musicbrainz_id=current_user.musicbrainz_id) }}">{{ _('Your profile') }}</a></li>
-                <li><a href="{{ url_for('supporters.logout') }}">{{ _('Sign out') }}</a></li>
+                <li><a href="{{ url_for('users.logout') }}">{{ _('Sign out') }}</a></li>
               </ul>
             </li>
           {% endif %}

@@ -1,0 +1,71 @@
+{% extends 'users/base.html' %}
+
+{% block title %}{{ _('Sign in') }} - MetaBrainz Foundation{% endblock %}
+
+{% block auth_form %}
+  <div class="auth-card-container">
+
+    <div class="auth-card">
+      <h1 class="page-title text-center">{{ _('Welcome back!') }}</h1>
+      {{ display_form_errors(form) }}
+      <form role="form" method="POST">
+        {{ form.csrf_token }}
+        <div class="form-group">
+          <label class="form-label" for="yourUsername">
+            Username
+          </label>
+          <div>
+            <input
+                class="form-control"
+                id="yourUsername"
+                name="username"
+                required
+                type="text"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="yourPassword">
+            Password
+          </label>
+          <input
+              class="form-control"
+              id="yourPassword"
+              name="password"
+              required
+              type="password"
+          />
+        </div>
+
+        <div class="auth-card-bottom">
+          <small class="checkbox">
+            <label for="rememberMe">
+              <input
+                  id="rememberMe"
+                  name="remember_me"
+                  type="checkbox"
+                  value="true"
+              />
+              Remember me
+            </label>
+          </small>
+          <a class="small" href="#">
+            I forgot my username / password
+          </a>
+        </div>
+
+        <button class="btn btn-primary main-action-button" type="submit">
+          Sign in
+        </button>
+      </form>
+
+    </div>
+    <div class="auth-card-footer">
+      <div class="small">
+        Don‘t have an account?<a href="{{ url_for('users.signup') }}"> Create a free MetaBrainz account </a>to access
+        MusicBrainz, ListenBrainz, CritiqueBrainz, and more.
+      </div>
+    </div>
+  </div>
+{% endblock %}
