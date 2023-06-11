@@ -50,9 +50,9 @@
               Remember me
             </label>
           </small>
-          <a class="small" href="#">
-            I forgot my username / password
-          </a>
+          <small>
+            I forgot my <a href="{{ url_for('users.lost_username') }}">username</a> / <a href="{{ url_for('users.lost_password') }}">password</a>
+          </small>
         </div>
 
         <button class="btn btn-primary main-action-button" type="submit">
