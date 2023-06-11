@@ -32,7 +32,7 @@ def signup():
             form.form_errors.append(f"Another user with email '{form.username.data}' exists.")
             return render_template("users/signup.html", form=form)
 
-        password_hash = bcrypt.generate_password_hash(form.password.data)
+        password_hash = bcrypt.generate_password_hash(form.password.data).decode()
         user = User.add(name=form.username.data, email=form.email.data, password_hash=password_hash)
 
         send_verification_email(user)

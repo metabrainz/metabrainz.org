@@ -15,7 +15,7 @@ def create_email_link_checksum(purpose: str, user: User, timestamp: int) -> str:
     text = f"{purpose}; user_id: {user.id}; email: {user.email}; timestamp: {timestamp}; secret: {current_app.config['EMAIL_VERIFICATION_SECRET_KEY']}"
     m = hashlib.sha256()
     m.update(text.encode("utf-8"))
-    return m.digest().decode("utf-8")
+    return m.hexdigest()
 
 
 def _send_user_email(user: User, subject: str, content: str, message_id: str):
@@ -32,7 +32,7 @@ def send_verification_email(user: User):
     """ Send email for verification of user's email address. """
     timestamp = int(datetime.now().timestamp())
     checksum = create_email_link_checksum(VERIFY_EMAIL, user, timestamp)
-    verification_link = url_for("users.email_verify", user_id=user.id, timestamp=timestamp, checksum=checksum)
+    verification_link = url_for("users.verify_email", user_id=user.id, timestamp=timestamp, checksum=checksum)
     content = render_template(
         "email/user-email-address-verification.txt",
         username=user.name,
