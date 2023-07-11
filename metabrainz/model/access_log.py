@@ -1,7 +1,7 @@
 from metabrainz.model import db
 from metabrainz.model.token import Token
 from metabrainz.model.supporter import Supporter
-from metabrainz.mail import send_mail
+from brainzutils.mail import send_mail
 from brainzutils import cache
 from sqlalchemy import func, text
 from sqlalchemy.dialects import postgresql

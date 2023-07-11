@@ -14,7 +14,7 @@ from quickbooks.objects.detailline import SalesItemLineDetail
 from quickbooks import exceptions
 
 from brainzutils import cache
-from metabrainz.mail import send_mail
+from brainzutils.mail import send_mail
 
 SEND_DELAY = 5
 MAIL_BODY = """To: %s %s (%s)

@@ -1,5 +1,5 @@
 from metabrainz.model import db
-from metabrainz.mail import send_mail
+from brainzutils.mail import send_mail
 from metabrainz.model.token import Token
 from metabrainz.admin import AdminModelView
 from sqlalchemy.sql.expression import func, or_
