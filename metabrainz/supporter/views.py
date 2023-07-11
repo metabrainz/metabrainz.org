@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 
 from metabrainz import flash, session
-from metabrainz.mail import send_mail, MailException
+from brainzutils.mail import send_mail, MailException
 from metabrainz.model import Dataset
 from metabrainz.model.supporter import Supporter, InactiveSupporterException
 from metabrainz.model.tier import Tier

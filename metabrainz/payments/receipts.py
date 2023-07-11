@@ -7,7 +7,7 @@ from reportlab.platypus import SimpleDocTemplate, Spacer
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
-from metabrainz.mail import send_mail
+from brainzutils.mail import send_mail
 from flask import current_app
 import tempfile
 
