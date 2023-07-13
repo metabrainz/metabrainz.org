@@ -15,6 +15,11 @@ def home():
     )
 
 
+@index_bp.route('/test')
+def test():
+    return render_template('test-page.html', props={})
+
+
 @index_bp.route('/about')
 def about():
     return render_template('index/about.html')

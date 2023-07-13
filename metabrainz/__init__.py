@@ -9,23 +9,34 @@ from flask import send_from_directory, request
 from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
 
+from metabrainz.utils import get_global_props
+
 # Check to see if we're running under a docker deployment. If so, don't second guess
 # the config file setup and just wait for the correct configuration to be generated.
 deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
-def create_app(debug=None, config_path = None):
+
+def create_app(debug=None, config_path=None):
 
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
     )
 
+    # Static files
+    from metabrainz import static_manager
+    static_manager.read_manifest()
+    app.static_folder = '/static'
+    app.context_processor(lambda: dict(
+        get_static_path=static_manager.get_static_path,
+    ))
+
     # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-    print("Starting metabrainz service with %s environment." % deploy_env);
+    print("Starting metabrainz service with %s environment." % deploy_env)
 
     # This is used to run tests, but not for dev or deployment
     if config_path:
@@ -168,6 +179,16 @@ def add_robots(app):
         return send_from_directory(app.static_folder, request.path[1:])
 
 
+def _register_blueprint_with_context(app, blueprint, **kwargs):
+    """Add some global props to a blueprint context and then register it with the app.
+    This should only be used for blueprints which render html."""
+    @blueprint.context_processor
+    def inject_context_processor():
+        return {"global_props": get_global_props()}
+
+    app.register_blueprint(blueprint, **kwargs)
+
+
 def _register_blueprints(app):
     from metabrainz.views import index_bp
     from metabrainz.reports.financial_reports.views import financial_reports_bp
@@ -177,11 +198,12 @@ def _register_blueprints(app):
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
 
-    app.register_blueprint(index_bp)
-    app.register_blueprint(financial_reports_bp, url_prefix='/finances')
-    app.register_blueprint(annual_reports_bp, url_prefix='/reports')
-    app.register_blueprint(supporters_bp)
-    app.register_blueprint(payments_bp)
+    _register_blueprint_with_context(app, index_bp)
+    _register_blueprint_with_context(app, financial_reports_bp, url_prefix='/finances')
+    _register_blueprint_with_context(app, annual_reports_bp, url_prefix='/reports')
+    _register_blueprint_with_context(app, supporters_bp)
+    _register_blueprint_with_context(app, payments_bp)
+
     # FIXME(roman): These URLs aren't named very correct since they receive payments
     # from organizations as well as regular donations:
     app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')

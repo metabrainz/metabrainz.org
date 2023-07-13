@@ -9,7 +9,7 @@ set -e
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 function invoke_docker_compose {
-    exec docker-compose -f docker/docker-compose.dev.yml \
+    exec docker compose -f docker/docker-compose.dev.yml \
         -p metabrainz \
         "$@"
 }
