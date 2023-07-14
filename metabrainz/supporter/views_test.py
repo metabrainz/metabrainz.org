@@ -1,4 +1,6 @@
 from urllib.parse import urlparse
+
+from metabrainz import create_app
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model.tier import Tier
 from flask import url_for
@@ -56,9 +58,13 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertStatus(self.client.get(url_for('supporters.musicbrainz')), 302)
 
     def test_musicbrainz_post(self):
-        self.assert500(self.client.get(url_for('supporters.musicbrainz_post')))
-        self.assert400(self.client.get(url_for('supporters.musicbrainz_post', error="PANIC")))
-        self.assert400(self.client.get(url_for('supporters.musicbrainz_post', state="fake")))
+        app = create_app(debug=True, config_path='../config.py')
+        app.config['TESTING'] = True
+        client = app.test_client()
+
+        self.assert500(client.get(url_for('supporters.musicbrainz_post')))
+        self.assert400(client.get(url_for('supporters.musicbrainz_post', error="PANIC")))
+        self.assert400(client.get(url_for('supporters.musicbrainz_post', state="fake")))
 
     def test_profile(self):
         self.assertStatus(self.client.get(url_for('supporters.profile')), 302)
@@ -68,7 +74,7 @@ class SupportersViewsTestCase(FlaskTestCase):
 
     def test_regenerate_token(self):
         self.assertStatus(self.client.post(url_for('supporters.regenerate_token')), 302)
-        self.assert405(self.client.get(url_for('supporters.regenerate_token')))
+        self.assertStatus(self.client.get(url_for('supporters.regenerate_token')), 405)
 
     def test_login(self):
         self.assert200(self.client.get(url_for('supporters.login')))

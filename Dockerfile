@@ -39,7 +39,7 @@ COPY requirements.txt /code/
 RUN pip3 install pip==21.0.1
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY docker /code/
+COPY . /code/
 
 #####################################################################################################
 # NOTE: The javascript files are continously watched and compiled using this image in developement. #

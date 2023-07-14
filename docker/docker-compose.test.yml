@@ -1,11 +1,13 @@
 # Docker Compose file for testing
 version: "3.8"
+
 services:
 
   web:
     build:
       context: ..
       dockerfile: Dockerfile
+      target: metabrainz-dev
     volumes:
       - ..:/code
     depends_on:
