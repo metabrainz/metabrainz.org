@@ -77,7 +77,7 @@ RUN npm run build:prod
 ###########################################
 # NOTE: The production image starts here. #
 ###########################################
-FROM metabrainz-base as metabrainz-prod
+FROM metabrainz-dev as metabrainz-prod
 
 COPY ./docker/prod/consul-template-uwsgi.conf /etc/
 
