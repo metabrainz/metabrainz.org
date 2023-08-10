@@ -334,9 +334,9 @@ class Payment(db.Model):
 
         transaction = charge["balance_transaction"]
         currency = transaction["currency"].lower()
-        # if currency not in SUPPORTED_CURRENCIES:
-        #     current_app.logger.warning("Unsupported currency: ", session["currency"])
-        #     return
+        if currency not in SUPPORTED_CURRENCIES:
+            current_app.logger.warning("Unsupported currency: ", transaction["currency"])
+            return
 
         new_donation = cls(
             first_name=details["name"],
