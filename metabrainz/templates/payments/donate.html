@@ -192,9 +192,8 @@
         // This function disables or enables payment buttons depending on what
         // features they support.
 
-        // We don't support recurring payments via Stripe. Payments in EUR are
-        // also not supported currently.
-        if ($('#recurring-flag').is(":checked") || selectedCurrency === CURRENCY.Euro) {
+        // We don't support payments in EUR via Stripe currently.
+        if (selectedCurrency === CURRENCY.Euro) {
           buttons.stripe.attr('disabled', 'disabled');
         } else {
           buttons.stripe.removeAttr('disabled');
@@ -231,13 +230,6 @@
         } else {
           console.error("Unknown currency:", this.value)
         }
-        updateButtonState();
-      });
-
-      /////////////
-      // RECURRENCE
-      /////////////
-      $('#recurring-flag').change(function() {
         updateButtonState();
       });
 
