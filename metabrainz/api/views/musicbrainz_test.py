@@ -24,14 +24,14 @@ class MusicBrainzViewsTestCase(FlaskTestCase):
 
         resp = self.client.get(url_for('api_musicbrainz.replication_info', token=self.token))
         self.assert200(resp)
-        self.assertEquals(resp.json, {
+        self.assertEqual(resp.json, {
             'last_packet': None,
         })
 
         open(os.path.join(self.path, 'replication-1.tar.bz2'), 'a').close()
         resp = self.client.get(url_for('api_musicbrainz.replication_info', token=self.token))
         self.assert200(resp)
-        self.assertEquals(resp.json, {
+        self.assertEqual(resp.json, {
             'last_packet': 'replication-1.tar.bz2',
         })
 
@@ -39,24 +39,24 @@ class MusicBrainzViewsTestCase(FlaskTestCase):
         open(os.path.join(self.path, 'replication-100000.tar.bz2'), 'a').close()
         resp = self.client.get(url_for('api_musicbrainz.replication_info', token=self.token))
         self.assert200(resp)
-        self.assertEquals(resp.json, {
+        self.assertEqual(resp.json, {
             'last_packet': 'replication-100000.tar.bz2',
         })
 
     def test_replication_check(self):
         resp = self.client.get('/api/musicbrainz/replication-check')
         self.assert200(resp)
-        self.assertEquals(resp.data, b"UNKNOWN no replication packets available")
+        self.assertEqual(resp.data, b"UNKNOWN no replication packets available")
 
         open(os.path.join(self.path, 'replication-1.tar.bz2'), 'a').close()
         resp = self.client.get('/api/musicbrainz/replication-check')
         self.assert200(resp)
-        self.assertEquals(resp.data, b"OK")
+        self.assertEqual(resp.data, b"OK")
 
         open(os.path.join(self.path, 'replication-3.tar.bz2'), 'a').close()
         resp = self.client.get('/api/musicbrainz/replication-check')
         self.assert200(resp)
-        self.assertEquals(resp.data, b"CRITICAL Replication packet 2 is missing")
+        self.assertEqual(resp.data, b"CRITICAL Replication packet 2 is missing")
 
         open(os.path.join(self.path, 'replication-2.tar.bz2'), 'a').close()
         os.utime(os.path.join(self.path, 'replication-3.tar.bz2'), (0, 0))
