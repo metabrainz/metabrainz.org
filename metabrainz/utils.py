@@ -47,3 +47,7 @@ def get_int_query_param(key: str, default: int):
         return int(request.args.get(key, default=default))
     except ValueError:
         return default
+
+
+def get_global_props():
+    return {}

@@ -9,23 +9,35 @@ from flask import send_from_directory, request
 from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
 
+from metabrainz.utils import get_global_props
+
 # Check to see if we're running under a docker deployment. If so, don't second guess
 # the config file setup and just wait for the correct configuration to be generated.
 deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
-def create_app(debug=None, config_path = None):
+
+def create_app(debug=None, config_path=None):
 
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
     )
 
+    # Static files
+    from metabrainz import static_manager
+    static_manager.read_manifest()
+    app.static_folder = '/static'
+    app.context_processor(lambda: dict(
+        get_static_path=static_manager.get_static_path,
+        global_props=get_global_props()
+    ))
+
     # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-    print("Starting metabrainz service with %s environment." % deploy_env);
+    print("Starting metabrainz service with %s environment." % deploy_env)
 
     # This is used to run tests, but not for dev or deployment
     if config_path:
@@ -182,6 +194,7 @@ def _register_blueprints(app):
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
     app.register_blueprint(supporters_bp)
     app.register_blueprint(payments_bp)
+
     # FIXME(roman): These URLs aren't named very correct since they receive payments
     # from organizations as well as regular donations:
     app.register_blueprint(payments_paypal_bp, url_prefix='/donations/paypal')

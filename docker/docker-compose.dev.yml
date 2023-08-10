@@ -1,5 +1,5 @@
 # Docker Compose file for development
-version: "2"
+version: "3.8"
 
 volumes:
   db:
@@ -9,13 +9,15 @@ services:
   web:
     build:
       context: ..
-      dockerfile: ./docker/Dockerfile.dev
+      dockerfile: Dockerfile
+      target: metabrainz-dev
     command: python /code/manage.py runserver -h 0.0.0.0 -p 80
     volumes:
       - ../data/replication_packets:/data/replication_packets
       - ../data/json_dumps:/data/json_dumps
       - ../data/logos:/code/metabrainz/static/img/user_logos
       - ..:/code
+      - ../frontend:/static
     ports:
       - "8000:80"
     depends_on:
@@ -33,3 +35,13 @@ services:
 
   redis:
     image: redis:3.2.1
+
+  static_builder:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-frontend-dev
+    command: npm run build:dev
+    user: ${STATIC_BUILD_USER:-node}
+    volumes:
+      - ../frontend:/code/frontend:z

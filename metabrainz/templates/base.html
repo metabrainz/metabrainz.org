@@ -16,12 +16,8 @@
       <link rel="icon" sizes="128x128" href="{{ url_for('static', filename='img/favicon-128.png') }}" type="image/png" />
       <link rel="icon" sizes="256x256" href="{{ url_for('static', filename='img/favicon-256.png') }}" type="image/png" />
 
-      {% if config.USE_COMPILED_STYLING %}
-        <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen" />
-      {% else %}
-        <link rel="stylesheet/less" type="text/css" href="{{ url_for('static', filename='css/main.less') }}" />
-        <script src="{{ url_for('static', filename='js/less-1.7.5.min.js') }}"></script>
-      {% endif %}
+      {# The css file has a .less extension in the manifest file entry (due to its original name in Webpack entry) #}
+      <link href="{{ get_static_path('main.less') }}" rel="stylesheet" media="screen" />
     {% endblock %}
   </head>
 
@@ -105,8 +101,8 @@
     </div>
 
     {% block scripts %}
-      <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/lib/jquery-2.1.1.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/lib/bootstrap.min.js') }}"></script>
     {% endblock %}
 
   </body>
