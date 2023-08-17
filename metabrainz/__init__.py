@@ -1,15 +1,21 @@
 import os
 import pprint
 import sys
-
-import stripe
-from brainzutils.flask import CustomFlask
-from brainzutils import sentry
-from flask import send_from_directory, request
-from flask_bcrypt import Bcrypt
-from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
 
+import stripe
+from authlib.oauth2.rfc6749 import ImplicitGrant
+from authlib.oauth2.rfc7636 import CodeChallenge
+from brainzutils import sentry
+from brainzutils.flask import CustomFlask
+from flask import send_from_directory, request
+from flask_bcrypt import Bcrypt
+
+from metabrainz.admin.quickbooks.views import QuickBooksView
+from metabrainz.oauth.authorization_grant import AuthorizationCodeGrant
+from metabrainz.oauth.authorization_grant import AuthorizationCodeGrant
+from metabrainz.oauth.provider import authorization_server, revoke_token
+from metabrainz.oauth.refresh_grant import RefreshTokenGrant
 from metabrainz.utils import get_global_props
 
 # Check to see if we're running under a docker deployment. If so, don't second guess
@@ -138,6 +144,8 @@ def create_app(debug=None, config_path = None):
     from metabrainz.admin.forms import LOGO_UPLOAD_SET
     configure_uploads(app, upload_sets=[LOGO_UPLOAD_SET])
 
+    config_oauth(app)
+
     # Blueprints
     _register_blueprints(app)
 
@@ -210,6 +218,8 @@ def _register_blueprints(app):
     # OAuth / API
     #############
 
+    from metabrainz.oauth.views import oauth_bp
+    app.register_blueprint(oauth_bp, url_prefix='/oauth')
     from metabrainz.api.views.index import api_index_bp
     app.register_blueprint(api_index_bp, url_prefix='/api')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
