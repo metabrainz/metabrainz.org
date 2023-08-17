@@ -1,6 +1,6 @@
 ARG PYTHON_BASE_IMAGE_VERSION=3.11-20221221
 ARG NODE_VERSION=16-alpine
-FROM metabrainz/python:$PYTHON_BASE_IMAGE_VERSION as metabrainz-dev
+FROM metabrainz/python:$PYTHON_BASE_IMAGE_VERSION as metabrainz-base
 
 ARG PYTHON_BASE_IMAGE_VERSION
 
@@ -33,13 +33,17 @@ RUN apt-get update \
 # so that we know what user it is created as: https://github.com/moby/moby/issues/36677
 RUN mkdir -p /code/metabrainz /static
 
-WORKDIR /code
+WORKDIR /code/metabrainz
 
-COPY requirements.txt /code/
+COPY requirements.txt /code/metabrainz
 RUN pip3 install pip==21.0.1
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /code/
+############################################
+# NOTE: The development image starts here. #
+############################################
+FROM metabrainz-base as metabrainz-dev
+COPY . /code/metabrainz
 
 #####################################################################################################
 # NOTE: The javascript files are continously watched and compiled using this image in developement. #
@@ -77,7 +81,7 @@ RUN npm run build:prod
 ###########################################
 # NOTE: The production image starts here. #
 ###########################################
-FROM metabrainz-dev as metabrainz-prod
+FROM metabrainz-base as metabrainz-prod
 
 RUN pip install --no-cache-dir uWSGI==2.0.22
 
@@ -95,9 +99,8 @@ COPY --from=metabrainz-frontend-prod /code/frontend/js/lib /static/js/lib
 COPY --from=metabrainz-frontend-prod /code/frontend/dist /static/dist
 
 # Now install our code, which may change frequently
-COPY docker /code/metabrainz/
+COPY . /code/metabrainz/
 
-WORKDIR /code/metabrainz
 # Ensure we use the right files and folders by removing duplicates
 RUN rm -rf ./frontend/
 RUN rm -f /code/metabrainz/metabrainz/config.py /code/metabrainz/metabrainz/config.pyc
