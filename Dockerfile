@@ -79,6 +79,8 @@ RUN npm run build:prod
 ###########################################
 FROM metabrainz-dev as metabrainz-prod
 
+RUN pip install --no-cache-dir uWSGI==2.0.22
+
 COPY ./docker/prod/consul-template-uwsgi.conf /etc/
 
 COPY ./docker/prod/uwsgi.service /etc/service/uwsgi/run
