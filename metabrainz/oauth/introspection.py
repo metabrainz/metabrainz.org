@@ -1,7 +1,7 @@
 from authlib.oauth2.rfc7662 import IntrospectionEndpoint
 
 from metabrainz.model import db
-from metabrainz.new_oauth.models.token import OAuth2Token
+from metabrainz.model.oauth.token import OAuth2Token
 
 
 class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
