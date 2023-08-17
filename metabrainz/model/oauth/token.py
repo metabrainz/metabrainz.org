@@ -6,8 +6,8 @@ from sqlalchemy import func, Column, Integer, DateTime, Text, ForeignKey, Boolea
 from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
-from metabrainz.new_oauth.models.client import OAuth2Client
-from metabrainz.new_oauth.models.relation_scope import OAuth2TokenScope
+from metabrainz.model.oauth.client import OAuth2Client
+from metabrainz.model.oauth.relation_scope import OAuth2TokenScope
 from metabrainz.model.user import User
 
 

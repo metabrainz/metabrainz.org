@@ -1,86 +1,125 @@
-from flask import Blueprint, render_template, redirect, request, jsonify
+from authlib.oauth2 import OAuth2Error
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify
 from flask_login import login_required, current_user
-from metabrainz.db.oauth import client as db_client
-from metabrainz.oauth import oauth_provider
-from metabrainz.oauth import exceptions
-from metabrainz.utils import build_url
-from metabrainz.decorators import nocache, crossdomain
+from werkzeug.security import gen_salt
 
-oauth_bp = Blueprint('oauth', __name__)
+from metabrainz.decorators import nocache, crossdomain
+from metabrainz.model import db
+from metabrainz.model.oauth.client import OAuth2Client
+from metabrainz.model.oauth.token import OAuth2Token
+from metabrainz.model.user import User
+from metabrainz.oauth.forms import ApplicationForm
+from metabrainz.oauth.provider import authorization_server
+from metabrainz.utils import build_url
+
+oauth_bp = Blueprint('new_oauth', __name__)
+
+
+@oauth_bp.route('/create_client', methods=('GET', 'POST'))
+@login_required
+def create_client():
+    form = ApplicationForm()
+    if form.validate_on_submit():
+        client_id = gen_salt(24)
+        client = OAuth2Client(
+            client_id=client_id,
+            owner_id=current_user.id,
+            name=form.client_name.data,
+            description=form.description.data,
+            website=form.website.data,
+            redirect_uris=[form.redirect_uri.data]
+        )
+        # TODO: Fix use of these columns
+        # client_metadata = {
+        #     "grant_types": split_by_crlf(form["grant_type"]),
+        #     "response_types": split_by_crlf(form["response_type"]),
+        #     "token_endpoint_auth_method": form["token_endpoint_auth_method"]
+        # }
+
+        # if form["token_endpoint_auth_method"] == "none":
+        #     client.client_secret = ""
+        # else:
+        #     client.client_secret = gen_salt(48)
+
+        client.client_secret = gen_salt(48)
+        db.session.add(client)
+        db.session.commit()
+    else:
+        return render_template('oauth/create_client.html', form=form)
+
+    return redirect(url_for("index.home"))
 
 
 @oauth_bp.route('/authorize', methods=['GET', 'POST'])
 @login_required
 def authorize_prompt():
-    """OAuth 2.0 authorization endpoint."""
-    response_type = request.args.get('response_type')
-    client_id = request.args.get('client_id')
+    """ OAuth 2.0 authorization endpoint. """
     redirect_uri = request.args.get('redirect_uri')
-    scope = request.args.get('scope')
-    state = request.args.get('state')
-
     if request.method == 'GET':  # Client requests access
-        oauth_provider.validate_authorization_request(client_id, response_type, redirect_uri, scope)
-        client = db_client.get(client_id)
-        return render_template('oauth/prompt.html', client=client, scope=scope,
-                               cancel_url=build_url(redirect_uri, dict(error='access_denied')),
+        try:
+            grant = authorization_server.get_consent_grant(end_user=current_user)
+        except OAuth2Error as error:
+            return jsonify({
+                "error": error.error,
+                "description": error.description
+            })  # FIXME: Add oauth error page
+        return render_template('oauth/prompt.html', client=grant.client, scope=grant.request.scope,
+                               cancel_url=build_url(redirect_uri, {"error": "access_denied"}),
                                hide_navbar_links=True, hide_footer=True)
-
-    if request.method == 'POST':  # User grants access to the client
-        oauth_provider.validate_authorization_request(client_id, response_type, redirect_uri, scope)
-        code = oauth_provider.generate_grant(client_id, current_user.id, redirect_uri, scope)
-        return redirect(build_url(redirect_uri, dict(code=code, state=state)))
+    else:
+        # TODO: Validate that user grants access to the client
+        return authorization_server.create_authorization_response(grant_user=current_user)
 
 
 @oauth_bp.route('/token', methods=['POST'])
 @nocache
 @crossdomain()
 def oauth_token_handler():
-    """OAuth 2.0 token endpoint.
+    return authorization_server.create_token_response()
 
-    :form string client_id:
-    :form string client_secret:
-    :form string redirect_uri:
-    :form string grant_type: ``authorization_code`` or ``refresh_token``
-    :form string code: (not required if grant_type is ``refresh_token``)
-    :form string refresh_token: (not required if grant_type is ``authorization_code``)
 
-    :resheader Content-Type: *application/json*
-    """
-    client_id = request.form.get('client_id')
-    client_secret = request.form.get('client_secret')
-    redirect_uri = request.form.get('redirect_uri')
-    grant_type = request.form.get('grant_type')
-    code = request.form.get('code')
-    refresh_token = request.form.get('refresh_token')
+@oauth_bp.route('/revoke', methods=['POST'])
+def revoke_token():
+    return authorization_server.create_endpoint_response("revocation")
 
-    oauth_provider.validate_token_request(grant_type, client_id, client_secret, redirect_uri, code, refresh_token)
 
-    if grant_type == 'authorization_code':
-        grant = oauth_provider.fetch_grant(client_id, code)
-        user_id = grant["user_id"]
-        scope = grant["scopes"]
-    elif grant_type == 'refresh_token':
-        token = oauth_provider.fetch_token(client_id, refresh_token)
-        user_id = token["user_id"]
-        scope = token["scopes"]
-    else:
-        raise exceptions.UnsupportedGrantType(
-            "Specified grant_type is unsupported. "
-            "Please, use authorization_code or refresh_token."
-        )
+@oauth_bp.route('/userinfo', methods=['GET'])
+def user_info():
+    # TODO: Discuss merging with introspection endpoint
+    auth_header = request.headers.get("Authorization")
+    if not auth_header:
+        return jsonify({"error": "missing auth header"}), 401
+    try:
+        token = auth_header.split(" ")[1]
+    except (ValueError, KeyError):
+        return jsonify({"error": "invalid auth header"}), 401
 
-    # Deleting grant and/or existing token(s)
-    # TODO(roman): Check if that's necessary:
-    oauth_provider.discard_grant(client_id, code)
-    oauth_provider.discard_client_user_tokens(client_id, user_id)
+    token = db.session\
+        .query(OAuth2Token)\
+        .filter_by(access_token=token)\
+        .one_or_none()
 
-    access_token, token_type, expires_in, refresh_token = \
-        oauth_provider.generate_token(client_id, refresh_token, user_id, scope)
+    if token is None:
+        return jsonify({"error": "invalid access token"}), 403
 
-    return jsonify(dict(
-        access_token=access_token,
-        token_type=token_type,
-        expires_in=expires_in,
-        refresh_token=refresh_token,
-    ))
+    if token.is_expired():
+        return jsonify({"error": "expired access token"}), 403
+
+    user = db.session\
+        .query(User)\
+        .filter_by(id=token.user_id)\
+        .first()
+
+    return {
+        "sub": user.name,
+        "metabrainz_user_id": user.id
+    }
+
+
+@oauth_bp.route('/introspect', methods=['POST'])
+def introspect_token():
+    return authorization_server.create_endpoint_response("introspection")
+
+
+def split_by_crlf(s):
+    return [v for v in s.splitlines() if v]

@@ -3,7 +3,7 @@ from datetime import datetime
 
 from flask import url_for, request, render_template, current_app
 
-from metabrainz.mail import send_mail
+from brainzutils.mail import send_mail
 from metabrainz.model.user import User
 
 VERIFY_EMAIL = "verify-email"
@@ -18,14 +18,8 @@ def create_email_link_checksum(purpose: str, user: User, timestamp: int) -> str:
     return m.hexdigest()
 
 
-def _send_user_email(user: User, subject: str, content: str, message_id: str):
-    send_mail(
-        subject=subject,
-        text=content,
-        recipients=[f"{user.name} <{user.email}>"],
-        reply_to=current_app.config["EMAIL_SUPPORT_ADDRESS"],
-        message_id=message_id
-    )
+def _send_user_email(user: User, subject: str, content: str):
+    send_mail(subject=subject, text=content, recipients=[f"{user.name} <{user.email}>"])
 
 
 def send_verification_email(user: User):
@@ -39,7 +33,7 @@ def send_verification_email(user: User):
         verification_link=verification_link,
         ip=request.remote_addr
     )
-    _send_user_email(user, "Please verify your email address", content, f"verify-email-{timestamp}")
+    _send_user_email(user, "Please verify your email address", content)
 
 
 def send_forgot_username_email(user: User):
@@ -50,7 +44,7 @@ def send_forgot_username_email(user: User):
         username=user.name,
         forgot_password_link=url_for("users.lost_password")
     )
-    _send_user_email(user, "Lost username", content, f"lost-username-{timestamp}")
+    _send_user_email(user, "Lost username", content)
 
 
 def send_forgot_password_email(user: User):
@@ -63,4 +57,4 @@ def send_forgot_password_email(user: User):
         reset_password_link=reset_password_link,
         contact_url="https://metabrainz.org/contact"
     )
-    _send_user_email(user, "Password reset request", content, f"lost-password-{timestamp}")
+    _send_user_email(user, "Password reset request", content)

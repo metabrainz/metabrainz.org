@@ -5,9 +5,9 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import Identity
 
 from metabrainz.model import db
-from metabrainz.new_oauth.models import OAuth2Scope
-from metabrainz.new_oauth.models.client import OAuth2Client
-from metabrainz.new_oauth.models.relation_scope import OAuth2CodeScope
+from metabrainz.model.oauth.client import OAuth2Client
+from metabrainz.model.oauth.relation_scope import OAuth2CodeScope
+from metabrainz.model.oauth.scope import OAuth2Scope
 from metabrainz.model.user import User
 
 
