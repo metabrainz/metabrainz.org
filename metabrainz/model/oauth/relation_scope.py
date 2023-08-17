@@ -3,7 +3,6 @@ from sqlalchemy.sql.schema import Identity, Column, ForeignKey
 
 from metabrainz.new_oauth.models import Base
 
-
 class OAuth2TokenScope(Base):
     __tablename__ = "l_token_scope"
     __table_args__ = {
