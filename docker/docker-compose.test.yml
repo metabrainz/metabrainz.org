@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
       target: metabrainz-dev
     volumes:
-      - ..:/code
+      - ..:/code/metabrainz
     depends_on:
       - db
       - redis
