@@ -9,11 +9,11 @@ from flask_uploads import UploadSet, IMAGES
 import os.path
 
 # ensure that the path is kept in sync with the volume mount path for production in docker-server-configs
-LOGO_STORAGE_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "static", "img", "user_logos")
+LOGO_STORAGE_DIR = os.path.join("/static", "img", "logos", "supporters")
 if not os.path.exists(LOGO_STORAGE_DIR):
     os.makedirs(LOGO_STORAGE_DIR)
 
-LOGO_UPLOAD_SET_NAME = "userlogo"
+LOGO_UPLOAD_SET_NAME = "supporterlogo"
 LOGO_UPLOAD_SET = UploadSet(
     name=LOGO_UPLOAD_SET_NAME,
     extensions=IMAGES,
