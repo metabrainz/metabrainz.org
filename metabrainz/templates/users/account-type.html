@@ -80,7 +80,7 @@
               {% for user in featured_supporters %}
                 <div class="logo-container">
                   {% if user.logo_filename %}
-                    <span><img src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}" /></span>
+                    <span><img src="{{ url_for('static', filename='img/logos/supporters/'+user.logo_filename) }}" /></span>
                   {% else %}
                     <span><img src="{{ user.org_logo_url }}" /></span>
                   {% endif %}

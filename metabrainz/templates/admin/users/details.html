@@ -21,7 +21,7 @@
     </div>
     {% if supporter.logo_filename %}
       <div class="col-sm-4 pull-right">
-        <img src="{{ url_for('static', filename='img/user_logos/'+supporter.logo_filename) }}" style="max-width:280px;max-height:73px;" />
+        <img src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}" style="max-width:280px;max-height:73px;" />
       </div>
     {% elif supporter.org_logo_url %}
       <div class="col-sm-4 pull-right">

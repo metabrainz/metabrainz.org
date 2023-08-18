@@ -28,7 +28,7 @@
           {% endif %}
             <div class="logo-container">
               {% if supporter.logo_filename %}
-                <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+supporter.logo_filename) }}" />
+                <img class="logo" src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}" />
               {% elif supporter.org_logo_url %}
                 <img class="logo" src="{{ supporter.org_logo_url }}"/>
               {% else %}

@@ -15,7 +15,6 @@ services:
     volumes:
       - ../data/replication_packets:/data/replication_packets
       - ../data/json_dumps:/data/json_dumps
-      - ../data/logos:/code/metabrainz/static/img/user_logos
       - ..:/code/metabrainz
       - ../frontend:/static
     ports:

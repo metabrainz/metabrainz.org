@@ -115,7 +115,7 @@
               <a href="{{ url_for('supporters.supporters_list') }}">
                 <div class="logo-container">
                   {% if supporter.logo_filename %}
-                    <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+supporter.logo_filename) }}"/>
+                    <img class="logo" src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"/>
                   {% elif supporter.org_logo_url %}
                     <img class="logo" src="{{ supporter.org_logo_url }}" />
                   {% else %}
@@ -141,7 +141,7 @@
         {% for supporter in bad_supporters %}
           <div class="col-sm-3 supporter">
             {% if supporter.logo_filename %}
-              <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ url_for('static', filename='img/user_logos/'+supporter.logo_filename) }}"/></a></span>
+              <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"/></a></span>
             {% elif supporter.org_logo_url %}
               <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ supporter.org_logo_url }}"/></a></span>
             {% else %}
