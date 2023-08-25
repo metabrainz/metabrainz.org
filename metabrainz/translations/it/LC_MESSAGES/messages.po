@@ -6,23 +6,23 @@
 # salo.rock, 2017
 # ROBERTO BORIOTTI <email address hidden>, 2021
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2017-01-19 20:40+0000\n"
-"Last-Translator: ROBERTO BORIOTTI <email address hidden>, 2021\n"
-"Language-Team: Italian (https://app.transifex.com/musicbrainz/teams/13846/"
-"it/)\n"
+"PO-Revision-Date: 2023-08-27 13:27+0000\n"
+"Last-Translator: \"salo.rock\" <salo.rock+musicbrainz@gmail.com>\n"
+"Language-Team: Italian <https://translations.metabrainz.org/projects/"
+"metabrainz/website/it/>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 4.18.2\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: it\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
 
 #: metabrainz/payments/forms.py:9
 msgid "You need to specify amount!"
@@ -154,7 +154,7 @@ msgstr "API"
 
 #: metabrainz/templates/base.html:78
 msgid "Contact us"
-msgstr "Contatti"
+msgstr "Contattaci"
 
 #: metabrainz/templates/base.html:80
 msgid "Blog"
@@ -181,7 +181,7 @@ msgstr "Attiva/disattiva navigazione"
 
 #: metabrainz/templates/navbar.html:21
 msgid "About "
-msgstr "Chi siamo"
+msgstr "Chi siamo "
 
 #: metabrainz/templates/navbar.html:23
 msgid "The Foundation"
@@ -189,7 +189,7 @@ msgstr "La Fondazione"
 
 #: metabrainz/templates/navbar.html:31
 msgid "Reports "
-msgstr "Rapporti"
+msgstr "Rapporti "
 
 #: metabrainz/templates/navbar.html:34
 msgid "Financial Reports"
@@ -224,8 +224,8 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
-"Tutti i punti finali richiedono un token di accesso che puoi ottenere dalla "
-"tua <a href=\"%(profile_url)s\">pagina del profilo</a>."
+"Tutti i punti finali richiedono un token di accesso che puoi ottenere\n"
+"dalla tua <a href=\"%(profile_url)s\">pagina del profilo</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
@@ -252,8 +252,8 @@ msgid ""
 "It is possible to get a signature for each replication packet. Just replace\n"
 "      <code>.tar.bz2</code> with <code>.asc</code>."
 msgstr ""
-"È possibile ottenere una firma per ogni pacchetto di replica sostituendo "
-"<code>.tar.bz2</code> con <code>.asc</code>."
+"È possibile ottenere una firma per ogni pacchetto di replica\n"
+"sostituendo <code>.tar.bz2</code> con <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:55
 msgid "You can find the latest replication packet numbers from this endpoint:"
@@ -280,9 +280,9 @@ msgid ""
 "believes in\n"
 "        free, open access to data."
 msgstr ""
-"La Fondazione MetaBrainz è un'impresa non-profit esentasse 501(c)(3), "
-"fondata nel dicembre 2004 e con sede a San Luis Obispo, California, che "
-"sostiene l'accesso libero e aperto ai dati."
+"La Fondazione MetaBrainz è un'impresa non-profit esentasse 501(c)(3),\n"
+"        fondata nel dicembre 2004 e con sede a San Luis Obispo, California,\n"
+"        che sostiene l'accesso libero e aperto ai dati."
 
 #: metabrainz/templates/index/about.html:16
 msgid ""
@@ -300,14 +300,20 @@ msgid ""
 "        that our data can be as comprehensive as possible."
 msgstr ""
 "La Fondazione MetaBrainz è stata creata per costruire database mantenuti "
-"dalla comunità e renderli disponibile nel dominio pubblico o sotto licenze "
-"Creative Commons. I nostri dati sono raccolti perlopiù da volontari e "
-"verificati attraverso un sistema di voto per assicurarne la coerenza e "
-"correttezza. Tutti gli usi non commerciali sono liberi, ma agli utenti "
-"commerciali è chiesto di pagare per ricevere aggiornamenti regolari dei "
-"dati, al fine di aiutare a finanziare il progetto. Incoraggiamo tutti gli "
-"utenti a contribuire al processo di raccolta dei dati in modo da assicurare "
-"che i nostri dati siano il più completo possibile."
+"dalla comunità\n"
+"        e renderli disponibile nel dominio pubblico o sotto licenze Creative "
+"Commons.\n"
+"        I nostri dati sono raccolti perlopiù da volontari e verificati "
+"attraverso un sistema di voto\n"
+"        per assicurarne la coerenza e correttezza. Tutti gli usi non "
+"commerciali sono liberi,\n"
+"        ma agli utenti commerciali è chiesto di pagare per ricevere "
+"aggiornamenti regolari dei dati,\n"
+"        al fine di aiutare a finanziare il progetto. Incoraggiamo tutti gli "
+"utenti\n"
+"        a contribuire al processo di raccolta dei dati in modo da "
+"assicurare\n"
+"        che i nostri dati siano il più completo possibile."
 
 #: metabrainz/templates/index/about.html:26
 #, python-format
@@ -3250,7 +3256,7 @@ msgstr "Il campo email di contatto è vuoto."
 
 #: metabrainz/users/views.py:48
 msgid "Can't find tier with a specified ID."
-msgstr "Impossibile trovare un livello con l'ID fornito."
+msgstr "Non è stato possibile trovare un livello con l'ID fornito."
 
 #: metabrainz/users/views.py:62 metabrainz/users/views.py:68
 msgid "Please select account type to sign up."
