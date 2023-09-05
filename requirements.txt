@@ -28,7 +28,7 @@ python-quickbooks==0.9.3
 pytz==2022.7.1
 rauth==0.7.3
 redis==4.5.4
-reportlab==3.6.12
+reportlab==3.6.13
 requests==2.31.0
 sentry-sdk[flask]==1.29.2
 six==1.16.0
