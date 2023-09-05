@@ -346,7 +346,7 @@ class StatsView(AdminBaseView):
             total += supporter.amount_pledged
             
         return self.render(
-            'admin/stats/users.html',
+            'admin/stats/supporters.html',
             supporters=supporters,
             total=total
         )
