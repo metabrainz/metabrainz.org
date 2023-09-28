@@ -32,12 +32,12 @@ def signup():
             form.form_errors.append(f"Another user with email '{form.username.data}' exists.")
             return render_template("users/signup.html", form=form)
 
-        password_hash = bcrypt.generate_password_hash(form.password.data).decode()
+        password_hash = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         user = User.add(name=form.username.data, email=form.email.data, password_hash=password_hash)
 
         send_verification_email(user)
         flash.success("Account created. Please check your inbox to complete verification.")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     return render_template("users/signup.html", form=form)
 
@@ -70,27 +70,27 @@ def verify_email():
     user_id = request.args.get("user_id")
 
     timestamp = int(request.args.get("timestamp"))
-    if datetime.fromtimestamp(timestamp) + current_app.config["EMAIL_VERIFICATION_EXPIRY"] > datetime.now():
+    if datetime.fromtimestamp(timestamp) + current_app.config["EMAIL_VERIFICATION_EXPIRY"] <= datetime.now():
         flash.error("Email verification link expired.")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     received_checksum = request.args.get("checksum")
 
     user = User.get(id=user_id)
     if user is None:
         flash.error("User not found.")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     checksum = create_email_link_checksum(VERIFY_EMAIL, user, timestamp)
     if checksum != received_checksum:
         flash.error("Unable to verify email.")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     user.email_confirmed_at = datetime.now(tz=timezone.utc)
     db.session.commit()
 
     flash.success("Email verified!")
-    return render_template("index/index.html")
+    return redirect(url_for("index.home"))
 
 
 # TODO: Add email verification resend
@@ -107,7 +107,7 @@ def lost_username():
 
         send_forgot_username_email(user)
         flash.success("Username recovery link sent!")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     return render_template("users/lost_username.html", form=form)
 
@@ -125,7 +125,7 @@ def lost_password():
 
         send_forgot_password_email(user)
         flash.success("Password reset link sent!")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     return render_template("users/lost_password.html", form=form)
 
@@ -137,29 +137,29 @@ def reset_password():
     user_id = request.args.get("user_id")
 
     timestamp = int(request.args.get("timestamp"))
-    if datetime.fromtimestamp(timestamp) + current_app.config["EMAIL_RESET_PASSWORD_EXPIRY"] > datetime.now():
+    if datetime.fromtimestamp(timestamp) + current_app.config["EMAIL_RESET_PASSWORD_EXPIRY"] <= datetime.now():
         flash.error("Email verification link expired.")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     received_checksum = request.args.get("checksum")
 
     user = User.get(id=user_id)
     if user is None:
         flash.error("User not found.")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     checksum = create_email_link_checksum(RESET_PASSWORD, user, timestamp)
     if checksum != received_checksum:
         flash.error("Unable to reset password.")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        user.password = form.password.data
+        user.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         db.session.commit()
 
         flash.success("Password reset!")
-        return render_template("index/index.html")
+        return redirect(url_for("index.home"))
 
     return render_template("users/reset_password.html", form=form)
 
