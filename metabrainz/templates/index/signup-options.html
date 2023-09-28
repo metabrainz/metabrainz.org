@@ -1,0 +1,52 @@
+{% extends 'users/base.html' %}
+
+{% block title %}{{ _('Sign up') }} - MetaBrainz Foundation{% endblock %}
+
+{% block auth_form %}
+  <div class="auth-card-container">
+
+    <div class="auth-card">
+      <h1 class="page-title text-center">{{ _('Choose account type') }}</h1>
+      <div class="h4 text-center">access all MetaBrainz projects</div>
+
+      <div id="tiers">
+        <div id="primary-tiers">
+          <div class="row">
+            <div class="tier shiny col-md-4">
+              <div class="thumbnail">
+                <div class="caption">
+                  <h3>Supporter</h3>
+                  <div class="description">
+                    Do you rely on data from MetaBrainz? We rely on contributions to keep providing it. To access our
+                    datasets or the <a href="https://musicbrainz.org/register">MusicBrainz Live Data Feed</a>, please
+                    choose between non-commercial and commercial use on the next page.
+                  </div>
+                  <div class="buttons">
+                    <p>
+                      <a href="{{ url_for('account_type') }}" class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a>
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="tier shiny col-md-4">
+              <div class="thumbnail">
+                <div class="caption">
+                  <h3>User</h3>
+                  <div class="description">
+                    You want to use one or more of MetaBrainz projects.
+                  </div>
+                  <div class="buttons">
+                    <p>
+                      <a href="{{ url_for('account_type') }}" class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

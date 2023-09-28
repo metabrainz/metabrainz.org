@@ -81,6 +81,11 @@ def gdpr_statement():
     return render_template('index/gdpr.html')
 
 
+@index_bp.route("/signup-options")
+def signup_options():
+    return render_template('index/signup-options.html')
+
+
 @index_bp.route('/about/customers.html')
 def about_customers_redirect():
     return redirect(url_for('supporters.supporters_list'), 301)

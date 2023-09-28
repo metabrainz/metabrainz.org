@@ -12,8 +12,7 @@ class User(db.Model, UserMixin):
     password = Column(Text, nullable=False)  # TODO: add a constraint to ensure password is cleared when deleted field is set
 
     email = Column(Text)
-    unconfirmed_email = Column(Text)
-
+    email_confirmed_at = Column(DateTime(timezone=True))
     member_since = Column(DateTime(timezone=True), default=func.now())
     last_login_at = Column(DateTime(timezone=True), default=func.now())
     last_updated = Column(DateTime(timezone=True), default=func.now())
