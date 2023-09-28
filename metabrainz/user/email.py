@@ -51,7 +51,7 @@ def send_forgot_password_email(user: User):
     """ Send email for resetting the user's password. """
     timestamp = int(datetime.now().timestamp())
     checksum = create_email_link_checksum(RESET_PASSWORD, user, timestamp)
-    reset_password_link = url_for("users.reset_password", user_id=user.id, timestamp=timestamp, checksum=checksum)
+    reset_password_link = url_for("users.reset_password", user_id=user.id, timestamp=timestamp, checksum=checksum, _external=True)
     content = render_template(
         "email/user-password-reset.txt",
         reset_password_link=reset_password_link,

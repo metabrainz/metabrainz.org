@@ -10,7 +10,12 @@
     {{- end -}}
 {{- end -}}
 
+from datetime import timedelta
+
 SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
+EMAIL_VERIFICATION_SECRET_KEY = '''{{template "KEY" "email_verification_secret_key"}}'''
+EMAIL_VERIFICATION_EXPIRY = timedelta(hours=24)
+EMAIL_RESET_PASSWORD_EXPIRY = timedelta(hours=24)
 DEBUG = False
 
 {{if service "pgbouncer-master"}}
@@ -79,6 +84,7 @@ MAIL_FROM_DOMAIN = '''{{template "KEY" "mail_from_domain"}}'''
 PREFERRED_URL_SCHEME = '''{{template "KEY" "preferred_url_scheme"}}'''
 
 SERVER_BASE_URL = f"{PREFERRED_URL_SCHEME}://{MAIL_FROM_DOMAIN}"
+SERVER_NAME = MAIL_FROM_DOMAIN
 
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [

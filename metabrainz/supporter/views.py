@@ -16,7 +16,6 @@ from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.supporter import musicbrainz_login, login_forbidden
 from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
     NonCommercialSupporterEditForm
-from metabrainz.user.forms import UserLoginForm, UserSignupForm
 
 supporters_bp = Blueprint('supporters', __name__)
 

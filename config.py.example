@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+from datetime import timedelta
 # CUSTOM CONFIGURATION
 
 DEBUG = True  # set to False in production mode
@@ -6,6 +6,8 @@ DEBUG = True  # set to False in production mode
 SECRET_KEY = "CHANGE_THIS"
 
 EMAIL_VERIFICATION_SECRET_KEY = "CHANGE THIS"
+EMAIL_VERIFICATION_EXPIRY = timedelta(hours=24)
+EMAIL_RESET_PASSWORD_EXPIRY = timedelta(hours=24)
 
 # Bcrypt
 BCRYPT_HASH_PREFIX = "2a"
@@ -48,6 +50,7 @@ STRIPE_KEYS = {
 
 # if developing payment integration locally, change this to your localhost url
 SERVER_BASE_URL = "https://metabrainz.org"
+SERVER_NAME = "metabrainz.org"
 
 
 # REDIS
