@@ -55,7 +55,7 @@ def create_app(debug=None, config_path=None):
         app.config.from_pyfile(config_path)
     else:
         if not deploy_env:
-            print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
+            print("loading %s" % os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
             app.config.from_pyfile(os.path.join(
                 os.path.dirname(os.path.realpath(__file__)),
                 '..', 'config.py'
@@ -64,8 +64,7 @@ def create_app(debug=None, config_path=None):
     # Load configuration files: If we're running under a docker deployment, wait until 
     # the consul configuration is available.
     if deploy_env:
-        consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), 
-            '..', 'consul_config.py')
+        consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'consul_config.py')
 
         print("loading consul %s" % consul_config)
         for i in range(CONSUL_CONFIG_FILE_RETRY_COUNT):
@@ -117,13 +116,8 @@ def create_app(debug=None, config_path=None):
     bcrypt.init_app(app)
 
     # MusicBrainz OAuth
-    from metabrainz.supporter import login_manager, musicbrainz_login
+    from metabrainz.user import login_manager
     login_manager.init_app(app)
-    musicbrainz_login.init(
-        app.config['MUSICBRAINZ_BASE_URL'],
-        app.config['MUSICBRAINZ_CLIENT_ID'],
-        app.config['MUSICBRAINZ_CLIENT_SECRET']
-    )
 
     # Templates
     from metabrainz.utils import reformat_datetime

@@ -9,9 +9,9 @@
         Supporter
         {% if supporter.is_commercial %}
           <strong>{{ supporter.org_name }}</strong>
-          ({{ supporter.musicbrainz_id }})
+          ({{ supporter.user.name }})
         {% else %}
-          {{ supporter.musicbrainz_id }}
+          {{ supporter.user.name }}
         {% endif %}
         <small>
           #{{ supporter.id }}
@@ -44,7 +44,7 @@
 
     <div class="form-group col-md-6">
       <label>MusicBrainz Username</label>
-      <input class="form-control" type="text" value="{{ supporter.musicbrainz_id }}" readonly>
+      <input class="form-control" type="text" value="{{ supporter.user.name }}" readonly>
       <div style="padding-top: 7px">
         <em class="text-muted">
           Determines which MusicBrainz user manages this MetaBrainz account.
