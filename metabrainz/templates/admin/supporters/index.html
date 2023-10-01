@@ -36,7 +36,7 @@
           <tr>
             <td>
               <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">
-                <strong>{{ supporter.musicbrainz_id }}</strong>
+                <strong>{{ supporter.user.name }}</strong>
                 {{ '('+supporter.org_name+')' if supporter.org_name }}
               </a>
             </td>

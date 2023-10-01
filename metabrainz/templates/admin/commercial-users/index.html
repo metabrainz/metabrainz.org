@@ -22,7 +22,7 @@
           <td>
             <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">
               <strong>{{ supporter.org_name }}</strong>
-              ({{ supporter.musicbrainz_id }})
+              ({{ supporter.user.name }})
             </a>
           </td>
           <td>

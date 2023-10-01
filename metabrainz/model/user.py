@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from sqlalchemy import Column, Integer, Identity, Text, DateTime, func, Boolean
+from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
 
@@ -19,6 +20,8 @@ class User(db.Model, UserMixin):
 
     deleted = Column(Boolean, default=False)
 
+    supporter = relationship("Supporter", uselist=False, back_populates="user")
+
     def get_user_id(self):
         return self.id
 
@@ -27,11 +30,11 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def add(cls, **kwargs):
-        new_user = cls(
-            name=kwargs.pop('name'),
-            password=kwargs.pop('password_hash'),
-            email=kwargs.pop('email')
-        )
+        from metabrainz import bcrypt
+
+        password = kwargs.pop('password')
+        password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+        new_user = cls(name=kwargs.pop('name'), password=password_hash, email=kwargs.pop('email'))
         if kwargs:
             raise TypeError('Unexpected **kwargs: %r' % kwargs)
         db.session.add(new_user)

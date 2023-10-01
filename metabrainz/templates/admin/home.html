@@ -19,7 +19,7 @@
           <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
           <td>{{ supporter.contact_name }}</td>
           <td>{{ supporter.contact_email }}</td>
-          <td>{{ supporter.musicbrainz_id }}</td>
+          <td>{{ supporter.user.name }}</td>
           <td>{{ supporter.tier }}</td>
           <td>{{ supporter.created }}</td>
         </tr>

@@ -8,7 +8,7 @@ class AuthMixin(object):
     """All admin views that shouldn't be available to public, must subclass this."""
 
     def is_accessible(self):
-        return current_user.is_authenticated and current_user.musicbrainz_id in current_app.config['ADMINS']
+        return current_user.is_authenticated and current_user.user.name in current_app.config['ADMINS']
 
     def _handle_view(self, name, **kwargs):
         if not self.is_accessible():

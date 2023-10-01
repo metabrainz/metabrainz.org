@@ -37,7 +37,7 @@ class Supporter(db.Model, UserMixin):
     # Common columns used by both commercial and non-commercial supporters:
     id = db.Column(db.Integer, primary_key=True)
     is_commercial = db.Column(db.Boolean, nullable=False)
-    musicbrainz_id = db.Column(db.Unicode, unique=True)  # MusicBrainz account that manages this supporter
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="SET NULL", onupdate="CASCADE"), unique=True)
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
     state = db.Column(postgresql.ENUM(
         STATE_ACTIVE,
@@ -78,12 +78,14 @@ class Supporter(db.Model, UserMixin):
 
     datasets = db.relationship("Dataset", secondary="dataset_supporter")
 
+    user = db.relationship("User", uselist=False, back_populates="supporter")
+
     def __str__(self):
         if self.is_commercial:
             return "%s (#%s)" % (self.org_name, self.id)
         else:
-            if self.musicbrainz_id:
-                return "#%s (MBID: %s)" % (self.id, self.musicbrainz_id)
+            if self.user.name:
+                return "#%s (MBID: %s)" % (self.id, self.user.name)
             else:
                 return str(self.id)
 
@@ -95,13 +97,13 @@ class Supporter(db.Model, UserMixin):
     def add(cls, **kwargs):
         new_supporter = cls(
             is_commercial=kwargs.pop('is_commercial'),
-            musicbrainz_id=kwargs.pop('musicbrainz_id'),
             contact_name=kwargs.pop('contact_name'),
             contact_email=kwargs.pop('contact_email'),
             data_usage_desc=kwargs.pop('data_usage_desc'),
+            user=kwargs.pop('user'),
             datasets=kwargs.pop('datasets', []),
-            org_desc=kwargs.pop('org_desc', None),
 
+            org_desc=kwargs.pop('org_desc', None),
             org_name=kwargs.pop('org_name', None),
             org_logo_url=kwargs.pop('org_logo_url', None),
             website_url=kwargs.pop('website_url', None),
@@ -188,11 +190,10 @@ class Supporter(db.Model, UserMixin):
 
     @classmethod
     def search(cls, value):
-        """Search supporters by their musicbrainz_id, org_name, contact_name,
+        """Search supporters by their org_name, contact_name,
         or contact_email.
         """
         query = cls.query.filter(or_(
-            cls.musicbrainz_id.ilike('%'+value+'%'),
             cls.org_name.ilike('%'+value+'%'),
             cls.contact_name.ilike('%'+value+'%'),
             cls.contact_email.ilike('%'+value+'%'),
@@ -279,7 +280,6 @@ class SupporterAdminView(AdminModelView):
     column_labels = dict(
         id='ID',
         is_commercial='Commercial',
-        musicbrainz_id='MusicBrainz ID',
         data_usage_desc='Data usage description',
         org_desc='Organization description',
         good_standing='Good standing',
@@ -310,11 +310,10 @@ class SupporterAdminView(AdminModelView):
         in_deadbeat_club='Indicates if this supporter refuses to support us.',
     )
     column_list = (
-        'is_commercial', 'musicbrainz_id', 'org_name', 'tier', 'featured',
+        'is_commercial', 'org_name', 'tier', 'featured',
         'good_standing', 'state', 'datasets'
     )
     form_columns = (
-        'musicbrainz_id',
         'contact_name',
         'contact_email',
         'state',
