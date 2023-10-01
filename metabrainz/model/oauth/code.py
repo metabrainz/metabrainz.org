@@ -23,7 +23,6 @@ class OAuth2AuthorizationCode(db.Model, AuthorizationCodeMixin):
     client_id = Column(Integer, ForeignKey("oauth.client.id", ondelete="CASCADE"), nullable=False)
     code = Column(Text, nullable=False, unique=True)
     redirect_uri = Column(Text, nullable=False)
-    response_type = Column(Text, nullable=False)
     code_challenge = Column(Text)
     code_challenge_method = Column(Text)
     granted_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
