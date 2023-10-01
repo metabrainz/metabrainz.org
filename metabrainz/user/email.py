@@ -22,18 +22,24 @@ def _send_user_email(user: User, subject: str, content: str):
     send_mail(subject=subject, text=content, recipients=[f"{user.name} <{user.email}>"])
 
 
-def send_verification_email(user: User):
+def send_verification_email(user: User, subject, template):
     """ Send email for verification of user's email address. """
     timestamp = int(datetime.now().timestamp())
     checksum = create_email_link_checksum(VERIFY_EMAIL, user, timestamp)
-    verification_link = url_for("users.verify_email", user_id=user.id, timestamp=timestamp, checksum=checksum)
+    verification_link = url_for(
+        "users.verify_email",
+        user_id=user.id,
+        timestamp=timestamp,
+        checksum=checksum,
+        _external=True
+    )
     content = render_template(
-        "email/user-email-address-verification.txt",
+        template,
         username=user.name,
         verification_link=verification_link,
         ip=request.remote_addr
     )
-    _send_user_email(user, "Please verify your email address", content)
+    _send_user_email(user, subject, content)
 
 
 def send_forgot_username_email(user: User):

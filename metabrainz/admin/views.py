@@ -57,7 +57,6 @@ class SupportersView(AdminBaseView):
         supporter = Supporter.get(id=supporter_id)
 
         form = forms.SupporterEditForm(defaults={
-            'musicbrainz_id': supporter.musicbrainz_id,
             'contact_name': supporter.contact_name,
             'contact_email': supporter.contact_email,
             'state': supporter.state,
@@ -82,7 +81,6 @@ class SupportersView(AdminBaseView):
 
         if form.validate_on_submit():
             update_data = {
-                'musicbrainz_id': form.musicbrainz_id.data,
                 'contact_name': form.contact_name.data,
                 'contact_email': form.contact_email.data,
                 'state': form.state.data,

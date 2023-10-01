@@ -1,0 +1,18 @@
+Dear {{ username }},
+
+Thank you for signing up!
+
+We request you to verify your MetaBrainz account. Please click on the link below to verify your email address:
+
+{{ verification_link }}
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser window instead.
+
+Once your email is verified, you can generate an access token for the MetaBrainz API on your profile page.
+
+This email was triggered by a request from the IP address [{{ ip }}].
+
+Thanks for using MetaBrainz!
+
+-- The MetaBrainz Team
+
