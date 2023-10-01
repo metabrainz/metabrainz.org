@@ -118,13 +118,8 @@ def create_app(debug=None, config_path = None):
     bcrypt.init_app(app)
 
     # MusicBrainz OAuth
-    from metabrainz.supporter import login_manager, musicbrainz_login
+    from metabrainz.user import login_manager
     login_manager.init_app(app)
-    musicbrainz_login.init(
-        app.config['MUSICBRAINZ_BASE_URL'],
-        app.config['MUSICBRAINZ_CLIENT_ID'],
-        app.config['MUSICBRAINZ_CLIENT_SECRET']
-    )
 
     # Templates
     from metabrainz.utils import reformat_datetime
