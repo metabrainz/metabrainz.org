@@ -48,7 +48,6 @@ CREATE TABLE oauth.code (
         client_id INTEGER NOT NULL,
         code TEXT NOT NULL,
         redirect_uri TEXT NOT NULL,
-        response_type TEXT NOT NULL,
         code_challenge TEXT,
         code_challenge_method TEXT,
         granted_at TIMESTAMP WITH TIME ZONE NOT NULL,

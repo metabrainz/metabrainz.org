@@ -30,3 +30,7 @@ class ApplicationForm(FlaskForm):
     def validate_website(self, field):
         if not field.data.startswith(("http://", "https://")):
             raise validators.ValidationError(lazy_gettext('Homepage URL must use http or https'))
+
+
+class AuthorizationForm(FlaskForm):
+    confirm = StringField(lazy_gettext('Confirm'), [validators.DataRequired()])

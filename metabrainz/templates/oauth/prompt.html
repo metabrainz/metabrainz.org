@@ -5,7 +5,7 @@
 
 {% block content %}
   <div id="oauth-prompt">
-    <h1 class="page-title">{{ client['name'] }}</h1>
+    <h1 class="page-title">{{ client.client_name }}</h1>
 
     <p style="font-size:1.1em;">{{ _('This app requested permission to access:') }}</p>
 
@@ -20,15 +20,14 @@
         </div>
       </div>
 
-      {% for scope in scopes %}
-        <div class="permission">
-          {{ oauth_scope_desc(scope) }}
-        </div>
-      {% endfor %}
+      <div class="permission">
+        {{ oauth_scope_desc(scope) }}
+      </div>
 
     </div>
 
     <form action="{{ request.url }}" method="post">
+      {{ form.hidden_tag() }}
       <button type="submit" name="confirm" value="yes" class="btn btn-primary">{{ _('Allow access') }}</button>
       <a href="{{ cancel_url }}" class="btn btn-default">{{ _('Cancel') }}</a>
     </form>
