@@ -49,7 +49,8 @@ class OAuth2Client(db.Model, ClientMixin):
         return True  # TODO: Fix token endpoint auth
 
     def check_response_type(self, response_type):
-        return True  # TODO: Fix response types
+        return (self.client_secret is not None and response_type == "code")\
+            or (self.client_secret is None and response_type == "token")
 
     def check_grant_type(self, grant_type):
         return True  # TODO: Fix grant types
