@@ -1,0 +1,20 @@
+Dear {{ username }},
+
+Thank you for signing up!
+
+Before we can review your application, we request you to verify your MetaBrainz account. Please
+click on the link below to verify your email address:
+
+{{ verification_link }}
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser window instead.
+
+Once your email is verified, we will start reviewing your application. We will send you updates via email.
+Please know that you may use our APIs and static data dumps for evaluation purposes while your application
+is pending. You do not need any API keys to do this.
+
+This email was triggered by a request from the IP address [{{ ip }}].
+
+Thanks for using MetaBrainz!
+
+-- The MetaBrainz Team

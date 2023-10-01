@@ -3,10 +3,10 @@ from datetime import datetime, timezone
 from flask import Blueprint, current_app, redirect, render_template, request, url_for
 from flask_login import logout_user, login_required, login_user
 
-from metabrainz import session, bcrypt, flash
+from metabrainz import bcrypt, flash
 from metabrainz.model import db
 from metabrainz.model.user import User
-from metabrainz.supporter import login_forbidden
+from metabrainz.user import login_forbidden
 from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
     VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
 from metabrainz.user.forms import UserLoginForm, UserSignupForm, ForgotPasswordForm, ForgotUsernameForm, \
@@ -27,15 +27,17 @@ def signup():
             return render_template("users/signup.html", form=form)
 
         # TODO: Handle the case where multiple users sign up with same email but haven"t verified it yet
-        user = User.get(name=form.email.data)
+        user = User.get(email=form.email.data)
         if user is not None:
-            form.form_errors.append(f"Another user with email '{form.username.data}' exists.")
+            form.form_errors.append(f"Another user with email '{form.email.data}' exists.")
             return render_template("users/signup.html", form=form)
 
-        password_hash = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-        user = User.add(name=form.username.data, email=form.email.data, password_hash=password_hash)
-
-        send_verification_email(user)
+        user = User.add(name=form.username.data, email=form.email.data, password=form.password.data)
+        send_verification_email(
+            user,
+            "Please verify your email address",
+            "email/user-email-address-verification.txt"
+        )
         flash.success("Account created. Please check your inbox to complete verification.")
         return redirect(url_for("index.home"))
 
@@ -168,5 +170,4 @@ def reset_password():
 @login_required
 def logout():
     logout_user()
-    session.clear()
     return redirect(url_for("index.home"))

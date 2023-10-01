@@ -52,17 +52,13 @@ class SupporterSignUpForm(UserSignupForm):
     agreement = BooleanField(validators=[DataRequired(message=gettext("You need to accept the agreement!"))])
     recaptcha = RecaptchaField()
 
-    def __init__(self, default_email=None, **kwargs):
-        kwargs.setdefault('contact_email', default_email)
-        FlaskForm.__init__(self, **kwargs)
-
 
 class NonCommercialSignUpForm(SupporterSignUpForm):
     """Sign up form for non-commercial supporters."""
     datasets = DatasetsField()
 
-    def __init__(self, available_datasets, default_email=None, **kwargs):
-        super().__init__(default_email, **kwargs)
+    def __init__(self, available_datasets, **kwargs):
+        super().__init__(**kwargs)
         self.datasets.choices = available_datasets
         self.descriptions = {d.id: d.description for d in available_datasets}
 

@@ -12,7 +12,7 @@
       <div id="tiers">
         <div id="primary-tiers">
           <div class="row">
-            <div class="tier shiny col-md-4">
+            <div class="tier shiny col-md-4" style="width: 100%">
               <div class="thumbnail">
                 <div class="caption">
                   <h3>Supporter</h3>
@@ -23,13 +23,13 @@
                   </div>
                   <div class="buttons">
                     <p>
-                      <a href="{{ url_for('account_type') }}" class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a>
+                      <a href="{{ url_for('supporters.account_type') }}" class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a>
                     </p>
                 </div>
               </div>
             </div>
           </div>
-            <div class="tier shiny col-md-4">
+            <div class="tier shiny col-md-4" style="width: 100%">
               <div class="thumbnail">
                 <div class="caption">
                   <h3>User</h3>
@@ -38,7 +38,7 @@
                   </div>
                   <div class="buttons">
                     <p>
-                      <a href="{{ url_for('account_type') }}" class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a>
+                      <a href="{{ url_for('users.signup') }}" class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a>
                     </p>
                   </div>
                 </div>

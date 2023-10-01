@@ -32,7 +32,7 @@
       </thead>
       {% for row in supporters %}
         <tr>
-          <td><a href="{{ url_for('supportersview.details', supporter_id=row.id) }}">{{ row.musicbrainz_id }}</a></td>
+          <td><a href="{{ url_for('supportersview.details', supporter_id=row.id) }}">{{ row.user.name }}</a></td>
           <td>{{ row.contact_name }}</td>
           <td>{{ row.contact_email }}</td>
           <td><code class="text-muted">{{ row.token }}</code></td>
