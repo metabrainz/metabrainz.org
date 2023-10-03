@@ -64,7 +64,12 @@
                 {{ current_user.name }} <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ url_for('supporters.profile') }}">{{ _('Your profile') }}</a></li>
+                {% if current_user.supporter %}
+                  {% set profile_url = url_for("supporters.profile") %}
+                {% else %}
+                  {% set profile_url = url_for("users.profile") %}
+                {% endif %}
+                <li><a href="{{ profile_url }}">{{ _('Your profile') }}</a></li>
                 <li><a href="{{ url_for('oauth.index') }}">{{ _('OAuth applications') }}</a></li>
                 <li><a href="{{ url_for('users.logout') }}">{{ _('Sign out') }}</a></li>
               </ul>

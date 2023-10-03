@@ -44,3 +44,12 @@ class User(db.Model, UserMixin):
     @classmethod
     def get(cls, **kwargs):
         return cls.query.filter_by(**kwargs).first()
+
+    def update(self, **kwargs):
+        email = kwargs.pop('email')
+        if email is not None:
+            self.email = email
+            self.email_confirmed_at = None
+        if kwargs:
+            raise TypeError('Unexpected **kwargs: %r' % kwargs)
+        db.session.commit()

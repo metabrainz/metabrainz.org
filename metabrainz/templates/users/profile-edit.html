@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Edit') }} - {{ _('Your Profile') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{{ _('Your Profile') }}</h1>
+  <h2>{{ _('Edit information') }}</h2>
+
+  {% for field in form.errors %}
+    {% for error in form.errors[field] %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endfor %}
+
+  <form method="POST" class="form-horizontal" role="form">
+    {{ form.hidden_tag() }}
+    <fieldset>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">{{ form.email.label.text }}</label>
+        <div class="col-sm-5">{{ form.email(class="form-control", required="required") }}</div>
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">{{ _('Update') }}</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}

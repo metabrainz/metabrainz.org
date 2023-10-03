@@ -68,3 +68,8 @@ class ResetPasswordForm(MeBFlaskForm):
         Length(min=8, max=64),
         EqualTo("password", gettext("Confirm Password should match password!"))
     ])
+
+
+class UserEditForm(MeBFlaskForm):
+    """ Login form for existing users. """
+    email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])

@@ -253,13 +253,13 @@ def musicbrainz_post():
         return redirect(url_for('.signup'))
 
 
-@supporters_bp.route('/profile')
+@supporters_bp.route('/supporters/profile')
 @login_required
 def profile():
-    return render_template("supporters/profile.html")
+    return render_template("supporters/profile.html", current_supporter=current_user.supporter)
 
 
-@supporters_bp.route('/profile/edit', methods=['GET', 'POST'])
+@supporters_bp.route('/supporters/profile/edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
     if current_user.is_commercial:
@@ -278,7 +278,7 @@ def profile_edit():
         if not current_user.is_commercial:
             kwargs["datasets"] = form.datasets.data
 
-        current_user.update(**kwargs)
+        current_user.supporter.update(**kwargs)
         flash.success("Profile updated.")
         return redirect(url_for('.profile'))
     else:
@@ -301,11 +301,11 @@ def profile_edit():
     }))
 
 
-@supporters_bp.route('/profile/regenerate-token', methods=['POST'])
+@supporters_bp.route('/supporters/profile/regenerate-token', methods=['POST'])
 @login_required
 def regenerate_token():
     try:
-        return jsonify({'token': current_user.generate_token()})
+        return jsonify({'token': current_user.supporter.generate_token()})
     except InactiveSupporterException:
         raise BadRequest(gettext("Can't generate new token unless account is active."))
     except TokenGenerationLimitException as e:
