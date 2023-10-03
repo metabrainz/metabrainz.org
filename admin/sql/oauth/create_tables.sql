@@ -25,6 +25,11 @@ CREATE TABLE oauth.scope (
         PRIMARY KEY (id)
 );
 
+INSERT INTO oauth.scope (name, description)
+     VALUES ('profile', 'View your public account information')
+          , ('tag', 'View and modify your private tags')
+          , ('rating', 'View and modify your private ratings');
+
 
 
 CREATE TABLE oauth.client (

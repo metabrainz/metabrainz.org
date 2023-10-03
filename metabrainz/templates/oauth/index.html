@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from 'macros.html' import oauth_scope_desc with context %}
 
 {% block title %}{{ _('Applications') }} - MetaBrainz{% endblock %}
 
@@ -7,7 +8,7 @@
 
   <div class="clearfix">
     <h3 class="pull-left">{{ _('Your applications') }}</h3>
-    <a href="{{ url_for('oauth.create') }}" class="btn btn-success pull-right" style="margin-top:12px;">
+    <a href="{{ url_for('oauth2.create') }}" class="btn btn-success pull-right" style="margin-top:12px;">
       <span class="glyphicon glyphicon-plus-sign"></span> {{ _('Create new application') }}
     </a>
   </div>
@@ -32,8 +33,8 @@
           <td>{{ app.client_id }}</td>
           <td>{{ app.client_secret }}</td>
           <td>
-            <a class="btn btn-primary btn-xs" href="{{ url_for('oauth.edit', client_id=app.client_id) }}">{{ _('Modify') }}</a>
-            <a class="btn btn-danger btn-xs" href="{{ url_for('oauth.delete', client_id=app.client_id) }}">{{ _('Delete') }}</a>
+            <a class="btn btn-primary btn-xs" href="{{ url_for('oauth2.edit', client_id=app.client_id) }}">{{ _('Modify') }}</a>
+            <a class="btn btn-danger btn-xs" href="{{ url_for('oauth2.delete', client_id=app.client_id) }}">{{ _('Delete') }}</a>
           </td>
         </tr>
       {% endfor %}
@@ -59,26 +60,19 @@
       <tbody>
         {% for token in tokens %}
           <tr>
-            <td><b>{{ token.client_name }}</b></td>
-            <td>{{ token.client_website }}</td>
+            <td><b>{{ token.client.name }}</b></td>
+            <td>{{ token.client.website }}</td>
             <td>
               {% if token.scopes %}
-                <ul>
-                  {% set scopes = token.scopes.split() %}
-{#                  {% from 'macros.html' import scope_desc with context %}#}
-{#                  {% for scope in scopes %}#}
-{#                    <li>{{ scope_desc(scope) }}</li>#}
-{#                  {% endfor %}#}
-                  {% for scope in scopes %}
-                    <li>{{ oauth_scope_desc(scope) }}</li>
-                  {% endfor %}
-                </ul>
+                {{ oauth_scope_desc(token.scopes) }}
               {% else %}
                 {{ _('No special requirements') }}
               {% endif %}
             </td>
             <td>
-              <a class="btn btn-danger btn-xs" href="{{ url_for('oauth.revoke', client_id=token.client_id) }}">{{ _('Revoke access') }}</a>
+              <form action="{{ url_for('oauth2.revoke', client_id=token.client_id) }}" method="post" class="btn btn-danger btn-xs" >
+                <button type="submit" name="your_name" value="your_value" class="btn-link">{{ _('Revoke access') }}</button>
+              </form>
             </td>
           </tr>
         {% endfor %}

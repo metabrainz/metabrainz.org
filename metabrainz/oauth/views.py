@@ -9,13 +9,14 @@ from metabrainz import flash
 from metabrainz.decorators import nocache, crossdomain
 from metabrainz.model import db
 from metabrainz.model.oauth.client import OAuth2Client
+from metabrainz.model.oauth.scope import get_scopes
 from metabrainz.model.oauth.token import OAuth2Token
 from metabrainz.model.user import User
 from metabrainz.oauth.forms import ApplicationForm, AuthorizationForm
 from metabrainz.oauth.provider import authorization_server
 from metabrainz.utils import build_url
 
-oauth_bp = Blueprint('oauth', __name__)
+oauth_bp = Blueprint('oauth2', __name__)
 
 
 @oauth_bp.route('/list')
@@ -40,27 +41,16 @@ def create():
     form = ApplicationForm()
     if form.validate_on_submit():
         client_id = gen_salt(24)
+        client_secret = gen_salt(48)
         client = OAuth2Client(
             client_id=client_id,
+            client_secret=client_secret,
             owner_id=current_user.id,
             name=form.client_name.data,
             description=form.description.data,
             website=form.website.data,
             redirect_uris=[form.redirect_uri.data]
         )
-        # TODO: Fix use of these columns
-        # client_metadata = {
-        #     "grant_types": split_by_crlf(form["grant_type"]),
-        #     "response_types": split_by_crlf(form["response_type"]),
-        #     "token_endpoint_auth_method": form["token_endpoint_auth_method"]
-        # }
-
-        # if form["token_endpoint_auth_method"] == "none":
-        #     client.client_secret = ""
-        # else:
-        #     client.client_secret = gen_salt(48)
-
-        client.client_secret = gen_salt(48)
         db.session.add(client)
         db.session.commit()
     else:
@@ -111,18 +101,19 @@ def delete(client_id):
 def authorize():
     """ OAuth 2.0 authorization endpoint. """
     form = AuthorizationForm()
-    redirect_uri = request.args.get('redirect_uri')
+    redirect_uri = request.args.get("redirect_uri")
     cancel_url = build_url(redirect_uri, {"error": "access_denied"})
 
     if request.method == 'GET':  # Client requests access
         try:
             grant = authorization_server.get_consent_grant(end_user=current_user)
+            scopes = get_scopes(db.session, grant.request.scope)
         except OAuth2Error as error:
             return jsonify({
                 "error": error.error,
                 "description": error.description
             })  # FIXME: Add oauth error page
-        return render_template('oauth/prompt.html', client=grant.client, scope=grant.request.scope,
+        return render_template('oauth/prompt.html', client=grant.client, scopes=scopes,
                                cancel_url=cancel_url, hide_navbar_links=True, hide_footer=True, form=form)
     else:
         if form.validate_on_submit():

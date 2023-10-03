@@ -24,17 +24,10 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro oauth_scope_desc(scope) %}
-  {{ scope }}
-  {###
-
-  Define scope description here like this:
-
-  {% if scope == "review" %}
-    <abbr title="Create and modify your reviews.">{{ _('Reviews') }}</abbr>
-  {% elif scope == "profile" %}
-    <abbr title="Access your profile">{{ _('Profile') }}</abbr>
-  {% endif %}
-
-  ###}
+{% macro oauth_scope_desc(scopes) %}
+  <ul>
+    {% for scope in scopes %}
+      <li>{{ scope.name }}: {{ scope.description }}</li>
+    {% endfor %}
+  </ul>
 {% endmacro %}
