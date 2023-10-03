@@ -29,8 +29,6 @@ class OAuth2Client(db.Model, ClientMixin):
         return self.client_id
 
     def get_default_redirect_uri(self):
-        if self.redirect_uris:
-            return self.redirect_uris[0]
         return None
 
     def get_allowed_scope(self, scope):

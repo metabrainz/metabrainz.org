@@ -70,7 +70,7 @@
                   {% set profile_url = url_for("users.profile") %}
                 {% endif %}
                 <li><a href="{{ profile_url }}">{{ _('Your profile') }}</a></li>
-                <li><a href="{{ url_for('oauth.index') }}">{{ _('OAuth applications') }}</a></li>
+                <li><a href="{{ url_for('oauth2.index') }}">{{ _('OAuth applications') }}</a></li>
                 <li><a href="{{ url_for('users.logout') }}">{{ _('Sign out') }}</a></li>
               </ul>
             </li>
