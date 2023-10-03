@@ -228,4 +228,3 @@ def config_oauth(app):
     authorization_server.register_grant(ImplicitGrant)
     authorization_server.register_grant(RefreshTokenGrant)
     authorization_server.register_endpoint(revoke_token)
-

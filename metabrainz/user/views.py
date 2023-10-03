@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 from flask import Blueprint, current_app, redirect, render_template, request, url_for
-from flask_login import logout_user, login_required, login_user
+from flask_login import logout_user, login_required, login_user, current_user
 
 from metabrainz import bcrypt, flash
 from metabrainz.model import db
@@ -10,7 +10,7 @@ from metabrainz.user import login_forbidden
 from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
     VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
 from metabrainz.user.forms import UserLoginForm, UserSignupForm, ForgotPasswordForm, ForgotUsernameForm, \
-    ResetPasswordForm
+    ResetPasswordForm, UserEditForm
 
 users_bp = Blueprint("users", __name__)
 
@@ -38,6 +38,7 @@ def signup():
             "Please verify your email address",
             "email/user-email-address-verification.txt"
         )
+        login_user(user)
         flash.success("Account created. Please check your inbox to complete verification.")
         return redirect(url_for("index.home"))
 
@@ -93,6 +94,30 @@ def verify_email():
 
     flash.success("Email verified!")
     return redirect(url_for("index.home"))
+
+
+@users_bp.route('/users/profile')
+@login_required
+def profile():
+    return render_template("users/profile.html")
+
+
+@users_bp.route('/users/profile/edit', methods=['GET', 'POST'])
+@login_required
+def profile_edit():
+    form = UserEditForm()
+    if form.validate_on_submit():
+        current_user.update(email=form.email.data)
+        send_verification_email(
+            current_user,
+            "Please verify your email address",
+            "email/user-email-address-verification.txt"
+        )
+        flash.success("Profile updated.")
+        return redirect(url_for(".profile"))
+
+    form.email.data = current_user.email
+    return render_template('users/profile-edit.html', form=form)
 
 
 # TODO: Add email verification resend

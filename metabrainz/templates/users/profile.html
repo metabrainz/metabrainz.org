@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Your Profile') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{{ _('Your Profile') }}</h1>
+  <div class="col-md-12">
+    <h3>{{ _('Contact information') }}</h3>
+    <p>
+      <strong>{{ _('Name:') }}</strong> {{ current_user.name }}<br />
+      <strong>{{ _('Email:') }}</strong> {{ current_user.email }}<br />
+    </p>
+    <p>
+      <a href="{{ url_for("users.profile_edit") }}" class="btn btn-lg btn-primary">Edit information</a>
+    </p>
+  </div>
+{% endblock %}
