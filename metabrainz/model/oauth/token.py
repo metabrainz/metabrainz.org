@@ -7,7 +7,9 @@ from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
 from metabrainz.model.oauth.client import OAuth2Client
+from metabrainz.model.oauth.code import OAuth2AuthorizationCode
 from metabrainz.model.oauth.relation_scope import OAuth2TokenScope
+from metabrainz.model.oauth.scope import OAuth2Scope, get_scopes
 from metabrainz.model.user import User
 
 
@@ -28,7 +30,7 @@ class OAuth2Token(db.Model, TokenMixin):
 
     user = relationship(User)
     client = relationship(OAuth2Client)
-    scopes = relationship("OAuth2Scope", secondary=OAuth2TokenScope)
+    scopes = relationship(OAuth2Scope, secondary=OAuth2TokenScope)
 
     def get_client_id(self):
         return self.client.client_id
@@ -61,7 +63,8 @@ def save_token(token_data, request):
         client_id=request.client.id,
         user_id=request.user.id,
         access_token=token_data["access_token"],
-        expires_in=token_data["expires_in"]
+        expires_in=token_data["expires_in"],
+        scopes=request.authorization_code.scopes
     )
     db.session.add(token)
     db.session.commit()
