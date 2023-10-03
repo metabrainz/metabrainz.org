@@ -7,21 +7,21 @@
 
   <p>
     <strong>Type:</strong>
-    {{ 'Commercial' if current_user.is_commercial else 'Non-commercial' }}
+    {{ 'Commercial' if current_supporter.is_commercial else 'Non-commercial' }}
     <br />
-    {% if current_user.is_commercial %}
-      <strong>Tier:</strong> {{ current_user.tier.name }}<br />
+    {% if current_supporter.is_commercial %}
+      <strong>Tier:</strong> {{ current_supporter.tier.name }}<br />
     {% endif %}
     <strong>State:</strong>
-    <span class="{{ 'text-success' if current_user.state == 'active'   else
-                    'text-danger'  if current_user.state == 'rejected' else
-                    'text-primary' if current_user.state == 'pending'  else
+    <span class="{{ 'text-success' if current_supporter.state == 'active'   else
+                    'text-danger'  if current_supporter.state == 'rejected' else
+                    'text-primary' if current_supporter.state == 'pending'  else
                     'text-warning' }}">
-      {{ current_user.state|upper }}
+      {{ current_supporter.state|upper }}
     </span>
   </p>
 
-  {% if not current_user.is_commercial %}
+  {% if not current_supporter.is_commercial %}
      <p>
        NOTE: If you would like to change your account from non-commercial to commercial, please
        <a href="{{ url_for("index.contact") }}">contact us</a>.
@@ -29,15 +29,15 @@
   {% endif %}
 
   <div class="row">
-    {% if current_user.is_commercial %}
+    {% if current_supporter.is_commercial %}
       <div class="col-md-7">
         <h3>{{ _('Organization information') }}</h3>
         <p>
-          <strong>{{ _('Name:') }}</strong> {{ current_user.org_name or
+          <strong>{{ _('Name:') }}</strong> {{ current_supporter.org_name or
                                     '<em class="text-muted">Unspecified</em>'|safe }}<br />
-          <strong>{{ _('Website URL:') }}</strong> {{ current_user.website_url or
+          <strong>{{ _('Website URL:') }}</strong> {{ current_supporter.website_url or
                                            '<em class="text-muted">Unspecified</em>'|safe }}<br />
-          <strong>{{ _('API URL:') }}</strong> {{ current_user.api_url or
+          <strong>{{ _('API URL:') }}</strong> {{ current_supporter.api_url or
                                        '<em class="text-muted">Unspecified</em>'|safe }}<br />
         </p>
         <p>
@@ -50,19 +50,19 @@
     <div class="col-md-12">
       <h3>{{ _('Contact information') }}</h3>
       <p>
-        <strong>{{ _('Name:') }}</strong> {{ current_user.contact_name }}<br />
-        <strong>{{ _('Email:') }}</strong> {{ current_user.contact_email }}<br />
-        {% if not current_user.is_commercial %}
+        <strong>{{ _('Name:') }}</strong> {{ current_supporter.contact_name }}<br />
+        <strong>{{ _('Email:') }}</strong> {{ current_supporter.contact_email }}<br />
+        {% if not current_supporter.is_commercial %}
           <strong>{{ _('Datasets used:') }}</strong>
-          {% if current_user.datasets %}
-            {{ current_user.datasets|map(attribute="name")|join(", ") }}
+          {% if current_supporter.datasets %}
+            {{ current_supporter.datasets|map(attribute="name")|join(", ") }}
           {% endif %}
           <br/>
         {% endif %}
       </p>
       <p>
         <a href="{{ url_for('supporters.profile_edit') }}" class="btn btn-lg btn-primary">
-          {% if current_user.is_commercial %}
+          {% if current_supporter.is_commercial %}
              Edit contact information
           {% else %}
              Edit datasets/contact information
@@ -72,8 +72,8 @@
     </div>
   </div>
 
-  {% if current_user.is_commercial %}
-    {% if current_user.state in ('active', 'limited') and current_user.good_standing %}
+  {% if current_supporter.is_commercial %}
+    {% if current_supporter.state in ('active', 'limited') and current_supporter.good_standing %}
       <h3>{{ _('Data use permission granted') }}</h3>
         <div style="font-size: 13pt">
         <p>
@@ -96,14 +96,14 @@
     {% else %}
       <h3>Limited/no data use permission granted</h3>
       <div style="font-size: 13pt">
-        {% if current_user.state == 'rejected' %}
+        {% if current_supporter.state == 'rejected' %}
           <p>
             <b>Your application for using the Live Data Feed has been rejected.</b>
           </p>
           <p>
             You do not have permission to use our data in a public commercial product.
           </p>
-        {% elif current_user.state == 'pending' %}
+        {% elif current_supporter.state == 'pending' %}
           <p>
             <b>Your application for using the Live Data Feed is still pending.</b>
           </p>
@@ -111,16 +111,16 @@
             You may use our data and APIs for evaluation/development purposes
             while your application is pending.
           </p>
-        {% elif current_user.state == 'waiting' %}
+        {% elif current_supporter.state == 'waiting' %}
           <p>
             <b>Your application for using the Live Data Feed is waiting to finalize our support agreement.</b>
           </p>
           <p>
             You may use our data and APIs for evaluation and development purposes, but you may not use the data in a public
-            commercial product. Once you are nearing the public release of a product that contains our data, please 
+            commercial product. Once you are nearing the public release of a product that contains our data, please
             <a href="/contact">contact us</a> again to finalize our support agreement.
           </p>
-        {% elif not current_user.good_standing %}
+        {% elif not current_supporter.good_standing %}
           <p>
             <b>Your use of the Live Data Feed is pending suspension.</b>
           </p>
@@ -135,11 +135,11 @@
     {% endif %}
   {% endif %}
 
-  {% if current_user.state in ('active', 'limited') and current_user.good_standing %}
+  {% if current_supporter.state in ('active', 'limited') and current_supporter.good_standing %}
     <h2>{{ _('Data Download') }}</h2>
 
     <div style="font-size: 13pt">
-      {% if not current_user.is_commercial %}
+      {% if not current_supporter.is_commercial %}
         <p>
            Thank you for registering with us -- we really appreciate it!
         </p>
@@ -155,7 +155,7 @@
     </div>
   {% endif %}
 
-  {% if current_user.state == 'active' %}
+  {% if current_supporter.state == 'active' %}
     <h2>{{ _('Live Data Feed Access token') }}</h2>
     <p style="font-style: italic; color: #444">
       {{ _('This access token should be considered private. Don\'t check this token
@@ -165,8 +165,8 @@
     </p>
     <div class="dataset-summary">
       <p>
-       {% if  current_user.token %}
-          <div id="token" style="font-size:14pt; padding: .5em; color: #AA0000">{{ current_user.token.value }}</div>
+       {% if  current_supporter.token %}
+          <div id="token" style="font-size:14pt; padding: .5em; color: #AA0000">{{ current_supporter.token.value }}</div>
        {% else %}
           <div id="token" style="font-size:14pt; padding: .5em; color: #AA0000">[ there is no valid token currently ]</div>
        {% endif %}
@@ -182,12 +182,12 @@
 
 {% block scripts %}
   {{ super() }}
-  {% if current_user.state == 'active' %}
+  {% if current_supporter.state == 'active' %}
     <script>
       $(document).ready(function () {
         var token = $("#token");
         {# Not showing confirmation dialog if there's no active token. #}
-        var ignoreConfirmation = {{ 'false' if current_user.token else 'true' }};
+        var ignoreConfirmation = {{ 'false' if current_supporter.token else 'true' }};
 
         $("#btn-generate-token").click(function () {
           if (ignoreConfirmation || confirm("{{ _('Are you sure you want to generate new access token? Current token will be revoked!') }}")) {
