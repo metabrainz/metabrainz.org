@@ -3,10 +3,7 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
 import { getPageProps } from "../utils";
-import {
-  AuthCardContainer,
-  AuthCardTextInput,
-} from "./utils";
+import { AuthCardContainer, AuthCardTextInput } from "./utils";
 
 type LostPasswordProps = {
   recaptcha_site_key: string;
@@ -74,9 +71,12 @@ function LostPassword({
                   required
                 />
 
-        <button className="btn btn-primary main-action-button" type="submit">
-          Send Email
-        </button>
+                <button
+                  className="btn btn-primary main-action-button"
+                  type="submit"
+                >
+                  Send Email
+                </button>
               </form>
             )}
           </Formik>
