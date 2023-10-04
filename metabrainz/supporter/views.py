@@ -1,8 +1,10 @@
+import json
 import logging
 
-from flask import Blueprint, request, redirect, render_template, url_for, jsonify
+from flask import Blueprint, request, redirect, render_template, url_for, jsonify, current_app
 from flask_babel import gettext
 from flask_login import login_user, logout_user, login_required, current_user
+from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 
 from metabrainz import flash, session
@@ -172,7 +174,23 @@ def signup_commercial():
         login_user(new_supporter)
         return redirect(url_for('.profile'))
 
-    return render_template("users/signup-commercial.html", form=form, tier=selected_tier, mb_username=mb_username)
+    form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
+    form_data = dict(**form.data)
+    if form_data["amount_pledged"]:
+        form_data["amount_pledged"] = float(form_data["amount_pledged"])
+    form_data.pop("csrf_token", None)
+
+    return render_template("users/signup-commercial.html", props=json.dumps({
+        "tier": {
+            "name": selected_tier.name,
+            "price": float(selected_tier.price)
+        },
+        "mb_username": mb_username,
+        "recaptcha_site_key": current_app.config["RECAPTCHA_PUBLIC_KEY"],
+        "csrf_token": generate_csrf(),
+        "initial_form_data": form_data,
+        "initial_errors": form_errors
+    }))
 
 
 @supporters_bp.route('/signup/noncommercial', methods=('GET', 'POST'))
@@ -221,7 +239,18 @@ def signup_noncommercial():
         login_user(new_supporter)
         return redirect(url_for('.profile'))
 
-    return render_template("users/signup-non-commercial.html", form=form, mb_username=mb_username)
+    form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
+    form_data = dict(**form.data)
+    form_data.pop("csrf_token", None)
+
+    return render_template("users/signup-non-commercial.html", props=json.dumps({
+        "datasets": [{"id": d.id, "description": d.description, "name": d.name} for d in available_datasets],
+        "mb_username": mb_username,
+        "recaptcha_site_key": current_app.config["RECAPTCHA_PUBLIC_KEY"],
+        "csrf_token": generate_csrf(),
+        "initial_form_data": form_data,
+        "initial_errors": form_errors
+    }))
 
 
 @supporters_bp.route('/login/musicbrainz')
@@ -270,6 +299,7 @@ def profile():
 @login_required
 def profile_edit():
     if current_user.is_commercial:
+        available_datasets = []
         form = CommercialSupporterEditForm()
     else:
         available_datasets = Dataset.query.all()
@@ -294,7 +324,17 @@ def profile_edit():
         if not current_user.is_commercial and current_user.datasets:
             form.datasets.data = [dataset.id for dataset in current_user.datasets]
 
-    return render_template('users/profile-edit.html', form=form)
+    form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
+    form_data = dict(**form.data)
+    form_data.pop("csrf_token", None)
+
+    return render_template("users/profile-edit.html", props=json.dumps({
+        "datasets": [{"id": d.id, "description": d.description, "name": d.name} for d in available_datasets],
+        "is_commercial": current_user.is_commercial,
+        "csrf_token": generate_csrf(),
+        "initial_form_data": form_data,
+        "initial_errors": form_errors
+    }))
 
 
 @supporters_bp.route('/profile/regenerate-token', methods=['POST'])
