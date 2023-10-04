@@ -136,3 +136,109 @@ export function DatasetsInput({ datasets }: DatasetsProps) {
     </div>
   );
 }
+
+export type AuthCardContainerProps = {
+  children?: any;
+};
+
+export function AuthCardContainer({ children }: AuthCardContainerProps) {
+  return (
+    <section id="auth-page">
+      <div className="auth-page-container">
+        <div className="icon-pills">
+          <div className="icon-pill">
+            <img
+              src="/static/img/projects/musicbrainz.svg"
+              alt="MusicBrainz"
+              title="MusicBrainz"
+            />
+          </div>
+          <div className="icon-pill">
+            <img
+              src="/static/img/projects/listenbrainz.svg"
+              alt="ListenBrainz"
+              title="ListenBrainz"
+            />
+          </div>
+          <div className="icon-pill">
+            <img
+              src="/static/img/projects/bookbrainz.svg"
+              alt="BookBrainz"
+              title="BookBrainz"
+            />
+          </div>
+          <div className="icon-pill">
+            <img
+              src="/static/img/projects/critiquebrainz.svg"
+              alt="CritiqueBrainz"
+              title="CritiqueBrainz"
+            />
+          </div>
+          <div className="icon-pill">
+            <img
+              src="/static/img/projects/picard.svg"
+              alt="Picard"
+              title="Picard"
+            />
+          </div>
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}
+
+export type AuthCardTextInputProps = JSX.IntrinsicElements["input"] &
+  FieldConfig & {
+    label: string | JSX.Element;
+  };
+
+export function AuthCardTextInput({
+  label,
+  children,
+  ...props
+}: AuthCardTextInputProps) {
+  const [field, meta] = useField(props);
+  return (
+    <div className="form-group">
+      <label className="form-label" htmlFor={props.id}>
+        {label} {props.required && <span style={{ color: "red" }}>*</span>}
+      </label>
+      <div>
+        <input
+          className="form-control"
+          {...field}
+          {...props}
+          required={props.required}
+        />
+        {meta.touched && meta.error ? (
+          <div style={{ paddingTop: "7px", color: "red" }}>{meta.error}</div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+export type AuthCardCheckboxInputProps = JSX.IntrinsicElements["input"] &
+  FieldConfig & {
+    label: string;
+  };
+
+export function AuthCardCheckboxInput({
+  label,
+  children,
+  ...props
+}: AuthCardCheckboxInputProps) {
+  const [field, meta] = useField(props);
+  return (
+    <div className="form-group">
+      <label htmlFor={props.id}>
+        <input {...props} {...field} />
+        Remember me
+      </label>
+      {meta.touched && meta.error ? (
+        <div style={{ paddingTop: "7px", color: "red" }}>{meta.error}</div>
+      ) : null}
+    </div>
+  );
+}
