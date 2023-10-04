@@ -47,6 +47,9 @@ module.exports = function (env, argv) {
         path.resolve(jsDir, "src/main.tsx"),
         path.resolve(cssDir, "main.less"),
       ],
+      signupCommercial: path.resolve(jsDir, "src/forms/SignupCommercial.tsx"),
+      signupNonCommercial: path.resolve(jsDir, "src/forms/SignupNonCommercial.tsx"),
+      profileEdit: path.resolve(jsDir, "src/forms/ProfileEdit.tsx")
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",
