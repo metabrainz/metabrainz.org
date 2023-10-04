@@ -109,7 +109,41 @@ def verify_email():
     db.session.commit()
 
     flash.success("Email verified!")
-    return render_template("index/index.html")
+    return redirect(url_for("index.home"))
+
+
+@users_bp.route('/users/profile')
+@login_required
+def profile():
+    return render_template("users/profile.html")
+
+
+@users_bp.route('/users/profile/edit', methods=['GET', 'POST'])
+@login_required
+def profile_edit():
+    form = UserEditForm()
+    if form.validate_on_submit():
+        user = User.get(email=form.email.data)
+        if user is not None:
+            form.email.errors.append(f"The given email address ({form.email.data}) is associated with a different account.")
+        else:
+            current_user.update(email=form.email.data)
+            send_verification_email(
+                current_user,
+                "Please verify your email address",
+                "email/user-email-address-verification.txt"
+            )
+            flash.success("Profile updated.")
+            return redirect(url_for(".profile"))
+
+    form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
+    form_data = {"email": current_user.email}
+
+    return render_template("users/profile-edit.html", props=json.dumps({
+        "csrf_token": generate_csrf(),
+        "initial_form_data": form_data,
+        "initial_errors": form_errors
+    }))
 
 
 # TODO: Add email verification resend

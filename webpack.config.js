@@ -63,7 +63,8 @@ module.exports = function (env, argv) {
       lostPassword: path.resolve(jsDir, "src/forms/LostPassword.tsx"),
       lostUsername: path.resolve(jsDir, "src/forms/LostUsername.tsx"),
       resetPassword: path.resolve(jsDir, "src/forms/ResetPassword.tsx"),
-      profileEdit: path.resolve(jsDir, "src/forms/ProfileEdit.tsx")
+      supporterProfileEdit: path.resolve(jsDir, "src/forms/SupporterProfileEdit.tsx"),
+      userProfileEdit: path.resolve(jsDir, "src/forms/UserProfileEdit.tsx")
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",
