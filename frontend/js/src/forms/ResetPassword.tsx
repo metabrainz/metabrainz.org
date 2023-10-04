@@ -3,10 +3,7 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
 import { getPageProps } from "../utils";
-import {
-  AuthCardContainer,
-  AuthCardTextInput,
-} from "./utils";
+import { AuthCardContainer, AuthCardTextInput } from "./utils";
 
 type ResetPasswordProps = {
   csrf_token: string;
@@ -80,10 +77,12 @@ function ResetPassword({
                   required
                 />
 
-
-        <button className="btn btn-primary main-action-button" type="submit">
-          Reset Password
-        </button>
+                <button
+                  className="btn btn-primary main-action-button"
+                  type="submit"
+                >
+                  Reset Password
+                </button>
               </form>
             )}
           </Formik>
@@ -95,14 +94,10 @@ function ResetPassword({
 
 document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps, globalProps } = getPageProps();
-  const { csrf_token, initial_errors } =
-    reactProps;
+  const { csrf_token, initial_errors } = reactProps;
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
-    <ResetPassword
-      csrf_token={csrf_token}
-      initial_errors={initial_errors}
-    />
+    <ResetPassword csrf_token={csrf_token} initial_errors={initial_errors} />
   );
 });
