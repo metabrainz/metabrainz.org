@@ -243,6 +243,7 @@ export function AuthCardCheckboxInput({
   );
 }
 
+
 export type OAuthTextInputProps = JSX.IntrinsicElements["input"] &
   FieldConfig & {
     label: string;
