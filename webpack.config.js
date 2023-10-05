@@ -61,7 +61,8 @@ module.exports = function (env, argv) {
           jsDir,
           "src/forms/SupporterProfileEdit.tsx"
       ),
-      userProfileEdit: path.resolve(jsDir, "src/forms/UserProfileEdit.tsx")
+      userProfileEdit: path.resolve(jsDir, "src/forms/UserProfileEdit.tsx"),
+      createApplication: path.resolve(jsDir, "src/forms/CreateApplication.tsx")
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",

@@ -1,7 +1,10 @@
+import json
+
 from authlib.oauth2 import OAuth2Error
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, current_app
 from flask_babel import gettext
 from flask_login import login_required, current_user
+from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound
 from werkzeug.security import gen_salt
 
@@ -49,14 +52,27 @@ def create():
             name=form.client_name.data,
             description=form.description.data,
             website=form.website.data,
-            redirect_uris=[form.redirect_uri.data]
+            redirect_uris=form.redirect_uris.data
         )
         db.session.add(client)
         db.session.commit()
-    else:
-        return render_template('oauth/create.html', form=form)
+        return redirect(url_for(".index"))
 
-    return redirect(url_for(".index"))
+    form_errors = {
+        "client_name": " ".join(form.client_name.errors),
+        "website": " ".join(form.website.errors),
+        "description": " ".join(form.description.errors),
+        "redirect_uris": [" ". join(errors) for errors in form.redirect_uris.errors]
+    }
+    form_data = dict(**form.data)
+    form_data.pop("csrf_token", None)
+
+    return render_template("oauth/create.html", props=json.dumps({
+        "csrf_token": generate_csrf(),
+        "is_edit_mode": False,
+        "initial_form_data": form_data,
+        "initial_errors": form_errors
+    }))
 
 
 @oauth_bp.route('/edit/<client_id>', methods=['GET', 'POST'])
@@ -71,16 +87,35 @@ def edit(client_id):
         application.name = form.client_name.data
         application.description = form.description.data
         application.website = form.website.data
-        application.redirect_uris = [form.redirect_uri.data]
+        application.redirect_uris = form.redirect_uris.data
         db.session.commit()
         flash.success(gettext("You have updated an application!"))
         return redirect(url_for('.index'))
 
-    form.client_name.data = application.name
-    form.description.data = application.description
-    form.website.data = application.website
-    form.redirect_uri.data = application.redirect_uris[0]
-    return render_template("oauth/edit.html", form=form)
+    form_errors = {
+        "client_name": " ".join(form.client_name.errors),
+        "website": " ".join(form.website.errors),
+        "description": " ".join(form.description.errors),
+        "redirect_uris": [" ". join(errors) for errors in form.redirect_uris.errors]
+    }
+    form_data = {
+        "client_name": form.client_name.data or application.name,
+        "description": form.description.data or application.description,
+        "website": form.website.data or application.website,
+    }
+
+    if form.redirect_uris.data and len(form.redirect_uris.data) > 0 and form.redirect_uris.data[0]:
+        form_data["redirect_uris"] = form.redirect_uris.data
+    else:
+        form_data["redirect_uris"] = application.redirect_uris
+
+    return render_template("oauth/edit.html", props=json.dumps({
+        "client_name": form_data["client_name"],
+        "is_edit_mode": True,
+        "csrf_token": generate_csrf(),
+        "initial_form_data": form_data,
+        "initial_errors": form_errors
+    }))
 
 
 @oauth_bp.route('/delete/<client_id>')
