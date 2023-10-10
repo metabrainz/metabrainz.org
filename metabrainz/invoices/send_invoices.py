@@ -70,7 +70,6 @@ class QuickBooksInvoiceSender():
     """ This class uses the QuickBooks API to sent invoices from our own mail ifrastructure. """
 
     def __init__(self):
-        QuickBooks.enable_global()
         self.auth_client = AuthClient(
             client_id=current_app.config["QUICKBOOKS_CLIENT_ID"],
             client_secret=current_app.config["QUICKBOOKS_CLIENT_SECRET"],
