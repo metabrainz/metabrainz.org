@@ -204,7 +204,8 @@ function SignupUser({
           </div>
           <div className="auth-card-footer">
             <div className="small">
-              Already have an account? <a href="/login">Sign in </a>
+              Already have an account?{" "}
+              <a href={`/login${window.location.search}`}>Sign in </a>
             </div>
           </div>
         </div>

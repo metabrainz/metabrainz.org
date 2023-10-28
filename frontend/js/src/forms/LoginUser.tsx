@@ -114,8 +114,11 @@ function LoginUser({
           <div className="auth-card-footer">
             <div className="small">
               Don‘t have an account?
-              <a href="/Login"> Create a free MetaBrainz account </a>to access
-              MusicBrainz, ListenBrainz, CritiqueBrainz, and more.
+              <a href={`/signup${window.location.search}`}>
+                {" "}
+                Create a free MetaBrainz account{" "}
+              </a>
+              to access MusicBrainz, ListenBrainz, CritiqueBrainz, and more.
             </div>
           </div>
         </div>
