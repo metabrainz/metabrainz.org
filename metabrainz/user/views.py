@@ -40,7 +40,10 @@ def signup():
                 )
                 login_user(user)
                 flash.success("Account created. Please check your inbox to complete verification.")
-                return redirect(url_for("index.home"))
+                redirect_to = request.args.get("next")
+                if not redirect_to:
+                    redirect_to = url_for("index.home")
+                return redirect(redirect_to)
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
     form_data = dict(**form.data)
@@ -69,7 +72,10 @@ def login():
             else:
                 login_user(user, remember=form.remember_me.data)
                 flash.success("Logged in successfully.")
-                return redirect(url_for("index.home"))
+                redirect_to = request.args.get("next")
+                if not redirect_to:
+                    redirect_to = url_for("index.home")
+                return redirect(redirect_to)
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
     form_data = dict(**form.data)
