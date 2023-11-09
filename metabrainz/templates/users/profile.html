@@ -75,59 +75,84 @@
   {% if current_user.is_commercial %}
     {% if current_user.state in ('active', 'limited') and current_user.good_standing %}
       <h3>{{ _('Data use permission granted') }}</h3>
-      <p>
-        {{ _('You have permission to use any of the data published by the MetaBrainz
-        Foundation. This includes data dumps released under a Creative Commons
-        non-commercial license. Thank you for your support!') }}
-      </p>
-      <p>
-        {{ _('Note 1: If your support falls behind by more than 60 days, this
-        permission may be withdrawn. You can always check your current permission
-        status on this page.') }}
-      </p>
-      <p>
-        {{ _('Note 2: The IP addresses from which replication packets for the Live Data Feed are downloaded are logged.') }}
-      </p>
+        <div style="font-size: 13pt">
+        <p>
+          <b>Your support agreement has been completed -- thank you!</b>
+        </p>
+        <p>
+          {{ _('You have permission to use any of the data published by the MetaBrainz
+          Foundation. This includes data dumps released under a Creative Commons
+          non-commercial license. Thank you for your support!') }}
+        </p>
+        <p>
+          {{ _('Note 1: If your support falls behind by more than 60 days, this
+          permission may be withdrawn. You can always check your current permission
+          status on this page.') }}
+        </p>
+        <p>
+          {{ _('Note 2: The IP addresses from which replication packets for the Live Data Feed are downloaded are logged.') }}
+        </p>
+      </div>
     {% else %}
-      <h3>{{ _('Limited data use permission granted') }}</h3>
-      <p>
-        {{ _('You do not currently have permission to use data released under a Creative Commons non-commercial license for commercial purposes.') }}
-      </p>
-      <p>
-        {{ _('Reason:') }}
+      <h3>Limited/no data use permission granted</h3>
+      <div style="font-size: 13pt">
         {% if current_user.state == 'rejected' %}
-          {{ _('Your application for using the Live Data Feed has been rejected.') }}
+          <p>
+            <b>Your application for using the Live Data Feed has been rejected.</b>
+          </p>
+          <p>
+            You do not have permission to use our data in a public commercial product.
+          </p>
         {% elif current_user.state == 'pending' %}
-          {{ _('Your application for using the Live Data Feed is still pending. You may use our data and APIs for evaluation purposes while your application is pending.') }}
+          <p>
+            <b>Your application for using the Live Data Feed is still pending.</b>
+          </p>
+          <p>
+            You may use our data and APIs for evaluation/development purposes
+            while your application is pending.
+          </p>
         {% elif current_user.state == 'waiting' %}
-          {{ _('Your application for using the Live Data Feed is in the waiting list. You may use our data and APIs for evaluation purposes while your application is pending.') }}
+          <p>
+            <b>Your application for using the Live Data Feed is waiting to finalize our support agreement.</b>
+          </p>
+          <p>
+            You may use our data and APIs for evaluation and development purposes, but you may not use the data in a public
+            commercial product. Once you are nearing the public release of a product that contains our data, please 
+            <a href="/contact">contact us</a> again to finalize our support agreement.
+          </p>
         {% elif not current_user.good_standing %}
-          {{ _('Your account sign-up is incomplete or your account is in bad standing, which means that you are more than
-          60 days behind in support payments. If you think this is a mistake,
-          please <a href="%(contact_url)s">contact us</a>.', contact_url=url_for('index.contact')) }}
+          <p>
+            <b>Your use of the Live Data Feed is pending suspension.</b>
+          </p>
+          <p>
+            Your account is in bad standing, which means that you are more than 60 days behind in support payments. If you think
+            this is a mistake, please <a href="/contact">contact us</a>.
+          </p>
         {% else %}
           {{ _('Unknown. :(') }}
         {% endif %}
-      </p>
+      </div>
     {% endif %}
   {% endif %}
 
   {% if current_user.state in ('active', 'limited') and current_user.good_standing %}
     <h2>{{ _('Data Download') }}</h2>
 
-    {% if not current_user.is_commercial %}
+    <div style="font-size: 13pt">
+      {% if not current_user.is_commercial %}
+        <p>
+           Thank you for registering with us -- we really appreciate it!
+        </p>
+      {% endif %}
+
       <p>
-         Thank you for registering with us -- we really appreciated it!
+        Please proceed to our download page to download our datasets:
       </p>
-    {% endif %}
 
-    <p>
-      Please proceed to our download page to download our datasets:
-    </p>
-
-    <p>
-      <a href="{{ url_for("index.download") }}" class="btn btn-lg btn-primary">Download Datasets</a>
-    </p>
+      <p>
+        <a href="{{ url_for("index.download") }}" class="btn btn-lg btn-primary">Download Datasets</a>
+      </p>
+    </div>
   {% endif %}
 
   {% if current_user.state == 'active' %}
