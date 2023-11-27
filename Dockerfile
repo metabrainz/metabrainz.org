@@ -1,4 +1,4 @@
-ARG PYTHON_BASE_IMAGE_VERSION=3.11-20221221
+ARG PYTHON_BASE_IMAGE_VERSION=3.11-20231006
 ARG NODE_VERSION=18-alpine
 FROM metabrainz/python:$PYTHON_BASE_IMAGE_VERSION as metabrainz-base
 
@@ -83,7 +83,7 @@ RUN npm run build:prod
 ###########################################
 FROM metabrainz-base as metabrainz-prod
 
-RUN pip install --no-cache-dir uWSGI==2.0.22
+RUN pip install --no-cache-dir uWSGI==2.0.23
 
 COPY ./docker/prod/consul-template-uwsgi.conf /etc/
 
