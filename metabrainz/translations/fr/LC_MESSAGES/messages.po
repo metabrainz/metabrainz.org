@@ -8,23 +8,23 @@
 # Idlusen <email address hidden>, 2019
 # Transifex Bot <>, 2023
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2017-01-19 20:40+0000\n"
-"Last-Translator: Transifex Bot <>, 2023\n"
-"Language-Team: French (https://app.transifex.com/musicbrainz/teams/13846/"
-"fr/)\n"
+"PO-Revision-Date: 2023-12-14 14:28+0000\n"
+"Last-Translator: yvanzo <yvanzo@users.noreply.translations.metabrainz.org>\n"
+"Language-Team: French <https://translations.metabrainz.org/projects/"
+"metabrainz/website/fr/>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.2.1\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
-"1000000 == 0 ? 1 : 2;\n"
 
 #: metabrainz/payments/forms.py:9
 msgid "You need to specify amount!"
@@ -334,7 +334,7 @@ msgstr "Comité de direction"
 
 #: metabrainz/templates/index/about.html:43
 msgid "Our board of directors consists of:"
-msgstr "Notre comité de direction est composé par"
+msgstr "Notre comité de direction est composé par :"
 
 #: metabrainz/templates/index/about.html:45
 #, python-format
@@ -2410,15 +2410,15 @@ msgstr ""
 #: metabrainz/templates/users/profile.html:29
 #: metabrainz/templates/users/profile.html:46
 msgid "Name:"
-msgstr "Nom : "
+msgstr "Nom :"
 
 #: metabrainz/templates/users/profile.html:31
 msgid "Website URL:"
-msgstr "URL du site internet : "
+msgstr "URL du site internet :"
 
 #: metabrainz/templates/users/profile.html:33
 msgid "API URL:"
-msgstr "URL de l'API : "
+msgstr "URL de l'API :"
 
 #: metabrainz/templates/users/profile.html:37
 #, python-format
@@ -2433,7 +2433,7 @@ msgstr ""
 
 #: metabrainz/templates/users/profile.html:47
 msgid "Email:"
-msgstr "Email : "
+msgstr "Email :"
 
 #: metabrainz/templates/users/profile.html:59
 msgid "Data use permission granted"
@@ -2467,7 +2467,7 @@ msgstr ""
 
 #: metabrainz/templates/users/profile.html:77
 msgid "Reason:"
-msgstr "Raison : "
+msgstr "Raison :"
 
 #: metabrainz/templates/users/profile.html:79
 #, python-format
@@ -2731,7 +2731,7 @@ msgstr "Vous devez indiquer la description de votre organisation."
 
 #: metabrainz/users/forms.py:42
 msgid "Website URL"
-msgstr "URL du site internet : "
+msgstr "URL du site web"
 
 #: metabrainz/users/forms.py:43
 msgid "You need to specify website of the organization."
