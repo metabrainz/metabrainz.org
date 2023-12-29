@@ -12,22 +12,22 @@
 # York Young, 2023
 # Transifex Bot <>, 2023
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2017-01-19 20:40+0000\n"
-"Last-Translator: Transifex Bot <>, 2023\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/musicbrainz/"
-"teams/13846/zh_CN/)\n"
+"PO-Revision-Date: 2023-12-30 18:28+0000\n"
+"Last-Translator: xuanqidongjim <xuanqidongjim@gmail.com>\n"
+"Language-Team: Chinese (Simplified) <https://translations.metabrainz.org/"
+"projects/metabrainz/website/zh_Hans/>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.3\n"
+"Generated-By: Babel 2.3.4\n"
 
 #: metabrainz/payments/forms.py:9
 msgid "You need to specify amount!"
@@ -56,7 +56,7 @@ msgstr "您已向MetaBrainz基金会付款，我们非常感谢您的支持！"
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
-msgstr "很抱歉看到您今天不打算捐款。希望您能改变主意。"
+msgstr "很抱歉看到您今天不打算捐款。希望您能改变主意！"
 
 #: metabrainz/payments/views.py:129
 msgid ""
@@ -664,8 +664,8 @@ msgid ""
 "We would love to\n"
 "    answer any questions you may have."
 msgstr ""
-"欢迎到我们的<a href=\"%(forums_url)s\">社区</a>互动！我们将很乐意解答您的问"
-"题。"
+"欢迎到我们的<a href=\"%(forums_url)s\">论坛</a>互动！\n"
+"我们将很乐意解答您的问题。"
 
 #: metabrainz/templates/index/contact.html:75
 msgid "IRC"
@@ -766,7 +766,7 @@ msgstr "一个开放的文献百科，提供已发表文献的信息"
 
 #: metabrainz/templates/index/index.html:85
 msgid "A repository of music cover art that is freely and easily accessible"
-msgstr ""
+msgstr "一个音乐封面储存库，可以自由轻松访问"
 
 #: metabrainz/templates/index/index.html:92
 #: metabrainz/templates/payments/donors.html:66
@@ -904,7 +904,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
-msgstr "Cover Art Archive"
+msgstr "封面档案"
 
 #: metabrainz/templates/index/projects.html:49
 #, python-format
@@ -2671,7 +2671,7 @@ msgstr "姓名"
 #: metabrainz/templates/users/signup-non-commercial.html:49
 #: metabrainz/users/forms.py:72
 msgid "Email"
-msgstr "Email"
+msgstr "邮箱"
 
 #: metabrainz/templates/users/signup-non-commercial.html:72
 msgid ""
@@ -2714,15 +2714,15 @@ msgstr "%(tier_name)s等级"
 #: metabrainz/templates/users/supporters-list.html:30
 #: metabrainz/templates/users/tier.html:25
 msgid "This user has bad standing"
-msgstr "此用户有不良记录。"
+msgstr "此用户有不良记录"
 
 #: metabrainz/templates/users/tier.html:13
 msgid "Sign up for this tier"
-msgstr "注册为此等级。"
+msgstr "注册为此等级"
 
 #: metabrainz/templates/users/tier.html:19
 msgid "Supporters on this tier"
-msgstr "此等级的支持人员。"
+msgstr "此等级的支持人员"
 
 #: metabrainz/users/forms.py:14
 msgid "Contact name is required!"
