@@ -56,7 +56,7 @@ class QuickBooksView(BaseView):
         '''
         Given a set of existing invoices, fetch the invoice from QuickBooks, make a copy, update it
         with new values and then have QuickBooks save the new invoice. Invoices are not sent,
-        and must be sent via the QuickBooks web interface.
+        and must be sent via the manage command from the metabrainz-prod container.
         '''
 
         for invoice in invoices:

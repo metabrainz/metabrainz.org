@@ -165,6 +165,10 @@ class QuickBooksInvoiceSender():
                 current_app.logger.warn("Skip invoice %s with status %s" % (invoice.DocNumber, invoice.EmailStatus))
                 continue
 
+            if invoice.DocNumber is None:
+                current_app.logger.warn("Skip invoice %s. Bad invoice number." % invoice.DocNumber)
+                continue
+
             current_app.logger.warn("Invoice %s with status %s" % (invoice.DocNumber, invoice.EmailStatus))
             if float(invoice.TotalAmt) == 0.0:
                 current_app.logger.warn("  marking zero amount invoice %s as sent." % invoice.DocNumber)
