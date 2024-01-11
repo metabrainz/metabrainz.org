@@ -12,6 +12,4 @@ CREATE TABLE "user" (
     deleted                 BOOLEAN
 );
 
-
-
 COMMIT;
