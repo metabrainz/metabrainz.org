@@ -16,7 +16,7 @@ idna==2.7
 importlib-metadata>=3.10.0
 intuit-oauth==1.2.4
 itsdangerous==2.1.2
-Jinja2==3.1.2
+Jinja2==3.1.3
 MarkupSafe==2.1.2
 mbdata==26.0.1
 msgpack-python==0.5.6
