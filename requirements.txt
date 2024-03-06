@@ -24,7 +24,7 @@ psycopg2-binary==2.9.7
 pytest==7.4.0
 pytest-cov==4.1.0
 python-dateutil==2.8.0
-python-quickbooks==0.9.3
+python-quickbooks==0.9.6
 pytz==2022.7.1
 rauth==0.7.3
 redis==4.5.4
