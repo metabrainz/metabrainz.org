@@ -22,7 +22,3 @@ def init_error_handlers(app):
     @app.errorhandler(503)
     def service_unavailable(error):
         return render_template('errors/503.html', error=error), 503
-
-    # @app.errorhandler(OAuthError)
-    # def oauth_error_handler(error):
-    #     return jsonify(error=error.code, description=error.desc), error.status

@@ -8,7 +8,6 @@ from metabrainz.model import db
 from metabrainz.model.oauth.client import OAuth2Client
 from metabrainz.model.oauth.relation_scope import OAuth2CodeScope
 from metabrainz.model.oauth.scope import OAuth2Scope
-from metabrainz.model.user import User
 
 
 class OAuth2AuthorizationCode(db.Model, AuthorizationCodeMixin):
@@ -19,7 +18,8 @@ class OAuth2AuthorizationCode(db.Model, AuthorizationCodeMixin):
     }
 
     id = Column(Integer, Identity(), primary_key=True)
-    user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
+    # no FK to user table because user data lives in MB db
+    user_id = Column(Integer, nullable=False)
     client_id = Column(Integer, ForeignKey("oauth.client.id", ondelete="CASCADE"), nullable=False)
     code = Column(Text, nullable=False, unique=True)
     redirect_uri = Column(Text, nullable=False)
@@ -27,7 +27,6 @@ class OAuth2AuthorizationCode(db.Model, AuthorizationCodeMixin):
     code_challenge_method = Column(Text)
     granted_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
 
-    user = relationship(User)
     client = relationship(OAuth2Client)
     scopes = relationship(OAuth2Scope, secondary=OAuth2CodeScope)
 

@@ -2,7 +2,6 @@ from authlib.oauth2.rfc6749 import grants
 
 from metabrainz.model import db
 from metabrainz.model.oauth.token import OAuth2Token
-from metabrainz.model.user import User
 
 
 class RefreshTokenGrant(grants.RefreshTokenGrant):

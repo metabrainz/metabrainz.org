@@ -10,12 +10,7 @@
     {{- end -}}
 {{- end -}}
 
-from datetime import timedelta
-
 SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
-EMAIL_VERIFICATION_SECRET_KEY = '''{{template "KEY" "email_verification_secret_key"}}'''
-EMAIL_VERIFICATION_EXPIRY = timedelta(hours=24)
-EMAIL_RESET_PASSWORD_EXPIRY = timedelta(hours=24)
 DEBUG = False
 
 {{if service "pgbouncer-master"}}

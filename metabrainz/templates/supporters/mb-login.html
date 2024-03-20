@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Log in') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{{ _('Log in') }}</h1>
+
+  <p>{{ _('To log in you need to have a MusicBrainz account.') }}</p>
+
+  <hr />
+  <div class="well" style="max-width: 400px; margin: 0 auto;">
+    <a href="{{ url_for('supporters.musicbrainz', next=request.args.get('next')) }}"
+       class="btn btn-primary btn-lg btn-block">{{ _('Log in with MusicBrainz') }}</a>
+  </div>
+{% endblock %}
