@@ -39,7 +39,7 @@ class SupportersView(AdminBaseView):
     def index(self):
         value = request.args.get('value')
         results = Supporter.search(value) if value else []
-        return self.render('admin/users/index.html',
+        return self.render('admin/supporters/index.html',
                            value=value, results=results)
 
     @expose('/<int:supporter_id>')
@@ -47,7 +47,7 @@ class SupportersView(AdminBaseView):
         supporter = Supporter.get(id=supporter_id)
         active_tokens = Token.get_all(owner_id=supporter.id, is_active=True)
         return self.render(
-            'admin/users/details.html',
+            'admin/supporters/details.html',
             supporter=supporter,
             active_tokens=active_tokens,
         )
@@ -122,7 +122,7 @@ class SupportersView(AdminBaseView):
             return redirect(url_for('.details', supporter_id=supporter.id))
 
         return self.render(
-            'admin/users/edit.html',
+            'admin/supporters/edit.html',
             supporter=supporter,
             form=form,
         )
@@ -200,7 +200,7 @@ class CommercialSupportersView(AdminBaseView):
         limit = 20
         offset = (page - 1) * limit
         supporters, count = Supporter.get_all_commercial(limit=limit, offset=offset)
-        return self.render('admin/commercial-users/index.html', supporters=supporters,
+        return self.render('admin/commercial-supporters/index.html', supporters=supporters,
                            page=page, limit=limit, count=count)
 
 
