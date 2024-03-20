@@ -30,18 +30,18 @@ ACCOUNT_TYPE_NONCOMMERCIAL = 'noncommercial'
 
 @supporters_bp.route('/supporters')
 def supporters_list():
-    return render_template('users/supporters-list.html', tiers=Tier.get_available(sort=True, sort_desc=True))
+    return render_template('supporters/supporters-list.html', tiers=Tier.get_available(sort=True, sort_desc=True))
 
 
 @supporters_bp.route('/supporters/bad')
 def bad_standing():
-    return render_template('users/bad-standing.html')
+    return render_template('supporters/bad-standing.html')
 
 
 @supporters_bp.route('/supporters/account-type')
 def account_type():
     return render_template(
-        'users/account-type.html',
+        'supporters/account-type.html',
         tiers=Tier.get_available(sort=True),
         featured_supporters=Supporter.get_featured()
     )
@@ -52,7 +52,7 @@ def tier(tier_id):
     t = Tier.get(id=tier_id)
     if not t or not t.available:
         raise NotFound(gettext("Can't find tier with a specified ID."))
-    return render_template('users/tier.html', tier=t)
+    return render_template('supporters/tier.html', tier=t)
 
 
 @supporters_bp.route('/signup')
@@ -61,7 +61,7 @@ def signup():
     mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
     if mb_username is None:
         # Show template with a link to MusicBrainz OAuth page
-        return render_template('users/mb-signup.html')
+        return render_template('supporters/mb-signup.html')
 
     account_type = session.fetch_data(SESSION_KEY_ACCOUNT_TYPE)
     if not account_type:
@@ -180,7 +180,7 @@ def signup_commercial():
         form_data["amount_pledged"] = float(form_data["amount_pledged"])
     form_data.pop("csrf_token", None)
 
-    return render_template("users/signup-commercial.html", props=json.dumps({
+    return render_template("supporters/signup-commercial.html", props=json.dumps({
         "tier": {
             "name": selected_tier.name,
             "price": float(selected_tier.price)
@@ -243,7 +243,7 @@ def signup_noncommercial():
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
 
-    return render_template("users/signup-non-commercial.html", props=json.dumps({
+    return render_template("supporters/signup-non-commercial.html", props=json.dumps({
         "datasets": [{"id": d.id, "description": d.description, "name": d.name} for d in available_datasets],
         "mb_username": mb_username,
         "recaptcha_site_key": current_app.config["RECAPTCHA_PUBLIC_KEY"],
@@ -292,7 +292,7 @@ def musicbrainz_post():
 @supporters_bp.route('/profile')
 @login_required
 def profile():
-    return render_template("users/profile.html")
+    return render_template("supporters/profile.html")
 
 
 @supporters_bp.route('/profile/edit', methods=['GET', 'POST'])
@@ -328,7 +328,7 @@ def profile_edit():
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
 
-    return render_template("users/profile-edit.html", props=json.dumps({
+    return render_template("supporters/profile-edit.html", props=json.dumps({
         "datasets": [{"id": d.id, "description": d.description, "name": d.name} for d in available_datasets],
         "is_commercial": current_user.is_commercial,
         "csrf_token": generate_csrf(),
@@ -351,7 +351,7 @@ def regenerate_token():
 @supporters_bp.route('/login')
 @login_forbidden
 def login():
-    return render_template('users/mb-login.html')
+    return render_template('supporters/mb-login.html')
 
 
 @supporters_bp.route('/logout')
