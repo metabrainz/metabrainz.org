@@ -1,9 +1,8 @@
 from authlib.oauth2.rfc6749 import ClientMixin
-from sqlalchemy import Column, Text, ForeignKey, Integer, ARRAY, Identity, DateTime, func
+from sqlalchemy import Column, Text, Integer, ARRAY, Identity, DateTime, func
 from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
-from metabrainz.model.user import User
 
 
 class OAuth2Client(db.Model, ClientMixin):
@@ -16,14 +15,13 @@ class OAuth2Client(db.Model, ClientMixin):
     id = Column(Integer, Identity(), primary_key=True)
     client_id = Column(Text, nullable=False)
     client_secret = Column(Text)
-    owner_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
+    # no FK to user table because user data lives in MB db
+    owner_id = Column(Integer, nullable=False)
     name = Column(Text, nullable=False)
     description = Column(Text, nullable=False)
     website = Column(Text)
     redirect_uris = Column(ARRAY(Text), nullable=False)
     client_id_issued_at = Column(DateTime(timezone=True), nullable=False, default=func.now())
-
-    user = relationship(User)
 
     def get_client_id(self):
         return self.client_id

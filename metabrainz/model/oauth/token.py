@@ -7,10 +7,8 @@ from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
 from metabrainz.model.oauth.client import OAuth2Client
-from metabrainz.model.oauth.code import OAuth2AuthorizationCode
 from metabrainz.model.oauth.relation_scope import OAuth2TokenScope
-from metabrainz.model.oauth.scope import OAuth2Scope, get_scopes
-from metabrainz.model.user import User
+from metabrainz.model.oauth.scope import OAuth2Scope
 
 
 class OAuth2Token(db.Model, TokenMixin):
@@ -20,7 +18,8 @@ class OAuth2Token(db.Model, TokenMixin):
     }
 
     id = Column(Integer, Identity(), primary_key=True)
-    user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
+    # no FK to user table because user data lives in MB db
+    user_id = Column(Integer, nullable=False)
     client_id = Column(Integer, ForeignKey("oauth.client.id", ondelete="CASCADE"), nullable=False)
     access_token = Column(Text, nullable=False, unique=True)
     refresh_token = Column(Text, index=True)  # nullable, because not all grants have refresh token
@@ -28,7 +27,6 @@ class OAuth2Token(db.Model, TokenMixin):
     expires_in = Column(Integer)
     revoked = Column(Boolean, default=False)
 
-    user = relationship(User)
     client = relationship(OAuth2Client)
     scopes = relationship(OAuth2Scope, secondary=OAuth2TokenScope)
 

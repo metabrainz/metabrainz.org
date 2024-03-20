@@ -23,6 +23,7 @@ LOGO_UPLOAD_SET = UploadSet(
 
 class SupporterEditForm(FlaskForm):
     # General info
+    musicbrainz_id = StringField("MusicBrainz Username")
     contact_name = StringField("Name")
     contact_email = EmailField("Email")
 

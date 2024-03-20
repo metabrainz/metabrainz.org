@@ -5,18 +5,17 @@ from flask import Blueprint, request, redirect, render_template, url_for, jsonif
 from flask_babel import gettext
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_wtf.csrf import generate_csrf
-from werkzeug.exceptions import NotFound, BadRequest
+from werkzeug.exceptions import NotFound, InternalServerError, BadRequest
 
-from metabrainz import flash
+from metabrainz import flash, session
+from brainzutils.mail import send_mail, MailException
 from metabrainz.model import Dataset
 from metabrainz.model.supporter import Supporter, InactiveSupporterException
 from metabrainz.model.tier import Tier
 from metabrainz.model.token import TokenGenerationLimitException
-from metabrainz.model.user import User
-from metabrainz.user import login_forbidden
+from metabrainz.supporter import musicbrainz_login, login_forbidden
 from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialSupporterEditForm, \
     NonCommercialSupporterEditForm
-from metabrainz.user.email import send_verification_email
 
 supporters_bp = Blueprint('supporters', __name__)
 
@@ -63,6 +62,29 @@ def signup():
         # Show template with a link to MusicBrainz OAuth page
         return render_template('supporters/mb-signup.html')
 
+@supporters_bp.route('/signup')
+@login_forbidden
+def signup():
+    mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
+    if mb_username is None:
+        # Show template with a link to MusicBrainz OAuth page
+        return render_template('supporters/mb-signup.html')
+
+    account_type = session.fetch_data(SESSION_KEY_ACCOUNT_TYPE)
+    if not account_type:
+        flash.info(gettext("Please select account type to sign up."))
+        return redirect(url_for(".account_type"))
+
+    if account_type == ACCOUNT_TYPE_COMMERCIAL:
+        tier_id = session.fetch_data(SESSION_KEY_TIER_ID)
+        if not tier_id:
+            flash.info(gettext("Please select account type to sign up."))
+            return redirect(url_for(".account_type"))
+        return redirect(url_for(".signup_commercial", tier_id=tier_id))
+    else:
+        return redirect(url_for(".signup_noncommercial"))
+
+
 @supporters_bp.route('/signup/commercial', methods=('GET', 'POST'))
 @login_forbidden
 def signup_commercial():
@@ -86,7 +108,16 @@ def signup_commercial():
         flash.error(gettext("You need to choose existing tier before signing up!"))
         return redirect(url_for(".account_type"))
 
-    form = CommercialSignUpForm()
+    mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
+    if not mb_username:
+        session.persist_data(**{
+            SESSION_KEY_ACCOUNT_TYPE: ACCOUNT_TYPE_COMMERCIAL,
+            SESSION_KEY_TIER_ID: selected_tier.id,
+        })
+        return redirect(url_for(".signup"))
+    mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
+
+    form = CommercialSignUpForm(default_email=mb_email)
 
     def custom_validation(f):
         if f.amount_pledged.data < selected_tier.price:
@@ -98,51 +129,55 @@ def signup_commercial():
         return True
 
     if form.validate_on_submit() and custom_validation(form):
-        user = User.get(name=form.username.data)
-        if user is not None:
-            form.form_errors.append(f"Another user with username '{form.username.data}' exists.")
-            return render_template("supporters/signup-commercial.html", form=form, tier=selected_tier)
+        # Checking if this supporter already exists
+        new_supporter = Supporter.get(musicbrainz_id=mb_username)
+        if not new_supporter:
+            new_supporter = Supporter.add(
+                is_commercial=True,
+                musicbrainz_id=mb_username,
+                contact_name=form.contact_name.data,
+                contact_email=form.contact_email.data,
+                data_usage_desc=form.usage_desc.data,
 
-        # TODO: Handle the case where multiple users sign up with same email but haven"t verified it yet
-        user = User.get(email=form.email.data)
-        if user is not None:
-            form.form_errors.append(f"Another user with email '{form.email.data}' exists.")
-            return render_template("supporters/signup-commercial.html", form=form, tier=selected_tier)
+                org_name=form.org_name.data,
+                org_desc=form.org_desc.data,
+                website_url=form.website_url.data,
+                org_logo_url=form.logo_url.data,
+                api_url=form.api_url.data,
 
-        user = User.add(name=form.username.data, email=form.email.data, password=form.password.data)
+                address_street=form.address_street.data,
+                address_city=form.address_city.data,
+                address_state=form.address_state.data,
+                address_postcode=form.address_postcode.data,
+                address_country=form.address_country.data,
 
-        new_supporter = Supporter.add(
-            is_commercial=True,
-            contact_name=form.contact_name.data,
-            contact_email=form.contact_email.data,
-            data_usage_desc=form.usage_desc.data,
-
-            org_name=form.org_name.data,
-            org_desc=form.org_desc.data,
-            website_url=form.website_url.data,
-            org_logo_url=form.logo_url.data,
-            api_url=form.api_url.data,
-
-            address_street=form.address_street.data,
-            address_city=form.address_city.data,
-            address_state=form.address_state.data,
-            address_postcode=form.address_postcode.data,
-            address_country=form.address_country.data,
-
-            tier_id=tier_id,
-            amount_pledged=form.amount_pledged.data,
-            datasets=[],
-            user=user
-        )
-        flash.success(gettext(
-            "Thanks for signing up! Your application will be reviewed "
-            "soon. We will send you updates via email."
-        ))
-        send_verification_email(
-            user,
-            "[MetaBrainz] Sign up confirmation",
-            "email/supporter-commercial-welcome-email-address-verification.txt"
-        )
+                tier_id=tier_id,
+                amount_pledged=form.amount_pledged.data,
+                datasets=[]
+            )
+            flash.success(gettext(
+                "Thanks for signing up! Your application will be reviewed "
+                "soon. We will send you updates via email."
+            ))
+            try:
+                send_mail(
+                    subject="[MetaBrainz] Sign up confirmation",
+                    text='Dear %s,\n\nThank you for signing up!\n\nYour application'
+                         ' will be reviewed soon and we will send you updates via email.'
+                         ' Please know that you may use our APIs and static data dumps for'
+                         ' evaluation purposes while your application is pending. You do not'
+                         ' need any API keys to do this.\n\n-- The MetaBrainz Team'
+                         % new_supporter.contact_name,
+                    recipients=[new_supporter.contact_email],
+                )
+            except MailException as e:
+                logging.error(e)
+                flash.warning(gettext(
+                    "Failed to send welcome email to you. We are looking into it. "
+                    "Sorry for inconvenience!"
+                ))
+        else:
+            flash.info(gettext("You already have a MetaBrainz account!"))
         login_user(new_supporter)
         return redirect(url_for('.profile'))
 
@@ -169,38 +204,46 @@ def signup_commercial():
 @login_forbidden
 def signup_noncommercial():
     """Sign up endpoint for non-commercial supporters."""
+    mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
+    if not mb_username:
+        session.persist_data(**{
+            SESSION_KEY_ACCOUNT_TYPE: ACCOUNT_TYPE_NONCOMMERCIAL,
+        })
+        return redirect(url_for(".signup"))
+    mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
     available_datasets = Dataset.query.all()
 
-    form = NonCommercialSignUpForm(available_datasets)
+    form = NonCommercialSignUpForm(available_datasets, default_email=mb_email)
     if form.validate_on_submit():
-        user = User.get(name=form.username.data)
-        if user is not None:
-            form.form_errors.append(f"Another user with username '{form.username.data}' exists.")
-            return render_template("supporters/signup-non-commercial.html", form=form)
-
-        # TODO: Handle the case where multiple users sign up with same email but haven"t verified it yet
-        user = User.get(email=form.email.data)
-        if user is not None:
-            form.form_errors.append(f"Another user with email '{form.email.data}' exists.")
-            return render_template("supporters/signup-non-commercial.html", form=form)
-
-        user = User.add(name=form.username.data, email=form.email.data, password=form.password.data)
-        supporter = Supporter.add(
-            is_commercial=False,
-            contact_name=form.contact_name.data,
-            contact_email=form.contact_email.data,
-            data_usage_desc=form.usage_desc.data,
-            datasets=form.datasets.data,
-            user=user
-        )
-        send_verification_email(
-            user,
-            "[MetaBrainz] Sign up confirmation",
-            "email/supporter-noncommercial-welcome-email-address-verification.txt"
-        )
-        flash.success(gettext("Thanks for signing up! Please check your inbox to complete verification."))
-
-        login_user(user)
+        # Checking if this supporter already exists
+        new_supporter = Supporter.get(musicbrainz_id=mb_username)
+        if not new_supporter:
+            new_supporter = Supporter.add(
+                is_commercial=False,
+                musicbrainz_id=mb_username,
+                contact_name=form.contact_name.data,
+                contact_email=form.contact_email.data,
+                data_usage_desc=form.usage_desc.data,
+                datasets=form.datasets.data
+            )
+            flash.success(gettext("Thanks for signing up!"))
+            try:
+                send_mail(
+                    subject="[MetaBrainz] Sign up confirmation",
+                    text='Dear %s,\n\nThank you for signing up!\n\nYou can now generate '
+                         'an access token for the MetaBrainz API on your profile page.'
+                         % new_supporter.contact_name,
+                    recipients=[new_supporter.contact_email],
+                )
+            except MailException as e:
+                logging.error(e)
+                flash.warning(gettext(
+                    "Failed to send welcome email to you. We are looking into it. "
+                    "Sorry for inconvenience!"
+                ))
+        else:
+            flash.info(gettext("You already have a MetaBrainz account!"))
+        login_user(new_supporter)
         return redirect(url_for('.profile'))
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
@@ -253,13 +296,13 @@ def musicbrainz_post():
         return redirect(url_for('.signup'))
 
 
-@supporters_bp.route('/supporters/profile')
+@supporters_bp.route('/profile')
 @login_required
 def profile():
-    return render_template("supporters/profile.html", current_supporter=current_user.supporter)
+    return render_template("supporters/profile.html")
 
 
-@supporters_bp.route('/supporters/profile/edit', methods=['GET', 'POST'])
+@supporters_bp.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
     if current_user.is_commercial:
@@ -278,7 +321,7 @@ def profile_edit():
         if not current_user.is_commercial:
             kwargs["datasets"] = form.datasets.data
 
-        current_user.supporter.update(**kwargs)
+        current_user.update(**kwargs)
         flash.success("Profile updated.")
         return redirect(url_for('.profile'))
     else:
@@ -301,12 +344,26 @@ def profile_edit():
     }))
 
 
-@supporters_bp.route('/supporters/profile/regenerate-token', methods=['POST'])
+@supporters_bp.route('/profile/regenerate-token', methods=['POST'])
 @login_required
 def regenerate_token():
     try:
-        return jsonify({'token': current_user.supporter.generate_token()})
+        return jsonify({'token': current_user.generate_token()})
     except InactiveSupporterException:
         raise BadRequest(gettext("Can't generate new token unless account is active."))
     except TokenGenerationLimitException as e:
         return jsonify({'error': e.message}), 429  # https://tools.ietf.org/html/rfc6585#page-3
+
+
+@supporters_bp.route('/login')
+@login_forbidden
+def login():
+    return render_template('supporters/mb-login.html')
+
+
+@supporters_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    session.clear()
+    return redirect(url_for('index.home'))

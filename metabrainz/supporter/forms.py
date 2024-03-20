@@ -5,8 +5,6 @@ from wtforms.fields import StringField, SelectMultipleField, EmailField, URLFiel
 from wtforms.validators import DataRequired, Length
 from wtforms.widgets import ListWidget, CheckboxInput
 
-from metabrainz.user.forms import UserSignupForm
-
 
 class DatasetsField(SelectMultipleField):
     widget = ListWidget(prefix_label=False)
@@ -34,7 +32,7 @@ class DatasetsField(SelectMultipleField):
         self.data = [datasets_dict.get(x) for x in self.data]
 
 
-class SupporterSignUpForm(UserSignupForm):
+class SupporterSignUpForm(FlaskForm):
     """Base sign up form for new supporters.
 
     Contains common fields required from both commercial and non-commercial
@@ -52,13 +50,17 @@ class SupporterSignUpForm(UserSignupForm):
     agreement = BooleanField(validators=[DataRequired(message=gettext("You need to accept the agreement!"))])
     recaptcha = RecaptchaField()
 
+    def __init__(self, default_email=None, **kwargs):
+        kwargs.setdefault('contact_email', default_email)
+        FlaskForm.__init__(self, **kwargs)
+
 
 class NonCommercialSignUpForm(SupporterSignUpForm):
     """Sign up form for non-commercial supporters."""
     datasets = DatasetsField()
 
-    def __init__(self, available_datasets, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, available_datasets, default_email=None, **kwargs):
+        super().__init__(default_email, **kwargs)
         self.datasets.choices = available_datasets
         self.descriptions = {d.id: d.description for d in available_datasets}
 
