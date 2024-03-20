@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { getPageProps } from "../utils";
 import { Dataset, DatasetsInput, TextInput } from "./utils";
 
-type ProfileEditProps = {
+type SupporterProfileEditProps = {
   datasets: Dataset[];
   is_commercial: boolean;
   csrf_token: string;
@@ -13,13 +13,13 @@ type ProfileEditProps = {
   initial_errors: any;
 };
 
-function ProfileEdit({
+function SupporterProfileEdit({
   datasets,
   is_commercial,
   csrf_token,
   initial_form_data,
   initial_errors,
-}: ProfileEditProps): JSX.Element {
+}: SupporterProfileEditProps): JSX.Element {
   return (
     <>
       <h1 className="page-title">Your Profile</h1>
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
-    <ProfileEdit
+    <SupporterProfileEdit
       datasets={datasets}
       is_commercial={is_commercial}
       csrf_token={csrf_token}
