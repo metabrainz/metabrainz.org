@@ -3,7 +3,6 @@ from authlib.oauth2.rfc6749 import grants
 from metabrainz.model import db
 from metabrainz.model.oauth.code import OAuth2AuthorizationCode
 from metabrainz.model.oauth.scope import get_scopes
-from metabrainz.model.user import User
 
 
 class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):

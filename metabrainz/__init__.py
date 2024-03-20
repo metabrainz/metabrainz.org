@@ -8,7 +8,6 @@ import stripe
 from brainzutils import sentry
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
-from flask_bcrypt import Bcrypt
 
 from metabrainz.admin.quickbooks.views import QuickBooksView
 from metabrainz.oauth.provider import authorization_server, revoke_token
@@ -19,9 +18,6 @@ from metabrainz.utils import get_global_props
 deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
-
-
-bcrypt = Bcrypt()
 
 
 def create_app(debug=None, config_path=None):
@@ -109,12 +105,14 @@ def create_app(debug=None, config_path=None):
     from metabrainz.admin.quickbooks import quickbooks
     quickbooks.init(app)
 
-    # bcrypt setup
-    bcrypt.init_app(app)
-
     # MusicBrainz OAuth
-    from metabrainz.user import login_manager
+    from metabrainz.supporter import login_manager, musicbrainz_login
     login_manager.init_app(app)
+    musicbrainz_login.init(
+        app.config['MUSICBRAINZ_BASE_URL'],
+        app.config['MUSICBRAINZ_CLIENT_ID'],
+        app.config['MUSICBRAINZ_CLIENT_SECRET']
+    )
 
     # Templates
     from metabrainz.utils import reformat_datetime
@@ -187,7 +185,6 @@ def _register_blueprints(app):
     from metabrainz.reports.financial_reports.views import financial_reports_bp
     from metabrainz.reports.annual_reports.views import annual_reports_bp
     from metabrainz.supporter.views import supporters_bp
-    from metabrainz.user.views import users_bp
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
@@ -196,7 +193,6 @@ def _register_blueprints(app):
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
     app.register_blueprint(supporters_bp)
-    app.register_blueprint(users_bp)
     app.register_blueprint(payments_bp)
 
     # FIXME(roman): These URLs aren't named very correct since they receive payments

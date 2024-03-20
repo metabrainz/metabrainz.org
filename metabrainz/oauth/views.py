@@ -14,7 +14,6 @@ from metabrainz.model import db
 from metabrainz.model.oauth.client import OAuth2Client
 from metabrainz.model.oauth.scope import get_scopes
 from metabrainz.model.oauth.token import OAuth2Token
-from metabrainz.model.user import User
 from metabrainz.oauth.forms import ApplicationForm, AuthorizationForm
 from metabrainz.oauth.provider import authorization_server
 from metabrainz.utils import build_url
