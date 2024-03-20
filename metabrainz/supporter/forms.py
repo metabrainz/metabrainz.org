@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm, RecaptchaField
 from flask_babel import gettext
 from wtforms import BooleanField, TextAreaField, validators
-from wtforms.fields.core import StringField, SelectMultipleField
-from wtforms.fields.html5 import EmailField, URLField, DecimalField
+from wtforms.fields import StringField, SelectMultipleField, EmailField, URLField, DecimalField
 from wtforms.validators import DataRequired, Length
 from wtforms.widgets import ListWidget, CheckboxInput
 

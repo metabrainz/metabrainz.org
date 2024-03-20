@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_babel import lazy_gettext
 from wtforms import StringField, BooleanField
-from wtforms.fields import RadioField
-from wtforms.fields.html5 import DecimalField, IntegerField
+from wtforms.fields import RadioField, DecimalField, IntegerField
 from wtforms.validators import DataRequired
 from metabrainz.payments import Currency
 

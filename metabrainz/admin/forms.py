@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, BooleanField, SelectField, TextAreaField
-from wtforms.fields.html5 import EmailField, URLField, DecimalField
+from wtforms.fields import EmailField, URLField, DecimalField
 from metabrainz.model import supporter
 from metabrainz.db import tier as db_tier
 from flask_uploads import UploadSet, IMAGES
