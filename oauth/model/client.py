@@ -1,6 +1,5 @@
 from authlib.oauth2.rfc6749 import ClientMixin
 from sqlalchemy import Column, Text, Integer, ARRAY, Identity, DateTime, func
-from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
 
