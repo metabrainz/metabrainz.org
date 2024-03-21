@@ -1,7 +1,7 @@
 import json
 
 from authlib.oauth2 import OAuth2Error
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify, current_app
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify
 from flask_babel import gettext
 from flask_login import login_required, current_user
 from flask_wtf.csrf import generate_csrf
@@ -11,11 +11,11 @@ from werkzeug.security import gen_salt
 from metabrainz import flash
 from metabrainz.decorators import nocache, crossdomain
 from metabrainz.model import db
-from metabrainz.model.oauth.client import OAuth2Client
-from metabrainz.model.oauth.scope import get_scopes
-from metabrainz.model.oauth.token import OAuth2Token
-from metabrainz.oauth.forms import ApplicationForm, AuthorizationForm
-from metabrainz.oauth.provider import authorization_server
+from oauth.model.client import OAuth2Client
+from oauth.model.scope import get_scopes
+from oauth.model.token import OAuth2Token
+from oauth.forms import ApplicationForm, AuthorizationForm
+from oauth.provider import authorization_server
 from metabrainz.utils import build_url
 
 oauth_bp = Blueprint('oauth2', __name__)
