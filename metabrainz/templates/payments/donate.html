@@ -126,6 +126,10 @@
 
     <h2>{{ _('Other ways to donate') }}</h2>
 
+    <h3>GitHub</h3>
+    <p>{{ _('If you use GitHub to sponsor your favourite projects, you can click below to Sponsor @metabrainz on GitHub Sponsors:') }}</p>
+    <p><a href="https://github.com/sponsors/metabrainz">https://github.com/sponsors/metabrainz</a></p>
+
     <h3>{{ _('Non-US Bank transfer') }}</h3>
     <p>{{ _('You can make a donation, or recurring donations, via bank transfer to the following IBAN:') }}</p>
     <p><em style="margin-left: 2em">BE96 9670 3472 0205 (BIC: TRWIBEB1XXX)</em></p>
@@ -133,14 +137,6 @@
 
     <h3>{{ _('US Check') }}</h3>
     <p>{{ _('Due to the increased unreliability of the US Postal Service we have stopped accepting paper checks. Sorry!') }}</p>
-
-    <h3>Flattr</h3>
-    <p>{{ _('If you use Flattr to donate to your favourite projects, you can click below to Flattr MetaBrainz:') }}</p>
-    <p><a href="https://flattr.com/profile/metabrainz ">https://flattr.com/profile/metabrainz</a></p>
-
-    <h3>GitHub</h3>
-    <p>{{ _('If you use GitHub to sponsor your favourite projects, you can click below to Sponsor @metabrainz on GitHub Sponsors:') }}</p>
-    <p><a href="https://github.com/sponsors/metabrainz">https://github.com/sponsors/metabrainz</a></p>
 
   </div>
 {% endblock %}
@@ -161,7 +157,7 @@
         },
         Euro: {
           code: "EUR",
-          paypal_id: '{{ config['PAYPAL_ACCOUNT_IDS']['EUR'] }}'
+          paypal_id: '{{ config['PAYPAL_ACCOUNT_IDS']['USD'] }}'
         }
       };
 
