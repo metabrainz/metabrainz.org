@@ -20,6 +20,12 @@ services:
     depends_on:
       - db
       - redis
+    expose:
+      - "8000"
+    environment:
+      LETSENCRYPT_HOST: dev.metabrainz.org
+      LETSENCRYPT_EMAIL: lucifer@metabrainz.org
+      VIRTUAL_HOST: dev.metabrainz.org
 
   oauth:
     build:
@@ -29,6 +35,9 @@ services:
     command: flask run --debug -h 0.0.0.0 -p 80
     environment:
       FLASK_APP: "oauth:create_app()"
+      LETSENCRYPT_HOST: oauth.metabrainz.org
+      LETSENCRYPT_EMAIL: lucifer@metabrainz.org
+      VIRTUAL_HOST: oauth.metabrainz.org
     volumes:
       - ../data/replication_packets:/data/replication_packets
       - ../data/json_dumps:/data/json_dumps
@@ -39,6 +48,8 @@ services:
     depends_on:
       - db
       - redis
+    expose:
+      - "8150"
 
   db:
     image: postgres:12.3
