@@ -69,4 +69,5 @@ services:
 
 networks:
   default:
-    external: musicbrainz-docker_default
+    name: musicbrainz-docker_default
+    external: true
