@@ -1,6 +1,4 @@
 # Docker Compose file for development
-version: "3.8"
-
 volumes:
   db:
 
@@ -12,8 +10,6 @@ services:
       dockerfile: Dockerfile
       target: metabrainz-dev
     command: python manage.py runserver -h 0.0.0.0 -p 80
-    environment:
-      AUTHLIB_INSECURE_TRANSPORT: true
     volumes:
       - ../data/replication_packets:/data/replication_packets
       - ../data/json_dumps:/data/json_dumps
@@ -21,6 +17,25 @@ services:
       - ../frontend:/static
     ports:
       - "8000:80"
+    depends_on:
+      - db
+      - redis
+
+  oauth:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: flask run --debug -h 0.0.0.0 -p 80
+    environment:
+      FLASK_APP: "oauth:create_app()"
+    volumes:
+      - ../data/replication_packets:/data/replication_packets
+      - ../data/json_dumps:/data/json_dumps
+      - ..:/code/metabrainz
+      - ../frontend:/static
+    ports:
+      - "8150:80"
     depends_on:
       - db
       - redis
