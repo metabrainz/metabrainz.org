@@ -1,7 +1,7 @@
 from authlib.oauth2.rfc6749 import ClientMixin
 from sqlalchemy import Column, Text, Integer, ARRAY, Identity, DateTime, func
 
-from metabrainz.model import db
+from oauth.model import db
 
 
 class OAuth2Client(db.Model, ClientMixin):

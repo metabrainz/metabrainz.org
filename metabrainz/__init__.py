@@ -1,16 +1,14 @@
-import logging
 import os
 import pprint
 import sys
-from time import sleep
 
 import stripe
-from brainzutils import sentry
 from brainzutils.flask import CustomFlask
+from brainzutils import sentry
 from flask import send_from_directory, request
-
 from metabrainz.admin.quickbooks.views import QuickBooksView
-from metabrainz.oauth.provider import authorization_server, revoke_token
+from time import sleep
+
 from metabrainz.utils import get_global_props
 
 # Check to see if we're running under a docker deployment. If so, don't second guess
@@ -21,8 +19,6 @@ CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 
 def create_app(debug=None, config_path=None):
-    logging.getLogger("authlib").setLevel(logging.DEBUG)
-
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
@@ -132,8 +128,6 @@ def create_app(debug=None, config_path=None):
     from metabrainz.admin.forms import LOGO_UPLOAD_SET
     configure_uploads(app, upload_sets=[LOGO_UPLOAD_SET])
 
-    config_oauth(app)
-
     # Blueprints
     _register_blueprints(app)
 
@@ -204,13 +198,7 @@ def _register_blueprints(app):
     # OAuth / API
     #############
 
-    from metabrainz.oauth.views import oauth_bp
-    app.register_blueprint(oauth_bp, url_prefix='/oauth2')
     from metabrainz.api.views.index import api_index_bp
     app.register_blueprint(api_index_bp, url_prefix='/api')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')
-
-
-def config_oauth(app):
-    authorization_server.init_app(app)

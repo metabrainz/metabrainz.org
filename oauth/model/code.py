@@ -4,10 +4,10 @@ from sqlalchemy import Column, Integer, ForeignKey, Text, DateTime, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import Identity
 
-from metabrainz.model import db
-from metabrainz.model.oauth.client import OAuth2Client
-from metabrainz.model.oauth.relation_scope import OAuth2CodeScope
-from metabrainz.model.oauth.scope import OAuth2Scope
+from oauth.model import db
+from oauth.model.client import OAuth2Client
+from oauth.model.relation_scope import OAuth2CodeScope
+from oauth.model.scope import OAuth2Scope
 
 
 class OAuth2AuthorizationCode(db.Model, AuthorizationCodeMixin):

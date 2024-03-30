@@ -1,7 +1,7 @@
 from sqlalchemy import Integer
 from sqlalchemy.sql.schema import Identity, Column, ForeignKey
 
-from metabrainz.model import db
+from oauth.model import db
 
 OAuth2TokenScope = db.Table(
     "l_token_scope",

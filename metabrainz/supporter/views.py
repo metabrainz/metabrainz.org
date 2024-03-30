@@ -54,13 +54,6 @@ def tier(tier_id):
         raise NotFound(gettext("Can't find tier with a specified ID."))
     return render_template('supporters/tier.html', tier=t)
 
-@supporters_bp.route('/signup')
-@login_forbidden
-def signup():
-    mb_username = session.fetch_data(SESSION_KEY_MB_USERNAME)
-    if mb_username is None:
-        # Show template with a link to MusicBrainz OAuth page
-        return render_template('supporters/mb-signup.html')
 
 @supporters_bp.route('/signup')
 @login_forbidden

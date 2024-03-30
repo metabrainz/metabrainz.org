@@ -1,12 +1,12 @@
 from authlib.oauth2.rfc7662 import IntrospectionEndpoint
 
-from metabrainz.model import db
-from metabrainz.model.oauth.token import OAuth2Token
+from oauth.model import db
+from oauth.model.token import OAuth2Token
 
 
 class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
 
-    def query_token(self, token_str, token_type_hint, client):
+    def query_token(self, token_str, token_type_hint):
         base_query = db.session.query(OAuth2Token)
         if token_type_hint == 'access_token':
             token = base_query.filter_by(access_token=token_str).first()

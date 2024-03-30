@@ -5,10 +5,10 @@ from authlib.oauth2.rfc6749.util import scope_to_list
 from sqlalchemy import func, Column, Integer, DateTime, Text, ForeignKey, Boolean, Identity
 from sqlalchemy.orm import relationship
 
-from metabrainz.model import db
-from metabrainz.model.oauth.client import OAuth2Client
-from metabrainz.model.oauth.relation_scope import OAuth2TokenScope
-from metabrainz.model.oauth.scope import OAuth2Scope
+from oauth.model import db
+from oauth.model.client import OAuth2Client
+from oauth.model.relation_scope import OAuth2TokenScope
+from oauth.model.scope import OAuth2Scope
 
 
 class OAuth2Token(db.Model, TokenMixin):

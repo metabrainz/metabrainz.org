@@ -88,6 +88,8 @@ PREFERRED_URL_SCHEME = '''{{template "KEY" "preferred_url_scheme"}}'''
 SERVER_BASE_URL = f"{PREFERRED_URL_SCHEME}://{MAIL_FROM_DOMAIN}"
 SERVER_NAME = MAIL_FROM_DOMAIN
 
+MUSICBRAINZ_SERVER = "https://beta.musicbrainz.org"
+
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [
     {{template "KEY_ARRAY" "notification_recipients"}}
