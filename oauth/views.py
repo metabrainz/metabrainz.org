@@ -1,27 +1,43 @@
 import json
+from datetime import timedelta
 
 from authlib.oauth2 import OAuth2Error
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, make_response
 from flask_babel import gettext
-from flask_login import login_required, current_user
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound
 from werkzeug.security import gen_salt
 
 from metabrainz import flash
 from metabrainz.decorators import nocache, crossdomain
-from metabrainz.model import db
+from oauth.login import login_required, current_user
+from oauth.model import db
 from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
 from oauth.model.token import OAuth2Token
 from oauth.forms import ApplicationForm, AuthorizationForm
+from oauth.model.user import User
 from oauth.provider import authorization_server
 from metabrainz.utils import build_url
 
-oauth_bp = Blueprint('oauth2', __name__)
+oauth2_bp = Blueprint("oauth2", __name__)
 
 
-@oauth_bp.route('/list')
+@oauth2_bp.route("/test-page")
+def test_page():
+    response = make_response(render_template("test-page.html", current_user=current_user))
+    response.set_cookie(
+        key="musicbrainz_server_session",
+        value="4c7031a8f52ab6aa1425cf271a37bd68cd4aabce",
+        max_age=timedelta(days=365),
+        path="/",
+        httponly=True,
+        samesite="Lax",
+    )
+    return response
+
+
+@oauth2_bp.route("/list")
 @login_required
 def index():
     applications = db\
@@ -37,7 +53,7 @@ def index():
     return render_template("oauth/index.html", applications=applications, tokens=tokens)
 
 
-@oauth_bp.route('/create_client', methods=('GET', 'POST'))
+@oauth2_bp.route("/create_client", methods=("GET", "POST"))
 @login_required
 def create():
     form = ApplicationForm()
@@ -74,7 +90,7 @@ def create():
     }))
 
 
-@oauth_bp.route('/edit/<client_id>', methods=['GET', 'POST'])
+@oauth2_bp.route("/edit/<client_id>", methods=["GET", "POST"])
 @login_required
 def edit(client_id):
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
@@ -89,7 +105,7 @@ def edit(client_id):
         application.redirect_uris = form.redirect_uris.data
         db.session.commit()
         flash.success(gettext("You have updated an application!"))
-        return redirect(url_for('.index'))
+        return redirect(url_for(".index"))
 
     form_errors = {
         "client_name": " ".join(form.client_name.errors),
@@ -117,7 +133,7 @@ def edit(client_id):
     }))
 
 
-@oauth_bp.route('/delete/<client_id>')
+@oauth2_bp.route("/delete/<client_id>")
 @login_required
 def delete(client_id):
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
@@ -126,11 +142,11 @@ def delete(client_id):
 
     db.session.delete(application)
     db.session.commit()
-    flash.success(gettext('You have deleted an application.'))
-    return redirect(url_for('.index'))
+    flash.success(gettext("You have deleted an application."))
+    return redirect(url_for(".index"))
 
 
-@oauth_bp.route('/authorize', methods=['GET', 'POST'])
+@oauth2_bp.route("/authorize", methods=["GET", "POST"])
 @login_required
 def authorize():
     """ OAuth 2.0 authorization endpoint. """
@@ -138,7 +154,7 @@ def authorize():
     redirect_uri = request.args.get("redirect_uri")
     cancel_url = build_url(redirect_uri, {"error": "access_denied"})
 
-    if request.method == 'GET':  # Client requests access
+    if request.method == "GET":  # Client requests access
         try:
             grant = authorization_server.get_consent_grant(end_user=current_user)
             scopes = get_scopes(db.session, grant.request.scope)
@@ -147,7 +163,7 @@ def authorize():
                 "error": error.error,
                 "description": error.description
             })  # FIXME: Add oauth error page
-        return render_template('oauth/prompt.html', client=grant.client, scopes=scopes,
+        return render_template("oauth/prompt.html", client=grant.client, scopes=scopes,
                                cancel_url=cancel_url, hide_navbar_links=True, hide_footer=True, form=form)
     else:
         if form.validate_on_submit():
@@ -156,19 +172,19 @@ def authorize():
             return redirect(cancel_url)
 
 
-@oauth_bp.route('/token', methods=['POST'])
+@oauth2_bp.route("/token", methods=["POST"])
 @nocache
 @crossdomain()
 def oauth_token_handler():
     return authorization_server.create_token_response()
 
 
-@oauth_bp.route('/revoke', methods=['POST'])
+@oauth2_bp.route("/revoke", methods=["POST"])
 def revoke():
     return authorization_server.create_endpoint_response("revocation")
 
 
-@oauth_bp.route('/userinfo', methods=['GET', 'POST'])
+@oauth2_bp.route("/userinfo", methods=["GET", "POST"])
 def user_info():
     # TODO: Discuss merging with introspection endpoint
     auth_header = request.headers.get("Authorization")
@@ -201,7 +217,7 @@ def user_info():
     }
 
 
-@oauth_bp.route('/introspect', methods=['POST'])
+@oauth2_bp.route("/introspect", methods=["POST"])
 def introspect_token():
     return authorization_server.create_endpoint_response("introspection")
 

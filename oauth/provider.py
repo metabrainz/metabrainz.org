@@ -7,11 +7,11 @@ from authlib.oauth2.rfc6749 import ImplicitGrant
 from authlib.oauth2.rfc7636 import CodeChallenge
 
 from metabrainz.model import db
-from metabrainz.model.oauth.client import OAuth2Client
-from metabrainz.model.oauth.token import OAuth2Token, save_token
-from metabrainz.oauth.authorization_grant import AuthorizationCodeGrant
-from metabrainz.oauth.introspection import OAuth2IntrospectionEndpoint
-from metabrainz.oauth.refresh_grant import RefreshTokenGrant
+from oauth.model.client import OAuth2Client
+from oauth.model.token import OAuth2Token, save_token
+from oauth.authorization_grant import AuthorizationCodeGrant
+from oauth.introspection import OAuth2IntrospectionEndpoint
+from oauth.refresh_grant import RefreshTokenGrant
 
 query_client = create_query_client_func(db.session, OAuth2Client)
 revoke_token = create_revocation_endpoint(db.session, OAuth2Token)

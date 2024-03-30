@@ -49,6 +49,8 @@ STRIPE_KEYS = {
 SERVER_BASE_URL = "http://localhost:8000"
 SERVER_NAME = "localhost:8000"
 
+MUSICBRAINZ_SERVER = "https://beta.musicbrainz.org"
+
 # REDIS
 REDIS = {
     "host": "redis",
