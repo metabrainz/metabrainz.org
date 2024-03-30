@@ -5,10 +5,10 @@ DEBUG = True  # set to False in production mode
 SECRET_KEY = "CHANGE_THIS"
 
 # DATABASE
-SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@db:5432/metabrainz"
+SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@meb_db:5432/metabrainz"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-POSTGRES_ADMIN_URI = "postgresql://postgres:postgres@db/postgres"
+POSTGRES_ADMIN_URI = "postgresql://postgres:postgres@meb_db/postgres"
 
 # DATABASES
 
