@@ -1,25 +1,23 @@
 # Docker Compose file for development
 volumes:
-  db:
+  meb_db:
 
 services:
 
-  web:
+  meb_web:
     build:
       context: ..
       dockerfile: Dockerfile
       target: metabrainz-dev
-    command: python manage.py runserver -h 0.0.0.0 -p 80
+    command: python manage.py runserver -h 0.0.0.0 -p 8000
     volumes:
       - ../data/replication_packets:/data/replication_packets
       - ../data/json_dumps:/data/json_dumps
       - ..:/code/metabrainz
       - ../frontend:/static
-    ports:
-      - "8000:80"
     depends_on:
-      - db
-      - redis
+      - meb_db
+      - meb_redis
     expose:
       - "8000"
     environment:
@@ -27,12 +25,12 @@ services:
       LETSENCRYPT_EMAIL: lucifer@metabrainz.org
       VIRTUAL_HOST: dev.metabrainz.org
 
-  oauth:
+  meb_oauth:
     build:
       context: ..
       dockerfile: Dockerfile
       target: metabrainz-dev
-    command: flask run --debug -h 0.0.0.0 -p 80
+    command: flask run --debug -h 0.0.0.0 -p 8150
     environment:
       FLASK_APP: "oauth:create_app()"
       LETSENCRYPT_HOST: oauth.metabrainz.org
@@ -43,27 +41,23 @@ services:
       - ../data/json_dumps:/data/json_dumps
       - ..:/code/metabrainz
       - ../frontend:/static
-    ports:
-      - "8150:80"
     depends_on:
-      - db
-      - redis
+      - meb_db
+      - meb_redis
     expose:
       - "8150"
 
-  db:
+  meb_db:
     image: postgres:12.3
     volumes:
-      - db:/var/lib/postgresql/data:z
+      - meb_db:/var/lib/postgresql/data:z
     environment:
       POSTGRES_PASSWORD: postgres
-    ports:
-      - "15432:5432"
 
-  redis:
+  meb_redis:
     image: redis:3.2.1
 
-  static_builder:
+  meb_static_builder:
     build:
       context: ..
       dockerfile: Dockerfile
@@ -72,3 +66,7 @@ services:
     user: ${STATIC_BUILD_USER:-node}
     volumes:
       - ../frontend:/code/frontend:z
+
+networks:
+  default:
+    external: musicbrainz-docker_default
