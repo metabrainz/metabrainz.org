@@ -1,7 +1,7 @@
 import json
 from datetime import timedelta
 
-from authlib.oauth2 import OAuth2Error
+from authlib.oauth2.rfc6749 import InvalidRequestError
 from flask import Blueprint, request, render_template, redirect, url_for, jsonify, make_response
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
@@ -25,10 +25,10 @@ oauth2_bp = Blueprint("oauth2", __name__)
 
 @oauth2_bp.route("/test-page")
 def test_page():
-    response = make_response(render_template("test-page.html", current_user=current_user))
+    response = make_response(render_template("test-page.html"))
     response.set_cookie(
         key="musicbrainz_server_session",
-        value="4c7031a8f52ab6aa1425cf271a37bd68cd4aabce",
+        value="44c6994361d9282d7f12bb2c47e0874f2d7d9d37",
         max_age=timedelta(days=365),
         path="/",
         httponly=True,
@@ -37,7 +37,7 @@ def test_page():
     return response
 
 
-@oauth2_bp.route("/list")
+@oauth2_bp.route("/client/list")
 @login_required
 def index():
     applications = db\
@@ -50,10 +50,28 @@ def index():
         .query(OAuth2Token)\
         .filter(OAuth2Token.user_id == current_user.id)\
         .all()
-    return render_template("oauth/index.html", applications=applications, tokens=tokens)
+    return render_template("oauth/index.html", props=json.dumps({
+        "applications": [{
+            "name": application.name,
+            "description": application.description,
+            "client_id": application.client_id,
+            "client_secret": application.client_secret,
+            "website": application.website,
+            "redirect_uris": application.redirect_uris,
+        } for application in applications],
+        "tokens": [{
+            "name": token.client.name,
+            "scopes": [{
+                "name": scope.name,
+                "description": scope.description
+            } for scope in token.scopes],
+            "client_id": token.client.client_id,
+            "website": token.client.website,
+        } for token in tokens],
+    }))
 
 
-@oauth2_bp.route("/create_client", methods=("GET", "POST"))
+@oauth2_bp.route("/client/create", methods=("GET", "POST"))
 @login_required
 def create():
     form = ApplicationForm()
@@ -77,7 +95,8 @@ def create():
         "client_name": " ".join(form.client_name.errors),
         "website": " ".join(form.website.errors),
         "description": " ".join(form.description.errors),
-        "redirect_uris": [" ". join(errors) for errors in form.redirect_uris.errors]
+        "redirect_uris": [" ". join(errors) for errors in form.redirect_uris.errors],
+        "csrf_token": " ".join(form.csrf_token.errors),
     }
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
@@ -90,7 +109,7 @@ def create():
     }))
 
 
-@oauth2_bp.route("/edit/<client_id>", methods=["GET", "POST"])
+@oauth2_bp.route("/client/edit/<client_id>", methods=["GET", "POST"])
 @login_required
 def edit(client_id):
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
@@ -133,7 +152,7 @@ def edit(client_id):
     }))
 
 
-@oauth2_bp.route("/delete/<client_id>")
+@oauth2_bp.route("/client/delete/<client_id>", methods=["POST"])
 @login_required
 def delete(client_id):
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
@@ -152,19 +171,22 @@ def authorize():
     """ OAuth 2.0 authorization endpoint. """
     form = AuthorizationForm()
     redirect_uri = request.args.get("redirect_uri")
+    if not redirect_uri:
+        raise InvalidRequestError(description='Missing "redirect_uri" in request.')
     cancel_url = build_url(redirect_uri, {"error": "access_denied"})
 
     if request.method == "GET":  # Client requests access
-        try:
-            grant = authorization_server.get_consent_grant(end_user=current_user)
-            scopes = get_scopes(db.session, grant.request.scope)
-        except OAuth2Error as error:
-            return jsonify({
-                "error": error.error,
-                "description": error.description
-            })  # FIXME: Add oauth error page
-        return render_template("oauth/prompt.html", client=grant.client, scopes=scopes,
-                               cancel_url=cancel_url, hide_navbar_links=True, hide_footer=True, form=form)
+        grant = authorization_server.get_consent_grant(end_user=current_user)
+        scopes = get_scopes(db.session, grant.request.scope)
+        return render_template("oauth/prompt.html", props=json.dumps({
+            "client_name": grant.client.name,
+            "scopes": [{
+                "name": scope.name,
+                "description": scope.description
+            } for scope in scopes],
+            "cancel_url": cancel_url,
+            "csrf_token": generate_csrf(),
+        }))
     else:
         if form.validate_on_submit():
             return authorization_server.create_authorization_response(grant_user=current_user)
