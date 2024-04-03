@@ -11,10 +11,10 @@ services:
     volumes:
       - ..:/code/metabrainz
     depends_on:
-      - db
+      - meb_db
       - redis
 
-  db:
+  meb_db:
     image: postgres:12.3
     environment:
       POSTGRES_PASSWORD: postgres

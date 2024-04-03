@@ -1,11 +1,15 @@
+import json
 import logging
 import os
 import pprint
 import sys
 from time import sleep
 
+from authlib.oauth2 import OAuth2Error
+from authlib.oauth2.rfc6749 import InvalidClientError
 from brainzutils import sentry
 from brainzutils.flask import CustomFlask
+from flask import render_template, current_app
 
 from oauth.provider import authorization_server, revoke_token
 from metabrainz.utils import get_global_props
@@ -50,7 +54,8 @@ def create_app(debug=None, config_path=None):
 
     app.config["SERVER_BASE_URL"] = "http://localhost:8150"
     app.config["SERVER_NAME"] = "localhost:8150"
-
+    app.config["DEBUG"] = False
+    app.config["TESTING"] = False
     app.logger.setLevel(logging.INFO)
 
     # app.config["SERVER_BASE_URL"] = "http://127.0.0.1:5000"
@@ -110,6 +115,16 @@ def create_app(debug=None, config_path=None):
     # Error handling
     from metabrainz.errors import init_error_handlers
     init_error_handlers(app)
+
+    @app.errorhandler(OAuth2Error)
+    def oauth_error_handler(error: OAuth2Error):
+        current_app.logger.info("Error: %s", error)
+        return render_template("oauth/error.html", props=json.dumps({
+            "error": {
+                "name": error.error,
+                "description": error.get_error_description()
+            }
+        }))
 
     authorization_server.init_app(app)
 

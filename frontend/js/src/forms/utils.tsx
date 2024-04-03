@@ -162,3 +162,16 @@ export function OAuthTextInput({
     </div>
   );
 }
+
+export function OAuthScopeDesc(scopes: Array<Scope>) {
+  return (
+    <ul>
+      {/* eslint-disable-next-line react/destructuring-assignment */}
+      {scopes.map((scope) => (
+        <li>
+          {scope.name}: {scope.description}
+        </li>
+      ))}
+    </ul>
+  );
+}
