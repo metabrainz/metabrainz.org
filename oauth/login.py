@@ -15,19 +15,31 @@ class User(UserMixin):
         self.id = user_id
         self.user_name = user_name
 
+    def is_anonymous(self):
+        return self.id is not None
+
+    def is_active(self):
+        return self.id is not None
+
+    def __str__(self):
+        return f"User(user_id={self.id}, user_name={self.user_name})"
+
+
+ANONYMOUS_USER = User(None, None)
+
 
 def _get_user():
     if has_request_context():
         if "_login_user" not in g:
             g._login_user = load_user_from_request(request)
         return g._login_user
-    return None
+    return ANONYMOUS_USER
 
 
 def login_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
-        if current_user is None:
+        if not current_user.is_authenticated():
             return redirect(f"{current_app.config['MUSICBRAINZ_SERVER']}/login?next=" + quote_plus(request.url))
         return func(*args, **kwargs)
 
@@ -40,10 +52,9 @@ def load_user_from_request(_request: Request):
             f"{current_app.config['MUSICBRAINZ_SERVER']}/ws/js/check-login",
             cookies=_request.cookies
         )
-        current_app.logger.error(f"MB Response: {response.text}")
         if response.status_code == 200:
             data = response.json()
             if data["id"] is not None:
                 return User(user_id=data["id"], user_name=data["name"])
 
-    return None
+    return ANONYMOUS_USER

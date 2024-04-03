@@ -57,6 +57,9 @@ module.exports = function (env, argv) {
         "src/forms/SupporterProfileEdit.tsx"
       ),
       createApplication: path.resolve(jsDir, "src/forms/CreateApplication.tsx"),
+      oauthPrompt: path.resolve(jsDir, "src/forms/OAuthPrompt.tsx"),
+      applications: path.resolve(jsDir, "src/Applications.tsx"),
+      oauthError: path.resolve(jsDir, "src/OAuthError.tsx"),
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",

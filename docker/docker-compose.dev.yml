@@ -24,6 +24,8 @@ services:
       LETSENCRYPT_HOST: dev.metabrainz.org
       LETSENCRYPT_EMAIL: lucifer@metabrainz.org
       VIRTUAL_HOST: dev.metabrainz.org
+    ports:
+      - "8000:8000"
 
   meb_oauth:
     build:
@@ -44,6 +46,8 @@ services:
     depends_on:
       - meb_db
       - meb_redis
+    ports:
+      - "8150:8150"
     expose:
       - "8150"
 
@@ -66,8 +70,3 @@ services:
     user: ${STATIC_BUILD_USER:-node}
     volumes:
       - ../frontend:/code/frontend:z
-
-networks:
-  default:
-    name: musicbrainz-docker_default
-    external: true
