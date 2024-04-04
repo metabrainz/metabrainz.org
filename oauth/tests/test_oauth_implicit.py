@@ -1,5 +1,4 @@
 import json
-from pprint import pprint
 from urllib.parse import urlparse, parse_qs, unquote
 
 from flask import g
@@ -8,7 +7,7 @@ from sqlalchemy import delete
 
 import oauth
 from oauth.login import User
-from oauth.model import db, OAuth2Scope, OAuth2AuthorizationCode, OAuth2Client
+from oauth.model import db, OAuth2Scope, OAuth2Client, OAuth2Token
 from oauth.tests import login_user
 
 
@@ -31,7 +30,7 @@ class OAuthTestCase(TestCase):
         db.session.commit()
 
     def tearDown(self):
-        db.session.execute(delete(OAuth2AuthorizationCode))
+        db.session.execute(delete(OAuth2Token))
         db.session.execute(delete(OAuth2Scope))
         db.session.execute(delete(OAuth2Client))
         db.session.commit()
@@ -62,7 +61,7 @@ class OAuthTestCase(TestCase):
                 "/oauth2/authorize",
                 query_string={
                     "client_id": application["client_id"],
-                    "response_type": "code",
+                    "response_type": "token",
                     "scope": "test-scope-1",
                     "state": "random-state",
                     "redirect_uri": redirect_uri,
@@ -81,7 +80,7 @@ class OAuthTestCase(TestCase):
                 "/oauth2/authorize",
                 query_string={
                     "client_id": application["client_id"],
-                    "response_type": "code",
+                    "response_type": "token",
                     "scope": "test-scope-1",
                     "state": "random-state",
                     "redirect_uri": redirect_uri,
@@ -94,19 +93,28 @@ class OAuthTestCase(TestCase):
             self.assertEqual(response.status_code, 302)
             self.assertTrue(response.location.startswith(redirect_uri))
             parsed = urlparse(response.location)
-            query_args = parse_qs(parsed.query)
-            self.assertIsNone(query_args.get("error"))
-            self.assertEqual(len(query_args["state"]), 1)
-            self.assertEqual(query_args["state"][0], "random-state")
-            self.assertEqual(len(query_args["code"]), 1)
-            codes = db.session.query(OAuth2AuthorizationCode).join(OAuth2Client).filter(
+            fragment_args = parse_qs(parsed.fragment)
+            
+            self.assertIsNone(fragment_args.get("error"))
+            
+            self.assertEqual(len(fragment_args["state"]), 1)
+            self.assertEqual(fragment_args["state"][0], "random-state")
+            
+            self.assertEqual(len(fragment_args["token_type"]), 1)
+            self.assertEqual(fragment_args["token_type"][0], "Bearer")
+            
+            self.assertEqual(len(fragment_args["expires_in"]), 1)
+            self.assertEqual(fragment_args["expires_in"][0], "3600")
+            
+            self.assertEqual(len(fragment_args["access_token"]), 1)
+            tokens = db.session.query(OAuth2Token).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
-                OAuth2AuthorizationCode.user_id == self.user2.id,
+                OAuth2Token.user_id == self.user2.id,
             ).all()
-            codes = {code.code for code in codes}
-            self.assertIn(query_args["code"][0], codes)
+            tokens = {token.access_token for token in tokens}
+            self.assertIn(fragment_args["access_token"][0], tokens)
             if only_one_code:
-                self.assertEqual(len(codes), 1)
+                self.assertEqual(len(tokens), 1)
 
     def test_oauth_authorize_implicit(self):
         application = self.create_oauth_app()
@@ -120,7 +128,7 @@ class OAuthTestCase(TestCase):
                 "/oauth2/authorize",
                 query_string={
                     "client_id": application["client_id"],
-                    "response_type": "code",
+                    "response_type": "token",
                     "scope": "test-scope-1",
                     "state": "random-state",
                     "redirect_uri": "https://example.com/callback",
@@ -139,7 +147,7 @@ class OAuthTestCase(TestCase):
                 "/oauth2/authorize",
                 query_string={
                     "client_id": application["client_id"],
-                    "response_type": "code",
+                    "response_type": "token",
                     "scope": "test-scope-1",
                     "state": "random-state",
                     "redirect_uri": "https://example.com/callback",
@@ -177,7 +185,7 @@ class OAuthTestCase(TestCase):
     def test_oauth_authorize_missing_client_id(self):
         application = self.create_oauth_app()
         query_string = {
-            "response_type": "code",
+            "response_type": "token",
             "scope": "test-scope-1",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
@@ -189,7 +197,7 @@ class OAuthTestCase(TestCase):
         application = self.create_oauth_app()
         query_string = {
             "client_id": "asb",
-            "response_type": "code",
+            "response_type": "token",
             "scope": "test-scope-1",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
@@ -224,7 +232,7 @@ class OAuthTestCase(TestCase):
         application = self.create_oauth_app()
         query_string = {
             "client_id": application["client_id"],
-            "response_type": "code",
+            "response_type": "token",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -235,7 +243,7 @@ class OAuthTestCase(TestCase):
         application = self.create_oauth_app()
         query_string = {
             "client_id": application["client_id"],
-            "response_type": "code",
+            "response_type": "token",
             "scope": "test-scope-abc",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
@@ -247,7 +255,7 @@ class OAuthTestCase(TestCase):
         application = self.create_oauth_app()
         query_string = {
             "client_id": application["client_id"],
-            "response_type": "code",
+            "response_type": "token",
             "scope": "test-scope-1",
             "state": "random-state",
         }
@@ -258,7 +266,7 @@ class OAuthTestCase(TestCase):
         application = self.create_oauth_app()
         query_string = {
             "client_id": application["client_id"],
-            "response_type": "code",
+            "response_type": "token",
             "scope": "test-scope-1",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
@@ -273,7 +281,7 @@ class OAuthTestCase(TestCase):
                 "/oauth2/authorize",
                 query_string={
                     "client_id": application["client_id"],
-                    "response_type": "code",
+                    "response_type": "token",
                     "scope": "test-scope-1",
                     "state": "random-state",
                     "redirect_uri": "https://example.com/callback",
@@ -288,7 +296,7 @@ class OAuthTestCase(TestCase):
             "/oauth2/authorize",
             query_string={
                 "client_id": application["client_id"],
-                "response_type": "code",
+                "response_type": "token",
                 "scope": "test-scope-1",
                 "state": "random-state",
                 "redirect_uri": "https://example.com/callback",
@@ -300,8 +308,8 @@ class OAuthTestCase(TestCase):
         self.assertEqual(parsed.scheme + "://" + parsed.netloc, self.app.config["MUSICBRAINZ_SERVER"])
         self.assertEqual(parsed.path, "/login")
 
-        query_args = parse_qs(parsed.query)
-        self.assertEqual(unquote(query_args["next"][0]), f"http://{self.app.config['SERVER_NAME']}/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
+        fragment_args = parse_qs(parsed.query)
+        self.assertEqual(unquote(fragment_args["next"][0]), f"http://{self.app.config['SERVER_NAME']}/oauth2/authorize?client_id={application['client_id']}&response_type=token&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
 
     def test_oauth_authorize_multiple_redirect_uris(self):
         application = self.create_oauth_app(redirect_uris=[

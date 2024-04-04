@@ -3,9 +3,8 @@ from authlib.integrations.sqla_oauth2 import (
     create_query_client_func,
     create_revocation_endpoint
 )
-from authlib.oauth2.rfc6749 import ImplicitGrant, InvalidScopeError
+from authlib.oauth2.rfc6749 import ImplicitGrant, InvalidScopeError, scope_to_list
 from authlib.oauth2.rfc7636 import CodeChallenge
-from oauthlib.oauth2.rfc6749.utils import scope_to_list
 
 from oauth.model import db, OAuth2Scope
 from oauth.model.client import OAuth2Client
