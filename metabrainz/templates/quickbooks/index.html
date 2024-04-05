@@ -33,6 +33,7 @@
 {% endblock %}
 {% macro section(customers, show_check) -%}        
   {% if customers %}
+    <input type="hidden" name="latest_invoice" value="{{ latest_invoice }}">
     <table class="table">
       {% for customer in customers %}
         {% set outer_loop = loop %}
