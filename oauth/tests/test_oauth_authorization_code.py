@@ -102,8 +102,7 @@ class OAuthTestCase(TestCase):
             self.assertTrue(response.location.startswith(redirect_uri))
             parsed = urlparse(response.location)
             query_args = parse_qs(parsed.query)
-            print(parsed.query)
-            
+
             self.assertIsNone(query_args.get("error"))
             
             self.assertEqual(len(query_args["state"]), 1)
@@ -137,7 +136,6 @@ class OAuthTestCase(TestCase):
                     "code": code,
                 }
             )
-            print(response.json)
             self.assert200(response)
             data = response.json
             self.assertEqual(data["expires_in"], 864000)
@@ -151,7 +149,7 @@ class OAuthTestCase(TestCase):
             if only_one_token:
                 self.assertEqual(len(tokens), 1)
 
-    def test_oauth_token(self):
+    def test_oauth_token_success(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
         code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
@@ -209,8 +207,6 @@ class OAuthTestCase(TestCase):
     def test_oauth_token_client_secret_mismatch(self):
         application1 = self.create_oauth_app()
         application2 = self.create_oauth_app()[1]
-        print(application1)
-        print(application2)
         redirect_uri = "https://example.com/callback"
         code = self._test_oauth_authorize_success_helper(application1, redirect_uri, True)
 
@@ -446,7 +442,7 @@ class OAuthTestCase(TestCase):
             self.assertEqual(response.status_code, 302)
             self.assertEqual(response.location, "https://example.com/callback?error=access_denied")
 
-    def _test_oauth_authorize_helper(self, user, query_string, error):
+    def _test_oauth_authorize_error_helper(self, user, query_string, error):
         with login_user(user):
             response = self.client.get(
                 "/oauth2/authorize",
@@ -477,7 +473,7 @@ class OAuthTestCase(TestCase):
             "redirect_uri": "https://example.com/callback",
         }
         error = {"name": "invalid_client", "description": ""}
-        self._test_oauth_authorize_helper(self.user2, query_string, error)
+        self._test_oauth_authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_client_id(self):
         application = self.create_oauth_app()
@@ -489,7 +485,7 @@ class OAuthTestCase(TestCase):
             "redirect_uri": "https://example.com/callback",
         }
         error = {"name": "invalid_client", "description": ""}
-        self._test_oauth_authorize_helper(self.user2, query_string, error)
+        self._test_oauth_authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_missing_response_type(self):
         application = self.create_oauth_app()
@@ -500,7 +496,7 @@ class OAuthTestCase(TestCase):
             "redirect_uri": "https://example.com/callback",
         }
         error = {"name": "unsupported_response_type", "description": "response_type=None is not supported"}
-        self._test_oauth_authorize_helper(self.user2, query_string, error)
+        self._test_oauth_authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_response_type(self):
         application = self.create_oauth_app()
@@ -512,7 +508,7 @@ class OAuthTestCase(TestCase):
             "redirect_uri": "https://example.com/callback",
         }
         error = {"name": "unsupported_response_type", "description": "response_type=invalid is not supported"}
-        self._test_oauth_authorize_helper(self.user2, query_string, error)
+        self._test_oauth_authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_missing_scope(self):
         application = self.create_oauth_app()
@@ -523,7 +519,7 @@ class OAuthTestCase(TestCase):
             "redirect_uri": "https://example.com/callback",
         }
         error = {"name": "invalid_scope", "description": "The requested scope is invalid, unknown, or malformed."}
-        self._test_oauth_authorize_helper(self.user2, query_string, error)
+        self._test_oauth_authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_scope(self):
         application = self.create_oauth_app()
@@ -535,7 +531,7 @@ class OAuthTestCase(TestCase):
             "redirect_uri": "https://example.com/callback",
         }
         error = {"name": "invalid_scope", "description": "The requested scope is invalid, unknown, or malformed."}
-        self._test_oauth_authorize_helper(self.user2, query_string, error)
+        self._test_oauth_authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_missing_redirect_uri(self):
         application = self.create_oauth_app()
@@ -546,7 +542,7 @@ class OAuthTestCase(TestCase):
             "state": "random-state",
         }
         error = {"name": "invalid_request", "description": "Missing \"redirect_uri\" in request."}
-        self._test_oauth_authorize_helper(self.user2, query_string, error)
+        self._test_oauth_authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_redirect_uri(self):
         application = self.create_oauth_app()
@@ -558,7 +554,7 @@ class OAuthTestCase(TestCase):
             "redirect_uri": "https://example.com/callback2",
         }
         error = {"name": "invalid_request", "description": "Redirect URI https://example.com/callback2 is not supported by client."}
-        self._test_oauth_authorize_helper(self.user2, query_string, error)
+        self._test_oauth_authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_cancel_url(self):
         application = self.create_oauth_app()
