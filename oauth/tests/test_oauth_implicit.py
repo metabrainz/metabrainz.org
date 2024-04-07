@@ -113,6 +113,7 @@ class OAuthTestCase(TestCase):
             ).all()
             tokens = {token.access_token for token in tokens}
             self.assertIn(fragment_args["access_token"][0], tokens)
+            self.assertNotIn("refresh_token", fragment_args)
             if only_one_code:
                 self.assertEqual(len(tokens), 1)
 

@@ -7,6 +7,9 @@ from oauth.model.user import User
 
 class RefreshTokenGrant(grants.RefreshTokenGrant):
 
+    TOKEN_ENDPOINT_AUTH_METHODS = ["client_secret_post"]
+    INCLUDE_NEW_REFRESH_TOKEN = True
+
     def authenticate_refresh_token(self, refresh_token):
         token = db.session\
             .query(OAuth2Token)\
@@ -16,7 +19,6 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
             return token
 
     def authenticate_user(self, credential):
-        # TODO: Do we need to verify the client_id / client_secret / token associated with the code here?
         return db.session\
             .query(User)\
             .filter_by(id=credential.user_id)\
