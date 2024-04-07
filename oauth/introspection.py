@@ -1,10 +1,13 @@
 from authlib.oauth2.rfc7662 import IntrospectionEndpoint
 
+from oauth import login
 from oauth.model import db
 from oauth.model.token import OAuth2Token
 
 
 class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
+
+    CLIENT_AUTH_METHODS = ["client_secret_post"]
 
     def query_token(self, token_str, token_type_hint):
         base_query = db.session.query(OAuth2Token)
@@ -19,20 +22,17 @@ class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
         return token
 
     def introspect_token(self, token):
+        user = login.load_user_from_db(token.user_id)
         return {
-            "active": True,
             "client_id": token.client.client_id,
             "token_type": "Bearer",
-            "username": token.user.name,
             "metabrainz_user_id": token.user_id,
             "scope": token.get_scope(),
-            "sub": token.user.name,
-            "aud": token.client.client_id,
-            "iss": "https://metabrainz.com/",
-            "exp": int(token.get_expires_at().timestamp()),
-            "iat": int(token.issued_at.timestamp()),
+            "sub": user.user_name,
+            "issued_by": "https://metabrainz.org/",
+            "expires_at": int(token.get_expires_at().timestamp()),
+            "issued_at": int(token.issued_at.timestamp()),
         }
 
     def check_permission(self, token, client, request):
-        # TODO: discuss restricting
-        return True
+        return token.client_id == client.id
