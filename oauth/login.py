@@ -6,6 +6,8 @@ from flask import Request, current_app, has_request_context, g, request, redirec
 from flask_login import UserMixin
 from werkzeug.local import LocalProxy
 
+from oauth.model import db
+
 current_user = LocalProxy(lambda: _get_user())
 
 
@@ -58,3 +60,11 @@ def load_user_from_request(_request: Request):
                 return User(user_id=data["id"], user_name=data["name"])
 
     return ANONYMOUS_USER
+
+
+def load_user_from_db(user_id: int):
+    user = db.User.filter_by(id=user_id, deleted=False).first()
+    if user is None:
+        return ANONYMOUS_USER
+    else:
+        return User(user_id=user.id, user_name=user.name)

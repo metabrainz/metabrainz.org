@@ -12,5 +12,4 @@ class User(db.Model):
 
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
-    email = Column(String)
     deleted = Column(Boolean, nullable=False)
