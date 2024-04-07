@@ -157,10 +157,13 @@ class OAuthTestCase(TestCase):
                 OAuth2Client.client_id == application["client_id"],
                 OAuth2Token.user_id == self.user2.id,
             ).all()
-            tokens = {token.access_token for token in tokens}
-            self.assertIn(data["access_token"], tokens)
+            access_tokens = {token.access_token for token in tokens}
+            refresh_tokens = {token.refresh_token for token in tokens}
+            self.assertIn(data["access_token"], access_tokens)
+            self.assertIn(data["refresh_token"], refresh_tokens)
             if only_one_token:
                 self.assertEqual(len(tokens), 1)
+                self.assertEqual(len(refresh_tokens), 1)
 
     def generate_s256_code_challenge(self, code_challenge_method):
         code_verifier = str(uuid.uuid4()) + str(uuid.uuid4()) + str(uuid.uuid4())

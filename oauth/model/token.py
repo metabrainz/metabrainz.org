@@ -59,16 +59,22 @@ class OAuth2Token(db.Model, TokenMixin):
 
 def save_token(token_data, request: FlaskOAuth2Request):
     # saving token for authorization code grant
-    if request.data.get("grant_type") == "authorization_code" and request.data.get("code") is not None:
+    if request.data.get("grant_type") == "authorization_code":
         _code = db.session.query(OAuth2AuthorizationCode).filter_by(code=request.data.get("code")).first()
         scopes = _code.scopes
-    elif request.data.get("scope") is not None:  # saving token for implicit grant
+        refresh_token = token_data["refresh_token"]
+    elif request.data.get("response_type") == "token":  # saving token for implicit grant
         scopes = get_scopes(db.session, request.data.get("scope"))
-    # TODO: Handle refresh token
+        refresh_token = None
+    elif request.data.get("grant_type") == "refresh_token":
+        scopes = request.refresh_token.scopes
+        refresh_token = token_data.get("refresh_token") or request.refresh_token.refresh_token
+
     token = OAuth2Token(
         client_id=request.client.id,
         user_id=request.user.id,
         access_token=token_data["access_token"],
+        refresh_token=refresh_token,
         expires_in=token_data["expires_in"],
         scopes=scopes
     )
