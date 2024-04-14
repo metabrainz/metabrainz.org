@@ -3,10 +3,19 @@ from sqlalchemy.sql.schema import Identity, Column, ForeignKey
 
 from oauth.model import db
 
-OAuth2TokenScope = db.Table(
-    "l_token_scope",
+
+OAuth2AccessTokenScope = db.Table(
+    "l_access_token_scope",
     Column("id", Integer, Identity(), primary_key=True),
-    Column("token_id", Integer, ForeignKey("oauth.token.id", ondelete="CASCADE"), nullable=False),
+    Column("access_token_id", Integer, ForeignKey("oauth.access_token.id", ondelete="CASCADE"), nullable=False),
+    Column("scope_id", Integer, ForeignKey("oauth.scope.id", ondelete="CASCADE"), nullable=False),
+    schema="oauth"
+)
+
+OAuth2RefreshTokenScope = db.Table(
+    "l_refresh_token_scope",
+    Column("id", Integer, Identity(), primary_key=True),
+    Column("refresh_token_id", Integer, ForeignKey("oauth.refresh_token.id", ondelete="CASCADE"), nullable=False),
     Column("scope_id", Integer, ForeignKey("oauth.scope.id", ondelete="CASCADE"), nullable=False),
     schema="oauth"
 )

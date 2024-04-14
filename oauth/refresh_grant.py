@@ -1,7 +1,6 @@
 from authlib.oauth2.rfc6749 import grants
 
-from oauth.model import db
-from oauth.model.token import OAuth2Token
+from oauth.model import db, OAuth2RefreshToken, OAuth2AccessToken
 from oauth.model.user import User
 
 
@@ -11,12 +10,10 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
     INCLUDE_NEW_REFRESH_TOKEN = True
 
     def authenticate_refresh_token(self, refresh_token):
-        token = db.session\
-            .query(OAuth2Token)\
-            .filter_by(refresh_token=refresh_token)\
+        return db.session\
+            .query(OAuth2RefreshToken)\
+            .filter_by(refresh_token=refresh_token, revoked=False)\
             .first()
-        if token and token.is_refresh_token_active():
-            return token
 
     def authenticate_user(self, credential):
         return db.session\
@@ -25,6 +22,18 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
             .first()
 
     def revoke_old_credential(self, credential):
+        old_access_tokens = db.session\
+            .query(OAuth2AccessToken)\
+            .filter_by(user_id=credential.user_id, client_id=credential.client_id, revoked=False)\
+            .order_by(OAuth2AccessToken.issued_at)\
+            .all()
+
+        if len(old_access_tokens) > 0:
+            old_access_tokens.pop()  # do not revoke the latest issued token
+            for token in old_access_tokens:
+                token.revoked = True
+                db.session.add(token)
+
         credential.revoked = True
         db.session.add(credential)
         db.session.commit()

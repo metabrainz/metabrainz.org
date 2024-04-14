@@ -2,19 +2,16 @@ from datetime import timedelta, datetime, timezone
 
 from authlib.integrations.flask_oauth2.requests import FlaskOAuth2Request
 from authlib.oauth2.rfc6749 import TokenMixin
-from authlib.oauth2.rfc6749.util import scope_to_list
-from sqlalchemy import func, Column, Integer, DateTime, Text, ForeignKey, Boolean, Identity
-from sqlalchemy.orm import relationship
+from sqlalchemy import func, Column, Integer, DateTime, ForeignKey, Boolean, Identity
+from sqlalchemy.orm import relationship, declared_attr
 
 from oauth.model import db
 from oauth.model.client import OAuth2Client
 from oauth.model.code import OAuth2AuthorizationCode
-from oauth.model.relation_scope import OAuth2TokenScope
-from oauth.model.scope import OAuth2Scope, get_scopes
+from oauth.model.scope import get_scopes
 
 
-class OAuth2Token(db.Model, TokenMixin):
-    __tablename__ = "token"
+class OAuth2BaseToken(TokenMixin):
     __table_args__ = {
         "schema": "oauth"
     }
@@ -22,30 +19,26 @@ class OAuth2Token(db.Model, TokenMixin):
     id = Column(Integer, Identity(), primary_key=True)
     # no FK to user table because user data lives in MB db
     user_id = Column(Integer, nullable=False)
-    client_id = Column(Integer, ForeignKey("oauth.client.id", ondelete="CASCADE"), nullable=False)
-    access_token = Column(Text, nullable=False, unique=True)
-    refresh_token = Column(Text, index=True)  # nullable, because not all grants have refresh token
     issued_at = Column(DateTime(timezone=True), default=func.now())
     expires_in = Column(Integer)
     revoked = Column(Boolean, default=False)
 
-    client = relationship(OAuth2Client)
-    scopes = relationship(OAuth2Scope, secondary=OAuth2TokenScope)
+    @declared_attr
+    def client_id(self):
+        return Column(Integer, ForeignKey("oauth.client.id", ondelete="CASCADE"), nullable=False)
+
+    @declared_attr
+    def client(self):
+        return relationship(OAuth2Client)
 
     def get_client_id(self):
         return self.client.client_id
-
-    def get_scope(self):
-        return scope_to_list([s.name for s in self.scopes])
 
     def get_expires_in(self):
         return self.expires_in
 
     def get_expires_at(self):
         return self.issued_at + timedelta(seconds=self.expires_in)
-
-    def is_refresh_token_active(self):
-        return not self.revoked
 
     def check_client(self, client):
         return self.client_id == client.id
@@ -58,25 +51,49 @@ class OAuth2Token(db.Model, TokenMixin):
 
 
 def save_token(token_data, request: FlaskOAuth2Request):
+    from oauth.model.access_token import OAuth2AccessToken
+    from oauth.model.refresh_token import OAuth2RefreshToken
+
+    refresh_token = None
+    access_token_scopes = []
+    refresh_token_scopes = []
+
     # saving token for authorization code grant
     if request.data.get("grant_type") == "authorization_code":
         _code = db.session.query(OAuth2AuthorizationCode).filter_by(code=request.data.get("code")).first()
-        scopes = _code.scopes
         refresh_token = token_data["refresh_token"]
+        access_token_scopes = _code.scopes
+        refresh_token_scopes = _code.scopes
     elif request.data.get("response_type") == "token":  # saving token for implicit grant
-        scopes = get_scopes(db.session, request.data.get("scope"))
-        refresh_token = None
+        access_token_scopes = get_scopes(db.session, request.data.get("scope"))
     elif request.data.get("grant_type") == "refresh_token":
-        scopes = request.refresh_token.scopes
-        refresh_token = token_data.get("refresh_token") or request.refresh_token.refresh_token
+        # if only a subset of scopes is requested, use that for access token but retain original scopes for the
+        # refresh token
+        if request.data.get("scope"):
+            access_token_scopes = get_scopes(db.session, request.data.get("scope"))
+        else:
+            access_token_scopes = request.refresh_token.scopes
 
-    token = OAuth2Token(
+        refresh_token = token_data.get("refresh_token") or request.refresh_token.refresh_token
+        refresh_token_scopes = request.refresh_token.scopes
+
+    access_token = OAuth2AccessToken(
         client_id=request.client.id,
         user_id=request.user.id,
         access_token=token_data["access_token"],
-        refresh_token=refresh_token,
         expires_in=token_data["expires_in"],
-        scopes=scopes
+        scopes=access_token_scopes,
     )
-    db.session.add(token)
+    db.session.add(access_token)
+
+    if refresh_token is not None:
+        refresh_token = OAuth2RefreshToken(
+            client_id=request.client.id,
+            user_id=request.user.id,
+            refresh_token=refresh_token,
+            expires_in=token_data["expires_in"],  # TODO: fix refresh token expiry, for existing retain or reset ?
+            scopes=refresh_token_scopes,
+        )
+        db.session.add(refresh_token)
+
     db.session.commit()

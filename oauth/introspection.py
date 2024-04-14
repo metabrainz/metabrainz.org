@@ -2,7 +2,8 @@ from authlib.oauth2.rfc7662 import IntrospectionEndpoint
 
 from oauth import login
 from oauth.model import db
-from oauth.model.token import OAuth2Token
+from oauth.model.access_token import OAuth2AccessToken
+from oauth.model.refresh_token import OAuth2RefreshToken
 
 
 class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
@@ -10,15 +11,14 @@ class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
     CLIENT_AUTH_METHODS = ["client_secret_post"]
 
     def query_token(self, token_str, token_type_hint):
-        base_query = db.session.query(OAuth2Token)
         if token_type_hint == "access_token":
-            token = base_query.filter_by(access_token=token_str).first()
+            token = db.session.query(OAuth2AccessToken).filter_by(access_token=token_str).first()
         elif token_type_hint == "refresh_token":
-            token = base_query.filter_by(refresh_token=token_str).first()
+            token = db.session.query(OAuth2RefreshToken).filter_by(refresh_token=token_str).first()
         else:  # without token_type_hint
-            token = base_query.filter_by(access_token=token_str).first()
+            token = db.session.query(OAuth2AccessToken).filter_by(access_token=token_str).first()
             if not token:
-                token = base_query.filter_by(refresh_token=token_str).first()
+                token = db.session.query(OAuth2RefreshToken).filter_by(refresh_token=token_str).first()
         return token
 
     def introspect_token(self, token):

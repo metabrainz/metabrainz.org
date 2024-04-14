@@ -6,12 +6,11 @@ import sys
 from time import sleep
 
 from authlib.oauth2 import OAuth2Error
-from authlib.oauth2.rfc6749 import InvalidClientError
 from brainzutils import sentry
 from brainzutils.flask import CustomFlask
 from flask import render_template, current_app
 
-from oauth.provider import authorization_server, revoke_token
+from oauth.provider import authorization_server
 from metabrainz.utils import get_global_props
 
 # Check to see if we're running under a docker deployment. If so, don"t second guess
