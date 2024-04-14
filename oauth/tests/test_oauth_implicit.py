@@ -9,18 +9,19 @@ from oauth.tests import login_user, OAuthTestCase
 
 class ImplicitGrantTestCase(OAuthTestCase):
 
-    def _test_oauth_authorize_success_helper(self, application, redirect_uri, only_one_code=False):
+    def authorize_success_helper(self, application, redirect_uri, only_one_code=False, approval_prompt=None):
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": redirect_uri,
+        }
+        if approval_prompt is not None:
+            query_string["approval_prompt"] = approval_prompt
+
         with login_user(self.user2):
-            response = self.client.get(
-                "/oauth2/authorize",
-                query_string={
-                    "client_id": application["client_id"],
-                    "response_type": "token",
-                    "scope": "test-scope-1",
-                    "state": "random-state",
-                    "redirect_uri": redirect_uri,
-                }
-            )
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
             self.assertEqual(props, {
@@ -30,20 +31,10 @@ class ImplicitGrantTestCase(OAuthTestCase):
                 "csrf_token": g.csrf_token,
             })
 
-            response = self.client.post(
-                "/oauth2/authorize",
-                query_string={
-                    "client_id": application["client_id"],
-                    "response_type": "token",
-                    "scope": "test-scope-1",
-                    "state": "random-state",
-                    "redirect_uri": redirect_uri,
-                },
-                data={
-                    "confirm": "yes",
-                    "csrf_token": g.csrf_token
-                }
-            )
+            response = self.client.post("/oauth2/authorize", query_string=query_string, data={
+                "confirm": "yes",
+                "csrf_token": g.csrf_token
+            })
             self.assertEqual(response.status_code, 302)
             self.assertTrue(response.location.startswith(redirect_uri))
             parsed = urlparse(response.location)
@@ -63,6 +54,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             self.assertEqual(len(fragment_args["access_token"]), 1)
             tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.client_id == OAuth2Client.id,
                 OAuth2AccessToken.user_id == self.user2.id,
             ).all()
             tokens = {token.access_token for token in tokens}
@@ -73,7 +65,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
 
     def test_oauth_authorize_implicit(self):
         application = self.create_oauth_app()
-        self._test_oauth_authorize_success_helper(application, "https://example.com/callback", True)
+        self.authorize_success_helper(application, "https://example.com/callback", True)
 
     def test_oauth_authorize_implicit_decline(self):
         application = self.create_oauth_app()
@@ -249,5 +241,166 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "https://example.com/callback1",
             "https://example.com/callback2"
         ])
-        self._test_oauth_authorize_success_helper(application, "https://example.com/callback1")
-        self._test_oauth_authorize_success_helper(application, "https://example.com/callback2")
+        self.authorize_success_helper(application, "https://example.com/callback1")
+        self.authorize_success_helper(application, "https://example.com/callback2", approval_prompt="force")
+
+    def test_oauth_approval_prompt_auto(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        self.authorize_success_helper(application, "https://example.com/callback1")
+
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": "https://example.com/callback2",
+        }
+
+        with login_user(self.user2):
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
+
+            self.assertEqual(response.status_code, 302)
+            self.assertTrue(response.location.startswith(query_string["redirect_uri"]))
+            parsed = urlparse(response.location)
+            fragment_args = parse_qs(parsed.fragment)
+
+            self.assertIsNone(fragment_args.get("error"))
+
+            self.assertEqual(len(fragment_args["state"]), 1)
+            self.assertEqual(fragment_args["state"][0], "random-state")
+
+            self.assertEqual(len(fragment_args["token_type"]), 1)
+            self.assertEqual(fragment_args["token_type"][0], "Bearer")
+
+            self.assertEqual(len(fragment_args["expires_in"]), 1)
+            self.assertEqual(fragment_args["expires_in"][0], "3600")
+
+            self.assertEqual(len(fragment_args["access_token"]), 1)
+            tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.client_id == OAuth2Client.id,
+                OAuth2AccessToken.user_id == self.user2.id,
+            ).all()
+            tokens = {token.access_token for token in tokens}
+            self.assertIn(fragment_args["access_token"][0], tokens)
+            self.assertNotIn("refresh_token", fragment_args)
+
+    def test_oauth_approval_prompt_force(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        self.authorize_success_helper(application, "https://example.com/callback1")
+
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": "https://example.com/callback2",
+            "approval_prompt": "force",
+        }
+
+        with login_user(self.user2):
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
+            self.assertTemplateUsed("oauth/prompt.html")
+            props = json.loads(self.get_context_variable("props"))
+            self.assertEqual(props, {
+                "client_name": "test-client",
+                "scopes": [{"name": "test-scope-1", "description": "Test Scope 1"}],
+                "cancel_url": query_string["redirect_uri"] + "?error=access_denied",
+                "csrf_token": g.csrf_token,
+            })
+
+    def test_oauth_approval_prompt_none(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        self.authorize_success_helper(application, "https://example.com/callback1")
+
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": "https://example.com/callback2",
+            "approval_prompt": "auto",
+        }
+
+        with login_user(self.user2):
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
+
+            self.assertEqual(response.status_code, 302)
+            self.assertTrue(response.location.startswith(query_string["redirect_uri"]))
+            parsed = urlparse(response.location)
+            fragment_args = parse_qs(parsed.fragment)
+
+            self.assertIsNone(fragment_args.get("error"))
+
+            self.assertEqual(len(fragment_args["state"]), 1)
+            self.assertEqual(fragment_args["state"][0], "random-state")
+
+            self.assertEqual(len(fragment_args["token_type"]), 1)
+            self.assertEqual(fragment_args["token_type"][0], "Bearer")
+
+            self.assertEqual(len(fragment_args["expires_in"]), 1)
+            self.assertEqual(fragment_args["expires_in"][0], "3600")
+
+            self.assertEqual(len(fragment_args["access_token"]), 1)
+            tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.client_id == OAuth2Client.id,
+                OAuth2AccessToken.user_id == self.user2.id,
+            ).all()
+            tokens = {token.access_token for token in tokens}
+            self.assertIn(fragment_args["access_token"][0], tokens)
+            self.assertNotIn("refresh_token", fragment_args)
+
+    def test_oauth_approval_prompt_invalid(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": "https://example.com/callback2",
+            "approval_prompt": "invalid",
+        }
+        error = {"name": "invalid_request", "description": "Invalid \"approval_prompt\" in request."}
+        self.authorize_error_helper(self.user2, query_string, error)
+
+    def test_oauth_approval_prompt_scope_mismatch(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        self.authorize_success_helper(application, "https://example.com/callback1")
+
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1 test-scope-2",
+            "state": "random-state",
+            "redirect_uri": "https://example.com/callback2",
+        }
+
+        with login_user(self.user2):
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
+            self.assertTemplateUsed("oauth/prompt.html")
+            props = json.loads(self.get_context_variable("props"))
+            self.assertEqual(props, {
+                "client_name": "test-client",
+                "scopes": [
+                    {"name": "test-scope-1", "description": "Test Scope 1"},
+                    {"name": "test-scope-2", "description": "Test Scope 2"}
+                ],
+                "cancel_url": query_string["redirect_uri"] + "?error=access_denied",
+                "csrf_token": g.csrf_token,
+            })

@@ -48,3 +48,15 @@ class OAuth2Client(db.Model, ClientMixin):
 
     def check_grant_type(self, grant_type):
         return True  # TODO: Fix grant types
+
+    def check_already_approved(self, user_id, requested_scopes):
+        """ Check if the user has previously approved all the scopes for a given client """
+        from oauth.model.access_token import OAuth2AccessToken
+
+        requested_scopes = {s.name for s in requested_scopes}
+        tokens = db.session.query(OAuth2AccessToken).filter_by(client_id=self.id, user_id=user_id, revoked=False).all()
+        for token in tokens:
+            existing_scopes = {s.name for s in token.scopes}
+            if existing_scopes.issuperset(requested_scopes):
+                return True
+        return False
