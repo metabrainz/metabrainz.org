@@ -6,67 +6,13 @@ from unittest.mock import patch
 from urllib.parse import urlparse, parse_qs
 
 from flask import g
-from flask_testing import TestCase
-from sqlalchemy import delete
 
-import oauth
 from oauth.authorization_grant import AuthorizationCodeGrant
-from oauth.login import User
-from oauth.model import db, OAuth2Scope, OAuth2Client, OAuth2AccessToken, OAuth2AuthorizationCode, OAuth2RefreshToken
-from oauth.tests import login_user
+from oauth.model import db, OAuth2Client, OAuth2AccessToken, OAuth2AuthorizationCode, OAuth2RefreshToken
+from oauth.tests import login_user, OAuthTestCase
 
 
-class OAuthTestCase(TestCase):
-
-    def create_app(self):
-        app = oauth.create_app()
-        app.config["TESTING"] = False
-        app.config["DEBUG"] = False
-        return app
-
-    def setUp(self):
-        self.user1 = User(user_id=1, user_name="test-user-1")
-        self.user2 = User(user_id=2, user_name="test-user-2")
-
-        scope = OAuth2Scope()
-        scope.name = "test-scope-1"
-        scope.description = "Test Scope 1"
-        db.session.add(scope)
-        db.session.commit()
-
-    def tearDown(self):
-        db.session.rollback()
-        db.session.execute(delete(OAuth2AccessToken))
-        db.session.execute(delete(OAuth2RefreshToken))
-        db.session.execute(delete(OAuth2AuthorizationCode))
-        db.session.execute(delete(OAuth2Scope))
-        db.session.execute(delete(OAuth2Client))
-        db.session.commit()
-
-    def create_oauth_app(self, owner=None, redirect_uris=None):
-        if owner is None:
-            owner = self.user1
-        data = {
-            "client_name": "test-client",
-            "description": "test-description",
-            "website": "https://example.com",
-        }
-        if redirect_uris is None:
-            redirect_uris = ["https://example.com/callback"]
-
-        for idx, redirect_uri in enumerate(redirect_uris):
-            data[f"redirect_uris.{idx}"] = redirect_uri
-
-        with login_user(owner):
-            self.client.get("/oauth2/client/create")
-            data["csrf_token"] = g.csrf_token
-            self.client.post("/oauth2/client/create", data=data, follow_redirects=True)
-
-            applications = json.loads(self.get_context_variable("props"))["applications"]
-            if len(applications) == 1:
-                return applications[0]
-            else:
-                return applications
+class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
 
     def _test_oauth_authorize_success_helper(self, application, redirect_uri, code_challenge,
                                              code_challenge_method, only_one_code=False):
@@ -121,6 +67,7 @@ class OAuthTestCase(TestCase):
             self.assertEqual(len(query_args["code"]), 1)
             codes = db.session.query(OAuth2AuthorizationCode).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
+                OAuth2AuthorizationCode.client_id == OAuth2Client.id,
                 OAuth2AuthorizationCode.user_id == self.user2.id,
             ).all()
             codes = {code.code for code in codes}
@@ -150,7 +97,6 @@ class OAuthTestCase(TestCase):
                     "code": code,
                 }
             )
-
             self.assert200(response)
             data = response.json
             self.assertEqual(data["expires_in"], 864000)
@@ -158,6 +104,7 @@ class OAuthTestCase(TestCase):
 
             access_tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.client_id == OAuth2Client.id,
                 OAuth2AccessToken.user_id == self.user2.id,
             ).all()
             access_tokens = {token.access_token for token in access_tokens}
@@ -165,7 +112,8 @@ class OAuthTestCase(TestCase):
 
             refresh_tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
-                OAuth2AccessToken.user_id == self.user2.id,
+                OAuth2RefreshToken.client_id == OAuth2Client.id,
+                OAuth2RefreshToken.user_id == self.user2.id,
             ).all()
             refresh_tokens = {token.refresh_token for token in refresh_tokens}
             self.assertIn(data["refresh_token"], refresh_tokens)
@@ -211,28 +159,6 @@ class OAuthTestCase(TestCase):
             self.assert400(response)
             self.assertEqual(response.json, error)
 
-    def _test_oauth_authorize_error_helper(self, user, query_string, error):
-        with login_user(user):
-            response = self.client.get(
-                "/oauth2/authorize",
-                query_string=query_string,
-            )
-            self.assertTemplateUsed("oauth/error.html")
-            props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props["error"], error)
-
-            response = self.client.post(
-                "/oauth2/authorize",
-                query_string=query_string,
-                data={
-                    "confirm": "yes",
-                    "csrf_token": g.csrf_token
-                }
-            )
-            self.assertTemplateUsed("oauth/error.html")
-            props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props["error"], error)
-
     def test_oauth_pkce_missing_code_challenge(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
@@ -249,7 +175,7 @@ class OAuthTestCase(TestCase):
                 "redirect_uri": redirect_uri,
             }
             error = {"name": "invalid_request", "description": "Missing \"code_challenge\""}
-            self._test_oauth_authorize_error_helper(self.user2, query_string, error)
+            self.authorize_error_helper(self.user2, query_string, error)
 
     # def test_oauth_pkce_invalid_code_challenge(self):
     #     application = self.create_oauth_app()
@@ -268,7 +194,7 @@ class OAuthTestCase(TestCase):
     #             "redirect_uri": redirect_uri,
     #         }
     #         error = {}
-    #         self._test_oauth_authorize_error_helper(self.user2, query_string, error)
+    #         self.assertAuthorizeError(self.user2, query_string, error)
 
     def test_oauth_pkce_missing_code_challenge_method(self):
         application = self.create_oauth_app()
@@ -298,7 +224,7 @@ class OAuthTestCase(TestCase):
                 "redirect_uri": redirect_uri,
             }
             error = {"description": "Unsupported \"code_challenge_method\"", "name": "invalid_request"}
-            self._test_oauth_authorize_error_helper(self.user2, query_string, error)
+            self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_pkce_missing_code_verifier(self):
         application = self.create_oauth_app()
