@@ -13,7 +13,7 @@ class OAuth2Scope(db.Model):
     }
 
     id = Column(Integer, Identity(), primary_key=True)
-    name = Column(Text, nullable=False)
+    name = Column(Text, nullable=False, unique=True)
     description = Column(Text, nullable=False)
 
 
