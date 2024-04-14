@@ -44,11 +44,13 @@ def index():
         .session\
         .query(OAuth2Client)\
         .filter(OAuth2Client.owner_id == current_user.id)\
+        .order_by(OAuth2Client.client_id_issued_at)\
         .all()
     tokens = db\
         .session\
         .query(OAuth2AccessToken)\
         .filter(OAuth2AccessToken.user_id == current_user.id)\
+        .order_by(OAuth2AccessToken.issued_at.desc())\
         .all()
     return render_template("oauth/index.html", props=json.dumps({
         "applications": [{
@@ -172,12 +174,20 @@ def authorize():
     form = AuthorizationForm()
     redirect_uri = request.args.get("redirect_uri")
     if not redirect_uri:
-        raise InvalidRequestError(description='Missing "redirect_uri" in request.')
+        raise InvalidRequestError(description="Missing \"redirect_uri\" in request.")
     cancel_url = build_url(redirect_uri, {"error": "access_denied"})
 
-    if request.method == "GET":  # Client requests access
+    approval = request.args.get("approval_prompt", "auto")
+    if approval not in {"auto", "force"}:
+        raise InvalidRequestError(description="Invalid \"approval_prompt\" in request.")
+
+    if request.method == "GET":
         grant = authorization_server.get_consent_grant(end_user=current_user)
         scopes = get_scopes(db.session, grant.request.scope)
+
+        if approval == "auto" and grant.client.check_already_approved(current_user.id, scopes):
+            return authorization_server.create_authorization_response(grant_user=current_user)
+
         return render_template("oauth/prompt.html", props=json.dumps({
             "client_name": grant.client.name,
             "scopes": [{
