@@ -40,7 +40,7 @@ class CustomURLValidator(object):
     """
     Use in conjunction with validators.URL(require_tld=False) to allow localhost urls but ban javascript URIs.
     """
-    field_flags = ("required", )
+    field_flags = {"required": True}
 
     def __init__(self, message=None):
         self.message = message
