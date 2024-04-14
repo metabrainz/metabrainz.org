@@ -12,7 +12,7 @@ from sqlalchemy import delete
 import oauth
 from oauth.authorization_grant import AuthorizationCodeGrant
 from oauth.login import User
-from oauth.model import db, OAuth2Scope, OAuth2Client, OAuth2Token, OAuth2AuthorizationCode
+from oauth.model import db, OAuth2Scope, OAuth2Client, OAuth2AccessToken, OAuth2AuthorizationCode, OAuth2RefreshToken
 from oauth.tests import login_user
 
 
@@ -35,7 +35,9 @@ class OAuthTestCase(TestCase):
         db.session.commit()
 
     def tearDown(self):
-        db.session.execute(delete(OAuth2Token))
+        db.session.rollback()
+        db.session.execute(delete(OAuth2AccessToken))
+        db.session.execute(delete(OAuth2RefreshToken))
         db.session.execute(delete(OAuth2AuthorizationCode))
         db.session.execute(delete(OAuth2Scope))
         db.session.execute(delete(OAuth2Client))
@@ -153,16 +155,23 @@ class OAuthTestCase(TestCase):
             data = response.json
             self.assertEqual(data["expires_in"], 864000)
             self.assertEqual(data["token_type"], "Bearer")
-            tokens = db.session.query(OAuth2Token).join(OAuth2Client).filter(
+
+            access_tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
-                OAuth2Token.user_id == self.user2.id,
+                OAuth2AccessToken.user_id == self.user2.id,
             ).all()
-            access_tokens = {token.access_token for token in tokens}
-            refresh_tokens = {token.refresh_token for token in tokens}
+            access_tokens = {token.access_token for token in access_tokens}
             self.assertIn(data["access_token"], access_tokens)
+
+            refresh_tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.user_id == self.user2.id,
+            ).all()
+            refresh_tokens = {token.refresh_token for token in refresh_tokens}
             self.assertIn(data["refresh_token"], refresh_tokens)
+
             if only_one_token:
-                self.assertEqual(len(tokens), 1)
+                self.assertEqual(len(access_tokens), 1)
                 self.assertEqual(len(refresh_tokens), 1)
 
     def generate_s256_code_challenge(self, code_challenge_method):

@@ -24,6 +24,7 @@ class OAuthTestCase(flask_testing.TestCase):
         self.addCleanup(patcher.stop)
 
     def tearDown(self):
+        db.session.rollback()
         db.session.execute(delete(OAuth2Client))
         db.session.commit()
 

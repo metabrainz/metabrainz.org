@@ -19,8 +19,8 @@ class OAuthTestCase(TestCase):
 
     def create_app(self):
         app = oauth.create_app()
-        app.config['TESTING'] = False
-        app.config['DEBUG'] = False
+        app.config["TESTING"] = False
+        app.config["DEBUG"] = False
         return app
 
     def setUp(self):
@@ -179,49 +179,13 @@ class OAuthTestCase(TestCase):
             self.assertIsNotNone(response.json["issued_at"])
             self.assertEqual(response.json["expires_at"] - response.json["issued_at"], expires_in)
 
-    def test_oauth_introspection_success(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token": token["access_token"],
-        }
-        self._test_oauth_introspection_success_helper(data)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token": token["refresh_token"],
-        }
-        self._test_oauth_introspection_success_helper(data)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token": token["access_token"],
-            "token_type_hint": "access_token",
-        }
-        self._test_oauth_introspection_success_helper(data)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token": token["refresh_token"],
-            "token_type_hint": "refresh_token",
-        }
-        self._test_oauth_introspection_success_helper(data)
-
     def _test_oauth_introspection_error_helper(self, data):
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/introspect", data=data)
             self.assert200(response)
             self.assertEqual(response.json["active"], False)
 
-    def test_oauth_introspection_wrong_token_type_hint(self):
+    def test_oauth_revoke_success(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
         code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
@@ -231,158 +195,17 @@ class OAuthTestCase(TestCase):
             "client_id": application["client_id"],
             "client_secret": application["client_secret"],
             "token": token["access_token"],
-            "token_type_hint": "refresh_token",
-        }
-        self._test_oauth_introspection_error_helper(data)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token": token["refresh_token"],
-            "token_type_hint": "access_token",
-        }
-        self._test_oauth_introspection_error_helper(data)
-
-    def test_oauth_introspection_invalid_token_type_hint(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token": token["access_token"],
-            "token_type_hint": "code",
-        }
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/introspect", data=data)
-            self.assert401(response)
-            self.assertEqual(response.json, {"error": "unsupported_token_type"})
-
-    def test_oauth_introspection_missing_token(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token_type_hint": "access_token",
-        }
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/introspect", data=data)
-            self.assert400(response)
-            self.assertEqual(response.json, {"error": "invalid_request"})
-
-    def test_oauth_introspection_missing_client_id(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_secret": application["client_secret"],
-            "token": token["access_token"],
-            "token_type_hint": "access_token",
-        }
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/introspect", data=data)
-            self.assert400(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
-
-    def test_oauth_introspection_invalid_client_id(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": "abc",
-            "client_secret": application["client_secret"],
-            "token": token["access_token"],
-            "token_type_hint": "access_token",
-        }
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/introspect", data=data)
-            self.assert400(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
-
-    def test_oauth_introspection_missing_client_secret(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": application["client_id"],
-            "token": token["access_token"],
-            "token_type_hint": "access_token",
-        }
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/introspect", data=data)
-            self.assert400(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
-
-    def test_oauth_introspection_invalid_client_secret(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": "abc",
-            "token": token["access_token"],
-            "token_type_hint": "access_token",
-        }
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/introspect", data=data)
-            self.assert400(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
-
-    def test_oauth_introspection_invalid_token(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token": "abc",
-        }
-        self._test_oauth_introspection_error_helper(data)
-
-    def test_oauth_introspection_different_client(self):
-        application = self.create_oauth_app()
-        application2 = self.create_oauth_app()[1]
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": application2["client_id"],
-            "client_secret": application2["client_secret"],
-            "token": token["access_token"],
-            "token_type_hint": "access_token",
-        }
-        self._test_oauth_introspection_error_helper(data)
-
-    def test_oauth_introspection_check_refreshed_token_works(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
-        old_token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
-
-        data = {
-            "client_id": application["client_id"],
-            "client_secret": application["client_secret"],
-            "token": old_token["access_token"],
         }
         self._test_oauth_introspection_success_helper(data)
 
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert200(response)
+            self.assertEqual(response.json, {})
+
+        self._test_oauth_introspection_error_helper(data)
+
+    def _test_oauth_refresh_token(self, application, token):
         with patch.object(
             RefreshTokenGrant,
             "authenticate_user",
@@ -394,17 +217,236 @@ class OAuthTestCase(TestCase):
                     "client_id": application["client_id"],
                     "client_secret": application["client_secret"],
                     "grant_type": "refresh_token",
-                    "refresh_token": old_token["refresh_token"],
+                    "refresh_token": token["refresh_token"],
                 }
             )
             self.assert200(response)
 
-        self._test_oauth_introspection_error_helper(data)
+            old_token = db.session.query(OAuth2AccessToken).filter_by(access_token=token["access_token"]).first()
+            self.assertTrue(old_token.revoked)
 
-        new_token = response.json
+            new_token = response.json
+            self.assertEqual(new_token["expires_in"], 3600)
+            self.assertEqual(new_token["token_type"], "Bearer")
+
+            access_tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.user_id == self.user2.id,
+                OAuth2AccessToken.revoked == False,
+            ).all()
+            access_tokens = {token.access_token for token in access_tokens}
+            self.assertIn(new_token["access_token"], access_tokens)
+
+            refresh_tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.user_id == self.user2.id,
+                OAuth2AccessToken.revoked == False,
+            ).all()
+            refresh_tokens = {token.refresh_token for token in refresh_tokens}
+            self.assertIn(new_token["refresh_token"], refresh_tokens)
+
+    def test_oauth_revoke_access_token_refresh_still_works(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+
         data = {
             "client_id": application["client_id"],
             "client_secret": application["client_secret"],
-            "token": new_token["access_token"],
+            "token": token["access_token"],
         }
-        self._test_oauth_introspection_success_helper(data, 3600)
+        self._test_oauth_introspection_success_helper(data)
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert200(response)
+            self.assertEqual(response.json, {})
+
+        self._test_oauth_introspection_error_helper(data)
+
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": token["refresh_token"],
+        }
+        self._test_oauth_introspection_success_helper(data)
+        self._test_oauth_refresh_token(application, token)
+
+    def test_oauth_revoke_refresh_token(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": token["refresh_token"],
+        }
+        self._test_oauth_introspection_success_helper(data)
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert200(response)
+            self.assertEqual(response.json, {})
+
+        self._test_oauth_introspection_error_helper(data)
+
+        # revoking refresh token revokes access token as well
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": token["access_token"],
+        }
+        self._test_oauth_introspection_error_helper(data)
+
+    def test_oauth_revoke_missing_credentials(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+
+        data = {
+            "token": token["refresh_token"],
+        }
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert400(response)
+            self.assertEqual(response.json, {"error": "invalid_client"})
+
+    def test_oauth_revoke_different_credentials(self):
+        application = self.create_oauth_app()
+        application2 = self.create_oauth_app()[1]
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+
+        data = {
+            "client_id": application2["client_id"],
+            "client_secret": application2["client_id"],
+            "token": token["refresh_token"],
+        }
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert400(response)
+            self.assertEqual(response.json, {"error": "invalid_client"})
+
+    def test_oauth_revoke_missing_client_id(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+
+        data = {
+            "client_secret": application["client_secret"],
+            "token": token["refresh_token"],
+        }
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert400(response)
+            self.assertEqual(response.json, {"error": "invalid_client"})
+
+    def test_oauth_revoke_invalid_client_id(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+
+        data = {
+            "client_id": application["client_secret"],
+            "client_secret": application["client_id"],
+            "token": token["refresh_token"],
+        }
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            print(response.json)
+            self.assert400(response)
+            self.assertEqual(response.json, {"error": "invalid_client"})
+
+    def test_oauth_revoke_missing_client_secret(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+
+        data = {
+            "client_id": application["client_id"],
+            "token": token["refresh_token"],
+        }
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert400(response)
+            self.assertEqual(response.json, {"error": "invalid_client"})
+
+    def test_oauth_revoke_invalid_client_secret(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_id"],
+            "token": token["refresh_token"],
+        }
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert400(response)
+            self.assertEqual(response.json, {"error": "invalid_client"})
+
+    def test_oauth_revoke_invalid_token_type_hint(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": token["refresh_token"],
+            "token_type_hint": "code"
+        }
+        
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert401(response)
+            self.assertEqual(response.json, {"error": "unsupported_token_type"})
+
+    def test_oauth_revoke_wrong_token_type_hint(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": token["refresh_token"],
+            "token_type_hint": "access_token"
+        }
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert200(response)
+            self.assertEqual(response.json, {})
+    
+    def test_oauth_revoke_wrong_token(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self._test_oauth_authorize_success_helper(application, redirect_uri, True)
+        token = self._test_oauth_token_success_helper(application, code, redirect_uri, True)
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": "refresh_token",
+        }
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/revoke", data=data)
+            self.assert200(response)
+            self.assertEqual(response.json, {})

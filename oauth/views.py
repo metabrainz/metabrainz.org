@@ -14,7 +14,7 @@ from oauth.login import login_required, current_user
 from oauth.model import db
 from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
-from oauth.model.token import OAuth2Token
+from oauth.model.access_token import OAuth2AccessToken
 from oauth.forms import ApplicationForm, AuthorizationForm
 from oauth.model.user import User
 from oauth.provider import authorization_server
@@ -47,8 +47,8 @@ def index():
         .all()
     tokens = db\
         .session\
-        .query(OAuth2Token)\
-        .filter(OAuth2Token.user_id == current_user.id)\
+        .query(OAuth2AccessToken)\
+        .filter(OAuth2AccessToken.user_id == current_user.id)\
         .all()
     return render_template("oauth/index.html", props=json.dumps({
         "applications": [{
@@ -218,7 +218,7 @@ def user_info():
         return jsonify({"error": "invalid auth header"}), 401
 
     token = db.session\
-        .query(OAuth2Token)\
+        .query(OAuth2AccessToken)\
         .filter_by(access_token=token)\
         .one_or_none()
 

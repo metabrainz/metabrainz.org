@@ -7,7 +7,7 @@ from sqlalchemy import delete
 
 import oauth
 from oauth.login import User
-from oauth.model import db, OAuth2Scope, OAuth2Client, OAuth2Token
+from oauth.model import db, OAuth2Scope, OAuth2Client, OAuth2AccessToken, OAuth2RefreshToken
 from oauth.tests import login_user
 
 
@@ -30,7 +30,9 @@ class OAuthTestCase(TestCase):
         db.session.commit()
 
     def tearDown(self):
-        db.session.execute(delete(OAuth2Token))
+        db.session.rollback()
+        db.session.execute(delete(OAuth2AccessToken))
+        db.session.execute(delete(OAuth2RefreshToken))
         db.session.execute(delete(OAuth2Scope))
         db.session.execute(delete(OAuth2Client))
         db.session.commit()
@@ -107,9 +109,9 @@ class OAuthTestCase(TestCase):
             self.assertEqual(fragment_args["expires_in"][0], "3600")
             
             self.assertEqual(len(fragment_args["access_token"]), 1)
-            tokens = db.session.query(OAuth2Token).join(OAuth2Client).filter(
+            tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
-                OAuth2Token.user_id == self.user2.id,
+                OAuth2AccessToken.user_id == self.user2.id,
             ).all()
             tokens = {token.access_token for token in tokens}
             self.assertIn(fragment_args["access_token"][0], tokens)
