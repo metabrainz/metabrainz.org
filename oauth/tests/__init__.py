@@ -27,30 +27,26 @@ class OAuthTestCase(TestCase):
 
     def create_app(self):
         app = oauth.create_app()
-        app.config['TESTING'] = False
-        app.config['DEBUG'] = False
+        app.config["TESTING"] = False
+        app.config["DEBUG"] = False
         return app
 
     def setUp(self):
         self.user1 = User(user_id=1, user_name="test-user-1")
         self.user2 = User(user_id=2, user_name="test-user-2")
 
-        scope = OAuth2Scope()
-        scope.name = "test-scope-1"
-        scope.description = "Test Scope 1"
-        db.session.add(scope)
-
-        scope2 = OAuth2Scope()
-        scope2.name = "test-scope-2"
-        scope2.description = "Test Scope 2"
-        db.session.add(scope2)
-
+        scopes = [
+            OAuth2Scope(name="test-scope-1", description="Test Scope 1"),
+            OAuth2Scope(name="test-scope-2", description="Test Scope 2")
+        ]
+        db.session.add_all(scopes)
         db.session.commit()
 
     def tearDown(self):
         db.session.rollback()
         db.session.execute(delete(OAuth2AccessToken))
         db.session.execute(delete(OAuth2RefreshToken))
+        db.session.execute(delete(OAuth2AuthorizationCode))
         db.session.execute(delete(OAuth2Scope))
         db.session.execute(delete(OAuth2Client))
         db.session.commit()
@@ -80,18 +76,19 @@ class OAuthTestCase(TestCase):
             else:
                 return applications
 
-    def authorize_success_for_token_grant_helper(self, application, redirect_uri, only_one_code=False):
+    def authorize_success_for_token_grant_helper(self, application, redirect_uri,
+                                                 only_one_code=False, approval_prompt=None):
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "code",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": redirect_uri,
+        }
+        if approval_prompt is not None:
+            query_string["approval_prompt"] = approval_prompt
         with login_user(self.user2):
-            response = self.client.get(
-                "/oauth2/authorize",
-                query_string={
-                    "client_id": application["client_id"],
-                    "response_type": "code",
-                    "scope": "test-scope-1",
-                    "state": "random-state",
-                    "redirect_uri": redirect_uri,
-                }
-            )
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
             self.assertEqual(props, {
@@ -101,20 +98,10 @@ class OAuthTestCase(TestCase):
                 "csrf_token": g.csrf_token,
             })
 
-            response = self.client.post(
-                "/oauth2/authorize",
-                query_string={
-                    "client_id": application["client_id"],
-                    "response_type": "code",
-                    "scope": "test-scope-1",
-                    "state": "random-state",
-                    "redirect_uri": redirect_uri,
-                },
-                data={
-                    "confirm": "yes",
-                    "csrf_token": g.csrf_token
-                }
-            )
+            response = self.client.post("/oauth2/authorize", query_string=query_string, data={
+                "confirm": "yes",
+                "csrf_token": g.csrf_token
+            })
             self.assertEqual(response.status_code, 302)
             self.assertTrue(response.location.startswith(redirect_uri))
             parsed = urlparse(response.location)
@@ -229,16 +216,18 @@ class OAuthTestCase(TestCase):
 
             access_tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.client_id == OAuth2Client.id,
                 OAuth2AccessToken.user_id == self.user2.id,
-                OAuth2AccessToken.revoked == False,
+                OAuth2AccessToken.revoked.is_(False),
             ).all()
             access_tokens = {token.access_token for token in access_tokens}
             self.assertIn(new_token["access_token"], access_tokens)
 
             refresh_tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
+                OAuth2RefreshToken.client_id == OAuth2Client.id,
                 OAuth2RefreshToken.user_id == self.user2.id,
-                OAuth2RefreshToken.revoked == False,
+                OAuth2RefreshToken.revoked.is_(False),
             ).all()
             refresh_tokens = {token.refresh_token for token in refresh_tokens}
             self.assertIn(new_token["refresh_token"], refresh_tokens)
@@ -256,4 +245,3 @@ class OAuthTestCase(TestCase):
             self.assertEqual(response.json["metabrainz_user_id"], self.user2.id)
             self.assertIsNotNone(response.json["issued_at"])
             self.assertEqual(response.json["expires_at"] - response.json["issued_at"], expires_in)
-

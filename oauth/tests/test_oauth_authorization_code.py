@@ -5,6 +5,7 @@ from urllib.parse import urlparse, parse_qs, unquote
 from flask import g
 
 from oauth.authorization_grant import AuthorizationCodeGrant
+from oauth.model import OAuth2AuthorizationCode, OAuth2Client, db
 from oauth.tests import login_user, OAuthTestCase
 
 
@@ -17,7 +18,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
     def _test_oauth_token_error_helper(self, data, error):
-        with patch.object(AuthorizationCodeGrant,"authenticate_user", return_value=self.user2):
+        with patch.object(AuthorizationCodeGrant, "authenticate_user", return_value=self.user2):
             response = self.client.post("/oauth2/token", data=data)
             self.assert400(response)
             self.assertEqual(response.json, error)
@@ -437,5 +438,118 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "https://example.com/callback1",
             "https://example.com/callback2"
         ])
-        self.authorize_success_for_token_grant_helper(application, "https://example.com/callback1")
-        self.authorize_success_for_token_grant_helper(application, "https://example.com/callback2")
+        code1 = self.authorize_success_for_token_grant_helper(application, "https://example.com/callback1")
+        self.token_success_token_grant_helper(application, code1, "https://example.com/callback1")
+        code2 = self.authorize_auto_approval_prompt_helper(application, "https://example.com/callback2")
+        self.token_success_token_grant_helper(application, code2, "https://example.com/callback2")
+
+    def authorize_auto_approval_prompt_helper(self, application, redirect_uri, only_one_code=False, approval_prompt=None):
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "code",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": redirect_uri,
+        }
+        if approval_prompt is not None:
+            query_string["approval_prompt"] = approval_prompt
+
+        with login_user(self.user2):
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
+            self.assertEqual(response.status_code, 302)
+            self.assertTrue(response.location.startswith(redirect_uri))
+            parsed = urlparse(response.location)
+            query_args = parse_qs(parsed.query)
+
+            self.assertIsNone(query_args.get("error"))
+
+            self.assertEqual(len(query_args["state"]), 1)
+            self.assertEqual(query_args["state"][0], "random-state")
+
+            self.assertEqual(len(query_args["code"]), 1)
+            codes = db.session.query(OAuth2AuthorizationCode).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AuthorizationCode.client_id == OAuth2Client.id,
+                OAuth2AuthorizationCode.user_id == self.user2.id,
+            ).all()
+            codes = {code.code for code in codes}
+            self.assertIn(query_args["code"][0], codes)
+            if only_one_code:
+                self.assertEqual(len(codes), 1)
+
+            return query_args["code"][0]
+
+    def test_oauth_approval_prompt_auto(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        code1 = self.authorize_success_for_token_grant_helper(application, "https://example.com/callback1")
+        self.token_success_token_grant_helper(application, code1, "https://example.com/callback1")
+        code2 = self.authorize_auto_approval_prompt_helper(application, "https://example.com/callback2",
+                                                           approval_prompt="auto")
+        self.token_success_token_grant_helper(application, code2, "https://example.com/callback2")
+
+    def test_oauth_approval_prompt_force(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
+        self.token_success_token_grant_helper(application, code, redirect_uri, True)
+
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, False, approval_prompt="force")
+        self.token_success_token_grant_helper(application, code, redirect_uri, False)
+
+    def test_oauth_approval_prompt_none(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        code1 = self.authorize_success_for_token_grant_helper(application, "https://example.com/callback1")
+        self.token_success_token_grant_helper(application, code1, "https://example.com/callback1")
+        code2 = self.authorize_auto_approval_prompt_helper(application, "https://example.com/callback2")
+        self.token_success_token_grant_helper(application, code2, "https://example.com/callback2")
+
+    def test_oauth_approval_prompt_invalid(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "authorization_code",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": "https://example.com/callback2",
+            "approval_prompt": "invalid",
+        }
+        error = {"name": "invalid_request", "description": "Invalid \"approval_prompt\" in request."}
+        self.authorize_error_helper(self.user2, query_string, error)
+
+    def test_oauth_approval_prompt_scope_mismatch(self):
+        application = self.create_oauth_app(redirect_uris=[
+            "https://example.com/callback1",
+            "https://example.com/callback2"
+        ])
+        code1 = self.authorize_success_for_token_grant_helper(application, "https://example.com/callback1")
+        self.token_success_token_grant_helper(application, code1, "https://example.com/callback1")
+
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1 test-scope-2",
+            "state": "random-state",
+            "redirect_uri": "https://example.com/callback2",
+        }
+        with login_user(self.user2):
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
+            self.assertTemplateUsed("oauth/prompt.html")
+            props = json.loads(self.get_context_variable("props"))
+            self.assertEqual(props, {
+                "client_name": "test-client",
+                "scopes": [
+                    {"name": "test-scope-1", "description": "Test Scope 1"},
+                    {"name": "test-scope-2", "description": "Test Scope 2"}
+                ],
+                "cancel_url": query_string["redirect_uri"] + "?error=access_denied",
+                "csrf_token": g.csrf_token,
+            })
