@@ -99,7 +99,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
             )
             self.assert200(response)
             data = response.json
-            self.assertEqual(data["expires_in"], 864000)
+            self.assertEqual(data["expires_in"], 3600)
             self.assertEqual(data["token_type"], "Bearer")
 
             access_tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(

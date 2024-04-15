@@ -38,6 +38,7 @@ services:
       LETSENCRYPT_HOST: oauth.metabrainz.org
       LETSENCRYPT_EMAIL: lucifer@metabrainz.org
       VIRTUAL_HOST: oauth.metabrainz.org
+      AUTHLIB_INSECURE_TRANSPORT: 1
     volumes:
       - ../data/replication_packets:/data/replication_packets
       - ../data/json_dumps:/data/json_dumps

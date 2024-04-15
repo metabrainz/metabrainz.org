@@ -76,6 +76,60 @@ class OAuthTestCase(TestCase):
             else:
                 return applications
 
+    def authorize_success_helper(self, application, redirect_uri, only_one_code=False, approval_prompt=None):
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": redirect_uri,
+        }
+        if approval_prompt is not None:
+            query_string["approval_prompt"] = approval_prompt
+
+        with login_user(self.user2):
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
+            self.assertTemplateUsed("oauth/prompt.html")
+            props = json.loads(self.get_context_variable("props"))
+            self.assertEqual(props, {
+                "client_name": "test-client",
+                "scopes": [{"name": "test-scope-1", "description": "Test Scope 1"}],
+                "cancel_url": redirect_uri + "?error=access_denied",
+                "csrf_token": g.csrf_token,
+            })
+
+            response = self.client.post("/oauth2/authorize", query_string=query_string, data={
+                "confirm": "yes",
+                "csrf_token": g.csrf_token
+            })
+            self.assertEqual(response.status_code, 302)
+            self.assertTrue(response.location.startswith(redirect_uri))
+            parsed = urlparse(response.location)
+            fragment_args = parse_qs(parsed.fragment)
+
+            self.assertIsNone(fragment_args.get("error"))
+
+            self.assertEqual(len(fragment_args["state"]), 1)
+            self.assertEqual(fragment_args["state"][0], "random-state")
+
+            self.assertEqual(len(fragment_args["token_type"]), 1)
+            self.assertEqual(fragment_args["token_type"][0], "Bearer")
+
+            self.assertEqual(len(fragment_args["expires_in"]), 1)
+            self.assertEqual(fragment_args["expires_in"][0], "3600")
+
+            self.assertEqual(len(fragment_args["access_token"]), 1)
+            tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.client_id == OAuth2Client.id,
+                OAuth2AccessToken.user_id == self.user2.id,
+            ).all()
+            tokens = {token.access_token for token in tokens}
+            self.assertIn(fragment_args["access_token"][0], tokens)
+            self.assertNotIn("refresh_token", fragment_args)
+            if only_one_code:
+                self.assertEqual(len(tokens), 1)
+
     def authorize_success_for_token_grant_helper(self, application, redirect_uri,
                                                  only_one_code=False, approval_prompt=None):
         query_string = {
@@ -161,7 +215,7 @@ class OAuthTestCase(TestCase):
             )
             self.assert200(response)
             data = response.json
-            self.assertEqual(data["expires_in"], 864000)
+            self.assertEqual(data["expires_in"], 3600)
             self.assertEqual(data["token_type"], "Bearer")
 
             access_tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
@@ -223,8 +277,9 @@ class OAuthTestCase(TestCase):
             ).all()
             refresh_tokens = {token.refresh_token for token in refresh_tokens}
             self.assertIn(new_token["refresh_token"], refresh_tokens)
+            return token
 
-    def introspection_success_helper(self, data, expires_in=864000):
+    def introspection_success_helper(self, data):
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/introspect", data=data)
             self.assert200(response)
@@ -236,4 +291,4 @@ class OAuthTestCase(TestCase):
             self.assertEqual(response.json["token_type"],  "Bearer")
             self.assertEqual(response.json["metabrainz_user_id"], self.user2.id)
             self.assertIsNotNone(response.json["issued_at"])
-            self.assertEqual(response.json["expires_at"] - response.json["issued_at"], expires_in)
+            self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)
