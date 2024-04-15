@@ -1,5 +1,5 @@
 import json
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 
 from authlib.oauth2.rfc6749 import InvalidRequestError
 from flask import Blueprint, request, render_template, redirect, url_for, jsonify, make_response
@@ -10,8 +10,9 @@ from werkzeug.security import gen_salt
 
 from metabrainz import flash
 from metabrainz.decorators import nocache, crossdomain
+from oauth import login
 from oauth.login import login_required, current_user
-from oauth.model import db
+from oauth.model import db, OAuth2RefreshToken
 from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
 from oauth.model.access_token import OAuth2AccessToken
@@ -28,7 +29,7 @@ def test_page():
     response = make_response(render_template("test-page.html"))
     response.set_cookie(
         key="musicbrainz_server_session",
-        value="44c6994361d9282d7f12bb2c47e0874f2d7d9d37",
+        value="b55b642ef06ba0075581031b41c9964603b81147",
         max_age=timedelta(days=365),
         path="/",
         httponly=True,
@@ -49,9 +50,13 @@ def index():
     tokens = db\
         .session\
         .query(OAuth2AccessToken)\
-        .filter(OAuth2AccessToken.user_id == current_user.id)\
+        .filter(
+            OAuth2AccessToken.user_id == current_user.id,
+            OAuth2AccessToken.revoked.is_(False)
+        )\
         .order_by(OAuth2AccessToken.issued_at.desc())\
         .all()
+    tokens = {t for t in tokens if not t.is_expired()}
     return render_template("oauth/index.html", props=json.dumps({
         "applications": [{
             "name": application.name,
@@ -185,6 +190,8 @@ def authorize():
         grant = authorization_server.get_consent_grant(end_user=current_user)
         scopes = get_scopes(db.session, grant.request.scope)
 
+        # TODO: decide if auto approval should revoke existing tokens issued to the same client for the given userr
+        #   if not improve UI for approved applications in the user page.
         if approval == "auto" and grant.client.check_already_approved(current_user.id, scopes):
             return authorization_server.create_authorization_response(grant_user=current_user)
 
@@ -202,6 +209,33 @@ def authorize():
             return authorization_server.create_authorization_response(grant_user=current_user)
         else:
             return redirect(cancel_url)
+
+
+@oauth2_bp.route("/client/<client_id>/revoke/user", methods=["POST"])
+@login_required
+def revoke_client_for_user(client_id):
+    application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
+    if application is None or application.owner_id != current_user.id:
+        raise NotFound()
+
+    access_tokens = db.session.query(OAuth2AccessToken).filter_by(
+        client_id=application.id,
+        user_id=current_user.id
+    ).all()
+    for token in access_tokens:
+        token.revoked = True
+    db.session.add_all(access_tokens)
+
+    refresh_tokens = db.session.query(OAuth2RefreshToken).filter_by(
+        client_id=application.id,
+        user_id=current_user.id
+    ).all()
+    for token in refresh_tokens:
+        token.revoked = True
+    db.session.add_all(refresh_tokens)
+
+    flash.success("Revoked tokens successfully!")
+    return redirect(url_for(".index"))
 
 
 @oauth2_bp.route("/token", methods=["POST"])
@@ -238,13 +272,10 @@ def user_info():
     if token.is_expired():
         return jsonify({"error": "expired access token"}), 403
 
-    user = db.session\
-        .query(User)\
-        .filter_by(id=token.user_id)\
-        .first()
+    user = login.load_user_from_db(token.user_id)
 
     return {
-        "sub": user.name,
+        "sub": user.user_name,
         "metabrainz_user_id": user.id
     }
 

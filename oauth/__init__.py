@@ -53,8 +53,6 @@ def create_app(debug=None, config_path=None):
 
     app.config["OAUTH2_REFRESH_TOKEN_GENERATOR"] = True
 
-    app.config["SERVER_BASE_URL"] = "http://localhost:8150"
-    app.config["SERVER_NAME"] = "localhost:8150"
     app.config["DEBUG"] = False
     app.config["TESTING"] = False
     app.logger.setLevel(logging.INFO)
