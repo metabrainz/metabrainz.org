@@ -54,6 +54,7 @@ function OAuthPrompt({
                   type="hidden"
                   value={csrf_token}
                 />
+                <input id="confirm" name="confirm" type="hidden" value="yes" />
               </div>
               {errors.csrf_token && (
                 <div className="alert alert-danger">{errors.csrf_token}</div>

@@ -1,7 +1,7 @@
 from authlib.oauth2.rfc6749 import grants
 
+from oauth import login
 from oauth.model import db, OAuth2RefreshToken, OAuth2AccessToken
-from oauth.model.user import User
 
 
 class RefreshTokenGrant(grants.RefreshTokenGrant):
@@ -16,10 +16,7 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
             .first()
 
     def authenticate_user(self, credential):
-        return db.session\
-            .query(User)\
-            .filter_by(id=credential.user_id)\
-            .first()
+        return login.load_user_from_db(credential.user_id)
 
     def revoke_old_credential(self, credential):
         old_access_tokens = db.session\
