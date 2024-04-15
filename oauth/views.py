@@ -1,11 +1,11 @@
 import json
-from datetime import timedelta, datetime, timezone
+from datetime import timedelta
 
 from authlib.oauth2.rfc6749 import InvalidRequestError
 from flask import Blueprint, request, render_template, redirect, url_for, jsonify, make_response
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import NotFound, Forbidden
 from werkzeug.security import gen_salt
 
 from metabrainz import flash
@@ -120,8 +120,10 @@ def create():
 @login_required
 def edit(client_id):
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
-    if application is None or application.owner_id != current_user.id:
+    if application is None:
         raise NotFound()
+    if application.owner_id != current_user.id:
+        raise Forbidden()
 
     form = ApplicationForm()
     if form.validate_on_submit():
@@ -163,8 +165,10 @@ def edit(client_id):
 @login_required
 def delete(client_id):
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
-    if application is None or application.owner_id != current_user.id:
+    if application is None:
         raise NotFound()
+    if application.owner_id != current_user.id:
+        raise Forbidden()
 
     db.session.delete(application)
     db.session.commit()
@@ -215,8 +219,6 @@ def authorize():
 @login_required
 def revoke_client_for_user(client_id):
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
-    if application is None or application.owner_id != current_user.id:
-        raise NotFound()
 
     access_tokens = db.session.query(OAuth2AccessToken).filter_by(
         client_id=application.id,

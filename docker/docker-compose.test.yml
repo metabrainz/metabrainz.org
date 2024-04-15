@@ -10,6 +10,8 @@ services:
     depends_on:
       - meb_db
       - redis
+    environment:
+      AUTHLIB_INSECURE_TRANSPORT: 1
 
   meb_db:
     image: postgres:12.3
