@@ -46,7 +46,10 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
               <th>Website</th>
               <th>Client ID</th>
               <th>Client secret</th>
-              <th>Actions</th>
+              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+              <th />
+              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -63,6 +66,8 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                   >
                     Modify
                   </a>
+                </td>
+                <td>
                   <a
                     className="btn btn-danger btn-xs"
                     href={`/oauth2/client/delete/${application.client_id}`}
@@ -106,7 +111,11 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                     method="post"
                     className="btn btn-danger btn-xs"
                   >
-                    <button type="submit" className="btn-link">
+                    <button
+                      type="submit"
+                      className="btn-link"
+                      style={{ color: "white" }}
+                    >
                       Revoke access
                     </button>
                   </form>
