@@ -148,11 +148,7 @@ class OAuthTestCase(TestCase):
             self.assertEqual(props["error"], error)
 
     def token_success_token_grant_helper(self, application, code, redirect_uri, only_one_token=False):
-        with patch.object(
-            AuthorizationCodeGrant,
-            "authenticate_user",
-            return_value=self.user2
-        ):
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post(
                 "/oauth2/token",
                 data={
@@ -191,11 +187,7 @@ class OAuthTestCase(TestCase):
             return data
 
     def refresh_grant_success_helper(self, application, token):
-        with patch.object(
-            RefreshTokenGrant,
-            "authenticate_user",
-            return_value=self.user2
-        ):
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post(
                 "/oauth2/token",
                 data={

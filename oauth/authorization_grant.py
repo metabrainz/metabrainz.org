@@ -1,9 +1,9 @@
 from authlib.oauth2.rfc6749 import grants
 
+from oauth import login
 from oauth.model import db
 from oauth.model.code import OAuth2AuthorizationCode
 from oauth.model.scope import get_scopes
-from oauth.model.user import User
 
 
 class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
@@ -41,7 +41,4 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         db.session.commit()
 
     def authenticate_user(self, authorization_code):
-        return db.session\
-            .query(User)\
-            .filter_by(id=authorization_code.user_id)\
-            .first()
+        return login.load_user_from_db(authorization_code.user_id)
