@@ -1,4 +1,7 @@
+from datetime import timedelta
 from unittest.mock import patch
+
+from freezegun import freeze_time
 
 from oauth.refresh_grant import RefreshTokenGrant
 from oauth.tests import OAuthTestCase
@@ -234,4 +237,21 @@ class IntrospectionTestCase(OAuthTestCase):
             "client_secret": application["client_secret"],
             "token": new_token["access_token"],
         }
-        self.introspection_success_helper(data, 3600)
+        self.introspection_success_helper(data)
+
+    def test_oauth_introspection_token_expired(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
+        token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
+
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": token["access_token"],
+        }
+        self.introspection_success_helper(data)
+
+        with freeze_time() as frozen_time:
+            frozen_time.tick(delta=timedelta(hours=25))
+            self._test_oauth_introspection_error_helper(data)
