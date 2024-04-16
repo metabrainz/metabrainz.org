@@ -153,7 +153,7 @@ function CreateApplication({
                                 type="button"
                                 className="btn btn-default"
                                 style={{ margin: "4px" }}
-                                onClick={() => insert(index, "")}
+                                onClick={() => insert(index + 1, "")}
                               >
                                 +
                               </button>
