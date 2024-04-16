@@ -1,5 +1,5 @@
 from functools import wraps
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlparse
 
 import requests
 from flask import Request, current_app, has_request_context, g, request, redirect
@@ -43,7 +43,9 @@ def login_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
         if not current_user.is_authenticated():
-            return redirect(f"{current_app.config['MUSICBRAINZ_SERVER']}/login?next=" + quote_plus(request.url))
+            parsed = urlparse(request.url)
+            new_url = parsed.path + "?" + parsed.query
+            return redirect(f"{current_app.config['MUSICBRAINZ_SERVER']}/login?returnto=" + quote_plus(new_url))
         return func(*args, **kwargs)
 
     return decorated_view
