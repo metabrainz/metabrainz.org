@@ -86,9 +86,21 @@ MAIL_FROM_DOMAIN = '''{{template "KEY" "mail_from_domain"}}'''
 PREFERRED_URL_SCHEME = '''{{template "KEY" "preferred_url_scheme"}}'''
 
 SERVER_BASE_URL = f"{PREFERRED_URL_SCHEME}://{MAIL_FROM_DOMAIN}"
-SERVER_NAME = MAIL_FROM_DOMAIN
+SERVER_NAME = None
 
-MUSICBRAINZ_SERVER = "https://beta.musicbrainz.org"
+{{if service "pgbouncer-slave"}}
+{{with index (service "pgbouncer-slave") 0}}
+MB_DATABASE_URI = "postgresql://musicbrainz_ro@{{.Address}}:{{.Port}}/musicbrainz_db"
+{{end}}
+{{else}}
+MB_DATABASE_URI = ""
+{{end}}
+
+SQLALCHEMY_BINDS = {
+   "musicbrainz": MB_DATABASE_URI
+}
+
+MUSICBRAINZ_SERVER = "https://test.musicbrainz.org"
 
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [

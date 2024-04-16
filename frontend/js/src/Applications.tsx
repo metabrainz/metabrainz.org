@@ -26,7 +26,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
       <div className="clearfix">
         <h3 className="pull-left">Your applications</h3>
         <a
-          href="/oauth2/client/create"
+          href="/new-oauth2/client/create"
           className="btn btn-success pull-right"
           style={{ marginTop: "12px" }}
         >
@@ -62,7 +62,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                 <td>
                   <a
                     className="btn btn-primary btn-xs"
-                    href={`/oauth2/client/edit/${application.client_id}`}
+                    href={`/new-oauth2/client/edit/${application.client_id}`}
                   >
                     Modify
                   </a>
@@ -70,7 +70,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                 <td>
                   <a
                     className="btn btn-danger btn-xs"
-                    href={`/oauth2/client/delete/${application.client_id}`}
+                    href={`/new-oauth2/client/delete/${application.client_id}`}
                   >
                     Delete
                   </a>
@@ -107,7 +107,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                 <td>{OAuthScopeDesc(token.scopes)}</td>
                 <td>
                   <form
-                    action={`/oauth2/revoke?client_id=${token.client_id}`}
+                    action={`/new-oauth2/revoke?client_id=${token.client_id}`}
                     method="post"
                     className="btn btn-danger btn-xs"
                   >

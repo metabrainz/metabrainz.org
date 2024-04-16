@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String, Boolean
 from oauth.model import db
 
 
-class User(db.Model):
+class Editor(db.Model):
 
     # TODO: Use a read only connection to MB DB
     __bind_key__ = "musicbrainz"
