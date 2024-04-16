@@ -26,12 +26,14 @@ def create_app(debug=None, config_path=None):
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
+        static_url_path="/new-oauth2/static",
+        static_folder="/static"
     )
 
     # Static files
     from metabrainz import static_manager
     static_manager.read_manifest()
-    app.static_folder = "/static"
+
     app.context_processor(lambda: dict(
         get_static_path=static_manager.get_static_path,
         global_props=get_global_props()
@@ -135,6 +137,6 @@ def create_app(debug=None, config_path=None):
     authorization_server.init_app(app)
 
     from oauth.views import oauth2_bp
-    app.register_blueprint(oauth2_bp, url_prefix="/oauth2")
+    app.register_blueprint(oauth2_bp, url_prefix="/new-oauth2")
 
     return app

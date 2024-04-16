@@ -17,25 +17,10 @@ from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
 from oauth.model.access_token import OAuth2AccessToken
 from oauth.forms import ApplicationForm, AuthorizationForm
-from oauth.model.user import User
 from oauth.provider import authorization_server
 from metabrainz.utils import build_url
 
 oauth2_bp = Blueprint("oauth2", __name__)
-
-
-@oauth2_bp.route("/test-page")
-def test_page():
-    response = make_response(render_template("test-page.html"))
-    response.set_cookie(
-        key="musicbrainz_server_session",
-        value="b55b642ef06ba0075581031b41c9964603b81147",
-        max_age=timedelta(days=365),
-        path="/",
-        httponly=True,
-        samesite="Lax",
-    )
-    return response
 
 
 @oauth2_bp.route("/client/list")
