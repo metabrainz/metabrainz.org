@@ -221,6 +221,8 @@ def revoke_client_for_user(client_id):
         token.revoked = True
     db.session.add_all(refresh_tokens)
 
+    db.session.commit()
+
     flash.success("Revoked tokens successfully!")
     return redirect(url_for(".index"))
 

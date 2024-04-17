@@ -16,4 +16,4 @@ def read_manifest():
 def get_static_path(resource_name):
     if resource_name not in manifest_content:
         return "/new-oauth2/static/%s" % resource_name
-    return "/new-oauth2/" + manifest_content[resource_name]
+    return "/new-oauth2" + manifest_content[resource_name]
