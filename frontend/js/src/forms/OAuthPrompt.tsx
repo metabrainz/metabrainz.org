@@ -27,7 +27,10 @@ function OAuthPrompt({
       <div className="permissions">
         <div className="permission">
           <div className="icon">
-            <img src="/static/img/oauth/identity.svg" alt="Identity" />
+            <img
+              src="/new-oauth2/static/img/oauth/identity.svg"
+              alt="Identity"
+            />
           </div>
           <div className="description">Your identity on MetaBrainz</div>
         </div>

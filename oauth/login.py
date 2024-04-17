@@ -44,9 +44,7 @@ def login_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
         if not current_user.is_authenticated():
-            parsed = urlparse(request.url)
-            new_url = parsed.path + "?" + parsed.query
-            return redirect(f"{current_app.config['MUSICBRAINZ_SERVER']}/login?returnto=" + quote_plus(new_url))
+            return redirect(f"{current_app.config['MUSICBRAINZ_SERVER']}/login?returnto=" + quote_plus(request.url))
         return func(*args, **kwargs)
 
     return decorated_view
