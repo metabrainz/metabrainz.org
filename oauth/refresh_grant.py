@@ -6,7 +6,7 @@ from oauth.model import db, OAuth2RefreshToken, OAuth2AccessToken
 
 class RefreshTokenGrant(grants.RefreshTokenGrant):
 
-    TOKEN_ENDPOINT_AUTH_METHODS = ["client_secret_post"]
+    TOKEN_ENDPOINT_AUTH_METHODS = ["client_secret_basic", "client_secret_post"]
     INCLUDE_NEW_REFRESH_TOKEN = True
 
     def authenticate_refresh_token(self, refresh_token):
@@ -29,8 +29,6 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
             old_access_tokens.pop()  # do not revoke the latest issued token
             for token in old_access_tokens:
                 token.revoked = True
-                db.session.add(token)
 
         credential.revoked = True
-        db.session.add(credential)
         db.session.commit()

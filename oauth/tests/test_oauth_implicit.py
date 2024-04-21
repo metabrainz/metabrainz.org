@@ -180,7 +180,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         self.assertEqual(parsed.path, "/login")
 
         fragment_args = parse_qs(parsed.query)
-        self.assertEqual(unquote(fragment_args["next"][0]), f"http://{self.app.config['SERVER_NAME']}/oauth2/authorize?client_id={application['client_id']}&response_type=token&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
+        self.assertEqual(unquote(fragment_args["returnto"][0]), f"http://{self.app.config['SERVER_NAME']}/oauth2/authorize?client_id={application['client_id']}&response_type=token&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
 
     def test_oauth_authorize_multiple_redirect_uris(self):
         application = self.create_oauth_app(redirect_uris=[

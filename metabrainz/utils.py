@@ -1,3 +1,4 @@
+import json
 from urllib.parse import urlparse, parse_qsl, urlunparse, urlencode
 
 import random
@@ -50,4 +51,4 @@ def get_int_query_param(key: str, default: int):
 
 
 def get_global_props():
-    return {}
+    return json.dumps({})

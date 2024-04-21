@@ -31,6 +31,14 @@ class OAuth2BaseToken(TokenMixin):
     def client(self):
         return relationship(OAuth2Client)
 
+    @declared_attr
+    def authorization_code_id(self):
+        return Column(Integer, ForeignKey("oauth.code.id"))
+
+    @declared_attr
+    def authorization_code(self):
+        return relationship(OAuth2AuthorizationCode)
+
     def get_client_id(self):
         return self.client.client_id
 
@@ -57,13 +65,20 @@ def save_token(token_data, request: FlaskOAuth2Request):
     refresh_token = None
     access_token_scopes = []
     refresh_token_scopes = []
+    authorization_code_id = None
+
+    # todo: query authorization code and associate with access and refresh token
 
     # saving token for authorization code grant
     if request.data.get("grant_type") == "authorization_code":
-        _code = db.session.query(OAuth2AuthorizationCode).filter_by(code=request.data.get("code")).first()
+        authorization_code = db.session\
+            .query(OAuth2AuthorizationCode)\
+            .filter_by(code=request.data.get("code"))\
+            .first()
+        authorization_code_id = authorization_code.id
         refresh_token = token_data["refresh_token"]
-        access_token_scopes = _code.scopes
-        refresh_token_scopes = _code.scopes
+        access_token_scopes = authorization_code.scopes
+        refresh_token_scopes = authorization_code.scopes
     elif request.data.get("response_type") == "token":  # saving token for implicit grant
         access_token_scopes = get_scopes(db.session, request.data.get("scope"))
     elif request.data.get("grant_type") == "refresh_token":
@@ -83,6 +98,7 @@ def save_token(token_data, request: FlaskOAuth2Request):
         access_token=token_data["access_token"],
         expires_in=token_data["expires_in"],
         scopes=access_token_scopes,
+        authorization_code_id=authorization_code_id
     )
     db.session.add(access_token)
 
@@ -93,6 +109,7 @@ def save_token(token_data, request: FlaskOAuth2Request):
             refresh_token=refresh_token,
             expires_in=token_data["expires_in"],  # TODO: fix refresh token expiry, for existing retain or reset ?
             scopes=refresh_token_scopes,
+            authorization_code_id=authorization_code_id
         )
         db.session.add(refresh_token)
 

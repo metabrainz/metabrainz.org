@@ -5,7 +5,7 @@ from oauth.model import db, OAuth2AccessToken, OAuth2RefreshToken
 
 class OAuth2RevocationEndpoint(RevocationEndpoint):
 
-    CLIENT_AUTH_METHODS = ["client_secret_post"]
+    CLIENT_AUTH_METHODS = ["client_secret_basic", "client_secret_post"]
 
     def query_token(self, token_str, token_type_hint):
         if token_type_hint == "access_token":

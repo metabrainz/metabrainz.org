@@ -90,7 +90,7 @@ SERVER_NAME = None
 
 {{if service "pgbouncer-slave"}}
 {{with index (service "pgbouncer-slave") 0}}
-MB_DATABASE_URI = "postgresql://musicbrainz_ro@{{.Address}}:{{.Port}}/musicbrainz_test"
+MB_DATABASE_URI = "postgresql://musicbrainz_ro@{{.Address}}:{{.Port}}/musicbrainz_db"
 {{end}}
 {{else}}
 MB_DATABASE_URI = ""
@@ -122,3 +122,7 @@ JSON_DUMPS_DIR = "/data/json_dumps"
 USE_COMPILED_STYLING = True
 
 DEBUG_TB_INTERCEPT_REDIRECTS = False
+
+OAUTH2_BLUEPRINT_PREFIX = "/new-oauth2"
+OAUTH2_ACCESS_TOKEN_GENERATOR = "oauth.generator.create_access_token"
+OAUTH2_REFRESH_TOKEN_GENERATOR = "oauth.generator.create_refresh_token"

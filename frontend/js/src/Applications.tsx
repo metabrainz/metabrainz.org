@@ -4,6 +4,7 @@ import { getPageProps } from "./utils";
 import { OAuthScopeDesc } from "./forms/utils";
 
 type ApplicationProps = {
+  urlPrefix: string;
   applications: Array<{
     name: string;
     website: string;
@@ -18,7 +19,11 @@ type ApplicationProps = {
   }>;
 };
 
-function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
+function Applications({
+  applications,
+  tokens,
+  urlPrefix,
+}: ApplicationProps): JSX.Element {
   return (
     <>
       <h2>Applications</h2>
@@ -26,7 +31,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
       <div className="clearfix">
         <h3 className="pull-left">Your applications</h3>
         <a
-          href="/new-oauth2/client/create"
+          href={`${urlPrefix}/client/create`}
           className="btn btn-success pull-right"
           style={{ marginTop: "12px" }}
         >
@@ -62,7 +67,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                 <td>
                   <a
                     className="btn btn-primary btn-xs"
-                    href={`/new-oauth2/client/edit/${application.client_id}`}
+                    href={`${urlPrefix}/client/edit/${application.client_id}`}
                   >
                     Modify
                   </a>
@@ -70,7 +75,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                 <td>
                   <a
                     className="btn btn-danger btn-xs"
-                    href={`/new-oauth2/client/delete/${application.client_id}`}
+                    href={`${urlPrefix}/client/delete/${application.client_id}`}
                   >
                     Delete
                   </a>
@@ -107,7 +112,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                 <td>{OAuthScopeDesc(token.scopes)}</td>
                 <td>
                   <form
-                    action={`/new-oauth2/client/${token.client_id}/revoke/user`}
+                    action={`${urlPrefix}/client/${token.client_id}/revoke/user`}
                     method="post"
                     className="btn btn-danger btn-xs"
                   >
@@ -132,9 +137,14 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
 document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps, globalProps } = getPageProps();
   const { applications, tokens } = reactProps;
+  const { url_prefix } = globalProps;
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
-    <Applications applications={applications} tokens={tokens} />
+    <Applications
+      applications={applications}
+      tokens={tokens}
+      urlPrefix={url_prefix}
+    />
   );
 });

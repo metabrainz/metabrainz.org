@@ -1,14 +1,12 @@
 import json
-from datetime import timedelta
 
 from authlib.oauth2.rfc6749 import InvalidRequestError
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify, make_response
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
 from werkzeug.security import gen_salt
 
-from metabrainz import flash
 from metabrainz.decorators import nocache, crossdomain
 from oauth import login
 from oauth.login import login_required, current_user
@@ -17,10 +15,10 @@ from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
 from oauth.model.access_token import OAuth2AccessToken
 from oauth.forms import ApplicationForm, AuthorizationForm
-from oauth.provider import authorization_server
+from oauth.authorization_server import authorization_server
 from metabrainz.utils import build_url
 
-oauth2_bp = Blueprint("oauth2", __name__)
+oauth2_bp = Blueprint("oauth2", __name__, static_folder="/static")
 
 
 @oauth2_bp.route("/client/list")
@@ -117,7 +115,7 @@ def edit(client_id):
         application.website = form.website.data
         application.redirect_uris = form.redirect_uris.data
         db.session.commit()
-        flash.success(gettext("You have updated an application!"))
+        flash(gettext("You have updated an application!"), "success")
         return redirect(url_for(".index"))
 
     form_errors = {
@@ -157,10 +155,11 @@ def delete(client_id):
 
     db.session.delete(application)
     db.session.commit()
-    flash.success(gettext("You have deleted an application."))
+    flash(gettext("You have deleted an application."), "success")
     return redirect(url_for(".index"))
 
 
+# TODO: add CSP and referer header suppression
 @oauth2_bp.route("/authorize", methods=["GET", "POST"])
 @login_required
 def authorize():
@@ -179,7 +178,7 @@ def authorize():
         grant = authorization_server.get_consent_grant(end_user=current_user)
         scopes = get_scopes(db.session, grant.request.scope)
 
-        # TODO: decide if auto approval should revoke existing tokens issued to the same client for the given userr
+        # TODO: decide if auto approval should revoke existing tokens issued to the same client for the given user
         #   if not improve UI for approved applications in the user page.
         if approval == "auto" and grant.client.check_already_approved(current_user.id, scopes):
             return authorization_server.create_authorization_response(grant_user=current_user)
@@ -204,26 +203,21 @@ def authorize():
 @login_required
 def revoke_client_for_user(client_id):
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
+    if application is None:
+        raise NotFound()
 
-    access_tokens = db.session.query(OAuth2AccessToken).filter_by(
+    db.session.query(OAuth2AccessToken).filter_by(
         client_id=application.id,
         user_id=current_user.id
-    ).all()
-    for token in access_tokens:
-        token.revoked = True
-    db.session.add_all(access_tokens)
-
-    refresh_tokens = db.session.query(OAuth2RefreshToken).filter_by(
+    ).update({OAuth2AccessToken.revoked: True})
+    db.session.query(OAuth2RefreshToken).filter_by(
         client_id=application.id,
         user_id=current_user.id
-    ).all()
-    for token in refresh_tokens:
-        token.revoked = True
-    db.session.add_all(refresh_tokens)
+    ).update({OAuth2RefreshToken.revoked: True})
 
     db.session.commit()
 
-    flash.success("Revoked tokens successfully!")
+    flash("Revoked tokens successfully!", "success")
     return redirect(url_for(".index"))
 
 

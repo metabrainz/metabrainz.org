@@ -5,9 +5,10 @@ import uuid
 from unittest.mock import patch
 from urllib.parse import urlparse, parse_qs
 
+import pytest
 from flask import g
 
-from oauth.authorization_grant import AuthorizationCodeGrant
+from oauth.authorization_code_grant import AuthorizationCodeGrant
 from oauth.model import db, OAuth2Client, OAuth2AccessToken, OAuth2AuthorizationCode, OAuth2RefreshToken
 from oauth.tests import login_user, OAuthTestCase
 
@@ -177,24 +178,25 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
             error = {"name": "invalid_request", "description": "Missing \"code_challenge\""}
             self.authorize_error_helper(self.user2, query_string, error)
 
-    # def test_oauth_pkce_invalid_code_challenge(self):
-    #     application = self.create_oauth_app()
-    #     redirect_uri = "https://example.com/callback"
-    #
-    #     for code_challenge_method in ["plain", "S256"]:
-    #         code_verifier, code_challenge = self.generate_s256_code_challenge(code_challenge_method)
-    #
-    #         query_string = {
-    #             "client_id": application["client_id"],
-    #             "response_type": "code",
-    #             "scope": "test-scope-1",
-    #             "state": "random-state",
-    #             "code_challenge": "abc",
-    #             "code_challenge_method": code_challenge_method,
-    #             "redirect_uri": redirect_uri,
-    #         }
-    #         error = {}
-    #         self.assertAuthorizeError(self.user2, query_string, error)
+    @pytest.mark.skip
+    def test_oauth_pkce_invalid_code_challenge(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+
+        for code_challenge_method in ["plain", "S256"]:
+            code_verifier, code_challenge = self.generate_s256_code_challenge(code_challenge_method)
+
+            query_string = {
+                "client_id": application["client_id"],
+                "response_type": "code",
+                "scope": "test-scope-1",
+                "state": "random-state",
+                "code_challenge": "abc",
+                "code_challenge_method": code_challenge_method,
+                "redirect_uri": redirect_uri,
+            }
+            error = {}
+            self.assertAuthorizeError(self.user2, query_string, error)
 
     def test_oauth_pkce_missing_code_challenge_method(self):
         application = self.create_oauth_app()

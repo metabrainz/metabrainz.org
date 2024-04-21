@@ -1,6 +1,8 @@
 import os.path
 import json
 
+from flask import current_app
+
 MANIFEST_PATH = os.path.join("/", "static", "dist", "manifest.json")
 
 manifest_content = {}
@@ -15,5 +17,5 @@ def read_manifest():
 
 def get_static_path(resource_name):
     if resource_name not in manifest_content:
-        return "/static/%s" % resource_name
-    return manifest_content[resource_name]
+        return current_app.config["OAUTH2_BLUEPRINT_PREFIX"] + "/static/%s" % resource_name
+    return current_app.config["OAUTH2_BLUEPRINT_PREFIX"] + manifest_content[resource_name]
