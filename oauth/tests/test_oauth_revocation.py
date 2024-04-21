@@ -99,7 +99,7 @@ class RevocationTestCase(OAuthTestCase):
 
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/revoke", data=data)
-            self.assert400(response)
+            self.assert401(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_different_credentials(self):
@@ -117,7 +117,7 @@ class RevocationTestCase(OAuthTestCase):
 
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/revoke", data=data)
-            self.assert400(response)
+            self.assert401(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_missing_client_id(self):
@@ -133,7 +133,7 @@ class RevocationTestCase(OAuthTestCase):
 
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/revoke", data=data)
-            self.assert400(response)
+            self.assert401(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_invalid_client_id(self):
@@ -150,7 +150,6 @@ class RevocationTestCase(OAuthTestCase):
 
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/revoke", data=data)
-            print(response.json)
             self.assert400(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
@@ -167,7 +166,7 @@ class RevocationTestCase(OAuthTestCase):
 
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/revoke", data=data)
-            self.assert400(response)
+            self.assert401(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_invalid_client_secret(self):
@@ -184,7 +183,7 @@ class RevocationTestCase(OAuthTestCase):
 
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/revoke", data=data)
-            self.assert400(response)
+            self.assert401(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_invalid_token_type_hint(self):

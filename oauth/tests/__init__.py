@@ -8,7 +8,7 @@ from flask_testing import TestCase
 from sqlalchemy import delete
 
 import oauth
-from oauth.authorization_grant import AuthorizationCodeGrant
+from oauth.authorization_code_grant import AuthorizationCodeGrant
 from oauth.login import User
 from oauth.model import OAuth2Scope, db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2Client, OAuth2AuthorizationCode
 from oauth.refresh_grant import RefreshTokenGrant
@@ -177,6 +177,7 @@ class OAuthTestCase(TestCase):
             if only_one_code:
                 self.assertEqual(len(codes), 1)
 
+            self.assertEqual(parsed.fragment, "_")
             return query_args["code"][0]
 
     def authorize_error_helper(self, user, query_string, error):

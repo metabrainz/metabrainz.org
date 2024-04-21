@@ -1,11 +1,13 @@
 import json
+from datetime import datetime, timedelta
 from unittest.mock import patch
 from urllib.parse import urlparse, parse_qs, unquote
 
 from flask import g
+from freezegun import freeze_time
 
-from oauth.authorization_grant import AuthorizationCodeGrant
-from oauth.model import OAuth2AuthorizationCode, OAuth2Client, db
+from oauth.authorization_code_grant import AuthorizationCodeGrant
+from oauth.model import OAuth2AuthorizationCode, OAuth2Client, db, OAuth2AccessToken, OAuth2RefreshToken
 from oauth.tests import login_user, OAuthTestCase
 
 
@@ -20,7 +22,11 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
     def _test_oauth_token_error_helper(self, data, error):
         with patch.object(AuthorizationCodeGrant, "authenticate_user", return_value=self.user2):
             response = self.client.post("/oauth2/token", data=data)
-            self.assert400(response)
+            # error code for invalid_client can be 400 or 401 depending on how validation failed
+            if error["error"] == "invalid_client":
+                self.assertIn(response.status_code, (400, 401))
+            else:
+                self.assert400(response)
             self.assertEqual(response.json, error)
 
     def test_oauth_token_invalid_client_id(self):
@@ -230,7 +236,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
-        self.token_success_token_grant_helper(application, code, redirect_uri, True)
+        token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
         data = {
             "client_id": application["client_id"],
@@ -241,9 +247,34 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_grant",
-            "error_description": "Invalid \"code\" in request."
+            "error_description": "\"code\" in request is already used."
         }
         self._test_oauth_token_error_helper(data, error)
+
+        access_token = db.session.query(OAuth2AccessToken).filter_by(access_token=token["access_token"]).first()
+        self.assertTrue(access_token.revoked)
+        refresh_token = db.session.query(OAuth2RefreshToken).filter_by(refresh_token=token["refresh_token"]).first()
+        self.assertTrue(refresh_token.revoked)
+
+    def test_oauth_authorization_code_expiry(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
+
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "grant_type": "authorization_code",
+            "redirect_uri": redirect_uri,
+            "code": code,
+        }
+        error = {
+            "error": "invalid_grant",
+            "error_description": "\"code\" in request is expired."
+        }
+        with freeze_time() as frozen_datetime:
+            frozen_datetime.tick(timedelta(minutes=60))
+            self._test_oauth_token_error_helper(data, error)
 
     def test_oauth_token_code_mismatch(self):
         application1 = self.create_oauth_app()
@@ -431,7 +462,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         self.assertEqual(parsed.path, "/login")
 
         fragment_args = parse_qs(parsed.query)
-        self.assertEqual(unquote(fragment_args["next"][0]), f"http://{self.app.config['SERVER_NAME']}/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
+        self.assertEqual(unquote(fragment_args["returnto"][0]), f"http://{self.app.config['SERVER_NAME']}/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
 
     def test_oauth_authorize_multiple_redirect_uris(self):
         application = self.create_oauth_app(redirect_uris=[
@@ -553,3 +584,5 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
                 "cancel_url": query_string["redirect_uri"] + "?error=access_denied",
                 "csrf_token": g.csrf_token,
             })
+
+    # todo: add test for client_secret_basic, parameter reuse

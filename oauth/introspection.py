@@ -8,7 +8,7 @@ from oauth.model.refresh_token import OAuth2RefreshToken
 
 class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
 
-    CLIENT_AUTH_METHODS = ["client_secret_post"]
+    CLIENT_AUTH_METHODS = ["client_secret_basic", "client_secret_post"]
 
     def query_token(self, token_str, token_type_hint):
         if token_type_hint == "access_token":
