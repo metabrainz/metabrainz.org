@@ -1,3 +1,5 @@
+from urllib.parse import urlparse, urlunparse
+
 from authlib.integrations.flask_oauth2 import AuthorizationServer
 from authlib.integrations.sqla_oauth2 import (
     create_query_client_func,
@@ -8,7 +10,7 @@ from authlib.oauth2.rfc7636 import CodeChallenge
 from oauth.model import db, OAuth2Scope
 from oauth.model.base_token import save_token
 from oauth.model.client import OAuth2Client
-from oauth.authorization_grant import AuthorizationCodeGrant
+from oauth.authorization_code_grant import AuthorizationCodeGrant
 from oauth.introspection import OAuth2IntrospectionEndpoint
 from oauth.refresh_grant import RefreshTokenGrant
 from oauth.revocation import OAuth2RevocationEndpoint
@@ -28,10 +30,19 @@ class CustomAuthorizationServer(AuthorizationServer):
         if not all_scopes.issuperset(scopes):
             raise InvalidScopeError(state=state)
 
+    def handle_response(self, status_code, payload, headers):
+        # add arbitrary fragment to redirect uri
+        # (for rationale: see https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-4.1.3)
+        response = super().handle_response(status_code, payload, headers)
+        if response.headers.get("Location"):
+            scheme, netloc, path, params, query, fragment = urlparse(response.headers["Location"])
+            if not fragment:
+                fragment = "_"
+            response.headers.set("Location", urlunparse((scheme, netloc, path, params, query, fragment)))
+        return response
 
-# TODO: We can also configure the expiry time and token generation function
-#  for the server. Its simple and will also be nice to prefix our tokens
-#  with meb. Rationale: https://github.blog/2021-04-05-behind-githubs-new-authentication-token-formats/
+
+# TODO: configure the expiry time for tokens
 authorization_server = CustomAuthorizationServer(query_client=query_client, save_token=save_token)
 authorization_server.register_grant(AuthorizationCodeGrant, [CodeChallenge(required=False)])
 authorization_server.register_grant(ImplicitGrant)

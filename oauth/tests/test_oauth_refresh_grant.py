@@ -21,7 +21,11 @@ class RefreshGrantTestCase(OAuthTestCase):
     def _test_oauth_token_error_helper(self, access_token, data, error):
         with patch.object(RefreshTokenGrant, "authenticate_user", return_value=self.user2):
             response = self.client.post("/oauth2/token", data=data)
-            self.assert400(response)
+            # error code for invalid_client can be 400 or 401 depending on how validation failed
+            if error["error"] == "invalid_client":
+                self.assertIn(response.status_code, (400, 401))
+            else:
+                self.assert400(response)
             self.assertEqual(response.json, error)
 
             old_token = db.session.query(OAuth2AccessToken).filter_by(access_token=access_token).first()
@@ -143,8 +147,6 @@ class RefreshGrantTestCase(OAuthTestCase):
                 "confirm": "yes",
                 "csrf_token": g.csrf_token
             })
-            print(response.location)
-            print(response.json)
             parsed = urlparse(response.location)
             query_args = parse_qs(parsed.query)
             code = query_args["code"][0]

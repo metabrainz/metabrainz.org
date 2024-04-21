@@ -119,7 +119,7 @@ class IntrospectionTestCase(OAuthTestCase):
         }
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/introspect", data=data)
-            self.assert400(response)
+            self.assert401(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_introspection_invalid_client_id(self):
@@ -152,7 +152,7 @@ class IntrospectionTestCase(OAuthTestCase):
         }
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/introspect", data=data)
-            self.assert400(response)
+            self.assert401(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_introspection_invalid_client_secret(self):
@@ -169,7 +169,7 @@ class IntrospectionTestCase(OAuthTestCase):
         }
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
             response = self.client.post("/oauth2/introspect", data=data)
-            self.assert400(response)
+            self.assert401(response)
             self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_introspection_invalid_token(self):

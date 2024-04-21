@@ -10,8 +10,7 @@ from brainzutils import sentry
 from brainzutils.flask import CustomFlask
 from flask import render_template, current_app
 
-from oauth.provider import authorization_server
-from metabrainz.utils import get_global_props
+from oauth.authorization_server import authorization_server
 
 # Check to see if we're running under a docker deployment. If so, don"t second guess
 # the config file setup and just wait for the correct configuration to be generated.
@@ -26,17 +25,16 @@ def create_app(debug=None, config_path=None):
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
-        static_url_path="/new-oauth2/static",
-        static_folder="/static"
+        static_folder=None,
     )
 
     # Static files
-    from metabrainz import static_manager
+    from oauth import static_manager
     static_manager.read_manifest()
 
     app.context_processor(lambda: dict(
         get_static_path=static_manager.get_static_path,
-        global_props=get_global_props()
+        global_props=json.dumps({"url_prefix": app.config["OAUTH2_BLUEPRINT_PREFIX"]}),
     ))
 
     print("Starting metabrainz service with %s environment." % deploy_env)
@@ -59,8 +57,8 @@ def create_app(debug=None, config_path=None):
         "implicit": 3600,
     }
 
-    # app.config["SERVER_BASE_URL"] = "http://localhost:8150"
-    # app.config["SERVER_NAME"] = "localhost:8150"
+    app.config["SERVER_BASE_URL"] = "http://localhost:8150"
+    app.config["SERVER_NAME"] = "localhost:8150"
 
     app.config["DEBUG"] = False
     app.config["TESTING"] = False
@@ -137,6 +135,6 @@ def create_app(debug=None, config_path=None):
     authorization_server.init_app(app)
 
     from oauth.views import oauth2_bp
-    app.register_blueprint(oauth2_bp, url_prefix="/new-oauth2")
+    app.register_blueprint(oauth2_bp, url_prefix=app.config["OAUTH2_BLUEPRINT_PREFIX"])
 
     return app
