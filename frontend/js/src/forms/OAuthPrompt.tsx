@@ -11,6 +11,7 @@ type OAuthPromptProps = {
   csrf_token: string;
   client_name: string;
   cancel_url: string;
+  submission_url: string;
 };
 
 function OAuthPrompt({
@@ -18,6 +19,7 @@ function OAuthPrompt({
   scopes,
   csrf_token,
   cancel_url,
+  submission_url,
   client_name,
 }: OAuthPromptProps): JSX.Element {
   return (
@@ -50,7 +52,7 @@ function OAuthPrompt({
         onSubmit={() => {}}
       >
         {({ errors, values }) => (
-          <form method="POST" className="form-horizontal">
+          <form method="POST" action={submission_url} className="form-horizontal">
             <div className="form-group">
               <div className="col-sm-offset-4 col-sm-5">
                 <input
@@ -86,7 +88,8 @@ function OAuthPrompt({
 
 document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps, globalProps } = getPageProps();
-  const { csrf_token, scopes, client_name, cancel_url } = reactProps;
+  const { csrf_token, scopes, client_name, cancel_url, submission_url } =
+    reactProps;
   const { url_prefix } = globalProps;
 
   const renderRoot = createRoot(domContainer!);
@@ -97,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
       csrf_token={csrf_token}
       client_name={client_name}
       cancel_url={cancel_url}
+      submission_url={submission_url}
     />
   );
 });

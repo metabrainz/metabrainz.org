@@ -1,7 +1,7 @@
 import json
 from datetime import datetime, timedelta
 from unittest.mock import patch
-from urllib.parse import urlparse, parse_qs, unquote
+from urllib.parse import urlparse, parse_qs, unquote, urlencode
 
 from flask import g
 from freezegun import freeze_time
@@ -18,6 +18,58 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         redirect_uri = "https://example.com/callback"
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         self.token_success_token_grant_helper(application, code, redirect_uri, True)
+
+    def test_oauth_authorize_post_token_success(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+
+        data = {
+            "client_id": application["client_id"],
+            "response_type": "code",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": redirect_uri,
+        }
+        with login_user(self.user2):
+            response = self.client.post("/oauth2/authorize", data=data)
+            self.assertTemplateUsed("oauth/prompt.html")
+            props = json.loads(self.get_context_variable("props"))
+
+            self.assertEqual(props["client_name"], "test-client")
+            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
+            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
+            self.assertEqual(props["csrf_token"], g.csrf_token)
+
+            parsed = urlparse(props["submission_url"])
+            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
+            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in data.items()})
+
+            response = self.client.post("/oauth2/authorize/confirm", query_string=urlencode(data), data={
+                "confirm": "yes",
+                "csrf_token": g.csrf_token
+            })
+            self.assertEqual(response.status_code, 302)
+            self.assertTrue(response.location.startswith(redirect_uri))
+            parsed = urlparse(response.location)
+            query_args = parse_qs(parsed.query)
+
+            self.assertIsNone(query_args.get("error"))
+
+            self.assertEqual(len(query_args["state"]), 1)
+            self.assertEqual(query_args["state"][0], "random-state")
+
+            self.assertEqual(len(query_args["code"]), 1)
+            codes = db.session.query(OAuth2AuthorizationCode).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AuthorizationCode.client_id == OAuth2Client.id,
+                OAuth2AuthorizationCode.user_id == self.user2.id,
+            ).all()
+            codes = {code.code for code in codes}
+            self.assertIn(query_args["code"][0], codes)
+
+            self.assertEqual(parsed.fragment, "_")
+
+            self.token_success_token_grant_helper(application, query_args["code"][0], redirect_uri, True)
 
     def _test_oauth_token_error_helper(self, data, error):
         with patch.object(AuthorizationCodeGrant, "authenticate_user", return_value=self.user2):
@@ -297,41 +349,32 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
 
     def test_oauth_authorize_decline(self):
         application = self.create_oauth_app()
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "code",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": "https://example.com/callback",
+        }
 
         with login_user(self.user2):
-            response = self.client.get(
-                "/oauth2/authorize",
-                query_string={
-                    "client_id": application["client_id"],
-                    "response_type": "code",
-                    "scope": "test-scope-1",
-                    "state": "random-state",
-                    "redirect_uri": "https://example.com/callback",
-                }
-            )
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props, {
-                "client_name": "test-client",
-                "scopes": [{"name": "test-scope-1", "description": "Test Scope 1"}],
-                "cancel_url": "https://example.com/callback?error=access_denied",
-                "csrf_token": g.csrf_token,
-            })
 
-            response = self.client.post(
-                "/oauth2/authorize",
-                query_string={
-                    "client_id": application["client_id"],
-                    "response_type": "code",
-                    "scope": "test-scope-1",
-                    "state": "random-state",
-                    "redirect_uri": "https://example.com/callback",
-                },
-                data={
+            self.assertEqual(props["client_name"], "test-client")
+            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
+            self.assertEqual(props["cancel_url"], query_string["redirect_uri"] + "?error=access_denied")
+            self.assertEqual(props["csrf_token"], g.csrf_token)
+
+            parsed = urlparse(props["submission_url"])
+            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
+            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+
+            response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
                     "confirm": "no",
                     "csrf_token": g.csrf_token
-                }
-            )
+            })
             self.assertEqual(response.status_code, 302)
             self.assertEqual(response.location, "https://example.com/callback?error=access_denied")
 
@@ -547,7 +590,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         ])
         query_string = {
             "client_id": application["client_id"],
-            "response_type": "authorization_code",
+            "response_type": "code",
             "scope": "test-scope-1",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
@@ -557,32 +600,34 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_approval_prompt_scope_mismatch(self):
-        application = self.create_oauth_app(redirect_uris=[
-            "https://example.com/callback1",
-            "https://example.com/callback2"
-        ])
-        code1 = self.authorize_success_for_token_grant_helper(application, "https://example.com/callback1")
-        self.token_success_token_grant_helper(application, code1, "https://example.com/callback1")
+        redirect_uri1 = "https://example.com/callback1"
+        redirect_uri2 = "https://example.com/callback2"
+        application = self.create_oauth_app(redirect_uris=[redirect_uri1, redirect_uri2])
+        code1 = self.authorize_success_for_token_grant_helper(application, redirect_uri1)
+        self.token_success_token_grant_helper(application, code1, redirect_uri1)
 
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
             "scope": "test-scope-1 test-scope-2",
             "state": "random-state",
-            "redirect_uri": "https://example.com/callback2",
+            "redirect_uri": redirect_uri2,
         }
         with login_user(self.user2):
             response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props, {
-                "client_name": "test-client",
-                "scopes": [
-                    {"name": "test-scope-1", "description": "Test Scope 1"},
-                    {"name": "test-scope-2", "description": "Test Scope 2"}
-                ],
-                "cancel_url": query_string["redirect_uri"] + "?error=access_denied",
-                "csrf_token": g.csrf_token,
-            })
+
+            self.assertEqual(props["client_name"], "test-client")
+            self.assertEqual(props["scopes"], [
+                {"name": "test-scope-1", "description": "Test Scope 1"},
+                {"name": "test-scope-2", "description": "Test Scope 2"}
+            ])
+            self.assertEqual(props["cancel_url"], redirect_uri2 + "?error=access_denied")
+            self.assertEqual(props["csrf_token"], g.csrf_token)
+
+            parsed = urlparse(props["submission_url"])
+            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
+            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
 
     # todo: add test for client_secret_basic, parameter reuse

@@ -17,44 +17,34 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
 
     def _test_oauth_authorize_success_helper(self, application, redirect_uri, code_challenge,
                                              code_challenge_method, only_one_code=False):
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "code",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "code_challenge": code_challenge,
+            "redirect_uri": redirect_uri,
+        }
+        if code_challenge_method:
+            query_string["code_challenge_method"] = code_challenge_method
         with login_user(self.user2):
-            response = self.client.get(
-                "/oauth2/authorize",
-                query_string={
-                    "client_id": application["client_id"],
-                    "response_type": "code",
-                    "scope": "test-scope-1",
-                    "state": "random-state",
-                    "code_challenge": code_challenge,
-                    "code_challenge_method": code_challenge_method,
-                    "redirect_uri": redirect_uri,
-                }
-            )
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props, {
-                "client_name": "test-client",
-                "scopes": [{"name": "test-scope-1", "description": "Test Scope 1"}],
-                "cancel_url": redirect_uri + "?error=access_denied",
-                "csrf_token": g.csrf_token,
-            })
 
-            response = self.client.post(
-                "/oauth2/authorize",
-                query_string={
-                    "client_id": application["client_id"],
-                    "response_type": "code",
-                    "scope": "test-scope-1",
-                    "state": "random-state",
-                    "code_challenge": code_challenge,
-                    "code_challenge_method": code_challenge_method,
-                    "redirect_uri": redirect_uri,
-                },
-                data={
-                    "confirm": "yes",
-                    "csrf_token": g.csrf_token
-                }
-            )
+            self.assertEqual(props["client_name"], "test-client")
+            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
+            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
+            self.assertEqual(props["csrf_token"], g.csrf_token)
+
+            parsed = urlparse(props["submission_url"])
+            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
+            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+
+            response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
+                "confirm": "yes",
+                "csrf_token": g.csrf_token
+            })
             self.assertEqual(response.status_code, 302)
             self.assertTrue(response.location.startswith(redirect_uri))
             parsed = urlparse(response.location)
@@ -196,7 +186,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
                 "redirect_uri": redirect_uri,
             }
             error = {}
-            self.assertAuthorizeError(self.user2, query_string, error)
+            self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_pkce_missing_code_challenge_method(self):
         application = self.create_oauth_app()
