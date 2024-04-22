@@ -21,6 +21,17 @@ from metabrainz.utils import build_url
 oauth2_bp = Blueprint("oauth2", __name__, static_folder="/static")
 
 
+@oauth2_bp.after_request
+def after_oauth2_request(response):
+    """ Add headers for Content-Security-Policy, Cache-Control and X-Frame-Options """
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["X-Frame-Options"] = "DENY"
+    # todo: add script-src to csp
+    response.headers["Content-Security-Policy"] = "default-src 'self'; frame-ancestors 'none';"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    return response
+
+
 @oauth2_bp.route("/client/list")
 @login_required
 def index():
