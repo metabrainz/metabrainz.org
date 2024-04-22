@@ -1,7 +1,7 @@
 import json
 
 from authlib.oauth2.rfc6749 import InvalidRequestError
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash, current_app, session
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
@@ -9,7 +9,7 @@ from werkzeug.security import gen_salt
 
 from metabrainz.decorators import nocache, crossdomain
 from oauth import login
-from oauth.login import login_required, current_user
+from oauth.login import login_required, current_user, login_required_with_session
 from oauth.model import db, OAuth2RefreshToken
 from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
@@ -39,7 +39,6 @@ def index():
         )\
         .order_by(OAuth2AccessToken.issued_at.desc())\
         .all()
-    tokens = {t for t in tokens if not t.is_expired()}
     return render_template("oauth/index.html", props=json.dumps({
         "applications": [{
             "name": application.name,
@@ -161,42 +160,47 @@ def delete(client_id):
 
 # TODO: add CSP and referer header suppression
 @oauth2_bp.route("/authorize", methods=["GET", "POST"])
-@login_required
+@login_required_with_session
 def authorize():
     """ OAuth 2.0 authorization endpoint. """
+    grant = authorization_server.get_consent_grant(end_user=current_user)
+    scopes = get_scopes(db.session, grant.request.scope)
+
+    approval = request.values.get("approval_prompt", "auto")
+    if approval not in {"auto", "force"}:
+        raise InvalidRequestError(description="Invalid \"approval_prompt\" in request.")
+
+    # TODO: decide if auto approval should revoke existing tokens issued to the same client for the given user
+    #   if not improve UI for approved applications in the user page.
+    if approval == "auto" and grant.client.check_already_approved(current_user.id, scopes):
+        return authorization_server.create_authorization_response(grant_user=current_user)
+
+    submission_url = build_url(url_for(".confirm_authorization", _external=False), request.values)
+    cancel_url = build_url(grant.request.data.get("redirect_uri"), {"error": "access_denied"})
+    return render_template("oauth/prompt.html", props=json.dumps({
+        "client_name": grant.client.name,
+        "scopes": [{
+            "name": scope.name,
+            "description": scope.description
+        } for scope in scopes],
+        "cancel_url": cancel_url,
+        "csrf_token": generate_csrf(),
+        "submission_url": submission_url
+    }))
+
+
+@oauth2_bp.route("/authorize/confirm", methods=["POST"])
+@login_required
+def confirm_authorization():
     form = AuthorizationForm()
+    if form.validate_on_submit():
+        return authorization_server.create_authorization_response(grant_user=current_user)
+
     redirect_uri = request.args.get("redirect_uri")
     if not redirect_uri:
         raise InvalidRequestError(description="Missing \"redirect_uri\" in request.")
     cancel_url = build_url(redirect_uri, {"error": "access_denied"})
-
-    approval = request.args.get("approval_prompt", "auto")
-    if approval not in {"auto", "force"}:
-        raise InvalidRequestError(description="Invalid \"approval_prompt\" in request.")
-
-    if request.method == "GET":
-        grant = authorization_server.get_consent_grant(end_user=current_user)
-        scopes = get_scopes(db.session, grant.request.scope)
-
-        # TODO: decide if auto approval should revoke existing tokens issued to the same client for the given user
-        #   if not improve UI for approved applications in the user page.
-        if approval == "auto" and grant.client.check_already_approved(current_user.id, scopes):
-            return authorization_server.create_authorization_response(grant_user=current_user)
-
-        return render_template("oauth/prompt.html", props=json.dumps({
-            "client_name": grant.client.name,
-            "scopes": [{
-                "name": scope.name,
-                "description": scope.description
-            } for scope in scopes],
-            "cancel_url": cancel_url,
-            "csrf_token": generate_csrf(),
-        }))
-    else:
-        if form.validate_on_submit():
-            return authorization_server.create_authorization_response(grant_user=current_user)
-        else:
-            return redirect(cancel_url)
+    return redirect(cancel_url)
 
 
 @oauth2_bp.route("/client/<client_id>/revoke/user", methods=["POST"])
@@ -247,12 +251,12 @@ def user_info():
     token = db.session\
         .query(OAuth2AccessToken)\
         .filter_by(access_token=token)\
-        .one_or_none()
+        .first()
 
     if token is None:
         return jsonify({"error": "invalid access token"}), 403
 
-    if token.is_expired():
+    if token.is_expired() or token.is_revoked():
         return jsonify({"error": "expired access token"}), 403
 
     user = login.load_user_from_db(token.user_id)

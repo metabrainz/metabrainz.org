@@ -1,7 +1,7 @@
 import json
 from contextlib import contextmanager
 from unittest.mock import patch
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, urlencode
 
 from flask import g
 from flask_testing import TestCase
@@ -91,14 +91,16 @@ class OAuthTestCase(TestCase):
             response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props, {
-                "client_name": "test-client",
-                "scopes": [{"name": "test-scope-1", "description": "Test Scope 1"}],
-                "cancel_url": redirect_uri + "?error=access_denied",
-                "csrf_token": g.csrf_token,
-            })
+            self.assertEqual(props["client_name"], "test-client")
+            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
+            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
+            self.assertEqual(props["csrf_token"], g.csrf_token)
 
-            response = self.client.post("/oauth2/authorize", query_string=query_string, data={
+            parsed = urlparse(props["submission_url"])
+            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
+            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+
+            response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
                 "confirm": "yes",
                 "csrf_token": g.csrf_token
             })
@@ -145,14 +147,16 @@ class OAuthTestCase(TestCase):
             response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props, {
-                "client_name": "test-client",
-                "scopes": [{"name": "test-scope-1", "description": "Test Scope 1"}],
-                "cancel_url": redirect_uri + "?error=access_denied",
-                "csrf_token": g.csrf_token,
-            })
+            self.assertEqual(props["client_name"], "test-client")
+            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
+            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
+            self.assertEqual(props["csrf_token"], g.csrf_token)
 
-            response = self.client.post("/oauth2/authorize", query_string=query_string, data={
+            parsed = urlparse(props["submission_url"])
+            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
+            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+
+            response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
                 "confirm": "yes",
                 "csrf_token": g.csrf_token
             })
@@ -191,7 +195,7 @@ class OAuthTestCase(TestCase):
             self.assertEqual(props["error"], error)
 
             response = self.client.post(
-                "/oauth2/authorize",
+                "/oauth2/authorize/confirm",
                 query_string=query_string,
                 data={
                     "confirm": "yes",

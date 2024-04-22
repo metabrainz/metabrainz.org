@@ -57,15 +57,12 @@ def create_app(debug=None, config_path=None):
         "implicit": 3600,
     }
 
-    app.config["SERVER_BASE_URL"] = "http://localhost:8150"
-    app.config["SERVER_NAME"] = "localhost:8150"
+    app.config["SERVER_BASE_URL"] = "http://localhost"
+    app.config["SERVER_NAME"] = "localhost"
 
     app.config["DEBUG"] = False
     app.config["TESTING"] = False
     app.logger.setLevel(logging.INFO)
-
-    # app.config["SERVER_BASE_URL"] = "http://127.0.0.1:5000"
-    # app.config["SERVER_NAME"] = "127.0.0.1:5000"
 
     # Load configuration files: If we're running under a docker deployment, wait until
     # the consul configuration is available.
