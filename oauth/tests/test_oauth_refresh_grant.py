@@ -143,7 +143,7 @@ class RefreshGrantTestCase(OAuthTestCase):
 
         with login_user(self.user2):
             self.client.get("/oauth2/authorize", query_string=query_string)
-            response = self.client.post("/oauth2/authorize", query_string=query_string, data={
+            response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
                 "confirm": "yes",
                 "csrf_token": g.csrf_token
             })
