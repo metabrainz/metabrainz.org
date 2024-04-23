@@ -1,4 +1,7 @@
-from authlib.oauth2.rfc6749 import grants, InvalidGrantError
+from urllib.parse import urlparse, parse_qs
+
+from authlib.oauth2.rfc6749 import grants, InvalidGrantError, InvalidRequestError
+from flask import render_template
 
 from oauth import login
 from oauth.model import db, OAuth2AccessToken, OAuth2RefreshToken
@@ -9,6 +12,15 @@ from oauth.model.scope import get_scopes
 class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
 
     TOKEN_ENDPOINT_AUTH_METHODS = ["client_secret_basic", "client_secret_post"]
+
+    def validate_authorization_request(self):
+        result = super().validate_authorization_request()
+
+        response_mode = self.request.data.get("response_mode")
+        if response_mode and response_mode != "form_post":
+            raise InvalidRequestError("Invalid \"response_mode\" in request.", state=self.request.state)
+
+        return result
 
     def save_authorization_code(self, code, request):
         code_challenge = request.data.get("code_challenge")
@@ -58,6 +70,22 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
             raise InvalidGrantError("\"code\" in request is already used.")
 
         return authorization_code
+
+    def create_authorization_response(self, redirect_uri: str, grant_user):
+        response = super().create_authorization_response(redirect_uri, grant_user)
+
+        if self.request.data.get("response_mode") == "form_post":
+            headers = response[2]
+            location = headers[0][1]
+            parsed = urlparse(location)
+            values = parse_qs(parsed.query)
+            return 200, render_template(
+                "oauth/authorize_form_post.html",
+                values=values,
+                redirect_uri=redirect_uri,
+            ), []
+
+        return response
 
     def delete_authorization_code(self, authorization_code):
         authorization_code.revoked = True

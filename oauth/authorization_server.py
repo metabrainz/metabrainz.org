@@ -4,17 +4,18 @@ from authlib.integrations.flask_oauth2 import AuthorizationServer
 from authlib.integrations.sqla_oauth2 import (
     create_query_client_func,
 )
-from authlib.oauth2.rfc6749 import ImplicitGrant, InvalidScopeError, scope_to_list
+from authlib.oauth2.rfc6749 import InvalidScopeError, scope_to_list
 from authlib.oauth2.rfc7636 import CodeChallenge
 from flask import request
 
+from oauth.authorization_code_grant import AuthorizationCodeGrant
+from oauth.implicit_grant import ImplicitGrant
+from oauth.introspection import OAuth2IntrospectionEndpoint
 from oauth.model import db, OAuth2Scope
 from oauth.model.base_token import save_token
 from oauth.model.client import OAuth2Client
-from oauth.authorization_code_grant import AuthorizationCodeGrant
-from oauth.introspection import OAuth2IntrospectionEndpoint
 from oauth.refresh_grant import RefreshTokenGrant
-from oauth.requests import CustomFlaskOAuth2Request
+from oauth.requests import CustomFlaskOAuth2Request, AUTHORIZE_REDIRECT_SESSION_KEY
 from oauth.revocation import OAuth2RevocationEndpoint
 
 query_client = create_query_client_func(db.session, OAuth2Client)
