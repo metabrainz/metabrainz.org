@@ -1,7 +1,7 @@
 import json
 
 from authlib.oauth2.rfc6749 import InvalidRequestError
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash, current_app, session
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
@@ -27,7 +27,8 @@ def after_oauth2_request(response):
     response.headers["Cache-Control"] = "no-store"
     response.headers["X-Frame-Options"] = "DENY"
     # todo: add script-src to csp
-    response.headers["Content-Security-Policy"] = "default-src 'self'; frame-ancestors 'none';"
+    response.headers["Content-Security-Policy"] = \
+        "default-src 'self'; frame-ancestors 'none'; script-src 'sha256-vJFm4HtSvYBaeJGb0uUgH6hZ77q54fbWtplmtKmB+RE=' https://fonts.gstatic.com https://test.musicbrainz.org;"
     response.headers["Referrer-Policy"] = "no-referrer"
     return response
 

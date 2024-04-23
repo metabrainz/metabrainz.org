@@ -1,7 +1,7 @@
 from functools import cached_property
 
 from authlib.integrations.flask_oauth2.requests import FlaskOAuth2Request
-from flask import session
+from flask import session, current_app
 
 AUTHORIZE_REDIRECT_SESSION_KEY = "authorize_redirect_session_key"
 
