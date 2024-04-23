@@ -1,4 +1,4 @@
-from authlib.oauth2.rfc6749 import grants
+from authlib.oauth2.rfc6749 import grants, InvalidRequestError
 
 from oauth import login
 from oauth.model import db, OAuth2RefreshToken, OAuth2AccessToken
@@ -10,10 +10,24 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
     INCLUDE_NEW_REFRESH_TOKEN = True
 
     def authenticate_refresh_token(self, refresh_token):
-        return db.session\
+        token = db.session\
             .query(OAuth2RefreshToken)\
-            .filter_by(refresh_token=refresh_token, revoked=False)\
+            .filter_by(refresh_token=refresh_token)\
             .first()
+        # revoked token used, revoke other tokens for same client and user
+        # https://datatracker.ietf.org/doc/html/rfc6819#section-5.2.2.3
+        if token.revoked:
+            db.session.query(OAuth2AccessToken).filter_by(
+                client_id=token.client_id,
+                user_id=token.user_id
+            ).update({OAuth2AccessToken.revoked: True})
+            db.session.query(OAuth2RefreshToken).filter_by(
+                client_id=token.client_id,
+                user_id=token.user_id
+            ).update({OAuth2RefreshToken.revoked: True})
+            db.session.commit()
+            raise InvalidRequestError("\"refresh_token\" in request was already revoked.")
+        return token
 
     def authenticate_user(self, credential):
         return login.load_user_from_db(credential.user_id)
