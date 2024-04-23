@@ -36,20 +36,20 @@ def after_oauth2_request(response):
 @oauth2_bp.route("/client/list")
 @login_required
 def index():
-    applications = db\
-        .session\
-        .query(OAuth2Client)\
-        .filter(OAuth2Client.owner_id == current_user.id)\
-        .order_by(OAuth2Client.client_id_issued_at)\
+    applications = db \
+        .session \
+        .query(OAuth2Client) \
+        .filter(OAuth2Client.owner_id == current_user.id) \
+        .order_by(OAuth2Client.client_id_issued_at) \
         .all()
-    tokens = db\
-        .session\
-        .query(OAuth2AccessToken)\
+    tokens = db \
+        .session \
+        .query(OAuth2AccessToken) \
         .filter(
-            OAuth2AccessToken.user_id == current_user.id,
-            OAuth2AccessToken.revoked.is_(False)
-        )\
-        .order_by(OAuth2AccessToken.issued_at.desc())\
+        OAuth2AccessToken.user_id == current_user.id,
+        OAuth2AccessToken.revoked.is_(False)
+    ) \
+        .order_by(OAuth2AccessToken.issued_at.desc()) \
         .all()
     return render_template("oauth/index.html", props=json.dumps({
         "applications": [{
@@ -96,7 +96,7 @@ def create():
         "client_name": " ".join(form.client_name.errors),
         "website": " ".join(form.website.errors),
         "description": " ".join(form.description.errors),
-        "redirect_uris": [" ". join(errors) for errors in form.redirect_uris.errors],
+        "redirect_uris": [" ".join(errors) for errors in form.redirect_uris.errors],
         "csrf_token": " ".join(form.csrf_token.errors),
     }
     form_data = dict(**form.data)
@@ -133,7 +133,7 @@ def edit(client_id):
         "client_name": " ".join(form.client_name.errors),
         "website": " ".join(form.website.errors),
         "description": " ".join(form.description.errors),
-        "redirect_uris": [" ". join(errors) for errors in form.redirect_uris.errors]
+        "redirect_uris": [" ".join(errors) for errors in form.redirect_uris.errors]
     }
     form_data = {
         "client_name": form.client_name.data or application.name,
@@ -178,16 +178,18 @@ def authorize():
     grant = authorization_server.get_consent_grant(end_user=current_user)
     scopes = get_scopes(db.session, grant.request.scope)
 
-    approval = request.values.get("approval_prompt", "auto")
+    approval = grant.request.data.get("approval_prompt", "auto")
     if approval not in {"auto", "force"}:
         raise InvalidRequestError(description="Invalid \"approval_prompt\" in request.")
 
     # TODO: decide if auto approval should revoke existing tokens issued to the same client for the given user
     #   if not improve UI for approved applications in the user page.
-    if approval == "auto" and grant.client.check_already_approved(current_user.id, scopes):
+    # do not auto approve consent for implicit grant (https://datatracker.ietf.org/doc/html/rfc6819#section-5.2.3.2)
+    if approval == "auto" and grant.request.response_type == "code" \
+            and grant.client.check_already_approved(current_user.id, scopes):
         return authorization_server.create_authorization_response(grant_user=current_user)
 
-    submission_url = build_url(url_for(".confirm_authorization", _external=False), request.values)
+    submission_url = build_url(url_for(".confirm_authorization", _external=False), grant.request.data)
     cancel_url = build_url(grant.request.data.get("redirect_uri"), {"error": "access_denied"})
     return render_template("oauth/prompt.html", props=json.dumps({
         "client_name": grant.client.name,
@@ -260,9 +262,9 @@ def user_info():
     except (ValueError, KeyError):
         return jsonify({"error": "invalid auth header"}), 401
 
-    token = db.session\
-        .query(OAuth2AccessToken)\
-        .filter_by(access_token=token)\
+    token = db.session \
+        .query(OAuth2AccessToken) \
+        .filter_by(access_token=token) \
         .first()
 
     if token is None:
