@@ -16,7 +16,7 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
             .first()
         # revoked token used, revoke other tokens for same client and user
         # https://datatracker.ietf.org/doc/html/rfc6819#section-5.2.2.3
-        if token.revoked:
+        if token and token.revoked:
             db.session.query(OAuth2AccessToken).filter_by(
                 client_id=token.client_id,
                 user_id=token.user_id
