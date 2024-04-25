@@ -76,36 +76,28 @@ class OAuthTestCase(TestCase):
             else:
                 return applications
 
-    def authorize_success_helper(self, application, redirect_uri, only_one_code=False, approval_prompt=None):
-        query_string = {
-            "client_id": application["client_id"],
-            "response_type": "token",
-            "scope": "test-scope-1",
-            "state": "random-state",
-            "redirect_uri": redirect_uri,
-        }
-        if approval_prompt is not None:
-            query_string["approval_prompt"] = approval_prompt
-
+    def authorize_oauth_prompt_helper(self, query_string):
         with login_user(self.user2):
             response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
             self.assertEqual(props["client_name"], "test-client")
             self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
+            self.assertEqual(props["cancel_url"], query_string["redirect_uri"] + "?error=access_denied")
             self.assertEqual(props["csrf_token"], g.csrf_token)
 
             parsed = urlparse(props["submission_url"])
             self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
             self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
 
+    def authorize_oauth_prompt_confirm_helper(self, query_string, only_one_code=False):
+        with login_user(self.user2):
             response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
                 "confirm": "yes",
                 "csrf_token": g.csrf_token
             })
             self.assertEqual(response.status_code, 302)
-            self.assertTrue(response.location.startswith(redirect_uri))
+            self.assertTrue(response.location.startswith(query_string["redirect_uri"]))
             parsed = urlparse(response.location)
             fragment_args = parse_qs(parsed.fragment)
 
@@ -122,7 +114,7 @@ class OAuthTestCase(TestCase):
 
             self.assertEqual(len(fragment_args["access_token"]), 1)
             tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
-                OAuth2Client.client_id == application["client_id"],
+                OAuth2Client.client_id == query_string["client_id"],
                 OAuth2AccessToken.client_id == OAuth2Client.id,
                 OAuth2AccessToken.user_id == self.user2.id,
             ).all()
@@ -131,6 +123,20 @@ class OAuthTestCase(TestCase):
             self.assertNotIn("refresh_token", fragment_args)
             if only_one_code:
                 self.assertEqual(len(tokens), 1)
+
+    def authorize_success_helper(self, application, redirect_uri, only_one_code=False, approval_prompt=None):
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "token",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": redirect_uri,
+        }
+        if approval_prompt is not None:
+            query_string["approval_prompt"] = approval_prompt
+
+        self.authorize_oauth_prompt_helper(query_string)
+        self.authorize_oauth_prompt_confirm_helper(query_string, only_one_code=only_one_code)
 
     def authorize_success_for_token_grant_helper(self, application, redirect_uri,
                                                  only_one_code=False, approval_prompt=None):
@@ -143,19 +149,10 @@ class OAuthTestCase(TestCase):
         }
         if approval_prompt is not None:
             query_string["approval_prompt"] = approval_prompt
+
+        self.authorize_oauth_prompt_helper(query_string)
+
         with login_user(self.user2):
-            response = self.client.get("/oauth2/authorize", query_string=query_string)
-            self.assertTemplateUsed("oauth/prompt.html")
-            props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
-            self.assertEqual(props["csrf_token"], g.csrf_token)
-
-            parsed = urlparse(props["submission_url"])
-            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
-            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
-
             response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
                 "confirm": "yes",
                 "csrf_token": g.csrf_token
