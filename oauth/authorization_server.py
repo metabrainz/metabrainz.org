@@ -15,7 +15,6 @@ from oauth.model import db, OAuth2Scope
 from oauth.model.base_token import save_token
 from oauth.model.client import OAuth2Client
 from oauth.refresh_grant import RefreshTokenGrant
-from oauth.requests import CustomFlaskOAuth2Request, AUTHORIZE_REDIRECT_SESSION_KEY
 from oauth.revocation import OAuth2RevocationEndpoint
 
 query_client = create_query_client_func(db.session, OAuth2Client)
@@ -43,9 +42,6 @@ class CustomAuthorizationServer(AuthorizationServer):
                 fragment = "_"
             response.headers.set("Location", urlunparse((scheme, netloc, path, params, query, fragment)))
         return response
-
-    def create_oauth2_request(self, _request):
-        return CustomFlaskOAuth2Request(request)
 
 
 # TODO: configure the expiry time for tokens

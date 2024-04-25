@@ -8,7 +8,6 @@ from werkzeug.local import LocalProxy
 
 from oauth.model import db
 from oauth.model.editor import Editor
-from oauth.requests import AUTHORIZE_REDIRECT_SESSION_KEY
 
 current_user = LocalProxy(lambda: _get_user())
 
@@ -45,17 +44,6 @@ def login_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
         if not current_user.is_authenticated():
-            return redirect(f"{current_app.config['MUSICBRAINZ_SERVER']}/login?returnto=" + quote_plus(request.url))
-        return func(*args, **kwargs)
-
-    return decorated_view
-
-
-def login_required_with_session(func):
-    @wraps(func)
-    def decorated_view(*args, **kwargs):
-        if not current_user.is_authenticated():
-            session[AUTHORIZE_REDIRECT_SESSION_KEY] = request.values
             return redirect(f"{current_app.config['MUSICBRAINZ_SERVER']}/login?returnto=" + quote_plus(request.url))
         return func(*args, **kwargs)
 
