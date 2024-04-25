@@ -261,6 +261,9 @@ class OAuthTestCase(TestCase):
             old_token = db.session.query(OAuth2AccessToken).filter_by(access_token=token["access_token"]).first()
             self.assertTrue(old_token.revoked)
 
+            old_token = db.session.query(OAuth2RefreshToken).filter_by(refresh_token=token["refresh_token"]).first()
+            self.assertTrue(old_token.revoked)
+
             new_token = response.json
             self.assertEqual(new_token["expires_in"], 3600)
             self.assertEqual(new_token["token_type"], "Bearer")

@@ -1,3 +1,4 @@
+import base64
 from datetime import timedelta
 from unittest.mock import patch
 
@@ -255,3 +256,28 @@ class IntrospectionTestCase(OAuthTestCase):
         with freeze_time() as frozen_time:
             frozen_time.tick(delta=timedelta(hours=25))
             self._test_oauth_introspection_error_helper(data)
+
+    def test_oauth_introspection_basic_auth(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
+        token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
+
+        auth = base64.b64encode((application["client_id"] + ":" + application["client_secret"]).encode("utf-8")).decode("utf-8")
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post(
+                "/oauth2/introspect",
+                data={"token": token["access_token"]},
+                headers={"Authorization": "Basic " + auth}
+            )
+            self.assert200(response)
+            self.assertEqual(response.json["active"], True)
+            self.assertEqual(response.json["client_id"], application["client_id"])
+            self.assertEqual(response.json["issued_by"], "https://metabrainz.org/")
+            self.assertEqual(response.json["scope"], ["test-scope-1"])
+            self.assertEqual(response.json["sub"],  self.user2.user_name)
+            self.assertEqual(response.json["token_type"],  "Bearer")
+            self.assertEqual(response.json["metabrainz_user_id"], self.user2.id)
+            self.assertIsNotNone(response.json["issued_at"])
+            self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)

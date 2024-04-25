@@ -186,3 +186,36 @@ class RefreshGrantTestCase(OAuthTestCase):
             ).first()
             self.assertEqual(new_token["refresh_token"], refresh_token.refresh_token)
             self.assertSetEqual({"test-scope-1", "test-scope-2"}, {s.name for s in refresh_token.scopes})
+
+    def test_oauth_using_revoked_refresh_token_revokes_new_tokens(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
+        token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
+
+        new_token = self.refresh_grant_success_helper(application, token)
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post(
+                "/oauth2/token",
+                data={
+                    "client_id": application["client_id"],
+                    "client_secret": application["client_secret"],
+                    "grant_type": "refresh_token",
+                    "refresh_token": token["refresh_token"],
+                }
+            )
+            self.assert400(response)
+            self.assertEqual(response.json, {
+                "error": "invalid_request",
+                "error_description": "\"refresh_token\" in request was already revoked."
+            })
+
+        latest_access_token = db.session.query(OAuth2AccessToken).filter_by(
+            access_token=new_token["access_token"]
+        ).first()
+        self.assertTrue(latest_access_token.revoked)
+        latest_refresh_token = db.session.query(OAuth2RefreshToken).filter_by(
+            refresh_token=token["refresh_token"]
+        ).first()
+        self.assertTrue(latest_refresh_token.revoked)
