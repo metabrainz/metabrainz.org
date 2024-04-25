@@ -81,21 +81,9 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
+        self.authorize_oauth_prompt_helper(query_string)
 
         with login_user(self.user2):
-            response = self.client.get("/oauth2/authorize", query_string=query_string)
-            self.assertTemplateUsed("oauth/prompt.html")
-            props = json.loads(self.get_context_variable("props"))
-
-            self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
-            self.assertEqual(props["csrf_token"], g.csrf_token)
-
-            parsed = urlparse(props["submission_url"])
-            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
-            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
-
             response = self.client.post(
                 "/oauth2/authorize/confirm",
                 query_string=query_string,
@@ -272,21 +260,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
         }
-
-        with login_user(self.user2):
-            response = self.client.get("/oauth2/authorize", query_string=query_string)
-
-            self.assertTemplateUsed("oauth/prompt.html")
-            props = json.loads(self.get_context_variable("props"))
-
-            self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], query_string["redirect_uri"] + "?error=access_denied")
-            self.assertEqual(props["csrf_token"], g.csrf_token)
-
-            parsed = urlparse(props["submission_url"])
-            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
-            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+        self.authorize_oauth_prompt_helper(query_string)
 
     def test_oauth_approval_prompt_force(self):
         redirect_uri1 = "https://example.com/callback1"
@@ -305,20 +279,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "redirect_uri": redirect_uri2,
             "approval_prompt": "force",
         }
-
-        with login_user(self.user2):
-            response = self.client.get("/oauth2/authorize", query_string=query_string)
-            self.assertTemplateUsed("oauth/prompt.html")
-            props = json.loads(self.get_context_variable("props"))
-
-            self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], redirect_uri2 + "?error=access_denied")
-            self.assertEqual(props["csrf_token"], g.csrf_token)
-
-            parsed = urlparse(props["submission_url"])
-            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
-            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+        self.authorize_oauth_prompt_helper(query_string)
 
     def test_oauth_approval_prompt_none(self):
         application = self.create_oauth_app(redirect_uris=[
@@ -335,20 +296,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "redirect_uri": "https://example.com/callback2",
             "approval_prompt": "auto",
         }
-
-        with login_user(self.user2):
-            response = self.client.get("/oauth2/authorize", query_string=query_string)
-            self.assertTemplateUsed("oauth/prompt.html")
-            props = json.loads(self.get_context_variable("props"))
-
-            self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], query_string["redirect_uri"] + "?error=access_denied")
-            self.assertEqual(props["csrf_token"], g.csrf_token)
-
-            parsed = urlparse(props["submission_url"])
-            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
-            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+        self.authorize_oauth_prompt_helper(query_string)
 
     def test_oauth_approval_prompt_invalid(self):
         application = self.create_oauth_app(redirect_uris=[
@@ -409,19 +357,9 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "response_mode": "form_post"
         }
 
+        self.authorize_oauth_prompt_helper(query_string)
+
         with login_user(self.user2):
-            response = self.client.get("/oauth2/authorize", query_string=query_string)
-            self.assertTemplateUsed("oauth/prompt.html")
-            props = json.loads(self.get_context_variable("props"))
-            self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
-            self.assertEqual(props["csrf_token"], g.csrf_token)
-
-            parsed = urlparse(props["submission_url"])
-            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
-            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
-
             response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
                 "confirm": "yes",
                 "csrf_token": g.csrf_token

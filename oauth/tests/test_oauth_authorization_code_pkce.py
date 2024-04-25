@@ -27,20 +27,10 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
         }
         if code_challenge_method:
             query_string["code_challenge_method"] = code_challenge_method
+
+        self.authorize_oauth_prompt_helper(query_string)
+
         with login_user(self.user2):
-            response = self.client.get("/oauth2/authorize", query_string=query_string)
-            self.assertTemplateUsed("oauth/prompt.html")
-            props = json.loads(self.get_context_variable("props"))
-
-            self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
-            self.assertEqual(props["csrf_token"], g.csrf_token)
-
-            parsed = urlparse(props["submission_url"])
-            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
-            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
-
             response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
                 "confirm": "yes",
                 "csrf_token": g.csrf_token
