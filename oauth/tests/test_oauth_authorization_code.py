@@ -1,10 +1,13 @@
+import base64
 import json
 from datetime import datetime, timedelta
 from unittest.mock import patch
 from urllib.parse import urlparse, parse_qs, unquote, urlencode
 
+import pytest
 from flask import g
 from freezegun import freeze_time
+from werkzeug.datastructures import MultiDict
 
 from oauth.authorization_code_grant import AuthorizationCodeGrant
 from oauth.model import OAuth2AuthorizationCode, OAuth2Client, db, OAuth2AccessToken, OAuth2RefreshToken
@@ -192,6 +195,23 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "code": code,
         }
         error = {"error": "unsupported_grant_type"}
+        self._test_oauth_token_error_helper(data, error)
+
+    @pytest.mark.skip
+    def test_oauth_token_parameter_reuse(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
+
+        data = MultiDict([
+            ("client_id", application["client_id"]),
+            ("client_secret", application["client_secret"]),
+            ("redirect_uri", redirect_uri),
+            ("grant_type", "code"),
+            ("grant_type", "token"),
+            ("code", code)
+        ])
+        error = {}
         self._test_oauth_token_error_helper(data, error)
 
     def test_oauth_token_missing_redirect_uri(self):
@@ -507,6 +527,20 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         fragment_args = parse_qs(parsed.query)
         self.assertEqual(unquote(fragment_args["returnto"][0]), f"http://{self.app.config['SERVER_NAME']}/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
 
+    @pytest.mark.skip
+    def test_oauth_authorize_parameter_reuse(self):
+        application = self.create_oauth_app()
+        query_string = MultiDict([
+            ("client_id", application["client_id"]),
+            ("scope", "test-scope-1"),
+            ("state", "random-state"),
+            ("redirect_uri", "https://example.com/callback"),
+            ("response_type", "code"),
+            ("response_type", "token"),
+        ])
+        error = {"name": "invalid_request", "description": ""}
+        self.authorize_error_helper(self.user2, query_string, error)
+
     def test_oauth_authorize_multiple_redirect_uris(self):
         application = self.create_oauth_app(redirect_uris=[
             "https://example.com/callback1",
@@ -630,4 +664,91 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
             self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
 
-    # todo: add test for client_secret_basic, parameter reuse
+    def test_oauth_basic_auth(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
+
+        auth = base64.b64encode((application["client_id"] + ":" + application["client_secret"]).encode("utf-8")).decode("utf-8")
+
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post(
+                "/oauth2/token",
+                data={
+                    "grant_type": "authorization_code",
+                    "redirect_uri": redirect_uri,
+                    "code": code,
+                },
+                headers={"Authorization": f"Basic {auth}"}
+            )
+            self.assert200(response)
+            data = response.json
+            self.assertEqual(data["expires_in"], 3600)
+            self.assertEqual(data["token_type"], "Bearer")
+
+            access_tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AccessToken.client_id == OAuth2Client.id,
+                OAuth2AccessToken.user_id == self.user2.id,
+            ).all()
+            access_tokens = {token.access_token for token in access_tokens}
+            self.assertIn(data["access_token"], access_tokens)
+
+            refresh_tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2RefreshToken.client_id == OAuth2Client.id,
+                OAuth2RefreshToken.user_id == self.user2.id,
+            ).all()
+            refresh_tokens = {token.refresh_token for token in refresh_tokens}
+            self.assertIn(data["refresh_token"], refresh_tokens)
+
+    def test_oauth_form_post_model(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "code",
+            "scope": "test-scope-1",
+            "state": "random-state",
+            "redirect_uri": redirect_uri,
+            "response_mode": "form_post"
+        }
+        with login_user(self.user2):
+            response = self.client.get("/oauth2/authorize", query_string=query_string)
+            self.assertTemplateUsed("oauth/prompt.html")
+            props = json.loads(self.get_context_variable("props"))
+            self.assertEqual(props["client_name"], "test-client")
+            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
+            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
+            self.assertEqual(props["csrf_token"], g.csrf_token)
+
+            parsed = urlparse(props["submission_url"])
+            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
+            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+
+            response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
+                "confirm": "yes",
+                "csrf_token": g.csrf_token
+            })
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("oauth/authorize_form_post.html")
+            self.assertEqual(self.get_context_variable("redirect_uri"), redirect_uri)
+
+            query_args = self.get_context_variable("values")
+            self.assertIsNone(query_args.get("error"))
+
+            self.assertEqual(len(query_args["state"]), 1)
+            self.assertEqual(query_args["state"][0], "random-state")
+
+            self.assertEqual(len(query_args["code"]), 1)
+            codes = db.session.query(OAuth2AuthorizationCode).join(OAuth2Client).filter(
+                OAuth2Client.client_id == application["client_id"],
+                OAuth2AuthorizationCode.client_id == OAuth2Client.id,
+                OAuth2AuthorizationCode.user_id == self.user2.id,
+            ).all()
+            codes = {code.code for code in codes}
+            self.assertIn(query_args["code"][0], codes)
+
+            code = query_args["code"][0]
+            self.token_success_token_grant_helper(application, code, redirect_uri, True)
