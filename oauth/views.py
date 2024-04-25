@@ -9,7 +9,7 @@ from werkzeug.security import gen_salt
 
 from metabrainz.decorators import nocache, crossdomain
 from oauth import login
-from oauth.login import login_required, current_user, login_required_with_session
+from oauth.login import login_required, current_user
 from oauth.model import db, OAuth2RefreshToken
 from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
@@ -24,9 +24,10 @@ oauth2_bp = Blueprint("oauth2", __name__, static_folder="/static")
 @oauth2_bp.after_request
 def after_oauth2_request(response):
     """ Add headers for Content-Security-Policy, Cache-Control and X-Frame-Options """
+    # TODO: add tests to check headers
     response.headers["Cache-Control"] = "no-store"
+    response.headers["Prgama"] = "no-cache"
     response.headers["X-Frame-Options"] = "DENY"
-    # todo: add script-src to csp
     response.headers["Content-Security-Policy"] = \
         "default-src 'self'; frame-ancestors 'none'; script-src 'sha256-vJFm4HtSvYBaeJGb0uUgH6hZ77q54fbWtplmtKmB+RE=' https://fonts.gstatic.com https://test.musicbrainz.org;"
     response.headers["Referrer-Policy"] = "no-referrer"
@@ -170,9 +171,8 @@ def delete(client_id):
     return redirect(url_for(".index"))
 
 
-# TODO: add CSP and referer header suppression
-@oauth2_bp.route("/authorize", methods=["GET", "POST"])
-@login_required_with_session
+@oauth2_bp.route("/authorize", methods=["GET"])
+@login_required
 def authorize():
     """ OAuth 2.0 authorization endpoint. """
     grant = authorization_server.get_consent_grant(end_user=current_user)
@@ -220,6 +220,7 @@ def confirm_authorization():
 @oauth2_bp.route("/client/<client_id>/revoke/user", methods=["POST"])
 @login_required
 def revoke_client_for_user(client_id):
+    # todo: add tests
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
     if application is None:
         raise NotFound()
@@ -253,7 +254,7 @@ def revoke():
 
 @oauth2_bp.route("/userinfo", methods=["GET", "POST"])
 def user_info():
-    # TODO: Discuss merging with introspection endpoint
+    # todo: remove. this should be in MB.
     auth_header = request.headers.get("Authorization")
     if not auth_header:
         return jsonify({"error": "missing auth header"}), 401
