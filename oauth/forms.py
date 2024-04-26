@@ -79,3 +79,7 @@ class ApplicationForm(FlaskForm):
 
 class AuthorizationForm(FlaskForm):
     confirm = StringField(gettext("Confirm"), [validators.DataRequired(), validators.AnyOf(["yes", "YES"])])
+
+
+class DeleteApplicationForm(FlaskForm):
+    confirm = StringField(gettext("Confirm"), [validators.DataRequired(), validators.AnyOf(["yes", "YES"])])

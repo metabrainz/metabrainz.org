@@ -1,7 +1,5 @@
-import { Formik } from "formik";
 import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
-import * as Yup from "yup";
 import { getPageProps } from "../utils";
 import { OAuthScopeDesc } from "./utils";
 
@@ -41,47 +39,31 @@ function OAuthPrompt({
 
         <div className="permission">{OAuthScopeDesc(scopes)}</div>
       </div>
-      <Formik
-        initialValues={{
-          confirm: "yes",
-          csrf_token,
-        }}
-        validationSchema={Yup.object({
-          confirm: Yup.string().required("Confirmation is required."),
-        })}
-        onSubmit={() => {}}
-      >
-        {({ errors, values }) => (
-          <form method="POST" action={submission_url} className="form-horizontal">
-            <div className="form-group">
-              <div className="col-sm-offset-4 col-sm-5">
-                <input
-                  id="csrf_token"
-                  name="csrf_token"
-                  type="hidden"
-                  value={csrf_token}
-                />
-                <input id="confirm" name="confirm" type="hidden" value="yes" />
-              </div>
-              {errors.csrf_token && (
-                <div className="alert alert-danger">{errors.csrf_token}</div>
-              )}
-            </div>
-            <div className="form-group">
-              <div className="col-md-offset-3 col-md-1">
-                <a href={cancel_url} className="btn btn-default">
-                  Cancel
-                </a>
-              </div>
-              <div className="col-md-1" style={{ marginLeft: "8px" }}>
-                <button type="submit" className="btn btn-primary">
-                  Allow access
-                </button>
-              </div>
-            </div>
-          </form>
-        )}
-      </Formik>
+      <form method="POST" action={submission_url} className="form-horizontal">
+        <div className="form-group">
+          <div className="col-sm-offset-4 col-sm-5">
+            <input
+              id="csrf_token"
+              name="csrf_token"
+              type="hidden"
+              value={csrf_token}
+            />
+            <input id="confirm" name="confirm" type="hidden" value="yes" />
+          </div>
+        </div>
+        <div className="form-group">
+          <div className="col-md-offset-3 col-md-1">
+            <a href={cancel_url} className="btn btn-default">
+              Cancel
+            </a>
+          </div>
+          <div className="col-md-1" style={{ marginLeft: "8px" }}>
+            <button type="submit" className="btn btn-primary">
+              Allow access
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 }
