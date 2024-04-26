@@ -232,3 +232,14 @@ class ClientTestCase(OAuthTestCase):
         token = self.authorize_success_helper(application, redirect_uri, True)
 
         self.revoke_from_user_helper(application)
+
+    def test_oauth_client_not_found(self):
+        with login_user(self.user2):
+            response = self.client.post(f"/oauth2/client/abc/revoke/user")
+            self.assert404(response)
+
+            response = self.client.post(f"/oauth2/client/abc/edit")
+            self.assert404(response)
+
+            response = self.client.post(f"/oauth2/client/abc/delete")
+            self.assert404(response)
