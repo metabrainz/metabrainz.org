@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 import pprint
 import sys
@@ -20,8 +19,6 @@ CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 
 def create_app(debug=None, config_path=None):
-    logging.getLogger("authlib").setLevel(logging.DEBUG)
-
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
@@ -51,18 +48,8 @@ def create_app(debug=None, config_path=None):
                 "..", "config.py"
             ))
 
-    app.config["OAUTH2_REFRESH_TOKEN_GENERATOR"] = True
-    app.config["OAUTH2_TOKEN_EXPIRES_IN"] = {
-        "authorization_code": 3600,
-        "implicit": 3600,
-    }
-
     app.config["SERVER_BASE_URL"] = "http://localhost"
     app.config["SERVER_NAME"] = "localhost"
-
-    app.config["DEBUG"] = False
-    app.config["TESTING"] = False
-    app.logger.setLevel(logging.INFO)
 
     # Load configuration files: If we're running under a docker deployment, wait until
     # the consul configuration is available.

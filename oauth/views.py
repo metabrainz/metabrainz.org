@@ -5,10 +5,10 @@ from flask import Blueprint, request, render_template, redirect, url_for, jsonif
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
-from werkzeug.security import gen_salt
 
 from metabrainz.decorators import nocache, crossdomain
 from oauth import login
+from oauth.generator import create_client_secret, create_client_id
 from oauth.login import login_required, current_user
 from oauth.model import db, OAuth2RefreshToken
 from oauth.model.client import OAuth2Client
@@ -77,8 +77,8 @@ def index():
 def create():
     form = ApplicationForm()
     if form.validate_on_submit():
-        client_id = gen_salt(24)
-        client_secret = gen_salt(48)
+        client_id = create_client_id()
+        client_secret = create_client_secret()
         client = OAuth2Client(
             client_id=client_id,
             client_secret=client_secret,
