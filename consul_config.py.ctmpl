@@ -126,3 +126,7 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 OAUTH2_BLUEPRINT_PREFIX = "/new-oauth2"
 OAUTH2_ACCESS_TOKEN_GENERATOR = "oauth.generator.create_access_token"
 OAUTH2_REFRESH_TOKEN_GENERATOR = "oauth.generator.create_refresh_token"
+OAUTH2_TOKEN_EXPIRES_IN = {
+    "authorization_code": 3600,
+    "implicit": 3600,
+}
