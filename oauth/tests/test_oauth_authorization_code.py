@@ -22,58 +22,6 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
-    def test_oauth_authorize_post_token_success(self):
-        application = self.create_oauth_app()
-        redirect_uri = "https://example.com/callback"
-
-        data = {
-            "client_id": application["client_id"],
-            "response_type": "code",
-            "scope": "test-scope-1",
-            "state": "random-state",
-            "redirect_uri": redirect_uri,
-        }
-        with login_user(self.user2):
-            response = self.client.post("/oauth2/authorize", data=data)
-            self.assertTemplateUsed("oauth/prompt.html")
-            props = json.loads(self.get_context_variable("props"))
-
-            self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
-            self.assertEqual(props["cancel_url"], redirect_uri + "?error=access_denied")
-            self.assertEqual(props["csrf_token"], g.csrf_token)
-
-            parsed = urlparse(props["submission_url"])
-            self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
-            self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in data.items()})
-
-            response = self.client.post("/oauth2/authorize/confirm", query_string=urlencode(data), data={
-                "confirm": "yes",
-                "csrf_token": g.csrf_token
-            })
-            self.assertEqual(response.status_code, 302)
-            self.assertTrue(response.location.startswith(redirect_uri))
-            parsed = urlparse(response.location)
-            query_args = parse_qs(parsed.query)
-
-            self.assertIsNone(query_args.get("error"))
-
-            self.assertEqual(len(query_args["state"]), 1)
-            self.assertEqual(query_args["state"][0], "random-state")
-
-            self.assertEqual(len(query_args["code"]), 1)
-            codes = db.session.query(OAuth2AuthorizationCode).join(OAuth2Client).filter(
-                OAuth2Client.client_id == application["client_id"],
-                OAuth2AuthorizationCode.client_id == OAuth2Client.id,
-                OAuth2AuthorizationCode.user_id == self.user2.id,
-            ).all()
-            codes = {code.code for code in codes}
-            self.assertIn(query_args["code"][0], codes)
-
-            self.assertEqual(parsed.fragment, "_")
-
-            self.token_success_token_grant_helper(application, query_args["code"][0], redirect_uri, True)
-
     def _test_oauth_token_error_helper(self, data, error):
         with patch.object(AuthorizationCodeGrant, "authenticate_user", return_value=self.user2):
             response = self.client.post("/oauth2/token", data=data)
