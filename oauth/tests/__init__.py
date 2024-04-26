@@ -127,6 +127,7 @@ class OAuthTestCase(TestCase):
                 OAuth2AccessToken.user_id == self.user2.id,
             ).all()
             tokens = {token.access_token for token in tokens}
+            self.assertTrue(fragment_args["access_token"][0].startswith("meba"))
             self.assertIn(fragment_args["access_token"][0], tokens)
             self.assertNotIn("refresh_token", fragment_args)
             if only_one_code:
@@ -242,6 +243,7 @@ class OAuthTestCase(TestCase):
             ).all()
             access_tokens = {token.access_token for token in access_tokens}
             self.assertIn(data["access_token"], access_tokens)
+            self.assertTrue(data["access_token"].startswith("meba"))
 
             refresh_tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
@@ -250,6 +252,7 @@ class OAuthTestCase(TestCase):
             ).all()
             refresh_tokens = {token.refresh_token for token in refresh_tokens}
             self.assertIn(data["refresh_token"], refresh_tokens)
+            self.assertTrue(data["refresh_token"].startswith("mebr"))
 
             if only_one_token:
                 self.assertEqual(len(access_tokens), 1)
@@ -290,6 +293,7 @@ class OAuthTestCase(TestCase):
             ).all()
             access_tokens = {token.access_token for token in access_tokens}
             self.assertIn(new_token["access_token"], access_tokens)
+            self.assertTrue(new_token["access_token"].startswith("meba"))
 
             refresh_tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
                 OAuth2Client.client_id == application["client_id"],
@@ -299,6 +303,7 @@ class OAuthTestCase(TestCase):
             ).all()
             refresh_tokens = {token.refresh_token for token in refresh_tokens}
             self.assertIn(new_token["refresh_token"], refresh_tokens)
+            self.assertTrue(new_token["refresh_token"].startswith("mebr"))
 
             self.assert_security_headers(response)
 
