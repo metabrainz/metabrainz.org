@@ -1,17 +1,15 @@
 import json
 from contextlib import contextmanager
 from unittest.mock import patch
-from urllib.parse import urlparse, parse_qs, urlencode
+from urllib.parse import urlparse, parse_qs
 
 from flask import g
 from flask_testing import TestCase
 from sqlalchemy import delete
 
 import oauth
-from oauth.authorization_code_grant import AuthorizationCodeGrant
 from oauth.login import User
 from oauth.model import OAuth2Scope, db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2Client, OAuth2AuthorizationCode
-from oauth.refresh_grant import RefreshTokenGrant
 
 
 @contextmanager
@@ -76,6 +74,14 @@ class OAuthTestCase(TestCase):
             else:
                 return applications
 
+    def assert_security_headers(self, response):
+        headers = response.headers
+        self.assertEqual(headers.get("Cache-Control"), "no-store")
+        self.assertEqual(headers.get("X-Frame-Options"), "DENY")
+        self.assertEqual(headers.get("Pragma"), "no-cache")
+        self.assertEqual(headers.get("Referrer-Policy"), "no-referrer")
+        self.assertIn("Content-Security-Policy", headers)
+
     def authorize_oauth_prompt_helper(self, query_string):
         with login_user(self.user2):
             response = self.client.get("/oauth2/authorize", query_string=query_string)
@@ -89,6 +95,8 @@ class OAuthTestCase(TestCase):
             parsed = urlparse(props["submission_url"])
             self.assertEqual(parsed.path, "/oauth2/authorize/confirm")
             self.assertEqual(parse_qs(parsed.query), {k: [v] for k, v in query_string.items()})
+
+            self.assert_security_headers(response)
 
     def authorize_oauth_prompt_confirm_helper(self, query_string, only_one_code=False):
         with login_user(self.user2):
@@ -123,6 +131,8 @@ class OAuthTestCase(TestCase):
             self.assertNotIn("refresh_token", fragment_args)
             if only_one_code:
                 self.assertEqual(len(tokens), 1)
+
+            self.assert_security_headers(response)
 
     def authorize_success_helper(self, application, redirect_uri, only_one_code=False, approval_prompt=None):
         query_string = {
@@ -178,6 +188,8 @@ class OAuthTestCase(TestCase):
             if only_one_code:
                 self.assertEqual(len(codes), 1)
 
+            self.assert_security_headers(response)
+
             self.assertEqual(parsed.fragment, "_")
             return query_args["code"][0]
 
@@ -202,6 +214,9 @@ class OAuthTestCase(TestCase):
             self.assertTemplateUsed("oauth/error.html")
             props = json.loads(self.get_context_variable("props"))
             self.assertEqual(props["error"], error)
+
+            self.assert_security_headers(response)
+
 
     def token_success_token_grant_helper(self, application, code, redirect_uri, only_one_token=False):
         with patch("oauth.login.load_user_from_db", return_value=self.user2):
@@ -239,6 +254,8 @@ class OAuthTestCase(TestCase):
             if only_one_token:
                 self.assertEqual(len(access_tokens), 1)
                 self.assertEqual(len(refresh_tokens), 1)
+
+            self.assert_security_headers(response)
 
             return data
 
@@ -282,6 +299,9 @@ class OAuthTestCase(TestCase):
             ).all()
             refresh_tokens = {token.refresh_token for token in refresh_tokens}
             self.assertIn(new_token["refresh_token"], refresh_tokens)
+
+            self.assert_security_headers(response)
+
             return token
 
     def introspection_success_helper(self, data):
@@ -297,3 +317,5 @@ class OAuthTestCase(TestCase):
             self.assertEqual(response.json["metabrainz_user_id"], self.user2.id)
             self.assertIsNotNone(response.json["issued_at"])
             self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)
+
+            self.assert_security_headers(response)

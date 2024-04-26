@@ -23,10 +23,9 @@ oauth2_bp = Blueprint("oauth2", __name__, static_folder="/static")
 
 @oauth2_bp.after_request
 def after_oauth2_request(response):
-    """ Add headers for Content-Security-Policy, Cache-Control and X-Frame-Options """
-    # TODO: add tests to check headers
+    """ Add security headers for Referrer-Policy, Content-Security-Policy, Cache-Control and X-Frame-Options """
     response.headers["Cache-Control"] = "no-store"
-    response.headers["Prgama"] = "no-cache"
+    response.headers["Pragma"] = "no-cache"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Content-Security-Policy"] = \
         "default-src 'self'; frame-ancestors 'none'; script-src 'sha256-vJFm4HtSvYBaeJGb0uUgH6hZ77q54fbWtplmtKmB+RE=' https://fonts.gstatic.com https://test.musicbrainz.org;"
@@ -220,7 +219,6 @@ def confirm_authorization():
 @oauth2_bp.route("/client/<client_id>/revoke/user", methods=["POST"])
 @login_required
 def revoke_client_for_user(client_id):
-    # todo: add tests
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
     if application is None:
         raise NotFound()
