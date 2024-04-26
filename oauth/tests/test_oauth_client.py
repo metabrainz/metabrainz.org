@@ -173,11 +173,42 @@ class ClientTestCase(OAuthTestCase):
     def test_oauth_client_delete(self):
         application = self.create_application()
 
-        response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", follow_redirects=True)
+        response = self.client.get(f"/oauth2/client/delete/{application['client_id']}", follow_redirects=True)
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("oauth/delete.html")
+        self.maxDiff = None
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(props["csrf_token"], g.csrf_token)
+        self.assertEqual(props["application"], {
+            "name": application["name"],
+            "description": application["description"],
+            "website": application["website"]
+        })
+        self.assertEqual(props["cancel_url"], "/oauth2/client/list")
+
+        response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", data={
+            "confirm": "yes",
+            "csrf_token": g.csrf_token
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertMessageFlashed("You have deleted an application.", "success")
+        self.assertTemplateUsed("oauth/index.html")
 
         props = json.loads(self.get_context_variable("props"))
         self.assertListEqual(props["applications"], [])
+
+    def test_oauth_client_delete_invalid_csrf(self):
+        application = self.create_application()
+        response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", data={
+            "confirm": "yes",
+            "csrf_token": "abc"
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertMessageFlashed("Failed to delete an application.", "error")
+        self.assertTemplateUsed("oauth/index.html")
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(len(props["applications"]), 1)
 
     def test_oauth_client_owner_check(self):
         application = self.create_application()

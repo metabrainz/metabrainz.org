@@ -1,7 +1,7 @@
 import json
 
 from authlib.oauth2.rfc6749 import InvalidRequestError
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash, g
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
@@ -14,7 +14,7 @@ from oauth.model import db, OAuth2RefreshToken
 from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
 from oauth.model.access_token import OAuth2AccessToken
-from oauth.forms import ApplicationForm, AuthorizationForm
+from oauth.forms import ApplicationForm, AuthorizationForm, DeleteApplicationForm
 from oauth.authorization_server import authorization_server
 from metabrainz.utils import build_url
 
@@ -28,7 +28,7 @@ def after_oauth2_request(response):
     response.headers["Pragma"] = "no-cache"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Content-Security-Policy"] = \
-        "default-src 'self'; frame-ancestors 'none'; script-src 'sha256-vJFm4HtSvYBaeJGb0uUgH6hZ77q54fbWtplmtKmB+RE=' https://fonts.gstatic.com https://test.musicbrainz.org;"
+        "default-src 'self'; frame-ancestors 'none'; script-src 'sha256-vJFm4HtSvYBaeJGb0uUgH6hZ77q54fbWtplmtKmB+RE=' https://fonts.gstatic.com https://test.musicbrainz.org; font-src https://fonts.gstatic.com;"
     response.headers["Referrer-Policy"] = "no-referrer"
     return response
 
@@ -75,6 +75,7 @@ def index():
 @oauth2_bp.route("/client/create", methods=("GET", "POST"))
 @login_required
 def create():
+    # todo: add client_secret rotation option
     form = ApplicationForm()
     if form.validate_on_submit():
         client_id = create_client_id()
@@ -155,18 +156,32 @@ def edit(client_id):
     }))
 
 
-@oauth2_bp.route("/client/delete/<client_id>", methods=["POST"])
+@oauth2_bp.route("/client/delete/<client_id>", methods=["GET", "POST"])
 @login_required
 def delete(client_id):
+    form = DeleteApplicationForm()
     application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
     if application is None:
         raise NotFound()
     if application.owner_id != current_user.id:
         raise Forbidden()
 
-    db.session.delete(application)
-    db.session.commit()
-    flash(gettext("You have deleted an application."), "success")
+    if request.method == "GET":
+        return render_template("oauth/delete.html", props=json.dumps({
+            "csrf_token": g.csrf_token,
+            "application": {
+                "name": application.name,
+                "description": application.description,
+                "website": application.website,
+            },
+            "cancel_url": url_for(".index"),
+        }))
+    elif form.validate_on_submit():
+        db.session.delete(application)
+        db.session.commit()
+        flash(gettext("You have deleted an application."), "success")
+    else:
+        flash(gettext("Failed to delete an application."), "error")
     return redirect(url_for(".index"))
 
 
