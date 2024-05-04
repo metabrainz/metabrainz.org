@@ -14,24 +14,25 @@
 # Ilya <email address hidden>, 2023
 # Transifex Bot <>, 2023
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2017-01-19 20:40+0000\n"
-"Last-Translator: Transifex Bot <>, 2023\n"
-"Language-Team: Russian (https://app.transifex.com/musicbrainz/teams/13846/"
-"ru/)\n"
+"PO-Revision-Date: 2024-05-05 20:42+0000\n"
+"Last-Translator: wileyfoxyx <wileyfoxyx@users.noreply.translations.metabrainz"
+".org>\n"
+"Language-Team: Russian <https://translations.metabrainz.org/projects/"
+"metabrainz/website/ru/>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.5.3\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: ru\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: metabrainz/payments/forms.py:9
 msgid "You need to specify amount!"
@@ -195,7 +196,7 @@ msgstr "Фонд"
 
 #: metabrainz/templates/navbar.html:31
 msgid "Reports "
-msgstr "Отчёты"
+msgstr "Отчеты "
 
 #: metabrainz/templates/navbar.html:34
 msgid "Financial Reports"
@@ -232,7 +233,7 @@ msgid ""
 msgstr ""
 "Всем конечным точкам требуется токен доступа, который вы можете получить со "
 "своей\n"
-"<a href=\"%(profile_url)s\">страницы профиля</a>"
+"<a href=\"%(profile_url)s\">страницы профиля</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
@@ -273,7 +274,7 @@ msgstr "Назад на домашнюю страницу"
 
 #: metabrainz/templates/index/about.html:3
 msgid "About"
-msgstr "О"
+msgstr "О нас"
 
 #: metabrainz/templates/index/about.html:6
 msgid "About the MetaBrainz Foundation"
@@ -328,7 +329,7 @@ msgstr "Совет директоров"
 
 #: metabrainz/templates/index/about.html:43
 msgid "Our board of directors consists of:"
-msgstr "Наш совет директоров состоит из:"
+msgstr "В наш совет директоров входят:"
 
 #: metabrainz/templates/index/about.html:45
 #, python-format
@@ -386,10 +387,12 @@ msgid ""
 "Secretary <a href=\"%(freso_url)s\">Frederik “Freso” S. Olesen</a>, "
 "Community Manager of the MetaBrainz Foundation"
 msgstr ""
+"Секретарь <a href=\"%(freso_url)s\">Фредерик “Freso” С. Олесен</a>, менеджер "
+"Фонда MetaBrainz по работе с сообществом"
 
 #: metabrainz/templates/index/about.html:55
 msgid "Our directors emeritus include:"
-msgstr "Our directors emeritus include:"
+msgstr "В число наших почетных директоров входят:"
 
 #: metabrainz/templates/index/about.html:58
 #, python-format
@@ -492,7 +495,7 @@ msgstr ""
 #: metabrainz/templates/index/contact.html:3
 #: metabrainz/templates/index/contact.html:6
 msgid "Contact"
-msgstr "Contact"
+msgstr "Обратная связь"
 
 #: metabrainz/templates/index/contact.html:8
 msgid "Found a bug in one of our projects?"
@@ -578,7 +581,7 @@ msgstr ""
 msgid "We are not distributing any of the music listed in MusicBrainz."
 msgstr ""
 "Мы не занимаемся распространением никакой музыки, присутствующей на "
-"MusicBrainz. "
+"MusicBrainz."
 
 #: metabrainz/templates/index/contact.html:47
 msgid ""
@@ -1068,7 +1071,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives in Barcelona, Spain."
-msgstr "Он живёт в Барселоне, Испания. "
+msgstr "Он живёт в Барселоне, Испания."
 
 #: metabrainz/templates/index/team.html:39
 msgid "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
@@ -1275,7 +1278,7 @@ msgstr ""
 
 #: metabrainz/templates/oauth/prompt.html:10
 msgid "This app requested permission to access:"
-msgstr "This app requested permission to access:"
+msgstr "Приложение запрашивает разрешение на:"
 
 #: metabrainz/templates/oauth/prompt.html:19
 msgid "Your identity on MetaBrainz"
@@ -1292,7 +1295,7 @@ msgstr "Отмена"
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
 msgid "Cancelling recurring payments"
-msgstr "Cancelling recurring payments"
+msgstr "Отмена рекуррентных платежей"
 
 #: metabrainz/templates/payments/cancel_recurring.html:9
 msgid ""
@@ -1515,7 +1518,7 @@ msgstr "Комиссия"
 
 #: metabrainz/templates/payments/donors.html:61
 msgid "First"
-msgstr "First"
+msgstr "Первый"
 
 #: metabrainz/templates/payments/payment.html:3
 #: metabrainz/templates/payments/payment.html:7
@@ -1570,7 +1573,7 @@ msgstr "Номер инвойса"
 
 #: metabrainz/templates/payments/payment.html:60
 msgid "Make this a recurring monthly payment"
-msgstr "Make this a recurring monthly payment"
+msgstr "Сделать рекуррентным платежом"
 
 #: metabrainz/templates/payments/payment.html:68
 msgid "Pay with Credit Card"
@@ -1617,7 +1620,7 @@ msgstr ""
 
 #: metabrainz/templates/reports/annual_reports/view.html:2
 msgid "Annual Report"
-msgstr "Annual Report"
+msgstr "Годовой отчет"
 
 #: metabrainz/templates/reports/financial_reports/index.html:9
 msgid ""
@@ -1663,7 +1666,7 @@ msgid ""
 "succeeding month, or as close to that as possible."
 msgstr ""
 "Мы стараемся публиковать свои балансовые отчёты в течение первой недели "
-"последующего месяца либо как можно быстрее к этому сроку,"
+"последующего месяца, либо как можно быстрее к этому сроку."
 
 #: metabrainz/templates/reports/financial_reports/index.html:35
 #: metabrainz/templates/reports/financial_reports/index.html:64
@@ -2014,7 +2017,7 @@ msgstr "Квартальные отчёты"
 #: metabrainz/templates/reports/financial_reports/index.html:279
 #: metabrainz/templates/reports/financial_reports/index.html:308
 msgid "Monthly reports"
-msgstr "Monthly reports"
+msgstr "Месячные отчеты"
 
 #: metabrainz/templates/reports/financial_reports/index.html:49
 #: metabrainz/templates/reports/financial_reports/index.html:78
@@ -2232,7 +2235,7 @@ msgstr ""
 
 #: metabrainz/templates/users/account-type.html:21
 msgid "Non-commercial / Personal"
-msgstr "Non-commercial / Personal"
+msgstr "Некоммерческий / личный"
 
 #: metabrainz/templates/users/account-type.html:24
 #, python-format
@@ -2251,12 +2254,12 @@ msgstr ""
 #: metabrainz/templates/users/account-type.html:34
 #: metabrainz/templates/users/signup-non-commercial.html:25
 msgid "Non-commercial"
-msgstr "Non-commercial"
+msgstr "Некоммерческий"
 
 #: metabrainz/templates/users/account-type.html:37
 #: metabrainz/templates/users/signup-commercial.html:25
 msgid "Commercial"
-msgstr "Commercial"
+msgstr "Коммерческий"
 
 #: metabrainz/templates/users/account-type.html:40
 msgid ""
@@ -2458,7 +2461,7 @@ msgstr "Неизвестно. :("
 
 #: metabrainz/templates/users/profile.html:96
 msgid "Access token"
-msgstr "Ключ доступа!"
+msgstr "Ключ доступа"
 
 #: metabrainz/templates/users/profile.html:99
 msgid "Generate new token"
