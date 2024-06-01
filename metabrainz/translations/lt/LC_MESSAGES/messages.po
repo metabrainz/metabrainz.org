@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2024-05-04 13:42+0000\n"
+"PO-Revision-Date: 2024-06-02 21:42+0000\n"
 "Last-Translator: Vaclovas Intas <gateway_31@protonmail.com>\n"
 "Language-Team: Lithuanian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/lt/>\n"
@@ -22,16 +22,16 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
 "11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 :"
 " n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 5.5.3\n"
+"X-Generator: Weblate 5.5.4\n"
 "Generated-By: Babel 2.3.4\n"
 
 #: metabrainz/payments/forms.py:9
 msgid "You need to specify amount!"
-msgstr "Jums reikia nurodyti kiekį!"
+msgstr "Reikia nurodyti sumą."
 
 #: metabrainz/payments/forms.py:21
 msgid "You need to specify invoice number!"
-msgstr "Jums reikia nurodyti sąskaitos faktūros numerį!"
+msgstr "Reikia nurodyti sąskaitos faktūros numerį."
 
 #: metabrainz/payments/views.py:105
 msgid ""
@@ -39,36 +39,35 @@ msgid ""
 "is greatly appreciated! It may take some time before your donation appears "
 "in the list due to processing delays."
 msgstr ""
-"Dėkojame, kad aukojate MetaBrainz fondui. Jūsų parama yra labai vertinama! "
-"Dėl apdorojimo vėlavimo gali praeiti šiek tiek laiko, kol jūsų auka "
-"pasirodys sąraše."
+"Ačiū, kad aukoji MetaBrainz fondui. Tavo parama yra labai vertinama! Dėl "
+"apdorojimo vėlavimo gali praeiti šiek tiek laiko, kol auka pasirodys sąraše."
 
 #: metabrainz/payments/views.py:112
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support is "
 "greatly appreciated!"
 msgstr ""
-"Dėkojame, kad atlikote mokėjimą MetaBrainz fondui. Jūsų parama yra labai "
+"Ačiū, kad atlikei mokėjimą MetaBrainz fondui. Tavo parama yra labai "
 "vertinama!"
 
 #: metabrainz/payments/views.py:123
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
-msgstr "Apgailestaujame, kad šiandien neaukosite. Tikimės, kad persigalvosite!"
+msgstr "Atsiprašome, kad šiandien neaukosi. Tikimės, kad persigalvosi!"
 
 #: metabrainz/payments/views.py:129
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
-msgstr "Apgailestaujame, kad šiandien nemokėsite. Tikimės, kad persigalvosite!"
+msgstr "Atsiprašome, kad šiandien nemokėsi. Tikimės, kad persigalvosi!"
 
 #: metabrainz/payments/views.py:143
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process your "
 "donation."
 msgstr ""
-"Atsiprašome, bet atrodo, kad susidūrėme su klaida ir negalime atlikti jūsų "
+"Atsiprašome, bet atrodo, kad susidūrėme su klaida ir negalime apdoroti tavo "
 "aukos."
 
 #: metabrainz/payments/views.py:149
@@ -132,11 +131,11 @@ msgstr "Donorai"
 
 #: metabrainz/templates/base.html:65
 msgid "Users"
-msgstr "Vartotojai"
+msgstr "Naudotojai"
 
 #: metabrainz/templates/base.html:68
 msgid "Sign in"
-msgstr "Prisijunkti"
+msgstr "Prisijungti"
 
 #: metabrainz/templates/base.html:70 metabrainz/templates/navbar.html:53
 msgid "Sign out"
@@ -144,7 +143,7 @@ msgstr "Atsijungti"
 
 #: metabrainz/templates/base.html:72
 msgid "Access your account"
-msgstr "Prieiga prie jūsų paskyros"
+msgstr "Prieiga prie paskyros"
 
 #: metabrainz/templates/base.html:73
 msgid "API"
@@ -152,7 +151,7 @@ msgstr "API"
 
 #: metabrainz/templates/base.html:78
 msgid "Contact us"
-msgstr "Susisiekite su mumis"
+msgstr "Susisiekti su mumis"
 
 #: metabrainz/templates/base.html:80
 msgid "Blog"
@@ -160,7 +159,7 @@ msgstr "Tinklaraštis"
 
 #: metabrainz/templates/base.html:81
 msgid "Twitter"
-msgstr "„Twitter“"
+msgstr "Twitter"
 
 #: metabrainz/templates/base.html:86
 #, python-format
@@ -169,8 +168,8 @@ msgid ""
 "            <a href=\"%(osuosl_url)s\">OSUOSL</a> and\n"
 "            <a href=\"%(sponsors_url)s\">others&hellip;</a>"
 msgstr ""
-"Remia<a href=\"%(google_url)s\">„Google“</a>,\n"
-"            <a href=\"%(osuosl_url)s\">„OSUOSL“</a> ir\n"
+"Remia<a href=\"%(google_url)s\">Google</a>,\n"
+"            <a href=\"%(osuosl_url)s\">OSUOSL</a> ir\n"
 "            <a href=\"%(sponsors_url)s\">kiti&hellip;</a>"
 
 #: metabrainz/templates/navbar.html:7
@@ -179,7 +178,7 @@ msgstr "Perjungti naršymą"
 
 #: metabrainz/templates/navbar.html:21
 msgid "About "
-msgstr "Apie"
+msgstr "Apie "
 
 #: metabrainz/templates/navbar.html:23
 msgid "The Foundation"
@@ -187,7 +186,7 @@ msgstr "Fondas"
 
 #: metabrainz/templates/navbar.html:31
 msgid "Reports "
-msgstr "Ataskaitos"
+msgstr "Ataskaitos "
 
 #: metabrainz/templates/navbar.html:34
 msgid "Financial Reports"
@@ -210,11 +209,11 @@ msgstr "Užsiregistruoti"
 
 #: metabrainz/templates/navbar.html:52
 msgid "Your profile"
-msgstr "Jūsų profilis"
+msgstr "Tavo profilis"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
-msgstr "Metabrainz API"
+msgstr "MetaBrainz API"
 
 #: metabrainz/templates/api/info.html:11
 #, python-format
@@ -222,8 +221,8 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
-"Visiems galutiniams taškams reikalingas prieigos ženklas, kurį galite gauti "
-"iš savo\n"
+"Visiems galutiniams taškams privalomas prieigos raktas, kurį gali gauti iš "
+"savo\n"
 "    <a href=\"%(profile_url)s\">profilio puslapio</a>."
 
 #: metabrainz/templates/api/info.html:15
@@ -251,13 +250,12 @@ msgid ""
 "It is possible to get a signature for each replication packet. Just replace\n"
 "      <code>.tar.bz2</code> with <code>.asc</code>."
 msgstr ""
-"Yra galimybė gauti kiekvieno kopijavimo paketo parašą. Tiesiog pakeiskite\n"
+"Yra galimybė gauti kiekvieno kopijavimo paketo parašą. Tiesiog pakeisk\n"
 "      <code>.tar.bz2</code> su <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:55
 msgid "You can find the latest replication packet numbers from this endpoint:"
-msgstr ""
-"Naujausius replikavimo paketų numerius galite rasti iš šio galinio taško:"
+msgstr "Naujausius replikavimo paketų numerius gali rasti iš šio galinio taško:"
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -269,7 +267,7 @@ msgstr "Apie"
 
 #: metabrainz/templates/index/about.html:6
 msgid "About the MetaBrainz Foundation"
-msgstr "Apie „MetaBrainz“ fondą"
+msgstr "Apie MetaBrainz fondą"
 
 #: metabrainz/templates/index/about.html:11
 msgid ""
@@ -278,7 +276,7 @@ msgid ""
 "believes in\n"
 "        free, open access to data."
 msgstr ""
-"„MetaBrainz“ fondas yra 501(c)(3) nuo mokesčių atleista pelno nesiekianti "
+"MetaBrainz fondas yra 501(c)(3) nuo mokesčių atleista pelno nesiekianti "
 "organizacija, įkurta\n"
 "        2004 m. gruodžio, ir įsikūręs San Luiso Obispo, Kalifornijoje, kuris "
 "tiki\n"
@@ -299,14 +297,13 @@ msgid ""
 "so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
-"„MetaBrainz“ fondas buvo įkurtas siekiant kurti bendruomenės prižiūrimos\n"
-"        duomenų bazes ir padaryti jas prieinamas viešai arba pagal "
-"„Creative\n"
-"        Commons“ licencijas. Mūsų duomenis daugiausia renka savanoriai, ir "
+"MetaBrainz fondas buvo įkurtas siekiant sukurti bendruomenės prižiūrimos\n"
+"        duomenų bazes ir padaryti jas prieinamas viešai arba pagal Creative\n"
+"        Commons licencijas. Mūsų duomenis daugiausia renka savanoriai, ir "
 "tikrina\n"
 "        balsavimo sistema, kad įsitikintų, jog jie yra nuoseklūs ir "
 "teisingi. Visi\n"
-"        nekomercinio naudojimo – nemokami, tačiau komercinių naudotojų yra "
+"        nekomercinio naudojimo – nemokami, bet komercinių naudotojai yra "
 "prašomi susimokėti už\n"
 "        reguliarų duomenų atnaujinimą, kad padėtų finansuoti projektą. Mes\n"
 "        raginame visus duomenų naudotojus prisidėti prie duomenų rinkimo "
@@ -326,12 +323,12 @@ msgid ""
 "        <a href=\"%(sponsors_url)s\">sponsors</a> who provide\n"
 "        funds in order for the foundation to accomplish its goals."
 msgstr ""
-"„MetaBrainz“ fondas tiki <a href=\"%(financial_reports_url)s\">\n"
-"        skaidriais finansais</a> ir turi keletą <a href=\"%(supporters_url)s"
-"\">\n"
+"MetaBrainz fondas tiki <a href=\"%(financial_reports_url)s\">\n"
+"        skaidriais finansais</a> ir turi keletą <a href=\"%(supporters_url)"
+"s\">\n"
 "        komercinių palaikytojus</a>, kurie moka už savalaikę ir patogią "
 "prieigą prie\n"
-"        duomenų. „MetaBrainz“ fondą yra parremtą pagal įvairių\n"
+"        duomenų. MetaBrainz fondą yra parremtą pagal įvairių\n"
 "        <a href=\"%(sponsors_url)s\">rėmėjų</a>, kurie teikia\n"
 "        lėšas, kad fondas galėtų pasiekti savo tikslus."
 
@@ -349,9 +346,8 @@ msgid ""
 "Director Nick Ashton-Hart, Executive Director of the <a href="
 "\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem Alliance</a>"
 msgstr ""
-"Direktorius Nickas Ashton-Hartas, vykdomasis <a href="
-"\"%(internet_ecosys_url)s\">Interneto agentūros direktorius &amp; "
-"Skaitmeninės ekosistemos sąjunga</a>"
+"Direktorius Nick Ashton-Hart, vykdomasis <a href=\"%(internet_ecosys_url)s\""
+">Interneto agentūros direktorius ir Skaitmeninės ekosistemos sąjunga</a>"
 
 #: metabrainz/templates/index/about.html:46
 #, python-format
