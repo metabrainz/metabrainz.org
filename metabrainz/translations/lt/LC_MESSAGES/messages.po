@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2024-06-02 21:42+0000\n"
+"PO-Revision-Date: 2024-06-09 13:42+0000\n"
 "Last-Translator: Vaclovas Intas <gateway_31@protonmail.com>\n"
 "Language-Team: Lithuanian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/lt/>\n"
@@ -303,7 +303,7 @@ msgstr ""
 "tikrina\n"
 "        balsavimo sistema, kad įsitikintų, jog jie yra nuoseklūs ir "
 "teisingi. Visi\n"
-"        nekomercinio naudojimo – nemokami, bet komercinių naudotojai yra "
+"        nekomercinio naudojimai – nemokami, bet komercinių naudotojai yra "
 "prašomi susimokėti už\n"
 "        reguliarų duomenų atnaujinimą, kad padėtų finansuoti projektą. Mes\n"
 "        raginame visus duomenų naudotojus prisidėti prie duomenų rinkimo "
@@ -1487,7 +1487,7 @@ msgstr "Štai nuorodos į daugiau informacijos:"
 #: metabrainz/templates/payments/donate.html:3
 #: metabrainz/templates/payments/donate.html:7
 msgid "Make a Donation"
-msgstr "Padarykti auką"
+msgstr "Padaryti auką"
 
 #: metabrainz/templates/payments/donate.html:10
 #, python-format
