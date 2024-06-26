@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2023-11-13 22:27+0000\n"
+"PO-Revision-Date: 2024-06-27 20:42+0000\n"
 "Last-Translator: \"salo.rock\" <salo.rock@users.noreply.translations."
 "metabrainz.org>\n"
 "Language-Team: Italian <https://translations.metabrainz.org/projects/"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
 " ? 1 : 2);\n"
-"X-Generator: Weblate 5.1\n"
+"X-Generator: Weblate 5.6\n"
 "Generated-By: Babel 2.3.4\n"
 
 #: metabrainz/payments/forms.py:9
@@ -3037,7 +3037,7 @@ msgid ""
 "code repository."
 msgstr ""
 "Accetto di trattare il mio token di accesso come un segreto e non lo "
-"condividerò pubblicamente né lo invierò ad un archivio di codice sorgente "
+"condividerò pubblicamente né lo invierò a un archivio di codice sorgente "
 "pubblicamente visibile."
 
 #: metabrainz/templates/users/signup-commercial.html:192
@@ -3099,7 +3099,7 @@ msgstr ""
 "Accetto di utilizzare il Live Data Feed esclusivamente per usi non "
 "commerciali (con fatturato di meno di 500$/anno) o personali. Accetto anche "
 "di trattare il mio token di accesso come un segreto e non lo condividerò "
-"pubblicamente né lo invierò ad un archivio di codice sorgente."
+"pubblicamente né lo invierò a un archivio di codice sorgente."
 
 #: metabrainz/templates/users/supporters-list.html:9
 #, python-format
