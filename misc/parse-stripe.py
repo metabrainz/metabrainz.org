@@ -9,9 +9,6 @@ import sys, os
 from decimal import Decimal
 import csv
 
-def toFloat(svalue):
-    return float(svalue.replace(",", ""))
-
 if len(sys.argv) < 4:
     print("Usage parse-stripe.py <stripe csv file> <qbo csv file> [beginning balance]")
     sys.exit(-1)
@@ -62,12 +59,12 @@ for row in rows:
     date = parser.parse(row[1] + " UTC")
     date = "%s/%s/%s" % (date.month, date.day, date.year)
     gross = Decimal(row[2])
-    fee = Decimal(row[10])
-    sender = row[20]
-    memo = row[9]
+    fee = Decimal(row[11])
+    sender = row[22]
+    memo = row[10]
 
-    if row[79] != "":
-        sender += " (inv #%s)" % row[79]
+    if row[84] != "":
+        sender += " (inv #%s)" % row[84]
 
     out.writerow([date, "Stripe fee", "-" + str(fee)])
     out.writerow([date, sender, str(gross)])

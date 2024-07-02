@@ -43,7 +43,10 @@ reader = unicode_csv_reader(fp)
 for line in reader:
 
     # Filter out lines that complicate everything
-    if line[4] == "General Card Deposit": 
+    if line[4] in ("General Card Deposit", "Account Hold for Open Authorization", "Reversal of General Account Hold"):
+        continue
+
+    if line[5] != 'Completed':
         continue
 
     lines.append(line)
@@ -64,14 +67,6 @@ while True:
     status = fields[5]
     typ = fields[4]
 
-    if status != 'Completed':
-        index += 1
-        continue
-
-    if typ in ["Account Hold for Open Authorization", "Reversal of General Account Hold"]:
-        index += 1
-        continue
-
     currency = fields[6]
     if currency == 'USD' and typ != "General Currency Conversion":
         # Normal native currency transactions
@@ -80,20 +75,25 @@ while True:
     elif currency != 'USD':
         print("transaction foreign")
         # Received money in foreign currency
-        foreign = float(lines[index + 2][7].replace(",", ""))
-        native = float(lines[index + 1][7].replace(",", ""))
+        print(lines[index + 1])
+        print(lines[index + 2])
+        foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+        native = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+
 
         print("native %f, foreign %f" % (native, foreign))
 
         ratio = native / foreign
         print("conversion rate: %f" % ratio)
 
-        fee = float(fee) / ratio
-        fee = float(int(fee * 100)) / 100
+        fee = Decimal(fee) / ratio
+        fee = Decimal(int(fee * 100)) / 100
         net = native - fee
 
         amount = native
-        print("amount %f fee: %f" % (amount, fee))
+        if typ == "Express Checkout Payment":
+            amount = -amount
+        print("amount %f fee: %f\n" % (amount, fee))
 
         index += 2
         
@@ -106,7 +106,7 @@ while True:
 
     desc = "PayPal Fee"
     dat = fields[0]
-    if fee and float(fee) != 0.0:
+    if fee and Decimal(fee) != 0.0:
         out.writerow([dat, desc, fee])
 
     index += 1
