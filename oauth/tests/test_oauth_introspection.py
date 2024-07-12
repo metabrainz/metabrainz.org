@@ -186,7 +186,7 @@ class IntrospectionTestCase(OAuthTestCase):
         }
         self._test_oauth_introspection_error_helper(data)
 
-    def test_oauth_introspection_different_client(self):
+    def test_oauth_introspection_different_client_success(self):
         application = self.create_oauth_app()
         application2 = self.create_oauth_app()[1]
         redirect_uri = "https://example.com/callback"
@@ -199,7 +199,20 @@ class IntrospectionTestCase(OAuthTestCase):
             "token": token["access_token"],
             "token_type_hint": "access_token",
         }
-        self._test_oauth_introspection_error_helper(data)
+        with patch("oauth.login.load_user_from_db", return_value=self.user2):
+            response = self.client.post("/oauth2/introspect", data=data)
+            self.assert200(response)
+            self.assertEqual(response.json["active"], True)
+            # self.assertEqual(response.json["client_id"], data["client_id"])
+            self.assertEqual(response.json["issued_by"], "https://metabrainz.org/")
+            self.assertEqual(response.json["scope"], ["test-scope-1"])
+            self.assertEqual(response.json["sub"], self.user2.user_name)
+            self.assertEqual(response.json["token_type"], "Bearer")
+            self.assertEqual(response.json["metabrainz_user_id"], self.user2.id)
+            self.assertIsNotNone(response.json["issued_at"])
+            self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)
+
+            self.assert_security_headers(response)
 
     def test_oauth_introspection_check_refreshed_token_works(self):
         application = self.create_oauth_app()
