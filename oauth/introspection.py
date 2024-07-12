@@ -35,4 +35,6 @@ class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
         }
 
     def check_permission(self, token, client, request):
-        return token.client_id == client.id
+        # any client can introspect any token
+        # todo: consider restricting to only *brainz clients having introspection rights
+        return True
