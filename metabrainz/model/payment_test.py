@@ -140,110 +140,108 @@ class PaymentModelStripeTestCase(FlaskTestCase):
     def setUp(self):
         super(PaymentModelStripeTestCase, self).setUp()
         self.session_without_metadata = {
-            "object": {
-                "id": "cs_test_a1Xnl40m2FIdI4qWQme3Sy2gPd2RnA4D764BqtueKvQC0sCfkQbWPnkZeU",
-                "object": "checkout.session",
-                "after_expiration": None,
-                "allow_promotion_codes": None,
-                "amount_subtotal": 5000,
-                "amount_total": 5000,
-                "automatic_tax": {
-                    "enabled": False,
-                    "liability": None,
-                    "status": None
+            "id": "cs_test_a1Xnl40m2FIdI4qWQme3Sy2gPd2RnA4D764BqtueKvQC0sCfkQbWPnkZeU",
+            "object": "checkout.session",
+            "after_expiration": None,
+            "allow_promotion_codes": None,
+            "amount_subtotal": 5000,
+            "amount_total": 5000,
+            "automatic_tax": {
+                "enabled": False,
+                "liability": None,
+                "status": None
+            },
+            "billing_address_collection": "required",
+            "cancel_url": "https://test.metabrainz.org/payment/cancelled?is_donation=True",
+            "client_reference_id": None,
+            "client_secret": None,
+            "consent": None,
+            "consent_collection": None,
+            "created": 1721063848,
+            "currency": "usd",
+            "currency_conversion": None,
+            "custom_fields": [
+            ],
+            "custom_text": {
+                "after_submit": None,
+                "shipping_address": None,
+                "submit": None,
+                "terms_of_service_acceptance": None
+            },
+            "customer": None,
+            "customer_creation": "if_required",
+            "customer_details": {
+                "address": {
+                    "city": "Delhi",
+                    "country": "IN",
+                    "line1": "Chandni Chowk",
+                    "line2": None,
+                    "postal_code": "110006",
+                    "state": "DL"
                 },
-                "billing_address_collection": "required",
-                "cancel_url": "https://test.metabrainz.org/payment/cancelled?is_donation=True",
-                "client_reference_id": None,
-                "client_secret": None,
-                "consent": None,
-                "consent_collection": None,
-                "created": 1721063848,
-                "currency": "usd",
-                "currency_conversion": None,
-                "custom_fields": [
-                ],
-                "custom_text": {
-                    "after_submit": None,
-                    "shipping_address": None,
-                    "submit": None,
-                    "terms_of_service_acceptance": None
-                },
-                "customer": None,
-                "customer_creation": "if_required",
-                "customer_details": {
-                    "address": {
-                        "city": "Delhi",
-                        "country": "IN",
-                        "line1": "Chandni Chowk",
-                        "line2": None,
-                        "postal_code": "110006",
-                        "state": "DL"
+                "email": "test@gmail.com",
+                "name": "Lucifer",
+                "phone": None,
+                "tax_exempt": "none",
+                "tax_ids": [
+                ]
+            },
+            "customer_email": None,
+            "expires_at": 1721150248,
+            "invoice": None,
+            "invoice_creation": {
+                "enabled": False,
+                "invoice_data": {
+                    "account_tax_ids": None,
+                    "custom_fields": None,
+                    "description": None,
+                    "footer": None,
+                    "issuer": None,
+                    "metadata": {
                     },
-                    "email": "test@gmail.com",
-                    "name": "Lucifer",
-                    "phone": None,
-                    "tax_exempt": "none",
-                    "tax_ids": [
-                    ]
-                },
-                "customer_email": None,
-                "expires_at": 1721150248,
-                "invoice": None,
-                "invoice_creation": {
-                    "enabled": False,
-                    "invoice_data": {
-                        "account_tax_ids": None,
-                        "custom_fields": None,
-                        "description": None,
-                        "footer": None,
-                        "issuer": None,
-                        "metadata": {
-                        },
-                        "rendering_options": None
-                    }
-                },
-                "livemode": False,
-                "locale": None,
-                "metadata": {
-                },
-                "mode": "payment",
-                "payment_intent": "pi_3PcsXqISlclrXlsU1mOuLu09",
-                "payment_link": None,
-                "payment_method_collection": "if_required",
-                "payment_method_configuration_details": None,
-                "payment_method_options": {
-                    "card": {
-                        "request_three_d_secure": "automatic"
-                    }
-                },
-                "payment_method_types": [
-                    "card"
-                ],
-                "payment_status": "paid",
-                "phone_number_collection": {
-                    "enabled": False
-                },
-                "recovered_from": None,
-                "saved_payment_method_options": None,
-                "setup_intent": None,
-                "shipping": None,
-                "shipping_address_collection": None,
-                "shipping_options": [
-                ],
-                "shipping_rate": None,
-                "status": "complete",
-                "submit_type": "donate",
-                "subscription": None,
-                "success_url": "https://test.metabrainz.org/payment/complete?is_donation=True",
-                "total_details": {
-                    "amount_discount": 0,
-                    "amount_shipping": 0,
-                    "amount_tax": 0
-                },
-                "ui_mode": "hosted",
-                "url": None
-            }
+                    "rendering_options": None
+                }
+            },
+            "livemode": False,
+            "locale": None,
+            "metadata": {
+            },
+            "mode": "payment",
+            "payment_intent": "pi_3PcsXqISlclrXlsU1mOuLu09",
+            "payment_link": None,
+            "payment_method_collection": "if_required",
+            "payment_method_configuration_details": None,
+            "payment_method_options": {
+                "card": {
+                    "request_three_d_secure": "automatic"
+                }
+            },
+            "payment_method_types": [
+                "card"
+            ],
+            "payment_status": "paid",
+            "phone_number_collection": {
+                "enabled": False
+            },
+            "recovered_from": None,
+            "saved_payment_method_options": None,
+            "setup_intent": None,
+            "shipping": None,
+            "shipping_address_collection": None,
+            "shipping_options": [
+            ],
+            "shipping_rate": None,
+            "status": "complete",
+            "submit_type": "donate",
+            "subscription": None,
+            "success_url": "https://test.metabrainz.org/payment/complete?is_donation=True",
+            "total_details": {
+                "amount_discount": 0,
+                "amount_shipping": 0,
+                "amount_tax": 0
+            },
+            "ui_mode": "hosted",
+            "url": None
         }
         self.payment_intent = {
             "amount": 5000,
