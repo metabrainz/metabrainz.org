@@ -310,8 +310,8 @@ class Payment(db.Model):
     def log_one_time_charge(cls, session):
         """ Log successful Stripe charge for one time payment/donation """
         payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
-                                                       expand=["charges.data.balance_transaction"])
-        charge = payment_intent["charges"]["data"][0]
+                                                       expand=["latest_charge.balance_transaction"])
+        charge = payment_intent["latest_charge"]
         metadata = payment_intent["metadata"]
         return cls._log_stripe_charge(charge, metadata)
 
