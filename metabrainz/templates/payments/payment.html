@@ -53,10 +53,9 @@
 
       <div id="buttons" class="form-group">
         <div class="col-sm-offset-3 col-sm-6">
-          {% if currency == 'usd' %}
-            {# Only accepting payments in USD through Stripe #}
-            <button id="btn-stripe" type="button" class="btn">{{ _('Pay with Credit Card') }}</button>
-          {% endif %}
+          <button id="btn-stripe" type="button" class="btn">
+            {{ _('Pay with Credit Card') }}
+          </button>
           <button id="btn-paypal" type="button" class="btn">
             <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
           </button>
