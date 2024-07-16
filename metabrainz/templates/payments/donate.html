@@ -175,7 +175,6 @@
           $.each(buttons, function( index, button ) {
             button.removeAttr('disabled');
           });
-          updateButtonState();
 
         } else { // Disabled
           $.each(buttons, function( index, button ) {
@@ -183,19 +182,6 @@
           });
         }
       }
-
-      function updateButtonState() {
-        // This function disables or enables payment buttons depending on what
-        // features they support.
-
-        // We don't support payments in EUR via Stripe currently.
-        if (selectedCurrency === CURRENCY.Euro) {
-          buttons.stripe.attr('disabled', 'disabled');
-        } else {
-          buttons.stripe.removeAttr('disabled');
-        }
-      }
-
 
       ///////////////
       // AMOUNT INPUT
@@ -226,7 +212,6 @@
         } else {
           console.error("Unknown currency:", this.value)
         }
-        updateButtonState();
       });
 
       ///////////////

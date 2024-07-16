@@ -448,7 +448,7 @@ class PaymentModelStripeTestCase(FlaskTestCase):
         }
         mock_stripe.retrieve.return_value = payment_intent
         session = self.session_without_metadata.copy()
-        Payment.log_one_time_charge(session)
+        Payment.log_one_time_charge("usd", session)
         self.assertEqual(len(Payment.query.all()), 1)
 
     @patch("stripe.PaymentIntent")
@@ -461,5 +461,5 @@ class PaymentModelStripeTestCase(FlaskTestCase):
             "invoice_number": 42,
         }
         mock_stripe.retrieve.return_value = payment_intent
-        Payment.log_one_time_charge(self.session_without_metadata)
+        Payment.log_one_time_charge("usd", self.session_without_metadata)
         self.assertEqual(len(Payment.query.all()), 1)

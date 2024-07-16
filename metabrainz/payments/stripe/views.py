@@ -23,6 +23,11 @@ def pay():
         return redirect(url_for("payments.error", is_donation=is_donation))
 
     is_recurring = form.recurring.data
+    currency = form.currency.data
+    if currency.lower() == "usd":
+        api_key = current_app.config["STRIPE_KEYS"]["USD"]["SECRET"]
+    else:
+        api_key = current_app.config["STRIPE_KEYS"]["EUR"]["SECRET"]
 
     charge_metadata = {
         "is_donation": is_donation,
@@ -46,7 +51,7 @@ def pay():
             {
                 "price_data": {
                     "unit_amount": int(form.amount.data * 100),  # amount in cents
-                    "currency": form.currency.data,
+                    "currency": currency,
                     "product_data": {
                         "name": "Support the MetaBrainz Foundation",
                         "description": description
@@ -77,18 +82,24 @@ def pay():
         }
 
     try:
-        session = stripe.checkout.Session.create(**session_config)
+        session = stripe.checkout.Session.create(**session_config, api_key=api_key)
         return redirect(session.url, code=303)
     except Exception as e:
         current_app.logger.error(e, exc_info=True)
         return redirect(url_for("payments.error", is_donation=is_donation))
 
 
-@payments_stripe_bp.route("/webhook/", methods=["POST"])
-def webhook():
+@payments_stripe_bp.route("/webhook/<currency>/", methods=["POST"])
+def webhook(currency):
     payload = request.data
     sig_header = request.headers.get("Stripe-Signature")
-    webhook_secret = current_app.config["STRIPE_KEYS"]["WEBHOOK_SECRET"]
+
+    if currency.lower() == "usd":
+        webhook_secret = current_app.config["STRIPE_KEYS"]["USD"]["WEBHOOK_SECRET"]
+    elif currency.lower() == "eur":
+        webhook_secret = current_app.config["STRIPE_KEYS"]["EUR"]["WEBHOOK_SECRET"]
+    else:
+        return jsonify({"error": "invalid currency"}), 400
 
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
@@ -105,8 +116,8 @@ def webhook():
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
         if session["mode"] == "payment":
-            Payment.log_one_time_charge(session)
+            Payment.log_one_time_charge(currency, session)
     elif event["type"] == "invoice.paid":
-        Payment.log_subscription_charge(event["data"]["object"])
+        Payment.log_subscription_charge(currency, event["data"]["object"])
 
     return jsonify({"status": "ok"})
