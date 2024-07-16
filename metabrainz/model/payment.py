@@ -300,17 +300,26 @@ class Payment(db.Model):
         return options
 
     @classmethod
-    def log_subscription_charge(cls, invoice):
+    def log_subscription_charge(cls, currency, invoice):
         """ Log successful Stripe charges for a recurring payment/donation """
-        charge = stripe.Charge.retrieve(invoice["charge"], expand=["balance_transaction"])
+        if currency.lower() == "usd":
+            api_key = current_app.config["STRIPE_KEYS"]["USD"]["SECRET"]
+        else:
+            api_key = current_app.config["STRIPE_KEYS"]["EUR"]["SECRET"]
+        charge = stripe.Charge.retrieve(invoice["charge"], expand=["balance_transaction"], api_key=api_key)
         metadata = invoice["lines"]["data"][0]["metadata"]
         return cls._log_stripe_charge(charge, metadata)
 
     @classmethod
-    def log_one_time_charge(cls, session):
+    def log_one_time_charge(cls, currency, session):
         """ Log successful Stripe charge for one time payment/donation """
+        if currency.lower() == "usd":
+            api_key = current_app.config["STRIPE_KEYS"]["USD"]["SECRET"]
+        else:
+            api_key = current_app.config["STRIPE_KEYS"]["EUR"]["SECRET"]
         payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
-                                                       expand=["latest_charge.balance_transaction"])
+                                                       expand=["latest_charge.balance_transaction"],
+                                                       api_key=api_key)
         charge = payment_intent["latest_charge"]
         metadata = payment_intent["metadata"]
         return cls._log_stripe_charge(charge, metadata)
@@ -343,7 +352,7 @@ class Payment(db.Model):
             last_name="",
             amount=transaction["net"] / 100,  # cents should be converted
             fee=transaction["fee"] / 100,  # cents should be converted
-            currency="usd",
+            currency=currency,
             transaction_id=charge["id"],
             payment_method=PAYMENT_METHOD_STRIPE,
             is_donation=metadata["is_donation"],

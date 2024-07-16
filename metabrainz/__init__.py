@@ -169,8 +169,6 @@ def create_app(debug=None, config_path=None):
     if app.config["QUICKBOOKS_CLIENT_ID"]:
         admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
 
-    stripe.api_key = app.config["STRIPE_KEYS"]["SECRET"]
-
     return app
 
 

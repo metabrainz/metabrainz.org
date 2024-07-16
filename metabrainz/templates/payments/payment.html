@@ -140,20 +140,6 @@
       // PAYMENTS
       ///////////
 
-      function updateRecurringState() {
-        // We don't support recurring payments via Stripe
-        if ($('#recurring-flag').is(":checked")) {
-          buttons.stripe.attr('disabled', 'disabled');
-        } else {
-          buttons.stripe.removeAttr('disabled');
-        }
-      }
-
-      $('#recurring-flag').change(function() {
-        updateRecurringState();
-      });
-
-
       // Stripe
       buttons.stripe.on('click', function(e) {
         setButtonsState(false);

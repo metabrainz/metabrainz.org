@@ -34,9 +34,16 @@ PAYPAL_BUSINESS = "payment@example.org"
 # Stripe
 # https://stripe.com/docs/tutorials/dashboard#api-keys
 STRIPE_KEYS = {
-    "SECRET": "",
-    "PUBLISHABLE": "",
-    "WEBHOOK_SECRET": ""
+    "USD": {
+        "SECRET": "",
+        "PUBLISHABLE": "",
+        "WEBHOOK_SECRET": ""
+    },
+    "EUR": {
+        "SECRET": "",
+        "PUBLISHABLE": "",
+        "WEBHOOK_SECRET": ""
+    }
 }
 
 # if developing payment integration locally, change this to your localhost url
