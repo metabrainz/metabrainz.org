@@ -7,9 +7,9 @@
     <h1 class="page-title">{{ _('Make a Payment') }}</h1>
 
     <div class="alert alert-info" role="alert">
-      {{ _('<b>This page is for organizations!</b> Payments made here will not show up
-      in the list of donations. If you want to make a donation instead, go to
-      <a href="%(donate_url)s">donation page</a>.', donate_url=url_for('payments.donate')) }}
+      {{ _('<b>This page is for organizations that are supporters of the MetaBrainz Foundation to make payments
+      to us!</b> Payments made here will not be considered as donations. If you want to make a donation
+      instead, go to <a href="%(donate_url)s">donation page</a>.', donate_url=url_for('payments.donate')) }}
     </div>
 
     <p>
