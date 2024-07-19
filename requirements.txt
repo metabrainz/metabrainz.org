@@ -30,7 +30,7 @@ rauth==0.7.3
 redis==5.0.3
 reportlab==4.1.0
 requests==2.32.0
-sentry-sdk[flask]==1.43.0
+sentry-sdk[flask]==2.10.0
 six==1.16.0
 SQLAlchemy==1.4.52
 sqlalchemy-dst>=1.0.1
