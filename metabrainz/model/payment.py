@@ -6,7 +6,6 @@ from metabrainz.model import db
 from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
-from sentry_sdk import capture_message
 from sqlalchemy.sql import func, desc
 from flask import current_app
 from datetime import datetime
@@ -173,7 +172,7 @@ class Payment(db.Model):
         if form['payment_status'] != 'Completed':
             # TODO(roman): Convert to regular `logging.info` call when such detailed logs
             # are no longer necessary to capture.
-            capture_message("PayPal: Payment is not completed", level="info", extra={"ipn_content": form})
+            logging.info("PayPal: Payment is not completed: %s",form)
             return
 
         account_ids = current_app.config['PAYPAL_ACCOUNT_IDS']  # "currency => account" mapping
