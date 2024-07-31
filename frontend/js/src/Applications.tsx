@@ -44,17 +44,14 @@ function Applications({
           No applications found
         </p>
       ) : (
-        <table className="table table-hover">
+        <table className="oauth-applications-table table table-hover">
           <thead>
             <tr>
               <th>Name</th>
               <th>Website</th>
               <th>Client ID</th>
               <th>Client secret</th>
-              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-              <th />
-              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-              <th />
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -66,15 +63,13 @@ function Applications({
                 <td>{application.client_secret}</td>
                 <td>
                   <a
-                    className="btn btn-primary btn-xs"
+                    className="btn btn-block btn-primary btn-xs"
                     href={`${urlPrefix}/client/edit/${application.client_id}`}
                   >
                     Modify
                   </a>
-                </td>
-                <td>
                   <a
-                    className="btn btn-danger btn-xs"
+                    className="btn btn-block btn-danger btn-xs"
                     href={`${urlPrefix}/client/delete/${application.client_id}`}
                   >
                     Delete
@@ -93,7 +88,7 @@ function Applications({
           No tokens found
         </p>
       ) : (
-        <table className="table table-hover">
+        <table className="oauth-applications-table table table-hover">
           <thead>
             <tr>
               <th>Name</th>

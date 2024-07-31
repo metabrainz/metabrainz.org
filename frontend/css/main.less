@@ -537,3 +537,9 @@ table.finances td:nth-child(2) {
     transform: rotate(360deg);
   }
 }
+
+// Oauth applications table has long token that need to be broken up
+// otherwise they make the page overflow
+.oauth-applications-table>tbody>tr>td {
+    word-break: break-word;
+}
