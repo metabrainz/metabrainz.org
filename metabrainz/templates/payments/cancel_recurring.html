@@ -6,16 +6,20 @@
   <h1 class="page-title">{{ _('Cancelling recurring payments') }}</h1>
 
   <p>
-    {{ _('In case you want to cancel recurring donation (payment) that you set up before,
-    you\'ll need to go to a service which you used to pay.') }}
+    {{ _('If you want to cancel a recurring donation (payment) that you have set up:') }}
   </p>
-
-  <p>
-    {{ _('Here are links to more information:') }}
-    <strong>
-      <ul>
-        <li><a href="https://www.paypal.com/selfhelp/article/FAQ2058">PayPal</a></li>
-      </ul>
-    </strong>
-  </p>
+ 
+  <ul>
+    <li>
+      {{ _('For Stripe, we will cancel your donation manually. 
+      Please <a href="%(contact_url)s">contact us</a>, indicating the name
+      on the card used to set up the payment.',
+      contact_url=url_for('index.contact')) }}
+    </li>
+    <li>
+      {{ _('For PayPal, you will need to cancel from their site.
+      See <a href="%(paypal_cancel_url)s">their documentation</a>.',
+      paypal_cancel_url='https://www.paypal.com/us/cshelp/article/what-is-an-automatic-payment-and-how-do-i-update-or-cancel-one-help240') }}
+    </li>
+  </ul>
 {% endblock %}
