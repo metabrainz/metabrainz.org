@@ -136,3 +136,42 @@ export function DatasetsInput({ datasets }: DatasetsProps) {
     </div>
   );
 }
+
+export type OAuthTextInputProps = JSX.IntrinsicElements["input"] &
+  FieldConfig & {
+    label: string;
+  };
+
+export function OAuthTextInput({
+  label,
+  children,
+  ...props
+}: OAuthTextInputProps) {
+  const [field, meta] = useField(props);
+  return (
+    <div className="form-group">
+      <label className="col-sm-3 control-label">
+        {label} {props.required && <span style={{ color: "red" }}>*</span>}
+      </label>
+      <div className="col-sm-5">
+        <input className="form-control" {...field} {...props} />
+        {meta.touched && meta.error ? (
+          <div style={{ paddingTop: "7px", color: "red" }}>{meta.error}</div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+export function OAuthScopeDesc(scopes: Array<Scope>) {
+  return (
+    <ul>
+      {/* eslint-disable-next-line react/destructuring-assignment */}
+      {scopes.map((scope) => (
+        <li>
+          {scope.name}: {scope.description}
+        </li>
+      ))}
+    </ul>
+  );
+}

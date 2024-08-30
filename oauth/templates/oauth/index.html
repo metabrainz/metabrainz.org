@@ -1,0 +1,8 @@
+{% extends 'base-react.html' %}
+
+{% block title %}{{ _('Applications') }} - MetaBrainz{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ get_static_path('applications.js') }}" type="text/javascript"></script>
+{% endblock %}
