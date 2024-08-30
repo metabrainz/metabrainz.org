@@ -146,3 +146,7 @@ def _explode_db_uri(uri):
 
 if __name__ == '__main__':
     cli()
+
+"""
+insert into tier (name, short_desc, long_desc, price, available, "primary") values ('We will contribute, we promise!', 'For lame user lying about supporting us.', 'Whatevs, you dont care anyway.', 0.0, 't', 't');
+"""

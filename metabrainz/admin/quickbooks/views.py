@@ -52,11 +52,11 @@ class QuickBooksView(BaseView):
 
 
     @staticmethod
-    def create_invoices(client, invoices):
+    def create_invoices(client, invoices, latest_invoice_num):
         '''
         Given a set of existing invoices, fetch the invoice from QuickBooks, make a copy, update it
         with new values and then have QuickBooks save the new invoice. Invoices are not sent,
-        and must be sent via the QuickBooks web interface.
+        and must be sent via the manage command from the metabrainz-prod container.
         '''
 
         for invoice in invoices:
@@ -65,9 +65,10 @@ class QuickBooksView(BaseView):
                 flash("Cannot fetch old invoice!")
                 break
 
+            latest_invoice_num += 1
             new_invoice = invoice_list[0]
             new_invoice.Id = None
-            new_invoice.DocNumber = None
+            new_invoice.DocNumber = latest_invoice_num
             new_invoice.DueDate = None
             new_invoice.TxnDate = None
             new_invoice.ShipDate = None
@@ -100,7 +101,7 @@ class QuickBooksView(BaseView):
         Send all this to the caller to render.
         '''
 
-        # Look up access tokens from sessions, or make the user login
+        # Look up access tokens from sessions, or make the supporter login
         access_token = session.get('access_token', None)
         refresh_token = session.get('refresh_token', "")
         realm = session.get('realm', None)
@@ -162,6 +163,12 @@ class QuickBooksView(BaseView):
             year -= 1
         (ppq_start, ppq_end) = self.calculate_quarter_dates(year ,ppq)
 
+        # Find the latest invoice number by iterating over all the invoices
+        latest_invoice = 0
+        for invoice in invoices:
+            latest_invoice = max(latest_invoice, int(invoice.DocNumber or "0"))
+        flash("latest invoice is %d" % latest_invoice)
+
         # Iterate over all the invoices, parse their dates and arrange them into the invoice dict, by customer
         invoice_dict = {}
         for invoice in invoices:
@@ -205,6 +212,7 @@ class QuickBooksView(BaseView):
                 'qty' : invoice.Line[0].SalesItemLineDetail.Qty,
                 'price' : invoice.Line[0].SalesItemLineDetail.UnitPrice
             })
+
 
         # Finally, classify customers into the three bins
         ready_to_invoice = []
@@ -308,7 +316,8 @@ class QuickBooksView(BaseView):
         cache.set("qb_access_token", session['access_token'], 3600)
         cache.set("qb_refresh_token", session['refresh_token'], 3600)
 
-        return render_template("quickbooks/index.html", ready=ready_to_invoice, wtf=wtf, current=current)
+        return render_template("quickbooks/index.html", ready=ready_to_invoice,
+                               wtf=wtf, current=current, latest_invoice=latest_invoice)
 
     @expose('/', methods=['POST'])
     def submit(self):
@@ -316,6 +325,7 @@ class QuickBooksView(BaseView):
         Parse the form submission, load invoices, copy the invoices, update the pertinent details and then save new invoice.
         '''
 
+        latest_invoice = int(request.form.get("latest_invoice"))
         customer = 0
         invoices = []
         while True:
@@ -348,7 +358,7 @@ class QuickBooksView(BaseView):
         # Now call create invoices and deal with possible errors
         try:
             client = get_client(realm, refresh_token)
-            self.create_invoices(client, invoices)
+            self.create_invoices(client, invoices, latest_invoice)
 
         except AuthClientError as err:
             flash("Authorization failed, please try again: %s" % err)

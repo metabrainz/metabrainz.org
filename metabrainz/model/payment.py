@@ -6,7 +6,6 @@ from metabrainz.model import db
 from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
-from sentry_sdk import capture_message
 from sqlalchemy.sql import func, desc
 from flask import current_app
 from datetime import datetime
@@ -173,7 +172,7 @@ class Payment(db.Model):
         if form['payment_status'] != 'Completed':
             # TODO(roman): Convert to regular `logging.info` call when such detailed logs
             # are no longer necessary to capture.
-            capture_message("PayPal: Payment is not completed", level="info", extra={"ipn_content": form})
+            logging.info("PayPal: Payment is not completed: %s",form)
             return
 
         account_ids = current_app.config['PAYPAL_ACCOUNT_IDS']  # "currency => account" mapping
@@ -300,7 +299,32 @@ class Payment(db.Model):
         return options
 
     @classmethod
-    def log_stripe_charge(cls, session):
+    def log_subscription_charge(cls, currency, invoice):
+        """ Log successful Stripe charges for a recurring payment/donation """
+        if currency.lower() == "usd":
+            api_key = current_app.config["STRIPE_KEYS"]["USD"]["SECRET"]
+        else:
+            api_key = current_app.config["STRIPE_KEYS"]["EUR"]["SECRET"]
+        charge = stripe.Charge.retrieve(invoice["charge"], expand=["balance_transaction"], api_key=api_key)
+        metadata = invoice["lines"]["data"][0]["metadata"]
+        return cls._log_stripe_charge(charge, metadata)
+
+    @classmethod
+    def log_one_time_charge(cls, currency, session):
+        """ Log successful Stripe charge for one time payment/donation """
+        if currency.lower() == "usd":
+            api_key = current_app.config["STRIPE_KEYS"]["USD"]["SECRET"]
+        else:
+            api_key = current_app.config["STRIPE_KEYS"]["EUR"]["SECRET"]
+        payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
+                                                       expand=["latest_charge.balance_transaction"],
+                                                       api_key=api_key)
+        charge = payment_intent["latest_charge"]
+        metadata = payment_intent["metadata"]
+        return cls._log_stripe_charge(charge, metadata)
+
+    @classmethod
+    def _log_stripe_charge(cls, charge, metadata):
         """Log successful Stripe charge.
 
         Args:
@@ -308,11 +332,6 @@ class Payment(db.Model):
                 available at https://stripe.com/docs/api/python#charge_object.
         """
         current_app.logger.debug("Processing Stripe charge...")
-        metadata = session["metadata"]
-
-        payment_intent = stripe.PaymentIntent.retrieve(session["payment_intent"],
-                                                       expand=["charges.data.balance_transaction"])
-        charge = payment_intent["charges"]["data"][0]
 
         # Transaction already exists in the database, do not insert again
         if db.session.query(exists().where(Payment.transaction_id == charge["id"])).scalar():
@@ -324,7 +343,7 @@ class Payment(db.Model):
         transaction = charge["balance_transaction"]
         currency = transaction["currency"].lower()
         if currency not in SUPPORTED_CURRENCIES:
-            current_app.logger.warning("Unsupported currency: ", session["currency"])
+            current_app.logger.warning("Unsupported currency: ", transaction["currency"])
             return
 
         new_donation = cls(

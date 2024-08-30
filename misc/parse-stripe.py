@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
+from datetime import datetime
+from dateutil import parser
+
 # Parse the report downloaded from https://dashboard.stripe.com/reports/balance
 
 import sys, os
 from decimal import Decimal
 import csv
-
-def toFloat(svalue):
-    return float(svalue.replace(",", ""))
 
 if len(sys.argv) < 4:
     print("Usage parse-stripe.py <stripe csv file> <qbo csv file> [beginning balance]")
@@ -38,40 +38,33 @@ out.writerow(["Date","Description","Amount"])
 trans = []
 head = None
 reader = csv.reader(fp)
+
+rows = []
 for i, row in enumerate(reader):
     if not i:
         head = row
         continue
 
-    if row[1] == 'payout':
-        continue
+    rows.append(row)
+
+rows.reverse()
+
+for row in rows:
 
 #    for i, d in enumerate(zip(head, row)):
 #        print("%d %-40s %s" % (i, d[0], d[1]))
 #    print()
 
-    date = row[3].split(' ')[0]
-    date = date.split('-')
-    date = "%s/%s/%s" % (date[1], date[2], date[0])
-    gross = Decimal(row[4])
-    fee = Decimal(row[9])
+    # TODO: Convert to PST/PDT
+    date = parser.parse(row[1] + " UTC")
+    date = "%s/%s/%s" % (date.month, date.day, date.year)
+    gross = Decimal(row[2])
+    fee = Decimal(row[11])
+    sender = row[22]
+    memo = row[10]
 
-    if row[1] == "contribution":
-        sender = "Climate contribution"
-        if balance is not None:
-            balance = balance + gross
-            print("%s %-40s %10s %10s" % (date, sender, str(gross), str(balance)))
-        out.writerow([date, sender, gross])
-        continue
-
-    sender = row[25]
-    if not sender or sender.strip() == "":
-        sender = row[17]
-    memo = row[1]
-
-    if row[1].find("Invoice") >= 0:
-        inv = row[1][row[1].find("Invoice") + 8:]
-        sender += " (inv #%s)" % inv
+    if row[84] != "":
+        sender += " (inv #%s)" % row[84]
 
     out.writerow([date, "Stripe fee", "-" + str(fee)])
     out.writerow([date, sender, str(gross)])
@@ -79,7 +72,7 @@ for i, row in enumerate(reader):
         balance = balance + gross
         print("%s %-40s %10s %10s" % (date, sender, str(gross), str(balance)))
         balance = balance - fee
-        print("%s %-40s %10s %10s" % (date, "Stripe fee", str(-fee), str(balance)))
+        print("%s %-40s %10s %10s" % (date, "Stripe fee", str(fee), str(balance)))
 
 fp.close()
 _out.close()

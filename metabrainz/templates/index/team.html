@@ -23,12 +23,12 @@
           pr_url='https://partyrobotics.com') }}
         </p>
         <p>
-          {{ _('He lives in Barcelona, Spain.') }}
+          {{ _('Originally from Germany, he now lives in Barcelona, Spain.') }}
         </p>
         <ul class="links">
           <li><strong>IRC:</strong> mayhem</li>
           <li><strong>GitHub:</strong> <a href="https://github.com/mayhem">mayhem</a></li>
-          <li><strong>Twitter:</strong> <a href="https://twitter.com/mayhembcn">mayhemBCN</a></li>
+          <li><strong>Twitter/X:</strong> <a href="https://twitter.com/mayhembcn">mayhemBCN</a></li>
         </ul>
       </div>
     </div>
@@ -52,38 +52,9 @@
     </div>
 
     <div class="person">
-      <img class="pic" src="{{ url_for('static', filename='img/team/frederik_olesen.jpg') }}"/>
-      <div class="bio">
-        <h4>{{ _('<span class="name">Frederik “Freso” S. Olesen</span> &mdash; Community Manager') }}</h4>
-        <p>
-          {{ _('Hired in the fall of 2015 as the MetaBrainz Community Manager, Freso is in charge of most of the public communication
-          channels (IRC, forums, blog, etc.) and various community projects (like the Google Code-in). He has been a
-          <a href="%(mb_freso_url)s">MusicBrainz contributor since 2006</a> and an open source enthusiast for
-          even longer.', mb_freso_url='https://musicbrainz.org/user/Freso') }}
-        </p>
-        <p>
-          {{ _('On the rare occasions that he is not found in front of a monitor of some sort, Freso can be found
-          <a href="%(mb_freso_artist)s">playing music</a> or (far more commonly)
-          dancing to it. He has even taught some dance classes and workshops in
-          <a href="%(bboy_url)s">b-boying</a>!',
-          mb_freso_artist='https://musicbrainz.org/artist/d112e7ac-3811-4773-abe3-f06c5e697ff4',
-          bboy_url='https://en.wikipedia.org/wiki/B-boying') }}
-        </p>
-        <p>
-          {{ _('Freso was born and raised in Copenhagen, Denmark but now lives across the sound in Landskrona, Sweden.') }}
-        </p>
-        <ul class="links">
-          <li><strong>IRC:</strong> Freso</li>
-          <li><strong>MusicBrainz:</strong> <a href="https://musicbrainz.org/user/Freso">Freso</a></li>
-          <li><strong>GitHub:</strong> <a href="https://github.com/Freso">Freso</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/nicolas_tamargo.jpg') }}"/>
       <div class="bio">
-        <h4>{{ _('<span class="name">Nicolás Tamargo</span> &mdash; Style Leader/Customer Support/Software Engineer') }}</h4>
+        <h4>{{ _('<span class="name">Nicolás Tamargo</span> &mdash; Style Leader/Customer Support/Community Manager/Software Engineer') }}</h4>
         <p>
           {{ _('Nicolás started (and still moonlights as) a hardcore editor, because he just likes
           organizing data that much. He was eventually offered the style leader position, in which
@@ -167,31 +138,6 @@
 
     <div class="person">
       <img
-        alt="Alastair Porter's photo"
-        class="pic"
-        src="{{ url_for('static', filename='img/team/alastair_porter.jpg') }}"
-      />
-      <div class="bio">
-        <h4>{{ _('<span class="name">Alastair Porter</span> &mdash; AcousticBrainz Lead &amp; Software Engineer') }}</h4>
-        <p>
-          {{ _('Alastair has been involved with MusicBrainz for over a decade, starting by contributing data and later as the
-          developer of the <a href="%(pymb_url)s">python webservice bindings</a>.',
-          pymb_url="https://github.com/alastair/python-musicbrainzngs")}}
-        </p>
-        <p>
-          {{ _('In 2014 while at the <a href="%(mtg)s">Music Technology Group</a>, he collaborated with MetaBrainz in developing and
-          launching AcousticBrainz, and since then has worked on it as a volunteer. He now works with the MetaBrainz team
-          as the lead AcousticBrainz developer.',
-          mtg="https://www.upf.edu/web/mtg/") }}
-        </p>
-        <ul class="links">
-          <li><strong>IRC:</strong> alastairp</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="person">
-      <img
         alt="Kartik Ohri's photo"
         class="pic"
         src="{{ url_for('static', filename='img/team/kartik.jpeg') }}"
@@ -206,30 +152,6 @@
         <ul class="links">
           <li><strong>IRC:</strong> lucifer</li>
           <li><strong>GitHub:</strong> <a href="https://github.com/amCap1712">amCap1712</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="person">
-      <img
-        alt="Akshat Tiwari's photo"
-        class="pic"
-        src="{{ url_for('static', filename='img/team/akshat.jpg') }}"
-      />
-      <div class="bio">
-        <h4>{{ _('<span class="name">Akshat Tiwari</span> &mdash; Junior Software Engineer') }}</h4>
-        <p>
-          {{ _('Akshat started contributing to the MusicBrainz Android App out of love for the project and after dwelling
-          on the variety of projects MetaBrainz operates, he decided to focus on the MusicBrainz project.
-          He was accepted as a Google Summer of Code student and is now a contractor for MetaBrainz, where
-          he focuses on the improvement of the MusicBrainz user interface and user experience.
-          
-          Akshat has always been fascinated by the creativity of people. He resides in New Delhi, India.') }}
-        </p>
-        <ul class="links">
-          <li><strong>IRC:</strong> akshaaatt</li>
-          <li><strong>GitHub:</strong> <a href="https://github.com/akshaaatt">akshaaatt</a></li>
-          <li><strong>Medium:</strong> <a href="https://medium.com/@akshaaatt">akshaaatt</a></li>
         </ul>
       </div>
     </div>
@@ -264,7 +186,7 @@
         src="{{ url_for('static', filename='img/team/aerozol.jpg') }}"
       />
       <div class="bio">
-        <h4>{{ _('<span class="name">Simon Hartman</span> &mdash; Design & UX Consultant') }}</h4>
+        <h4>{{ _('<span class="name">Simon Hartman</span> &mdash; Design, UX Consultant & Social Media Jockey') }}</h4>
         <p>
           {{ _('Simon has been contributing data and complaints about UX and design to MusicBrainz since 2009.
           In 2022 he started complaining about UX and design in an official capacity. He lives in New Zealand
@@ -278,8 +200,52 @@
       </div>
     </div>
 
+    <div class="person">
+      <img
+        alt="Ansh Goyal's photo"
+        class="pic"
+        src="{{ url_for('static', filename='img/team/ansh.jpg') }}"
+      />
+      <div class="bio">
+        <h4>{{ _('<span class="name">Ansh Goyal</span> &mdash; Junior Software Engineer') }}</h4>
+        <p>
+          {{ _('Ansh is a Software Engineer and is based in New Delhi, India. He joined MetaBrainz as a Google Summer of Code student in 2022 and has been a part of the community since then.
+          He started contributing to CritiqueBrainz and BookBrainz and is now also working on ListenBrainz.
+          In his leisure moments, Ansh enjoys binge-watching movies and listening to music.') }}
+        </p>
+        <ul class="links">
+          <li><strong>IRC:</strong> ansh</li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/anshg1214">anshg1214</a></li>
+          <li><strong>ListenBrainz:</strong> <a href="https://listenbrainz.org/user/anshgoyal31">anshgoyal31</a></li>
+        </ul>
+      </div>
+    </div>
+
     <h2>{{ _('Voluntary Project Leaders') }}</h2>
 
+    <div class="person">
+      <img
+        alt="Akshat Tiwari's photo"
+        class="pic"
+        src="{{ url_for('static', filename='img/team/akshat.jpg') }}"
+      />
+      <div class="bio">
+        <h4>{{ _('<span class="name">Akshat Tiwari</span> &mdash; Junior Software Engineer') }}</h4>
+        <p>
+          {{ _('Akshat started contributing to the MusicBrainz Android App out of love for the project and after dwelling
+          on the variety of projects MetaBrainz operates, he decided to focus on the MusicBrainz project.
+          He was accepted as a Google Summer of Code student and is now a contractor for MetaBrainz, where
+          he focuses on the improvement of the MusicBrainz user interface and user experience.
+          
+          Akshat has always been fascinated by the creativity of people. He resides in New Delhi, India.') }}
+        </p>
+        <ul class="links">
+          <li><strong>IRC:</strong> akshaaatt</li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/akshaaatt">akshaaatt</a></li>
+          <li><strong>Medium:</strong> <a href="https://medium.com/@akshaaatt">akshaaatt</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="person">
       <img class="pic" src="{{ url_for('static', filename='img/team/param_singh.jpg') }}" />
       <div class="bio">
@@ -333,16 +299,16 @@
         src="{{ url_for('static', filename='img/team/catcat.jpg') }}"
       />
       <div class="bio">
-        <h4>{{ _('<span class="name">C. "CatCat" Holm</span> &mdash; MusicBrainz Instruments') }}</h4>
+        <h4>{{ _('<span class="name">Akira Holm</span> &mdash; MusicBrainz Instruments') }}</h4>
         <p>
           {{ _('CatQuest, the Endeavouring Cat! (CatCat, for short) has been a MusicBrainz editor since 2004, and
           is in charge of adding and improving the musical instruments in MusicBrainz (the very unseriously-named,
           yet quite important "Instrument Inserter" position). When not looking all over the internet (and the library!)
-          for instrument data, their other hobbies include playing games, listening to all sorts of different music,
-          Lego, colouring, and collecting all sorts of things, from stickers and stamps to bottlecaps.') }}
+          for instrument data, his other hobbies include playing games, listening to all sorts of different music, Lupin 
+          III, colouring, and collecting all sorts of things, from stickers and stamps to bottlecaps.') }}
         </p>
         <ul class="links">
-          <li><strong>IRC:</strong> CatQuest</li>
+          <li><strong>IRC:</strong> ApeKattQuest</li>
           <li><strong>MusicBrainz:</strong> <a href="https://musicbrainz.org/user/CatCat">CatCat</a></li>
           <li><strong>ListenBrainz:</strong> <a href="https://listenbrainz.org/user/CatCat">CatCat</a></li>
         </ul>

@@ -39,9 +39,16 @@ PAYPAL_ACCOUNT_IDS = {
 PAYPAL_BUSINESS = '''{{template "KEY" "payments/paypal/business_email"}}'''
 
 STRIPE_KEYS = {
-    "SECRET": '''{{template "KEY" "payments/stripe/secret"}}''',
-    "PUBLISHABLE": '''{{template "KEY" "payments/stripe/publishable"}}''',
-    "WEBHOOK_SECRET": '''{{template "KEY" "payments/stripe/webhook_secret"}}''',
+    "USD": {
+        "SECRET": '''{{template "KEY" "payments/stripe/secret"}}''',
+        "PUBLISHABLE": '''{{template "KEY" "payments/stripe/publishable"}}''',
+        "WEBHOOK_SECRET": '''{{template "KEY" "payments/stripe/webhook_secret"}}''',
+    },
+    "EUR": {
+        "SECRET": '''{{template "KEY" "payments/stripe-eu/secret"}}''',
+        "PUBLISHABLE": '''{{template "KEY" "payments/stripe-eu/publishable"}}''',
+        "WEBHOOK_SECRET": '''{{template "KEY" "payments/stripe-eu/webhook_secret"}}''',
+    },
 }
 
 # MusicBrainz Base URL must have a trailing slash.

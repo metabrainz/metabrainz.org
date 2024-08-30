@@ -34,7 +34,7 @@
             <td>{{ token.value }}</td>
             <td>
               {% if token.owner_id %}
-                <a href="{{ url_for('usersview.details', user_id=token.owner_id) }}">{{ token.owner }}</a>
+                <a href="{{ url_for('supportersview.details', supporter_id=token.owner_id) }}">{{ token.owner }}</a>
               {% endif %}
             </td>
             <td>{{ token.created }}</td>

@@ -24,7 +24,6 @@ def get_client(realm, refresh_token):
     Create the QuickBooks client object from the auth client.
     '''
 
-    QuickBooks.enable_global()
     qb = QuickBooks(
         auth_client=current_app.quickbooks_auth_client,
         refresh_token=refresh_token,

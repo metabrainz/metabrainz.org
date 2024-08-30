@@ -1,0 +1,93 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h1>Supporters</h1>
+
+  <h3>Search</h3>
+  <p>
+    <em>Find supporters by organization name, MusicBrainz username, contact name or email.</em>
+  </p>
+  <form method="GET" class="form-horizontal" role="form">
+    <input id="input-value" name="value" class="form-control" autofocus
+        {{ 'value='+value if value }} style="width: 300px;" />
+    <button type="submit" class="btn btn-default">Search</button>
+  </form>
+
+  {% if value %}
+    <hr />
+    {% if results %}
+      {% if results|length > 20 %}
+        <small class="text-muted"><em>Showing only first 20 results.</em></small>
+      {% endif %}
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>MusicBrainz ID (Organization)</th>
+          <th>State</th>
+          <th>Contact name</th>
+          <th>Contact email</th>
+          <th>Commercial</th>
+          <th>Standing</th>
+          <th>Tier</th>
+          <th>Featured</th>
+          <th>{# Buttons #}</th>
+        </tr>
+        </thead>
+        {% for supporter in results %}
+          <tr>
+            <td>
+              <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">
+                <strong>{{ supporter.musicbrainz_id }}</strong>
+                {{ '('+supporter.org_name+')' if supporter.org_name }}
+              </a>
+            </td>
+            <td>
+              {% if supporter.state == 'active' %}
+                <span class="label label-success">Active</span>
+              {% elif supporter.state == 'pending' %}
+                <span class="label label-warning">Pending</span>
+              {% elif supporter.state == 'waiting' %}
+                <span class="label label-warning">Waiting</span>
+              {% elif supporter.state == 'limited' %}
+                <span class="label label-default">Limited</span>
+              {% elif supporter.state == 'rejected' %}
+                <span class="label label-important">Rejected</span>
+              {% else %}
+                <span class="label label-default">UNKNOWN</span>
+              {% endif %}
+            </td>
+            <td>{{ supporter.contact_name }}</td>
+            <td>{{ supporter.contact_email }}</td>
+            <td>
+              {% if supporter.is_commercial %}
+                <span class="label label-success">Commercial</span>
+              {% else %}
+                <span class="label label-default">Non-commercial</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if supporter.good_standing %}
+                <span class="label label-success">Good standing</span>
+              {% else %}
+                <span class="label label-important">Bad standing</span>
+              {% endif %}
+            </td>
+            <td>{{ supporter.tier }}</td>
+            <td>
+              {% if supporter.featured %}
+                <span class="label label-success">Featured</span>
+              {% else %}
+                <span class="label label-default">Not featured</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}"
+                 class="btn btn-xs btn-primary" role="button">Edit</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      Can't find any supporter.
+    {% endif %}
+  {% endif %}
+{% endblock %}

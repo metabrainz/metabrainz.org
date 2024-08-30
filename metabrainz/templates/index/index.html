@@ -16,10 +16,10 @@
         {{ _('Our data is mostly gathered by volunteers and verified
         by peer review to ensure it is consistent and correct. All
         <a href="%(account_type_url)s">non-commercial use</a> of this data is free,
-        but <a href="%(account_type_url)s">commercial users</a> are asked to
+        but <a href="%(account_type_url)s">commercial supporters</a> are asked to
         <a href="%(account_type_url)s">support us</a> in order to help fund the
-        project. We encourage all data users to contribute to the data gathering process so
-        that our data can be as comprehensive as possible.', account_type_url=url_for('users.account_type')) }}
+        project. We encourage all data supporters to contribute to the data gathering process so
+        that our data can be as comprehensive as possible.', account_type_url=url_for('supporters.account_type')) }}
       </p>
       <p>
       To find out more about our datasets, please take a look at our <a href="{{ url_for("index.datasets") }}">
@@ -38,7 +38,7 @@
               {{ _('An open music encyclopedia that collects music metadata and makes it
               available to the public') }}<br />
               <em>{{ _('Sign up to use the <a href="%(account_type_url)s">Live Data Feed</a></em>',
-              account_type_url=url_for('users.account_type')) }}
+              account_type_url=url_for('supporters.account_type')) }}
             </div>
           </div>
           <div class="item">
@@ -104,22 +104,22 @@
         who make use of our data sets.', financial_reports_url=url_for('financial_reports.index'),
         donations_url=url_for('payments.donate'),
         sponsors_url=url_for('index.sponsors'),
-        supporters_url=url_for('users.supporters_list') ) }}
+        supporters_url=url_for('supporters.supporters_list') ) }}
       </p>
     </div>
 
-    {% if good_users %}
-      <div class="featured-users homepage-section">
-        {% for user in good_users %}
-          <div class="user">
-              <a href="{{ url_for('users.supporters_list') }}">
+    {% if good_supporters %}
+      <div class="featured-supporters homepage-section">
+        {% for supporter in good_supporters %}
+          <div class="supporter">
+              <a href="{{ url_for('supporters.supporters_list') }}">
                 <div class="logo-container">
-                  {% if user.logo_filename %}
-                    <img class="logo" src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}"/>
-                  {% elif user.org_logo_url %}
-                    <img class="logo" src="{{ user.org_logo_url }}" />
+                  {% if supporter.logo_filename %}
+                    <img class="logo" src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"/>
+                  {% elif supporter.org_logo_url %}
+                    <img class="logo" src="{{ supporter.org_logo_url }}" />
                   {% else %}
-                    <div class="name">{{ user.org_name }}</div>
+                    <div class="name">{{ supporter.org_name }}</div>
                   {% endif %}
                 </div>
               </a>
@@ -128,24 +128,24 @@
       </div>
     {% endif %}
 
-    {% if bad_users %}
+    {% if bad_supporters %}
       <div class="homepage-section">
         {{ _('Unfortunately, some companies listed below use data we provide without contributing back.
         <a href="%(bad_customers_url)s">Find out more</a> about them or
         <a href="%(account_type_url)s">sign up</a>!',
         bad_customers_url=url_for('index.bad_customers'),
-        account_type_url=url_for('users.account_type')) }}
+        account_type_url=url_for('supporters.account_type')) }}
       </div>
 
-      <div id="featured-users" class="row">
-        {% for user in bad_users %}
-          <div class="col-sm-3 user">
-            {% if user.logo_filename %}
-              <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ url_for('static', filename='img/user_logos/'+user.logo_filename) }}"/></a></span>
-            {% elif user.org_logo_url %}
-              <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ user.org_logo_url }}"/></a></span>
+      <div id="featured-supporters" class="row">
+        {% for supporter in bad_supporters %}
+          <div class="col-sm-3 supporter">
+            {% if supporter.logo_filename %}
+              <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"/></a></span>
+            {% elif supporter.org_logo_url %}
+              <span><a href="{{ url_for('index.bad_customers') }}"><img class="logo" src="{{ supporter.org_logo_url }}"/></a></span>
             {% else %}
-              <span class="name"><a href="{{ url_for('index.bad_customers') }}">{{ user.org_name }}</a></span>
+              <span class="name"><a href="{{ url_for('index.bad_customers') }}">{{ supporter.org_name }}</a></span>
             {% endif %}
           </div>
         {% endfor %}

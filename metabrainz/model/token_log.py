@@ -20,15 +20,16 @@ class TokenLog(db.Model):
         ),
         primary_key=True,
     )
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL", onupdate="CASCADE"))
+    supporter_id = db.Column(db.Integer, db.ForeignKey('supporter.id', ondelete="SET NULL", onupdate="CASCADE"))
+    supporter = db.relationship("Supporter", back_populates="token_log_records")
 
     @classmethod
     def create_record(cls, access_token, action):
-        user_id = current_user.id if current_user.is_authenticated else None
+        supporter_id = current_user.id if current_user.is_authenticated else None
         new_record = cls(
             token_value=access_token,
             action=action,
-            user_id=user_id,
+            supporter_id=supporter_id,
         )
         db.session.add(new_record)
         db.session.commit()

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Supporters') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{{ _('Supporters') }}</h1>
+
+  <p>
+    {{ _('The following organizations make use of the data-sets published by MetaBrainz and
+    are supporting us financially or through some other reciprocal agreement. There are also
+    organizations that make use of our data that have explicitly declined to support us. There
+    may also be other organizations making use of our data that we don\'t know about yet. If you
+    know of a company using our data, please <a href="%(contact_url)s">contact us</a>. If you want
+    to sign your company up as a supporter, go to our <a href="%(signup_form)s">sign up page</a>.',
+    contact_url=url_for('index.contact'),
+    signup_form=url_for('supporters.account_type')) }}
+  </p>
+
+  <div id="supporters-list">
+    {% for tier in tiers %}
+      {% set featured_supporters = tier.get_featured_supporters() %}
+      {% if featured_supporters|length > 0 %}
+        <h2><a href="{{ url_for('supporters.tier', tier_id=tier.id) }}">{{ _('%(tier_name)s tier', tier_name=tier.name) }}</a></h2>
+        {% if tier.short_desc %}
+          <div class="tier-description">{{ tier.short_desc }}</div>
+        {% endif %}
+        <div class="supporters-grid">
+          {% for supporter in featured_supporters %}
+            <div class="supporter {{ 'bad-standing' if not supporter.good_standing }}">
+              {% if not supporter.good_standing %}
+                <a href="{{ url_for('supporters.bad_standing') }}"
+                   title="{{ _('This supporter is behind on their payments.') }}">
+              {% elif supporter.website_url %}
+                <a href="{{ supporter.website_url }}">
+              {% endif %}
+                <div class="logo-container">
+                  {% if supporter.logo_filename %}
+                    <img class="logo" src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}" />
+                  {% elif supporter.org_logo_url %}
+                    <img class="logo" src="{{ supporter.org_logo_url }}"/>
+                  {% else %}
+                    <div class="name">{{ supporter.org_name }}</div>
+                  {% endif %}
+                </div>
+                {% if supporter.data_usage_desc %}
+                  <div class="description">{{ supporter.data_usage_desc }}</div>
+                {% endif %}
+              {% if not supporter.good_standing or (supporter.good_standing and supporter.website_url) %}
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+{% endblock %}

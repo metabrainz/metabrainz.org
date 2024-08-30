@@ -12,7 +12,7 @@ class Token(db.Model):
 
     value = db.Column(db.String, primary_key=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL", onupdate="CASCADE"))
+    owner_id = db.Column(db.Integer, db.ForeignKey('supporter.id', ondelete="SET NULL", onupdate="CASCADE"))
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
 
     log_records = db.relationship(TokenLog, backref="token", lazy="dynamic")
@@ -31,8 +31,8 @@ class Token(db.Model):
 
     @classmethod
     def generate_token(cls, owner_id):
-        """Generates new token for a specified user and revokes all other
-        tokens owned by this user.
+        """Generates new token for a specified supporter and revokes all other
+        tokens owned by this supporter.
 
         Returns:
             Value of the new token.
@@ -59,10 +59,10 @@ class Token(db.Model):
 
     @classmethod
     def revoke_tokens(cls, owner_id):
-        """Revokes all tokens owned by a specified user.
+        """Revokes all tokens owned by a specified supporter.
 
         Args:
-            owner_id: ID of a user.
+            owner_id: ID of a supporter.
         """
         tokens = db.session.query(cls).filter(
             cls.owner_id == owner_id,

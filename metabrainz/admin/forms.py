@@ -1,18 +1,19 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, BooleanField, SelectField, TextAreaField
-from wtforms.fields.html5 import EmailField, URLField, DecimalField
-from metabrainz.model import user
+from wtforms.fields import EmailField, URLField, DecimalField
+from metabrainz.model import supporter
 from metabrainz.db import tier as db_tier
 from flask_uploads import UploadSet, IMAGES
 
 import os.path
 
-LOGO_STORAGE_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "static", "img", "user_logos")
+# ensure that the path is kept in sync with the volume mount path for production in docker-server-configs
+LOGO_STORAGE_DIR = os.path.join("/static", "img", "logos", "supporters")
 if not os.path.exists(LOGO_STORAGE_DIR):
     os.makedirs(LOGO_STORAGE_DIR)
 
-LOGO_UPLOAD_SET_NAME = "userlogo"
+LOGO_UPLOAD_SET_NAME = "supporterlogo"
 LOGO_UPLOAD_SET = UploadSet(
     name=LOGO_UPLOAD_SET_NAME,
     extensions=IMAGES,
@@ -20,7 +21,7 @@ LOGO_UPLOAD_SET = UploadSet(
 )
 
 
-class UserEditForm(FlaskForm):
+class SupporterEditForm(FlaskForm):
     # General info
     musicbrainz_id = StringField("MusicBrainz Username")
     contact_name = StringField("Name")
@@ -28,15 +29,15 @@ class UserEditForm(FlaskForm):
 
     # Data access
     state = SelectField("State", choices=[
-        (user.STATE_ACTIVE, "Active"),
-        (user.STATE_PENDING, "Pending"),
-        (user.STATE_WAITING, "Waiting"),
-        (user.STATE_REJECTED, "Rejected"),
-        (user.STATE_LIMITED, "Limited"),
+        (supporter.STATE_ACTIVE, "Active"),
+        (supporter.STATE_PENDING, "Pending"),
+        (supporter.STATE_WAITING, "Waiting"),
+        (supporter.STATE_REJECTED, "Rejected"),
+        (supporter.STATE_LIMITED, "Limited"),
     ])
 
     # Commercial info
-    is_commercial = BooleanField("This is a commercial user")
+    is_commercial = BooleanField("This is a commercial supporter")
     org_name = StringField("Organization name")
     org_desc = TextAreaField("Description")
     api_url = URLField("URL of the organization's API (if exists)")
@@ -51,7 +52,7 @@ class UserEditForm(FlaskForm):
     amount_pledged = DecimalField("Amount pledged", default=0)
 
     # Promotion
-    featured = BooleanField("Featured user")
+    featured = BooleanField("Featured supporter")
     website_url = URLField("Website URL")
     logo_url = URLField("Logo image URL (legacy)")
     logo = FileField("Logo image", validators=[

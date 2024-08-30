@@ -15,8 +15,8 @@
       {% for action in token_actions %}
         <tr>
           <td>
-            <a href="{{ url_for('usersview.details', user_id=action.user.id) }}">{{ action.user.musicbrainz_id }}</a>
-            {% if action.user.id == action.token.owner.id %}
+            <a href="{{ url_for('supportersview.details', supporter_id=action.supporter.id) }}">{{ action.supporter.musicbrainz_id }}</a>
+            {% if action.supporter.id == action.token.owner.id %}
               {% if action.action == "create" %}
                 generated their token
               {% elif action.action == "deactivate" %}
@@ -24,12 +24,12 @@
               {% endif %}
             {% else %}
               {% if action.action == "create" %}
-                generated new token for user
+                generated new token for supporter
               {% elif action.action == "deactivate" %}
-                revoked token owned by user
+                revoked token owned by supporter
               {% endif %}
               {% if action.token.owner %}
-                  <a href="{{ url_for('usersview.details', user_id=action.token.owner.id) }}">{{ action.token.owner }}</a>
+                  <a href="{{ url_for('supportersview.details', supporter_id=action.token.owner.id) }}">{{ action.token.owner }}</a>
               {% else %}
                   [ invalid owner row suppressed ]
               {% endif %}

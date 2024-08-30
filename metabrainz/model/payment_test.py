@@ -1,12 +1,12 @@
+import copy
 from unittest.mock import patch
 
-from metabrainz.testing import FlaskTestCase
-from metabrainz.model.payment import Payment
-from metabrainz.model import db
-from metabrainz.payments import Currency
 from flask import current_app
-import copy
-import stripe
+
+from metabrainz.model import db
+from metabrainz.model.payment import Payment
+from metabrainz.payments import Currency
+from metabrainz.testing import FlaskTestCase
 
 
 class PaymentModelGeneralTestCase(FlaskTestCase):
@@ -140,37 +140,81 @@ class PaymentModelStripeTestCase(FlaskTestCase):
     def setUp(self):
         super(PaymentModelStripeTestCase, self).setUp()
         self.session_without_metadata = {
-            "id": "cs_test_a1sNH4THpeTEp9qwePCKNI3A9f2r6Li",
+            "id": "cs_test_a1Xnl40m2FIdI4qWQme3Sy2gPd2RnA4D764BqtueKvQC0sCfkQbWPnkZeU",
             "object": "checkout.session",
             "after_expiration": None,
             "allow_promotion_codes": None,
-            "amount_subtotal": 15000,
-            "amount_total": 15000,
+            "amount_subtotal": 5000,
+            "amount_total": 5000,
             "automatic_tax": {
                 "enabled": False,
+                "liability": None,
                 "status": None
             },
             "billing_address_collection": "required",
-            "cancel_url": "http://localhost:8000/payment/cancelled?is_donation=True",
+            "cancel_url": "https://test.metabrainz.org/payment/cancelled?is_donation=True",
             "client_reference_id": None,
+            "client_secret": None,
             "consent": None,
             "consent_collection": None,
+            "created": 1721063848,
             "currency": "usd",
-            "customer": "cus_KSHNduYk",
+            "currency_conversion": None,
+            "custom_fields": [
+            ],
+            "custom_text": {
+                "after_submit": None,
+                "shipping_address": None,
+                "submit": None,
+                "terms_of_service_acceptance": None
+            },
+            "customer": None,
+            "customer_creation": "if_required",
             "customer_details": {
-                "email": "testing@gmail.com",
+                "address": {
+                    "city": "Delhi",
+                    "country": "IN",
+                    "line1": "Chandni Chowk",
+                    "line2": None,
+                    "postal_code": "110006",
+                    "state": "DL"
+                },
+                "email": "test@gmail.com",
+                "name": "Lucifer",
                 "phone": None,
                 "tax_exempt": "none",
                 "tax_ids": [
                 ]
             },
             "customer_email": None,
-            "expires_at": 1634991912,
+            "expires_at": 1721150248,
+            "invoice": None,
+            "invoice_creation": {
+                "enabled": False,
+                "invoice_data": {
+                    "account_tax_ids": None,
+                    "custom_fields": None,
+                    "description": None,
+                    "footer": None,
+                    "issuer": None,
+                    "metadata": {
+                    },
+                    "rendering_options": None
+                }
+            },
             "livemode": False,
             "locale": None,
+            "metadata": {
+            },
             "mode": "payment",
-            "payment_intent": "pi_3JnMoZB",
+            "payment_intent": "pi_3PcsXqISlclrXlsU1mOuLu09",
+            "payment_link": None,
+            "payment_method_collection": "if_required",
+            "payment_method_configuration_details": None,
             "payment_method_options": {
+                "card": {
+                    "request_three_d_secure": "automatic"
+                }
             },
             "payment_method_types": [
                 "card"
@@ -180,184 +224,198 @@ class PaymentModelStripeTestCase(FlaskTestCase):
                 "enabled": False
             },
             "recovered_from": None,
+            "saved_payment_method_options": None,
             "setup_intent": None,
             "shipping": None,
             "shipping_address_collection": None,
+            "shipping_options": [
+            ],
+            "shipping_rate": None,
+            "status": "complete",
             "submit_type": "donate",
             "subscription": None,
-            "success_url": "http://localhost:8000/payment/complete?is_donation=True",
+            "success_url": "https://test.metabrainz.org/payment/complete?is_donation=True",
             "total_details": {
                 "amount_discount": 0,
                 "amount_shipping": 0,
                 "amount_tax": 0
             },
+            "ui_mode": "hosted",
             "url": None
         }
         self.payment_intent = {
-            "amount": 15000,
+            "amount": 5000,
             "amount_capturable": 0,
-            "amount_received": 15000,
+            "amount_details": {
+                "tip": {}
+            },
+            "amount_received": 5000,
             "application": None,
             "application_fee_amount": None,
+            "automatic_payment_methods": None,
             "canceled_at": None,
             "cancellation_reason": None,
             "capture_method": "automatic",
-            "charges": {
-                "data": [
-                    {
-                        "amount": 15000,
-                        "amount_captured": 15000,
-                        "amount_refunded": 0,
-                        "application": None,
-                        "application_fee": None,
-                        "application_fee_amount": None,
-                        "balance_transaction": {
-                            "amount": 1100526,
-                            "available_on": 1635465600,
-                            "created": 1634905541,
-                            "cross_border_classification": "export",
-                            "currency": "usd",
-                            "description": None,
-                            "exchange_rate": 73.3684,
-                            "fee": 55841,
-                            "fee_details": [
-                                {
-                                    "amount": 8518,
-                                    "application": None,
-                                    "currency": "usd",
-                                    "description": "GST",
-                                    "type": "tax"
-                                },
-                                {
-                                    "amount": 47323,
-                                    "application": None,
-                                    "currency": "usd",
-                                    "description": "Stripe processing fees",
-                                    "type": "stripe_fee"
-                                }
-                            ],
-                            "id": "txn_3JnMFzLHJk1rdonaIW",
-                            "net": 1044685,
-                            "object": "balance_transaction",
-                            "reporting_category": "charge",
-                            "source": "ch_3JnMo8SIg1ZpIFTmV",
-                            "status": "pending",
-                            "type": "charge"
-                        },
-                        "billing_details": {
-                            "address": {
-                                "city": "Doesn't Matter",
-                                "country": "GL",
-                                "line1": "Any value",
-                                "line2": None,
-                                "postal_code": "46071",
-                                "state": None
-                            },
-                            "email": "testing@gmail.com",
-                            "name": "Lucifer",
-                            "phone": None
-                        },
-                        "calculated_statement_descriptor": "LUCIFERTESTINGACCOUNT",
-                        "captured": True,
-                        "created": 1634905541,
-                        "currency": "usd",
-                        "customer": "cus_KSHNuduYk",
-                        "description": None,
-                        "destination": None,
-                        "dispute": None,
-                        "disputed": False,
-                        "failure_code": None,
-                        "failure_message": None,
-                        "fraud_details": {},
-                        "id": "ch_3JnMo8SIgvFzTmV",
-                        "invoice": None,
-                        "livemode": False,
-                        "metadata": {},
-                        "object": "charge",
-                        "on_behalf_of": None,
-                        "order": None,
-                        "outcome": {
-                            "network_status": "approved_by_network",
-                            "reason": None,
-                            "risk_level": "normal",
-                            "risk_score": 7,
-                            "seller_message": "Payment complete.",
-                            "type": "authorized"
-                        },
-                        "paid": True,
-                        "payment_intent": "pi_3JnMo8SFAoSPZBEYj80Aa",
-                        "payment_method": "pm_1JnMoZSFzLHJk1KzLHktn",
-                        "payment_method_details": {
-                            "card": {
-                                "brand": "visa",
-                                "checks": {
-                                    "address_line1_check": "pass",
-                                    "address_postal_code_check": "pass",
-                                    "cvc_check": "pass"
-                                },
-                                "country": "US",
-                                "exp_month": 2,
-                                "exp_year": 2026,
-                                "fingerprint": "vChIMFgq3Ve",
-                                "funding": "credit",
-                                "installments": None,
-                                "last4": "4242",
-                                "network": "visa",
-                                "three_d_secure": {
-                                    "authentication_flow": None,
-                                    "result": "attempt_acknowledged",
-                                    "result_reason": None,
-                                    "version": "1.0.2"
-                                },
-                                "wallet": None
-                            },
-                            "type": "card"
-                        },
-                        "receipt_email": None,
-                        "receipt_number": None,
-                        "receipt_url": "https://pay.stripe.com/receipts/acct_1JjJe3FzLHJk/ch_SIgvzLHJk1ZpIFTmV/rcpt_xUaDGQsPmfrc4J1NEBohQbvS0W",
-                        "refunded": False,
-                        "refunds": {
-                            "data": [],
-                            "has_more": False,
-                            "object": "list",
-                            "total_count": 0,
-                            "url": "/v1/charges/ch_3SIgLHJk1ZpIFTmV/refunds"
-                        },
-                        "review": None,
-                        "shipping": None,
-                        "source": None,
-                        "source_transfer": None,
-                        "statement_descriptor": None,
-                        "statement_descriptor_suffix": None,
-                        "status": "succeeded",
-                        "transfer_data": None,
-                        "transfer_group": None
-                    }
-                ],
-                "has_more": False,
-                "object": "list",
-                "total_count": 1,
-                "url": "/v1/charges?payment_intent=pi_3JnMo8SIHJk1oSPZB"
-            },
-            "client_secret": "pi_3JnMo8SIgzLHPZB_secret_OuVctwTNvmXf6XUON",
+            "client_secret": "",
             "confirmation_method": "automatic",
-            "created": 1634905512,
+            "created": 1721063918,
             "currency": "usd",
-            "customer": "cus_KSHVduduYk",
-            "description": None,
-            "id": "pi_3JnMo8SIgvSPZB",
+            "customer": None,
+            "description": "Donation to the MetaBrainz Foundation",
+            "id": "pi_3PcsXqISlclrXlsU1mOuLu09",
             "invoice": None,
             "last_payment_error": None,
+            "latest_charge": {
+                "amount": 5000,
+                "amount_captured": 5000,
+                "amount_refunded": 0,
+                "application": None,
+                "application_fee": None,
+                "application_fee_amount": None,
+                "balance_transaction": {
+                    "amount": 5000,
+                    "available_on": 1721174400,
+                    "created": 1721063919,
+                    "currency": "usd",
+                    "description": "Donation to the MetaBrainz Foundation",
+                    "exchange_rate": None,
+                    "fee": 175,
+                    "fee_details": [
+                        {
+                            "amount": 175,
+                            "application": None,
+                            "currency": "usd",
+                            "description": "Stripe processing fees",
+                            "type": "stripe_fee"
+                        }
+                    ],
+                    "id": "txn_3PcsXqISlclrXlsU1eOyDsoF",
+                    "net": 4825,
+                    "object": "balance_transaction",
+                    "reporting_category": "charge",
+                    "source": "ch_3PcsXqISlclrXlsU1OR5YDF6",
+                    "status": "pending",
+                    "type": "charge"
+                },
+                "billing_details": {
+                    "address": {
+                        "city": "Delhi",
+                        "country": "IN",
+                        "line1": "Chandni Chowk",
+                        "line2": None,
+                        "postal_code": "110006",
+                        "state": "DL"
+                    },
+                    "email": "kartikohri13@gmail.com",
+                    "name": "KARTIK OHRI",
+                    "phone": None
+                },
+                "calculated_statement_descriptor": "METABRAINZ FOUNDATION",
+                "captured": True,
+                "created": 1721063919,
+                "currency": "usd",
+                "customer": None,
+                "description": "Donation to the MetaBrainz Foundation",
+                "destination": None,
+                "dispute": None,
+                "disputed": False,
+                "failure_balance_transaction": None,
+                "failure_code": None,
+                "failure_message": None,
+                "fraud_details": {},
+                "id": "ch_3PcsXqISlclrXlsU1OR5YDF6",
+                "invoice": None,
+                "livemode": False,
+                "metadata": {
+                    "anonymous": "False",
+                    "can_contact": "False",
+                    "editor": "lucifer",
+                    "is_donation": "True"
+                },
+                "object": "charge",
+                "on_behalf_of": None,
+                "order": None,
+                "outcome": {
+                    "network_status": "approved_by_network",
+                    "reason": None,
+                    "risk_level": "normal",
+                    "risk_score": 38,
+                    "seller_message": "Payment complete.",
+                    "type": "authorized"
+                },
+                "paid": True,
+                "payment_intent": "pi_3PcsXqISlclrXlsU1mOuLu09",
+                "payment_method": "pm_1PcsXpISlclrXlsUAKE1YVd2",
+                "payment_method_details": {
+                    "card": {
+                        "amount_authorized": 5000,
+                        "brand": "visa",
+                        "checks": {
+                            "address_line1_check": "pass",
+                            "address_postal_code_check": "pass",
+                            "cvc_check": "pass"
+                        },
+                        "country": "US",
+                        "exp_month": 1,
+                        "exp_year": 2026,
+                        "extended_authorization": {
+                            "status": "disabled"
+                        },
+                        "fingerprint": "4mEB6pJ8j7eJWcK2",
+                        "funding": "credit",
+                        "incremental_authorization": {
+                            "status": "unavailable"
+                        },
+                        "installments": None,
+                        "last4": "4242",
+                        "mandate": None,
+                        "multicapture": {
+                            "status": "unavailable"
+                        },
+                        "network": "visa",
+                        "network_token": {
+                            "used": False
+                        },
+                        "overcapture": {
+                            "maximum_amount_capturable": 5000,
+                            "status": "unavailable"
+                        },
+                        "three_d_secure": None,
+                        "wallet": None
+                    },
+                    "type": "card"
+                },
+                "radar_options": {},
+                "receipt_email": None,
+                "receipt_number": None,
+                "receipt_url": "",
+                "refunded": False,
+                "review": None,
+                "shipping": None,
+                "source": None,
+                "source_transfer": None,
+                "statement_descriptor": None,
+                "statement_descriptor_suffix": None,
+                "status": "succeeded",
+                "transfer_data": None,
+                "transfer_group": None
+            },
             "livemode": False,
-            "metadata": {},
+            "metadata": {
+                "anonymous": "False",
+                "can_contact": "False",
+                "editor": "lucifer",
+                "is_donation": "True"
+            },
             "next_action": None,
             "object": "payment_intent",
             "on_behalf_of": None,
-            "payment_method": "pm_1JnMoZSIgvtnEYj80A",
+            "payment_method": "pm_1PcsXpISlclrXlsUAKE1YVd2",
+            "payment_method_configuration_details": None,
             "payment_method_options": {
                 "card": {
                     "installments": None,
+                    "mandate_options": None,
                     "network": None,
                     "request_three_d_secure": "automatic"
                 }
@@ -365,6 +423,7 @@ class PaymentModelStripeTestCase(FlaskTestCase):
             "payment_method_types": [
                 "card"
             ],
+            "processing": None,
             "receipt_email": None,
             "review": None,
             "setup_future_usage": None,
@@ -380,26 +439,27 @@ class PaymentModelStripeTestCase(FlaskTestCase):
     @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_donation(self, mock_stripe):
         # Function should execute without any exceptions
-        mock_stripe.retrieve.return_value = self.payment_intent
-        session = self.session_without_metadata.copy()
-        session["metadata"] = {
+        payment_intent = self.payment_intent.copy()
+        payment_intent["metadata"] = {
             "is_donation": "True",
             "editor": "lucifer",
             "anonymous": "False",
             "can_contact": "False"
         }
-        Payment.log_stripe_charge(session)
+        mock_stripe.retrieve.return_value = payment_intent
+        session = self.session_without_metadata.copy()
+        Payment.log_one_time_charge("usd", session)
         self.assertEqual(len(Payment.query.all()), 1)
 
     @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_payment(self, mock_stripe):
         # Function should execute without any exceptions
-        mock_stripe.retrieve.return_value = self.payment_intent
-        session = self.session_without_metadata.copy()
-        session["metadata"] = {
+        payment_intent = self.payment_intent.copy()
+        payment_intent["metadata"] = {
             "is_donation": "False",
             "email": "mail@example.com",
             "invoice_number": 42,
         }
-        Payment.log_stripe_charge(session)
+        mock_stripe.retrieve.return_value = payment_intent
+        Payment.log_one_time_charge("usd", self.session_without_metadata)
         self.assertEqual(len(Payment.query.all()), 1)

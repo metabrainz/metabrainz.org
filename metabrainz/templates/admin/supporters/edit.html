@@ -1,0 +1,228 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h1>Supporters</h1>
+  <hr />
+
+  <h2>
+    Edit supporter #{{ supporter.id }}
+    <small>
+      {% if supporter.is_commercial %}
+        <strong>{{ supporter.org_name }}</strong>
+        ({{ supporter.musicbrainz_id }})
+      {% else %}
+        {{ supporter.musicbrainz_id }}
+      {% endif %}
+    </small>
+  </h2>
+  <p class="text-muted"><em>Created on {{ supporter.created }}.</em></p>
+
+  {% for field in form.errors %}
+    {% for error in form.errors[field] %}
+      <div class="alert alert-danger">{{ field }}: {{ error }}</div>
+    {% endfor %}
+  {% endfor %}
+
+  <form role="form" method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+
+    <h3>General info</h3>
+    <div class="row">
+
+      <div class="form-group col-md-6">
+        <label>{{ form.musicbrainz_id.label.text }}</label>
+        {{ form.musicbrainz_id(class="form-control") }}
+        <div style="padding-top: 7px">
+          <em class="text-muted">
+            Determines which MusicBrainz supporter manages this MetaBrainz account.
+            Can be changed to switch the owner. Only one supporter can be an owner.
+          </em>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>{{ form.contact_name.label.text }}</label>
+          {{ form.contact_name(class="form-control") }}
+        </div>
+        <div class="form-group">
+          <label>{{ form.contact_email.label.text }}</label>
+          {{ form.contact_email(class="form-control") }}
+        </div>
+      </div>
+
+    </div>
+
+    <h3>Data access</h3>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>{{ form.state.label.text }}</label>
+        {{ form.state(class="form-control") }}
+        <div style="padding-top: 7px">
+          <em class="text-muted">
+            State determines whether this supporter has access to the MetaBrainz Live Data Feed API.
+          </em>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <ul class="text-muted">
+          <li><code>Active</code> - Full access to the API</li>
+          <li><code>Pending</code> - New supporter waiting for approval</li>
+          <li><code>Waiting</code> - Old supporter in the waiting list (for approval)</li>
+          <li><code>Rejected</code> - Rejected access the API</li>
+          <li><code>Limited</code> - Cannot access the API</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Commercial info</h3>
+    <div class="row">
+
+      <div class="form-group col-md-12">
+        <div class="checkbox">
+          <label style="font-size:15px;font-weight:bold;">
+            {{ form.is_commercial() }}
+            {{ form.is_commercial.label.text }}
+          </label>
+          <div style="padding-top: 7px">
+            <em class="text-muted">
+              If this supporter is commercial, all the information below should be filled in.
+            </em>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>{{ form.org_name.label.text }}</label>
+          {{ form.org_name(class="form-control") }}
+        </div>
+        <div class="form-group">
+          <label>{{ form.api_url.label.text }}</label>
+          {{ form.api_url(class="form-control") }}
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label>{{ form.org_desc.label.text }}</label>
+        {{ form.org_desc(class="form-control", rows=5) }}
+      </div>
+
+    </div>
+
+    <h4>Address</h4>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>{{ form.address_street.label.text }}</label>
+        {{ form.address_street(class="form-control") }}
+      </div>
+      <div class="form-group col-md-6">
+        <label>{{ form.address_city.label.text }}</label>
+        {{ form.address_city(class="form-control") }}
+      </div>
+      <div class="form-group col-md-6">
+        <label>{{ form.address_postcode.label.text }}</label>
+        {{ form.address_postcode(class="form-control") }}
+      </div>
+      <div class="form-group col-md-6">
+        <label>{{ form.address_state.label.text }}</label>
+        {{ form.address_state(class="form-control") }}
+      </div>
+      <div class="form-group col-md-6">
+        <label>{{ form.address_country.label.text }}</label>
+        {{ form.address_country(class="form-control") }}
+      </div>
+    </div>
+
+    <h4>Financial info</h4>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>{{ form.tier.label.text }}</label>
+        {{ form.tier(class="form-control") }}
+      </div>
+      <div class="form-group col-md-6">
+        <label>{{ form.amount_pledged.label.text }}</label>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          {{ form.amount_pledged(class="form-control") }}
+        </div>
+      </div>
+    </div>
+
+    <h3>Promotion</h3>
+    <div class="row">
+
+      <div class="form-group col-md-12">
+        <div class="checkbox">
+          <label style="font-size:15px;font-weight:bold;">
+            {{ form.featured() }}
+            {{ form.featured.label.text }}
+          </label>
+          <div style="padding-top: 7px">
+            <em class="text-muted">
+              If this supporter is featured, it will show up in the public list on
+              the website. All the information below should be filled in if
+              this is checked.
+            </em>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>{{ form.website_url.label.text }}</label>
+          {{ form.website_url(class="form-control") }}
+        </div>
+        <div class="form-group">
+          <label>{{ form.logo.label.text }}</label>
+          {{ form.logo(class="form-control") }}
+          <div style="padding-top: 7px">
+            <em class="text-muted">
+              Logo image that will be displayed on the website. Preferably in
+              the SVG format.
+            </em>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>{{ form.logo_url.label.text }}</label>
+          {{ form.logo_url(class="form-control") }}
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label>{{ form.usage_desc.label.text }}</label>
+        {{ form.usage_desc(class="form-control", rows=5) }}
+        <div style="padding-top: 7px">
+          <em class="text-muted">
+            Provide a very short (one full sentence) description that includes
+            name of this organization.
+          </em>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group text-success">
+          <div class="checkbox">
+            <label style="font-size:15px;font-weight:bold;">
+              {{ form.good_standing() }}
+              {{ form.good_standing.label.text }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group text-warning">
+          <div class="checkbox">
+            <label style="font-size:15px;font-weight:bold;">
+              {{ form.in_deadbeat_club() }}
+              {{ form.in_deadbeat_club.label.text }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+  </form>
+{% endblock %}

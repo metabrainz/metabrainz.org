@@ -12,6 +12,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")/../"
 git describe --tags --dirty --always > .git-version
 
 TAG_PART=${1:-latest}
-docker build -t metabrainz/metabrainz:$TAG_PART \
+docker build --target metabrainz-prod -t metabrainz/metabrainz:$TAG_PART \
         --build-arg GIT_COMMIT_SHA=$(git describe --tags --dirty --always) .
 docker push metabrainz/metabrainz:$TAG_PART

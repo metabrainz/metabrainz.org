@@ -98,9 +98,6 @@
         <div id="buttons" class="form-group">
           <div class="col-sm-offset-3 col-sm-6">
             <button id="btn-stripe" type="button" class="btn">{{ _('Donate with Credit Card') }}</button>
-            <button id="btn-paypal" type="button" class="btn">
-              <img src="{{ url_for('static', filename='img/payments/paypal.svg') }}" />
-            </button>
           </div>
         </div>
 
@@ -126,6 +123,10 @@
 
     <h2>{{ _('Other ways to donate') }}</h2>
 
+    <h3>GitHub</h3>
+    <p>{{ _('If you use GitHub to sponsor your favourite projects, you can click below to Sponsor @metabrainz on GitHub Sponsors:') }}</p>
+    <p><a href="https://github.com/sponsors/metabrainz">https://github.com/sponsors/metabrainz</a></p>
+
     <h3>{{ _('Non-US Bank transfer') }}</h3>
     <p>{{ _('You can make a donation, or recurring donations, via bank transfer to the following IBAN:') }}</p>
     <p><em style="margin-left: 2em">BE96 9670 3472 0205 (BIC: TRWIBEB1XXX)</em></p>
@@ -133,14 +134,6 @@
 
     <h3>{{ _('US Check') }}</h3>
     <p>{{ _('Due to the increased unreliability of the US Postal Service we have stopped accepting paper checks. Sorry!') }}</p>
-
-    <h3>Flattr</h3>
-    <p>{{ _('If you use Flattr to donate to your favourite projects, you can click below to Flattr MetaBrainz:') }}</p>
-    <p><a href="https://flattr.com/profile/metabrainz ">https://flattr.com/profile/metabrainz</a></p>
-
-    <h3>GitHub</h3>
-    <p>{{ _('If you use GitHub to sponsor your favourite projects, you can click below to Sponsor @metabrainz on GitHub Sponsors:') }}</p>
-    <p><a href="https://github.com/sponsors/metabrainz">https://github.com/sponsors/metabrainz</a></p>
 
   </div>
 {% endblock %}
@@ -157,11 +150,9 @@
         // These must match form definitions.
         US_Dollar: {
           code: "USD",
-          paypal_id: '{{ config['PAYPAL_ACCOUNT_IDS']['USD'] }}'
         },
         Euro: {
           code: "EUR",
-          paypal_id: '{{ config['PAYPAL_ACCOUNT_IDS']['EUR'] }}'
         }
       };
 
@@ -171,7 +162,6 @@
 
       var buttons = {
         stripe: $('#btn-stripe'),
-        paypal: $('#btn-paypal')
       };
 
       function setButtonsState(enabled) {
@@ -179,7 +169,6 @@
           $.each(buttons, function( index, button ) {
             button.removeAttr('disabled');
           });
-          updateButtonState();
 
         } else { // Disabled
           $.each(buttons, function( index, button ) {
@@ -187,20 +176,6 @@
           });
         }
       }
-
-      function updateButtonState() {
-        // This function disables or enables payment buttons depending on what
-        // features they support.
-
-        // We don't support recurring payments via Stripe. Payments in EUR are
-        // also not supported currently.
-        if ($('#recurring-flag').is(":checked") || selectedCurrency === CURRENCY.Euro) {
-          buttons.stripe.attr('disabled', 'disabled');
-        } else {
-          buttons.stripe.removeAttr('disabled');
-        }
-      }
-
 
       ///////////////
       // AMOUNT INPUT
@@ -231,14 +206,6 @@
         } else {
           console.error("Unknown currency:", this.value)
         }
-        updateButtonState();
-      });
-
-      /////////////
-      // RECURRENCE
-      /////////////
-      $('#recurring-flag').change(function() {
-        updateButtonState();
       });
 
       ///////////////
@@ -296,61 +263,6 @@
         e.preventDefault();
         form.attr("action", "{{ url_for('payments_stripe.pay', donation=True) }}");
         form.submit();
-      });
-
-      // PayPal
-      buttons.paypal.on('click', function(e) {
-        setButtonsState(false);
-        {% if config.PAYMENT_PRODUCTION %}
-          form.attr("action", "https://www.paypal.com/cgi-bin/webscr");
-        {% else %}
-          form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
-        {% endif %}
-
-        {# Info about variables can be found at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/ #}
-
-        $('<input>').attr({type: 'hidden', name: 'business', value: selectedCurrency.paypal_id}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('payments.complete', is_donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('payments.cancelled', is_donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'notify_url', value: '{{ url_for('payments_paypal.ipn', _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'currency_code', value: selectedCurrency.code}).appendTo(form);
-
-        if ($('#recurring-flag').is(":checked")) { // Recurring donations
-          $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick-subscriptions'}).appendTo(form);
-          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Recurring donation to the MetaBrainz Foundation'}).appendTo(form);
-          $('<input>').attr({type: 'hidden', name: 't3', value: 'M'}).appendTo(form); {# units of duration ('M' is month) #}
-          $('<input>').attr({type: 'hidden', name: 'p3', value: '1'}).appendTo(form); {# subscription duration #}
-          $('<input>').attr({type: 'hidden', name: 'src', value: '1'}).appendTo(form); {# recurring payments #}
-          $('<input>').attr({type: 'hidden', name: 'sra', value: '1'}).appendTo(form); {# reattempt on failure #}
-
-        } else {  // One-time donation
-          $('<input>').attr({type: 'hidden', name: 'cmd', value: '_xclick'}).appendTo(form);
-          $('<input>').attr({type: 'hidden', name: 'item_name', value: 'Donation to the MetaBrainz Foundation'}).appendTo(form);
-        }
-
-        {# Reconfiguring inputs for PayPal #}
-        if ($('#recurring-flag').is(":checked")) { // Recurring donations
-          amount.attr('name', 'a3');
-        } else {  // One-time donation
-          amount.attr('name', 'amount');
-        }
-
-        editor.attr('name', 'custom');
-
-        $('<input>').attr({type: 'hidden', name: 'on3', value: 'is_donation'}).appendTo(form);
-        $('<input>').attr({type: 'hidden', name: 'os3', value: 'yes'}).appendTo(form);
-
-        $('<input>').attr({type: 'hidden', name: 'on0', value: 'contact'}).appendTo(form);
-        $("#can-contact-flag").attr('name', 'os0');
-        $("#can-contact-flag").attr('value', 'yes'); {# Boolean values are compared to 'yes' in IPN processor. #}
-
-        $('<input>').attr({type: 'hidden', name: 'on1', value: 'anonymous'}).appendTo(form);
-        $("#anonymous-flag").attr('name', 'os1');
-        $("#anonymous-flag").attr('value', 'yes'); {# Boolean values are compared to 'yes' in IPN processor. #}
-
-        form.submit();
-        return false;
       });
 
     });

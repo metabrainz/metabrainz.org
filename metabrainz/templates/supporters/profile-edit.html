@@ -1,0 +1,8 @@
+{% extends 'base-react.html' %}
+
+{% block title %}{{ _('Edit') }} - {{ _('Your Profile') }} - MetaBrainz Foundation{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ get_static_path('supporterProfileEdit.js') }}" type="text/javascript"></script>
+{% endblock %}

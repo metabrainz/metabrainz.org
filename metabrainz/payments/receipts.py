@@ -7,7 +7,7 @@ from reportlab.platypus import SimpleDocTemplate, Spacer
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
-from metabrainz.mail import send_mail
+from brainzutils.mail import send_mail
 from flask import current_app
 import tempfile
 
@@ -106,8 +106,8 @@ def generate_receipt(email, date, amount, name, is_donation, editor_name):
     else:
         from_email = "payments@metabrainz.org"
     address_par = Paragraph(
-        "340 S Lemon Ave #6432<br/>"
-        "Walnut, CA 91789<br/><br/>"
+        "440 N Barranca Ave #6432<br/>"
+        "Covina, CA 91723<br/><br/>"
         "%s<br/>"
         "https://metabrainz.org"
         % from_email,

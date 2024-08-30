@@ -8,8 +8,15 @@
 set -e
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
+echo "Checking docker compose version"
+if docker compose version &> /dev/null; then
+    DOCKER_COMPOSE_CMD="docker compose"
+else
+    DOCKER_COMPOSE_CMD="docker-compose"
+fi
+
 function invoke_docker_compose {
-    exec docker-compose -f docker/docker-compose.dev.yml \
+    exec $DOCKER_COMPOSE_CMD -f docker/docker-compose.dev.yml \
         -p metabrainz \
         "$@"
 }

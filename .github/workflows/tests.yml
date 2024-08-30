@@ -11,6 +11,9 @@ jobs:
   test:
 
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
 
     steps:
     - uses: actions/checkout@v2
@@ -22,17 +25,11 @@ jobs:
       run: echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
       continue-on-error: true
 
-    - name: Pull docker images
-      run: docker-compose -f docker/docker-compose.test.yml pull
-
-    - uses: satackey/action-docker-layer-caching@v0.0.11
-      continue-on-error: true
-
     - name: Run tests
       run: ./test.sh
 
     - name: Publish Unit Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1.11
+      uses: EnricoMi/publish-unit-test-result-action@v2
       if: ${{ always() }}
       with:
         files: reports/tests.xml

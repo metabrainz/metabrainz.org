@@ -1,7 +1,9 @@
 from __future__ import division
 from flask import Blueprint, request, render_template, url_for, redirect, current_app, jsonify
 from flask_babel import gettext
-from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
+from werkzeug.datastructures import MultiDict
+
+from metabrainz.payments import SUPPORTED_CURRENCIES
 from metabrainz.model.payment import Payment
 from metabrainz.payments.forms import DonationForm, PaymentForm
 from metabrainz import flash
@@ -18,9 +20,7 @@ payments_bp = Blueprint('payments', __name__)
 @payments_bp.route('/donate')
 def donate():
     """Regular donation page."""
-    stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
-    return render_template('payments/donate.html', form=DonationForm(),
-                           stripe_public_key=stripe_public_key)
+    return render_template('payments/donate.html', form=DonationForm())
 
 
 @payments_bp.route('/payment/')
@@ -35,9 +35,11 @@ def payment(currency):
     currency = currency.lower()
     if currency not in SUPPORTED_CURRENCIES:
         return redirect('.payment_selector')
-    stripe_public_key = current_app.config['STRIPE_KEYS']['PUBLISHABLE']
-    return render_template('payments/payment.html', form=PaymentForm(), currency=currency,
-                           stripe_public_key=stripe_public_key)
+    return render_template(
+        'payments/payment.html',
+        form=PaymentForm(formdata=MultiDict([("currency", currency)])),
+        currency=currency
+    )
 
 
 @payments_bp.route('/donors')
@@ -153,7 +155,7 @@ def cancelled():
 def error():
     """Error page for payments.
 
-    Users should be redirected there when errors occur during payment process.
+    Supporters/Users should be redirected there when errors occur during payment process.
     """
     if request.args.get("is_donation") == "True":
         flash.error(gettext(

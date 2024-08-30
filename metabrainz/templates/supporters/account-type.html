@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Support') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{{ _('Support us') }}</h1>
+
+  <p>
+    Do you rely on data from MetaBrainz? We rely on contributions to keep providing it. To access our
+    datasets or the <a href="https://musicbrainz.org/register">MusicBrainz Live Data Feed</a>, please
+    choose between non-commercial and commercial use below. You will need a
+    <a href="https://musicbrainz.org/register">MusicBrainz account</a> with a verified email address to
+    sign-up.
+  </p>
+
+  <h3 id="non-commercial">{{ _('Non-commercial / Personal') }}</h3>
+
+  <p>
+    Non-commercial includes personal use and university course assignment use of our data. If you are an
+    open source developer, a small non-profit, or are using our data as part of an official university or
+    research project, please sign up as a commercial user using the non-profit tier below. If you are a
+    non-profit with more than 10 employees/contractors, or a pre-revenue start-up and expect to have
+    revenue in the future, please sign up with a commercial account - see below for more details.
+    Please <a href="{{ url_for('payments.donate') }}">consider making a donation</a> to support
+    our efforts!
+  </p>
+
+  <p class="text-center">
+    <a href="{{ url_for('supporters.signup_noncommercial') }}"
+       class="btn btn-default" role="button">{{ _('Non-commercial') }}</a>
+  </p>
+
+  <h3 id="commercial" >{{ _('Commercial') }}</h3>
+
+  <p>
+     If you are a company with a current revenue stream or an expected revenue stream, please select a
+     support tier below that fits your current situation. We welcome working with companies that are just
+     getting started and we're happy for your MetaBrainz support to grow as you grow. If you would like
+     to use our data, but are not ready to state this publicly yet, sign up for the stealth start-up tier;
+     we will keep your data-usage confidential and contact you to discuss your plans. If you are an
+     established company, choose the tier that appropriately fits the size and revenue of your company.   
+  </p>
+
+  {% if tiers %}
+
+    <div id="tiers">
+      <div id="primary-tiers">
+        <div class="row">
+          {% for tier in tiers %}
+            {% if tier.primary %}
+              <div class="tier shiny col-md-4">
+                <div class="thumbnail">
+                  <div class="caption">
+                    <h3>{{ tier.name }}</h3>
+                    <div class="price">{{ _('$%(tier_price)s/month and up', tier_price=tier.price) }}</div>
+                    <div class="description">{{ tier.short_desc }}</div>
+                    <div class="buttons">
+                      <p><a href="{{ url_for('supporters.tier', tier_id=tier.id) }}"
+                            class="btn btn-default btn-block" role="button">{{ _('More info') }}</a></p>
+                      <p><a href="{{ url_for('supporters.signup_commercial', tier_id=tier.id) }}"
+                            class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <p class="text-center">
+          <button id="btn-show-all" type="button" class="btn btn-default">{{ _('View all tiers') }}</button>
+        </p>
+
+        <div class="thumbnail">
+          <div class="caption">
+            {# Last tier should be the most expensive. Exactly what we need! #}
+            {% set featured_supporters = tiers[-1].get_featured_supporters(limit=4, with_logos=True) %}
+            <div id="featured-supporters">
+              <h3>{{ _('Some of our Unicorn members') }}</h3>
+              {% for user in featured_supporters %}
+                <div class="logo-container">
+                  {% if user.logo_filename %}
+                    <span><img src="{{ url_for('static', filename='img/logos/supporters/'+user.logo_filename) }}" /></span>
+                  {% else %}
+                    <span><img src="{{ user.org_logo_url }}" /></span>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+            <em><a href="{{ url_for('supporters.supporters_list') }}">{{ _('See all our supporters') }}</a></em>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="all-tiers" style="display: none">
+        <table class="table table-condensed">
+          {% for tier in tiers %}
+            <tr>
+              <td><strong>{{ tier.name }}</strong></td>
+              <td>{{ tier.short_desc }}</td>
+              <td>{{ _('$%(tier_price)s/month and up', tier_price=tier.price) }}</td>
+              <td>
+                <a href="{{ url_for('supporters.tier', tier_id=tier.id) }}"
+                   class="btn btn-default btn-xs" role="button">{{ _('More info') }}</a>
+                <a href="{{ url_for('supporters.signup_commercial', tier_id=tier.id) }}"
+                   class="btn btn-primary btn-xs" role="button">{{ _('Sign up') }}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+        <p class="text-center">
+          <button id="btn-show-less" type="button" class="btn btn-default">{{ _('View featured tiers') }}</button>
+        </p>
+      </div>
+
+    </div>
+
+    <div>
+      {{ _('If you are not sure which tier to pick, please
+      <a href="%(contact_url)s">contact us</a>.', contact_url=url_for('index.contact')) }}
+    </div>
+
+  {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    $(document).ready(function () {
+      var primaryTiers = $("#primary-tiers");
+      var allTiers = $("#all-tiers");
+
+      $("#btn-show-all").click(function () {
+        primaryTiers.fadeOut("fast", function () {
+          allTiers.fadeIn("fast");
+        });
+      });
+      $("#btn-show-less").click(function () {
+        allTiers.fadeOut("fast", function () {
+          primaryTiers.fadeIn("fast");
+        });
+      });
+    });
+  </script>
+{% endblock %}

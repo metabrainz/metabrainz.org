@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('%(tier_name)s tier', tier_name=tier.name) }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{{ _('%(tier_name)s tier', tier_name=tier.name) }}</h1>
+
+  <p>{{ tier.long_desc | nl2br | safe }}</p>
+
+  {% if not current_user or current_user.is_anonymous %}
+    <p class="text-center">
+      <a href="{{ url_for('supporters.signup_commercial', tier_id=tier.id) }}"
+         class="btn btn-primary">{{ _('Sign up for this tier') }}</a>
+    </p>
+  {% endif %}
+
+  {% set supporters = tier.get_featured_supporters() %}
+  {% if supporters|length > 0 %}
+    <h3>{{ _('Supporters on this tier') }}</h3>
+    <div class="supporters-grid">
+      {% for supporter in supporters %}
+        <div class="supporter {{ 'bad-standing' if not supporter.good_standing }}">
+          {% if not supporter.good_standing %}
+            <a href="{{ url_for('supporters.bad_standing') }}"
+               title="{{ _('This supporter is behind on their payments.') }}">
+          {% elif supporter.website_url %}
+            <a href="{{ supporter.website_url }}">
+          {% endif %}
+            <div class="logo-container">
+              {% if supporter.logo_filename %}
+                <img class="logo" src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}" />
+              {% elif supporter.org_logo_url %}
+                <img class="logo" src="{{ supporter.org_logo_url }}"/>
+              {% else %}
+                <div class="name">{{ supporter.org_name }}</div>
+              {% endif %}
+            </div>
+            {% if supporter.data_usage_desc %}
+              <div class="description">{{ supporter.data_usage_desc }}</div>
+            {% endif %}
+          {% if not supporter.good_standing or (supporter.good_standing and supporter.website_url) %}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+{% endblock %}

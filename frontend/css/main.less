@@ -1,0 +1,539 @@
+@import "theme/theme.less";
+@import "carousel.less";
+@import "auth-page.less";
+
+@icon-font-path:"/static/fonts/";
+
+
+// -------------
+// General stuff
+// -------------
+
+@container-lg: @container-md;  // Limiting max width of the page
+
+@brand-primary: @green;
+@brand-secondary: @orange;
+
+body {
+  padding-bottom: 25px;
+}
+
+// Navbar
+@grid-float-breakpoint: @screen-md-min; // Point at which the navbar becomes uncollapsed
+.navbar {
+  @logo-width: 166px + 15px;
+  .navbar-variant(@green, @logo-width);
+  .support-link {
+    > a {
+      background-color: @orange !important;
+      &:hover, &:focus {
+        background-color: darken(@orange, 6.5%) !important;
+      }
+    }
+  }
+}
+
+// Footer
+.footer {
+  font-size: 12px;
+  line-height: 19px;
+  .title {
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  ul {
+    padding: 0;
+    li { list-style: none; }
+  }
+  .lower-footer { margin-top: 4px; }
+}
+
+img { .img-responsive(); }
+img.pull-right { padding-left: 15px; }
+
+h1.page-title, h2.page-title {
+  @media (max-width: @grid-float-breakpoint) { margin-top: 0px; }
+}
+
+
+// ---------------
+// Different pages
+// ---------------
+
+// Home page
+#homepage {
+  @section-margin: 40px;
+
+  #more-intro { margin-bottom: @section-margin; }
+
+  .featured-supporters {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+    .supporter {
+      width: 199px;
+      height: 100px;
+      margin-left: 18px;
+      margin-right: 18px;
+      @media (max-width: @grid-float-breakpoint) {
+        padding-bottom: 12px;
+        margin: 0 auto;
+      }
+      .logo-container {
+        margin: 0 auto;
+        line-height: 100px;
+        text-align: center;
+        .logo {
+          max-width: 160px;
+          max-height: 70px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+
+  .homepage-section { margin-bottom: @section-margin; }
+}
+
+// Account type selection
+#tiers {
+  margin-top: 40px;
+  #primary-tiers {
+    .tier {
+      .thumbnail {
+        height: 259px;
+        h3 {
+          margin-top: 8px;
+          font-size: 20px;
+        }
+        .price {
+          margin-bottom: 14px;
+          font-size: 20px;
+          font-weight: 300;
+        }
+        .description {
+          margin-bottom: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          height: 57px; // fallback
+          -webkit-line-clamp: 3; // number of lines to show
+          -webkit-box-orient: vertical;
+        }
+        .buttons :last-child {
+          margin-bottom: 0px;
+        }
+      }
+    }
+    .tier.shiny {
+      .thumbnail { border-color: fade(@brand-secondary, 40%); }
+    }
+  }
+  #featured-supporters {
+    .clearfix;
+    margin-bottom: 12px;
+    h3 { margin-bottom: 0px; }
+    @featured-supporter-height: 80px;
+    @featured-supporter-width: 168px;
+    .logo-container {
+      .pull-left;
+      height: @featured-supporter-height;
+      width: @featured-supporter-width;
+      margin-left: 21px;
+      margin-right: 21px;
+      line-height: @featured-supporter-height;
+      > span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        img {
+          max-height: @featured-supporter-height;
+          max-width: @featured-supporter-width;
+          display: block;
+          margin: auto;
+        }
+      }
+    }
+  }
+}
+
+#supporters-list {
+  margin-bottom: 30px;
+  .tier-description {
+    .text-muted();
+    font-style: italic;
+  }
+}
+
+.supporters-grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  @supporter-width: 158px;
+  .supporter {
+    margin-left: 15px;
+    margin-right: 15px;
+    @media (min-width: @grid-float-breakpoint) { width: @supporter-width; }
+    @media (max-width: @grid-float-breakpoint) {
+      padding-bottom: 12px;
+      margin: 0 auto;
+    }
+    .logo-container {
+      margin: 0 auto;
+      height: 100px;
+      width: @supporter-width;
+      line-height: 100px;
+      text-align: center;
+      .name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 1.8em;
+      }
+      .logo {
+        max-height: 80px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    .description {
+      font-size: 12px;
+      color: @link-color;
+    }
+
+    &.bad-standing {
+      a { color: @red; }
+      .description { color: @red; }
+    }
+
+    a { font-weight: inherit; }
+    a:hover { text-decoration: none; }
+  }
+}
+
+// Projects page
+.projects {
+  .projects-list > div {
+    padding: 10px;
+    .clearfix;
+    .logo-container {
+      .pull-left;
+      padding-top: 4px;
+      padding-right: 10px;
+      img {
+        width: 80px;
+      }
+    }
+    .title {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 2px;
+    }
+  }
+}
+
+// Team page
+#team {
+  .person {
+    .clearfix;
+    padding-bottom: 20px;
+    span.name {
+      font-weight: bold;
+      color: @orange;
+    }
+    img.pic {
+      width: 120px;
+      .pull-left;
+      margin-right: 10px;
+      margin-top: 15px;
+    }
+    .bio {
+      @media (min-width: @grid-float-breakpoint) {
+        margin-left: 142px;
+      }
+      ul.links {
+        .list-unstyled;
+      }
+    }
+  }
+}
+
+// Sponsors page
+#sponsors.table {
+  td { vertical-align: middle !important; }
+  td:first-child {
+    padding-right: 10px;
+    text-align: center;
+    img { max-width: 110px; }
+  }
+}
+
+
+// Payment page
+#payment {
+  #payment-panel {
+    margin-bottom: 8px;
+
+    form {
+      #input-amount-fg {
+        font-weight: bold;
+
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        .input-group-addon { font-weight: bold; }
+
+        #input-amount {
+          -webkit-box-flex: 1;
+          -webkit-flex: 1;
+          flex: 1;
+          height: 30px;
+        }
+
+        #currency-selector {
+          -webkit-box-flex: none;
+          -webkit-flex: none;
+          flex: none;
+          margin-left: 4px;
+        }
+      }
+
+      #big-amount-info {
+        .text-info();
+        margin-top: 10px;
+        font-style: italic;
+        font-weight: bold;
+      }
+
+      #buttons {
+        margin-bottom: 4px;
+
+        button {
+          height: 38px;
+          font-weight: bold;
+          img { display: inline; }
+        }
+
+        #btn-stripe {
+          @btn-stripe-bg: #1d9ae1;
+          .button-variant(#fff; @btn-stripe-bg; darken(@btn-stripe-bg, 5%));
+        }
+
+        #btn-paypal {
+          @btn-paypal-bg: #ffc95f;
+          .button-variant(@text-color; @btn-paypal-bg; darken(@btn-paypal-bg, 5%));
+          img {
+            height: 82%;
+            margin-bottom: 2px;
+          }
+        }
+      }
+
+    }
+  }
+
+  small {
+    font-style: italic;
+    .text-muted;
+  }
+
+  .form-group:last-child { margin-bottom: 0px; }
+}
+
+// API page
+#api {
+  code {
+    font-weight: bold;
+  }
+}
+
+
+// OAuth prompt
+#oauth-prompt {
+  .permissions {
+    .permission {
+      .clearfix;
+      border-top: 1px solid @gray-lighter;
+      padding: 12px;
+      &:last-child {
+        border-bottom: 1px solid @gray-lighter;
+      }
+      .icon {
+        .pull-left;
+        margin-right: 12px;
+        > img {
+          width: 28px;
+        }
+      }
+      .description {
+        margin-top: 4px;
+      }
+    }
+  }
+  form {
+    margin-top: 20px;
+  }
+}
+
+// Report-specific styles
+table.finances td:nth-child(2) {
+  text-align: right;
+}
+
+// Datasets page
+.dataset-card {
+    background: #eee;
+    min-height: 16em;
+    filter: drop-shadow(0px 4px 4px fade(#000, 25%));
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    padding: 0.5em;
+    align-items: center;
+    
+    .dataset-card-logo {
+      width: 100%;
+      padding: 0.7em;
+    }
+
+    .dataset-card-text {
+      > p:first-of-type {
+          margin: 0 15px 10px 0px;
+      }
+    }
+    
+    .dataset-card-heading {
+        color: #eb743b;
+        font-weight: bold;
+    }
+}
+.dataset-flex-container{
+  display: flex;
+  align-items: stretch;
+  gap: 2em;
+  flex-wrap: wrap;
+  .dataset-card {
+    flex:1;
+    flex-basis: 455px; // replicate the behavior of col-md-6
+    margin: 0;
+  }
+}
+
+
+@media (max-width: 400px) {
+  #data {
+    flex-direction: column;
+  }
+}
+
+.dataset-summary {
+    background: #eee;
+    filter: drop-shadow(0px 4px 4px fade(#000, 25%));
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-top: 1em;
+    margin-bottom: 3em;
+    padding: 1em;
+    align-items: center;
+
+    .dataset-summary-heading {
+        color: #eb743b;
+        font-weight: bold;
+        font-size: 15pt;
+        margin-bottom: 15px;
+    }
+
+    td {
+        padding: 0 3px 0 3px;
+        font-size: 11pt;
+    }
+
+    td:nth-child(1){
+        font-weight: bold;
+        text-align: right;
+    }
+}
+
+
+.dataset-panel.panel .panel-heading,
+#dataset-signup .panel .panel-heading {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #EB743B;
+}
+
+#dataset-signup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  max-width: calc(100% - 2em);
+  .panel{
+    flex:1;
+    min-width: 400px;
+    margin: 0 1em 1em;
+    .panel-body{
+      min-height: 230px;
+      display: flex;
+      flex-direction: column;
+      .buttons {
+        margin-top:auto;
+      }
+    }
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

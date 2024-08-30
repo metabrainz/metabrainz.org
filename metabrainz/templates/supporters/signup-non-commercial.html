@@ -1,0 +1,8 @@
+{% extends 'base-react.html' %}
+
+{% block title %}{{ _('Sign up') }} - MetaBrainz Foundation{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ get_static_path('signupNonCommercial.js') }}" type="text/javascript"></script>
+{% endblock %}

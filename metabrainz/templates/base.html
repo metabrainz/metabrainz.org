@@ -16,12 +16,8 @@
       <link rel="icon" sizes="128x128" href="{{ url_for('static', filename='img/favicon-128.png') }}" type="image/png" />
       <link rel="icon" sizes="256x256" href="{{ url_for('static', filename='img/favicon-256.png') }}" type="image/png" />
 
-      {% if config.USE_COMPILED_STYLING %}
-        <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen" />
-      {% else %}
-        <link rel="stylesheet/less" type="text/css" href="{{ url_for('static', filename='css/main.less') }}" />
-        <script src="{{ url_for('static', filename='js/less-1.7.5.min.js') }}"></script>
-      {% endif %}
+      {# The css file has a .less extension in the manifest file entry (due to its original name in Webpack entry) #}
+      <link href="{{ get_static_path('main.less') }}" rel="stylesheet" media="screen" />
     {% endblock %}
   </head>
 
@@ -64,21 +60,21 @@
             <div class="col-sm-2">
               <div class="title"><a href="{{ url_for('financial_reports.index') }}">{{ _('Finances') }}</a></div>
               <ul>
-                <li><a href="{{ url_for('annual_reports.index') }}">{{ _('Annual Reports') }}</a></li>
+                <li><a href="{{ url_for('annual_reports.index') }}">{{ _('Archived Annual Reports') }}</a></li>
                 <li><a href="{{ url_for('payments.donors') }}">{{ _('Donors') }}</a></li>
                 <li><a href="{{ url_for('index.sponsors') }}">{{ _('Sponsors') }}</a></li>
-                <li><a href="{{ url_for('users.supporters_list') }}">{{ _('Supporters') }}</a></li>
+                <li><a href="{{ url_for('supporters.supporters_list') }}">{{ _('Supporters') }}</a></li>
               </ul>
             </div>
             <div class="col-sm-2">
-              <div class="title"><a href="{{ url_for('users.supporters_list') }}">{{ _('Users') }}</a></div>
+              <div class="title"><a href="{{ url_for('supporters.supporters_list') }}">{{ _('Supporters') }}</a></div>
               <ul>
                 {% if not current_user or current_user.is_anonymous %}
-                  <li><a href="{{ url_for('users.login') }}">{{ _('Sign in') }}</a></li>
+                  <li><a href="{{ url_for('supporters.login') }}">{{ _('Sign in') }}</a></li>
                 {% else %}
-                  <li><a href="{{ url_for('users.logout') }}">{{ _('Sign out') }}</a></li>
+                  <li><a href="{{ url_for('supporters.logout') }}">{{ _('Sign out') }}</a></li>
                 {% endif %}
-                <li><a href="{{ url_for('users.profile') }}">{{ _('Access your account') }}</a></li>
+                <li><a href="{{ url_for('supporters.profile') }}">{{ _('Access your account') }}</a></li>
                 <li><a href="{{ url_for('api_index.info') }}">{{ _('API') }}</a></li>
               </ul>
             </div>
@@ -87,16 +83,17 @@
               <div class="title"><a href="{{ url_for('index.contact') }}">{{ _('Contact us') }}</a></div>
               <ul>
                 <li><a href="https://blog.metabrainz.org/category/metabrainz/">{{ _('Blog') }}</a></li>
-                <li><a href="https://twitter.com/MetaBrainz">{{ _('Twitter') }}</a></li>
+                <li><a href="https://twitter.com/MetaBrainz">{{ _('Twitter/X') }}</a></li>
+                <li><a href="https://mastodon.social/@metabrainz">{{ _('Mastodon') }}</a></li>
+                <li><a href="https://bsky.app/profile/metabrainz.org">{{ _('Bluesky') }}</a></li>
+                <li><a href="https://www.instagram.com/MetaBrainz/">{{ _('Instagram') }}</a></li>
               </ul>
             </div>
           </div>
           <div class="lower-footer">
-            {{ _('Sponsored by <a href="%(google_url)s">Google</a>,
-            <a href="%(osuosl_url)s">OSUOSL</a> and
+            {{ _('Sponsored by <a href="%(google_url)s">Google</a> and
             <a href="%(sponsors_url)s">others&hellip;</a>',
             sponsors_url=url_for('index.sponsors'),
-            osuosl_url='https://osuosl.org/',
             google_url='https://www.google.com/') }}
           </div>
         </div>
@@ -105,8 +102,8 @@
     </div>
 
     {% block scripts %}
-      <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/lib/jquery-2.1.1.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/lib/bootstrap.min.js') }}"></script>
     {% endblock %}
 
   </body>

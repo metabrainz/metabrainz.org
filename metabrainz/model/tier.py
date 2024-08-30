@@ -1,10 +1,10 @@
 from metabrainz.model import db
-from metabrainz.model.user import User
+from metabrainz.model.supporter import Supporter
 from metabrainz.admin import AdminModelView
 
 
 class Tier(db.Model):
-    """This model defines tier of support that commercial users can sign up to."""
+    """This model defines tier of support that commercial supporters can sign up to."""
     __tablename__ = 'tier'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,7 +13,7 @@ class Tier(db.Model):
     long_desc = db.Column(db.UnicodeText)
     price = db.Column(db.Numeric(11, 2), nullable=False)  # per month
 
-    # Users can sign up only to available tiers on their own. If tier is not
+    # Supporters can sign up only to available tiers on their own. If tier is not
     # available, it should be hidden from the website.
     available = db.Column(db.Boolean, nullable=False, default=False)
 
@@ -22,7 +22,7 @@ class Tier(db.Model):
     # that lists all available tiers.
     primary = db.Column(db.Boolean, nullable=False, default=False)
 
-    users = db.relationship("User", backref='tier', lazy="dynamic")
+    supporters = db.relationship("Supporter", backref='tier', lazy="dynamic")
 
     def __str__(self):
         return "%s (#%s)" % (self.name, self.id)
@@ -57,8 +57,8 @@ class Tier(db.Model):
                     query.order_by(cls.price.asc())
         return query.all()
 
-    def get_featured_users(self, **kwargs):
-        return User.get_featured(tier_id=self.id, **kwargs)
+    def get_featured_supporters(self, **kwargs):
+        return Supporter.get_featured(tier_id=self.id, **kwargs)
 
 
 class TierAdminView(AdminModelView):
@@ -72,7 +72,7 @@ class TierAdminView(AdminModelView):
     column_descriptions = dict(
         price='USD',
         primary="Primary tiers are displayed first on tier selection pages.",
-        available="Indicates if users can sign up to that tier on their own. "
+        available="Indicates if supporters can sign up to that tier on their own. "
                   "Tier will be hidden from the website if it's not available.",
     )
     column_list = ('id', 'name', 'price', 'primary', 'available',)

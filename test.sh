@@ -1,7 +1,14 @@
 #!/bin/bash
 
+echo "Checking docker compose version"
+if docker compose version &> /dev/null; then
+    DOCKER_COMPOSE_CMD="docker compose"
+else
+    DOCKER_COMPOSE_CMD="docker-compose"
+fi
+
 function invoke_docker_compose {
-    docker-compose -f docker/docker-compose.test.yml \
+    $DOCKER_COMPOSE_CMD -f docker/docker-compose.test.yml \
         -p metabrainz_test \
         "$@"
 }
