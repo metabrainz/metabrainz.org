@@ -23,8 +23,8 @@ def copy_row_ids():
                   FROM editor e
                  WHERE EXISTS(
                         SELECT 1
-                          FROM (VALUES %s) AS t(user_id)
-                         WHERE t.user_id = e.user_id
+                          FROM (VALUES %s) AS t(username)
+                         WHERE t.username = e.name
                  )
             """, editor_ids, fetch=True)
             editors = [(r[0], r[1]) for r in results]
