@@ -35,7 +35,7 @@ def get_supporter(authorization_code):
         )
     }, decoder=lambda content: json.loads(content.decode("utf-8")))
     data = s.get('oauth2/userinfo').json()
-    return data.get('sub'), data.get('email')
+    return data.get('sub'), data.get('email'), data.get("metabrainz_user_id")
 
 
 def get_authentication_uri():

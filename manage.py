@@ -10,6 +10,8 @@ import click
 
 import logging
 
+from metabrainz.supporter.copy_mb_row_ids import copy_row_ids
+
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'admin', 'sql')
 
 cli = click.Group()
@@ -115,6 +117,13 @@ def send_invoice_reminders():
     with create_app().app_context():
         qb = QuickBooksInvoiceSender()
         qb.send_invoice_reminders()
+
+
+@cli.command()
+def import_musicbrainz_row_ids():
+    """ Import musicbrainz row ids for users """
+    with create_app().app_context():
+        copy_row_ids()
 
 
 def _run_psql(script, uri, database=None):

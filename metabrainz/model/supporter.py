@@ -38,6 +38,7 @@ class Supporter(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     is_commercial = db.Column(db.Boolean, nullable=False)
     musicbrainz_id = db.Column(db.Unicode, unique=True)  # MusicBrainz account that manages this supporter
+    musicbrainz_row_id = db.Column(db.Integer, unique=True)  # MusicBrainz row id of the account
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
     state = db.Column(postgresql.ENUM(
         STATE_ACTIVE,
@@ -96,6 +97,7 @@ class Supporter(db.Model, UserMixin):
         new_supporter = cls(
             is_commercial=kwargs.pop('is_commercial'),
             musicbrainz_id=kwargs.pop('musicbrainz_id'),
+            musicbrainz_row_id=kwargs.pop('musicbrainz_row_id'),
             contact_name=kwargs.pop('contact_name'),
             contact_email=kwargs.pop('contact_email'),
             data_usage_desc=kwargs.pop('data_usage_desc'),

@@ -21,6 +21,7 @@ CREATE TABLE supporter (
   id               SERIAL            NOT NULL, -- PK
   is_commercial    BOOLEAN           NOT NULL,
   musicbrainz_id   CHARACTER VARYING UNIQUE,
+  musicbrainz_row_id INTEGER UNIQUE,
   created          TIMESTAMP WITH TIME ZONE,
   state            state_types       NOT NULL,
   contact_name     CHARACTER VARYING NOT NULL,
@@ -77,6 +78,7 @@ CREATE TABLE payment (
   last_name        CHARACTER VARYING NOT NULL,
   email            CHARACTER VARYING NOT NULL,
   editor_name      CHARACTER VARYING,
+  editor_id        INTEGER,
   can_contact      BOOLEAN,
   anonymous        BOOLEAN,
   address_street   CHARACTER VARYING,
