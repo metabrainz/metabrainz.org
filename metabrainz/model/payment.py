@@ -2,7 +2,7 @@ from __future__ import division
 
 from sqlalchemy import exists
 
-from metabrainz.model import db
+from metabrainz.model import db, Supporter
 from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
@@ -37,6 +37,7 @@ class Payment(db.Model):
 
     # Donation-specific columns
     editor_name = db.Column(db.Unicode)  # MusicBrainz username
+    editor_id = db.Column(db.Integer)  # MusicBrainz row id
     can_contact = db.Column(db.Boolean)
     anonymous = db.Column(db.Boolean)
 
@@ -242,6 +243,12 @@ class Payment(db.Model):
         if is_donation:
             new_payment.editor_name = form.get('custom')
 
+            supporter = Supporter.get(musicbrainz_id=new_payment.editor_name)
+            if supporter is None:
+                new_payment.editor_id = None
+            else:
+                new_payment.editor_id = supporter.editor_id
+
             anonymous_opt = options.get("anonymous")
             if anonymous_opt is None:
                 logging.warning("PayPal: Anonymity option is missing", extra={"ipn_content": form})
@@ -380,6 +387,13 @@ class Payment(db.Model):
 
             if "editor" in metadata:
                 new_donation.editor_name = metadata["editor"]
+
+                supporter = Supporter.get(musicbrainz_id=new_donation.editor_name)
+                if supporter is None:
+                    new_donation.editor_id = None
+                else:
+                    new_donation.editor_id = supporter.editor_id
+
         else:  # Organization payment
             new_donation.invoice_number = metadata["invoice_number"]
 

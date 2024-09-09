@@ -23,6 +23,7 @@ SESSION_KEY_ACCOUNT_TYPE = 'account_type'
 SESSION_KEY_TIER_ID = 'account_tier'
 SESSION_KEY_MB_USERNAME = 'mb_username'
 SESSION_KEY_MB_EMAIL = 'mb_email'
+SESSION_KEY_MB_ROW_ID = 'mb_row_id'
 
 ACCOUNT_TYPE_COMMERCIAL = 'commercial'
 ACCOUNT_TYPE_NONCOMMERCIAL = 'noncommercial'
@@ -110,6 +111,9 @@ def signup_commercial():
         return redirect(url_for(".signup"))
     mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
 
+    mb_row_id = session.fetch_data(SESSION_KEY_MB_ROW_ID)
+    mb_row_id = int(mb_row_id) if mb_row_id else None
+
     form = CommercialSignUpForm(default_email=mb_email)
 
     def custom_validation(f):
@@ -128,6 +132,7 @@ def signup_commercial():
             new_supporter = Supporter.add(
                 is_commercial=True,
                 musicbrainz_id=mb_username,
+                musicbrainz_row_id=mb_row_id,
                 contact_name=form.contact_name.data,
                 contact_email=form.contact_email.data,
                 data_usage_desc=form.usage_desc.data,
@@ -204,6 +209,10 @@ def signup_noncommercial():
         })
         return redirect(url_for(".signup"))
     mb_email = session.fetch_data(SESSION_KEY_MB_EMAIL)
+
+    mb_row_id = session.fetch_data(SESSION_KEY_MB_ROW_ID)
+    mb_row_id = int(mb_row_id) if mb_row_id else None
+
     available_datasets = Dataset.query.all()
 
     form = NonCommercialSignUpForm(available_datasets, default_email=mb_email)
@@ -214,6 +223,7 @@ def signup_noncommercial():
             new_supporter = Supporter.add(
                 is_commercial=False,
                 musicbrainz_id=mb_username,
+                musicbrainz_row_id=mb_row_id,
                 contact_name=form.contact_name.data,
                 contact_email=form.contact_email.data,
                 data_usage_desc=form.usage_desc.data,
@@ -271,13 +281,14 @@ def musicbrainz_post():
         raise InternalServerError(gettext("Authorization code is missing!"))
 
     try:
-        mb_username, mb_email = musicbrainz_login.get_supporter(code)
+        mb_username, mb_email, mb_row_id = musicbrainz_login.get_supporter(code)
     except KeyError:
         raise BadRequest(gettext("Login failed!"))
 
     session.persist_data(**{
         SESSION_KEY_MB_USERNAME: mb_username,
         SESSION_KEY_MB_EMAIL: mb_email,
+        SESSION_KEY_MB_ROW_ID: mb_row_id
     })
     supporter = Supporter.get(musicbrainz_id=mb_username)
     if supporter:  # Checking if supporter is already signed up
