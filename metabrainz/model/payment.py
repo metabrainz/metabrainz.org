@@ -247,7 +247,7 @@ class Payment(db.Model):
             if supporter is None:
                 new_payment.editor_id = None
             else:
-                new_payment.editor_id = supporter.editor_id
+                new_payment.editor_id = supporter.musicbrainz_row_id
 
             anonymous_opt = options.get("anonymous")
             if anonymous_opt is None:
@@ -392,7 +392,7 @@ class Payment(db.Model):
                 if supporter is None:
                     new_donation.editor_id = None
                 else:
-                    new_donation.editor_id = supporter.editor_id
+                    new_donation.editor_id = supporter.musicbrainz_row_id
 
         else:  # Organization payment
             new_donation.invoice_number = metadata["invoice_number"]
