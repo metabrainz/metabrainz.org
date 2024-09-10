@@ -24,7 +24,7 @@ def copy_row_ids_for_table(table_name, fetch_query, update_query):
                  WHERE EXISTS(
                         SELECT 1
                           FROM (VALUES %s) AS t(username)
-                         WHERE t.username = e.name
+                         WHERE lower(t.username) = lower(e.name)
                  )
             """, editor_ids, fetch=True)
             editors = [(r[0], r[1]) for r in results]
@@ -41,20 +41,20 @@ def copy_row_ids_for_table(table_name, fetch_query, update_query):
 
 
 def copy_row_ids():
-    supporter_fetch_query = "SELECT musicbrainz_id FROM supporter"
+    supporter_fetch_query = "SELECT musicbrainz_id FROM supporter WHERE musicbrainz_row_id IS NULL"
     supporter_update_query = """
         UPDATE supporter s
            SET musicbrainz_row_id = t.musicbrainz_row_id
           FROM (VALUES %s) AS t(musicbrainz_row_id, musicbrainz_id)
-        WHERE s.musicbrainz_id = t.musicbrainz_id
+        WHERE lower(s.musicbrainz_id) = lower(t.musicbrainz_id)
     """
 
-    payment_fetch_query = "SELECT DISTINCT editor_name FROM payment WHERE editor_name IS NOT NULL"
+    payment_fetch_query = "SELECT DISTINCT editor_name FROM payment WHERE editor_name IS NOT NULL AND editor_id IS NULL"
     payment_update_query = """
         UPDATE payment p
            SET editor_id = t.musicbrainz_row_id
           FROM (VALUES %s) AS t(musicbrainz_row_id, musicbrainz_id)
-         WHERE p.editor_name = t.musicbrainz_id
+         WHERE lower(p.editor_name) = lower(t.musicbrainz_id)
     """
 
     copy_row_ids_for_table("supporter", supporter_fetch_query, supporter_update_query)
