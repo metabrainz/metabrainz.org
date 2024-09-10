@@ -13,6 +13,7 @@ class AccessLogTestCase(FlaskTestCase):
     def test_access_log(self):
         supporter_0 = Supporter.add(is_commercial=False,
                                     musicbrainz_id="mb_test",
+                                    musicbrainz_row_id=1,
                                     contact_name="Mr. Test",
                                     contact_email="test@musicbrainz.org",
                                     data_usage_desc="poop!",
@@ -25,6 +26,7 @@ class AccessLogTestCase(FlaskTestCase):
 
         supporter_1 = Supporter.add(is_commercial=True,
                                     musicbrainz_id="mb_commercial",
+                                    musicbrainz_row_id=3,
                                     contact_name="Mr. Commercial",
                                     contact_email="testc@musicbrainz.org",
                                     data_usage_desc="poop!",
