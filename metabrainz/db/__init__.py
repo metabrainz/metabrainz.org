@@ -4,10 +4,17 @@ from sqlalchemy.pool import NullPool
 
 engine: sqlalchemy.engine.Engine = None
 
+mb_engine: sqlalchemy.engine.Engine = None
+
 
 def init_db_engine(connect_str):
     global engine
     engine = create_engine(connect_str, poolclass=NullPool)
+
+
+def init_mb_db_engine(connect_str):
+    global mb_engine
+    mb_engine = create_engine(connect_str, poolclass=NullPool)
 
 
 def run_sql_script(sql_file_path):

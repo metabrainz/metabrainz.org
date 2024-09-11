@@ -92,6 +92,9 @@ def create_app(debug=None, config_path=None):
     # Database
     from metabrainz import db
     db.init_db_engine(app.config["SQLALCHEMY_DATABASE_URI"])
+    if app.config.get("SQLALCHEMY_MUSICBRAINZ_URI", None):
+        db.init_mb_db_engine(app.config["SQLALCHEMY_MUSICBRAINZ_URI"])
+
     from metabrainz import model
     model.db.init_app(app)
 
