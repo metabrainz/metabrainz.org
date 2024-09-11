@@ -1,6 +1,7 @@
 from __future__ import division
 from flask import Blueprint, request, render_template, url_for, redirect, current_app, jsonify
 from flask_babel import gettext
+from flask_login import current_user
 from werkzeug.datastructures import MultiDict
 
 from metabrainz.payments import SUPPORTED_CURRENCIES
@@ -20,7 +21,10 @@ payments_bp = Blueprint('payments', __name__)
 @payments_bp.route('/donate')
 def donate():
     """Regular donation page."""
-    return render_template('payments/donate.html', form=DonationForm())
+    form = DonationForm()
+    if current_user is not None and not current_user.is_anonymous:
+        form.editor.data = current_user.musicbrainz_id
+    return render_template('payments/donate.html', form=form)
 
 
 @payments_bp.route('/payment/')
