@@ -70,9 +70,9 @@ for row in rows:
     out.writerow([date, sender, str(gross)])
     if balance is not None:
         balance = balance + gross
-        print("%s %-40s %10s %10s" % (date, sender, str(gross), str(balance)))
+        print("%s,%-40s,%10s,%10s" % (date, sender, str(gross), str(balance)))
         balance = balance - fee
-        print("%s %-40s %10s %10s" % (date, "Stripe fee", str(fee), str(balance)))
+        print("%s,%-40s,%10s,%10s" % (date, "Stripe fee", str(fee), str(balance)))
 
 fp.close()
 _out.close()
