@@ -113,7 +113,7 @@ function Applications({
                   >
                     <button
                       type="submit"
-                      className="btn-link"
+                      className="btn btn-danger"
                       style={{ color: "white" }}
                     >
                       Revoke access
