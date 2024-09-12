@@ -1,10 +1,10 @@
 # Docker Compose file for development
 volumes:
-  meb_db:
+  db:
 
 services:
 
-  meb_web:
+  web:
     build:
       context: ..
       dockerfile: Dockerfile
@@ -16,8 +16,8 @@ services:
       - ..:/code/metabrainz
       - ../frontend:/static
     depends_on:
-      - meb_db
-      - meb_redis
+      - db
+      - redis
     expose:
       - "8000"
     environment:
@@ -27,7 +27,7 @@ services:
     ports:
       - "8000:8000"
 
-  meb_oauth:
+  oauth:
     build:
       context: ..
       dockerfile: Dockerfile
@@ -45,24 +45,24 @@ services:
       - ..:/code/metabrainz
       - ../frontend:/static
     depends_on:
-      - meb_db
-      - meb_redis
+      - db
+      - redis
     ports:
       - "8150:8150"
     expose:
       - "8150"
 
-  meb_db:
+  db:
     image: postgres:12.3
     volumes:
-      - meb_db:/var/lib/postgresql/data:z
+      - db:/var/lib/postgresql/data:z
     environment:
       POSTGRES_PASSWORD: postgres
 
-  meb_redis:
+  redis:
     image: redis:3.2.1
 
-  meb_static_builder:
+  static_builder:
     build:
       context: ..
       dockerfile: Dockerfile

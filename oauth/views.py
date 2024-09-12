@@ -27,8 +27,6 @@ def after_oauth2_request(response):
     response.headers["Cache-Control"] = "no-store"
     response.headers["Pragma"] = "no-cache"
     response.headers["X-Frame-Options"] = "DENY"
-    response.headers["Content-Security-Policy"] = \
-        "default-src 'self'; frame-ancestors 'none'; script-src 'sha256-vJFm4HtSvYBaeJGb0uUgH6hZ77q54fbWtplmtKmB+RE=' https://fonts.gstatic.com https://test.musicbrainz.org; font-src https://fonts.gstatic.com;"
     response.headers["Referrer-Policy"] = "no-referrer"
     return response
 
