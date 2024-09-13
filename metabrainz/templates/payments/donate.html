@@ -39,7 +39,7 @@
           <label for="input-amount" class="col-sm-offset-2 col-sm-3 control-label">{{ _('Amount') }}</label>
           <div class="col-sm-4">
             <div id="input-amount-fg">
-              {{ form.amount(id="input-amount", class="form-control", value="50.00") | safe }}
+              {{ form.amount(id="input-amount", class="form-control") | safe }}
               <div id="currency-selector" class="btn-group" data-toggle="buttons">
                 {% for subfield in form.currency %}
                   <label class="btn btn-primary {{ 'active' if subfield.checked }}">
