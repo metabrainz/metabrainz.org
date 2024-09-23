@@ -1,9 +1,13 @@
 from __future__ import division
+
+from decimal import Decimal, InvalidOperation
+
 from flask import Blueprint, request, render_template, url_for, redirect, current_app, jsonify
 from flask_babel import gettext
+from flask_login import current_user
 from werkzeug.datastructures import MultiDict
 
-from metabrainz.payments import SUPPORTED_CURRENCIES
+from metabrainz.payments import SUPPORTED_CURRENCIES, Currency
 from metabrainz.model.payment import Payment
 from metabrainz.payments.forms import DonationForm, PaymentForm
 from metabrainz import flash
@@ -20,7 +24,35 @@ payments_bp = Blueprint('payments', __name__)
 @payments_bp.route('/donate')
 def donate():
     """Regular donation page."""
-    return render_template('payments/donate.html', form=DonationForm())
+    form = DonationForm()
+
+    if editor := request.args.get('editor'):
+        form.editor.data = editor
+    else:
+        if current_user is not None and not current_user.is_anonymous:
+            form.editor.data = current_user.musicbrainz_id
+
+    amount = None
+    if _amount := request.args.get('amount'):
+        try:
+            value = Decimal(_amount)
+            if value >= 0:
+                amount = value
+        except (ValueError, TypeError, InvalidOperation):
+            pass
+
+    if amount is None:
+        amount = Decimal(50)
+    form.amount.data = amount
+
+    _currency =  request.args.get('currency', 'usd')
+    if _currency.lower() == 'eur':
+        currency = 'eur'
+    else:
+        currency = 'usd'
+    form.currency.data = currency
+
+    return render_template('payments/donate.html', form=form)
 
 
 @payments_bp.route('/payment/')

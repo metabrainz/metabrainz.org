@@ -31,6 +31,7 @@ except IOError:
 balance = None
 try:
     balance = Decimal(sys.argv[3])
+    print("got starting balance", balance)
 except (InvalidOperation, IndexError):
     print("Cannot balance value, ignoring.")
 
@@ -53,6 +54,8 @@ for line in reader:
 
 index = 1
 register = []
+credit = Decimal(0.0)
+debits = Decimal(0.0)
 while True:
     if index >= len(lines):
         break
@@ -61,9 +64,10 @@ while True:
 
     desc = fields[3]
     dat = fields[0]
-    gross = fields[7]
-    fee = fields[8]
-    net = fields[9]
+    gross = Decimal(fields[7].replace(",", ""))
+    fee = Decimal(fields[8].replace(",", ""))
+    net = Decimal(fields[9].replace(",", ""))
+    pp_balance = Decimal(fields[29].replace(",", ""))
     status = fields[5]
     typ = fields[4]
 
@@ -73,18 +77,18 @@ while True:
         amount = gross
 
     elif currency != 'USD':
-        print("transaction foreign")
+#        print("transaction foreign")
         # Received money in foreign currency
-        print(lines[index + 1])
-        print(lines[index + 2])
+#        print(lines[index + 1])
+#        print(lines[index + 2])
         foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
         native = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
 
 
-        print("native %f, foreign %f" % (native, foreign))
+#        print("native %f, foreign %f" % (native, foreign))
 
         ratio = native / foreign
-        print("conversion rate: %f" % ratio)
+#        print("conversion rate: %f" % ratio)
 
         fee = Decimal(fee) / ratio
         fee = Decimal(int(fee * 100)) / 100
@@ -93,16 +97,20 @@ while True:
         amount = native
         if typ == "Express Checkout Payment":
             amount = -amount
-        print("amount %f fee: %f\n" % (amount, fee))
 
         index += 2
-        
+
     desc = desc.replace(",", " ")
     out.writerow([dat, desc, amount])
 
+    if amount > 0.0:
+        credit += amount
+    else:
+        debits += amount
+
     if balance is not None:
         balance = balance + Decimal(str(net).replace(",", ""))
-        register.append("%s %-40s %10s %10s %10s" % (dat, desc, str(amount), str(fee), str(balance)))
+        register.append("%s %-40s %10s %10s %10s" % (dat, desc, str(amount), str(fee), str(pp_balance)))
 
     desc = "PayPal Fee"
     dat = fields[0]
@@ -111,6 +119,7 @@ while True:
 
     index += 1
 
+
 fp.close()
 _out.close()
 
@@ -118,3 +127,8 @@ if register:
     register.reverse()
     for line in register:
         print(line)
+
+    print()
+    print(" Debits: %.2f" % debits)
+    print("Credits: %.2f" % credit)
+    print("  Total: %.2f" % (credit + debits))
