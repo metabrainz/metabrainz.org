@@ -35,19 +35,11 @@ out.writerow(["Date","Description","Amount"])
 lines = []
 reader = unicode_csv_reader(fp)
 for line in reader:
-
-    # Filter out lines that complicate everything
-    if line[4] in ("General Card Deposit", "Account Hold for Open Authorization", "Reversal of General Account Hold"):
-        continue
-
-    if line[5] != 'Completed':
-        continue
-
     lines.append(line)
 
 print("DATE       NAME                                           GROSS       FEE     PP_BAL    BALANCE")
 
-index = 0
+index = 1
 register = []
 balance = None
 while True:
@@ -96,6 +88,12 @@ while True:
         usd_fee = Decimal(fee) * exchange_rate
         usd_fee = Decimal(int(usd_fee * 100)) / 100
         gross = usd - usd_fee
+        fee = usd_fee
+        net = usd
+
+        if typ == "Express Checkout Payment":
+            gross = -gross
+            net = -net
 
         print("      foreign: ", foreign)
         print("  foreign fee: ", fee)
@@ -104,18 +102,17 @@ while True:
         print("        gross: ", gross)
         print("exchange rate: ", exchange_rate)
 
-        if typ == "Express Checkout Payment":
-            gross = -gross
 
-        fee = usd_fee
-        net = usd
         # Get the correct balance, because WTF paypal.
         pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
 
         # The balance for express checkout are zero. thanks paypal.
         if pp_balance == Decimal(0.0):
             print("Balance fix!")
-            pp_balance = balance - usd
+            print("balance: %s gross: %s" % (str(balance), str(gross)))
+            pp_balance = balance + gross
+
+        print("Balance: ", balance)
 
         index += 2
     else:
@@ -136,9 +133,9 @@ while True:
     balance = balance + net
     if balance != pp_balance:
         print("     discrepancy: ", (pp_balance - balance))
+        print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(gross), str(fee),
+                                               str(pp_balance), str(balance)))
         sys.exit(-1)
-
-    print(desc)
 
     desc = desc.replace(",", " ")
     out.writerow([dat, desc, fee, gross])
