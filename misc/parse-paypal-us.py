@@ -65,48 +65,70 @@ while True:
     status = fields[5]
     typ = fields[4]
 
-    if gross == Decimal(0.0):
-        print("*** skip non balance affecting transaction: %s", desc)
-        index += 1
-        continue
+#    if gross == Decimal(0.0):
+#        print("*** skip non balance affecting transaction: %s", desc)
+#        index += 1
+#        continue
 
     currency = fields[6]
+
+    try:
+        lookahead_type = lines[index + 1][4]
+    except IndexError:
+        lookahead_type = ""
+
     if currency == 'USD' and typ != "General Currency Conversion":
         # Normal native currency transactions
         amount = gross
 
-    elif currency != 'USD' and lines[index + 1][4] == "General Currency Conversion":
-        # Received money in foreign currency
-        foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
-        usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
-        print("      foreign: ", foreign)
-        print("  foreign fee: ", fee)
+    elif currency != 'USD' and lookahead_type == "General Currency Conversion":
 
-        # Get the correct balance, because WTF paypal.
-        pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
+        if typ == "Express Checkout Payment":
+            # Received money in foreign currency
+            usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+            foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+        else:
+            # Received money in foreign currency
+            usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+            foreign = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
 
         exchange_rate = usd / foreign
         usd_fee = Decimal(fee) * exchange_rate
         usd_fee = Decimal(int(usd_fee * 100)) / 100
         gross = usd - usd_fee
+
+        print("      foreign: ", foreign)
+        print("  foreign fee: ", fee)
         print("          net: ", usd)
         print("      usd fee: ", usd_fee)
         print("        gross: ", gross)
         print("exchange rate: ", exchange_rate)
-        print("          net: ", net)
 
         if typ == "Express Checkout Payment":
             gross = -gross
 
         fee = usd_fee
-        net = foreign
+        net = usd
+        # Get the correct balance, because WTF paypal.
+        pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
 
+        # The balance for express checkout are zero. thanks paypal.
+        if pp_balance == Decimal(0.0):
+            print("Balance fix!")
+            pp_balance = balance - usd
 
         index += 2
     else:
-        print("*** skip non balance affecting transaction: %s", desc)
-        index += 1
-        continue
+        print(gross, fee)
+        if gross + fee == Decimal(0.0):
+            print("*** skip non balance affecting transaction: %s", desc)
+            index += 1
+            continue
+
+        print("Unknown transaction")
+        print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(gross), str(fee),
+                                               str(pp_balance), str(balance)))
+        assert False
 
     if balance is None:
         balance = pp_balance - net
@@ -114,6 +136,9 @@ while True:
     balance = balance + net
     if balance != pp_balance:
         print("     discrepancy: ", (pp_balance - balance))
+        sys.exit(-1)
+
+    print(desc)
 
     desc = desc.replace(",", " ")
     out.writerow([dat, desc, fee, gross])
