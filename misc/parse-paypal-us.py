@@ -45,6 +45,8 @@ for line in reader:
 
     lines.append(line)
 
+print("DATE       NAME                                           GROSS       FEE     PP_BAL    BALANCE")
+
 index = 0
 register = []
 balance = None
@@ -63,40 +65,60 @@ while True:
     status = fields[5]
     typ = fields[4]
 
+    if gross == Decimal(0.0):
+        print("*** skip non balance affecting transaction: %s", desc)
+        index += 1
+        continue
+
     currency = fields[6]
     if currency == 'USD' and typ != "General Currency Conversion":
         # Normal native currency transactions
         amount = gross
 
-    elif currency != 'USD':
+    elif currency != 'USD' and lines[index + 1][4] == "General Currency Conversion":
         # Received money in foreign currency
         foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
-        native = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+        usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+        print("      foreign: ", foreign)
+        print("  foreign fee: ", fee)
 
         # Get the correct balance, because WTF paypal.
         pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
 
-        ratio = native / foreign
-        fee = Decimal(fee) / ratio
-        fee = Decimal(int(fee * 100)) / 100
-        net = native - fee
+        exchange_rate = usd / foreign
+        usd_fee = Decimal(fee) * exchange_rate
+        usd_fee = Decimal(int(usd_fee * 100)) / 100
+        gross = usd - usd_fee
+        print("          net: ", usd)
+        print("      usd fee: ", usd_fee)
+        print("        gross: ", gross)
+        print("exchange rate: ", exchange_rate)
+        print("          net: ", net)
 
-        amount = native
         if typ == "Express Checkout Payment":
-            amount = -amount
+            gross = -gross
+
+        fee = usd_fee
+        net = foreign
+
 
         index += 2
+    else:
+        print("*** skip non balance affecting transaction: %s", desc)
+        index += 1
+        continue
 
-    # If this is the first row, calculate the starting balance
     if balance is None:
         balance = pp_balance - net
-        print("Starting balance: ", balance)
-
-    desc = desc.replace(",", " ")
-    out.writerow([dat, desc, amount])
 
     balance = balance + net
-    print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(amount), str(fee),
+    if balance != pp_balance:
+        print("     discrepancy: ", (pp_balance - balance))
+
+    desc = desc.replace(",", " ")
+    out.writerow([dat, desc, fee, gross])
+
+    print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(gross), str(fee),
                                            str(pp_balance), str(balance)))
 
     desc = "PayPal Fee"
