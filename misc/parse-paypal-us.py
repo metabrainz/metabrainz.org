@@ -11,7 +11,7 @@ def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
         yield [cell for cell in row]
 
 if len(sys.argv) not in [3,4]:
-    print("Usage parse-paypal-es.py <paypal csv file> <qbo csv file> [start balance]")
+    print("Usage parse-paypal-es.py <paypal csv file> <qbo csv file>")
     sys.exit(-1)
 
 fp = None
@@ -27,13 +27,6 @@ try:
 except IOError:
     print("Cannot open output file %s" % sys.argv[2])
     sys.exit(0)
-
-balance = None
-try:
-    balance = Decimal(sys.argv[3])
-    print("got starting balance", balance)
-except (InvalidOperation, IndexError):
-    print("Cannot balance value, ignoring.")
 
 
 out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
@@ -52,10 +45,9 @@ for line in reader:
 
     lines.append(line)
 
-index = 1
+index = 0
 register = []
-credit = Decimal(0.0)
-debits = Decimal(0.0)
+balance = None
 while True:
     if index >= len(lines):
         break
@@ -77,19 +69,14 @@ while True:
         amount = gross
 
     elif currency != 'USD':
-#        print("transaction foreign")
         # Received money in foreign currency
-#        print(lines[index + 1])
-#        print(lines[index + 2])
         foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
         native = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
 
-
-#        print("native %f, foreign %f" % (native, foreign))
+        # Get the correct balance, because WTF paypal.
+        pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
 
         ratio = native / foreign
-#        print("conversion rate: %f" % ratio)
-
         fee = Decimal(fee) / ratio
         fee = Decimal(int(fee * 100)) / 100
         net = native - fee
@@ -100,17 +87,17 @@ while True:
 
         index += 2
 
+    # If this is the first row, calculate the starting balance
+    if balance is None:
+        balance = pp_balance - net
+        print("Starting balance: ", balance)
+
     desc = desc.replace(",", " ")
     out.writerow([dat, desc, amount])
 
-    if amount > 0.0:
-        credit += amount
-    else:
-        debits += amount
-
-    if balance is not None:
-        balance = balance + Decimal(str(net).replace(",", ""))
-        register.append("%s %-40s %10s %10s %10s" % (dat, desc, str(amount), str(fee), str(pp_balance)))
+    balance = balance + net
+    print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(amount), str(fee),
+                                           str(pp_balance), str(balance)))
 
     desc = "PayPal Fee"
     dat = fields[0]
@@ -119,16 +106,9 @@ while True:
 
     index += 1
 
+print("    Final paypal balance: ", pp_balance)
+print("Final calculated balance: ", balance)
+
 
 fp.close()
 _out.close()
-
-if register:
-    register.reverse()
-    for line in register:
-        print(line)
-
-    print()
-    print(" Debits: %.2f" % debits)
-    print("Credits: %.2f" % credit)
-    print("  Total: %.2f" % (credit + debits))
