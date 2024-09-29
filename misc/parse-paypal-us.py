@@ -55,6 +55,15 @@ def process_file(in_file, out_file, verbose):
                 # Received money in foreign currency
                 usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
                 foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+            elif typ == "Payment Refund":
+                # A refund was made. Did we make it or someone else?
+                if gross > Decimal(0.0):
+                    # Someone else made it
+                    usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+                    foreign = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+                else:
+                    usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+                    foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
             else:
                 # Received money in foreign currency
                 usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
@@ -64,20 +73,24 @@ def process_file(in_file, out_file, verbose):
             usd_fee = Decimal(fee) * exchange_rate
             usd_fee = Decimal(int(usd_fee * 100)) / 100
             gross = usd - usd_fee
-            fee = usd_fee
-            net = usd
-
-            if typ == "Express Checkout Payment":
-                gross = -gross
-                net = -net
 
             if (verbose):
                 print("      foreign: ", foreign)
                 print("  foreign fee: ", fee)
-                print("          net: ", usd)
+                print("          net: ", net)
                 print("      usd fee: ", usd_fee)
                 print("        gross: ", gross)
                 print("exchange rate: ", exchange_rate)
+
+
+            fee = usd_fee
+            net = usd
+
+            gross_fix = False
+            if typ == "Express Checkout Payment":
+                gross = -gross
+                net = -net
+
 
             # Get the correct balance, because WTF paypal.
             pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
@@ -113,10 +126,15 @@ def process_file(in_file, out_file, verbose):
             assert False
 
         desc = desc.replace(",", " ")
-        out.writerow([dat, desc, fee, gross])
+        out.writerow([dat, desc, gross])
 
         print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(gross), str(fee),
                                                str(pp_balance), str(balance)))
+ 
+        desc = "PayPal Fee"
+        dat = fields[0]
+        if fee and Decimal(fee) != 0.0:
+            out.writerow([dat, desc, fee])
 
         index += 1
 
