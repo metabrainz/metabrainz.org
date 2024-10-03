@@ -10,6 +10,94 @@ def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
     for row in csv_reader:
         yield [cell for cell in row]
 
+
+def handle_foreign_express_checkout(gross, fee, net, paypal_balance, balance):
+    usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+    foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+
+    exchange_rate = usd / foreign
+    usd_fee = Decimal(fee) * exchange_rate
+    usd_fee = Decimal(int(usd_fee * 100)) / 100
+    gross = -(usd - usd_fee)
+    fee = usd_fee
+    net = -usd
+
+    # The balance for express checkout are zero. thanks paypal.
+    if pp_balance == Decimal(0.0):
+        if (verbose):
+            print("Balance fix!")
+            print("balance: %s gross: %s" % (str(balance), str(gross)))
+        paypal_balance = balance + gross
+
+    if balance is None:
+        balance = pp_balance - net
+        starting_balance = balance
+
+    balance = balance + net
+
+    return gross, fee, net, paypal_balance, balance
+
+
+def handle_checkout_refund(gross, fee, net, paypal_balance, balance):
+    usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+    foreign = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+
+    exchange_rate = usd / foreign
+    usd_fee = Decimal(fee) * exchange_rate
+    usd_fee = Decimal(int(usd_fee * 100)) / 100
+    gross = usd - usd_fee
+    fee = usd_fee
+    net = usd
+    pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
+
+    if balance is None:
+        balance = pp_balance - net
+        starting_balance = balance
+
+    balance = balance + net
+
+    return gross, fee, net, paypal_balance, balance
+
+def handle_payment_refund(gross, fee, net, paypal_balance, balance):
+    usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+    foreign = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+
+    exchange_rate = usd / foreign
+    usd_fee = Decimal(fee) * exchange_rate
+    usd_fee = Decimal(int(usd_fee * 100)) / 100
+    gross = usd - usd_fee
+    fee = usd_fee
+    net = usd
+    pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
+
+    if balance is None:
+        balance = pp_balance - net
+        starting_balance = balance
+
+    balance = balance + net
+
+    return gross, fee, net, paypal_balance, balance
+
+def handle_payment(gross, fee, net, paypal_balance, balance):
+    usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+    foreign = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+
+    exchange_rate = usd / foreign
+    usd_fee = Decimal(fee) * exchange_rate
+    usd_fee = Decimal(int(usd_fee * 100)) / 100
+    gross = usd - usd_fee
+    fee = usd_fee
+    net = usd
+    pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
+
+    if balance is None:
+        balance = pp_balance - net
+        starting_balance = balance
+
+    balance = balance + net
+
+    return gross, fee, net, paypal_balance, balance
+
 def process_file(in_file, out_file, verbose):
     out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
     out.writerow(["Date","Description","Amount"])
@@ -37,7 +125,7 @@ def process_file(in_file, out_file, verbose):
         net = Decimal(fields[9].replace(",", ""))
         pp_balance = Decimal(fields[29].replace(",", ""))
         status = fields[5]
-        typ = fields[4]
+        transaction_type = fields[4]
         currency = fields[6]
 
         try:
@@ -45,34 +133,24 @@ def process_file(in_file, out_file, verbose):
         except IndexError:
             lookahead_type = ""
 
-        if currency == 'USD' and typ != "General Currency Conversion":
-            # Normal native currency transactions
-            amount = gross
+        if currency == 'USD' and transaction_type != "General Currency Conversion":
+            # Normal native currency transactions, no adjustments necessary
+            pass
 
         elif currency != 'USD' and lookahead_type == "General Currency Conversion":
 
-            if typ == "Express Checkout Payment":
-                # Received money in foreign currency
-                usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
-                foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
-            elif typ == "Payment Refund":
+            if transaction_type == "Express Checkout Payment":
+                gross, fee, net, paypal_balance, balance = handle_foreign_express_checkout(gross, fee, net, paypal_balance, balance)
+            elif transaction_type == "Payment Refund":
                 # A refund was made. Did we make it or someone else?
                 if gross > Decimal(0.0):
                     # Someone else made it
-                    usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
-                    foreign = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+                    gross, fee, net, paypal_balance, balance = handle_checkout_refund(gross, fee, net, paypal_balance, balance)
                 else:
-                    usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
-                    foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+                    gross, fee, net, paypal_balance, balance = handle_payment_refund(gross, fee, net, paypal_balance, balance)
             else:
                 # Received money in foreign currency
-                usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
-                foreign = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
-
-            exchange_rate = usd / foreign
-            usd_fee = Decimal(fee) * exchange_rate
-            usd_fee = Decimal(int(usd_fee * 100)) / 100
-            gross = usd - usd_fee
+                gross, fee, net, paypal_balance, balance = handle_payment(gross, fee, net, paypal_balance, balance)
 
             if (verbose):
                 print("      foreign: ", foreign)
@@ -81,26 +159,6 @@ def process_file(in_file, out_file, verbose):
                 print("      usd fee: ", usd_fee)
                 print("        gross: ", gross)
                 print("exchange rate: ", exchange_rate)
-
-
-            fee = usd_fee
-            net = usd
-
-            gross_fix = False
-            if typ == "Express Checkout Payment":
-                gross = -gross
-                net = -net
-
-
-            # Get the correct balance, because WTF paypal.
-            pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
-
-            # The balance for express checkout are zero. thanks paypal.
-            if pp_balance == Decimal(0.0):
-                if (verbose):
-                    print("Balance fix!")
-                    print("balance: %s gross: %s" % (str(balance), str(gross)))
-                pp_balance = balance + gross
 
             index += 2
         else:
@@ -114,11 +172,6 @@ def process_file(in_file, out_file, verbose):
                                                    str(pp_balance), str(balance)))
             assert False
 
-        if balance is None:
-            balance = pp_balance - net
-            starting_balance = balance
-
-        balance = balance + net
         if balance != pp_balance:
             print("     discrepancy: ", (pp_balance - balance))
             print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(gross), str(fee),
