@@ -1,156 +1,276 @@
 #!/usr/bin/env python3
-
-import sys
-import re
+import argparse
+from dataclasses import dataclass
 import csv
-from decimal import Decimal, InvalidOperation
+from datetime import datetime
+from decimal import Decimal
+from typing import Dict
 
-def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
-    csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
-    for row in csv_reader:
-        yield [cell for cell in row]
+from ofxtools.models import STMTTRN, BANKTRANLIST, STMTRS, BANKMSGSRSV1, OFX, BANKACCTFROM, LEDGERBAL, STMTTRNRS, \
+    STATUS, FI, SONRS, SIGNONMSGSRSV1
+from ofxtools.utils import UTC
+import xml.etree.ElementTree as ET
 
-def process_file(in_file, out_file, verbose):
-    out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
-    out.writerow(["Date","Description","Amount"])
 
-    lines = []
-    reader = unicode_csv_reader(fp)
-    for line in reader:
-        lines.append(line)
+@dataclass
+class Transaction:
+    description: str
+    date: datetime
+    gross: Decimal
+    fee: Decimal
+    net: Decimal
+    currency: str
+    type: str
+    balance: Decimal
+    comment: str
+    is_donation: bool
+    accounted_for: bool
+    line: str
+    balance_impact: str
+    transaction_id: str
+    reference_transaction_id: str
+    subtransactions: list
 
-    print("DATE       NAME                                           GROSS       FEE     PP_BAL    BALANCE")
 
-    index = 1
-    register = []
-    balance = None
-    while True:
-        if index >= len(lines):
-            break
+def classify_transaction(transaction: Transaction):
+    if transaction.is_donation and transaction.currency == 'USD':
+        return {
+            'trntype': 'CREDIT',
+            'trnamt': transaction.gross,
+            'name': 'Donation',
+            'memo': '4010 Income - Donations - PayPal'
+        }
+    elif transaction.is_donation and transaction.currency != 'USD':
+        return {
+            'trntype': 'CREDIT',
+            'trnamt': transaction.gross,
+            'name': None,  # Not classified
+            'memo': f'PayPal donation in {transaction.currency}. Reference: {transaction.reference_transaction_id}'
+        }
+    elif transaction.type == 'Payment':
+        return {
+            'trntype': 'DEBIT',
+            'trnamt': -transaction.gross,
+            'name': None,  # Not classified
+            'memo': f'Payment in {transaction.currency}'
+        }
+    elif transaction.type == 'Transfer':
+        return {
+            'trntype': 'XFER',
+            'trnamt': -transaction.gross,
+            'name': '3100 Bank - PPB Checking',
+            'memo': 'Transfer to Pacific Premier'
+        }
+    else:  # Checkout payments, refunds, etc.
+        return {
+            'trntype': 'OTHER',
+            'trnamt': transaction.gross,
+            'name': None,  # Not classified
+            'memo': f'Unclassified transaction: {transaction.type}'
+        }
 
-        fields = lines[index]
 
-        desc = fields[3]
-        dat = fields[0]
-        gross = Decimal(fields[7].replace(",", ""))
-        fee = Decimal(fields[8].replace(",", ""))
-        net = Decimal(fields[9].replace(",", ""))
-        pp_balance = Decimal(fields[29].replace(",", ""))
-        status = fields[5]
-        typ = fields[4]
-        currency = fields[6]
+def create_ofx(transactions: Dict[str, Transaction]):
+    statement_transactions = []
+    for transaction in list(transactions.values()):
+        classified = classify_transaction(transaction)
 
-        try:
-            lookahead_type = lines[index + 1][4]
-        except IndexError:
-            lookahead_type = ""
+        if not classified:
+            continue
+        tran = STMTTRN(
+            trntype=classified['trntype'],
+            dtposted=transaction.date.replace(tzinfo=UTC),
+            trnamt=classified['trnamt'],
+            fitid=transaction.transaction_id,
+            name=classified['name'],
+            memo=classified['memo']
+        )
+        statement_transactions.append(tran)
 
-        if currency == 'USD' and typ != "General Currency Conversion":
-            # Normal native currency transactions
-            amount = gross
+        if transaction.fee != 0:
+            fee_tran = STMTTRN(
+                trntype='DEBIT',
+                dtposted=transaction.date.replace(tzinfo=UTC),
+                trnamt=transaction.fee,
+                fitid=f"{transaction.transaction_id}_fee",
+                name=f'PayPal fee for {transaction.transaction_id}',
+                memo='5020 Expense - Bank - PayPal'
+            )
+            statement_transactions.append(fee_tran)
 
-        elif currency != 'USD' and lookahead_type == "General Currency Conversion":
+        for subtrans in transaction.subtransactions:
+            sub_tran = STMTTRN(
+                trntype='OTHER',
+                dtposted=transaction.date.replace(tzinfo=UTC),
+                trnamt=subtrans.gross,
+                fitid=f"{transaction.transaction_id}",
+                name=None,
+                memo=f"Subtransaction: {subtrans.description}"
+            )
+            statement_transactions.append(sub_tran)
 
-            if typ == "Express Checkout Payment":
-                # Received money in foreign currency
-                usd = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
-                foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
+    tl = BANKTRANLIST(*statement_transactions,
+                      dtstart=statement_transactions[0].dtposted,
+                      dtend=statement_transactions[-1].dtposted)
+
+    t = list(transactions.values())[0]
+    stmtrs = STMTRS(
+        curdef='USD',
+        bankacctfrom=BANKACCTFROM(bankid='Paypal', acctid='3020', accttype='CHECKING'),
+        banktranlist=tl,
+        ledgerbal=LEDGERBAL(balamt=t.balance, dtasof=t.date.replace(tzinfo=UTC)),
+    )
+    msgsrs = BANKMSGSRSV1(STMTTRNRS(
+        stmtrs=stmtrs,
+        trnuid="0",
+        status=STATUS(code="0", severity="INFO"))
+    )
+    fi = FI(org='Illuminati', fid='666')
+    sonrs = SONRS(status=STATUS(code="0", severity="INFO"), dtserver = datetime(2015, 1, 2, 17, tzinfo=UTC),
+                  language = 'ENG', fi = fi)
+    signonmsgs = SIGNONMSGSRSV1(sonrs=sonrs)
+    return OFX(signonmsgsrsv1=signonmsgs, bankmsgsrsv1=msgsrs)
+
+
+def parse(input_file) -> Dict[str, Transaction]:
+
+    transactions = {}
+
+    with open(input_file, "r", encoding="utf-8-sig") as f:
+        csv_reader = csv.DictReader(f, dialect="excel")
+        for line in csv_reader:
+            if line["Option 1 Name"] == "is_donation":
+                is_donation = line["Option 1 Value"] == "yes"
+            elif line["Option 2 Name"] == "is_donation":
+                is_donation = line["Option 2 Value"] == "yes"
+            elif "donation" in line["Subject"].lower():
+                is_donation = True
             else:
-                # Received money in foreign currency
-                usd = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
-                foreign = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+                is_donation = False
 
-            exchange_rate = usd / foreign
-            usd_fee = Decimal(fee) * exchange_rate
-            usd_fee = Decimal(int(usd_fee * 100)) / 100
-            gross = usd - usd_fee
-            fee = usd_fee
-            net = usd
+            transaction = Transaction(
+                description=line["Name"],
+                date=datetime.strptime(line["Date"], "%m/%d/%Y"),
+                gross=Decimal(line["Gross"].replace(",", "")),
+                fee=Decimal(line["Fee"].replace(",", "")),
+                net=Decimal(line["Net"].replace(",", "")),
+                currency=line["Currency"],
+                type=line["Type"],
+                balance=Decimal(line["Balance"].replace(",", "")),
+                is_donation=bool(is_donation),  # is_donation
+                comment="",
+                accounted_for=False,
+                balance_impact=line["Balance Impact"],
+                transaction_id=line["Transaction ID"],
+                reference_transaction_id=line["Reference Txn ID"],
+                subtransactions=[],
+                line=line
+            )
+            transactions[transaction.transaction_id] = transaction
 
-            if typ == "Express Checkout Payment":
-                gross = -gross
-                net = -net
+    subtransaction_keys = []
+    for transaction in transactions.values():
+        if transaction.reference_transaction_id is not None and transaction.reference_transaction_id != "" \
+                and transaction.reference_transaction_id in transactions:
+            main_transaction = transactions[transaction.reference_transaction_id]
+            main_transaction.subtransactions.append(transaction)
+            subtransaction_keys.append(transaction.transaction_id)
 
-            if (verbose):
-                print("      foreign: ", foreign)
-                print("  foreign fee: ", fee)
-                print("          net: ", usd)
-                print("      usd fee: ", usd_fee)
-                print("        gross: ", gross)
-                print("exchange rate: ", exchange_rate)
+    for subtransaction_key in subtransaction_keys:
+        subtransaction = transactions[subtransaction_key]
 
-            # Get the correct balance, because WTF paypal.
-            pp_balance = Decimal(lines[index + 2][29].replace(",", ""))
+        if subtransaction.subtransactions:
+            print(subtransaction)
+            for t in subtransaction.subtransactions:
+                print("\t", t)
+            transactions.pop(subtransaction_key)
 
-            # The balance for express checkout are zero. thanks paypal.
-            if pp_balance == Decimal(0.0):
-                if (verbose):
-                    print("Balance fix!")
-                    print("balance: %s gross: %s" % (str(balance), str(gross)))
-                pp_balance = balance + gross
+    return transactions
 
-            index += 2
-        else:
-            if gross + fee == Decimal(0.0):
-                print("*** skip non balance affecting transaction: %s" % desc)
-                index += 1
-                continue
+    # usd_donations = []
+    # usd_payments = []
+    # withdrawals = []
+    # usd_expenses = []
+    #
+    # non_usd_donations = {}
+    # non_usd_expenses = {}
+    # non_usd_payments = {}
+    #
+    # index = 0
+    # while index < len(transactions):
+    #     transaction = transactions[index]
+    #     if transaction.type == "General Currency Conversion":
+    #         if non_usd_expenses.get(transaction.reference_transaction_id):
+    #             main_transaction = non_usd_expenses[transaction.reference_transaction_id]
+    #         elif non_usd_payments.get(transaction.reference_transaction_id):
+    #             main_transaction = non_usd_payments[transaction.reference_transaction_id]
+    #         elif non_usd_donations.get(transaction.reference_transaction_id):
+    #             main_transaction = non_usd_donations[transaction.reference_transaction_id]
+    #         else:
+    #             main_transaction = None
+    #
+    #         if main_transaction is not None:
+    #             main_transaction.subtransactions.append(transaction)
+    #             transaction.accounted_for = True
+    #         else:
+    #             print(transaction.line)
+    #
+    #         index += 1
+    #     elif transaction.currency == "USD":
+    #         if transaction.is_donation:
+    #             usd_donations.append(transaction)
+    #             transaction.accounted_for = True
+    #         elif transaction.type == "General Withdrawal":
+    #             withdrawals.append(transaction)
+    #             transaction.accounted_for = True
+    #         elif transaction.type in ["General Payment", "Subscription Payment", "Website Payment", "Reversal of General Account Hold"] and transaction.balance_impact == "Credit":
+    #             usd_payments.append(transaction)
+    #             transaction.accounted_for = True
+    #         elif transaction.balance_impact == "Debit":
+    #             usd_expenses.append(transaction)
+    #             transaction.accounted_for = True
+    #         else:
+    #             print(transaction.line)
+    #         index += 1
+    #     else:
+    #         if transaction.is_donation:
+    #             non_usd_donations[transaction.transaction_id] = transaction
+    #             transaction.accounted_for = True
+    #         elif transaction.type in ["Express Checkout Payment", "General Payment"] and transaction.balance_impact == "Credit":
+    #             non_usd_payments[transaction.transaction_id] = transaction
+    #             transaction.accounted_for = True
+    #         elif transaction.balance_impact == "Debit":
+    #             non_usd_expenses[transaction.transaction_id] = transaction
+    #             transaction.accounted_for = True
+    #         else:
+    #             print(transaction.line)
+    #         index += 1
+    #
+    # print("all transactions", len(transactions))
+    #
+    # count = 0
+    # for transaction in transactions:
+    #     if transaction.accounted_for:
+    #         count += 1
+    #
+    # print("accounted for", count)
 
-            print("Unknown transaction")
-            print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(gross), str(fee),
-                                                   str(pp_balance), str(balance)))
-            assert False
 
-        if balance is None:
-            balance = pp_balance - net
-            starting_balance = balance
+def main():
+    parser = argparse.ArgumentParser(prog='Parse PayPal Transactions')
+    parser.add_argument("--input", help="Paypal transactions/activity csv file", required=True)
+    parser.add_argument("--output", help="Desired simplified report file path", required=True)
 
-        balance = balance + net
-        if balance != pp_balance:
-            print("     discrepancy: ", (pp_balance - balance))
-            print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(gross), str(fee),
-                                                   str(pp_balance), str(balance)))
-            assert False
+    args = parser.parse_args()
+    transactions = parse(args.input)
 
-        desc = desc.replace(",", " ")
-        out.writerow([dat, desc, fee, gross])
+    ofx = create_ofx(transactions)
 
-        print("%s %-40s %10s %10s %10s %10s" % (dat, desc, str(gross), str(fee),
-                                               str(pp_balance), str(balance)))
+    root = ofx.to_etree()
+    message = ET.tostring(root).decode()
+    with open(args.output, 'w') as ofxfile:
+        ofxfile.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?><?OFX OFXHEADER="200" VERSION="220" SECURITY="NONE" OLDFILEUID="NONE" NEWFILEUID="NONE"?>')
+        ofxfile.write(message)
 
-        index += 1
-
-    print("    Start paypal balance: ", starting_balance)
-    print("    Final paypal balance: ", pp_balance)
-    print("Final calculated balance: ", balance)
-
-
-if len(sys.argv) not in [3,4]:
-    print("Usage parse-paypal-es.py <paypal csv file> <qbo csv file>")
-    sys.exit(-1)
-
-if sys.argv[1] == "-v":
-    verbose = True
-    index = 2
-else:
-    verbose = False
-    index = 1
-
-fp = None
-try:
-    fp = open(sys.argv[index], "r")
-except IOError:
-    print("Cannot open input file %s" % sys.argv[1])
-    sys.exit(0)
-
-_out = None
-try:
-    _out = open(sys.argv[index + 1], "w")
-except IOError:
-    print("Cannot open output file %s" % sys.argv[2])
-    sys.exit(0)
-
-process_file(fp, _out, verbose)
-
-fp.close()
-_out.close()
+if __name__ == "__main__":
+    main()
