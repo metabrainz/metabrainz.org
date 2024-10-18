@@ -65,23 +65,23 @@ def create_csv_file(out_file: str, transactions: Dict[str, Transaction]):
             exchange_rate = native / foreign
             usd_fee = Decimal(t.fee * exchange_rate).quantize(Decimal('.01'), rounding=ROUND_DOWN)
 
-            print(f" native: {native:.2f}")
-            print(f"foreign: {foreign:.2f}")
-            print(f"eur fee: {t.fee:.2f}")
-            print(f"usd fee: {usd_fee:.2f}")
-            print(f" x-rate: {exchange_rate:.10f}")
+#            print(f" native: {native:.2f}")
+#            print(f"foreign: {foreign:.2f}")
+#            print(f"eur fee: {t.fee:.2f}")
+#            print(f"usd fee: {usd_fee:.2f}")
+#            print(f" x-rate: {exchange_rate:.10f}")
 
             t.gross = native - usd_fee
             t.fee = usd_fee
-            ic(t)
-            print(f" fix bal: {pp_balance:.2f}")
+#            ic(t)
+#            print(f" fix bal: {pp_balance:.2f}")
             t.balance = pp_balance 
-            print()
-        else:
-            print(f"  gross: {t.gross:.2f}")
-            print(f"    fee: {t.fee:.2f}")
-            print(f"balance: {t.balance:.2f}")
-            print()
+#            print()
+#        else:
+#            print(f"  gross: {t.gross:.2f}")
+#            print(f"    fee: {t.fee:.2f}")
+#            print(f"balance: {t.balance:.2f}")
+#            print()
 
         if balance is None:
             balance = t.balance
@@ -94,6 +94,8 @@ def create_csv_file(out_file: str, transactions: Dict[str, Transaction]):
                 ic(t)
                 assert False
 
+        print(t.date, t.balance, balance)
+
         assert t.gross != Decimal(0.0)
         if t.description == "":
             print(t)
@@ -101,6 +103,8 @@ def create_csv_file(out_file: str, transactions: Dict[str, Transaction]):
         out.writerow([t.date.strftime("%m/%d/%Y"), t.description, t.gross])
         if t.fee != Decimal(0.0):
             out.writerow([t.date.strftime("%m/%d/%Y"), "PayPal Fee", t.fee])
+
+    print(f"Final balance: {balance:.2f}")
 
     _out.close()
 
@@ -150,8 +154,17 @@ def parse(input_file) -> Dict[str, Transaction]:
 
         prev = subbed[-1]
 
+        # If the balance doesn't change, ignore it
+        if t.net == Decimal(0.0):
+            continue
+
         # If they snuck a card deposit into a transaction, process it first as a separate transaction!
         if prev.date == t.date and t.description == "" and t.type == "General Card Deposit":
+            subbed.insert(len(subbed) - 1, t)
+            continue
+
+        if prev.currency != "USD" and prev.date == t.date and \
+            t.description == "PayPal" and t.type == "Reversal of General Account Hold":
             subbed.insert(len(subbed) - 1, t)
             continue
 
