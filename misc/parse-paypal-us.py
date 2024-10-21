@@ -1,134 +1,193 @@
 #!/usr/bin/env python3
-
-import sys
-import re
+import argparse
+from dataclasses import dataclass
 import csv
-from decimal import Decimal, InvalidOperation
+from datetime import datetime
+from decimal import Decimal, ROUND_DOWN
+from typing import Dict
+from icecream import ic
 
-def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
-    csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
-    for row in csv_reader:
-        yield [cell for cell in row]
+from ofxtools.models import STMTTRN, BANKTRANLIST, STMTRS, BANKMSGSRSV1, OFX, BANKACCTFROM, LEDGERBAL, STMTTRNRS, \
+    STATUS, FI, SONRS, SIGNONMSGSRSV1
+from ofxtools.utils import UTC
+import xml.etree.ElementTree as ET
 
-if len(sys.argv) not in [3,4]:
-    print("Usage parse-paypal-es.py <paypal csv file> <qbo csv file> [start balance]")
-    sys.exit(-1)
-
-fp = None
-try:
-    fp = open(sys.argv[1], "r")
-except IOError:
-    print("Cannot open input file %s" % sys.argv[1])
-    sys.exit(0)
-
-_out = None
-try:
-    _out = open(sys.argv[2], "w")
-except IOError:
-    print("Cannot open output file %s" % sys.argv[2])
-    sys.exit(0)
-
-balance = None
-try:
-    balance = Decimal(sys.argv[3])
-    print("got starting balance", balance)
-except (InvalidOperation, IndexError):
-    print("Cannot balance value, ignoring.")
+@dataclass
+class Transaction:
+    description: str
+    date: datetime
+    gross: Decimal
+    fee: Decimal
+    net: Decimal
+    currency: str
+    type: str
+    balance: Decimal
+    comment: str
+    is_donation: bool
+    accounted_for: bool
+    line: str
+    balance_impact: str
+    transaction_id: str
+    invoice_num: str
+    reference_transaction_id: str
+    subtransactions: list
 
 
-out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
-out.writerow(["Date","Description","Amount"])
+def create_csv_file(out_file: str, transactions: Dict[str, Transaction]):
 
-lines = []
-reader = unicode_csv_reader(fp)
-for line in reader:
+    balance = None
+    try:
+        _out = open(out_file, "w")
+    except IOError:
+        print("Cannot open output file %s" % sys.argv[2])
+        sys.exit(0)
 
-    # Filter out lines that complicate everything
-    if line[4] in ("General Card Deposit", "Account Hold for Open Authorization", "Reversal of General Account Hold"):
-        continue
+    out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
+    out.writerow(["Date","Description","Amount"])
+    for t in transactions:
 
-    if line[5] != 'Completed':
-        continue
+        if t.type in ("General Withdrawal", "User Initiated Withdrawal"):
+            t.description = "Transfer"
+        elif t.type.startswith("Bank Deposit to PP Account"):
+            t.description = "Bank Deposit to PP Account"
+        elif t.type == "General Card Deposit":
+            t.description = "General Card Deposit"
 
-    lines.append(line)
+        if t.currency != "USD":
+            pp_balance = None
+            for sub_t in t.subtransactions:
+                if sub_t.currency == "USD" and sub_t.type == "General Currency Conversion":
+                    native = sub_t.gross
+                    pp_balance = sub_t.balance
+                if sub_t.currency != "USD":
+                    foreign = -sub_t.gross
 
-index = 1
-register = []
-credit = Decimal(0.0)
-debits = Decimal(0.0)
-while True:
-    if index >= len(lines):
-        break
+            exchange_rate = native / foreign
+            usd_fee = Decimal(t.fee * exchange_rate).quantize(Decimal('.01'), rounding=ROUND_DOWN)
 
-    fields = lines[index]
+#            print(f" native: {native:.2f}")
+#            print(f"foreign: {foreign:.2f}")
+#            print(f"eur fee: {t.fee:.2f}")
+#            print(f"usd fee: {usd_fee:.2f}")
+#            print(f" x-rate: {exchange_rate:.10f}")
 
-    desc = fields[3]
-    dat = fields[0]
-    gross = Decimal(fields[7].replace(",", ""))
-    fee = Decimal(fields[8].replace(",", ""))
-    net = Decimal(fields[9].replace(",", ""))
-    pp_balance = Decimal(fields[29].replace(",", ""))
-    status = fields[5]
-    typ = fields[4]
+            t.gross = native - usd_fee
+            t.fee = usd_fee
+#            ic(t)
+#            print(f" fix bal: {pp_balance:.2f}")
+            t.balance = pp_balance 
+#            print()
+#        else:
+#            print(f"  gross: {t.gross:.2f}")
+#            print(f"    fee: {t.fee:.2f}")
+#            print(f"balance: {t.balance:.2f}")
+#            print()
 
-    currency = fields[6]
-    if currency == 'USD' and typ != "General Currency Conversion":
-        # Normal native currency transactions
-        amount = gross
+        if balance is None:
+            balance = t.balance
+        else:
+            balance += t.gross + t.fee
+            if t.balance != balance:
+                print(f"    balance: {balance:.2f}")
+                print(f" pp balance: {t.balance:.2f}")
+                print(f"Discrepancy: {t.balance - balance:.2f}")
+                ic(t)
+                assert False
 
-    elif currency != 'USD':
-#        print("transaction foreign")
-        # Received money in foreign currency
-#        print(lines[index + 1])
-#        print(lines[index + 2])
-        foreign = Decimal(lines[index + 2][7].replace(",", "")).copy_abs()
-        native = Decimal(lines[index + 1][7].replace(",", "")).copy_abs()
+        print(t.date, t.balance, balance)
 
+        assert t.gross != Decimal(0.0)
+        if t.description == "":
+            print(t)
+            assert False
+        out.writerow([t.date.strftime("%m/%d/%Y"), t.description, t.gross])
+        if t.fee != Decimal(0.0):
+            out.writerow([t.date.strftime("%m/%d/%Y"), "PayPal Fee", t.fee])
 
-#        print("native %f, foreign %f" % (native, foreign))
+    print(f"Final balance: {balance:.2f}")
 
-        ratio = native / foreign
-#        print("conversion rate: %f" % ratio)
-
-        fee = Decimal(fee) / ratio
-        fee = Decimal(int(fee * 100)) / 100
-        net = native - fee
-
-        amount = native
-        if typ == "Express Checkout Payment":
-            amount = -amount
-
-        index += 2
-
-    desc = desc.replace(",", " ")
-    out.writerow([dat, desc, amount])
-
-    if amount > 0.0:
-        credit += amount
-    else:
-        debits += amount
-
-    if balance is not None:
-        balance = balance + Decimal(str(net).replace(",", ""))
-        register.append("%s %-40s %10s %10s %10s" % (dat, desc, str(amount), str(fee), str(pp_balance)))
-
-    desc = "PayPal Fee"
-    dat = fields[0]
-    if fee and Decimal(fee) != 0.0:
-        out.writerow([dat, desc, fee])
-
-    index += 1
+    _out.close()
 
 
-fp.close()
-_out.close()
+def parse(input_file) -> Dict[str, Transaction]:
 
-if register:
-    register.reverse()
-    for line in register:
-        print(line)
+    transactions = []
 
-    print()
-    print(" Debits: %.2f" % debits)
-    print("Credits: %.2f" % credit)
-    print("  Total: %.2f" % (credit + debits))
+    with open(input_file, "r", encoding="utf-8-sig") as f:
+        csv_reader = csv.DictReader(f, dialect="excel")
+        for line in csv_reader:
+            if line["Option 1 Name"] == "is_donation":
+                is_donation = line["Option 1 Value"] == "yes"
+            elif line["Option 2 Name"] == "is_donation":
+                is_donation = line["Option 2 Value"] == "yes"
+            elif "donation" in line["Subject"].lower():
+                is_donation = True
+            else:
+                is_donation = False
+
+            transaction = Transaction(
+                description=line["Name"],
+                date=datetime.strptime(line["Date"] + " " + line["Time"], "%m/%d/%Y %H:%M:%S"),
+                gross=Decimal(line["Gross"].replace(",", "")),
+                fee=Decimal(line["Fee"].replace(",", "")),
+                net=Decimal(line["Net"].replace(",", "")),
+                currency=line["Currency"],
+                type=line["Type"],
+                balance=Decimal(line["Balance"].replace(",", "")),
+                is_donation=bool(is_donation),  # is_donation
+                comment="",
+                accounted_for=False,
+                balance_impact=line["Balance Impact"],
+                transaction_id=line["Transaction ID"],
+                invoice_num=line["Invoice Number"],
+                reference_transaction_id=line["Reference Txn ID"],
+                subtransactions=[],
+                line=line
+            )
+            transactions.append(transaction)
+
+    subbed = []
+    for i, t in enumerate(transactions):
+        if i == 0:
+            subbed.append(t)
+            continue
+
+        prev = subbed[-1]
+
+        # If the balance doesn't change, ignore it
+        if t.net == Decimal(0.0):
+            continue
+
+        # If they snuck a card deposit into a transaction, process it first as a separate transaction!
+        if prev.date == t.date and t.description == "" and t.type == "General Card Deposit":
+            subbed.insert(len(subbed) - 1, t)
+            continue
+
+        if prev.currency != "USD" and prev.date == t.date and \
+            t.description == "PayPal" and t.type == "Reversal of General Account Hold":
+            subbed.insert(len(subbed) - 1, t)
+            continue
+
+        if prev.date == t.date and t.description == "":
+            prev.subtransactions.append(t)
+            continue
+
+        subbed.append(t)
+
+#    for t in subbed:
+#        ic(t)
+
+    return subbed
+
+
+def main():
+    parser = argparse.ArgumentParser(prog='Parse PayPal Transactions')
+    parser.add_argument("--input", help="Paypal transactions/activity csv file", required=True)
+    parser.add_argument("--output", help="Desired simplified report file path", required=True)
+
+    args = parser.parse_args()
+    transactions = parse(args.input)
+    create_csv_file(args.output, transactions)
+
+if __name__ == "__main__":
+    main()
