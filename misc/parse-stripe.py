@@ -3,7 +3,7 @@
 from datetime import datetime
 from dateutil import parser
 
-# Parse the report downloaded from https://dashboard.stripe.com/reports/balance
+# Parse the strip transaction report
 
 import sys, os
 from decimal import Decimal
@@ -60,10 +60,10 @@ for row in rows:
     date = "%s/%s/%s" % (date.month, date.day, date.year)
     gross = Decimal(row[2])
     fee = Decimal(row[11])
-    sender = row[22]
+    sender = row[23]
     memo = row[10]
 
-    if row[84] != "":
+    if row[87] != "":
         sender += " (inv #%s)" % row[84]
 
     out.writerow([date, "Stripe fee", "-" + str(fee)])
