@@ -182,7 +182,7 @@ class AccessLog(db.Model):
                           .add_columns(func.count("AccessLog.*").label("count")) \
                           .group_by(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id, \
                                     Supporter.contact_name, Supporter.contact_email, Supporter.data_usage_desc) \
-                            .order_by(text("count DESC"))
+                          .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         non_commercial = query.all()
@@ -191,12 +191,12 @@ class AccessLog(db.Model):
                           .select_from(AccessLog) \
                           .join(Token) \
                           .join(Supporter) \
-                          .with_entities(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id, \
+                          .with_entities(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id,
                                          Supporter.contact_name, Supporter.contact_email, Supporter.data_usage_desc) \
                           .filter(Supporter.is_commercial == True) \
                           .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
                           .add_columns(func.count("AccessLog.*").label("count")) \
-                          .group_by(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id, \
+                          .group_by(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id,
                                     Supporter.contact_name, Supporter.contact_email, Supporter.data_usage_desc) \
                           .order_by(text("count DESC"))
         if limit:

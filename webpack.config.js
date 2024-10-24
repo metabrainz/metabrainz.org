@@ -43,10 +43,7 @@ module.exports = function (env, argv) {
       // Importing main.less file here so that it gets compiled.
       // Otherwise with a standalone entrypoint Webpack would generate a superfluous js file.
       // All the Less/CSS will be exported separately to a main.css file and not appear in the main module
-      main: [
-        path.resolve(jsDir, "src/main.tsx"),
-        path.resolve(cssDir, "main.less"),
-      ],
+      main: path.resolve(cssDir, "main.less"),
       signupCommercial: path.resolve(jsDir, "src/forms/SignupCommercial.tsx"),
       signupNonCommercial: path.resolve(
         jsDir,
@@ -56,6 +53,11 @@ module.exports = function (env, argv) {
         jsDir,
         "src/forms/SupporterProfileEdit.tsx"
       ),
+      createApplication: path.resolve(jsDir, "src/forms/CreateApplication.tsx"),
+      deleteApplication: path.resolve(jsDir, "src/forms/DeleteApplication.tsx"),
+      oauthPrompt: path.resolve(jsDir, "src/forms/OAuthPrompt.tsx"),
+      applications: path.resolve(jsDir, "src/Applications.tsx"),
+      oauthError: path.resolve(jsDir, "src/OAuthError.tsx"),
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",

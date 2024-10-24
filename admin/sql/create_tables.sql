@@ -20,7 +20,7 @@ CREATE TABLE dataset (
 CREATE TABLE supporter (
   id               SERIAL            NOT NULL, -- PK
   is_commercial    BOOLEAN           NOT NULL,
-  musicbrainz_id   CHARACTER VARYING UNIQUE,
+  musicbrainz_id CHARACTER VARYING UNIQUE,
   musicbrainz_row_id INTEGER UNIQUE,
   created          TIMESTAMP WITH TIME ZONE,
   state            state_types       NOT NULL,
@@ -94,36 +94,6 @@ CREATE TABLE payment (
   currency         payment_currency  NOT NULL DEFAULT 'usd',
   memo             CHARACTER VARYING,
   invoice_number   INTEGER
-);
-
-CREATE TABLE oauth_client (
-  client_id     CHARACTER VARYING, -- PK
-  client_secret CHARACTER VARYING NOT NULL,
-  redirect_uri  CHARACTER VARYING NOT NULL,
-  user_id       INTEGER           NOT NULL, -- FK, user
-  name          CHARACTER VARYING NOT NULL,
-  description   CHARACTER VARYING NOT NULL,
-  website       CHARACTER VARYING NOT NULL
-);
-
-CREATE TABLE oauth_grant (
-  id           SERIAL                   NOT NULL, -- PK
-  client_id    CHARACTER VARYING        NOT NULL, -- FK, oauth_client
-  user_id      INTEGER                  NOT NULL, -- FK, user
-  redirect_uri CHARACTER VARYING        NOT NULL,
-  code         CHARACTER VARYING        NOT NULL,
-  expires      TIMESTAMP WITH TIME ZONE NOT NULL,
-  scopes       CHARACTER VARYING
-);
-
-CREATE TABLE oauth_token (
-  id            SERIAL                   NOT NULL, -- PK
-  client_id     CHARACTER VARYING        NOT NULL, -- FK, oauth_client
-  access_token  CHARACTER VARYING        NOT NULL,
-  user_id       INT                      NOT NULL, -- FK, user
-  refresh_token CHARACTER VARYING        NOT NULL,
-  expires       TIMESTAMP WITH TIME ZONE NOT NULL,
-  scopes        CHARACTER VARYING
 );
 
 COMMIT;

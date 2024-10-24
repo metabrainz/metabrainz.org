@@ -19,7 +19,6 @@ CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 
 def create_app(debug=None, config_path=None):
-
     app = CustomFlask(
         import_name=__name__,
         use_flask_uuid=True,
@@ -45,7 +44,7 @@ def create_app(debug=None, config_path=None):
         app.config.from_pyfile(config_path)
     else:
         if not deploy_env:
-            print("loading %s" % os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
+            print("loading %s" % os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'config.py'))
             app.config.from_pyfile(os.path.join(
                 os.path.dirname(os.path.realpath(__file__)),
                 '..', 'config.py'
@@ -54,8 +53,7 @@ def create_app(debug=None, config_path=None):
     # Load configuration files: If we're running under a docker deployment, wait until 
     # the consul configuration is available.
     if deploy_env:
-        consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), 
-            '..', 'consul_config.py')
+        consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'consul_config.py')
 
         print("loading consul %s" % consul_config)
         for i in range(CONSUL_CONFIG_FILE_RETRY_COUNT):
@@ -131,9 +129,7 @@ def create_app(debug=None, config_path=None):
 
     from flask_uploads import configure_uploads
     from metabrainz.admin.forms import LOGO_UPLOAD_SET
-    configure_uploads(app, upload_sets=[
-        LOGO_UPLOAD_SET,
-    ])
+    configure_uploads(app, upload_sets=[LOGO_UPLOAD_SET])
 
     # Blueprints
     _register_blueprints(app)
@@ -205,11 +201,7 @@ def _register_blueprints(app):
     # OAuth / API
     #############
 
-    from metabrainz.oauth.views import oauth_bp
-    app.register_blueprint(oauth_bp, url_prefix='/oauth')
     from metabrainz.api.views.index import api_index_bp
     app.register_blueprint(api_index_bp, url_prefix='/api')
-    from metabrainz.api.views.supporter import api_supporter_bp
-    app.register_blueprint(api_supporter_bp, url_prefix='/api/supporter')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')
