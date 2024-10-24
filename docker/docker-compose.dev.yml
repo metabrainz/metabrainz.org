@@ -20,10 +20,6 @@ services:
       - redis
     expose:
       - "8000"
-    environment:
-      LETSENCRYPT_HOST: dev.metabrainz.org
-      LETSENCRYPT_EMAIL: lucifer@metabrainz.org
-      VIRTUAL_HOST: dev.metabrainz.org
     ports:
       - "8000:8000"
 
@@ -35,13 +31,8 @@ services:
     command: flask run --debug -h 0.0.0.0 -p 8150
     environment:
       FLASK_APP: "oauth:create_app()"
-      LETSENCRYPT_HOST: oauth.metabrainz.org
-      LETSENCRYPT_EMAIL: lucifer@metabrainz.org
-      VIRTUAL_HOST: oauth.metabrainz.org
       AUTHLIB_INSECURE_TRANSPORT: 1
     volumes:
-      - ../data/replication_packets:/data/replication_packets
-      - ../data/json_dumps:/data/json_dumps
       - ..:/code/metabrainz
       - ../frontend:/static
     depends_on:
