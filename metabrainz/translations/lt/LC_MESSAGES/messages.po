@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2024-06-09 13:42+0000\n"
+"PO-Revision-Date: 2024-10-26 08:42+0000\n"
 "Last-Translator: Vaclovas Intas <gateway_31@protonmail.com>\n"
 "Language-Team: Lithuanian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/lt/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
 "11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 :"
 " n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 5.5.4\n"
+"X-Generator: Weblate 5.7.2\n"
 "Generated-By: Babel 2.3.4\n"
 
 #: metabrainz/payments/forms.py:9
@@ -39,44 +39,45 @@ msgid ""
 "is greatly appreciated! It may take some time before your donation appears "
 "in the list due to processing delays."
 msgstr ""
-"Ačiū, kad aukoji MetaBrainz fondui. Tavo parama yra labai vertinama! Dėl "
-"apdorojimo vėlavimo gali praeiti šiek tiek laiko, kol auka pasirodys sąraše."
+"Dėkojame, kad aukojate „MetaBrainz“ fondui. Jūsų parama yra labai vertinama! "
+"Dėl apdorojimo vėlavimo gali praeiti šiek tiek laiko, kol auka pasirodys "
+"sąraše."
 
 #: metabrainz/payments/views.py:112
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support is "
 "greatly appreciated!"
 msgstr ""
-"Ačiū, kad atlikei mokėjimą MetaBrainz fondui. Tavo parama yra labai "
+"Dėkojame, kad atlikote mokėjimą „MetaBrainz“ fondui. Jūsų parama yra labai "
 "vertinama!"
 
 #: metabrainz/payments/views.py:123
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
-msgstr "Atsiprašome, kad šiandien neaukosi. Tikimės, kad persigalvosi!"
+msgstr "Apgailestaujame, kad šiandien neaukosite. Tikimės, kad persigalvosite!"
 
 #: metabrainz/payments/views.py:129
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
-msgstr "Atsiprašome, kad šiandien nemokėsi. Tikimės, kad persigalvosi!"
+msgstr "Apgailestaujame, kad šiandien nemokėsite. Tikimės, kad persigalvosite!"
 
 #: metabrainz/payments/views.py:143
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process your "
 "donation."
 msgstr ""
-"Atsiprašome, bet atrodo, kad susidūrėme su klaida ir negalime apdoroti tavo "
-"aukos."
+"Apgailestaujame, bet atrodo, kad susidūrėme su klaida ir negalime apdoroti "
+"jūsų aukos."
 
 #: metabrainz/payments/views.py:149
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process your "
 "payment."
 msgstr ""
-"Atsiprašome, bet atrodo, kad susidūrėme su klaida ir negalime atlikti jūsų "
-"mokėjimo."
+"Apgailestaujame, bet atrodo, kad susidūrėme su klaida ir negalime apdoroti "
+"jūsų mokėjimo."
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
@@ -159,7 +160,7 @@ msgstr "Tinklaraštis"
 
 #: metabrainz/templates/base.html:81
 msgid "Twitter"
-msgstr "Twitter"
+msgstr "„Twitter“"
 
 #: metabrainz/templates/base.html:86
 #, python-format
@@ -168,8 +169,8 @@ msgid ""
 "            <a href=\"%(osuosl_url)s\">OSUOSL</a> and\n"
 "            <a href=\"%(sponsors_url)s\">others&hellip;</a>"
 msgstr ""
-"Remia<a href=\"%(google_url)s\">Google</a>,\n"
-"            <a href=\"%(osuosl_url)s\">OSUOSL</a> ir\n"
+"Remia <a href=\"%(google_url)s\">„Google“</a>,\n"
+"            <a href=\"%(osuosl_url)s\">„OSUOSL“</a> ir\n"
 "            <a href=\"%(sponsors_url)s\">kiti&hellip;</a>"
 
 #: metabrainz/templates/navbar.html:7
@@ -194,7 +195,7 @@ msgstr "Finansų ataskaitos"
 
 #: metabrainz/templates/navbar.html:38
 msgid "Donate"
-msgstr "Paaukoti"
+msgstr "Aukoti"
 
 #: metabrainz/templates/navbar.html:45
 #: metabrainz/templates/users/account-type.html:65
@@ -205,15 +206,15 @@ msgstr "Paaukoti"
 #: metabrainz/templates/users/signup-non-commercial.html:3
 #: metabrainz/templates/users/signup-non-commercial.html:87
 msgid "Sign up"
-msgstr "Užsiregistruoti"
+msgstr "Registruotis"
 
 #: metabrainz/templates/navbar.html:52
 msgid "Your profile"
-msgstr "Tavo profilis"
+msgstr "Jūsų profilis"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
-msgstr "MetaBrainz API"
+msgstr "„MetaBrainz“ API"
 
 #: metabrainz/templates/api/info.html:11
 #, python-format
@@ -221,17 +222,17 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
-"Visiems galutiniams taškams privalomas prieigos raktas, kurį gali gauti iš "
+"Visiems galutiniams taškams privalomas prieigos raktas, kurį galite gauti iš "
 "savo\n"
 "    <a href=\"%(profile_url)s\">profilio puslapio</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
-msgstr "MusicBrainz tiesioginis duomenų srautas"
+msgstr "„MusicBrainz“ tiesioginis duomenų srautas"
 
 #: metabrainz/templates/api/info.html:16
 msgid "There are three endpoints for fetching replication packets:"
-msgstr "Yra trys galiniai taškai, skirti kopijavimo paketams gauti:"
+msgstr "Yra trys galutiniai taškai, skirti kopijavimo paketams gauti:"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly:"
@@ -239,7 +240,7 @@ msgstr "Valandinis:"
 
 #: metabrainz/templates/api/info.html:29
 msgid "Daily:"
-msgstr "Kasdien:"
+msgstr "Kasdieninis:"
 
 #: metabrainz/templates/api/info.html:40
 msgid "Weekly:"
@@ -250,12 +251,13 @@ msgid ""
 "It is possible to get a signature for each replication packet. Just replace\n"
 "      <code>.tar.bz2</code> with <code>.asc</code>."
 msgstr ""
-"Yra galimybė gauti kiekvieno kopijavimo paketo parašą. Tiesiog pakeisk\n"
-"      <code>.tar.bz2</code> su <code>.asc</code>."
+"Galima gauti kiekvieno kopijavimo paketo parašą. Tiesiog pakeiskite\n"
+"      <code>.tar.bz2</code> į <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:55
 msgid "You can find the latest replication packet numbers from this endpoint:"
-msgstr "Naujausius replikavimo paketų numerius gali rasti iš šio galinio taško:"
+msgstr ""
+"Naujausius replikavimo paketų numerius galite rasti iš šio galutinio taško:"
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -267,7 +269,7 @@ msgstr "Apie"
 
 #: metabrainz/templates/index/about.html:6
 msgid "About the MetaBrainz Foundation"
-msgstr "Apie MetaBrainz fondą"
+msgstr "Apie „MetaBrainz“ fondą"
 
 #: metabrainz/templates/index/about.html:11
 msgid ""
@@ -3013,8 +3015,8 @@ msgstr "Prisijungimas nepavyko!"
 
 #: metabrainz/users/views.py:226
 msgid "Authorization code is missing!"
-msgstr "Nėra autorizacijos kodo!"
+msgstr "Trūksta patvirtinimo kodo."
 
 #: metabrainz/users/views.py:270
 msgid "Can't generate new token unless account is active."
-msgstr "Negalima sukurti naujo žetono, nebent paskyra yra aktyvi."
+msgstr "Negalima sugeneruoti naujo prieigos rakto, nebent paskyra yra aktyvi."
