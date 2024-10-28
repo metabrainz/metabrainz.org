@@ -49,7 +49,7 @@
             "name": "BookBrainz",
             "description": "BookBrainz is an ambitious open-source project dedicated to creating a comprehensive online database of every published book, magazine, journal, and other publication ever written. As part of the MetaBrainz Foundation, alongside MusicBrainz and other projects, BookBrainz empowers users to contribute and edit information about books, including titles, authors, publication dates, ISBNs, and more. This collaborative effort fosters a vast and accurate resource for book lovers, researchers, and libraries worldwide. By making this data freely accessible, BookBrainz promotes knowledge sharing and fosters a deeper understanding of the literary world.",
             "webpageUrl": {
-                "url": "https://bookbrainz.org"
+                "url": "https://bookbrainz.org",
                 "wellKnown": "https://bookbrainz.org/.well-known/funding-manifest-urls" 
             },
             "repositoryUrl": {
