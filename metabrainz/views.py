@@ -1,5 +1,5 @@
 import datetime
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, make_response
 from flask_login import current_user
 from metabrainz.model.supporter import Supporter
 
@@ -117,3 +117,10 @@ def signup():
 @index_bp.route('/datasets/download')
 def download():
     return render_template('index/datasets/download.html')
+
+
+@index_bp.route('/funding.json')
+def funding_json():
+    r = make_response(render_template('index/funding.json'))
+    r.mimetype = 'application/json'
+    return r

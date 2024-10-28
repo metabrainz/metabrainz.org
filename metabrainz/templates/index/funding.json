@@ -1,0 +1,270 @@
+{
+    "version": "v1.0.0",
+
+    "entity": {
+        "type": "organisation",
+        "role": "owner",
+        "name": "MetaBrainz Foundation Inc",
+        "email": "support@metabrainz.org",
+        "phone": "+1 805.459.0815",
+        "description": "The MetaBrainz Foundation is a global community creating and maintaining an open encyclopedia of music and arts metadata. Beginning as a resource for music collectors we currently establish collaborations between volunteers, artists, and industry leaders. Since it’s founding it has grown into a global community of hundreds of thousands of editors collaborating together to build and maintain the MetaBrainz comprehensive datasets.\nThe foundation works within a balanced ecosystem of contributions to the datasets and community and the utilization of the datasets. We encourage all data supporters to participate in the data gathering, editing and peer review processes so that our data can be as comprehensive as possible. Each entity is assigned a permanent MBID (MusicBrainz Identifier) in order to facilitate the creation of a reliable and unambiguous universal lingua franca for music data. MBID’s have opened the possibility of boundless search queries, exceeding the seven traditional identifiers for music data and truly putting knowledge at one's fingertips. Our community aggregated data sets are verified and edited by a global voting system to ensure the data is consistent and correct. We collect information about as many different styles and types of arts and music as possible and do not discriminate when compiling data.\nThe foundation was founded in 2004 by Robert Kaye, in San Luis Obispo, California and is a 501(c)(3) tax-exempt non-profit. Commercial supporters are asked to contribute financially in order to help fund our family of projects, and give back to our community to keep our ecosystem healthy. Non-commercial use of our data remains free, and we are committed to keeping it free to utilize. We are also supported by donations and a number of sponsors who provide funds in order for the foundation to continue to accomplish various project goals. The MetaBrainz Foundation believes in transparent finances, which are published quarterly.",
+        "webpageUrl": {
+            "url": "https://metabrainz.org/about"
+        }
+    },
+
+    "projects": [
+        {
+            "guid": "musicbrainz",
+            "name": "MusicBrainz",
+            "description": "MusicBrainz is a community-maintained open source encyclopedia of music information. This means that anyone — including you — can help contribute to the project by adding information about your favorite artists and their works.\n In 2000, Gracenote took over the free CDDB project and commercialized it, essentially charging users for accessing the very data they themselves contributed. In response, Robert Kaye founded MusicBrainz. The project has since grown rapidly from a one-man operation to an international community of enthusiasts that appreciates both music and music metadata. Along the way, the scope of the project has expanded from its origins as a mere CDDB replacement to the true music encyclopedia MusicBrainz is today.\n As an encyclopedia and as a community, MusicBrainz exists only to collect as much information about music as we can. We do not discriminate or prefer one 'type' of music over another, and we try to collect information about as many different types of music as possible. Whether it is published or unpublished, popular or fringe, western or non-western, human or non-human — we want it all in MusicBrainz.\n The MusicBrainz Database stores all of the various pieces of information we collect about music, from artists and their releases to works and their composers, and much more. Note: We do not actually store or have access to any of the music recordings!\n Most of the data in the MusicBrainz Database is licensed under CC0, which effectively places the data into the Public Domain. That means that anyone can download the data and use it in any way they want. The remaining data is released under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 license.",
+            "webpageUrl": {
+                "url": "https://musicbrainz.org"
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/metabrainz/musicbrainz-server",
+                "wellKnown": "https://github.com"
+            },
+            "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
+            "tags": ["music metadata", "open data", "data service provider", "501.c.3", "non-profit"]
+        },
+        {
+            "guid": "listenbrainz",
+            "name": "ListenBrainz",
+            "description": "ListenBrainz is a free and open-source project (similar to Last.fm) that tracks your music listening habits and provides insights into your taste. By submitting your listening data, you contribute to a larger dataset that benefits the music community. ListenBrainz offers visualizations of your listening history, personalized recommendations, and the ability to connect with other music enthusiasts. It's a valuable tool for music lovers who want to understand and share their musical preferences. From the user submitted data ListenBrainz creates several derivative datasets that can be used to build recommendation systems and music discovery tools, free of the bias that is commonly present in closed recommendation systems.",
+            "webpageUrl": {
+                "url": "https://listenbrainz.org"
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/metabrainz/listenbrainz-server",
+                "wellKnown": "https://github.com"
+            },
+            "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
+            "tags": ["music community", "recommendations", "fresh releases", "listening data", "open data", "data service provider", "501.c.3", "non-profit"]
+        },
+        {
+            "guid": "bookbrainz",
+            "name": "BookBrainz",
+            "description": "BookBrainz is an ambitious open-source project dedicated to creating a comprehensive online database of every published book, magazine, journal, and other publication ever written. As part of the MetaBrainz Foundation, alongside MusicBrainz and other projects, BookBrainz empowers users to contribute and edit information about books, including titles, authors, publication dates, ISBNs, and more. This collaborative effort fosters a vast and accurate resource for book lovers, researchers, and libraries worldwide. By making this data freely accessible, BookBrainz promotes knowledge sharing and fosters a deeper understanding of the literary world.",
+            "webpageUrl": {
+                "url": "https://bookbrainz.org"
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/metabrainz/bookbrainz-site",
+                "wellKnown": "https://github.com"
+            },
+            "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
+            "tags": ["book community", "book metadata", "open data", "ISBN", "data service provider", "501.c.3", "non-profit"]
+        }
+
+    ],
+
+    "funding": {
+        "channels": [
+            {
+                "guid": "paypal",
+                "type": "payment-provider",
+                "address": "paypal@metabrainz.org",
+                "description": "Make a donation to MetaBrainz via PayPal."
+            },
+            {
+                "guid": "bank",
+                "type": "bank",
+                "address": "IBAN: BE96 9670 3472 0205\nBIC: TRWIBEB1XXX",
+                "description": "Make a donation to MetaBrainz via SEPA bank transfer."
+            },
+            {
+                "guid": "credit-card",
+                "type": "payment-provider",
+                "address": "https://metabrainz.org/donate",
+                "description": "Make a donation to MetaBrainz via a Credit Card payment."
+            }
+        ],
+
+        "plans": [
+            {
+            "guid": "one-time-15",
+            "status": "active",
+            "name": "Fifteen dollars one time donation",
+            "description": "A $15 one time end-user (non-commercial) donation.",
+            "amount": 15,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "one-time-25",
+            "status": "active",
+            "name": "Twenty-five dollars one time donation",
+            "description": "A $25 one time end-user (non-commercial) donation.",
+            "amount": 25,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "one-time-50",
+            "status": "active",
+            "name": "Fifty dollars one time donation",
+            "description": "A $50 one time end-user (non-commercial) donation.",
+            "amount": 50,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "one-time-100",
+            "status": "active",
+            "name": "Ohe hundred dollars one time donation",
+            "description": "A $100 one time end-user (non-commercial) donation.",
+            "amount": 100,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "one-time-custom",
+            "status": "active",
+            "name": "A custom one time donation",
+            "description": "A custom amount one time end-user (non-commercial) donation.",
+            "amount": 0,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "monthly-15",
+            "status": "active",
+            "name": "Fifteen dollars a month donation",
+            "description": "A $15 a month end-user (non-commercial) donation.",
+            "amount": 15,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "monthly-25",
+            "status": "active",
+            "name": "Twenty-five dollars a month donation",
+            "description": "A $25 a month end-user (non-commercial) donation.",
+            "amount": 25,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "monthly-50",
+            "status": "active",
+            "name": "Fifty dollars a month donation",
+            "description": "A $50 a month end-user (non-commercial) donation.",
+            "amount": 50,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "monthly-100",
+            "status": "active",
+            "name": "Ohe hundred dollars a month donation",
+            "description": "A $100 a month end-user (non-commercial) donation.",
+            "amount": 100,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "monthly-custom",
+            "status": "active",
+            "name": "A custom monthly donation",
+            "description": "A custom amount monthly end-user (non-commercial) donation.",
+            "amount": 0,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "bronze",
+            "status": "active",
+            "name": "Bronze support tier",
+            "description": "Commercial support on the Bronze tier, suited for small companies and start-ups.",
+            "amount": 100,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "silver",
+            "status": "active",
+            "name": "Silver support tier",
+            "description": "Commercial support on the Silver tier, suited for small to medium sized companies.",
+            "amount": 600,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "gold",
+            "status": "active",
+            "name": "Gold support tier",
+            "description": "Commercial support on the Gold tier, suited for medium to large sized companies.",
+            "amount": 1250,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "unicorn",
+            "status": "active",
+            "name": "Unicorn support tier",
+            "description": "Commercial support on the Unitcorn tier, suited for large companies and special (mythical) situations.",
+            "amount": 2000,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "bank", "credit-card"]
+            }
+        ],
+
+        "history": [
+            {
+                "year": 2023,
+                "income": 425360.68,
+                "expenses": 465201.78,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2023.pdf"
+            },
+            {
+                "year": 2022,
+                "income":  452208.82,
+                "expenses": 465188.45,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2022.pdf"
+            },
+            {
+                "year": 2021,
+                "income": 512837.40,
+                "expenses": 425119.83,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2021.pdf"
+            },
+            {
+                "year": 2020,
+                "income": 389873.97,
+                "expenses": 404307.49,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2020.pdf"
+            },
+            {
+                "year": 2019,
+                "income": 427789.23,
+                "expenses": 377961.13,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2019.pdf"
+            }
+        ]
+    }
+}
