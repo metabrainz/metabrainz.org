@@ -57,7 +57,7 @@
                 "wellKnown": "https://github.com/metabrainz/bookbrainz-site/blob/main/.well-known/funding-manifest-urls"
             },
             "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
-            "tags": ["book-community", "book-metadata", "open-data", "ISBN", "data service provider", "non-profit"]
+            "tags": ["book-community", "book-metadata", "open-data", "isbn", "data-service-provider", "non-profit"]
         }
 
     ],
@@ -184,46 +184,6 @@
             "currency": "USD",
             "frequency": "monthly",
             "channels": ["paypal", "credit-card"]
-            },
-            {
-            "guid": "bronze",
-            "status": "active",
-            "name": "Bronze support tier",
-            "description": "Commercial support on the Bronze tier, suited for small companies and start-ups.",
-            "amount": 100,
-            "currency": "USD",
-            "frequency": "monthly",
-            "channels": ["paypal", "bank", "credit-card"]
-            },
-            {
-            "guid": "silver",
-            "status": "active",
-            "name": "Silver support tier",
-            "description": "Commercial support on the Silver tier, suited for small to medium sized companies.",
-            "amount": 600,
-            "currency": "USD",
-            "frequency": "monthly",
-            "channels": ["paypal", "bank", "credit-card"]
-            },
-            {
-            "guid": "gold",
-            "status": "active",
-            "name": "Gold support tier",
-            "description": "Commercial support on the Gold tier, suited for medium to large sized companies.",
-            "amount": 1250,
-            "currency": "USD",
-            "frequency": "monthly",
-            "channels": ["paypal", "bank", "credit-card"]
-            },
-            {
-            "guid": "unicorn",
-            "status": "active",
-            "name": "Unicorn support tier",
-            "description": "Commercial support on the Unitcorn tier, suited for large companies and special (mythical) situations.",
-            "amount": 2000,
-            "currency": "USD",
-            "frequency": "monthly",
-            "channels": ["paypal", "bank", "credit-card"]
             }
         ],
 
