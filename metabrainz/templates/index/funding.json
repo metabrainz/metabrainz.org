@@ -6,7 +6,7 @@
         "role": "owner",
         "name": "MetaBrainz Foundation Inc",
         "email": "support@metabrainz.org",
-        "phone": "+1 805.459.0815",
+        "phone": "001-805-459-0815",
         "description": "The MetaBrainz Foundation is a global community creating and maintaining an open encyclopedia of music and arts metadata. Beginning as a resource for music collectors we currently establish collaborations between volunteers, artists, and industry leaders. Since it’s founding it has grown into a global community of hundreds of thousands of editors collaborating together to build and maintain the MetaBrainz comprehensive datasets.\nThe foundation works within a balanced ecosystem of contributions to the datasets and community and the utilization of the datasets. We encourage all data supporters to participate in the data gathering, editing and peer review processes so that our data can be as comprehensive as possible. Each entity is assigned a permanent MBID (MusicBrainz Identifier) in order to facilitate the creation of a reliable and unambiguous universal lingua franca for music data. MBID’s have opened the possibility of boundless search queries, exceeding the seven traditional identifiers for music data and truly putting knowledge at one's fingertips. Our community aggregated data sets are verified and edited by a global voting system to ensure the data is consistent and correct. We collect information about as many different styles and types of arts and music as possible and do not discriminate when compiling data.\nThe foundation was founded in 2004 by Robert Kaye, in San Luis Obispo, California and is a 501(c)(3) tax-exempt non-profit. Commercial supporters are asked to contribute financially in order to help fund our family of projects, and give back to our community to keep our ecosystem healthy. Non-commercial use of our data remains free, and we are committed to keeping it free to utilize. We are also supported by donations and a number of sponsors who provide funds in order for the foundation to continue to accomplish various project goals. The MetaBrainz Foundation believes in transparent finances, which are published quarterly.",
         "webpageUrl": {
             "url": "https://metabrainz.org/about"
@@ -19,28 +19,30 @@
             "name": "MusicBrainz",
             "description": "MusicBrainz is a community-maintained open source encyclopedia of music information. This means that anyone — including you — can help contribute to the project by adding information about your favorite artists and their works.\n In 2000, Gracenote took over the free CDDB project and commercialized it, essentially charging users for accessing the very data they themselves contributed. In response, Robert Kaye founded MusicBrainz. The project has since grown rapidly from a one-man operation to an international community of enthusiasts that appreciates both music and music metadata. Along the way, the scope of the project has expanded from its origins as a mere CDDB replacement to the true music encyclopedia MusicBrainz is today.\n As an encyclopedia and as a community, MusicBrainz exists only to collect as much information about music as we can. We do not discriminate or prefer one 'type' of music over another, and we try to collect information about as many different types of music as possible. Whether it is published or unpublished, popular or fringe, western or non-western, human or non-human — we want it all in MusicBrainz.\n The MusicBrainz Database stores all of the various pieces of information we collect about music, from artists and their releases to works and their composers, and much more. Note: We do not actually store or have access to any of the music recordings!\n Most of the data in the MusicBrainz Database is licensed under CC0, which effectively places the data into the Public Domain. That means that anyone can download the data and use it in any way they want. The remaining data is released under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 license.",
             "webpageUrl": {
-                "url": "https://musicbrainz.org"
+                "url": "https://musicbrainz.org",
+                "wellKnown": "https://musicbrainz.org/.well-known/funding-manifest-urls" 
             },
             "repositoryUrl": {
                 "url": "https://github.com/metabrainz/musicbrainz-server",
-                "wellKnown": "https://github.com"
+                "wellKnown": "https://github.com/metabrainz/musicbrainz-server/blob/main/.well-known/funding-manifest-urls"
             },
             "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
-            "tags": ["music metadata", "open data", "data service provider", "501.c.3", "non-profit"]
+            "tags": ["music-metadata", "open-data", "data-service-provider", "non-profit"]
         },
         {
             "guid": "listenbrainz",
             "name": "ListenBrainz",
             "description": "ListenBrainz is a free and open-source project (similar to Last.fm) that tracks your music listening habits and provides insights into your taste. By submitting your listening data, you contribute to a larger dataset that benefits the music community. ListenBrainz offers visualizations of your listening history, personalized recommendations, and the ability to connect with other music enthusiasts. It's a valuable tool for music lovers who want to understand and share their musical preferences. From the user submitted data ListenBrainz creates several derivative datasets that can be used to build recommendation systems and music discovery tools, free of the bias that is commonly present in closed recommendation systems.",
             "webpageUrl": {
-                "url": "https://listenbrainz.org"
+                "url": "https://listenbrainz.org",
+                "wellKnown": "https://listenbrainz.org/.well-known/funding-manifest-urls" 
             },
             "repositoryUrl": {
                 "url": "https://github.com/metabrainz/listenbrainz-server",
-                "wellKnown": "https://github.com"
+                "wellKnown": "https://github.com/metabrainz/listenbrainz-server/blob/main/.well-known/funding-manifest-urls"
             },
             "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
-            "tags": ["music community", "recommendations", "fresh releases", "listening data", "open data", "data service provider", "501.c.3", "non-profit"]
+            "tags": ["music-community", "recommendations", "fresh-releases", "listening-data", "open-data", "data-service-provider", "non-profit"]
         },
         {
             "guid": "bookbrainz",
@@ -48,13 +50,14 @@
             "description": "BookBrainz is an ambitious open-source project dedicated to creating a comprehensive online database of every published book, magazine, journal, and other publication ever written. As part of the MetaBrainz Foundation, alongside MusicBrainz and other projects, BookBrainz empowers users to contribute and edit information about books, including titles, authors, publication dates, ISBNs, and more. This collaborative effort fosters a vast and accurate resource for book lovers, researchers, and libraries worldwide. By making this data freely accessible, BookBrainz promotes knowledge sharing and fosters a deeper understanding of the literary world.",
             "webpageUrl": {
                 "url": "https://bookbrainz.org"
+                "wellKnown": "https://bookbrainz.org/.well-known/funding-manifest-urls" 
             },
             "repositoryUrl": {
                 "url": "https://github.com/metabrainz/bookbrainz-site",
-                "wellKnown": "https://github.com"
+                "wellKnown": "https://github.com/metabrainz/bookbrainz-site/blob/main/.well-known/funding-manifest-urls"
             },
             "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
-            "tags": ["book community", "book metadata", "open data", "ISBN", "data service provider", "501.c.3", "non-profit"]
+            "tags": ["book-community", "book-metadata", "open-data", "ISBN", "data service provider", "non-profit"]
         }
 
     ],
