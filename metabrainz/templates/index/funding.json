@@ -57,7 +57,7 @@
                 "wellKnown": "https://github.com/metabrainz/bookbrainz-site/blob/master/.well-known/funding-manifest-urls"
             },
             "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
-            "tags": ["book-community", "book-metadata", "open-data", "isbn", "data-service-provider", "non-profit"]
+            "tags": ["books", "community", "metadata", "open-data", "isbn", "library", "data-service-provider", "non-profit"]
         }
 
     ],
