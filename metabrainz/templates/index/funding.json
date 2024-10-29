@@ -39,7 +39,7 @@
             },
             "repositoryUrl": {
                 "url": "https://github.com/metabrainz/listenbrainz-server",
-                "wellKnown": "https://github.com/metabrainz/listenbrainz-server/blob/main/.well-known/funding-manifest-urls"
+                "wellKnown": "https://github.com/metabrainz/listenbrainz-server/blob/master/.well-known/funding-manifest-urls"
             },
             "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
             "tags": ["music-community", "recommendations", "fresh-releases", "listening-data", "open-data", "data-service-provider", "non-profit"]
