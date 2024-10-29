@@ -27,7 +27,7 @@
                 "wellKnown": "https://github.com/metabrainz/musicbrainz-server/blob/master/.well-known/funding-manifest-urls"
             },
             "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
-            "tags": ["music-metadata", "open-data", "data-service-provider", "non-profit"]
+            "tags": ["music", "community", "metadata", "open-data", "data-service-provider", "non-profit"]
         },
         {
             "guid": "listenbrainz",
