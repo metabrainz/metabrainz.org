@@ -128,14 +128,14 @@ web# ./node_modules/.bin/lessc ./metabrainz/static/fonts/font_awesome/less/font-
 
 Once you have built and started all the services as mentioned above, run:
 
-`$ ./develop.sh manage extract_strings`
+`$ ./develop.sh manage extract-strings`
 
 ### Compiling the strings
 
 The POT files are compiled automatically every time the services are built, but in case you make any changes to the POT files
 and want to compile the translation files again, run:
 
-`$ ./develop.sh manage compile_translations`
+`$ ./develop.sh manage compile-translations`
 
 
 ## Testing

@@ -8,7 +8,7 @@
   <h3>{{ _('Found a bug in one of our projects?') }}</h3>
   <p>
     {{ _('Found a broken link or something that doesn\'t work as you expect it to? You can report issues in our
-    <a href="%(bug_tracker_url)s">bug tracker</a>, or let us know on IRC or
+    <a href="%(bug_tracker_url)s">bug tracker</a>, or let us know on our chat or
     by email. Contact details are provided below. Please include details such as what happened, what you expected
     to happen, and the URLs of any pages involved.', bug_tracker_url='http://tickets.musicbrainz.org/secure/BrowseProjects.jspa') }}
   </p>
@@ -87,20 +87,27 @@
     answer any questions you may have.', forums_url='https://community.metabrainz.org/') }}
   </p>
 
-  <h3>{{ _('IRC') }}</h3>
+  <h3>{{ _('Chat') }}</h3>
   <p>
-    {{ _('The MetaBrainz/MusicBrainz team, as well as MusicBrainz supporters, hang out in the
-    <strong><a href="%(irc_url_mb)s">#musicbrainz</a></strong> and
-    <strong><a href="%(irc_url_meb)s">#metabrainz</a></strong>
-    channels on IRC chat at irc.libera.chat. If you don\'t have an IRC client
-    installed, consider using this
-    <a href="%(irc_webchat_url)s">webchat client</a>
-    instead. Please feel free to browse the
-    <a href="%(chatlogs_url)s">IRC log archives</a>.',
-    irc_url_mb='ircs://irc.libera.chat:6697/musicbrainz',
-    irc_url_meb='ircs://irc.libera.chat:6697/metabrainz',
-    irc_webchat_url='https://kiwiirc.com/nextclient/irc.libera.chat/#musicbrainz,#metabrainz',
+    {{ _('The MetaBrainz/MusicBrainz/ListenBrainz team and community hang out
+    on our Matrix, IRC and Discord channels. Visit the
+    <a href="%(chatbrainz_url)s">ChatBrainz</a>
+    page and join the chat. You can also browse the
+    <a href="%(chatlogs_url)s">chat log archives</a>.',
+    chatbrainz_url='https://musicbrainz.org/doc/Communication/ChatBrainz',
     chatlogs_url='http://chatlogs.metabrainz.org/') }}
+  </p>
+
+  <h3>{{ _('Social media') }}</h3>
+  <p>
+    {{ _('You can follow us on these social channels:') }}
+     <ul>
+      <li><a href="https://blog.metabrainz.org/">{{ _('Blog') }}</a></li>
+      <li><a href="https://x.com/MetaBrainz">{{ _('Twitter/X') }}</a></li>
+      <li><a href="https://mastodon.social/@metabrainz">{{ _('Mastodon') }}</a></li>
+      <li><a href="https://bsky.app/profile/metabrainz.org">{{ _('Bluesky') }}</a></li>
+      <li><a href="https://www.instagram.com/MetaBrainz/">{{ _('Instagram') }}</a></li>
+    </ul>
   </p>
 
   <h3>{{ _('Mailing address') }}</h3>
