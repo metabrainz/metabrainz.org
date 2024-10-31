@@ -1,0 +1,233 @@
+{
+    "version": "v1.0.0",
+
+    "entity": {
+        "type": "organisation",
+        "role": "owner",
+        "name": "MetaBrainz Foundation Inc",
+        "email": "support@metabrainz.org",
+        "phone": "001-805-459-0815",
+        "description": "The MetaBrainz Foundation is a non-profit organization founded in 2004 by Robert Kaye,  creates and maintains open data projects that provide reliable structured metadata for various forms of media.It seeks to build free and accessible knowledge repositories and foster collaboration within an open community. The foundation operates under an open data and open-source ethos, with its data and tools freely available for public use, distribution, and modification. We encourage developers, researchers, and organizations to contribute and create derivative projects, ultimately enriching the ecosystem around open media metadata.\nMetaBrainz's flagship project, MusicBrainz, is an extensive, user-driven music database for artist, album, track, and release information. It supports applications like Picard for digital music libraries tagging and serves as a foundational resource with contributions from users and support from companies like Google and the BBC.\nListenBrainz focuses on recording and analyzing music listening habits, inspired by projects like Last.fm. Users can use these insights to explore trends and personalized recommendations.\nBookBrainz is an open database for book metadata, similar to MusicBrainz but tailored for literature, cataloging authors, works, editions, and other entities in the literary world. This open data is invaluable for libraries, researchers, and readers seeking a community-driven book database.\nThe MetaBrainz Foundation’s commitment to open-source is integral to its mission. All software including the tools, APIs, and data structures, is released under open-source licenses. This transparency ensures the data remains free for everyone, regardless of commercial or non-commercial use, while encouraging contributions from a global user base.\nMetaBrainz is funded by partnerships, sponsorships, and community donations, allowing it to remain independent and committed to providing high-quality, free data for users and the digital landscape.",
+        "webpageUrl": {
+            "url": "https://metabrainz.org/about"
+        }
+    },
+
+    "projects": [
+        {
+            "guid": "musicbrainz",
+            "name": "MusicBrainz",
+            "description": "MusicBrainz is a community-maintained open source encyclopedia of music information. This means that anyone — including you — can help contribute to the project by adding information about your favorite artists and their works.\n In 2000, Gracenote took over the free CDDB project and commercialized it, essentially charging users for accessing the very data they themselves contributed. In response, Robert Kaye founded MusicBrainz. The project has since grown rapidly from a one-man operation to an international community of enthusiasts that appreciates both music and music metadata. Along the way, the scope of the project has expanded from its origins as a mere CDDB replacement to the true music encyclopedia MusicBrainz is today.\n As an encyclopedia and as a community, MusicBrainz exists only to collect as much information about music as we can. We do not discriminate or prefer one 'type' of music over another, and we try to collect information about as many different types of music as possible. Whether it is published or unpublished, popular or fringe, western or non-western, human or non-human — we want it all in MusicBrainz.\n The MusicBrainz Database stores all of the various pieces of information we collect about music, from artists and their releases to works and their composers, and much more. Note: We do not actually store or have access to any of the music recordings!\n Most of the data in the MusicBrainz Database is licensed under CC0, which effectively places the data into the Public Domain. That means that anyone can download the data and use it in any way they want. The remaining data is released under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 license.",
+            "webpageUrl": {
+                "url": "https://musicbrainz.org",
+                "wellKnown": "https://musicbrainz.org/.well-known/funding-manifest-urls" 
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/metabrainz/musicbrainz-server",
+                "wellKnown": "https://github.com/metabrainz/musicbrainz-server/blob/master/.well-known/funding-manifest-urls"
+            },
+            "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
+            "tags": ["music", "community", "metadata", "open-data", "data-service-provider", "non-profit"]
+        },
+        {
+            "guid": "listenbrainz",
+            "name": "ListenBrainz",
+            "description": "ListenBrainz is a free and open-source project (similar to Last.fm) that tracks your music listening habits and provides insights into your taste. By submitting your listening data, you contribute to a larger dataset that benefits the music community. ListenBrainz offers visualizations of your listening history, personalized recommendations, and the ability to connect with other music enthusiasts. It's a valuable tool for music lovers who want to understand and share their musical preferences. From the user submitted data ListenBrainz creates several derivative datasets that can be used to build recommendation systems and music discovery tools, free of the bias that is commonly present in closed recommendation systems.",
+            "webpageUrl": {
+                "url": "https://listenbrainz.org",
+                "wellKnown": "https://listenbrainz.org/.well-known/funding-manifest-urls" 
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/metabrainz/listenbrainz-server",
+                "wellKnown": "https://github.com/metabrainz/listenbrainz-server/blob/master/.well-known/funding-manifest-urls"
+            },
+            "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
+            "tags": ["music", "community", "recommendations", "fresh-releases", "listening-data", "open-data", "data-service-provider", "non-profit"]
+        },
+        {
+            "guid": "bookbrainz",
+            "name": "BookBrainz",
+            "description": "BookBrainz is an ambitious open-source project dedicated to creating a comprehensive online database of every published book, magazine, journal, and other publication ever written. As part of the MetaBrainz Foundation, alongside MusicBrainz and other projects, BookBrainz empowers users to contribute and edit information about books, including titles, authors, publication dates, ISBNs, and more. This collaborative effort fosters a vast and accurate resource for book lovers, researchers, and libraries worldwide. By making this data freely accessible, BookBrainz promotes knowledge sharing and fosters a deeper understanding of the literary world.",
+            "webpageUrl": {
+                "url": "https://bookbrainz.org",
+                "wellKnown": "https://bookbrainz.org/.well-known/funding-manifest-urls" 
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/metabrainz/bookbrainz-site",
+                "wellKnown": "https://github.com/metabrainz/bookbrainz-site/blob/master/.well-known/funding-manifest-urls"
+            },
+            "licenses": ["GPL-2.0-or-later", "CC-BY-NC-SA-3.0", "CC0-1.0"],
+            "tags": ["books", "community", "metadata", "open-data", "isbn", "library", "data-service-provider", "non-profit"]
+        }
+
+    ],
+
+    "funding": {
+        "channels": [
+            {
+                "guid": "paypal",
+                "type": "payment-provider",
+                "address": "paypal@metabrainz.org",
+                "description": "Make a donation to MetaBrainz via PayPal."
+            },
+            {
+                "guid": "bank",
+                "type": "bank",
+                "address": "IBAN: BE96 9670 3472 0205\nBIC: TRWIBEB1XXX",
+                "description": "Make a donation to MetaBrainz via SEPA bank transfer."
+            },
+            {
+                "guid": "credit-card",
+                "type": "payment-provider",
+                "address": "https://metabrainz.org/donate",
+                "description": "Make a donation to MetaBrainz via a Credit Card payment."
+            }
+        ],
+
+        "plans": [
+            {
+            "guid": "one-time-15",
+            "status": "active",
+            "name": "Fifteen dollars one time donation",
+            "description": "A $15 one time end-user (non-commercial) donation.",
+            "amount": 15,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "one-time-25",
+            "status": "active",
+            "name": "Twenty-five dollars one time donation",
+            "description": "A $25 one time end-user (non-commercial) donation.",
+            "amount": 25,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "one-time-50",
+            "status": "active",
+            "name": "Fifty dollars one time donation",
+            "description": "A $50 one time end-user (non-commercial) donation.",
+            "amount": 50,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "one-time-100",
+            "status": "active",
+            "name": "Ohe hundred dollars one time donation",
+            "description": "A $100 one time end-user (non-commercial) donation.",
+            "amount": 100,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "one-time-custom",
+            "status": "active",
+            "name": "A custom one time donation",
+            "description": "A custom amount one time end-user (non-commercial) donation.",
+            "amount": 0,
+            "currency": "USD",
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "monthly-15",
+            "status": "active",
+            "name": "Fifteen dollars a month donation",
+            "description": "A $15 a month end-user (non-commercial) donation.",
+            "amount": 15,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "monthly-25",
+            "status": "active",
+            "name": "Twenty-five dollars a month donation",
+            "description": "A $25 a month end-user (non-commercial) donation.",
+            "amount": 25,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "monthly-50",
+            "status": "active",
+            "name": "Fifty dollars a month donation",
+            "description": "A $50 a month end-user (non-commercial) donation.",
+            "amount": 50,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "monthly-100",
+            "status": "active",
+            "name": "Ohe hundred dollars a month donation",
+            "description": "A $100 a month end-user (non-commercial) donation.",
+            "amount": 100,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "monthly-custom",
+            "status": "active",
+            "name": "A custom monthly donation",
+            "description": "A custom amount monthly end-user (non-commercial) donation.",
+            "amount": 0,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "credit-card"]
+            }
+        ],
+
+        "history": [
+            {
+                "year": 2023,
+                "income": 425360.68,
+                "expenses": 465201.78,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2023.pdf"
+            },
+            {
+                "year": 2022,
+                "income":  452208.82,
+                "expenses": 465188.45,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2022.pdf"
+            },
+            {
+                "year": 2021,
+                "income": 512837.40,
+                "expenses": 425119.83,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2021.pdf"
+            },
+            {
+                "year": 2020,
+                "income": 389873.97,
+                "expenses": 404307.49,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2020.pdf"
+            },
+            {
+                "year": 2019,
+                "income": 427789.23,
+                "expenses": 377961.13,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2019.pdf"
+            }
+        ]
+    }
+}
