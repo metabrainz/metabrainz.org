@@ -6,7 +6,6 @@ from authlib.integrations.sqla_oauth2 import (
 )
 from authlib.oauth2.rfc6749 import InvalidScopeError, scope_to_list
 from authlib.oauth2.rfc7636 import CodeChallenge
-from flask import request
 
 from oauth.authorization_code_grant import AuthorizationCodeGrant
 from oauth.implicit_grant import ImplicitGrant

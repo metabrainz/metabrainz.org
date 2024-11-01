@@ -28,6 +28,7 @@ def after_oauth2_request(response):
     response.headers["Pragma"] = "no-cache"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Referrer-Policy"] = "no-referrer"
+    # todo: add content-security-policy headers
     return response
 
 

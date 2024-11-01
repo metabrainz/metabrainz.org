@@ -1,7 +1,7 @@
 from urllib.parse import urlparse, parse_qs
 
 from authlib.oauth2.rfc6749 import grants, InvalidGrantError, InvalidRequestError
-from flask import render_template
+from flask import render_template, current_app
 
 from oauth import login
 from oauth.model import db, OAuth2AccessToken, OAuth2RefreshToken
@@ -36,7 +36,7 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
             user_id=request.user.id,
             code_challenge=code_challenge,
             code_challenge_method=code_challenge_method,
-            expires_in=600,  # todo: make configurable like other oauth2_ options
+            expires_in=current_app.config["OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN"],
         )
         db.session.add(auth_code)
         db.session.commit()
