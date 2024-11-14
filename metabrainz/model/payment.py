@@ -83,7 +83,7 @@ class Payment(db.Model):
             -1 = unknown person, 0 = no need to nag, 1 = should be nagged.
             Second is...
         """
-        days_per_dollar = 7.5
+        days_per_dollar = 6
         result = db.session.execute(
             "SELECT ((amount + COALESCE(fee, 0)) * :days_per_dollar) - "
             "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
