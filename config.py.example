@@ -122,3 +122,4 @@ OAUTH2_TOKEN_EXPIRES_IN = {
     "authorization_code": 3600,
     "implicit": 3600,
 }
+OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600

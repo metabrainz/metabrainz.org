@@ -101,7 +101,7 @@ SQLALCHEMY_BINDS = {
    "musicbrainz": MB_DATABASE_URI
 }
 
-MUSICBRAINZ_SERVER = "https://test.musicbrainz.org"
+MUSICBRAINZ_SERVER = '''{{template "KEY" "musicbrainz/oauth_server_url"}}'''
 
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [
@@ -131,3 +131,4 @@ OAUTH2_TOKEN_EXPIRES_IN = {
     "authorization_code": 3600,
     "implicit": 3600,
 }
+OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
