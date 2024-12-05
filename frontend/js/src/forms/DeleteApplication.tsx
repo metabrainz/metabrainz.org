@@ -43,17 +43,13 @@ function DeleteApplication({
                 <input id="confirm" name="confirm" type="hidden" value="yes" />
               </div>
             </div>
-            <div className="form-group">
-              <div className="col-md-offset-3 col-md-1">
-                <a href={cancel_url} className="btn btn-default">
-                  Cancel
-                </a>
-              </div>
-              <div className="col-md-1" style={{ marginLeft: "8px" }}>
-                <button type="submit" className="btn btn-danger">
-                  Delete
-                </button>
-              </div>
+            <div className="btn-group">
+              <a href={cancel_url} className="btn btn-default">
+                Cancel
+              </a>
+              <button type="submit" className="btn btn-danger" style={{ marginLeft: "8px" }}>
+                Delete
+              </button>
             </div>
           </form>
         </div>
