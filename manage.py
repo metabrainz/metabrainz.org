@@ -62,6 +62,7 @@ def init_db(force=False, create_db=False):
 
     click.echo('Creating tables... ', nl=False)
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_tables.sql'))
+    db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'create_tables.sql'))
     click.echo('Done.')
 
     click.echo('Creating primary and foreign keys... ', nl=False)

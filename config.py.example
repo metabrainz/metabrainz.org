@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CUSTOM CONFIGURATION
 
 DEBUG = True  # set to False in production mode
@@ -6,11 +5,11 @@ DEBUG = True  # set to False in production mode
 SECRET_KEY = "CHANGE_THIS"
 
 # DATABASE
-SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@db:5432/metabrainz"
+SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@meb_db:5432/metabrainz"
 SQLALCHEMY_MUSICBRAINZ_URI = ""
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-POSTGRES_ADMIN_URI = "postgresql://postgres:postgres@db/postgres"
+POSTGRES_ADMIN_URI = "postgresql://postgres:postgres@meb_db/postgres"
 
 # DATABASES
 
@@ -48,8 +47,10 @@ STRIPE_KEYS = {
 }
 
 # if developing payment integration locally, change this to your localhost url
-SERVER_BASE_URL = "https://metabrainz.org"
+SERVER_BASE_URL = "http://localhost:8000"
+SERVER_NAME = "localhost:8000"
 
+MUSICBRAINZ_SERVER = "https://beta.musicbrainz.org"
 
 # REDIS
 REDIS = {
@@ -113,3 +114,12 @@ NOTIFICATION_RECIPIENTS = [
 #PREFERRED_URL_SCHEME = "https"
 #USE_COMPILED_STYLING = True
 USE_NGINX_X_ACCEL = False
+
+OAUTH2_BLUEPRINT_PREFIX = "/oauth2"
+OAUTH2_ACCESS_TOKEN_GENERATOR = "oauth.generator.create_access_token"
+OAUTH2_REFRESH_TOKEN_GENERATOR = "oauth.generator.create_refresh_token"
+OAUTH2_TOKEN_EXPIRES_IN = {
+    "authorization_code": 3600,
+    "implicit": 3600,
+}
+OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600

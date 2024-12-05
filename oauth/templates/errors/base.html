@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}{% block error_title %}{% endblock %} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{{ self.error_title() }}</h1>
+  <p>{% block error_description %}{{ error.description }}{% endblock %}</p>
+  <p><a href="#">{{ _('Back to home page') }}</a></p>
+{% endblock %}

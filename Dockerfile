@@ -85,11 +85,19 @@ FROM metabrainz-base as metabrainz-prod
 
 RUN pip install --no-cache-dir uWSGI==2.0.23
 
-COPY ./docker/prod/consul-template-uwsgi.conf /etc/
+COPY ./docker/web/consul-template-web.conf /etc/
+COPY ./docker/web/web.service /etc/service/web/run
+COPY ./docker/web/web.ini /etc/uwsgi/web.ini
+RUN chmod 755 /etc/service/web/run
+RUN touch /etc/service/web/down
 
-COPY ./docker/prod/uwsgi.service /etc/service/uwsgi/run
-RUN chmod 755 /etc/service/uwsgi/run
-COPY ./docker/prod/uwsgi.ini /etc/uwsgi/uwsgi.ini
+COPY ./docker/oauth/consul-template-oauth.conf /etc/
+COPY ./docker/oauth/oauth.service /etc/service/oauth/run
+COPY ./docker/oauth/oauth.ini /etc/uwsgi/oauth.ini
+RUN chmod 755 /etc/service/oauth/run
+RUN touch /etc/service/oauth/down
+
+COPY ./docker/rc.local /etc/rc.local
 
 # copy the compiled js files and static assets from image to prod
 COPY --from=metabrainz-frontend-prod /code/frontend/robots.txt /static/

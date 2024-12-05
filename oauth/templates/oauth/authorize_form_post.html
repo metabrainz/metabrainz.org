@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head><title>Submit This Form</title></head>
+   <body>
+    <form method="post" action="{{ redirect_uri }}">
+      {%- for key, value in values.items() -%}
+          <input type="hidden" name="{{ key }}" value="{{ value[0] }}">
+      {%- endfor -%}
+    </form>
+   </body>
+   <script integrity="sha256-Ldf3w4VR3vLkCfvkxEihLDMj4U+f+F//HexFanCUriY=">
+       document.addEventListener("DOMContentLoaded", (event) => {
+           document.forms[0].submit();
+       });
+   </script> 
+</html>

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+function log() {
+   printf "%(%Y-%m-%d %H:%M:%S %Z)T rc.local: "
+   echo $@
+}
+
+log "Hello, this is rc.local. CONTAINER_NAME is $CONTAINER_NAME, and DEPLOY_ENV is $DEPLOY_ENV"
+
+if [ "${CONTAINER_NAME}" = "metabrainz-${DEPLOY_ENV}" ]
+then
+    log Enabling web
+    rm -f /etc/service/web/down
+fi
+
+if [ "${CONTAINER_NAME}" = "metabrainz-oauth-${DEPLOY_ENV}" ]
+then
+    log Enabling oauth
+    rm -f /etc/service/oauth/down
+fi
