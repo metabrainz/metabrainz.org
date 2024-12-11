@@ -47,7 +47,11 @@ function DeleteApplication({
               <a href={cancel_url} className="btn btn-default">
                 Cancel
               </a>
-              <button type="submit" className="btn btn-danger" style={{ marginLeft: "8px" }}>
+              <button
+                type="submit"
+                className="btn btn-danger"
+                style={{ marginLeft: "8px" }}
+              >
                 Delete
               </button>
             </div>

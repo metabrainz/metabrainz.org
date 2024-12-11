@@ -48,7 +48,6 @@ STRIPE_KEYS = {
 
 # if developing payment integration locally, change this to your localhost url
 SERVER_BASE_URL = "http://localhost:8000"
-SERVER_NAME = "localhost:8000"
 
 MUSICBRAINZ_SERVER = "https://beta.musicbrainz.org"
 

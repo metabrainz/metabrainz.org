@@ -87,7 +87,6 @@ MAIL_FROM_DOMAIN = '''{{template "KEY" "mail_from_domain"}}'''
 PREFERRED_URL_SCHEME = '''{{template "KEY" "preferred_url_scheme"}}'''
 
 SERVER_BASE_URL = f"{PREFERRED_URL_SCHEME}://{MAIL_FROM_DOMAIN}"
-SERVER_NAME = None
 
 {{if service "pgbouncer-slave"}}
 {{with index (service "pgbouncer-slave") 0}}
