@@ -462,7 +462,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         self.assertEqual(parsed.path, "/login")
 
         fragment_args = parse_qs(parsed.query)
-        self.assertEqual(unquote(fragment_args["returnto"][0]), f"http://{self.app.config['SERVER_NAME']}/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
+        self.assertEqual(unquote(fragment_args["returnto"][0]), f"http://localhost/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
 
     @pytest.mark.skip
     def test_oauth_authorize_parameter_reuse(self):

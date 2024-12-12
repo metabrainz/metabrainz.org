@@ -48,9 +48,6 @@ def create_app(debug=None, config_path=None):
                 "..", "config.py"
             ))
 
-    app.config["SERVER_BASE_URL"] = "http://localhost:8150"
-    app.config["SERVER_NAME"] = "localhost:8150"
-
     # Load configuration files: If we're running under a docker deployment, wait until
     # the consul configuration is available.
     if deploy_env:
