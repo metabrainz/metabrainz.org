@@ -11,6 +11,7 @@ from metabrainz.payments import SUPPORTED_CURRENCIES, Currency
 from metabrainz.model.payment import Payment
 from metabrainz.payments.forms import DonationForm, PaymentForm
 from metabrainz import flash
+from metabrainz.decorators import crossdomain
 from math import ceil
 import requests
 from requests.exceptions import RequestException
@@ -104,12 +105,14 @@ def cancel_recurring():
 
 
 @payments_bp.route('/donations/nag-check/<editor>')
+@crossdomain()
 def nag_check(editor):
     a, b = Payment.get_nag_days(editor)
     return '%s,%s\n' % (a, b)
 
 
 @payments_bp.route('/donations/nag-check')
+@crossdomain()
 def nag_check_with_param():
 
     editor = request.args.get('editor')
