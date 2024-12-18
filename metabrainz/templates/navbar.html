@@ -65,7 +65,7 @@
               </a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ url_for('supporters.profile', musicbrainz_id=current_user.musicbrainz_id) }}">{{ _('Your profile') }}</a></li>
-                <li><a href="{{ url_for('oauth2.index') }}">{{ _('OAuth applications') }}</a></li>
+                <li><a href="https://musicbrainz.org/new-oauth2/client/list">{{ _('OAuth applications') }}</a></li>
                 <li><a href="{{ url_for('supporters.logout') }}">{{ _('Sign out') }}</a></li>
               </ul>
             </li>
