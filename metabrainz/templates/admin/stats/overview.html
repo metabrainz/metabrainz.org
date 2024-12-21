@@ -13,7 +13,7 @@
       <ol>
         {% for supporter, req_count in top_downloaders %}
           <li>
-            <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.musicbrainz_id }}</a>
+            <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.user.name }}</a>
             {{ '('+supporter.org_name+')' if supporter.is_commercial }}
             - {{ req_count }} requests
           </li>
@@ -29,7 +29,7 @@
         {% for action in token_actions %}
           <li>
             {% if action.supporter %}
-              <a href="{{ url_for('supportersview.details', supporter_id=action.supporter.id) }}">{{ action.supporter.musicbrainz_id }}</a>
+              <a href="{{ url_for('supportersview.details', supporter_id=action.supporter.id) }}">{{ action.supporter.user.name }}</a>
             {% else %}
               Deleted Supporter
             {% endif %}

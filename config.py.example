@@ -1,8 +1,18 @@
+from datetime import timedelta
+
 # CUSTOM CONFIGURATION
 
 DEBUG = True  # set to False in production mode
 
 SECRET_KEY = "CHANGE_THIS"
+
+EMAIL_VERIFICATION_SECRET_KEY = "CHANGE THIS"
+EMAIL_VERIFICATION_EXPIRY = timedelta(hours=24)
+EMAIL_RESET_PASSWORD_EXPIRY = timedelta(hours=24)
+
+# Bcrypt
+BCRYPT_HASH_PREFIX = "2a"
+BCRYPT_LOG_ROUNDS = 12
 
 # DATABASE
 SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@meb_db:5432/metabrainz"
