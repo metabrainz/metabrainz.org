@@ -31,7 +31,7 @@ def donate():
         form.editor.data = editor
     else:
         if current_user is not None and not current_user.is_anonymous:
-            form.editor.data = current_user.musicbrainz_id
+            form.editor.data = current_user.name
 
     amount = None
     if _amount := request.args.get('amount'):

@@ -1,5 +1,6 @@
 BEGIN;
 
+ALTER TABLE "user" ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 ALTER TABLE tier ADD CONSTRAINT tier_pkey PRIMARY KEY (id);
 ALTER TABLE supporter ADD CONSTRAINT supporter_pkey PRIMARY KEY (id);
 ALTER TABLE token ADD CONSTRAINT token_pkey PRIMARY KEY (value);
