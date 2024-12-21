@@ -9,8 +9,9 @@ services:
       context: ..
       dockerfile: Dockerfile
       target: metabrainz-dev
-    command: python manage.py runserver -h 0.0.0.0 -p 8000
+    command: flask run --debug -h 0.0.0.0 -p 8000
     environment:
+      FLASK_APP: "metabrainz:create_app()"
       DEPLOY_ENV: dev
     volumes:
       - ../data/replication_packets:/data/replication_packets

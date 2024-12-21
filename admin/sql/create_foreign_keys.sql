@@ -5,6 +5,10 @@ ALTER TABLE token
   REFERENCES supporter (id) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE SET NULL;
 
+ALTER TABLE supporter ADD CONSTRAINT supporter_user_id_fkey
+    FOREIGN KEY (user_id) REFERENCES "user" (id)
+    ON UPDATE CASCADE ON DELETE SET NULL;
+
 ALTER TABLE supporter
   ADD CONSTRAINT supporter_tier_id_fkey FOREIGN KEY (tier_id)
   REFERENCES tier (id) MATCH SIMPLE

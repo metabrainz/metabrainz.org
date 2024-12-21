@@ -3,6 +3,7 @@ from __future__ import division
 from sqlalchemy import exists, text
 
 from metabrainz.model import db, Supporter
+from metabrainz.model.user import User
 from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
@@ -157,26 +158,14 @@ class Payment(db.Model):
         return count, query.all()
 
     @staticmethod
-    def get_musicbrainz_row_id(editor_name):
+    def get_user_id(editor_name):
         """ Get the musicbrainz row id by given editor's name
 
             First try to retrieve the row id from the supporters table and then from MB database.
         """
-        supporter = Supporter.get(musicbrainz_id=editor_name)
-        if supporter is not None and supporter.musicbrainz_row_id is not None:
-            return supporter.musicbrainz_row_id
-
-        from metabrainz.db import mb_engine
-        if mb_engine is not None:
-            with mb_engine.connect() as mb_conn:
-                result = mb_conn.execute(
-                    text("SELECT id FROM editor WHERE lower(name) = lower(:editor_name)"),
-                    {"editor_name": editor_name}
-                )
-                row = result.fetchone()
-                if row is not None:
-                    return row.id
-
+        user = User.get(name=editor_name)
+        if user is not None:
+            return user.id
         return None
 
 
@@ -196,8 +185,6 @@ class Payment(db.Model):
 
         # Only processing completed donations
         if form['payment_status'] != 'Completed':
-            # TODO(roman): Convert to regular `logging.info` call when such detailed logs
-            # are no longer necessary to capture.
             logging.info("PayPal: Payment is not completed: %s",form)
             return
 
@@ -267,7 +254,7 @@ class Payment(db.Model):
 
         if is_donation:
             new_payment.editor_name = form.get('custom')
-            new_payment.editor_id = cls.get_musicbrainz_row_id(new_payment.editor_name)
+            new_payment.editor_id = cls.get_user_id(new_payment.editor_name)
 
             anonymous_opt = options.get("anonymous")
             if anonymous_opt is None:
@@ -411,7 +398,7 @@ class Payment(db.Model):
 
             if "editor" in metadata:
                 new_donation.editor_name = metadata["editor"]
-                new_donation.editor_id = cls.get_musicbrainz_row_id(new_donation.editor_name)
+                new_donation.editor_id = cls.get_user_id(new_donation.editor_name)
 
         else:  # Organization payment
             if "invoice_number" in metadata:

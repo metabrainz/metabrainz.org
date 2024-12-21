@@ -3,6 +3,7 @@ from flask import Response, request, redirect, url_for, current_app
 from flask_admin import expose
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms
 from metabrainz.admin.forms import get_logo_storage_dir
+from metabrainz.model import db
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
@@ -58,9 +59,9 @@ class SupportersView(AdminBaseView):
         supporter = Supporter.get(id=supporter_id)
 
         form = forms.SupporterEditForm(defaults={
-            'musicbrainz_id': supporter.musicbrainz_id,
+            'username': supporter.user.name,
+            'email': supporter.user.email,
             'contact_name': supporter.contact_name,
-            'contact_email': supporter.contact_email,
             'state': supporter.state,
             'is_commercial': supporter.is_commercial,
             'org_name': supporter.org_name,
@@ -83,9 +84,7 @@ class SupportersView(AdminBaseView):
 
         if form.validate_on_submit():
             update_data = {
-                'musicbrainz_id': form.musicbrainz_id.data,
                 'contact_name': form.contact_name.data,
-                'contact_email': form.contact_email.data,
                 'state': form.state.data,
                 'is_commercial': form.is_commercial.data,
                 'org_name': form.org_name.data,
@@ -119,6 +118,10 @@ class SupportersView(AdminBaseView):
                         logging.warning(e)
                 # Saving new one
                 image_storage.save(os.path.join(get_logo_storage_dir(current_app), logo_filename))
+
+            supporter.user.name = form.username.data
+            supporter.user.email = form.email.data
+            db.session.commit()
             db_supporter.update(supporter_id=supporter.id, **update_data)
             return redirect(url_for('.details', supporter_id=supporter.id))
 
@@ -249,6 +252,7 @@ class StatsView(AdminBaseView):
             token_actions=TokenLog.list(10)[0],
         )
 
+
     @staticmethod
     def dns_lookup(ip):
         try:
@@ -299,6 +303,7 @@ class StatsView(AdminBaseView):
             days=days
         )
 
+
     @expose('/top-tokens/')
     def top_tokens(self):
         days = get_int_query_param('days', default=7)
@@ -327,6 +332,7 @@ class StatsView(AdminBaseView):
             limit=limit,
             count=count,
         )
+
 
     @expose('/usage')
     def hourly_usage_data(self):

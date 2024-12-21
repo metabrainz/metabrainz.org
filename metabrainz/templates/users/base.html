@@ -1,0 +1,34 @@
+{% extends 'base-react.html' %}
+
+{% block title %}{{ _('Sign in') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <section id="auth-page">
+    <div class="auth-page-container">
+      <div class="icon-pills">
+        <div class="icon-pill">
+          <img src="{{ url_for('static', filename='img/projects/musicbrainz.svg') }}" alt="MusicBrainz"
+               title="MusicBrainz"/>
+        </div>
+        <div class="icon-pill">
+          <img src="{{ url_for('static', filename='img/projects/listenbrainz.svg') }}" alt="ListenBrainz"
+               title="ListenBrainz"/>
+        </div>
+        <div class="icon-pill">
+          <img src="{{ url_for('static', filename='img/projects/bookbrainz.svg') }}" alt="BookBrainz"
+               title="BookBrainz"/>
+        </div>
+        <div class="icon-pill">
+          <img src="{{ url_for('static', filename='img/projects/critiquebrainz.svg') }}" alt="CritiqueBrainz"
+               title="CritiqueBrainz"/>
+        </div>
+        <div class="icon-pill">
+          <img src="{{ url_for('static', filename='img/projects/picard.svg') }}" alt="Picard" title="Picard"/>
+        </div>
+      </div>
+      {% block auth_form %}
+        <!--- Auth related form goes -->
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}

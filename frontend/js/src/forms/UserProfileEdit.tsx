@@ -3,23 +3,19 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
 import { getPageProps } from "../utils";
-import { Dataset, DatasetsInput, TextInput } from "./utils";
+import { TextInput } from "./utils";
 
-type SupporterProfileEditProps = {
-  datasets: Dataset[];
-  is_commercial: boolean;
+type UserProfileEditProps = {
   csrf_token: string;
   initial_form_data: any;
   initial_errors: any;
 };
 
-function SupporterProfileEdit({
-  datasets,
-  is_commercial,
+function UserProfileEdit({
   csrf_token,
   initial_form_data,
   initial_errors,
-}: SupporterProfileEditProps): JSX.Element {
+}: UserProfileEditProps): JSX.Element {
   return (
     <>
       <h1 className="page-title">Your Profile</h1>
@@ -27,16 +23,12 @@ function SupporterProfileEdit({
 
       <Formik
         initialValues={{
-          datasets:
-            initial_form_data.datasets?.map((x: number) => x.toString()) ?? [],
-          contact_name: initial_form_data.contact_name ?? "",
-          contact_email: initial_form_data.contact_email ?? "",
+          email: initial_form_data.email ?? "",
           csrf_token,
         }}
         initialErrors={initial_errors}
         initialTouched={initial_errors}
         validationSchema={Yup.object({
-          contact_name: Yup.string().required("Contact name is required!"),
           contact_email: Yup.string()
             .email()
             .required("Email address is required!"),
@@ -60,23 +52,12 @@ function SupporterProfileEdit({
             </div>
 
             <TextInput
-              type="text"
-              id="contact_name"
-              name="contact_name"
-              label="Name"
-              required
-            />
-
-            <TextInput
               type="email"
-              id="contact_email"
-              name="contact_email"
-              label="Email"
+              id="email"
+              name="email"
+              label="E-mail address"
               required
             />
-            <br />
-
-            {!is_commercial && <DatasetsInput datasets={datasets} />}
 
             <div className="form-group">
               <div className="col-sm-offset-4 col-sm-10">
@@ -93,20 +74,12 @@ function SupporterProfileEdit({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
-  const {
-    datasets,
-    is_commercial,
-    csrf_token,
-    initial_form_data,
-    initial_errors,
-  } = reactProps;
+  const { domContainer, reactProps } = getPageProps();
+  const { csrf_token, initial_form_data, initial_errors } = reactProps;
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
-    <SupporterProfileEdit
-      datasets={datasets}
-      is_commercial={is_commercial}
+    <UserProfileEdit
       csrf_token={csrf_token}
       initial_form_data={initial_form_data}
       initial_errors={initial_errors}

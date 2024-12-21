@@ -49,15 +49,18 @@ module.exports = function (env, argv) {
         jsDir,
         "src/forms/SignupNonCommercial.tsx"
       ),
-      supporterProfileEdit: path.resolve(
-        jsDir,
-        "src/forms/SupporterProfileEdit.tsx"
-      ),
       createApplication: path.resolve(jsDir, "src/forms/CreateApplication.tsx"),
       deleteApplication: path.resolve(jsDir, "src/forms/DeleteApplication.tsx"),
       oauthPrompt: path.resolve(jsDir, "src/forms/OAuthPrompt.tsx"),
       applications: path.resolve(jsDir, "src/Applications.tsx"),
       oauthError: path.resolve(jsDir, "src/OAuthError.tsx"),
+      signupUser: path.resolve(jsDir, "src/forms/SignupUser.tsx"),
+      loginUser: path.resolve(jsDir, "src/forms/LoginUser.tsx"),
+      lostPassword: path.resolve(jsDir, "src/forms/LostPassword.tsx"),
+      lostUsername: path.resolve(jsDir, "src/forms/LostUsername.tsx"),
+      resetPassword: path.resolve(jsDir, "src/forms/ResetPassword.tsx"),
+      profileEdit: path.resolve(jsDir, "src/forms/ProfileEdit.tsx"),
+      profile: path.resolve(jsDir, "src/Profile.tsx"),
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",
