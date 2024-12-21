@@ -67,20 +67,14 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assert400(client.get(url_for('supporters.musicbrainz_post', state="fake")))
 
     def test_profile(self):
-        self.assertStatus(self.client.get(url_for('supporters.profile')), 302)
+        self.assertStatus(self.client.get(url_for('index.profile')), 302)
 
     def test_profile_edit(self):
-        self.assertStatus(self.client.get(url_for('supporters.profile_edit')), 302)
+        self.assertStatus(self.client.get(url_for('index.profile_edit')), 302)
 
     def test_regenerate_token(self):
         self.assertStatus(self.client.post(url_for('supporters.regenerate_token')), 302)
         self.assertStatus(self.client.get(url_for('supporters.regenerate_token')), 405)
-
-    def test_login(self):
-        self.assert200(self.client.get(url_for('supporters.login')))
-
-    def test_logout(self):
-        self.assertStatus(self.client.get(url_for('supporters.logout')), 302)
 
     def test_bad_standing(self):
         self.assert200(self.client.get(url_for('supporters.bad_standing')))

@@ -22,7 +22,7 @@ class Tier(db.Model):
     # that lists all available tiers.
     primary = db.Column(db.Boolean, nullable=False, default=False)
 
-    supporters = db.relationship("Supporter", backref='tier', lazy="dynamic")
+    supporters = db.relationship("Supporter", back_populates="tier", lazy="dynamic")
 
     def __str__(self):
         return "%s (#%s)" % (self.name, self.id)
