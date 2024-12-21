@@ -1,0 +1,13 @@
+Someone, probably you, asked to look up the username of the
+MetaBrainz account associated with this email address.
+
+Your MetaBrainz username is: {{ username }}
+
+If you have also forgotten your password, use this username and your email address
+to reset your password here - {{ forgot_password_link }}
+
+If you didn't initiate this request and feel that you've received this email in
+error, don't worry, you don't need to take any further action and can safely
+disregard this email.
+
+-- The MetaBrainz Team

@@ -22,7 +22,7 @@
           <td>
             <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">
               <strong>{{ supporter.org_name }}</strong>
-              ({{ supporter.musicbrainz_id }})
+              ({{ supporter.user.name }})
             </a>
           </td>
           <td>
@@ -37,7 +37,7 @@
             {% endif %}
           </td>
           <td>{{ supporter.contact_name }}</td>
-          <td>{{ supporter.contact_email }}</td>
+          <td>{{ supporter.user.email }}</td>
           <td>
             {% if supporter.good_standing %}
               <span class="label label-success">Good standing</span>
