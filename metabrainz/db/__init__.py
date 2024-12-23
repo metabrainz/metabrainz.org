@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.pool import NullPool
 
 engine: sqlalchemy.engine.Engine = None
@@ -20,7 +20,7 @@ def init_mb_db_engine(connect_str):
 def run_sql_script(sql_file_path):
     with open(sql_file_path) as sql:
         with engine.connect() as connection:
-            connection.execute(sql.read())
+            connection.execute(text(sql.read()))
 
 
 def run_sql_script_without_transaction(sql_file_path):
@@ -34,7 +34,7 @@ def run_sql_script_without_transaction(sql_file_path):
                 # TODO: Not a great way of removing comments. The alternative is to catch
                 # the exception sqlalchemy.exc.ProgrammingError "can't execute an empty query"
                 if line and not line.startswith("--"):
-                    connection.execute(line)
+                    connection.execute(text(line))
         except sqlalchemy.exc.ProgrammingError as e:
             print("Error: {}".format(e))
         finally:
