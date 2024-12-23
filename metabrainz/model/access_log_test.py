@@ -1,8 +1,7 @@
+from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
-from metabrainz.model import AccessLog, db, Supporter
+from metabrainz.model import AccessLog, Supporter
 from metabrainz.model.supporter import STATE_ACTIVE
-from flask import current_app
-import copy
 
 
 class AccessLogTestCase(FlaskTestCase):
@@ -11,25 +10,17 @@ class AccessLogTestCase(FlaskTestCase):
         super(AccessLogTestCase, self).setUp()
 
     def test_access_log(self):
-        supporter_0 = Supporter.add(is_commercial=False,
-                                    musicbrainz_id="mb_test",
-                                    contact_name="Mr. Test",
-                                    contact_email="test@musicbrainz.org",
-                                    data_usage_desc="poop!",
-                                    org_desc="foo!",
-                                    )
+        user_0 = User.add(name="mb_test", unconfirmed_email="test@musicbrainz.org", password="<PASSWORD>")
+        supporter_0 = Supporter.add(is_commercial=False, contact_name="Mr. Test", data_usage_desc="poop!",
+                                    org_desc="foo!", user=user_0)
         supporter_0.set_state(STATE_ACTIVE)
         token_0 = supporter_0.generate_token()
         AccessLog.create_record(token_0, "10.1.1.69")
         AccessLog.create_record(token_0, "10.1.1.69")
 
-        supporter_1 = Supporter.add(is_commercial=True,
-                                    musicbrainz_id="mb_commercial",
-                                    contact_name="Mr. Commercial",
-                                    contact_email="testc@musicbrainz.org",
-                                    data_usage_desc="poop!",
-                                    org_desc="foo!"
-                                    )
+        user_1 = User.add(name="mb_commercial", unconfirmed_email="testc@musicbrainz.org", password="<PASSWORD>")
+        supporter_1 = Supporter.add(is_commercial=True, contact_name="Mr. Commercial", data_usage_desc="poop!",
+                                    org_desc="foo!", user=user_1)
         supporter_1.set_state(STATE_ACTIVE)
         token_1 = supporter_1.generate_token()
         AccessLog.create_record(token_1, "10.1.1.59")
