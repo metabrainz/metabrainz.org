@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TYPE payment_method_types AS ENUM (
   'stripe',
   'paypal',
@@ -29,3 +31,5 @@ CREATE TYPE dataset_project_type AS ENUM (
   'listenbrainz',
   'critiquebrainz'
 );
+
+COMMIT;
