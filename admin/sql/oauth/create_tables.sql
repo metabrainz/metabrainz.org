@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE schema oauth;
 
 CREATE TABLE oauth.scope (
@@ -107,3 +109,5 @@ CREATE TABLE oauth.l_code_scope (
         FOREIGN KEY(code_id) REFERENCES oauth.code (id) ON DELETE CASCADE,
         FOREIGN KEY(scope_id) REFERENCES oauth.scope (id) ON DELETE CASCADE
 );
+
+COMMIT;
