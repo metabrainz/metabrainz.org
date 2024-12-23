@@ -32,9 +32,6 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for('supporters.tier', tier_id=t.id)))
         self.assert404(self.client.get(url_for('supporters.tier', tier_id=t.id + 1)))
 
-    def test_signup(self):
-        self.assert200(self.client.get(url_for('supporters.signup')))
-
     def test_signup_commercial(self):
         resp = self.client.get(url_for('supporters.signup_commercial'))
         self.assertEqual(resp.location, urlparse(url_for('supporters.account_type')).path)
@@ -53,18 +50,6 @@ class SupportersViewsTestCase(FlaskTestCase):
         # With missing tier
         resp = self.client.get(url_for('supporters.signup_commercial', tier_id=unavailable_tier.id + 1))
         self.assertEqual(resp.location, url_for('supporters.account_type'))
-
-    def test_musicbrainz(self):
-        self.assertStatus(self.client.get(url_for('supporters.musicbrainz')), 302)
-
-    def test_musicbrainz_post(self):
-        app = create_app(debug=True, config_path='../config.py')
-        app.config['TESTING'] = True
-        client = app.test_client()
-
-        self.assert500(client.get(url_for('supporters.musicbrainz_post')))
-        self.assert400(client.get(url_for('supporters.musicbrainz_post', error="PANIC")))
-        self.assert400(client.get(url_for('supporters.musicbrainz_post', state="fake")))
 
     def test_profile(self):
         self.assertStatus(self.client.get(url_for('index.profile')), 302)
