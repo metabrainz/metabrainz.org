@@ -73,6 +73,9 @@ def login():
                 form.password.errors.append("Invalid username or password.")
             else:
                 login_user(user, remember=form.remember_me.data)
+                user.last_login_at = datetime.now(timezone.utc)
+                db.session.commit()
+
                 flash.success("Logged in successfully.")
                 redirect_to = request.args.get("next")
                 if not redirect_to:
@@ -95,7 +98,6 @@ def login():
 def verify_email():
     """ User"s email verification endpoint. """
     user_id = request.args.get("user_id")
-
     timestamp = int(request.args.get("timestamp"))
     if datetime.fromtimestamp(timestamp) + current_app.config["EMAIL_VERIFICATION_EXPIRY"] <= datetime.now():
         flash.error("Email verification link expired.")
@@ -120,7 +122,7 @@ def verify_email():
         db.session.commit()
         flash.success("Email verified!")
     except IntegrityError:
-        flash.error(f"The email ({user.unconfirmed_email}) is already associated with an another account.")
+        flash.error(f"The email is already associated with an another account.")
         db.session.rollback()
 
     return redirect(url_for("index.home"))
@@ -151,7 +153,7 @@ def lost_username():
             form.email.errors.append(f"The given email address ({form.email.data}) does not exist in our database.")
         else:
             send_forgot_username_email(user)
-            flash.success("Username recovery link sent!")
+            flash.success("Username recovery email sent!")
             return redirect(url_for("index.home"))
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
@@ -200,16 +202,15 @@ def reset_password():
 
     timestamp = int(request.args.get("timestamp"))
     if datetime.fromtimestamp(timestamp) + current_app.config["EMAIL_RESET_PASSWORD_EXPIRY"] <= datetime.now():
-        flash.error("Email verification link expired.")
+        flash.error("Password reset link expired.")
         return redirect(url_for("index.home"))
-
-    received_checksum = request.args.get("checksum")
 
     user = User.get(id=user_id)
     if user is None:
         flash.error("User not found.")
         return redirect(url_for("index.home"))
 
+    received_checksum = request.args.get("checksum")
     checksum = create_email_link_checksum(RESET_PASSWORD, user.id, user.get_email_any(), timestamp)
     if checksum != received_checksum:
         flash.error("Unable to reset password.")
