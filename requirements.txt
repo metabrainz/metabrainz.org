@@ -24,7 +24,7 @@ msgpack==0.5.6
 psycopg2-binary==2.9.10
 pytest==8.1.1
 pytest-cov==4.1.0
-freezegun==1.4.0
+freezegun==1.5.1
 python-dateutil==2.9.0.post0
 python-quickbooks==0.9.7
 pytz==2024.1
