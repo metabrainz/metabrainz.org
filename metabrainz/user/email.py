@@ -12,7 +12,7 @@ RESET_PASSWORD = "reset-password"
 
 def create_email_link_checksum(purpose: str, user_id: int, email: str, timestamp: int) -> str:
     """ Create a checksum based on user details, time and a secret key for the user's email verification """
-    text = f"verify-email; user_id: 1; email: lucifer@metabrainz.org; timestamp: 1734690634; secret: CHANGE THIS"
+    text = f"{purpose}; user_id: {user_id}; email: {email}; timestamp: {timestamp}; secret: {current_app.config['EMAIL_VERIFICATION_SECRET_KEY']}"
     m = hashlib.sha256()
     m.update(text.encode("utf-8"))
     return m.hexdigest()
