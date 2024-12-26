@@ -42,44 +42,35 @@ class FlaskTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        logging.basicConfig(level=logging.DEBUG)
-
         cls.app = cls.create_app()
         cls.client = cls.app.test_client()
-
-        template_rendered.connect(cls._set_template)
-        message_flashed.connect(cls._add_flash_message)
-
-        cls.template = None
-        cls.flashed_messages = []
 
     def setUp(self):
         self._ctx = self.app.test_request_context()
         self._ctx.push()
         self.reset_db()
+        self.template = None
+        self.flashed_messages = []
+        template_rendered.connect(self._set_template)
+        message_flashed.connect(self._add_flash_message)
 
-        FlaskTestCase.template = None
-        FlaskTestCase.flashed_messages = []
+    def _add_flash_message(self, app, message, category):
+        self.flashed_messages.append((message, category))
 
-    @classmethod
-    def _add_flash_message(cls, app, message, category):
-        cls.flashed_messages.append((message, category))
-
-    @classmethod
-    def _set_template(cls, app, template, context):
-        cls.template = (template, context)
+    def _set_template(self, app, template, context):
+        self.template = (template, context)
 
     def tearDown(self):
         model.db.session.remove()
+        template_rendered.disconnect(self._set_template)
+        message_flashed.disconnect(self._add_flash_message)
         self._ctx.pop()
         del self._ctx
-        del FlaskTestCase.template
-        del FlaskTestCase.flashed_messages
+        del self.template
+        del self.flashed_messages
 
     @classmethod
     def tearDownClass(cls):
-        template_rendered.disconnect(cls._set_template)
-        message_flashed.disconnect(cls._add_flash_message)
         del cls.client
         del cls.app
 
@@ -104,7 +95,7 @@ class FlaskTestCase(unittest.TestCase):
         :param message: expected message
         :param category: expected message category
         """
-        for _message, _category in FlaskTestCase.flashed_messages:
+        for _message, _category in self.flashed_messages:
             if _message == message and _category == category:
                 return True
 
@@ -121,11 +112,11 @@ class FlaskTestCase(unittest.TestCase):
         :versionadded: 0.2
         :param name: template name
         """
-        used_template = FlaskTestCase.template[0].name
+        used_template = self.template[0].name
         self.assertEqual(used_template, name, f"Template {name} not used. Template used: {used_template}")
 
     def get_context_variable(self, name):
-        context = FlaskTestCase.template[1]
+        context = self.template[1]
         if name in context:
             return context[name]
         raise ValueError()
