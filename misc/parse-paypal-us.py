@@ -7,11 +7,6 @@ from decimal import Decimal, ROUND_DOWN
 from typing import Dict
 from icecream import ic
 
-from ofxtools.models import STMTTRN, BANKTRANLIST, STMTRS, BANKMSGSRSV1, OFX, BANKACCTFROM, LEDGERBAL, STMTTRNRS, \
-    STATUS, FI, SONRS, SIGNONMSGSRSV1
-from ofxtools.utils import UTC
-import xml.etree.ElementTree as ET
-
 @dataclass
 class Transaction:
     description: str
