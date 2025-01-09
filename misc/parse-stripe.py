@@ -3,14 +3,41 @@
 from datetime import datetime
 from dateutil import parser
 
-# Parse the strip transaction report
+# Parse the stripe balance report:  https://dashboard.stripe.com/reports/balance
 
 import sys, os
 from decimal import Decimal
 import csv
 
+def parse_payouts(payouts_file):
+    pay = None
+    try:
+        pay = open(payouts_file, "r")
+        reader = csv.reader(pay)
+    except IOError:
+        print("Cannot open payouts file %s" % payouts_file)
+        exit(0)
+
+    payouts = []
+    head = None
+    for i, row in enumerate(reader):
+        if i == 0:
+            head = row
+            continue
+
+#        for i, d in enumerate(zip(head, row)):
+#            print("%d %-40s %s" % (i, d[0], d[1]))
+#        print()
+
+        amount = -Decimal(row[1])
+        date = parser.parse(row[5] + " UTC")
+        payouts.append({ "date": date, "amount": amount, "sender": "PAYOUT", "fee": Decimal(0.0) })
+
+    return payouts
+
+
 if len(sys.argv) < 4:
-    print("Usage parse-stripe.py <stripe csv file> <qbo csv file> [beginning balance]")
+    print("Usage parse-stripe.py <stripe csv file> <payout csv> <starting balance> <qbo csv file>")
     sys.exit(-1)
 
 fp = None
@@ -20,17 +47,16 @@ except IOError:
     print("Cannot open input file %s" % sys.argv[1])
     sys.exit(0)
 
+payouts = parse_payouts(sys.argv[2])
+balance = Decimal(sys.argv[3].replace(",", ""))
+
 _out = None
 try:
-    _out = open(sys.argv[2], "w")
+    _out = open(sys.argv[4], "w")
 except IOError:
-    print("Cannot open output file %s" % sys.argv[2])
+    print("Cannot open output file %s" % sys.argv[4])
     exit(0)
 
-try:
-    balance = Decimal(sys.argv[3])
-except IndexError:
-    balance = None
 
 out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
 out.writerow(["Date","Description","Amount"])
@@ -48,31 +74,51 @@ for i, row in enumerate(reader):
     rows.append(row)
 
 rows.reverse()
+fp.close()
 
+data = []
 for row in rows:
-
 #    for i, d in enumerate(zip(head, row)):
 #        print("%d %-40s %s" % (i, d[0], d[1]))
 #    print()
 
-    # TODO: Convert to PST/PDT
-    date = parser.parse(row[1] + " UTC")
-    date = "%s/%s/%s" % (date.month, date.day, date.year)
-    gross = Decimal(row[2])
-    fee = Decimal(row[11])
-    sender = row[23]
-    memo = row[10]
+    date = parser.parse(row[2] + " UTC")
+    amount = Decimal(row[6])
+    fee = Decimal(row[7])
+    sender = row[19]
 
-    if row[87] != "":
-        sender += " (inv #%s)" % row[84]
+    if not sender:
+        sender = "Subscription from %s" % row[41]
+        if row[61]:
+            sender += ", editor %s" % row[61]
+        if row[62]:
+            sender += ", email %s" % row[62]
 
-    out.writerow([date, "Stripe fee", "-" + str(fee)])
-    out.writerow([date, sender, str(gross)])
-    if balance is not None:
-        balance = balance + gross
-        print("%s,%-40s,%10s,%10s" % (date, sender, str(gross), str(balance)))
-        balance = balance - fee
-        print("%s,%-40s,%10s,%10s" % (date, "Stripe fee", str(fee), str(balance)))
+    if amount < Decimal(0.0):
+        sender = "Stripe Additional Fee"
 
-fp.close()
+    if row[63] != "":
+        sender += " (inv #%s)" % row[63]
+
+    data.append({ "date": date, "amount": amount, "fee": fee, "sender": sender })
+
+data.extend(payouts)
+data = sorted(data, key=lambda a: a["date"])
+
+for row in data:
+    print(row)
+
+for entry in data:
+    date = "%s/%s/%s" % (entry["date"].month, entry["date"].day, entry["date"].year)
+
+    if entry["fee"] != Decimal(0.0):
+        out.writerow([date, "Stripe fee", str(-entry["fee"])])
+    out.writerow([date, entry["sender"], str(entry["amount"])])
+
+    balance = balance + entry["amount"]
+    print("%s,%-40s,%.2f,%.2f" % (date, entry["sender"], entry["amount"], balance))
+    if entry["fee"] != Decimal(0.0):
+        balance = balance - entry["fee"]
+        print("%s,%-40s,%.2f,%.2f" % (date, "Stripe fee", -entry["fee"], balance))
+
 _out.close()
