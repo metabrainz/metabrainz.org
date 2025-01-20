@@ -189,6 +189,14 @@
 
         "history": [
             {
+                "year": 2024,
+                "income": 476337.83,
+                "expenses": 22709.12,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Profit and Loss: https://metabrainz.org/finances/files/MetaBrainz_Foundation_profit_loss_2024.pdf"
+            },
+            {
                 "year": 2023,
                 "income": 425360.68,
                 "expenses": 465201.78,
