@@ -86,104 +86,104 @@
 
         "plans": [
             {
-            "guid": "one-time-15",
-            "status": "active",
-            "name": "Fifteen dollars one time donation",
-            "description": "A $15 one time end-user (non-commercial) donation.",
-            "amount": 15,
-            "currency": "USD",
-            "frequency": "one-time",
-            "channels": ["paypal", "bank", "credit-card"]
-            },
-            {
-            "guid": "one-time-25",
-            "status": "active",
-            "name": "Twenty-five dollars one time donation",
-            "description": "A $25 one time end-user (non-commercial) donation.",
-            "amount": 25,
-            "currency": "USD",
-            "frequency": "one-time",
-            "channels": ["paypal", "bank", "credit-card"]
-            },
-            {
-            "guid": "one-time-50",
-            "status": "active",
-            "name": "Fifty dollars one time donation",
-            "description": "A $50 one time end-user (non-commercial) donation.",
-            "amount": 50,
-            "currency": "USD",
-            "frequency": "one-time",
-            "channels": ["paypal", "bank", "credit-card"]
-            },
-            {
-            "guid": "one-time-100",
-            "status": "active",
-            "name": "Ohe hundred dollars one time donation",
-            "description": "A $100 one time end-user (non-commercial) donation.",
-            "amount": 100,
-            "currency": "USD",
-            "frequency": "one-time",
-            "channels": ["paypal", "bank", "credit-card"]
-            },
-            {
             "guid": "one-time-custom",
             "status": "active",
             "name": "A custom one time donation",
-            "description": "A custom amount one time end-user (non-commercial) donation.",
+            "description": "A custom amount one time donation.",
             "amount": 0,
             "currency": "USD",
             "frequency": "one-time",
             "channels": ["paypal", "bank", "credit-card"]
             },
             {
-            "guid": "monthly-15",
+            "guid": "one-time-one-month",
             "status": "active",
-            "name": "Fifteen dollars a month donation",
-            "description": "A $15 a month end-user (non-commercial) donation.",
-            "amount": 15,
+            "name": "One time donation to cover one developer month",
+            "description": "$2500 one time support for 1 developer month",
+            "amount": 2500,
             "currency": "USD",
-            "frequency": "monthly",
-            "channels": ["paypal", "credit-card"]
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
             },
             {
-            "guid": "monthly-25",
+            "guid": "one-time-one-quarter",
             "status": "active",
-            "name": "Twenty-five dollars a month donation",
-            "description": "A $25 a month end-user (non-commercial) donation.",
-            "amount": 25,
+            "name": "One time donation to cover 3 developer months",
+            "description": "$7500 one time support for 3 developers months",
+            "amount": 7500,
             "currency": "USD",
-            "frequency": "monthly",
-            "channels": ["paypal", "credit-card"]
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
             },
             {
-            "guid": "monthly-50",
+            "guid": "one-time-half-year",
             "status": "active",
-            "name": "Fifty dollars a month donation",
-            "description": "A $50 a month end-user (non-commercial) donation.",
-            "amount": 50,
+            "name": "One time donation to cover 6 developer months",
+            "description": "$15,000 one time support for 6 developers months",
+            "amount": 15000,
             "currency": "USD",
-            "frequency": "monthly",
-            "channels": ["paypal", "credit-card"]
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
             },
             {
-            "guid": "monthly-100",
+            "guid": "one-time-year",
             "status": "active",
-            "name": "Ohe hundred dollars a month donation",
-            "description": "A $100 a month end-user (non-commercial) donation.",
-            "amount": 100,
+            "name": "One time donation to cover 1 developer year",
+            "description": "$30,000 one time support for 1 developer year",
+            "amount": 30000,
             "currency": "USD",
-            "frequency": "monthly",
-            "channels": ["paypal", "credit-card"]
+            "frequency": "one-time",
+            "channels": ["paypal", "bank", "credit-card"]
             },
             {
             "guid": "monthly-custom",
             "status": "active",
             "name": "A custom monthly donation",
-            "description": "A custom amount monthly end-user (non-commercial) donation.",
+            "description": "A custom amount monthly donation.",
             "amount": 0,
             "currency": "USD",
             "frequency": "monthly",
             "channels": ["paypal", "credit-card"]
+            },
+            {
+            "guid": "repeating-one-month",
+            "status": "active",
+            "name": "Repeating donation to cover one developer month",
+            "description": "$2500 repeating support for 1 developer month",
+            "amount": 2500,
+            "currency": "USD",
+            "frequency": "monthly",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "repeating-one-quarter",
+            "status": "active",
+            "name": "Repeating donation to cover 3 developer months",
+            "description": "$7500 repeating support for 3 developers months",
+            "amount": 7500,
+            "currency": "USD",
+            "frequency": "other",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "repeating-half-year",
+            "status": "active",
+            "name": "Repeating donation to cover 6 developer months",
+            "description": "$15,000 repeating support for 6 developers months",
+            "amount": 15000,
+            "currency": "USD",
+            "frequency": "other",
+            "channels": ["paypal", "bank", "credit-card"]
+            },
+            {
+            "guid": "repeating-year",
+            "status": "active",
+            "name": "Repeating donation to cover 1 developer year",
+            "description": "$30000 repeating support for 1 developer year",
+            "amount": 30000,
+            "currency": "USD",
+            "frequency": "yearly",
+            "channels": ["paypal", "bank", "credit-card"]
             }
         ],
 
