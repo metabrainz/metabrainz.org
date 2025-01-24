@@ -1,0 +1,8 @@
+{% extends 'users/base.html' %}
+
+{% block title %}{{ _('Forgot username') }} - MetaBrainz Foundation{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ get_static_path('lostUsername.js') }}" type="text/javascript"></script>
+{% endblock %}
