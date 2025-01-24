@@ -89,7 +89,7 @@
               <label>
                 {{ form.anonymous(id="anonymous-flag") | safe }}
                 {{ _('I would like this donation to be anonymous') }}
-                <br /><small>{{ _('Your name won\'t appear in the donors list') }}</small>
+                <br /><small>{{ _('Your name and username won\'t appear in the donors list') }}</small>
               </label>
             </div>
           </div>
@@ -107,6 +107,13 @@
       </form>
 
     </div>
+
+    <p>
+      <small>
+        {{ _('Your billing name and (if provided) your username will be listed
+        in our donors list unless you make your donation anonymous.') }}
+      </small>
+    </p>
 
     <p>
       <small>
