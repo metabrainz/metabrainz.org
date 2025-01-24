@@ -1,6 +1,6 @@
 ARG PYTHON_BASE_IMAGE_VERSION=3.11-20231006
 ARG NODE_VERSION=18-alpine
-FROM metabrainz/python:$PYTHON_BASE_IMAGE_VERSION as metabrainz-base
+FROM metabrainz/python:$PYTHON_BASE_IMAGE_VERSION AS metabrainz-base
 
 ARG PYTHON_BASE_IMAGE_VERSION
 
@@ -42,13 +42,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 ############################################
 # NOTE: The development image starts here. #
 ############################################
-FROM metabrainz-base as metabrainz-dev
+FROM metabrainz-base AS metabrainz-dev
 COPY . /code/metabrainz
 
 #####################################################################################################
 # NOTE: The javascript files are continously watched and compiled using this image in developement. #
 #####################################################################################################
-FROM node:$NODE_VERSION as metabrainz-frontend-dev
+FROM node:$NODE_VERSION AS metabrainz-frontend-dev
 
 ARG NODE_VERSION
 
@@ -71,7 +71,7 @@ COPY webpack.config.js babel.config.js tsconfig.json .eslintrc.js .stylelintrc.j
 #########################################################################
 # NOTE: The javascript files for production are compiled in this image. #
 #########################################################################
-FROM metabrainz-frontend-dev as metabrainz-frontend-prod
+FROM metabrainz-frontend-dev AS metabrainz-frontend-prod
 
 # Compile front-end (static) files
 COPY ./frontend /code/frontend
@@ -81,7 +81,7 @@ RUN npm run build:prod
 ###########################################
 # NOTE: The production image starts here. #
 ###########################################
-FROM metabrainz-base as metabrainz-prod
+FROM metabrainz-base AS metabrainz-prod
 
 RUN pip install --no-cache-dir uWSGI==2.0.23
 
