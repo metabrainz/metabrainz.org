@@ -1,6 +1,7 @@
 from decimal import Decimal
-from flask import Response, request, redirect, url_for
+from flask import Response, request, redirect, url_for, jsonify
 from flask_admin import expose
+from flask_login import current_user
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms
 from metabrainz.model import db
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
@@ -19,6 +20,7 @@ import time
 import uuid
 import json
 import socket
+from metabrainz.model.user import User, ModerationLog
 
 from metabrainz.utils import get_int_query_param
 
@@ -356,3 +358,103 @@ class StatsView(AdminBaseView):
             supporters=supporters,
             total=total
         )
+
+
+class UserManagementView(AdminBaseView):
+    @expose('/')
+    def index(self):
+        """List all users with search functionality"""
+        search_query = request.args.get('q', '').strip()
+        page = get_int_query_param('page', default=1)
+        if page < 1:
+            return redirect(url_for('.index'))
+            
+        per_page = 50
+        query = User.query
+        
+        if search_query:
+            query = query.filter(
+                db.or_(
+                    User.name.ilike(f'%{search_query}%'),
+                    User.email.ilike(f'%{search_query}%')
+                )
+            )
+            
+        # Order by registration date, newest first
+        query = query.order_by(User.member_since.desc())
+        
+        # Paginate results
+        pagination = query.paginate(page=page, per_page=per_page)
+        
+        return self.render(
+            'admin/users/index.html',
+            users=pagination.items,
+            pagination=pagination,
+            search_query=search_query
+        )
+
+    @expose('/user/<int:user_id>')
+    def user_details(self, user_id):
+        """Show detailed user information and moderation options"""
+        # Use joined loading for moderation logs
+        user = User.query\
+            .options(
+                db.joinedload(User.moderation_logs)
+                .joinedload(ModerationLog.moderator)
+            )\
+            .get_or_404(user_id)
+            
+        # Sort moderation logs by timestamp (newest first)
+        moderation_logs = sorted(
+            user.moderation_logs,
+            key=lambda x: x.timestamp,
+            reverse=True
+        )
+            
+        return self.render(
+            'admin/users/details.html',
+            user=user,
+            moderation_logs=moderation_logs
+        )
+
+    @expose('/user/<int:user_id>/block', methods=['POST'])
+    def block_user(self, user_id):
+        """Block a user"""
+        user = User.query.get_or_404(user_id)
+        reason = request.form.get('reason', '').strip()
+        
+        if not reason:
+            flash.error('A reason is required to block a user.')
+            return redirect(url_for('.user_details', user_id=user_id))
+            
+        try:
+            user.block(current_user, reason)
+            flash.success(f'User {user.name} has been blocked.')
+        except ValueError as e:
+            flash.error(str(e))
+        except Exception as e:
+            db.session.rollback()
+            flash.error('An error occurred while blocking the user.')
+            
+        return redirect(url_for('.user_details', user_id=user_id))
+
+    @expose('/user/<int:user_id>/unblock', methods=['POST'])
+    def unblock_user(self, user_id):
+        """Unblock a user"""
+        user = User.query.get_or_404(user_id)
+        reason = request.form.get('reason', '').strip()
+        
+        if not reason:
+            flash.error('A reason is required to unblock a user.')
+            return redirect(url_for('.user_details', user_id=user_id))
+            
+        try:
+            user.unblock(current_user, reason)
+            flash.success(f'User {user.name} has been unblocked.')
+        except ValueError as e:
+            flash.error(str(e))
+        except Exception as e:
+            db.session.rollback()
+            flash.error('An error occurred while unblocking the user.')
+            
+        return redirect(url_for('.user_details', user_id=user_id))
