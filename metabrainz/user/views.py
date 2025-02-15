@@ -72,15 +72,21 @@ def login():
             if not bcrypt.check_password_hash(user.password, form.password.data):
                 form.password.errors.append("Invalid username or password.")
             else:
-                login_user(user, remember=form.remember_me.data)
-                user.last_login_at = datetime.now(timezone.utc)
-                db.session.commit()
+                if user.is_blocked:
+                    form.username.errors.append(
+                        "Your account has been blocked. Please contact support if"
+                        " you believe this is an error."
+                    )
+                else:
+                    login_user(user, remember=form.remember_me.data)
+                    user.last_login_at = datetime.now(timezone.utc)
+                    db.session.commit()
 
-                flash.success("Logged in successfully.")
-                redirect_to = request.args.get("next")
-                if not redirect_to:
-                    redirect_to = url_for("index.home")
-                return redirect(redirect_to)
+                    flash.success("Logged in successfully.")
+                    redirect_to = request.args.get("next")
+                    if not redirect_to:
+                        redirect_to = url_for("index.home")
+                    return redirect(redirect_to)
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
     form_data = dict(**form.data)

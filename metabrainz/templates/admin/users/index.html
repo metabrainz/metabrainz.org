@@ -1,0 +1,78 @@
+{% extends "admin/master.html" %}
+
+{% block body %}
+<div class="container-fluid">
+    <h2>User Management</h2>
+
+    <!-- Search Form -->
+    <form class="mb-4" method="GET" action="{{ url_for('.index') }}">
+        <div class="input-group">
+            <input type="text" class="form-control" name="q" 
+                   value="{{ search_query }}" placeholder="Search users...">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            {% if search_query %}
+                <a href="{{ url_for('.index') }}" class="btn btn-outline-secondary">Clear</a>
+            {% endif %}
+        </div>
+    </form>
+
+    <!-- Users Table -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Created</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>
+                        {{ user.get_email_any() }}
+                        <span class="badge {% if user.is_email_confirmed() %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ 'Confirmed' if user.is_email_confirmed() else 'Unconfirmed' }}
+                        </span>
+                    </td>
+                    <td>{{ user.member_since.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        <span class="badge {% if user.is_blocked %}bg-danger{% else %}bg-success{% endif %}">
+                            {{ 'Blocked' if user.is_blocked else 'Active' }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('.user_details', user_id=user.id) }}" 
+                           class="btn btn-sm btn-primary">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if pagination.pages > 1 %}
+    <nav aria-label="User list pagination">
+        <ul class="pagination justify-content-center">
+            {% for page in pagination.iter_pages() %}
+                {% if page %}
+                    <li class="page-item {{ 'active' if page == pagination.page else '' }}">
+                        <a class="page-link" href="{{ url_for('.index', page=page, q=search_query) }}">
+                            {{ page }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %} 
