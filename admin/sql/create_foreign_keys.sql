@@ -21,7 +21,7 @@ ALTER TABLE dataset_supporter
 
 ALTER TABLE dataset_supporter
     ADD CONSTRAINT dataset_supporter_dataset_id_fkey FOREIGN KEY (dataset_id)
-    REFERENCES "dataset" (id) MATCH SIMPLE
+    REFERENCES dataset (id) MATCH SIMPLE
     ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE token_log
@@ -38,5 +38,15 @@ ALTER TABLE access_log
   ADD CONSTRAINT access_log_token_fkey FOREIGN KEY (token)
   REFERENCES token (value) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE moderation_log
+  ADD CONSTRAINT moderation_log_user_id_fkey FOREIGN KEY (user_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE SET NULL;
+
+ALTER TABLE moderation_log
+  ADD CONSTRAINT moderation_log_moderator_id_fkey FOREIGN KEY (moderator_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE SET NULL;
 
 COMMIT;
