@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2024-06-27 20:42+0000\n"
-"Last-Translator: \"salo.rock\" <salo.rock@users.noreply.translations."
-"metabrainz.org>\n"
+"PO-Revision-Date: 2025-03-09 18:44+0000\n"
+"Last-Translator: \"salo.rock\" "
+"<salo.rock@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Italian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/it/>\n"
 "Language: it\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
 " ? 1 : 2);\n"
-"X-Generator: Weblate 5.6\n"
+"X-Generator: Weblate 5.10.2\n"
 "Generated-By: Babel 2.3.4\n"
 
 #: metabrainz/payments/forms.py:9
@@ -779,8 +779,8 @@ msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
-"Un'enciclopedia musicale aperta che raccoglie metadati musicali e li mette a "
-"disposizione del pubblico."
+"Un'enciclopedia musicale aperta che raccoglie metadati musicali\n"
+"              e li mette a disposizione del pubblico"
 
 #: metabrainz/templates/index/index.html:36
 #, python-format
@@ -2490,7 +2490,7 @@ msgstr "Settembre"
 #: metabrainz/templates/reports/financial_reports/index.html:336
 #: metabrainz/templates/reports/financial_reports/index.html:358
 msgid "August"
-msgstr "Agosto:"
+msgstr "Agosto"
 
 #: metabrainz/templates/reports/financial_reports/index.html:54
 #: metabrainz/templates/reports/financial_reports/index.html:83
@@ -2505,7 +2505,7 @@ msgstr "Agosto:"
 #: metabrainz/templates/reports/financial_reports/index.html:337
 #: metabrainz/templates/reports/financial_reports/index.html:359
 msgid "July"
-msgstr "Luglio:"
+msgstr "Luglio"
 
 #: metabrainz/templates/reports/financial_reports/index.html:55
 #: metabrainz/templates/reports/financial_reports/index.html:84
@@ -2520,7 +2520,7 @@ msgstr "Luglio:"
 #: metabrainz/templates/reports/financial_reports/index.html:338
 #: metabrainz/templates/reports/financial_reports/index.html:360
 msgid "June"
-msgstr "Giugno:"
+msgstr "Giugno"
 
 #: metabrainz/templates/reports/financial_reports/index.html:56
 #: metabrainz/templates/reports/financial_reports/index.html:85
@@ -2535,7 +2535,7 @@ msgstr "Giugno:"
 #: metabrainz/templates/reports/financial_reports/index.html:339
 #: metabrainz/templates/reports/financial_reports/index.html:361
 msgid "May"
-msgstr "Maggio:"
+msgstr "Maggio"
 
 #: metabrainz/templates/reports/financial_reports/index.html:57
 #: metabrainz/templates/reports/financial_reports/index.html:86
@@ -2550,7 +2550,7 @@ msgstr "Maggio:"
 #: metabrainz/templates/reports/financial_reports/index.html:340
 #: metabrainz/templates/reports/financial_reports/index.html:362
 msgid "April"
-msgstr "Aprile:"
+msgstr "Aprile"
 
 #: metabrainz/templates/reports/financial_reports/index.html:58
 #: metabrainz/templates/reports/financial_reports/index.html:87
@@ -2565,7 +2565,7 @@ msgstr "Aprile:"
 #: metabrainz/templates/reports/financial_reports/index.html:341
 #: metabrainz/templates/reports/financial_reports/index.html:363
 msgid "March"
-msgstr "Marzo:"
+msgstr "Marzo"
 
 #: metabrainz/templates/reports/financial_reports/index.html:59
 #: metabrainz/templates/reports/financial_reports/index.html:88
@@ -2580,7 +2580,7 @@ msgstr "Marzo:"
 #: metabrainz/templates/reports/financial_reports/index.html:342
 #: metabrainz/templates/reports/financial_reports/index.html:364
 msgid "February"
-msgstr "Febbraio:"
+msgstr "Febbraio"
 
 #: metabrainz/templates/reports/financial_reports/index.html:60
 #: metabrainz/templates/reports/financial_reports/index.html:89
@@ -2595,7 +2595,7 @@ msgstr "Febbraio:"
 #: metabrainz/templates/reports/financial_reports/index.html:343
 #: metabrainz/templates/reports/financial_reports/index.html:365
 msgid "January"
-msgstr "Gennaio:"
+msgstr "Gennaio"
 
 #: metabrainz/templates/reports/financial_reports/index.html:330
 #: metabrainz/templates/reports/financial_reports/index.html:352
