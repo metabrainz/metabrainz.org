@@ -7,22 +7,22 @@
 # Leo_Verto <email address hidden>, 2017
 # Transifex Bot <>, 2023
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2017-01-19 20:40+0000\n"
-"Last-Translator: Transifex Bot <>, 2023\n"
-"Language-Team: German (https://app.transifex.com/musicbrainz/teams/13846/"
-"de/)\n"
+"PO-Revision-Date: 2025-04-09 14:20+0000\n"
+"Last-Translator: nzure <nzure@leaft.ch>\n"
+"Language-Team: German <https://translations.metabrainz.org/projects/"
+"metabrainz/website/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: metabrainz/payments/forms.py:9
 msgid "You need to specify amount!"
@@ -30,7 +30,7 @@ msgstr "Du musst eine Menge angeben!"
 
 #: metabrainz/payments/forms.py:21
 msgid "You need to specify invoice number!"
-msgstr ""
+msgstr "Du musst eine Rechnungsnummer angeben!"
 
 #: metabrainz/payments/views.py:105
 msgid ""
@@ -62,16 +62,20 @@ msgid ""
 "We're sorry, but it appears we've run into an error and can't process your "
 "donation."
 msgstr ""
+"Es tut uns leid, es scheint ein Fehler aufgetreten zu sein und wir können "
+"Ihre Spende nicht verarbeiten."
 
 #: metabrainz/payments/views.py:149
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process your "
 "payment."
 msgstr ""
+"Es tut uns leid, es scheint ein Fehler aufgetreten zu sein und wir können "
+"Ihre Zahlung nicht verarbeiten."
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
-msgstr ""
+msgstr "Der angeforderte Jahresbericht wurde nicht gefunden."
 
 #: metabrainz/templates/base.html:48
 msgid "Foundation"
@@ -212,6 +216,8 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
+"Alle Endpoints benötigen einen Access-Token, den du auf deiner \n"
+"<a href=\"%(profile_url)s\">Profilseite</a> erhalten kannst."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
@@ -295,11 +301,11 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:42
 msgid "Board of Directors"
-msgstr ""
+msgstr "Vorstand"
 
 #: metabrainz/templates/index/about.html:43
 msgid "Our board of directors consists of:"
-msgstr ""
+msgstr "Unser Vorstand besteht aus:"
 
 #: metabrainz/templates/index/about.html:45
 #, python-format
