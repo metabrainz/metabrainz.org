@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2025-03-09 18:44+0000\n"
+"PO-Revision-Date: 2025-05-03 17:20+0000\n"
 "Last-Translator: \"salo.rock\" "
 "<salo.rock@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Italian <https://translations.metabrainz.org/projects/"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
 " ? 1 : 2);\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.11.3\n"
 "Generated-By: Babel 2.3.4\n"
 
 #: metabrainz/payments/forms.py:9
@@ -1423,10 +1423,11 @@ msgid ""
 "          website. Currently works on MusicBrainz, AcousticBrainz, and other "
 "projects."
 msgstr ""
-"Roman è entrato in contatto con MetaBrainz per la prima attraverso il "
-"programma Google Summer of Code, durante il quale è stato determinante per "
-"la nascita di <a href=\"%(cb_url)s\">CritiqueBrainz</a>.\n"
-"Ha programmato il nuovo sito di MetaBrainz. Al momento lavora su "
+"Roman è entrato in contatto con MetaBrainz per la prima volta attraverso il "
+"programma Google Summer of Code,\n"
+"          durante il quale è stato determinante per la nascita di <a href="
+"\"%(cb_url)s\">CritiqueBrainz</a>.\n"
+"          Ha programmato il nuovo sito di MetaBrainz. Al momento lavora su "
 "MusicBrainz, AcousticBrainz e altri progetti."
 
 #: metabrainz/templates/index/team.html:115
@@ -3171,7 +3172,7 @@ msgstr "È necessario accettare l'accordo!"
 
 #: metabrainz/users/forms.py:35
 msgid "Organization name"
-msgstr "Nome organizzazione"
+msgstr "Nome dell'organizzazione"
 
 #: metabrainz/users/forms.py:36
 msgid "You need to specify the name of your organization."
