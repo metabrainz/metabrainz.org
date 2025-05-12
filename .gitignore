@@ -14,6 +14,7 @@ pip-delete-this-directory.txt
 # Test results
 htmlcov/
 .coverage
+tests.xml
 
 # Application data
 /data
