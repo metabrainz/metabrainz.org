@@ -13,15 +13,20 @@ CREATE TABLE notifications (
     user_id         INTEGER NOT NULL, -- foreign key to user's table musicbrainz_row_id.
     project         notification_project_type NOT NULL,
     read            BOOLEAN DEFAULT FALSE,
-    created_ts      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    created         TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     expire_age      SMALLINT, -- in days.
     important       BOOLEAN DEFAULT FALSE,
     email_id        TEXT,
     subject         TEXT,
     body            TEXT,
     template_id     TEXT, --MB Mail template id.
-    template_params JSONB --params for given MB Mail template.
-
+    template_params JSONB, --params for given MB Mail template.
+    CONSTRAINT mail_type CHECK(
+      -- caller needs to provide either (subject and body) or (template_id and template_params).
+      ((subject IS NOT NULL AND body IS NOT NULL) AND (template_id IS NULL AND template_params IS NULL))
+      OR
+      ((subject IS NULL AND body IS NULL) AND (template_id IS NOT NULL AND template_params IS NOT NULL))
+    )
 );
 ALTER TABLE notifications ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
 
