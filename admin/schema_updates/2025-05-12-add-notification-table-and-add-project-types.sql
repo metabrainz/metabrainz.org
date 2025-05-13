@@ -17,8 +17,8 @@ CREATE TABLE notifications (
     expire_age      SMALLINT, -- in days.
     important       BOOLEAN DEFAULT FALSE,
     email_id        TEXT,
-    subject         TEXT NOT NULL,
-    body            TEXT NOT NULL,
+    subject         TEXT,
+    body            TEXT,
     template_id     TEXT, --MB Mail template id.
     template_params JSONB --params for given MB Mail template.
 
