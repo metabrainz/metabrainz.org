@@ -109,11 +109,11 @@ CREATE TABLE notifications (
     body            TEXT,
     template_id     TEXT, --MB Mail template id.
     template_params JSONB, --params for given MB Mail template.
-    CHECK(
+    CONSTRAINT mail_type CHECK(
       -- caller needs to provide either (subject and body) or (template_id and template_params).
       ((subject IS NOT NULL AND body IS NOT NULL) AND (template_id IS NULL AND template_params IS NULL))
       OR
-      ((subject IS NULL AND body is NULL) AND (template_id IS NOT NULL AND template_params IS NOT NULL))
+      ((subject IS NULL AND body IS NULL) AND (template_id IS NOT NULL AND template_params IS NOT NULL))
     )
 );
 
