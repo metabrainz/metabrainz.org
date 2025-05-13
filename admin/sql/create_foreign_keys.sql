@@ -35,8 +35,8 @@ ALTER TABLE access_log
   REFERENCES token (value) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION;
 
-ALTER TABLE notifications
-    ADD CONSTRAINT notifications_user_id_fkey
+ALTER TABLE notification
+    ADD CONSTRAINT notification_user_id_fkey
     FOREIGN KEY (user_id)
     REFERENCES "user" (musicbrainz_row_id)
     ON UPDATE NO ACTION ON DELETE NO ACTION;
