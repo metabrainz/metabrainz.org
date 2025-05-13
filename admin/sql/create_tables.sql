@@ -105,8 +105,8 @@ CREATE TABLE notifications (
     expire_age      SMALLINT, -- in days.
     important       BOOLEAN DEFAULT FALSE,
     email_id        TEXT,
-    subject         TEXT NOT NULL,
-    body            TEXT NOT NULL,
+    subject         TEXT,
+    body            TEXT,
     template_id     TEXT, --MB Mail template id.
     template_params JSONB --params for given MB Mail template.
 
@@ -118,7 +118,7 @@ CREATE TABLE "user" (
     musicbrainz_row_id  INTEGER UNIQUE,
     user_email          TEXT UNIQUE,
     digest              BOOLEAN DEFAULT FALSE,
-    digest_age          INTEGER
+    digest_age          SMALLINT -- in days.
 );
 
 COMMIT;
