@@ -5,7 +5,7 @@ CREATE TABLE "user" (
     musicbrainz_row_id  INTEGER UNIQUE,
     user_email          TEXT UNIQUE,
     digest              BOOLEAN DEFAULT FALSE,
-    digest_age          INTEGER
+    digest_age          SMALLINT -- in days.
 );
 
 COMMIT;
