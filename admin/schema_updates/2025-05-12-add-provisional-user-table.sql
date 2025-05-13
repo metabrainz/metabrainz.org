@@ -8,4 +8,6 @@ CREATE TABLE "user" (
     digest_age          SMALLINT -- in days.
 );
 
+ALTER TABLE "user" ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+
 COMMIT;
