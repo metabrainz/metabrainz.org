@@ -9,6 +9,6 @@ ALTER TABLE payment ADD CONSTRAINT payment_pkey PRIMARY KEY (id);
 ALTER TABLE dataset ADD CONSTRAINT dataset_pkey PRIMARY KEY (id);
 ALTER TABLE dataset_supporter ADD CONSTRAINT dataset_supporter_pkey PRIMARY KEY (id);
 ALTER TABLE notification ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
-ALTER TABLE "user" ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+ALTER TABLE user_preference ADD CONSTRAINT user_preference_pkey PRIMARY KEY (id);
 
 COMMIT;
