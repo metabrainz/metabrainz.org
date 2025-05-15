@@ -49,6 +49,10 @@ services:
       - db:/var/lib/postgresql/data:z
     environment:
       POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
 
   redis:
     image: redis:3.2.1
