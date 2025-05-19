@@ -29,3 +29,11 @@ CREATE TYPE dataset_project_type AS ENUM (
   'listenbrainz',
   'critiquebrainz'
 );
+
+CREATE TYPE notification_project_type AS ENUM (
+    'metabrainz',
+    'musicbrainz',
+    'listenbrainz',
+    'bookbrainz',
+    'critiquebrainz'
+);

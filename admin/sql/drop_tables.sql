@@ -11,5 +11,7 @@ DROP TABLE IF EXISTS supporter          CASCADE;
 DROP TABLE IF EXISTS tier               CASCADE;
 DROP TABLE IF EXISTS dataset_supporter  CASCADE;
 DROP TABLE IF EXISTS dataset            CASCADE;
+DROP TABLE IF EXISTS notification       CASCADE;
+DROP TABLE IF EXISTS user_preference    CASCADE;
 
 COMMIT;
