@@ -11,3 +11,4 @@ from .tier import Tier
 from .payment import Payment
 from .dataset import Dataset
 from .dataset_supporter import DatasetSupporter
+from .user_preference import UserPreference
