@@ -4,7 +4,7 @@ from metabrainz.model import db
 
 
 class UserPreference(db.Model):
-    """ This model defines the notifications from metabrainz projects."""
+    """ This model defines the digest preferences of Users."""
     __tablename__ = 'user_preference'
 
     id = db.Column(db.Integer, primary_key=True)
