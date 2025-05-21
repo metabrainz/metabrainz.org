@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional
 import uuid
 
 from sqlalchemy.dialects.postgresql import JSONB
@@ -17,7 +18,7 @@ class NotificationProjectType(Enum):
 
 
 class Notification(db.Model):
-    """This model defines the notifications for metabrianz projects."""
+    """This model defines the notifications for metabrainz projects."""
     __tablename__='notification'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -45,7 +46,7 @@ class Notification(db.Model):
     )
 
     @classmethod
-    def get(cls: "Notification", **kwargs) -> "Notification" | None:
+    def get(cls: "Notification", **kwargs) -> Optional["Notification"]:
         return cls.query.filter_by(**kwargs).first()
     
     @classmethod
