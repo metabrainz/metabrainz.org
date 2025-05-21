@@ -61,6 +61,7 @@ def load_user_from_request(_request: Request):
             if data["id"] is not None:
                 return User(user_id=data["id"], user_name=data["name"])
             
+    ## TODO: remove this.
     if current_app.config["DEBUG"]:
         return User(user_id=0,user_name='test')
 
