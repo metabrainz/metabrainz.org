@@ -2,6 +2,7 @@ from typing import Type, Optional
 
 from metabrainz.model import db
 
+DEFAULT_DIGEST_AGE = 7 # in days.
 
 class UserPreference(db.Model):
     """ This model defines the digest preferences of Users."""
@@ -11,7 +12,7 @@ class UserPreference(db.Model):
     musicbrainz_row_id = db.Column(db.Integer, unique=True)
     user_email = db.Column(db.Text, unique=True)
     digest = db.Column(db.Boolean, default=False)
-    digest_age = db.Column(db.SmallInteger)
+    digest_age = db.Column(db.SmallInteger, default=DEFAULT_DIGEST_AGE)
     
     # Todo: add foreign keys and relationship to user table.
 

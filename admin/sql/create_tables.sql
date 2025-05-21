@@ -102,9 +102,9 @@ CREATE TABLE notification (
     project                   notification_project_type NOT NULL,
     read                      BOOLEAN DEFAULT FALSE,
     created                   TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    expire_age                SMALLINT, -- in days.
+    expire_age                SMALLINT NOT NULL, -- in days.
     important                 BOOLEAN DEFAULT FALSE,
-    email_id                  TEXT,
+    email_id                  TEXT UNIQUE DEFAULT uuid_generate_v4(),
     subject                   TEXT,
     body                      TEXT,
     template_id               TEXT, --MB Mail template id.
