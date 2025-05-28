@@ -73,12 +73,9 @@ class Token(db.Model):
 
     @classmethod
     def is_valid(cls, token_value):
-        """Checks if token exists and is active and returns token object."""
+        """Checks if token exists and is active."""
         token = cls.get(value=token_value)
-        if not token or not token.is_active:
-            return None
-
-        return token
+        return token and token.is_active
 
     def revoke(self):
         self.is_active = False
