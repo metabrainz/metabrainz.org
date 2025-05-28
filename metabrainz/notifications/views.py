@@ -1,8 +1,8 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime, timezone
 from metabrainz.model.notification import NotificationProjectType
 from metabrainz.db.notification import fetch_notifications, mark_read_unread, delete_notifications
-from metabrainz.errors import APIBadRequest
+from metabrainz.errors import APIBadRequest, APIServiceUnavailable
 
 DEFAULT_NOTIFICATION_FETCH_COUNT = 100
 MAX_ITEMS_PER_GET = 1000 # From listenbrainz.webserver.views.api_tools
@@ -156,8 +156,12 @@ def mark_notifications(user_id: int):
                 raise APIBadRequest('Unread values must be Integers')
         else:
             raise APIBadRequest("'unread' must be an Array")
+    try:
+        mark_read_unread(user_id, tuple(read), tuple(unread))
+    except Exception as err:
+        current_app.logger.error("Cannot update read values ", str(err))
+        raise APIServiceUnavailable("Cannot update read values right now.")
 
-    mark_read_unread(user_id, tuple(read), tuple(unread))
     return jsonify({'status': 'ok'}), 200
 
 
@@ -204,7 +208,11 @@ def remove_notifications(user_id: int):
                 raise APIBadRequest('ID values must be Integers')
     else:
         raise APIBadRequest("ID's must be in an Array")
+    try:
+        delete_notifications(user_id, tuple(delete_ids))
+    except Exception as err:
+        current_app.logger.error("Cannot delete notifications ", str(err))
+        raise APIServiceUnavailable("Cannot delete notifications right now.")
 
-    delete_notifications(user_id, tuple(delete_ids))
     return jsonify({'status': 'ok'}), 200
     
