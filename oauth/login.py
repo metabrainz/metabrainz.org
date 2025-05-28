@@ -74,6 +74,11 @@ def load_user_from_request(_request: Request):
 
 
 def load_user_from_db(user_id: int):
+
+    # TODO: remove this.
+    if current_app.config["DEBUG"]:
+        return User(user_id=0, user_name='test')
+    
     user = db.session.query(Editor).filter_by(id=user_id, deleted=False).first()
     if user is None:
         return ANONYMOUS_USER

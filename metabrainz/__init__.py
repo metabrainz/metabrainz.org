@@ -185,12 +185,14 @@ def _register_blueprints(app):
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
+    from metabrainz.notifications.views import notification_bp
 
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
     app.register_blueprint(supporters_bp)
     app.register_blueprint(payments_bp)
+    app.register_blueprint(notification_bp, url_prefix='/notification')
 
     # FIXME(roman): These URLs aren't named very correct since they receive payments
     # from organizations as well as regular donations:
