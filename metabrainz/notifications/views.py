@@ -93,7 +93,8 @@ def get_notifications(user_id: int):
     elif unread_only == 't':
         unread_only=True
 
-    data = fetch_notifications(user_id, projects, count, offset, until_ts, unread_only)
+    # data = fetch_notifications(user_id, tuple(projects), count, offset, until_ts, unread_only)
+    data = fetch_notifications(user_id=user_id)
     return jsonify(data)
 
 

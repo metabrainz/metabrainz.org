@@ -1,28 +1,32 @@
 import sqlalchemy
 from datetime import datetime
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 from flask import current_app
 
 from metabrainz import db
 
-def fetch_notifications(user_id: int, projects: List[str], count: int, offset: int, until_ts: datetime, unread_only: bool ) -> List[dict]:
+def fetch_notifications(user_id: int, projects: Optional[Tuple[str, ...]]=None, count: Optional[int]=None, offset: Optional[int]=None,
+                        until_ts: Optional[datetime]=None, unread_only: Optional[bool]=False ) -> List[dict]:
+
     """Fetches notifications for a given user based on provided args.
 
     Args:
         user_id (int): User's row id from User table. (musicbrainz_row_id for now)
-        projects (List[str]): List of MetaBrainz projects from which notifications are to be fetched.
-        count (int): Number of notifications to fetch.
-        offset (int): Number of notifications to skip (for pagination).
-        until_ts (datetime): Upper limit timestamp for notifications.
-        unread_only (bool): Whether to fetch only unread notifications.
+        projects (Optional[Tuple[str, ...]]): List of MetaBrainz projects from which notifications are to be fetched.
+        count (Optional[int]): Number of notifications to fetch.
+        offset (Optional[int]): Number of notifications to skip (for pagination).
+        until_ts (Optional[datetime]): Upper limit timestamp for notifications.
+        unread_only (Optional[bool]): Whether to fetch only unread notifications.
 
     Returns:
         List[dict]: List of dictionaries containing the fetched notifications in descending order of their created timestamp.
     """
 
+    if not projects:
+        projects = (None, )
     params = {
         "user_id": user_id,
-        "projects": tuple(projects),
+        "projects": projects,
         "count": count,
         "offset": offset,
         "until_ts": until_ts,
@@ -32,20 +36,20 @@ def fetch_notifications(user_id: int, projects: List[str], count: int, offset: i
     with db.engine.connect() as connection:
         query = sqlalchemy.text("""
                 SELECT
-                        id,
-                        musicbrainz_row_id AS user_id,
-                        project::TEXT,
-                        body,
-                        template_id,
-                        created AS sent_at,
-                        read,
-                        important
+                        id
+                        ,musicbrainz_row_id AS user_id
+                        ,project::TEXT
+                        ,body
+                        ,template_id
+                        ,created AS sent_at
+                        ,read
+                        ,important
                 FROM
                         notification    
                 WHERE
                         musicbrainz_row_id = :user_id
-                        AND created <= :until_ts
-                        AND project in :projects
+                        AND (:until_ts IS NULL OR created <= :until_ts)
+                        AND (:projects IS NULL OR project IN :projects)
                         AND (:unread_only = FALSE OR read = FALSE)
                 ORDER BY
                         created DESC
@@ -71,36 +75,26 @@ def mark_read_unread(user_id: int, read_ids: Tuple[int, ...], unread_ids: Tuple[
         int : Total number of rows successfully updated. -1 if a database error occurs.
     """
 
-    total_affected_rows=0
-    
+    if not read_ids:
+        read_ids = (None, )
+    if not unread_ids:
+        unread_ids = (None, )
+
     with db.engine.connect() as connection:
         read_query = sqlalchemy.text("""
                         UPDATE
                                 notification
                         SET 
-                                read = TRUE
+                                read =  CASE
+                                            WHEN id in :read_ids THEN TRUE
+                                            ELSE FALSE
+                                        END
                         WHERE
                                 musicbrainz_row_id = :user_id
-                                AND id IN :read_ids
+                                AND (id IN :read_ids OR id IN :unread_ids)
         """)
-        if read_ids:
-            result_read = connection.execute(read_query, {'user_id': user_id, 'read_ids': read_ids})
-            total_affected_rows += result_read.rowcount
-
-        unread_query = sqlalchemy.text("""
-                        UPDATE
-                                notification
-                        SET 
-                                read = FALSE
-                        WHERE
-                                musicbrainz_row_id = :user_id
-                                AND id IN :unread_ids
-        """)
-        if unread_ids:
-            result_unread = connection.execute(unread_query, {'user_id': user_id, 'unread_ids': unread_ids})
-            total_affected_rows+= result_unread.rowcount
-
-
+        total_affected_rows = connection.execute(read_query, {'user_id': user_id, 'read_ids': read_ids, 'unread_ids': unread_ids}).rowcount
+        
     return  total_affected_rows
 
 
@@ -111,6 +105,8 @@ def delete_notifications(user_id: int, delete_ids: Tuple[int, ...]):
         delete_ids (Tuple[int, ...]): Tuple of notification IDs to be deleted.
     
     """
+    if not delete_ids:
+        delete_ids = (None, )
 
     with db.engine.connect() as connection:
         delete_query = sqlalchemy.text("""
