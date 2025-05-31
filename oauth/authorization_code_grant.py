@@ -25,6 +25,7 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
     def save_authorization_code(self, code, request):
         code_challenge = request.data.get("code_challenge")
         code_challenge_method = request.data.get("code_challenge_method")
+        nonce = request.data.get("nonce")
 
         scopes = get_scopes(db.session, request.scope)
 
@@ -36,6 +37,7 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
             user_id=request.user.id,
             code_challenge=code_challenge,
             code_challenge_method=code_challenge_method,
+            nonce=nonce,
             expires_in=current_app.config["OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN"],
         )
         db.session.add(auth_code)
