@@ -30,7 +30,7 @@ class OAuth2Client(db.Model, ClientMixin):
         return None
 
     def get_allowed_scope(self, scope):
-        pass  # TODO: Fix allowed scopes
+        return scope # TODO: Fix allowed scopes
 
     def check_redirect_uri(self, redirect_uri):
         return redirect_uri in self.redirect_uris

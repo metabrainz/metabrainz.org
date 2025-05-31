@@ -30,6 +30,7 @@ class OAuth2AuthorizationCode(db.Model, AuthorizationCodeMixin):
     issued_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
     expires_in = Column(Integer)
     revoked = Column(Boolean, default=False)
+    nonce = Column(Text)
 
     client = relationship(OAuth2Client)
     scopes = relationship(OAuth2Scope, secondary=OAuth2CodeScope)
@@ -43,3 +44,9 @@ class OAuth2AuthorizationCode(db.Model, AuthorizationCodeMixin):
     def is_expired(self):
         expires_at = self.issued_at + timedelta(seconds=self.expires_in)
         return datetime.now(tz=timezone.utc) >= expires_at
+
+    def get_nonce(self):
+        return self.nonce
+
+    def get_auth_time(self):
+        return int(self.issued_at.timestamp())

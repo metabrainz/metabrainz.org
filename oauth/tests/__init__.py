@@ -33,19 +33,11 @@ class OAuthTestCase(TestCase):
         self.user1 = User(user_id=1, user_name="test-user-1")
         self.user2 = User(user_id=2, user_name="test-user-2")
 
-        scopes = [
-            OAuth2Scope(name="test-scope-1", description="Test Scope 1"),
-            OAuth2Scope(name="test-scope-2", description="Test Scope 2")
-        ]
-        db.session.add_all(scopes)
-        db.session.commit()
-
     def tearDown(self):
         db.session.rollback()
         db.session.execute(delete(OAuth2AccessToken))
         db.session.execute(delete(OAuth2RefreshToken))
         db.session.execute(delete(OAuth2AuthorizationCode))
-        db.session.execute(delete(OAuth2Scope))
         db.session.execute(delete(OAuth2Client))
         db.session.commit()
 
@@ -82,13 +74,21 @@ class OAuthTestCase(TestCase):
         self.assertEqual(headers.get("Referrer-Policy"), "no-referrer")
         # self.assertIn("Content-Security-Policy", headers)
 
-    def authorize_oauth_prompt_helper(self, query_string):
+    def authorize_oauth_prompt_helper(self, query_string, openid=False):
         with login_user(self.user2):
             response = self.client.get("/oauth2/authorize", query_string=query_string)
             self.assertTemplateUsed("oauth/prompt.html")
             props = json.loads(self.get_context_variable("props"))
             self.assertEqual(props["client_name"], "test-client")
-            self.assertEqual(props["scopes"], [{"name": "test-scope-1", "description": "Test Scope 1"}])
+            expected_scopes = [
+                {"name": "profile", "description": "View your public account information"}
+            ]
+            if openid:
+                expected_scopes.append({
+                    "name": "openid",
+                    "description": "Sign you in and view your unique user id"
+                })
+            self.assertCountEqual(props["scopes"], expected_scopes)
             self.assertEqual(props["cancel_url"], query_string["redirect_uri"] + "?error=access_denied")
             self.assertEqual(props["csrf_token"], g.csrf_token)
 
@@ -139,7 +139,7 @@ class OAuthTestCase(TestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
@@ -154,7 +154,7 @@ class OAuthTestCase(TestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
@@ -316,7 +316,7 @@ class OAuthTestCase(TestCase):
             self.assertEqual(response.json["active"], True)
             self.assertEqual(response.json["client_id"], data["client_id"])
             self.assertEqual(response.json["issued_by"], "https://metabrainz.org/")
-            self.assertEqual(response.json["scope"], ["test-scope-1"])
+            self.assertEqual(response.json["scope"], ["profile"])
             self.assertEqual(response.json["sub"],  self.user2.user_name)
             self.assertEqual(response.json["token_type"],  "Bearer")
             self.assertEqual(response.json["metabrainz_user_id"], self.user2.id)
