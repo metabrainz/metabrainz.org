@@ -92,9 +92,10 @@ def get_notifications(user_id: int):
         unread_only=False
     elif unread_only == 't':
         unread_only=True
+    else:
+        raise APIBadRequest('Invalid unread_only option')
 
-    # data = fetch_notifications(user_id, tuple(projects), count, offset, until_ts, unread_only)
-    data = fetch_notifications(user_id=user_id)
+    data = fetch_notifications(user_id, tuple(projects), count, offset, until_ts, unread_only)
     return jsonify(data)
 
 
@@ -160,7 +161,7 @@ def mark_notifications(user_id: int):
     try:
         mark_read_unread(user_id, tuple(read), tuple(unread))
     except Exception as err:
-        current_app.logger.error("Cannot update read values ", str(err))
+        current_app.logger.error("Cannot update read values %s", str(err))
         raise APIServiceUnavailable("Cannot update read values right now.")
 
     return jsonify({'status': 'ok'}), 200
