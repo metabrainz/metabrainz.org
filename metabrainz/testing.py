@@ -173,3 +173,6 @@ class FlaskTestCase(unittest.TestCase):
 
     def assert500(self, response, message=None):
         self.assertStatus(response, 500, message)
+    
+    def assert503(self, response, message=None):
+        self.assertStatus(response, 503, message)
