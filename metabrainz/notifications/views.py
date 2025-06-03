@@ -72,7 +72,7 @@ def get_notifications(user_id: int):
         try:
             until_ts = datetime.fromtimestamp(float(until_ts), tz=timezone.utc)
         except ValueError:
-            raise APIBadRequest('Invalid Until_Timestamp ')
+            raise APIBadRequest('Invalid Until_Timestamp')
 
     project = request.args.get('project')
     projects=[]
@@ -85,7 +85,7 @@ def get_notifications(user_id: int):
             try:
                 NotificationProjectType(p)
             except ValueError:
-                raise APIBadRequest(f'Invalid Project Type{p}\n')
+                raise APIBadRequest('Invalid project name')
 
     unread_only = request.args.get('unread_only')
     if unread_only is None or unread_only == 'f':
@@ -213,7 +213,7 @@ def remove_notifications(user_id: int):
     try:
         delete_notifications(user_id, tuple(delete_ids))
     except Exception as err:
-        current_app.logger.error("Cannot delete notifications ", str(err))
+        current_app.logger.error("Cannot delete notifications %s", str(err))
         raise APIServiceUnavailable("Cannot delete notifications right now.")
 
     return jsonify({'status': 'ok'}), 200
