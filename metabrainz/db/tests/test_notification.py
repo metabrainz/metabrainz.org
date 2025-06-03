@@ -106,10 +106,10 @@ class NotificationDbTestCase(FlaskTestCase):
                     AND (:unread_only = FALSE OR read = FALSE)
             ORDER BY
                     created DESC
-            OFFSET
-                    :offset
             LIMIT
                     :count
+            OFFSET
+                    :offset
         """), test_params)
         query_result = sorted(query_result.mappings().all(), key=lambda item: item['id'])
         self.assertEqual(fetch_result, query_result)
