@@ -53,10 +53,10 @@ def fetch_notifications(user_id: int, projects: Optional[Tuple[str, ...]]=None, 
                         AND (:unread_only = FALSE OR read = FALSE)
                 ORDER BY
                         created DESC
-                OFFSET
-                        :offset
                 LIMIT
                         :count
+                OFFSET
+                        :offset
         """)
         
         result = connection.execute(query, params)
