@@ -120,5 +120,7 @@ OAUTH2_REFRESH_TOKEN_GENERATOR = "oauth.generator.create_refresh_token"
 OAUTH2_TOKEN_EXPIRES_IN = {
     "authorization_code": 3600,
     "implicit": 3600,
+    "client_credentials": 3600,
 }
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
+OAUTH2_WHITELISTED_CCG_CLIENTS = []
