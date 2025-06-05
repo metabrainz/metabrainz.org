@@ -150,14 +150,13 @@ def insert_notifications(notifications: List[dict]) -> int:
             ,"read": False
         })
 
-        if notif["important"] and notif["send_email"] and notif["project"] in current_app.config['MAIL_FROM_PROJECTS']:
-            addr = current_app.config['MAIL_FROM_PROJECTS'][notif["project"]]
+        if notif["important"] and notif["send_email"]:
             try:
                 send_mail(
                     subject=notif["subject"],
                     text=notif["body"],
                     recipients=list(notif["to"]),
-                    from_addr='noreply@' + addr
+                    from_addr=notif["sent_from"]
                 )
             except Exception:
                 current_app.logger.error("Could not send email to %s", notif["to"]) 
