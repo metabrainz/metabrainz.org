@@ -1,9 +1,13 @@
 import sqlalchemy
+import uuid
+import orjson
 from datetime import datetime
 from typing import List, Tuple, Optional
 from flask import current_app
+from brainzutils.mail import send_mail
 
 from metabrainz import db
+
 
 def fetch_notifications(user_id: int, projects: Optional[Tuple[str, ...]]=None, count: Optional[int]=None, offset: Optional[int]=None,
                         until_ts: Optional[datetime]=None, unread_only: Optional[bool]=False ) -> List[dict]:
@@ -72,7 +76,8 @@ def mark_read_unread(user_id: int, read_ids: Tuple[int, ...], unread_ids: Tuple[
         unread_ids (Tuple[int, ...]): Tuple of notification IDs to be be marked as unread.
     
     Returns:
-        int : Total number of rows successfully updated. -1 if a database error occurs.
+        int : Total number of rows successfully updated.
+
     """
 
     if not read_ids:
@@ -118,4 +123,54 @@ def delete_notifications(user_id: int, delete_ids: Tuple[int, ...]):
                                 AND id IN :delete_ids
         """)
         connection.execute(delete_query, {'user_id': user_id, 'delete_ids': delete_ids})
+
+
+def insert_notifications(notifications: List[dict]) -> int:
+    """
+    Inserts a batch of notifications into the table.
+    Args:
+        notifications (List[dict]): List of notifications to be inserted.
+
+    Returns:
+        int : Total number of rows successfully inserted.
+    """
+
+    params=[]
+    for notif in notifications:
+        params.append({
+            "musicbrainz_row_id": notif["musicbrainz_row_id"]
+            ,"project": notif["project"]
+            ,"subject":notif.get("subject")
+            ,"body" : notif.get("body")
+            ,"template_id": notif.get("template_id")
+            ,"template_params": orjson.dumps(notif.get("template_params")).decode("utf-8") if notif.get("template_params") else None
+            ,"important": notif["important"]
+            ,"expire_age": notif["expire_age"]
+            ,"email_id": notif.get("email_id", str(uuid.uuid4()))
+            ,"read": False
+        })
+
+        if notif["important"] and notif["send_email"] and notif["project"] in current_app.config['MAIL_FROM_PROJECTS']:
+            addr = current_app.config['MAIL_FROM_PROJECTS'][notif["project"]]
+            try:
+                send_mail(
+                    subject=notif["subject"],
+                    text=notif["body"],
+                    recipients=list(notif["to"]),
+                    from_addr='noreply@' + addr
+                )
+            except Exception:
+                current_app.logger.error("Could not send email to %s", notif["to"]) 
+            params[-1]["read"] = True
+
+    with db.engine.connect() as connection:
+        insert_query = sqlalchemy.text("""
+                    INSERT INTO
+                        notification
+                            (musicbrainz_row_id, project, subject, body, template_id, template_params, important, expire_age, email_id, read)
+                    VALUES
+                        (:musicbrainz_row_id, :project, :subject, :body, :template_id, :template_params, :important, :expire_age, :email_id, :read)        
+        """)
+        result = connection.execute(insert_query, params)
+    return result.rowcount
 

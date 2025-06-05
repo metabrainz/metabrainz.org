@@ -95,6 +95,13 @@ ADMINS = [
 SMTP_SERVER = "metabrainz-mail"
 SMTP_PORT = 25
 MAIL_FROM_DOMAIN = "metabrainz.org"
+MAIL_FROM_PROJECTS = {
+    "metabrainz": "metabrainz.org",
+    "musicbrainz": "musicbrainz.org",
+    "listenbrainz": "listenbrainz.org",
+    "bookbrainz": "bookbrainz.org",
+    "critiquebrainz": "critiquebrainz.org"
+}
 
 # OTHER STUFF
 
