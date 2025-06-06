@@ -1,8 +1,11 @@
 from functools import wraps
 from urllib.parse import quote_plus
 
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
 import requests
-from flask import Request, current_app, has_request_context, g, request, redirect, session
+from flask import Request, current_app, has_request_context, g, request, redirect
 from flask_login import UserMixin
 from werkzeug.local import LocalProxy
 
@@ -10,7 +13,7 @@ from oauth.model import db
 from oauth.model.editor import Editor
 
 current_user = LocalProxy(lambda: _get_user())
-
+_retry = Retry(total=3)
 
 class User(UserMixin):
 
@@ -52,7 +55,9 @@ def login_required(func):
 
 def load_user_from_request(_request: Request):
     if "musicbrainz_server_session" in _request.cookies:
-        response = requests.get(
+        session = requests.Session()
+        session.mount("https://", HTTPAdapter(max_retries=_retry))
+        response = session.get(
             f"{current_app.config['MUSICBRAINZ_SERVER']}/ws/js/check-login",
             cookies=_request.cookies
         )

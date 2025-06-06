@@ -21,7 +21,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
@@ -43,7 +43,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         application = self.create_oauth_app()
         query_string = {
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -55,7 +55,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": "asb",
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -66,7 +66,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         application = self.create_oauth_app()
         query_string = {
             "client_id": application["client_id"],
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -78,7 +78,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "invalid",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -113,7 +113,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
         }
         error = {"name": "invalid_request", "description": "Missing \"redirect_uri\" in request."}
@@ -124,7 +124,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
         }
@@ -136,7 +136,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         application = self.create_oauth_app()
         query_string = MultiDict([
             ("client_id", application["client_id"]),
-            ("scope", "test-scope-1"),
+            ("scope", "profile"),
             ("state", "random-state"),
             ("redirect_uri", "https://example.com/callback"),
             ("response_type", "token"),
@@ -153,7 +153,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
                 query_string={
                     "client_id": application["client_id"],
                     "response_type": "token",
-                    "scope": "test-scope-1",
+                    "scope": "profile",
                     "state": "random-state",
                     "redirect_uri": "https://example.com/callback",
                 }
@@ -168,7 +168,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             query_string={
                 "client_id": application["client_id"],
                 "response_type": "token",
-                "scope": "test-scope-1",
+                "scope": "profile",
                 "state": "random-state",
                 "redirect_uri": "https://example.com/callback",
             }
@@ -180,7 +180,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         self.assertEqual(parsed.path, "/login")
 
         fragment_args = parse_qs(parsed.query)
-        self.assertEqual(unquote(fragment_args["returnto"][0]), f"http://localhost/oauth2/authorize?client_id={application['client_id']}&response_type=token&scope=test-scope-1&state=random-state&redirect_uri=https://example.com/callback")
+        self.assertEqual(unquote(fragment_args["returnto"][0]), f"http://localhost/oauth2/authorize?client_id={application['client_id']}&response_type=token&scope=profile&state=random-state&redirect_uri=https://example.com/callback")
 
     def test_oauth_authorize_multiple_redirect_uris(self):
         application = self.create_oauth_app(redirect_uris=[
@@ -200,7 +200,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
         }
@@ -218,7 +218,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": redirect_uri2,
             "approval_prompt": "force",
@@ -235,7 +235,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
             "approval_prompt": "auto",
@@ -250,7 +250,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
             "approval_prompt": "invalid",
@@ -267,7 +267,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1 test-scope-2",
+            "scope": "profile tag",
             "state": "random-state",
             "redirect_uri": redirect_uri2,
         }
@@ -279,8 +279,8 @@ class ImplicitGrantTestCase(OAuthTestCase):
 
             self.assertEqual(props["client_name"], "test-client")
             self.assertEqual(props["scopes"], [
-                {"name": "test-scope-1", "description": "Test Scope 1"},
-                {"name": "test-scope-2", "description": "Test Scope 2"},
+                {"name": "profile", "description": "View your public account information"},
+                {"name": "tag", "description": "View and modify your private tags"},
             ])
             self.assertEqual(props["cancel_url"], redirect_uri2 + "?error=access_denied")
             self.assertEqual(props["csrf_token"], g.csrf_token)
@@ -295,7 +295,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": redirect_uri,
             "response_mode": "form_post"

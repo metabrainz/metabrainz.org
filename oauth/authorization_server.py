@@ -14,6 +14,8 @@ from oauth.introspection import OAuth2IntrospectionEndpoint
 from oauth.model import db, OAuth2Scope
 from oauth.model.base_token import save_token
 from oauth.model.client import OAuth2Client
+from oauth.oidc_grant import OpenIDCode, OpenIDImplicitGrant
+
 from oauth.refresh_grant import RefreshTokenGrant
 from oauth.revocation import OAuth2RevocationEndpoint
 
@@ -46,9 +48,13 @@ class CustomAuthorizationServer(AuthorizationServer):
 
 # TODO: configure the expiry time for tokens
 authorization_server = CustomAuthorizationServer(query_client=query_client, save_token=save_token)
-authorization_server.register_grant(AuthorizationCodeGrant, [CodeChallenge(required=False)])
+authorization_server.register_grant(AuthorizationCodeGrant, [
+    CodeChallenge(required=False),
+    OpenIDCode(require_nonce=True)
+])
 authorization_server.register_grant(ImplicitGrant)
 authorization_server.register_grant(RefreshTokenGrant)
 authorization_server.register_grant(ClientCredentialsGrant)
+authorization_server.register_grant(OpenIDImplicitGrant)
 authorization_server.register_endpoint(OAuth2RevocationEndpoint)
 authorization_server.register_endpoint(OAuth2IntrospectionEndpoint)
