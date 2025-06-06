@@ -5,6 +5,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, jsonif
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
+from urllib.parse import urljoin
 
 from metabrainz.decorators import nocache, crossdomain
 from oauth import login
@@ -322,12 +323,13 @@ def well_known_oauth_authorization_server():
     scopes = [
         s[0] for s in db.session.query(OAuth2Scope.name).all()
     ]
+    url_prefix = urljoin(current_app.config["MUSICBRAINZ_SERVER"], current_app.config["OAUTH2_BLUEPRINT_PREFIX"])
     return {
         "issuer": "https://metabrainz.org",
-        "authorization_endpoint": url_for("oauth2.authorize", _external=True),
-        "token_endpoint": url_for("oauth2.oauth_token_handler", _external=True),
-        "userinfo_endpoint": url_for("oauth2.user_info", _external=True),
-        "jwks_uri": url_for(".jwks_uri", _external=True),
+        "authorization_endpoint": f"{url_prefix}/authorize",
+        "token_endpoint": f"{url_prefix}/token",
+        "userinfo_endpoint": f"{url_prefix}/userinfo",
+        "jwks_uri": f"{url_prefix}/.well-known/jwks.json",
         "scopes_supported": scopes,
         "response_types_supported": ["code", "id_token token", "id_token"],
         "response_modes_supported": ["query", "fragment"],
