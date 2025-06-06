@@ -22,17 +22,25 @@ class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
         return token
 
     def introspect_token(self, token):
-        user = login.load_user_from_db(token.user_id)
-        return {
+        data = {
             "client_id": token.client.client_id,
             "token_type": "Bearer",
-            "metabrainz_user_id": token.user_id,
             "scope": token.get_scope(),
-            "sub": user.user_name,
             "issued_by": "https://metabrainz.org/",
             "expires_at": int(token.get_expires_at().timestamp()),
             "issued_at": int(token.issued_at.timestamp()),
         }
+
+        if token.user_id is not None:
+            data["metabrainz_user_id"] = token.user_id
+            user = login.load_user_from_db(token.user_id)
+            sub = user.user_name
+        else:
+            # user_id is None for client credentials grant
+            sub = token.client.name
+        data["sub"] = sub
+
+        return data
 
     def check_permission(self, token, client, request):
         # any client can introspect any token

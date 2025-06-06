@@ -286,6 +286,9 @@ def user_info():
     if token.is_expired() or token.is_revoked():
         return jsonify({"error": "expired access token"}), 403
 
+    if token.user_id is None:
+        return jsonify({"error": "access token not associated with a user"}), 400
+
     user = login.load_user_from_db(token.user_id)
 
     return {

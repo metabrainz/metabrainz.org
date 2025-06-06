@@ -256,3 +256,32 @@ class RevocationTestCase(OAuthTestCase):
             )
             self.assert200(response)
             self.assertEqual(response.json, {})
+
+    def test_oauth_revoke_client_credentials(self):
+        application = self.create_oauth_app()
+        self.app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"] = [
+            application["client_id"],
+        ]
+
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "grant_type": "client_credentials",
+            "scope": "test-scope-1",
+        }
+        response = self.client.post("/oauth2/token", data=data)
+        self.assertEqual(response.status_code, 200)
+        token = response.json["access_token"]
+
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": token,
+        }
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json, {})
+
+        response = self.client.post("/oauth2/introspect", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json["active"], False)
