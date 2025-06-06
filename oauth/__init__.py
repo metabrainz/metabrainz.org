@@ -117,6 +117,6 @@ def create_app(debug=None, config_path=None):
 
     from oauth.views import oauth2_bp, wellknown_bp
     app.register_blueprint(oauth2_bp, url_prefix=app.config["OAUTH2_BLUEPRINT_PREFIX"])
-    app.register_blueprint(wellknown_bp, url_prefix="/.well-known")
+    app.register_blueprint(wellknown_bp, url_prefix=app.config["OAUTH2_BLUEPRINT_PREFIX"] + "/.well-known")
 
     return app
