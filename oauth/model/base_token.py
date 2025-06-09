@@ -17,8 +17,6 @@ class OAuth2BaseToken(TokenMixin):
     }
 
     id = Column(Integer, Identity(), primary_key=True)
-    # no FK to user table because user data lives in MB db
-    user_id = Column(Integer, nullable=False)
     issued_at = Column(DateTime(timezone=True), default=func.now())
     expires_in = Column(Integer)
     revoked = Column(Boolean, default=False)
@@ -67,8 +65,6 @@ def save_token(token_data, request: FlaskOAuth2Request):
     refresh_token_scopes = []
     authorization_code_id = None
 
-    # todo: query authorization code and associate with access and refresh token
-
     # saving token for authorization code grant
     if request.data.get("grant_type") == "authorization_code":
         authorization_code = db.session\
@@ -82,8 +78,8 @@ def save_token(token_data, request: FlaskOAuth2Request):
     elif request.data.get("response_type") == "token":  # saving token for implicit grant
         access_token_scopes = get_scopes(db.session, request.data.get("scope"))
     elif request.data.get("grant_type") == "refresh_token":
-        # if only a subset of scopes is requested, use that for access token but retain original scopes for the
-        # refresh token
+        # if only a subset of scopes is requested, use that for access token but retain
+        # the original scopes for the refresh token
         if request.data.get("scope"):
             access_token_scopes = get_scopes(db.session, request.data.get("scope"))
         else:
@@ -91,10 +87,17 @@ def save_token(token_data, request: FlaskOAuth2Request):
 
         refresh_token = token_data.get("refresh_token") or request.refresh_token.refresh_token
         refresh_token_scopes = request.refresh_token.scopes
+    elif request.data.get("grant_type") == "client_credentials":
+        access_token_scopes = get_scopes(db.session, request.data.get("scope"))
+
+    if request.data.get("grant_type") == "client_credentials":
+        user_id = None
+    else:
+        user_id = request.user.id
 
     access_token = OAuth2AccessToken(
         client_id=request.client.id,
-        user_id=request.user.id,
+        user_id=user_id,
         access_token=token_data["access_token"],
         expires_in=token_data["expires_in"],
         scopes=access_token_scopes,
@@ -105,7 +108,7 @@ def save_token(token_data, request: FlaskOAuth2Request):
     if refresh_token is not None:
         refresh_token = OAuth2RefreshToken(
             client_id=request.client.id,
-            user_id=request.user.id,
+            user_id=user_id,
             refresh_token=refresh_token,
             expires_in=token_data["expires_in"],  # TODO: fix refresh token expiry, for existing retain or reset ?
             scopes=refresh_token_scopes,

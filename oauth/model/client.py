@@ -1,4 +1,5 @@
 from authlib.oauth2.rfc6749 import ClientMixin
+from flask import current_app
 from sqlalchemy import Column, Text, Integer, ARRAY, Identity, DateTime, func
 
 from oauth.model import db
@@ -47,7 +48,9 @@ class OAuth2Client(db.Model, ClientMixin):
         return True  # TODO: Fix check response type
 
     def check_grant_type(self, grant_type):
-        return True  # TODO: Fix grant types
+        if grant_type == "client_credentials":
+            return self.client_id in current_app.config.get("OAUTH2_WHITELISTED_CCG_CLIENTS", [])
+        return True
 
     def check_already_approved(self, user_id, requested_scopes):
         """ Check if the user has previously approved all the scopes for a given client """

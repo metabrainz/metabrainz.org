@@ -8,6 +8,7 @@ from authlib.oauth2.rfc6749 import InvalidScopeError, scope_to_list
 from authlib.oauth2.rfc7636 import CodeChallenge
 
 from oauth.authorization_code_grant import AuthorizationCodeGrant
+from oauth.client_credentials import ClientCredentialsGrant
 from oauth.implicit_grant import ImplicitGrant
 from oauth.introspection import OAuth2IntrospectionEndpoint
 from oauth.model import db, OAuth2Scope
@@ -48,5 +49,6 @@ authorization_server = CustomAuthorizationServer(query_client=query_client, save
 authorization_server.register_grant(AuthorizationCodeGrant, [CodeChallenge(required=False)])
 authorization_server.register_grant(ImplicitGrant)
 authorization_server.register_grant(RefreshTokenGrant)
+authorization_server.register_grant(ClientCredentialsGrant)
 authorization_server.register_endpoint(OAuth2RevocationEndpoint)
 authorization_server.register_endpoint(OAuth2IntrospectionEndpoint)

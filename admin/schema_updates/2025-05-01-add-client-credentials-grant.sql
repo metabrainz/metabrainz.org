@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE oauth.access_token ALTER COLUMN user_id DROP NOT NULL;
+
+COMMIT;
