@@ -294,3 +294,36 @@ class IntrospectionTestCase(OAuthTestCase):
             self.assertEqual(response.json["metabrainz_user_id"], self.user2.id)
             self.assertIsNotNone(response.json["issued_at"])
             self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)
+
+    def test_oauth_introspection_client_credentials(self):
+        application = self.create_oauth_app()
+        self.app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"] = [
+            application["client_id"],
+        ]
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "grant_type": "client_credentials",
+            "scope": "test-scope-1",
+        }
+        response = self.client.post("/oauth2/token", data=data)
+        self.assertEqual(response.status_code, 200)
+        token = response.json["access_token"]
+
+        data = {
+            "client_id": application["client_id"],
+            "client_secret": application["client_secret"],
+            "token": token,
+        }
+        response = self.client.post("/oauth2/introspect", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json["active"], True)
+        self.assertEqual(response.json["client_id"], data["client_id"])
+        self.assertEqual(response.json["issued_by"], "https://metabrainz.org/")
+        self.assertEqual(response.json["scope"], ["test-scope-1"])
+        self.assertEqual(response.json["sub"], application["name"])
+        self.assertEqual(response.json["token_type"], "Bearer")
+        self.assertIsNotNone(response.json["issued_at"])
+        self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)
+
+        self.assert_security_headers(response)
