@@ -27,7 +27,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.6",
+    "@babel/runtime": "^7.27.6",
     "core-js": "^3.26.1",
     "formik": "^2.4.5",
     "less": "^4.1.1",
