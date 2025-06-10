@@ -138,13 +138,13 @@ def insert_notifications(notifications: List[dict]) -> int:
     params=[]
     for notif in notifications:
         params.append({
-            "musicbrainz_row_id": notif["musicbrainz_row_id"]
+            "musicbrainz_row_id": notif["user_id"]
             ,"project": notif["project"]
             ,"subject":notif.get("subject")
             ,"body" : notif.get("body")
             ,"template_id": notif.get("template_id")
             ,"template_params": orjson.dumps(notif.get("template_params")).decode("utf-8") if notif.get("template_params") else None
-            ,"important": notif["important"]
+            ,"important": notif.get("important", False)
             ,"expire_age": notif["expire_age"]
             ,"email_id": notif.get("email_id", str(uuid.uuid4()))
             ,"read": False
