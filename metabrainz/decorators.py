@@ -2,6 +2,10 @@ from functools import wraps, update_wrapper
 from datetime import timedelta
 from flask import request, current_app, make_response
 import six
+import requests
+from metabrainz.errors import APIBadRequest, APIUnauthorized, APIForbidden
+
+NOTIFICATION_SCOPE = 'notification'
 
 
 def add_response_headers(headers=None):
@@ -71,3 +75,27 @@ def crossdomain(origin='*', methods=None, headers=None,
         f.provide_automatic_options = False
         return update_wrapper(wrapped_function, f)
     return decorator
+
+
+def ccg_token_required(f):
+    @wraps(f)
+    def decorated(*args,**kwargs):
+        token = request.args.get('token')
+        if not token:
+            raise APIBadRequest('Missing access token')
+        data = {
+            "client_id": current_app.config["MUSICBRAINZ_CLIENT_ID"],
+            "client_secret": current_app.config["MUSICBRAINZ_CLIENT_SECRET"],
+            "token": token
+        }
+        response = requests.post(current_app.config["OAUTH_INTROSPECTION_URL"], data).json()
+        if not response.get("active"):
+            raise APIUnauthorized('Invalid or Expired access token.')
+        if NOTIFICATION_SCOPE not in response["scope"]:
+            raise APIForbidden('Missing notification scope.')
+        if response["client_id"] not in current_app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"]:
+            raise APIForbidden('Client is not a MeB project.')
+
+        return f(*args, **kwargs)
+    
+    return decorated

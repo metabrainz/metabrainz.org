@@ -4,7 +4,7 @@ from metabrainz.model.notification import NotificationProjectType
 from metabrainz.model.user_preference import UserPreference
 from metabrainz.db.notification import fetch_notifications, mark_read_unread, delete_notifications, insert_notifications
 from metabrainz.errors import APIBadRequest, APIServiceUnavailable
-
+from metabrainz.decorators import ccg_token_required
 DEFAULT_NOTIFICATION_FETCH_COUNT = 100
 MAX_ITEMS_PER_GET = 1000 # From listenbrainz.webserver.views.api_tools
 MAX_DIGEST_AGE = 100 # In days.
@@ -13,7 +13,7 @@ notification_bp = Blueprint("notification", __name__)
 
 
 @notification_bp.get("/<int:user_id>/fetch")
-# TODO: Add authorization decorator.
+@ccg_token_required
 def get_notifications(user_id: int):
     """
     Fetch notifications for a user.
@@ -101,7 +101,7 @@ def get_notifications(user_id: int):
 
 
 @notification_bp.post("<int:user_id>/mark-read")
-# TODO: Add authorization decorator.
+@ccg_token_required
 def mark_notifications(user_id: int):
     """
     Mark notifications as read or unread for a user.
@@ -170,7 +170,7 @@ def mark_notifications(user_id: int):
 
 
 @notification_bp.post("<int:user_id>/delete")
-# TODO: Add Authorization decorator.
+@ccg_token_required
 def remove_notifications(user_id: int):
     """
     Delete notifications for a user.
@@ -220,8 +220,6 @@ def remove_notifications(user_id: int):
         raise APIServiceUnavailable("Cannot delete notifications right now.")
 
     return jsonify({'status': 'ok'}), 200
-    
-
 @notification_bp.post("/send")
 # TODO: Add Authorization decorator.
 def send_notifications():
@@ -254,7 +252,7 @@ def send_notifications():
     .. code-block:: json
 
         [
-            {  
+            {
                 "user_id": 1,
                 "project": "listenbrainz",
                 "to": "user@example.com",
@@ -335,7 +333,7 @@ def set_digest_preference(user_id):
             "digest": false,
             "digest_age": 7
         }
-    
+
     :param token: Required, Access token for authentication.
     :statuscode 200: Data fetched successfully.
     :statuscode 400: Invalid user_id.
@@ -354,7 +352,7 @@ def set_digest_preference(user_id):
             "digest": true,
             "digest_age": 17
         }
-    
+
     Returns JSON of the updated data in the following format:
 
     ..code-block:: json
@@ -376,22 +374,22 @@ def set_digest_preference(user_id):
         if not res:
             raise APIBadRequest("Invalid user_id.")
         return jsonify({"digest": res.digest, "digest_age": res.digest_age})
-    
+
     elif request.method == "POST":
         data = request.json
         digest = data.get("digest")
         digest_age = data.get("digest_age")
-        
+
         if digest is None or not isinstance(digest, bool):
             raise APIBadRequest("Invalid digest value.")
         if digest_age is not None:
             if not isinstance(digest_age, int) or (digest_age < 1 or digest_age > MAX_DIGEST_AGE):
                 raise APIBadRequest("Invalid digest age.")
-        
+
         try:
             result = UserPreference.set_digest_info(musicbrainz_row_id=user_id, digest=digest, digest_age=digest_age)
             return jsonify({"digest": result.digest, "digest_age": result.digest_age})
-        
+
         except Exception as err:
             current_app.logger.error("Cannot update digest preference %s", str(err))
             raise APIServiceUnavailable("Cannot update digest preference right now.")
