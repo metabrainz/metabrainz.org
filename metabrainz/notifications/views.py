@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from metabrainz.model.notification import NotificationProjectType
 from metabrainz.db.notification import fetch_notifications, mark_read_unread, delete_notifications
 from metabrainz.errors import APIBadRequest, APIServiceUnavailable
-
+from metabrainz.decorators import ccg_token_required
 DEFAULT_NOTIFICATION_FETCH_COUNT = 100
 MAX_ITEMS_PER_GET = 1000 # From listenbrainz.webserver.views.api_tools
 
@@ -12,7 +12,7 @@ notification_bp = Blueprint("notification", __name__)
 
 
 @notification_bp.get("/<int:user_id>/fetch")
-# TODO: Add authorization decorator.
+@ccg_token_required
 def get_notifications(user_id: int):
     """
     Fetch notifications for a user.
@@ -100,7 +100,7 @@ def get_notifications(user_id: int):
 
 
 @notification_bp.post("<int:user_id>/mark-read")
-# TODO: Add authorization decorator.
+@ccg_token_required
 def mark_notifications(user_id: int):
     """
     Mark notifications as read or unread for a user.
@@ -168,7 +168,7 @@ def mark_notifications(user_id: int):
 
 
 @notification_bp.post("<int:user_id>/delete")
-# TODO: Add Authorization decorator.
+@ccg_token_required
 def remove_notifications(user_id: int):
     """
     Delete notifications for a user.
@@ -217,4 +217,3 @@ def remove_notifications(user_id: int):
         raise APIServiceUnavailable("Cannot delete notifications right now.")
 
     return jsonify({'status': 'ok'}), 200
-    
