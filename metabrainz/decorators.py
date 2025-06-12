@@ -82,7 +82,7 @@ def ccg_token_required(f):
     def decorated(*args,**kwargs):
         token = request.args.get('token')
         if not token:
-            raise APIBadRequest('Missing access token')
+            raise APIBadRequest('Missing access token.')
         data = {
             "client_id": current_app.config["MUSICBRAINZ_CLIENT_ID"],
             "client_secret": current_app.config["MUSICBRAINZ_CLIENT_SECRET"],
@@ -94,7 +94,7 @@ def ccg_token_required(f):
         if NOTIFICATION_SCOPE not in response["scope"]:
             raise APIForbidden('Missing notification scope.')
         if response["client_id"] not in current_app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"]:
-            raise APIForbidden('Client is not a MeB project.')
+            raise APIForbidden('Client is not an official MeB project.')
 
         return f(*args, **kwargs)
     

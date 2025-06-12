@@ -5,6 +5,7 @@ from metabrainz.model.user_preference import UserPreference
 from metabrainz.db.notification import fetch_notifications, mark_read_unread, delete_notifications, insert_notifications
 from metabrainz.errors import APIBadRequest, APIServiceUnavailable
 from metabrainz.decorators import ccg_token_required
+
 DEFAULT_NOTIFICATION_FETCH_COUNT = 100
 MAX_ITEMS_PER_GET = 1000 # From listenbrainz.webserver.views.api_tools
 MAX_DIGEST_AGE = 100 # In days.
