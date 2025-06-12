@@ -54,6 +54,7 @@ STRIPE_KEYS = {
 
 # MusicBrainz Base URL must have a trailing slash.
 MUSICBRAINZ_BASE_URL = '''{{template "KEY" "musicbrainz/base_url"}}'''
+OAUTH_INTROSPECTION_URL = MUSICBRAINZ_BASE_URL + "new-oauth2/introspect"
 MUSICBRAINZ_CLIENT_ID = '''{{template "KEY" "musicbrainz/client_id"}}'''
 MUSICBRAINZ_CLIENT_SECRET = '''{{template "KEY" "musicbrainz/client_secret"}}'''
 
