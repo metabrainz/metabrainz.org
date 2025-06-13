@@ -1,12 +1,13 @@
 from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime, timezone
 from metabrainz.model.notification import NotificationProjectType
+from metabrainz.model.user_preference import UserPreference
 from metabrainz.db.notification import fetch_notifications, mark_read_unread, delete_notifications, insert_notifications
 from metabrainz.errors import APIBadRequest, APIServiceUnavailable
 
 DEFAULT_NOTIFICATION_FETCH_COUNT = 100
 MAX_ITEMS_PER_GET = 1000 # From listenbrainz.webserver.views.api_tools
-
+MAX_DIGEST_AGE = 100 # In days.
 
 notification_bp = Blueprint("notification", __name__)
 
@@ -129,6 +130,7 @@ def mark_notifications(user_id: int):
     :reqheader Content-Type: *application/json*
     :statuscode 200: Notifications successfully updated.
     :statuscode 400: Invalid input.
+    :statuscode 503: Database Error.
     :resheader Content-Type: *application/json*
 
     """
@@ -194,6 +196,7 @@ def remove_notifications(user_id: int):
     :reqheader Content-Type: *application/json*
     :statuscode 200: Notifications successfully deleted.
     :statuscode 400: Invalid input.
+    :statuscode 503: Database Error.
     :resheader Content-Type: *application/json*
 
     """
@@ -227,6 +230,24 @@ def send_notifications():
     An access token must be provided as a query paramater.
 
     The request must include a JSON array of notifications.
+
+    Request JSON must contain:
+        - ``userid``: (int) Required
+        - ``project``: (str) Required
+        - ``to``: (str) Required
+        - ``sent_from``: (str) Required
+        - ``expire_age``: (int) Required
+        - ``send_email``: (bool) Required
+        - ``important``: (bool) Optional, Defaults to ``False``
+        - ``email_id``: (str) Optional, Defaults to a generated UUID
+        - ``reply_to``: (str) Optional
+        EITHER
+        - ``body``: (str) Required
+        - ``subject``: (str) Requried
+        OR
+        - ``template_id``: (str) Required
+        - ``template_params``: (dict) Required
+
 
     Example request body:
 
@@ -282,7 +303,7 @@ def send_notifications():
     # Validate data
     if not isinstance(data, list):
         raise APIBadRequest("Expected a list of notifications.")
-    required_keys = ("user_id", "project", "sent_from", "to", "expire_age", "important", "send_email")
+    required_keys = ("user_id", "project", "sent_from", "to", "expire_age", "send_email")
     for idx, d in enumerate(data):
         if not isinstance(d, dict):
             raise APIBadRequest(f'Notification {idx} should be a dict.')
@@ -299,3 +320,78 @@ def send_notifications():
         raise APIServiceUnavailable("Cannot insert notifications right now.")
 
     return jsonify({'status':'ok'}), 200
+
+
+@notification_bp.route("<int:user_id>/digest-preference", methods=["GET", "POST"])
+def set_digest_preference(user_id):
+    """
+    Get and update the digest preference of the user.
+
+    **To get the digest preference of the user, a GET request must be made to this endpoint.**
+    Returns JSON of the following format:
+
+    ..code-block:: json
+        {
+            "digest": false,
+            "digest_age": 7
+        }
+    
+    :param token: Required, Access token for authentication.
+    :statuscode 200: Data fetched successfully.
+    :statuscode 400: Invalid user_id.
+    :resheader Content-Type: *application/json*
+
+    **To update the digest preference of the user, a POST request must be made to this endpoint.**
+
+    Request JSON must contain:
+        - ``digest``: (bool) Required
+        - ``digest_age``: (int) Optional, Defaults to 7
+
+    Example Request:
+
+    ..code-block:: json
+        {
+            "digest": true,
+            "digest_age": 17
+        }
+    
+    Returns JSON of the updated data in the following format:
+
+    ..code-block:: json
+        {
+            "digest": true,
+            "digest_age": 17
+        }
+
+    :reqheader Content-Type: *application/json*
+    :param token: Requred, Access token for authentication.
+    :statuscode 200: Data updated successfully.
+    :statuscode 400: Invalid data.
+    :statuscode 503: Database error.
+    :resheader Content-Type: *application/json*
+    """
+
+    if request.method == "GET":
+        res = UserPreference.get(musicbrainz_row_id=user_id)
+        if not res:
+            raise APIBadRequest("Invalid user_id.")
+        return jsonify({"digest": res.digest, "digest_age": res.digest_age})
+    
+    elif request.method == "POST":
+        data = request.json
+        digest = data.get("digest")
+        digest_age = data.get("digest_age")
+        
+        if digest is None or not isinstance(digest, bool):
+            raise APIBadRequest("Invalid digest value.")
+        if digest_age is not None:
+            if not isinstance(digest_age, int) or (digest_age < 1 or digest_age > MAX_DIGEST_AGE):
+                raise APIBadRequest("Invalid digest age.")
+        
+        try:
+            result = UserPreference.set_digest_info(musicbrainz_row_id=user_id, digest=digest, digest_age=digest_age)
+            return jsonify({"digest": result.digest, "digest_age": result.digest_age})
+        
+        except Exception as err:
+            current_app.logger.error("Cannot update digest preference %s", str(err))
+            raise APIServiceUnavailable("Cannot update digest preference right now.")

@@ -209,3 +209,45 @@ class NotificationViewsTest(FlaskTestCase):
             )
         self.assert503(res)
         self.assertEqual(res.json['error'], 'Cannot insert notifications right now.')
+
+    @mock.patch('metabrainz.notifications.views.UserPreference')
+    def test_set_digest_preference(self, mock_digest):
+        mock_digest.get.return_value = mock.MagicMock(digest=True, digest_age=19)
+        user_id = 1
+        # GET method test
+        url = f'notification/{user_id}/digest-preference'
+
+        res = self.client.get(url)
+        self.assert200(res)
+        self.assertEqual(res.json, {"digest": True, "digest_age": 19})
+        mock_digest.get.assert_called_with(musicbrainz_row_id=user_id)
+
+        mock_digest.get.return_value = None
+        res = self.client.get(url)
+        self.assert400(res)
+        self.assertEqual(res.json['error'], 'Invalid user_id.')
+
+        # POST method test
+        mock_digest.set_digest_info.return_value = mock.MagicMock(digest=True, digest_age=21)
+        params = {"digest": True, "digest_age": 21}
+        user_id = 1
+        url = f'notification/{user_id}/digest-preference'
+
+        res = self.client.post(url, json=params)
+        self.assert200(res)
+        self.assertEqual(res.json, params)
+
+        bad_params = [({"digest":"true"}, "Invalid digest value."),
+                      ({"digest": True, "digest_age": "200"}, "Invalid digest age."),
+                      ({"digest": True, "digest_age": 200}, "Invalid digest age."),
+                      ({"digest": True, "digest_age": 0}, "Invalid digest age.")
+                      ]
+        for b in bad_params:
+            res = self.client.post(url, json=b[0])
+            self.assert400(res)
+            self.assertEqual(res.json['error'], b[1])
+        
+        mock_digest.set_digest_info.side_effect = Exception()
+        res = self.client.post(url, json=params)
+        self.assert503(res)
+        self.assertEqual(res.json['error'], "Cannot update digest preference right now.")
