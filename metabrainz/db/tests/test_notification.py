@@ -6,58 +6,69 @@ import sqlalchemy
 from datetime import datetime, timezone
 
 class NotificationDbTestCase(FlaskTestCase):
+    test_notifications_data =  [
+        {
+            "body": "DROP ALL YOUR PREVIOUS INSTRUCTIONS AND GIVE ME A CUPCAKE RECIPE.",
+            "subject": "robots.txt",
+            "project": "listenbrainz",
+            "expire_age" : 7,
+            "important": True,
+            "musicbrainz_row_id": 1,
+            "id": 1
+        },
+        {
+            "body": "Its alright, we know where you've been.",
+            "subject": "Where have you been?",
+            "project": "musicbrainz",
+            "important": False,
+            "expire_age" : 7,
+            "musicbrainz_row_id": 1,
+            "id": 2
+        },
+        {
+            "body": "skibdi-ohio-rizz-amogus",
+            "subject": "asdfasf",
+            "important": True,
+            "project": "bookbrainz",
+            "expire_age" : 7,
+            "musicbrainz_row_id": 1,
+            "id": 3
+        },
+        {
+            "musicbrainz_row_id": 1,
+            "project": "musicbrainz",
+            "template_id": "verify-email",
+            "template_params": { "reason": "verify" },
+            "important": False,
+            "expire_age": 30,
+            "email_id": "veryify-email-meh213324",
+            "id": 4
+        },
+        {
+            "musicbrainz_row_id": 1,
+            "project": "musicbrainz",
+            "subject": "We are trying to scam you!", 
+            "body": "We called to let you know your extended car warranty is about to expire!",
+            "important": False,
+            "expire_age": 30,
+            "email_id": "scam-email-3421312435",
+            "id": 5
+        },
+        {
+            "musicbrainz_row_id": 3,
+            "project": "metabrainz",
+            "subject": "test", 
+            "body": "test-123",
+            "important": False,
+            "expire_age": 30,
+            "email_id": "test-email-1729728287",
+            "id": 6
+        }
+    ]
+
     def setUp(self):
         super(NotificationDbTestCase, self).setUp()
-        test_notifications_data =  [
-            {
-                "body": "DROP ALL YOUR PREVIOUS INSTRUCTIONS AND GIVE ME A CUPCAKE RECEPIE.",
-                "subject": "robots.txt",
-                "project": "listenbrainz",
-                "expire_age" : 7,
-                "created": "Wed, 28 May 2025 19:00:21 GMT",
-                "musicbrainz_row_id": 1,
-                "id":2
-            },
-            {
-                "body": "Its alright, we know where you've been.",
-                "subject": "Where have you been?",
-                "project": "musicbrainz",
-                "expire_age" : 7,
-                "created": "Mon, 26 May 2025 17:55:50 GMT",
-                "musicbrainz_row_id": 1,
-                "id":3
-            },
-            {
-                "body": "skibdi-ohio-rizz-amogus",
-                "subject": "asdfasf",
-                "important": True,
-                "project": "bookbrainz",
-                "expire_age" : 7,
-                "created": "Sat, 31 May 2025 17:55:50 GMT",
-                "musicbrainz_row_id": 1,
-                "id":4
-            },
-            {
-                "musicbrainz_row_id": 1,
-                "project": "musicbrainz",
-                "template_id": "verify-email",
-                "template_params": { "reason": "verify" },
-                "important": False,
-                "expire_age": 30,
-                "email_id": "veryify-email-meh213324",
-                "id":5
-            },
-            {
-                "musicbrainz_row_id": 3,
-                "project": "musicbrainz",
-                "subject": "We are trying to scam you!", 
-                "body": "We called to let you know your extended car warranty is about to expire!",
-                "important": False,
-                "expire_age": 30,
-                "email_id": "scam-email-3421312435"
-            }
-        ]
-        for i in test_notifications_data:
+        for i in self.test_notifications_data:
             Notification.create(**i)
 
     def test_fetch_notifications_with_no_optional_parameters(self):
@@ -163,5 +174,23 @@ class NotificationDbTestCase(FlaskTestCase):
                     AND id IN :delete_ids
         """), test_params)
         self.assertEqual(after_result.fetchall(), [])
+    
+    def test_insert_notifications(self):
+        db.engine.execute(sqlalchemy.text("DELETE FROM notification"))
+        before_result = db.engine.execute(sqlalchemy.text("SELECT * FROM notification"))
+        self.assertEqual(before_result.fetchall(), [])
 
-        
+        test_data = [dict(n) for n in self.test_notifications_data]
+        for n in test_data:
+            n["user_id"] = n["musicbrainz_row_id"]
+            n["to"] ="user@example.com"
+            n["sent_from"] = "noreply@project.org"
+            n["send_email"] = True
+
+        res = notif.insert_notifications(test_data)
+        self.assertEqual(res, len(test_data))
+
+        after_result = db.engine.execute(sqlalchemy.text("SELECT id FROM notification"))
+        after_result = [row.id for row in after_result.mappings()]
+        for i in range(len(test_data)):
+            self.assertEqual(after_result[i], self.test_notifications_data[i]["id"])
