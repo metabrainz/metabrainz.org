@@ -10,8 +10,18 @@
     {{- end -}}
 {{- end -}}
 
+from datetime import timedelta
+
 SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
 DEBUG = False
+
+EMAIL_VERIFICATION_SECRET_KEY = '''{{template "KEY" "email_verification_secret_key"}}'''
+EMAIL_VERIFICATION_EXPIRY = timedelta(hours=24)
+EMAIL_RESET_PASSWORD_EXPIRY = timedelta(hours=24)
+
+# Bcrypt
+BCRYPT_HASH_PREFIX = "2a"
+BCRYPT_LOG_ROUNDS = 12
 
 {{if service "pgbouncer-master"}}
 {{with index (service "pgbouncer-master") 0}}
