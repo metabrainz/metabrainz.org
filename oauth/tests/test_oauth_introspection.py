@@ -304,7 +304,7 @@ class IntrospectionTestCase(OAuthTestCase):
             "client_id": application["client_id"],
             "client_secret": application["client_secret"],
             "grant_type": "client_credentials",
-            "scope": "test-scope-1",
+            "scope": "profile",
         }
         response = self.client.post("/oauth2/token", data=data)
         self.assertEqual(response.status_code, 200)
@@ -320,7 +320,7 @@ class IntrospectionTestCase(OAuthTestCase):
         self.assertEqual(response.json["active"], True)
         self.assertEqual(response.json["client_id"], data["client_id"])
         self.assertEqual(response.json["issued_by"], "https://metabrainz.org/")
-        self.assertEqual(response.json["scope"], ["test-scope-1"])
+        self.assertEqual(response.json["scope"], ["profile"])
         self.assertEqual(response.json["sub"], application["name"])
         self.assertEqual(response.json["token_type"], "Bearer")
         self.assertIsNotNone(response.json["issued_at"])
