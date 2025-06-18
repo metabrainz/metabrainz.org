@@ -30,7 +30,7 @@ class OAuth2Client(db.Model, ClientMixin):
         return None
 
     def get_allowed_scope(self, scope):
-        pass  # TODO: Fix allowed scopes
+        return scope
 
     def check_redirect_uri(self, redirect_uri):
         return redirect_uri in self.redirect_uris
@@ -42,10 +42,10 @@ class OAuth2Client(db.Model, ClientMixin):
         return self.client_secret == client_secret
 
     def check_endpoint_auth_method(self, method, endpoint):
-        return True  # TODO: Fix token endpoint auth
+        return True
 
     def check_response_type(self, response_type):
-        return True  # TODO: Fix check response type
+        return True
 
     def check_grant_type(self, grant_type):
         if grant_type == "client_credentials":

@@ -1,16 +1,17 @@
 import json
 
 from authlib.oauth2.rfc6749 import InvalidRequestError
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash, g
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash, g, current_app
 from flask_babel import gettext
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
+from urllib.parse import urljoin
 
 from metabrainz.decorators import nocache, crossdomain
 from oauth import login
 from oauth.generator import create_client_secret, create_client_id
 from oauth.login import login_required, current_user
-from oauth.model import db, OAuth2RefreshToken
+from oauth.model import db, OAuth2RefreshToken, OAuth2Scope
 from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
 from oauth.model.access_token import OAuth2AccessToken
@@ -19,6 +20,7 @@ from oauth.authorization_server import authorization_server
 from metabrainz.utils import build_url
 
 oauth2_bp = Blueprint("oauth2", __name__, static_folder="/static")
+wellknown_bp = Blueprint("well-known", __name__)
 
 
 @oauth2_bp.after_request
@@ -41,6 +43,7 @@ def index():
         .filter(OAuth2Client.owner_id == current_user.id) \
         .order_by(OAuth2Client.client_id_issued_at) \
         .all()
+    # todo: de-dup access tokens, show auth-ed applications instead?
     tokens = db \
         .session \
         .query(OAuth2AccessToken) \
@@ -266,7 +269,7 @@ def revoke():
 
 @oauth2_bp.route("/userinfo", methods=["GET", "POST"])
 def user_info():
-    # todo: remove. this should be in MB.
+    # todo: make this OpenID compliant
     auth_header = request.headers.get("Authorization")
     if not auth_header:
         return jsonify({"error": "missing auth header"}), 401
@@ -304,3 +307,33 @@ def introspect_token():
 
 def split_by_crlf(s):
     return [v for v in s.splitlines() if v]
+
+
+@wellknown_bp.route("/jwks.json")
+def jwks_uri():
+    return {
+        "keys": [
+            current_app.config["OIDC_JWT_PUBLIC_KEY"]
+        ]
+    }
+
+
+@wellknown_bp.route("/openid-configuration", methods=["GET"])
+def well_known_oauth_authorization_server():
+    scopes = [
+        s[0] for s in db.session.query(OAuth2Scope.name).all()
+    ]
+    url_prefix = urljoin(current_app.config["MUSICBRAINZ_SERVER"], current_app.config["OAUTH2_BLUEPRINT_PREFIX"])
+    return {
+        "issuer": "https://metabrainz.org",
+        "authorization_endpoint": f"{url_prefix}/authorize",
+        "token_endpoint": f"{url_prefix}/token",
+        "userinfo_endpoint": f"{url_prefix}/userinfo",
+        "jwks_uri": f"{url_prefix}/.well-known/jwks.json",
+        "scopes_supported": scopes,
+        "response_types_supported": ["code", "id_token token", "id_token"],
+        "response_modes_supported": ["query", "fragment"],
+        "grant_types_supported": ["authorization_code", "refresh_token", "implicit"],
+        "id_token_signing_alg_values_supported": ["ES256", "none"],
+        "subject_types_supported": ["public"],
+    }

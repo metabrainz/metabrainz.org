@@ -124,3 +124,25 @@ OAUTH2_TOKEN_EXPIRES_IN = {
 }
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
 OAUTH2_WHITELISTED_CCG_CLIENTS = []
+
+OIDC_ID_TOKEN_EXPIRATION = 3600
+# DANGER: DO NOT USE THESE VALUES IN PRODUCTION
+OIDC_JWT_PRIVATE_KEY = {
+   "alg": "P-256",
+   "kty": "EC",
+   "kid": "admin@example.com",
+   "use": "sig",
+   "crv": "P-256",
+   "x": "Ze2loSV3wrroKUN_4zhwGhCqo3Xhu1td4QjeQ5wIVR0",
+   "y": "HlLtdXARY_f55A3fnzQbPcm6hgr34Mp8p-nuzQCE0Zw",
+   "d": "r_kHyZ-a06rmxM3yESK84r1otSg-aQcVStkRhA-iCM8"
+}
+OIDC_JWT_PUBLIC_KEY = {
+   "alg": "P-256",
+   "kty": "EC",
+   "kid": "admin@example.com",
+   "use": "sig",
+   "crv": "P-256",
+   "x": "Ze2loSV3wrroKUN_4zhwGhCqo3Xhu1td4QjeQ5wIVR0",
+   "y": "HlLtdXARY_f55A3fnzQbPcm6hgr34Mp8p-nuzQCE0Zw",
+}

@@ -20,7 +20,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "test-scope-1",
+            "scope": "profile",
             "state": "random-state",
             "code_challenge": code_challenge,
             "redirect_uri": redirect_uri,
@@ -150,7 +150,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
             query_string = {
                 "client_id": application["client_id"],
                 "response_type": "code",
-                "scope": "test-scope-1",
+                "scope": "profile",
                 "state": "random-state",
                 "code_challenge_method": code_challenge_method,
                 "redirect_uri": redirect_uri,
@@ -169,7 +169,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
             query_string = {
                 "client_id": application["client_id"],
                 "response_type": "code",
-                "scope": "test-scope-1",
+                "scope": "profile",
                 "state": "random-state",
                 "code_challenge": "abc",
                 "code_challenge_method": code_challenge_method,
@@ -199,7 +199,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
             query_string = {
                 "client_id": application["client_id"],
                 "response_type": "code",
-                "scope": "test-scope-1",
+                "scope": "profile",
                 "state": "random-state",
                 "code_challenge": code_challenge,
                 "code_challenge_method": "md5",
