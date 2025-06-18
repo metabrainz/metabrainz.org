@@ -10,8 +10,6 @@
     {{- end -}}
 {{- end -}}
 
-import json
-
 SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
 DEBUG = False
 
