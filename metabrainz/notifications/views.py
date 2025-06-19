@@ -229,7 +229,7 @@ def remove_notifications(user_id: int):
 
 
 @notification_bp.post("/send")
-# TODO: Add Authorization decorator.
+@ccg_token_required
 def send_notifications():
     """
     Inserts batch of notifications for a project.
@@ -329,6 +329,7 @@ def send_notifications():
 
 
 @notification_bp.route("<int:user_id>/digest-preference", methods=["GET", "POST"])
+@ccg_token_required
 def set_digest_preference(user_id):
     """
     Get and update the digest preference of the user.

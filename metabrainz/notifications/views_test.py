@@ -8,6 +8,11 @@ from metabrainz.notifications.views import DEFAULT_NOTIFICATION_FETCH_COUNT, MAX
 
 class NotificationViewsTest(FlaskTestCase):
     
+    def setUp(self):
+        super(NotificationViewsTest, self).setUp()
+        self.app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"] = ['abc', 'def']
+        self.introspect_url = self.app.config["OAUTH_INTROSPECTION_URL"]
+
     @requests_mock.Mocker()
     @mock.patch('metabrainz.notifications.views.fetch_notifications')
     def test_get_notifications(self, mock_requests, mock_fetch):
@@ -15,14 +20,14 @@ class NotificationViewsTest(FlaskTestCase):
         projects =  tuple(i.value for i in NotificationProjectType )
         until_ts = datetime.now(timezone.utc)
         expected_value=[{'t_id':1}, {'t_id':2}]
-        self.app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"] = ['abc', 'def']
+        url = f'notification/{user_id}/fetch'
+
         mock_fetch.return_value=expected_value
-        mock_requests.post(self.app.config["OAUTH_INTROSPECTION_URL"], json={
+        mock_requests.post(self.introspect_url, json={
             "active": True,
             "client_id": "abc",
             "scope": ["notification"],
-        })
-        url = f'notification/{user_id}/fetch'
+        })        
 
         # With no optional parameters.
         response = self.client.get(url, query_string={'token':'good_token'})
@@ -73,7 +78,7 @@ class NotificationViewsTest(FlaskTestCase):
         user_id=1
         read=[1,2,3]
         unread=[4,5,6]
-        mock_requests.post(self.app.config["OAUTH_INTROSPECTION_URL"], json={
+        mock_requests.post(self.introspect_url, json={
             "active": True,
             "client_id": "abc",
             "scope": ["notification"],
@@ -134,7 +139,7 @@ class NotificationViewsTest(FlaskTestCase):
     def test_remove_notifications(self, mock_requests, mock_delete):
         user_id=1
         delete=[6,7,8]
-        mock_requests.post(self.app.config["OAUTH_INTROSPECTION_URL"], json={
+        mock_requests.post(self.introspect_url, json={
             "active": True,
             "client_id": "abc",
             "scope": ["notification"],
@@ -169,9 +174,15 @@ class NotificationViewsTest(FlaskTestCase):
         self.assert503(res)
         self.assertEqual(res.json['error'], 'Cannot delete notifications right now.')
 
+    @requests_mock.Mocker()
     @mock.patch('metabrainz.notifications.views.insert_notifications')
-    def test_send_notifications(self, mock_insert):
+    def test_send_notifications(self, mock_requests, mock_insert):
         mock_insert.return_value=2
+        mock_requests.post(self.introspect_url, json={
+            "active": True,
+            "client_id": "abc",
+            "scope": ["notification"],
+        })
         test_data = [
             {  
                 "user_id": 1,
@@ -200,13 +211,15 @@ class NotificationViewsTest(FlaskTestCase):
                 "send_email": True
             }
         ]
+        url = f'notification/send?token=good_token'
         res = self.client.post(
-            'notification/send',
+            url,
             json=test_data
         )
         self.assert200(res)
         mock_insert.assert_called_with(test_data)
         self.assertEqual(res.json['status'], 'ok')
+
         # Bad Requests.
         test_data[1].pop('sent_from')
         test_data[0].pop('subject')
@@ -215,7 +228,7 @@ class NotificationViewsTest(FlaskTestCase):
                     ([test_data[0]], 'Notification 0 should include either subject and body or template_id and template_params.')]
         for i in bad_data:
             res = self.client.post(
-                'notification/send',
+                url,
                 json=i[0]
             )
             self.assert400(res)
@@ -224,7 +237,7 @@ class NotificationViewsTest(FlaskTestCase):
         # Database error.
         mock_insert.side_effect= Exception()
         res = self.client.post(
-            f'notification/send',
+            url,
             json=[{
                 "user_id": 4,
                 "project": "musicbrainz",
@@ -242,13 +255,19 @@ class NotificationViewsTest(FlaskTestCase):
         self.assert503(res)
         self.assertEqual(res.json['error'], 'Cannot insert notifications right now.')
 
+    @requests_mock.Mocker()
     @mock.patch('metabrainz.notifications.views.UserPreference')
-    def test_set_digest_preference(self, mock_digest):
+    def test_set_digest_preference(self, mock_requests, mock_digest):
         mock_digest.get.return_value = mock.MagicMock(digest=True, digest_age=19)
+        mock_requests.post(self.introspect_url, json={
+            "active": True,
+            "client_id": "abc",
+            "scope": ["notification"],
+        })
         user_id = 1
-        # GET method test
-        url = f'notification/{user_id}/digest-preference'
+        url = f'notification/{user_id}/digest-preference?token=good_token'
 
+        # GET method test        
         res = self.client.get(url)
         self.assert200(res)
         self.assertEqual(res.json, {"digest": True, "digest_age": 19})
@@ -262,13 +281,11 @@ class NotificationViewsTest(FlaskTestCase):
         # POST method test
         mock_digest.set_digest_info.return_value = mock.MagicMock(digest=True, digest_age=21)
         params = {"digest": True, "digest_age": 21}
-        user_id = 1
-        url = f'notification/{user_id}/digest-preference'
-
         res = self.client.post(url, json=params)
         self.assert200(res)
         self.assertEqual(res.json, params)
 
+        # Bad requests.
         bad_params = [({"digest":"true"}, "Invalid digest value."),
                       ({"digest": True, "digest_age": "200"}, "Invalid digest age."),
                       ({"digest": True, "digest_age": 200}, "Invalid digest age."),
@@ -283,7 +300,7 @@ class NotificationViewsTest(FlaskTestCase):
         res = self.client.post(url, json=params)
         self.assert503(res)
         self.assertEqual(res.json['error'], "Cannot update digest preference right now.")
-    
+
     @requests_mock.Mocker()
     def test_invalid_tokens(self, mock_requests):
         endpoints = [
@@ -300,29 +317,39 @@ class NotificationViewsTest(FlaskTestCase):
                 "url": "notification/1/delete",
                 "method": self.client.post,
                 "data": {"json": [1]}
+            },
+            {
+                "url": "notification/send",
+                "method": self.client.post,
+                "data": {"json": [{"test_data": 1}]}
+            },
+            {
+                "url": "notification/1/digest-preference",
+                "method": self.client.post,
+                "data": {"json": {"digest": True, "digest_age": 19}}
+
             }
         ]
         for e in endpoints:
             url = e["url"]
             json = e.get("data")
             method = e["method"]
-            introspect_url = self.app.config["OAUTH_INTROSPECTION_URL"]
 
             res = method(url, **(json or {}))
             self.assert400(res)
             self.assertEqual(res.json['error'], 'Missing access token.')
 
-            mock_requests.post(introspect_url, json={"active": False})
+            mock_requests.post(self.introspect_url, json={"active": False})
             res = method(url+'?token=bad_token', **(json or {}))
             self.assert401(res)
             self.assertEqual(res.json['error'], 'Invalid or Expired access token.')
 
-            mock_requests.post(introspect_url, json={"active": True, "scope": ["view", "profile"]})
+            mock_requests.post(self.introspect_url, json={"active": True, "scope": ["view", "profile"]})
             res = method(url+'?token=missing_scope_token', **(json or {}))
             self.assert403(res)
             self.assertEqual(res.json['error'], 'Missing notification scope.')
 
-            mock_requests.post(introspect_url, json={"active": True, "scope": ["notification"], "client_id": "xyz"})
+            mock_requests.post(self.introspect_url, json={"active": True, "scope": ["notification"], "client_id": "xyz"})
             res = method(url+'?token=invalid_clientid_token', **(json or {}))
             self.assert403(res)
             self.assertEqual(res.json['error'], 'Client is not an official MeB project.')
