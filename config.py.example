@@ -61,6 +61,7 @@ REDIS = {
 # MUSICBRAINZ
 # MusicBrainz Base URL must have a trailing slash.
 MUSICBRAINZ_BASE_URL = "https://musicbrainz.org/"
+OAUTH_INTROSPECTION_URL = f"{MUSICBRAINZ_BASE_URL}new-oauth2/introspect"
 MUSICBRAINZ_CLIENT_ID = ""
 MUSICBRAINZ_CLIENT_SECRET = ""
 
