@@ -144,7 +144,7 @@ def insert_notifications(notifications: List[dict]) -> int:
             ,"body" : notif.get("body")
             ,"template_id": notif.get("template_id")
             ,"template_params": orjson.dumps(notif.get("template_params")).decode("utf-8") if notif.get("template_params") else None
-            ,"important": notif.get("important", False)
+            ,"important": notif["important"]
             ,"expire_age": notif["expire_age"]
             ,"email_id": notif.get("email_id", str(uuid.uuid4()))
             ,"read": False
