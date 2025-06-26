@@ -134,34 +134,7 @@ def insert_notifications(notifications: List[dict]) -> int:
     Returns:
         int : Total number of rows successfully inserted.
     """
-
-    params=[]
-    for notif in notifications:
-        params.append({
-            "musicbrainz_row_id": notif["user_id"]
-            ,"project": notif["project"]
-            ,"subject":notif.get("subject")
-            ,"body" : notif.get("body")
-            ,"template_id": notif.get("template_id")
-            ,"template_params": orjson.dumps(notif.get("template_params")).decode("utf-8") if notif.get("template_params") else None
-            ,"important": notif["important"]
-            ,"expire_age": notif["expire_age"]
-            ,"email_id": notif.get("email_id", str(uuid.uuid4()))
-            ,"read": False
-        })
-
-        if notif["important"] and notif["send_email"]:
-            try:
-                send_mail(
-                    subject=notif["subject"],
-                    text=notif["body"],
-                    recipients=list(notif["to"]),
-                    from_addr=notif["sent_from"]
-                )
-            except Exception:
-                current_app.logger.error("Could not send email to %s", notif["to"]) 
-            params[-1]["read"] = True
-
+    params = _prepare_notifications(notifications)
     with db.engine.connect() as connection:
         insert_query = sqlalchemy.text("""
                     INSERT INTO
@@ -173,3 +146,54 @@ def insert_notifications(notifications: List[dict]) -> int:
         result = connection.execute(insert_query, params)
     return result.rowcount
 
+
+def _prepare_notifications(notifications: List[dict]) -> List[dict]:
+    """Helper function to prepare notifications for insertion into db."""
+
+    params=[]
+    for notif in notifications:
+
+        important = notif["important"]
+        read = False
+        subject = notif.get("subject")
+        body = notif.get("body")
+        template_id = notif.get("template_id")
+        template_params = (
+            orjson.dumps(notif.get("template_params")).decode("utf-8")
+            if notif.get("template_params")
+            else None
+        )
+
+        # Send email directly if the notification is marked as important.
+        if important and notif["send_email"]:
+            if subject and body:
+                _send_important_mail(subject, body, notif["to"], notif["sent_from"])
+            elif template_id and template_params:
+                pass  # TODO: Integrate mb-mail.
+            read = True
+
+        params.append(
+            {   
+                "musicbrainz_row_id": notif["user_id"],
+                "project": notif["project"],
+                "subject": subject,
+                "body": body,
+                "template_id": template_id,
+                "template_params": template_params,
+                "important": notif["important"],
+                "expire_age": notif["expire_age"],
+                "email_id": notif.get("email_id", str(uuid.uuid4())),
+                "read": read
+            }
+        )
+    return params
+
+
+def _send_important_mail(subject: str, text: str, recipient: str, from_addr: str):
+    """Helper function to directly send mail for important notification."""
+    try:
+        send_mail(
+            subject=subject, text=text, recipients=[recipient], from_addr=from_addr
+        )
+    except Exception as err:
+        current_app.logger.error("Failed to send mail to recipient %s, %s", recipient, str(err))

@@ -320,7 +320,7 @@ def send_notifications():
 
     try:
         res = insert_notifications(data)
-        current_app.logger.info("%i rows inserted.", res)
+        current_app.logger.info("%i rows inserted.", res)  # TODO: Remove this
     except Exception as err:
         current_app.logger.error("Cannot insert notifications %s", str(err))
         raise APIServiceUnavailable("Cannot insert notifications right now.")
