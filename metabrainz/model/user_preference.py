@@ -21,10 +21,13 @@ class UserPreference(db.Model):
         return cls.query.filter_by(**kwargs).first()
     
     @classmethod
-    def set_digest_info(cls: Type["UserPreference"], musicbrainz_row_id:int, digest:bool, digest_age:int) -> int:
-        result = cls.query.filter(cls.musicbrainz_row_id == musicbrainz_row_id).update(
-            {cls.digest:digest, cls.digest_age: digest_age}
-        )
-        db.session.commit()
+    def set_digest_info(cls: Type["UserPreference"], musicbrainz_row_id: int, digest: bool, digest_age: Optional[int]=None) -> Optional["UserPreference"]:
+        params = {cls.digest: digest}
+        if digest_age:
+            params[cls.digest_age] = digest_age
 
+        cls.query.filter(cls.musicbrainz_row_id == musicbrainz_row_id).update(params)
+        db.session.commit()
+        
+        result = cls.query.filter_by(musicbrainz_row_id = musicbrainz_row_id).first()
         return result
