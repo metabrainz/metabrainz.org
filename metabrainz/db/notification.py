@@ -4,7 +4,6 @@ import orjson
 from datetime import datetime
 from typing import List, Tuple, Optional
 from flask import current_app
-from brainzutils.mail import send_mail
 
 from metabrainz import db
 
