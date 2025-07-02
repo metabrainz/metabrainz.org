@@ -5,7 +5,7 @@ from brainzutils.mail import send_mail
 from brainzutils import cache
 from sqlalchemy import func, text
 from sqlalchemy.dialects import postgresql
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from flask import current_app
 import logging
 import pytz
@@ -25,7 +25,7 @@ class AccessLog(db.Model):
     __tablename__ = 'access_log'
 
     token = db.Column(db.String, db.ForeignKey('token.value'), primary_key=True)
-    timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=lambda: datetime.now(timezone.utc))
     ip_address = db.Column(postgresql.INET)
 
     @classmethod

@@ -2,7 +2,7 @@ from metabrainz.model import db
 from metabrainz.model import token_log
 from metabrainz.model.token_log import TokenLog
 from metabrainz.utils import generate_string
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 TOKEN_LENGTH = 40
 
@@ -13,7 +13,7 @@ class Token(db.Model):
     value = db.Column(db.String, primary_key=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('supporter.id', ondelete="SET NULL", onupdate="CASCADE"))
-    created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
+    created = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     log_records = db.relationship(TokenLog, backref="token", lazy="dynamic")
 
@@ -40,7 +40,7 @@ class Token(db.Model):
         if owner_id is not None:
             last_hour_q = cls.query.filter(
                 cls.owner_id == owner_id,
-                cls.created > datetime.utcnow() - timedelta(hours=1),
+                cls.created > datetime.now(timezone.utc) - timedelta(hours=1),
             )
             if last_hour_q.count() > 0:
                 raise TokenGenerationLimitException("Can't generate more than one token per hour.")
