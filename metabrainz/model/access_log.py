@@ -25,7 +25,7 @@ class AccessLog(db.Model):
     __tablename__ = 'access_log'
 
     token = db.Column(db.String, db.ForeignKey('token.value'), primary_key=True)
-    timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=datetime.now(timezone.utc))
+    timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=lambda: datetime.now(timezone.utc))
     ip_address = db.Column(postgresql.INET)
 
     @classmethod

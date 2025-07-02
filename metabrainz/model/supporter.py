@@ -39,7 +39,7 @@ class Supporter(db.Model, UserMixin):
     is_commercial = db.Column(db.Boolean, nullable=False)
     musicbrainz_id = db.Column(db.Unicode, unique=True)  # MusicBrainz account that manages this supporter
     musicbrainz_row_id = db.Column(db.Integer, unique=True)  # MusicBrainz row id of the account
-    created = db.Column(db.DateTime(timezone=True), default=datetime.now(timezone.utc))
+    created = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     state = db.Column(postgresql.ENUM(
         STATE_ACTIVE,
         STATE_PENDING,
