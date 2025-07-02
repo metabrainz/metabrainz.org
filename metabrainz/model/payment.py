@@ -8,7 +8,7 @@ from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
 from sqlalchemy.sql import func, desc
 from flask import current_app
-from datetime import datetime
+from datetime import datetime, timezone
 import stripe
 import logging
 
@@ -45,7 +45,9 @@ class Payment(db.Model):
     invoice_number = db.Column(db.Integer)
 
     # Transaction details
-    payment_date = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
+    payment_date = db.Column(
+        db.DateTime(timezone=True), default=datetime.now(timezone.utc)
+    )
     payment_method = db.Column(db.Enum(
         PAYMENT_METHOD_STRIPE,
         PAYMENT_METHOD_PAYPAL,
@@ -177,7 +179,6 @@ class Payment(db.Model):
                     return row.id
 
         return None
-
 
     @classmethod
     def process_paypal_ipn(cls, form):
@@ -369,7 +370,9 @@ class Payment(db.Model):
         transaction = charge["balance_transaction"]
         currency = transaction["currency"].lower()
         if currency not in SUPPORTED_CURRENCIES:
-            current_app.logger.warning("Unsupported currency: ", transaction["currency"])
+            current_app.logger.warning(
+                "Unsupported currency: ", transaction["currency"]
+            )
             return
 
         new_donation = cls(

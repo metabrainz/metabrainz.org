@@ -84,8 +84,8 @@ class QuickBooksInvoiceSender():
         realm = cache.get("qb_realm")
 
         if not refresh_token or not realm:
-            current_app.logger.warn("Could not fetch OAuth credentials from redis.")
-            current_app.logger.warn("Load https://metabrainz.org/admin/quickbooks/ to push the credentials to redis.")
+            current_app.logger.warning("Could not fetch OAuth credentials from redis.")
+            current_app.logger.warning("Load https://metabrainz.org/admin/quickbooks/ to push the credentials to redis.")
             return None
 
         try:
@@ -95,7 +95,7 @@ class QuickBooksInvoiceSender():
                 company_id=realm
             )
         except intuitlib.exceptions.AuthClientError as err:
-            current_app.logger.warn("Could not log into quickbooks. Re-log in on the web to fix.")
+            current_app.logger.warning("Could not log into quickbooks. Re-log in on the web to fix.")
             return None
 
 
@@ -112,13 +112,13 @@ class QuickBooksInvoiceSender():
             invoice.save(qb=client)
             return True
         except exceptions.ValidationException as err:
-            current_app.logger.warn(err.detail)
+            current_app.logger.warning(err.detail)
             return False
 
     def send_invoice(self, client, invoice, customer):
         """ Given a client, invoice and its customer object, send the invoice to the customer. """
 
-        current_app.logger.warn("  sending invoice")
+        current_app.logger.warning("  sending invoice")
         emails = [e.strip() for e in str(invoice.BillEmail).split(",")]
         emails.append("accounting@metabrainz.org")
         text = MAIL_BODY % (customer.GivenName,
@@ -141,7 +141,7 @@ class QuickBooksInvoiceSender():
         )
         self.mark_invoice_sent(client, invoice)
 
-        current_app.logger.warn("  wait")
+        current_app.logger.warning("  wait")
         time.sleep(SEND_DELAY)
 
     def send_invoices(self):
@@ -149,64 +149,64 @@ class QuickBooksInvoiceSender():
             ignore them in future runs, asks for feedback about invoices that are unclear and sends
             the rest. """
 
-        current_app.logger.warn("Find invoices to send...")
+        current_app.logger.warning("Find invoices to send...")
         client = self.get_client()
         if not client:
-            current_app.logger.warn("Cannot get client -- have you logged into QuickBooks web within the last hour?")
+            current_app.logger.warning("Cannot get client -- have you logged into QuickBooks web within the last hour?")
             return
 
         invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
         if not invoices:
-            current_app.logger.warn("Cannot fetch list of invoices")
+            current_app.logger.warning("Cannot fetch list of invoices")
             return
 
         for invoice in invoices:
             if invoice.EmailStatus == "EmailSent":
-                current_app.logger.warn("Skip invoice %s with status %s" % (invoice.DocNumber, invoice.EmailStatus))
+                current_app.logger.warning("Skip invoice %s with status %s" % (invoice.DocNumber, invoice.EmailStatus))
                 continue
 
             if invoice.DocNumber is None:
-                current_app.logger.warn("Skip invoice %s. Bad invoice number." % invoice.DocNumber)
+                current_app.logger.warning("Skip invoice %s. Bad invoice number." % invoice.DocNumber)
                 continue
 
-            current_app.logger.warn("Invoice %s with status %s" % (invoice.DocNumber, invoice.EmailStatus))
+            current_app.logger.warning("Invoice %s with status %s" % (invoice.DocNumber, invoice.EmailStatus))
             if float(invoice.TotalAmt) == 0.0:
-                current_app.logger.warn("  marking zero amount invoice %s as sent." % invoice.DocNumber)
+                current_app.logger.warning("  marking zero amount invoice %s as sent." % invoice.DocNumber)
                 self.mark_invoice_sent(client, invoice)
                 continue
 
             customer = Customer.get(int(invoice.CustomerRef.value), qb=client)
             if customer.Notes.find("donotsend") >= 0:
-                current_app.logger.warn("  marking donotsend invoice %s as sent, without sending." % invoice.DocNumber)
+                current_app.logger.warning("  marking donotsend invoice %s as sent, without sending." % invoice.DocNumber)
                 self.mark_invoice_sent(client, invoice)
                 continue
 
             if invoice.EmailStatus == "NotSet":
-                current_app.logger.warn("  To '%s' marked as NotSet." % customer.DisplayName)
+                current_app.logger.warning("  To '%s' marked as NotSet." % customer.DisplayName)
                 while True:
                     resp = input("  Send [s], Mark sent [m], Ignore [i]:").strip().lower()
                     if resp is None or len(resp) == 0 or resp[0] not in "smi":
-                        current_app.logger.warn("  select one of the given options!")
+                        current_app.logger.warning("  select one of the given options!")
                         continue
 
                     if resp[0] == "s":
                         self.send_invoice(client, invoice, customer)
-                        current_app.logger.warn("  invoice sent!")
+                        current_app.logger.warning("  invoice sent!")
                     elif resp[0] == "m":
                         self.mark_invoice_sent(client, invoice)
-                        current_app.logger.warn("  invoice marked as sent, without being sent!")
+                        current_app.logger.warning("  invoice marked as sent, without being sent!")
 
                     break
 
                 continue
 
             self.send_invoice(client, invoice, customer)
-            current_app.logger.warn("  invoice sent!")
+            current_app.logger.warning("  invoice sent!")
 
     def send_invoice_reminder(self, client, invoice, customer):
         """ Given a client, invoice and its customer object, send the invoice to the customer. """
 
-        current_app.logger.warn("  sending invoice")
+        current_app.logger.warning("  sending invoice")
         emails = [e.strip() for e in str(invoice.BillEmail).split(",")]
         emails.append("accounting@metabrainz.org")
         text = REMINDER_MAIL_BODY % (customer.GivenName,
@@ -228,28 +228,28 @@ class QuickBooksInvoiceSender():
             from_name="MetaBrainz Accounting Department"
         )
 
-        current_app.logger.warn("  wait")
+        current_app.logger.warning("  wait")
         time.sleep(SEND_DELAY)
 
     def send_invoice_reminders(self):
         client = self.get_client()
         if not client:
-            current_app.logger.warn("Cannot get client -- have you logged into QuickBooks web within the last hour?")
+            current_app.logger.warning("Cannot get client -- have you logged into QuickBooks web within the last hour?")
             return
 
         due_date = datetime.datetime.now() - datetime.timedelta(days=182)
         due_date = "%d-%02d-%02d" % (due_date.year, due_date.month, due_date.day)
         invoices = Invoice.query(f"select * from invoice where balance > '0.0' and duedate < '{due_date}' order by metadata.createtime desc maxresults 300", qb=client)
         if not invoices:
-            current_app.logger.warn("Cannot fetch list of invoices")
+            current_app.logger.warning("Cannot fetch list of invoices")
             return
 
-        current_app.logger.warn(f"fetched %d invoices" % len(invoices))
+        current_app.logger.warning(f"fetched %d invoices" % len(invoices))
         for invoice in invoices:
             customer = Customer.get(int(invoice.CustomerRef.value), qb=client)
             if customer.Notes.find("donotsend") >= 0:
-                current_app.logger.warn("skipping donotsend invoice %s." % invoice.DocNumber)
+                current_app.logger.warning("skipping donotsend invoice %s." % invoice.DocNumber)
                 continue
 
-            current_app.logger.warn("Invoice %s with balance %s due on %s" % (invoice.DocNumber, invoice.Balance, invoice.DueDate))
+            current_app.logger.warning("Invoice %s with balance %s due on %s" % (invoice.DocNumber, invoice.Balance, invoice.DueDate))
             self.send_invoice_reminder(client, invoice, customer)
