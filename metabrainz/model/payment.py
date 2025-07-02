@@ -46,7 +46,7 @@ class Payment(db.Model):
 
     # Transaction details
     payment_date = db.Column(
-        db.DateTime(timezone=True), default=datetime.now(timezone.utc)
+        db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
     payment_method = db.Column(db.Enum(
         PAYMENT_METHOD_STRIPE,

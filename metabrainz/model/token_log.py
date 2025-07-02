@@ -11,7 +11,7 @@ class TokenLog(db.Model):
     __tablename__ = 'token_log'
 
     token_value = db.Column(db.String, db.ForeignKey('token.value'), primary_key=True)
-    timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=datetime.now(timezone.utc))
+    timestamp = db.Column(db.DateTime(timezone=True), primary_key=True, default=lambda: datetime.now(timezone.utc))
     action = db.Column(
         db.Enum(
             ACTION_DEACTIVATE,

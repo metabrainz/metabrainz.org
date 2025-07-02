@@ -13,7 +13,7 @@ class Token(db.Model):
     value = db.Column(db.String, primary_key=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('supporter.id', ondelete="SET NULL", onupdate="CASCADE"))
-    created = db.Column(db.DateTime(timezone=True), default=datetime.now(timezone.utc))
+    created = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     log_records = db.relationship(TokenLog, backref="token", lazy="dynamic")
 
