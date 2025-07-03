@@ -25,12 +25,12 @@ def parse_payouts(payouts_file):
             head = row
             continue
 
-#        for i, d in enumerate(zip(head, row)):
-#            print("%d %-40s %s" % (i, d[0], d[1]))
-#        print()
+        for i, d in enumerate(zip(head, row)):
+            print("%d %-40s %s" % (i, d[0], d[1]))
+        print()
 
-        amount = -Decimal(row[1])
-        date = parser.parse(row[5] + " UTC")
+        amount = -Decimal(row[4])
+        date = parser.parse(row[2] + " UTC")
         payouts.append({ "date": date, "amount": amount, "sender": "PAYOUT", "fee": Decimal(0.0) })
 
     return payouts
@@ -78,9 +78,9 @@ fp.close()
 
 data = []
 for row in rows:
-#    for i, d in enumerate(zip(head, row)):
-#        print("%d %-40s %s" % (i, d[0], d[1]))
-#    print()
+    for i, d in enumerate(zip(head, row)):
+        print("%d %-40s %s" % (i, d[0], d[1]))
+    print()
 
     date = parser.parse(row[2] + " UTC")
     amount = Decimal(row[6])
