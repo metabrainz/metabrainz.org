@@ -29,8 +29,8 @@ def parse_payouts(payouts_file):
             print("%d %-40s %s" % (i, d[0], d[1]))
         print()
 
-        amount = -Decimal(row[1].replace(",", "."))
-        date = parser.parse(row[5] + " UTC")
+        amount = -Decimal(row[4].replace(",", "."))
+        date = parser.parse(row[2] + " UTC")
         payouts.append({ "date": date, "amount": amount, "sender": "PAYOUT", "fee": Decimal(0.0) })
 
     return payouts
@@ -85,20 +85,18 @@ for row in rows:
     date = parser.parse(row[2] + " UTC")
     amount = Decimal(row[6].replace(",", "."))
     fee = Decimal(row[7].replace(",", "."))
-    sender = row[19]
+    sender = row[21]
 
     if not sender:
-        sender = "Subscription from %s" % row[41]
+        sender = "Subscription from %s" % row[43]
         if row[61]:
-            sender += ", editor %s" % row[61]
-        if row[62]:
-            sender += ", email %s" % row[62]
+            sender += ", editor %s" % row[63]
 
     if amount < Decimal(0.0):
         sender = "Stripe Additional Fee"
 
-    if row[62] != "":
-        sender += " (inv #%s)" % row[62]
+    if row[64] != "":
+        sender += " (inv #%s)" % row[64]
 
     data.append({ "date": date, "amount": amount, "fee": fee, "sender": sender })
 
