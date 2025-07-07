@@ -5,6 +5,7 @@ from metabrainz.model.user_preference import UserPreference
 from metabrainz.db.notification import fetch_notifications, mark_read_unread, delete_notifications, insert_notifications
 from metabrainz.errors import APIBadRequest, APIServiceUnavailable
 from metabrainz.decorators import ccg_token_required
+from metabrainz.mail import NotificationSender
 
 DEFAULT_NOTIFICATION_FETCH_COUNT = 100
 MAX_ITEMS_PER_GET = 1000 # From listenbrainz.webserver.views.api_tools
@@ -324,6 +325,9 @@ def send_notifications():
     except Exception as err:
         current_app.logger.error("Cannot insert notifications %s", str(err))
         raise APIServiceUnavailable("Cannot insert notifications right now.")
+    
+    sender = NotificationSender(data)
+    sender.send_important_notifications()
 
     return jsonify({'status':'ok'}), 200
 
