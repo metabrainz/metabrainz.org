@@ -10,8 +10,10 @@ class NotificationSender:
     def __init__(self, notifications):
         self.notifications = notifications
 
-    def _send_important_mail(self, notification):
-        """Helper function to send important notifications."""
+    def _send_mail(self, notification):
+        """Helper function to send a notification through mail.
+        If sending fails, the notification is stored in cache for later retry.
+        """
         try:
             send_mail(
                 subject=notification["subject"],
@@ -25,10 +27,11 @@ class NotificationSender:
             )
             cache.hset(FAILED_MAIL_HASH_KEY, str(uuid.uuid4()), notification)
 
-    def send_mails(self):
+    def send_important_notifications(self):
+        """Sends all the important notifications."""
         for notif in self.notifications:
             if notif["important"] and notif["send_email"]:
                 if notif.get("subject") and notif.get("body"):
-                    self._send_important_mail(notif)
+                    self._send_mail(notif)
                 else:
                     pass  # TODO: integrate mb-mail
