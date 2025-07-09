@@ -327,7 +327,7 @@ def send_notifications():
         raise APIServiceUnavailable("Cannot insert notifications right now.")
     
     sender = NotificationSender(data)
-    sender.send_important_notifications()
+    sender.send_immediate_notifications()
 
     return jsonify({'status':'ok'}), 200
 

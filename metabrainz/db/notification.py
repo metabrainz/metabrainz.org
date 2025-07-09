@@ -171,3 +171,29 @@ def _prepare_notifications(notifications: List[dict]) -> List[dict]:
         )
 
     return params
+
+
+def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
+    """Filter notifications which belongs to users with digest disabled.
+    Args:
+        notifications (List[dict]): List of notifications.
+    Returns:
+        List[dict] : List of notifications for users with digest disabled.
+
+    """
+    user_ids_to_check = tuple(i["user_id"] for i in notifications)
+    with db.engine.connect() as connection:
+        query = sqlalchemy.text("""
+                        SELECT musicbrainz_row_id
+                        FROM user_preference
+                        WHERE musicbrainz_row_id IN :user_ids AND digest = FALSE
+        """)
+        result = connection.execute(query, {"user_ids": user_ids_to_check})
+        non_digest_user_ids = {user_id[0] for user_id in result}
+
+    non_digest_notifications = []
+    for notification in notifications:
+        if notification["user_id"] in non_digest_user_ids:
+            non_digest_notifications.append(notification)
+
+    return non_digest_notifications
