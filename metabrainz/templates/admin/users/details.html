@@ -1,0 +1,106 @@
+{% extends admin_base_template %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>User Details: {{ user.name }}</h2>
+        <a href="{{ url_for('.index') }}" class="btn btn-secondary">Back to Users List</a>
+    </div>
+
+    <!-- User Information -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">User Information</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Username:</dt>
+                        <dd class="col-sm-8">{{ user.name }}</dd>
+                        
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">
+                            {{ user.get_email_any() }}
+                            <span class="badge {% if user.is_email_confirmed() %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ 'Confirmed' if user.is_email_confirmed() else 'Unconfirmed' }}
+                            </span>
+                        </dd>
+                        
+                        <dt class="col-sm-4">Created:</dt>
+                        <dd class="col-sm-8">{{ user.member_since.strftime('%Y-%m-%d %H:%M:%S') }}</dd>
+                        
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge {% if user.is_blocked %}bg-danger{% else %}bg-success{% endif %}">
+                                {{ 'Blocked' if user.is_blocked else 'Active' }}
+                            </span>
+                        </dd>
+                    </dl>
+                </div>
+                
+                <div class="col-md-6">
+                    {% if not user.is_blocked %}
+                        <form action="{{ url_for('.block_user', user_id=user.id) }}" method="POST" class="mb-3">
+                            <div class="form-group">
+                                <label for="blockReason">Block Reason:</label>
+                                <textarea class="form-control" id="blockReason" name="reason" 
+                                          rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger mt-2">Block User</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('.unblock_user', user_id=user.id) }}" method="POST" class="mb-3">
+                            <div class="form-group">
+                                <label for="unblockReason">Unblock Reason:</label>
+                                <textarea class="form-control" id="unblockReason" name="reason" 
+                                          rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success mt-2">Unblock User</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Moderation History -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Moderation History</h3>
+        </div>
+        <div class="card-body">
+            {% if moderation_logs %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Action</th>
+                                <th>Moderator</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in moderation_logs %}
+                            <tr>
+                                <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>
+                                    <span class="badge {% if log.action == 'block' %}bg-danger{% else %}bg-success{% endif %}">
+                                        {{ log.action }}
+                                    </span>
+                                </td>
+                                <td>{{ log.moderator.name }}</td>
+                                <td>{{ log.reason }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted">No moderation history found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 
