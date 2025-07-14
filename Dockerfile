@@ -99,6 +99,13 @@ RUN touch /etc/service/oauth/down
 
 COPY ./docker/rc.local /etc/rc.local
 
+# Create directory for cron logs.
+RUN mkdir /logs
+
+# crontab
+COPY ./docker/services/cron/crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/crontab
+
 # copy the compiled js files and static assets from image to prod
 COPY --from=metabrainz-frontend-prod /code/frontend/robots.txt /static/
 COPY --from=metabrainz-frontend-prod /code/frontend/fonts /static/fonts
