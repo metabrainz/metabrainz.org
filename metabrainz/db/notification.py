@@ -242,8 +242,8 @@ def get_digest_notifications() -> List[dict]:
         notifications = []
         for row in result.mappings():
             row = dict(row)
-            row["to"] = row["user_email"]
-            row["from_addr"] = f'no_reply@{row["project"]}.org'
+            row["to"] = row.pop("user_email")
+            row["sent_from"] = f'no_reply@{row.pop("project")}.org'
             notifications.append(row)
 
         return notifications
