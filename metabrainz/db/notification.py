@@ -200,6 +200,7 @@ def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
 
 
 def delete_expired_notifications():
+    """Delete notifications that are past their expire_age."""
     with db.engine.connect() as connection:
         query = sqlalchemy.text(
             """
@@ -215,6 +216,14 @@ def delete_expired_notifications():
 
 
 def get_digest_notifications() -> List[dict]:
+    """Fetches all unread notifications that are to be sent in a digest.
+
+    Returns:
+        List[dict]: List of dictionaries containing the keys
+            `musicbrainz_row_id`, `to`, `sent_from`, `subject`,
+            `body`, `template_id`, `template_params`
+    """
+
     with db.engine.connect() as connection:
         query = sqlalchemy.text(
             """
