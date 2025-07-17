@@ -3,6 +3,8 @@ from metabrainz import db
 from metabrainz import create_app
 from metabrainz.model.access_log import AccessLog
 from metabrainz.invoices.send_invoices import QuickBooksInvoiceSender
+from metabrainz.mail import NotificationSender
+from metabrainz.db.notification import delete_expired_notifications
 import urllib.parse
 import subprocess
 import os
@@ -125,6 +127,21 @@ def import_musicbrainz_row_ids():
     """ Import musicbrainz row ids for users """
     with create_app().app_context():
         copy_row_ids()
+
+
+@cli.command()
+def delete_expired_notifications():
+    """Delete notifications past their expire age."""
+    with create_app().app_context():
+        delete_expired_notifications()
+
+
+@cli.command()
+def send_digest_notifications():
+    """Send digest notifications for users"""
+    with create_app().app_context():
+        ns = NotificationSender()
+        ns.send_digest_notifications()
 
 
 def _run_psql(script, uri, database=None):

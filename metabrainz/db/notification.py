@@ -197,3 +197,62 @@ def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
             non_digest_notifications.append(notification)
 
     return non_digest_notifications
+
+
+def delete_expired_notifications():
+    """Delete notifications that are past their expire_age."""
+    with db.engine.connect() as connection:
+        query = sqlalchemy.text(
+            """
+                DELETE
+                FROM  
+                    notification
+                WHERE 
+                    (created + (INTERVAL '1 day' * expire_age)) <= NOW()
+            """
+        )
+        result = connection.execute(query)
+    current_app.logger.info(f"Deleted {result.rowcount} notifications.")
+
+
+def get_digest_notifications() -> List[dict]:
+    """Fetches all unread notifications that are to be sent in a digest.
+
+    Returns:
+        List[dict]: List of dictionaries containing the keys
+            `musicbrainz_row_id`, `to`, `sent_from`, `subject`,
+            `body`, `template_id`, `template_params`
+    """
+
+    with db.engine.connect() as connection:
+        query = sqlalchemy.text(
+            """
+                SELECT 
+                        notification.musicbrainz_row_id
+                        ,notification.subject
+                        ,notification.body
+                        ,notification.template_id
+                        ,notification.template_params
+                        ,user_preference.user_email
+                        ,notification.project::TEXT
+                FROM
+                        notification
+                JOIN
+                        user_preference ON notification.musicbrainz_row_id = user_preference.musicbrainz_row_id
+
+                WHERE
+                        user_preference.digest = true
+                        AND (notification.created + (INTERVAL '1 day' * user_preference.digest_age)) <= NOW()
+                        AND notification.read = false      
+            """
+        )
+        result = connection.execute(query)
+
+        notifications = []
+        for row in result.mappings():
+            row = dict(row)
+            row["to"] = row.pop("user_email")
+            row["sent_from"] = f'no_reply@{row.pop("project")}.org'
+            notifications.append(row)
+
+        return notifications
