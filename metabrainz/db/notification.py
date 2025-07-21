@@ -272,6 +272,10 @@ def get_digest_notifications() -> List[dict]:
 
 
 def mark_notifications_read(notifications: List[dict]):
+    """Marks a list of notifications as 'read'.
+    Args:
+        notifications (List[dict]): List of notification dictionaries, each must contain an "id" key.
+    """
     notification_ids = tuple(n["id"] for n in notifications)
     if not notification_ids:
         return
