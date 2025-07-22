@@ -250,14 +250,14 @@ class NotificationDbTestCase(FlaskTestCase):
             self.assertEqual(notification["musicbrainz_row_id"], 2)
             self.assertEqual(notification["to"], "2@abc.com")
 
-    def test_mark_notifications_read(self):
+    def test_mark_notifications_sent(self):
         res = db.engine.execute(sqlalchemy.text("SELECT * FROM notification"))
         notifications = res.mappings().all()
 
-        notif.mark_notifications_read(notifications)
+        notif.mark_notifications_sent(notifications)
 
         after_result = db.engine.execute(
-            sqlalchemy.text("SELECT * FROM notification WHERE read=true")
+            sqlalchemy.text("SELECT * FROM notification WHERE notification_sent = true")
         )
         after_result = after_result.mappings().all()
         self.assertEqual(len(after_result), len(notifications))
