@@ -7,7 +7,7 @@ from brainzutils.mail import send_mail
 from metabrainz.db.notification import (
     filter_non_digest_notifications,
     get_digest_notifications,
-    mark_notifications_read,
+    mark_notifications_sent,
 )
 
 FAILED_MAIL_HASH_KEY = "failed_mail"
@@ -61,11 +61,11 @@ class NotificationSender:
         immediate_notifications += non_digest_notifications
 
         self._send_notifications(immediate_notifications)
-        mark_notifications_read(immediate_notifications)
+        mark_notifications_sent(immediate_notifications)
 
     def send_digest_notifications(self):
         """Send notifications which have reached their digest_age."""
 
         notifications = get_digest_notifications()
         self._send_notifications(notifications)
-        mark_notifications_read(notifications)
+        mark_notifications_sent(notifications)

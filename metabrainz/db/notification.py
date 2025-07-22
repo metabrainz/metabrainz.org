@@ -138,13 +138,13 @@ def insert_notifications(notifications: List[dict]) -> List[tuple[int]]:
     insert_query = """
                     INSERT INTO
                         notification
-                            (musicbrainz_row_id, project, subject, body, template_id, template_params, important, expire_age, email_id, read)
+                            (musicbrainz_row_id, project, subject, body, template_id, template_params, important, expire_age, email_id)
                     VALUES
                         %s
                     RETURNING 
                         id
         """
-    template = "(%(musicbrainz_row_id)s, %(project)s, %(subject)s, %(body)s, %(template_id)s, %(template_params)s, %(important)s, %(expire_age)s, %(email_id)s, %(read)s)"
+    template = "(%(musicbrainz_row_id)s, %(project)s, %(subject)s, %(body)s, %(template_id)s, %(template_params)s, %(important)s, %(expire_age)s, %(email_id)s)"
 
     conn = db.engine.raw_connection()
     try:
@@ -169,8 +169,9 @@ def _prepare_notifications(notifications: List[dict]) -> List[dict]:
                 "project": notif["project"],
                 "important": notif["important"],
                 "expire_age": notif["expire_age"],
+                # If we use pgsql's default UUID column, test cases fail due to "uuid-ossp" extension not being found.
+                # So, generating UUID in python before inserting.
                 "email_id": notif.get("email_id", str(uuid.uuid4())),
-                "read": False,
                 "subject": notif.get("subject"),
                 "body": notif.get("body"),
                 "template_id": notif.get("template_id"),
@@ -240,7 +241,7 @@ def get_digest_notifications() -> List[dict]:
         query = sqlalchemy.text(
             """
                 SELECT 
-                        notification.id
+                         notification.id
                         ,notification.musicbrainz_row_id
                         ,notification.subject
                         ,notification.body
@@ -271,8 +272,8 @@ def get_digest_notifications() -> List[dict]:
         return notifications
 
 
-def mark_notifications_read(notifications: List[dict]):
-    """Marks a list of notifications as 'read'.
+def mark_notifications_sent(notifications: List[dict]):
+    """Marks a list of notifications as sent.
     Args:
         notifications (List[dict]): List of notification dictionaries, each must contain an "id" key.
     """
@@ -283,7 +284,7 @@ def mark_notifications_read(notifications: List[dict]):
         query = sqlalchemy.text(
             """
                 UPDATE notification
-                SET read = true
+                SET notification_sent = true
                 WHERE id IN :IDs
             """
         )
