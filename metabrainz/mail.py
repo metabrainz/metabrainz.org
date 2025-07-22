@@ -3,7 +3,10 @@ from flask import current_app
 from typing import List
 from brainzutils import cache
 from brainzutils.mail import send_mail
-from metabrainz.db.notification import filter_non_digest_notifications
+from metabrainz.db.notification import (
+    filter_non_digest_notifications,
+    get_digest_notifications,
+)
 
 FAILED_MAIL_HASH_KEY = "failed_mail"
 
@@ -11,6 +14,7 @@ FAILED_MAIL_HASH_KEY = "failed_mail"
 class NotificationSender:
     def __init__(self, notifications):
         self.notifications = notifications
+
 
     def _send_notifications_batch(self, notifications: List[dict]):
         """Helper function to send immediate notifications through mail.
@@ -31,6 +35,7 @@ class NotificationSender:
                     str(err),
                 )
                 cache.hset(FAILED_MAIL_HASH_KEY, str(uuid.uuid4()), notification)
+
 
     def send_immediate_notifications(self):
         """Sends notifications that are marked as important or are for users with digest disabled."""
@@ -54,3 +59,10 @@ class NotificationSender:
         immediate_notifications += non_digest_notifications
 
         self._send_notifications_batch(immediate_notifications)
+
+
+    def send_digest_notifications(self):
+        """Send notifications which have reached their digest_age."""
+
+        notifications = get_digest_notifications()
+        self._send_notifications_batch(notifications)

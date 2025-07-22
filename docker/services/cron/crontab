@@ -1,0 +1,5 @@
+# Run cronjob daily at 00:00 UTC to delete notifications past their expire age.
+0 0 * * * root /usr/local/bin/python /code/metabrainz/manage.py delete-expired-notifications >> /logs/delete_notifications.logs 2>&1
+# Run cronjob daily at 01:00 UTC to send digest notifications.
+0 1 * * * root /usr/local/bin/python /code/metabrainz/manage.py send-digest-notifications >> /logs/digest_notifications.logs 2>&1
+
