@@ -228,7 +228,8 @@ def get_digest_notifications() -> List[dict]:
         query = sqlalchemy.text(
             """
                 SELECT 
-                        notification.musicbrainz_row_id
+                         notification.id
+                        ,notification.musicbrainz_row_id
                         ,notification.subject
                         ,notification.body
                         ,notification.template_id
@@ -238,12 +239,13 @@ def get_digest_notifications() -> List[dict]:
                 FROM
                         notification
                 JOIN
-                        user_preference ON notification.musicbrainz_row_id = user_preference.musicbrainz_row_id
-
+                        user_preference
+                ON
+                        notification.musicbrainz_row_id = user_preference.musicbrainz_row_id
                 WHERE
                         user_preference.digest = true
                         AND (notification.created + (INTERVAL '1 day' * user_preference.digest_age)) <= NOW()
-                        AND notification.read = false      
+                        AND notification.notification_sent = false      
             """
         )
         result = connection.execute(query)

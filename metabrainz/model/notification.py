@@ -33,6 +33,7 @@ class Notification(db.Model):
     body = db.Column(db.Text)
     template_id = db.Column(db.Text)
     template_params = db.Column(JSONB)
+    notification_sent = db.Column(db.Boolean, default=False)
 
     __table_args__=(
         db.CheckConstraint(
