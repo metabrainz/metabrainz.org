@@ -109,6 +109,7 @@ CREATE TABLE notification (
     body                      TEXT,
     template_id               TEXT, --MB Mail template id.
     template_params           JSONB, --params for given MB Mail template.
+    notification_sent         BOOL DEFAULT FALSE,
 
     CONSTRAINT mail_type      CHECK(
       -- caller needs to provide either (subject and body) or (template_id and template_params).
