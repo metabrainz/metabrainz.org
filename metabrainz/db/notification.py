@@ -4,6 +4,7 @@ import orjson
 from datetime import datetime
 from typing import List, Tuple, Optional
 from flask import current_app
+from psycopg2.extras import execute_values
 
 from metabrainz import db
 
@@ -124,26 +125,37 @@ def delete_notifications(user_id: int, delete_ids: Tuple[int, ...]):
         connection.execute(delete_query, {'user_id': user_id, 'delete_ids': delete_ids})
 
 
-def insert_notifications(notifications: List[dict]) -> int:
+def insert_notifications(notifications: List[dict]) -> List[tuple[int]]:
     """
     Inserts a batch of notifications into the table.
     Args:
         notifications (List[dict]): List of notifications to be inserted.
 
     Returns:
-        int : Total number of rows successfully inserted.
+        List[tuple[int]]: List of tuples with each tuple contaning ID of an inserted notification.
     """
     params = _prepare_notifications(notifications)
-    with db.engine.connect() as connection:
-        insert_query = sqlalchemy.text("""
+    insert_query = """
                     INSERT INTO
                         notification
-                            (musicbrainz_row_id, project, subject, body, template_id, template_params, important, expire_age, email_id, read)
+                            (musicbrainz_row_id, project, subject, body, template_id, template_params, important, expire_age, email_id)
                     VALUES
-                        (:musicbrainz_row_id, :project, :subject, :body, :template_id, :template_params, :important, :expire_age, :email_id, :read)        
-        """)
-        result = connection.execute(insert_query, params)
-    return result.rowcount
+                        %s
+                    RETURNING 
+                        id
+        """
+    template = "(%(musicbrainz_row_id)s, %(project)s, %(subject)s, %(body)s, %(template_id)s, %(template_params)s, %(important)s, %(expire_age)s, %(email_id)s)"
+
+    conn = db.engine.raw_connection()
+    try:
+        with conn.cursor() as cur:
+            execute_values(cur, insert_query, params, template)
+            notification_ids = cur.fetchall()
+        conn.commit()
+    finally:
+        conn.close()
+
+    return notification_ids
 
 
 def _prepare_notifications(notifications: List[dict]) -> List[dict]:
@@ -157,8 +169,9 @@ def _prepare_notifications(notifications: List[dict]) -> List[dict]:
                 "project": notif["project"],
                 "important": notif["important"],
                 "expire_age": notif["expire_age"],
+                # If we use pgsql's default UUID column, test cases fail due to "uuid-ossp" extension not being found.
+                # So, generating UUID in python before inserting.
                 "email_id": notif.get("email_id", str(uuid.uuid4())),
-                "read": False,
                 "subject": notif.get("subject"),
                 "body": notif.get("body"),
                 "template_id": notif.get("template_id"),
@@ -234,7 +247,7 @@ def get_digest_notifications() -> List[dict]:
                         ,notification.body
                         ,notification.template_id
                         ,notification.template_params
-                        ,user_preference.user_email
+                        ,user_preference.user_email AS to
                         ,notification.project::TEXT
                 FROM
                         notification
@@ -253,8 +266,26 @@ def get_digest_notifications() -> List[dict]:
         notifications = []
         for row in result.mappings():
             row = dict(row)
-            row["to"] = row.pop("user_email")
             row["sent_from"] = f'no_reply@{row.pop("project")}.org'
             notifications.append(row)
 
         return notifications
+
+
+def mark_notifications_sent(notifications: List[dict]):
+    """Marks a list of notifications as sent.
+    Args:
+        notifications (List[dict]): List of notification dictionaries, each must contain an "id" key.
+    """
+    notification_ids = tuple(n["id"] for n in notifications)
+    if not notification_ids:
+        return
+    with db.engine.connect() as connection:
+        query = sqlalchemy.text(
+            """
+                UPDATE notification
+                SET notification_sent = true
+                WHERE id IN :IDs
+            """
+        )
+        connection.execute(query, {"IDs": notification_ids})
