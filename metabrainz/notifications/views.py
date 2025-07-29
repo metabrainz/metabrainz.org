@@ -320,14 +320,17 @@ def send_notifications():
             raise APIBadRequest(f'Notification {idx} should include either subject and body or template_id and template_params.')
 
     try:
-        res = insert_notifications(data)
-        current_app.logger.info("%i rows inserted.", res)  # TODO: Remove this
+        notification_ids = insert_notifications(data)
+
+        for index, id_tuple in enumerate(notification_ids):
+            data[index]["id"] = id_tuple[0]
+
+        sender = NotificationSender(data)
+        sender.send_immediate_notifications()
+
     except Exception as err:
         current_app.logger.error("Cannot insert notifications %s", str(err))
-        raise APIServiceUnavailable("Cannot insert notifications right now.")
-    
-    sender = NotificationSender(data)
-    sender.send_immediate_notifications()
+        raise APIServiceUnavailable("Cannot send notifications right now.")
 
     return jsonify({'status':'ok'}), 200
 
@@ -387,22 +390,22 @@ def set_digest_preference(user_id):
         if not res:
             raise APIBadRequest("Invalid user_id.")
         return jsonify({"digest": res.digest, "digest_age": res.digest_age})
-    
+
     elif request.method == "POST":
         data = request.json
         digest = data.get("digest")
         digest_age = data.get("digest_age")
-        
+
         if digest is None or not isinstance(digest, bool):
             raise APIBadRequest("Invalid digest value.")
         if digest_age is not None:
             if not isinstance(digest_age, int) or (digest_age < 1 or digest_age > MAX_DIGEST_AGE):
                 raise APIBadRequest("Invalid digest age.")
-        
+
         try:
             result = UserPreference.set_digest_info(musicbrainz_row_id=user_id, digest=digest, digest_age=digest_age)
             return jsonify({"digest": result.digest, "digest_age": result.digest_age})
-        
+
         except Exception as err:
             current_app.logger.error("Cannot update digest preference %s", str(err))
             raise APIServiceUnavailable("Cannot update digest preference right now.")
