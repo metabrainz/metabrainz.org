@@ -211,7 +211,7 @@ class NotificationViewsTest(FlaskTestCase):
                 "send_email": True
             }
         ]
-        url = f'notification/send?token=good_token'
+        url = 'notification/send?token=good_token'
         res = self.client.post(
             url,
             json=test_data
