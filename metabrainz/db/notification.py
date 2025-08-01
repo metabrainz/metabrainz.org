@@ -195,6 +195,9 @@ def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
 
     """
     user_ids_to_check = tuple(i["user_id"] for i in notifications)
+    if not user_ids_to_check:
+        return []
+    
     with db.engine.connect() as connection:
         query = sqlalchemy.text("""
                         SELECT musicbrainz_row_id
