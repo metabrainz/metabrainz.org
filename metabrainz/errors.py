@@ -1,4 +1,4 @@
-from flask import render_template, jsonify, Response
+from flask import render_template, jsonify
 
 
 def init_error_handlers(app):

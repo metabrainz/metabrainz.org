@@ -3,7 +3,7 @@ from datetime import timedelta
 from flask import request, current_app, make_response
 import six
 import requests
-from metabrainz.errors import APIBadRequest, APIUnauthorized, APIForbidden
+from metabrainz.errors import APIUnauthorized, APIForbidden
 
 NOTIFICATION_SCOPE = 'notification'
 
@@ -93,10 +93,10 @@ def ccg_token_required(f):
     def decorated(*args, **kwargs):
         auth_header = request.headers.get("Authorization")
         if not auth_header or not auth_header.startswith("Bearer "):
-            raise APIBadRequest("Missing or invalid Authorization header")
+            raise APIUnauthorized("Missing or invalid Authorization header.")
         token = auth_header.split(" ", 1)[1]
         if not token:
-            raise APIBadRequest("Missing access token.")
+            raise APIUnauthorized("Missing access token.")
 
         data = {
             "client_id": current_app.config["MUSICBRAINZ_CLIENT_ID"],
