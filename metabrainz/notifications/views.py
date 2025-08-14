@@ -104,7 +104,7 @@ def get_notifications(user_id: int):
     return jsonify(data)
 
 
-@notification_bp.post("<int:user_id>/mark-read")
+@notification_bp.post("/<int:user_id>/mark-read")
 @ccg_token_required
 def mark_notifications(user_id: int):
     """
@@ -173,7 +173,7 @@ def mark_notifications(user_id: int):
     return jsonify({'status': 'ok'}), 200
 
 
-@notification_bp.post("<int:user_id>/delete")
+@notification_bp.post("/<int:user_id>/delete")
 @ccg_token_required
 def remove_notifications(user_id: int):
     """
@@ -332,7 +332,7 @@ def send_notifications():
     return jsonify({'status':'ok'}), 200
 
 
-@notification_bp.route("<int:user_id>/digest-preference", methods=["GET", "POST"])
+@notification_bp.route("/<int:user_id>/digest-preference", methods=["GET", "POST"])
 @ccg_token_required
 def set_digest_preference(user_id):
     """
