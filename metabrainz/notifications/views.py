@@ -18,8 +18,8 @@ notification_bp = Blueprint("notification", __name__)
 def get_notifications(user_id: int):
     """
     Fetch notifications for a user.
-    An access token must be provided as a query paramater.
-    
+    An access token must be provided in the Authorization header, formatted as `Bearer <token>`.
+
     If none of the optional parameters are specified, this endpoint returns the 
     :data:`~DEFAULT_NOTIFICATION_FETCH_COUNT` most recent notifications across all projects, including both read and unread.
 
@@ -103,13 +103,12 @@ def get_notifications(user_id: int):
     return jsonify(data)
 
 
-@notification_bp.post("<int:user_id>/mark-read")
+@notification_bp.post("/<int:user_id>/mark-read")
 @ccg_token_required
 def mark_notifications(user_id: int):
     """
     Mark notifications as read or unread for a user.
-    An access token must be provided as a query paramater.
-
+    An access token must be provided in the Authorization header, formatted as `Bearer <token>`.
     The request must include a JSON body with at least one of the ``read`` or ``unread`` arrays containing notification ID's.
 
     Example request body:
@@ -128,7 +127,7 @@ def mark_notifications(user_id: int):
         {
             "status": "ok"
         }
-    
+
     :param token: Required. Access token for authentication.
     :reqheader Content-Type: *application/json*
     :statuscode 200: Notifications successfully updated.
@@ -174,12 +173,12 @@ def mark_notifications(user_id: int):
     return jsonify({'status': 'ok'}), 200
 
 
-@notification_bp.post("<int:user_id>/delete")
+@notification_bp.post("/<int:user_id>/delete")
 @ccg_token_required
 def remove_notifications(user_id: int):
     """
     Delete notifications for a user.
-    An access token must be provided as a query paramater.
+    An access token must be provided in the Authorization header, formatted as `Bearer <token>`.
 
     The request must include a JSON array of notification IDs that belongs to the user.
 
@@ -234,7 +233,7 @@ def remove_notifications(user_id: int):
 def send_notifications():
     """
     Inserts batch of notifications for a project.
-    An access token must be provided as a query paramater.
+    An access token must be provided in the Authorization header, formatted as `Bearer <token>`.
 
     The request must include a JSON array of notifications.
 
@@ -335,12 +334,13 @@ def send_notifications():
     return jsonify({'status':'ok'}), 200
 
 
-@notification_bp.route("<int:user_id>/digest-preference", methods=["GET", "POST"])
+@notification_bp.route("/<int:user_id>/digest-preference", methods=["GET", "POST"])
 @ccg_token_required
 def set_digest_preference(user_id):
     """
     Get and update the digest preference of the user.
-
+    An access token must be provided in the Authorization header, formatted as `Bearer <token>`.
+    
     **To get the digest preference of the user, a GET request must be made to this endpoint.**
     Returns JSON of the following format:
 
