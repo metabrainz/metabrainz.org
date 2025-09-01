@@ -9,22 +9,22 @@
 # Lp Mashups <email address hidden>, 2021
 # Transifex Bot <>, 2023
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-27 14:44+0100\n"
-"PO-Revision-Date: 2017-01-19 20:40+0000\n"
-"Last-Translator: Transifex Bot <>, 2023\n"
-"Language-Team: Japanese (https://app.transifex.com/musicbrainz/teams/13846/"
-"ja/)\n"
+"PO-Revision-Date: 2025-09-02 02:39+0000\n"
+"Last-Translator: TefWw <came.from.the.north7239@gmail.com>\n"
+"Language-Team: Japanese <https://translations.metabrainz.org/projects/"
+"metabrainz/website/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.13\n"
+"Generated-By: Babel 2.3.4\n"
 
 #: metabrainz/payments/forms.py:9
 msgid "You need to specify amount!"
@@ -811,7 +811,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
-msgstr "Cover Art Archive"
+msgstr "カバーアートアーカイブ"
 
 #: metabrainz/templates/index/projects.html:49
 #, python-format
