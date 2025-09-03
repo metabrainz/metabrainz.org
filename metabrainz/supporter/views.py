@@ -181,7 +181,7 @@ def signup_commercial():
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
     form_data = dict(**form.data)
-    if form_data["amount_pledged"]:
+    if form_data["amount_pledged"] is not None:
         form_data["amount_pledged"] = float(form_data["amount_pledged"])
     form_data.pop("csrf_token", None)
 
