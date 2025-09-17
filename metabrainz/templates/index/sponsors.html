@@ -21,14 +21,6 @@
   <table id="sponsors" class="table table-condensed">
     <tbody>
     <tr>
-      <td><img src="{{ url_for('static', filename='img/logos/sponsors/google.svg') }}"></td>
-      <td>
-        {{ _('<b><a href="%(google_url)s">Google</a></b> has been an extremely supportive
-        sponsor. They\'ve donated over <b>$500,000!</b>', google_url='https://www.google.com/') }}
-      </td>
-    </tr>
-
-    <tr>
       <td><img src="{{ url_for('static', filename='img/logos/sponsors/github.svg') }}"></td>
       <td>
         {{ _('<b><a href="%(github_url)s">GitHub</a></b> provides us with a free Bronze
@@ -44,10 +36,12 @@
     {{ _('In our past, we\'ve had a lot of people support us with many different levels of support:
     Access to conferences, covering travel expenses, large personal donations and countless
     meals. These have become too numerous to list, but we wanted to note a few individuals
-    who have made a big difference for us.') }}
+    and companies who have made a big difference for us.') }}
   </p>
   <p>
-    {{ _('Richard Jones of <a href="%(last_fm_url)s">Last.fm fame</a> donated <b>$50,000</b> in 2010,
+    {{ _('<a href="%(google_url)s">Google</a></b> has been an extremely supportive
+    sponsor, donating over <b>$500,000</b> over the years. Richard Jones of
+    <a href="%(last_fm_url)s">Last.fm fame</a> donated <b>$50,000</b> in 2010,
     <a href="%(oracle_url)s">Sun Microsystems</a> &amp; Paul Lamere donated a database
     server and <a href="%(oreilly_url)s">O\'Reilly Media</a> gave MusicBrainz $500 to
     start off a bank account for the project before the MetaBrainz Foundation existed.
@@ -57,7 +51,8 @@
     periodic help crafting contracts for licensing our data.
     <a href="%(dw_url)s">Digital West Networks Inc.</a> was our main
     hosting provider between 2006 and 2016 and gave us a discount because of our non-profit status.',
-    last_fm_url='http://last.fm', oracle_url='https://www.oracle.com/sun', oreilly_url='http://oreilly.com/',
+    google_url='https://www.google.com/', last_fm_url='http://last.fm',
+    oracle_url='https://www.oracle.com/sun', oreilly_url='http://oreilly.com/',
     ed_url='https://www.linkedin.com/in/edcavazos', dan_url='http://www.mh-llp.com/our-people/daniel-appelman',
     dw_url='https://www.digitalwest.com/') }}
   </p>
