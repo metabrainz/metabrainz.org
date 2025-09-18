@@ -88,7 +88,7 @@ function SignupNonCommercial({
             onSubmit={() => {}}
           >
             {({ errors, setFieldValue }) => (
-              <form method="POST" className="form-horizontal">
+              <form method="POST" className="d-flex flex-column">
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
                     <input
@@ -152,6 +152,7 @@ function SignupNonCommercial({
                   type="email"
                   name="email"
                   id="email"
+                  autoComplete="email"
                   required
                 />
 
@@ -160,6 +161,7 @@ function SignupNonCommercial({
                   type="password"
                   name="password"
                   id="password"
+                  autoComplete="new-password"
                   required
                 />
 
@@ -168,6 +170,7 @@ function SignupNonCommercial({
                   type="password"
                   name="confirm_password"
                   id="confirm_password"
+                  autoComplete="new-password"
                   required
                 />
                 <br />

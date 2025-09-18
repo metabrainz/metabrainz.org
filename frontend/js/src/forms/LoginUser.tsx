@@ -24,7 +24,7 @@ function LoginUser({
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h1 className="page-title text-center">Welcome back!</h1>
+          <h2 className="page-title text-center">Welcome back!</h2>
           <Formik
             initialValues={{
               username: initial_form_data.username ?? "",
@@ -63,8 +63,8 @@ function LoginUser({
                     <>
                       Username{" "}
                       <span
-                        className="small help-block"
-                        style={{ display: "inline-block" }}
+                        className="small"
+                        style={{ display: "inline-block", color: "#404040" }}
                       >
                         (public)
                       </span>
@@ -74,7 +74,11 @@ function LoginUser({
                   name="username"
                   id="username"
                   required
-                />
+                >
+                  <a className="form-label-link small" href="/lost-username">
+                    Forgot username?
+                  </a>
+                </AuthCardTextInput>
 
                 <AuthCardTextInput
                   label="Password"
@@ -82,22 +86,20 @@ function LoginUser({
                   name="password"
                   id="password"
                   required
-                />
+                >
+                  <a className="form-label-link small" href="/lost-password">
+                    Forgot password?
+                  </a>
+                </AuthCardTextInput>
 
-                <div className="auth-card-bottom">
-                  <small className="checkbox">
-                    <AuthCardCheckboxInput
-                      label="Remember me"
-                      id="remember_me"
-                      name="remember_me"
-                      type="checkbox"
-                    />
-                  </small>
-                  <small>
-                    I forgot my <a href="/lost-username">username</a> /{" "}
-                    <a href="/lost-password">password</a>
-                  </small>
-                </div>
+                <small className="checkbox">
+                  <AuthCardCheckboxInput
+                    label="Remember me"
+                    id="remember_me"
+                    name="remember_me"
+                    type="checkbox"
+                  />
+                </small>
 
                 <button
                   className="btn btn-primary main-action-button"
@@ -108,12 +110,8 @@ function LoginUser({
               </form>
             )}
           </Formik>
-          <div className="auth-card-footer">
-            <div className="small">
-              Don‘t have an account?
-              <a href="/Login"> Create a free MetaBrainz account </a>to access
-              MusicBrainz, ListenBrainz, CritiqueBrainz, and more.
-            </div>
+          <div className="auth-card-footer text-center">
+            Don&apos;t have an account? <a href="/signup">Sign up</a>
           </div>
         </div>
       </div>

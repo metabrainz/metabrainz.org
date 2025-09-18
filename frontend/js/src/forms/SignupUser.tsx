@@ -23,7 +23,7 @@ function SignupUser({
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h1 className="page-title text-center">Create your account</h1>
+          <h2 className="page-title text-center">Create your account</h2>
           <div className="h4 text-center">access all MetaBrainz projects</div>
           <Formik
             initialValues={{
@@ -80,7 +80,7 @@ function SignupUser({
                     <>
                       Username{" "}
                       <span
-                        className="small help-block"
+                        className="small"
                         style={{ display: "inline-block" }}
                       >
                         (public)
@@ -124,7 +124,7 @@ function SignupUser({
                   />
                 </div>
 
-                <div>
+                <div className="small" style={{ fontSize: "1.3rem" }}>
                   Please note that your contributions will be released into the
                   public domain or licensed for use. We will never share your
                   personal information.
@@ -202,10 +202,8 @@ function SignupUser({
               </div>
             </div>
           </div>
-          <div className="auth-card-footer">
-            <div className="small">
-              Already have an account? <a href="/login">Sign in </a>
-            </div>
+          <div className="auth-card-footer text-center">
+            Already have an account? <a href="/login">Sign in </a>
           </div>
         </div>
       </div>
