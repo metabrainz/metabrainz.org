@@ -70,33 +70,31 @@ class User(db.Model, UserMixin):
 
         return None
 
+    def moderate(self, moderator, action, reason):
+        """Moderate the user account"""
+        log = ModerationLog(
+            user_id=self.id,
+            moderator_id=moderator.id,
+            action=action,
+            reason=reason
+        )
+        db.session.add(log)
+
     def block(self, moderator, reason):
         """Block the user account"""
         if self.is_blocked:
             raise ValueError("User is already blocked")
-            
         self.is_blocked = True
         self.login_id = uuid4()
-        log = ModerationLog(
-            user_id=self.id,
-            moderator_id=moderator.id,
-            action='block',
-            reason=reason
-        )
-        db.session.add(log)
+
+        self.moderate(moderator, 'block', reason)
         db.session.commit()
     
     def unblock(self, moderator, reason):
         """Unblock the user account"""
         if not self.is_blocked:
             raise ValueError("User is not blocked")
-            
         self.is_blocked = False
-        log = ModerationLog(
-            user_id=self.id,
-            moderator_id=moderator.id,
-            action='unblock',
-            reason=reason
-        )
-        db.session.add(log)
+
+        self.moderate(moderator, 'unblock', reason)
         db.session.commit()
