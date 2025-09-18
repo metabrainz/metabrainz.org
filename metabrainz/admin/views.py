@@ -417,44 +417,45 @@ class UserManagementView(AdminBaseView):
             moderation_logs=moderation_logs
         )
 
-    @expose('/user/<int:user_id>/block', methods=['POST'])
-    def block_user(self, user_id):
-        """Block a user"""
-        user = User.query.get_or_404(user_id)
-        reason = request.form.get('reason', '').strip()
-        
-        if not reason:
-            flash.error('A reason is required to block a user.')
+    @expose('/user/<int:user_id>/moderate', methods=['POST'])
+    def moderate_user(self, user_id):
+        """Handle all user moderation actions through a single endpoint"""
+        action = request.form.get('action')
+        if action not in ['block', 'unblock', 'comment']:
+            flash.error('Invalid moderation action.')
             return redirect(url_for('.user_details', user_id=user_id))
-            
-        try:
-            user.block(current_user, reason)
-            flash.success(f'User {user.name} has been blocked.')
-        except ValueError as e:
-            flash.error(str(e))
-        except Exception as e:
-            db.session.rollback()
-            flash.error('An error occurred while blocking the user.')
-            
-        return redirect(url_for('.user_details', user_id=user_id))
 
-    @expose('/user/<int:user_id>/unblock', methods=['POST'])
-    def unblock_user(self, user_id):
-        """Unblock a user"""
         user = User.query.get_or_404(user_id)
         reason = request.form.get('reason', '').strip()
-        
+
         if not reason:
-            flash.error('A reason is required to unblock a user.')
+            flash.error('A reason is required to take a moderation action on a user.')
             return redirect(url_for('.user_details', user_id=user_id))
-            
+
         try:
-            user.unblock(current_user, reason)
-            flash.success(f'User {user.name} has been unblocked.')
+            if action == "block":
+                if user.is_blocked:
+                    flash.warning('User is already blocked.')
+                else:
+                    user.block(current_user, reason)
+                    flash.success(f'User {user.name} has been blocked.')
+            elif action == "unblock":
+                if not user.is_blocked:
+                    flash.warning('User is not currently blocked.')
+                else:
+                    user.unblock(current_user, reason)
+                    flash.success(f'User {user.name} has been unblocked.')
+            elif action == "comment":
+                user.moderate(current_user, "comment", reason)
+                flash.success(f'Moderation note added for user {user.name}.')
+
+            db.session.commit()
+
         except ValueError as e:
             flash.error(str(e))
         except Exception as e:
             db.session.rollback()
-            flash.error('An error occurred while unblocking the user.')
-            
+            flash.error(f'An error occurred while processing the {action} action.')
+            logging.exception(f'Error in moderation action {action} for user {user_id}:')
+
         return redirect(url_for('.user_details', user_id=user_id))
