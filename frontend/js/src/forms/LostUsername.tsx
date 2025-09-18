@@ -20,7 +20,7 @@ function LostUsername({
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h1 className="page-title text-center">Forgot your username?</h1>
+          <h2 className="page-title text-center">Forgot your username?</h2>
           <Formik
             initialValues={{
               email: initial_form_data.email ?? "",
