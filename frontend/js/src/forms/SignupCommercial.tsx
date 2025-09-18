@@ -469,58 +469,6 @@ function SignupCommercial({
               </form>
             )}
           </Formik>
-          <div className="modal fade" id="conditions-modal">
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <p>
-                  Note that any contributions you make to MusicBrainz will be
-                  released into the Public Domain and/or licensed under a
-                  Creative Commons by-nc-sa license. Furthermore, you give the
-                  MetaBrainz Foundation the right to license this data for
-                  commercial use.
-                  <br />
-                  Please read our <a href="/social-contract">
-                    {" "}
-                    license page
-                  </a>{" "}
-                  for more details.
-                </p>
-                <p>
-                  MusicBrainz believes strongly in the privacy of its users. Any
-                  personal information you choose to provide will not be sold or
-                  shared with anyone else.
-                  <br />
-                  Please read our <a href="/privacy">privacy policy</a> for more
-                  details.
-                </p>
-                <p>
-                  You may remove your personal information from our services
-                  anytime by deleting your account.
-                  <br />
-                  Please read our <a href="/gdpr">
-                    GDPR compliance statement
-                  </a>{" "}
-                  for more details.
-                </p>
-                <p>
-                  Creating an account on MetaBrainz will give you access to
-                  accounts on our other services, such as ListenBrainz,
-                  MusicBrainz, BookBrainz, and more.
-                  <br />
-                  We do not automatically create accounts for these services
-                  when you create a MetaBrainz account, but you will only be a
-                  few clicks away doing so.
-                </p>
-                <button
-                  className="btn btn-primary center-block"
-                  type="button"
-                  data-dismiss="modal"
-                >
-                  Sounds good
-                </button>
-              </div>
-            </div>
-          </div>
           <div className="auth-card-footer">
             <div className="small">
               Already have an account? <a href="/login">Sign in </a>
