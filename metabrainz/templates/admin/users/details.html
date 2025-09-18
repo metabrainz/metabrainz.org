@@ -40,25 +40,31 @@
                 </div>
                 
                 <div class="col-md-6">
-                    {% if not user.is_blocked %}
-                        <form action="{{ url_for('.block_user', user_id=user.id) }}" method="POST" class="mb-3">
-                            <div class="form-group">
-                                <label for="blockReason">Block Reason:</label>
-                                <textarea class="form-control" id="blockReason" name="reason" 
-                                          rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-danger mt-2">Block User</button>
-                        </form>
-                    {% else %}
-                        <form action="{{ url_for('.unblock_user', user_id=user.id) }}" method="POST" class="mb-3">
-                            <div class="form-group">
-                                <label for="unblockReason">Unblock Reason:</label>
-                                <textarea class="form-control" id="unblockReason" name="reason" 
-                                          rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-success mt-2">Unblock User</button>
-                        </form>
-                    {% endif %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="mb-0">Moderation Actions</h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ url_for('.moderate_user', user_id=user.id) }}" method="POST" id="moderationForm">
+                                <div class="form-group mb-3">
+                                    <label for="action" class="form-label">Action</label>
+                                    <select class="form-select" id="action" name="action" required>
+                                        <option value="" disabled selected>Select an action</option>
+                                        <option value="block" {% if user.is_blocked %}disabled{% endif %}>Block User</option>
+                                        <option value="unblock" {% if not user.is_blocked %}disabled{% endif %}>Unblock User</option>
+                                        <option value="comment">Add Note</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="reason" class="form-label">Reason / Notes</label>
+                                    <textarea class="form-control" id="reason" name="reason" 
+                                              rows="3" required></textarea>
+                                    <div class="form-text">Please provide a detailed reason for this action.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

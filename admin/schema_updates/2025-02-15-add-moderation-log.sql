@@ -1,3 +1,5 @@
+CREATE TYPE moderation_action_type AS ENUM ('block', 'unblock');
+
 BEGIN;
 
 ALTER TABLE "user" ADD COLUMN is_blocked BOOLEAN NOT NULL DEFAULT FALSE;
