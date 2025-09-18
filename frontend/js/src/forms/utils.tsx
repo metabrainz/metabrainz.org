@@ -234,9 +234,18 @@ export function AuthCardTextInput({
   const [field, meta] = useField(props);
   return (
     <div className="form-group">
-      <label className="form-label" htmlFor={props.id}>
-        {label} {props.required && <span style={{ color: "red" }}>*</span>}
-      </label>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <label className="form-label" htmlFor={props.id}>
+          {label} {props.required && <span style={{ color: "red" }}>*</span>}
+        </label>
+        {children}
+      </div>
       <div>
         <input
           className="form-control"
@@ -245,7 +254,9 @@ export function AuthCardTextInput({
           required={props.required}
         />
         {meta.touched && meta.error ? (
-          <div style={{ paddingTop: "7px", color: "red" }}>{meta.error}</div>
+          <div className="small" style={{ paddingTop: "7px", color: "red" }}>
+            {meta.error}
+          </div>
         ) : null}
       </div>
     </div>
