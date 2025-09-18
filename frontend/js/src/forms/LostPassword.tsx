@@ -20,7 +20,7 @@ function LostPassword({
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h1 className="page-title text-center">Forgot your password?</h1>
+          <h2 className="page-title text-center">Forgot your password?</h2>
           <Formik
             initialValues={{
               username: initial_form_data.username ?? "",
