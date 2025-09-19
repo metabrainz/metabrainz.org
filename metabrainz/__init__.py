@@ -8,7 +8,9 @@ from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
 from flask_bcrypt import Bcrypt
 
+from metabrainz.admin import AdminModelView
 from metabrainz.admin.quickbooks.views import QuickBooksView
+from metabrainz.model.user import User
 from metabrainz.utils import get_global_props
 
 # Check to see if we're running under a docker deployment. If so, don't second guess
@@ -153,7 +155,7 @@ def create_app(debug=None, config_path=None):
     from metabrainz.admin.views import PaymentsView
     from metabrainz.admin.views import TokensView
     from metabrainz.admin.views import StatsView
-    from metabrainz.admin.views import UserManagementView
+    from metabrainz.admin.views import UserModelView
     admin.add_view(CommercialSupportersView(name='Commercial supporters', category='Supporters'))
     admin.add_view(SupportersView(name='Search', category='Supporters'))
     admin.add_view(PaymentsView(name='All', category='Payments'))
@@ -162,7 +164,7 @@ def create_app(debug=None, config_path=None):
     admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
     admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
     admin.add_view(StatsView(name='Supporters', endpoint="statsview/supporters", category='Statistics'))
-    admin.add_view(UserManagementView(name='User Management', endpoint='users-admin', category='Users'))
+    admin.add_view(UserModelView(User, model.db.session, endpoint="users-admin", category="Users"))
     if app.config["QUICKBOOKS_CLIENT_ID"]:
         admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
 

@@ -3,8 +3,8 @@
 {% block body %}
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>User Details: {{ user.name }}</h2>
-        <a href="{{ url_for('.index') }}" class="btn btn-secondary">Back to Users List</a>
+        <h2>User Details: {{ model.name }}</h2>
+        <a href="{{ url_for('.index_view') }}" class="btn btn-secondary">Back to Users List</a>
     </div>
 
     <!-- User Information -->
@@ -17,23 +17,28 @@
                 <div class="col-md-6">
                     <dl class="row">
                         <dt class="col-sm-4">Username:</dt>
-                        <dd class="col-sm-8">{{ user.name }}</dd>
+                        <dd class="col-sm-8">{{ model.name }}</dd>
                         
                         <dt class="col-sm-4">Email:</dt>
                         <dd class="col-sm-8">
-                            {{ user.get_email_any() }}
-                            <span class="badge {% if user.is_email_confirmed() %}bg-success{% else %}bg-danger{% endif %}">
-                                {{ 'Confirmed' if user.is_email_confirmed() else 'Unconfirmed' }}
+                            {{ model.get_email_any() }}
+                            <span class="badge {% if model.is_email_confirmed() %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ 'Confirmed' if model.is_email_confirmed() else 'Unconfirmed' }}
                             </span>
+                            {% if not model.is_email_confirmed() %}
+                            <form action="{{ url_for('.verify_user_email', user_id=model.id) }}" method="POST" class="d-inline ms-2">
+                                <button type="submit" class="btn btn-sm btn-outline-success">Verify Email</button>
+                           </form>
+                            {% endif %}
                         </dd>
                         
                         <dt class="col-sm-4">Created:</dt>
-                        <dd class="col-sm-8">{{ user.member_since.strftime('%Y-%m-%d %H:%M:%S') }}</dd>
+                        <dd class="col-sm-8">{{ model.member_since.strftime('%Y-%m-%d %H:%M:%S') }}</dd>
                         
                         <dt class="col-sm-4">Status:</dt>
                         <dd class="col-sm-8">
-                            <span class="badge {% if user.is_blocked %}bg-danger{% else %}bg-success{% endif %}">
-                                {{ 'Blocked' if user.is_blocked else 'Active' }}
+                            <span class="badge {% if model.is_blocked %}bg-danger{% else %}bg-success{% endif %}">
+                                {{ 'Blocked' if model.is_blocked else 'Active' }}
                             </span>
                         </dd>
                     </dl>
@@ -45,13 +50,13 @@
                             <h4 class="mb-0">Moderation Actions</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ url_for('.moderate_user', user_id=user.id) }}" method="POST" id="moderationForm">
+                            <form action="{{ url_for('.moderate_user', user_id=model.id) }}" method="POST" id="moderationForm">
                                 <div class="form-group mb-3">
                                     <label for="action" class="form-label">Action</label>
                                     <select class="form-select" id="action" name="action" required>
                                         <option value="" disabled selected>Select an action</option>
-                                        <option value="block" {% if user.is_blocked %}disabled{% endif %}>Block User</option>
-                                        <option value="unblock" {% if not user.is_blocked %}disabled{% endif %}>Unblock User</option>
+                                        <option value="block" {% if model.is_blocked %}disabled{% endif %}>Block User</option>
+                                        <option value="unblock" {% if not model.is_blocked %}disabled{% endif %}>Unblock User</option>
                                         <option value="comment">Add Note</option>
                                     </select>
                                 </div>
@@ -76,7 +81,7 @@
             <h3 class="card-title">Moderation History</h3>
         </div>
         <div class="card-body">
-            {% if moderation_logs %}
+            {% if model.moderation_logs %}
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -88,7 +93,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for log in moderation_logs %}
+                            {% for log in model.moderation_logs %}
                             <tr>
                                 <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                                 <td>
