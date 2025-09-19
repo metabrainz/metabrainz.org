@@ -2,7 +2,7 @@ from decimal import Decimal
 from flask import Response, request, redirect, url_for, jsonify
 from flask_admin import expose
 from flask_login import current_user
-from metabrainz.admin import AdminIndexView, AdminBaseView, forms
+from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
 from metabrainz.model import db
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
@@ -360,38 +360,20 @@ class StatsView(AdminBaseView):
         )
 
 
-class UserManagementView(AdminBaseView):
-    @expose('/')
-    def index(self):
-        """List all users with search functionality"""
-        search_query = request.args.get('q', '').strip()
-        page = get_int_query_param('page', default=1)
-        if page < 1:
-            return redirect(url_for('.index'))
-            
-        per_page = 50
-        query = User.query
-        
-        if search_query:
-            query = query.filter(
-                db.or_(
-                    User.name.ilike(f'%{search_query}%'),
-                    User.email.ilike(f'%{search_query}%')
-                )
-            )
-            
-        # Order by registration date, newest first
-        query = query.order_by(User.member_since.desc())
-        
-        # Paginate results
-        pagination = query.paginate(page=page, per_page=per_page)
-        
-        return self.render(
-            'admin/users/index.html',
-            users=pagination.items,
-            pagination=pagination,
-            search_query=search_query
-        )
+class UserModelView(AdminModelView):
+    column_list = ('name', 'email', 'member_since', 'is_blocked', '')
+    column_searchable_list = ('name', 'email')
+    column_default_sort = ('name', True)
+    can_create = False
+    can_delete = False
+    can_view_details = True
+
+    list_template = "admin/users/index.html"
+    details_template = "admin/users/details.html"
+
+    # todo: add csrf token to admin form
+    #  add table for username deletion storage
+    #  webhooks
 
     @expose('/user/<int:user_id>')
     def user_details(self, user_id):
@@ -403,23 +385,40 @@ class UserManagementView(AdminBaseView):
                 .joinedload(ModerationLog.moderator)
             )\
             .get_or_404(user_id)
-            
+
         # Sort moderation logs by timestamp (newest first)
         moderation_logs = sorted(
             user.moderation_logs,
             key=lambda x: x.timestamp,
             reverse=True
         )
-            
+
         return self.render(
             'admin/users/details.html',
             user=user,
             moderation_logs=moderation_logs
         )
 
+    @expose('/user/<int:user_id>/verify-email', methods=['POST'])
+    def verify_user_email(self, user_id):
+        """Verify a user's email address manually"""
+        user = User.query.get_or_404(user_id)
+
+        try:
+            user.verify_email_manually(current_user, f"Email manually verified by moderator {current_user.name}.")
+            flash.success(f'Email for {user.name} has been manually verified.')
+        except ValueError as e:
+            flash.error(str(e))
+        except Exception as e:
+            db.session.rollback()
+            flash.error('An error occurred while verifying the email.')
+            logging.exception(f'Error verifying email for user {user_id}:')
+
+        return redirect(url_for('.user_details', user_id=user_id))
+
     @expose('/user/<int:user_id>/moderate', methods=['POST'])
     def moderate_user(self, user_id):
-        """Handle all user moderation actions through a single endpoint"""
+        """Handle user moderation actions"""
         action = request.form.get('action')
         if action not in ['block', 'unblock', 'comment']:
             flash.error('Invalid moderation action.')

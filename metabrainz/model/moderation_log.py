@@ -12,7 +12,7 @@ class ModerationLog(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
     moderator_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    action = Column(Enum("block", "unblock", "comment", name="moderation_action_type"), nullable=False)
+    action = Column(Enum("block", "unblock", "comment", "verify_email", name="moderation_action_type"), nullable=False)
     reason = Column(Text(), nullable=False)
     timestamp = Column(DateTime(timezone=True), default=func.now())
 
