@@ -28,7 +28,10 @@ class User(db.Model, UserMixin):
     is_blocked = Column(Boolean, nullable=False, default=False)
 
     supporter: Mapped["Supporter"] = relationship("Supporter", uselist=False, back_populates="user", lazy="joined")
-    moderation_logs: Mapped[list["ModerationLog"]] = relationship("ModerationLog", back_populates="user", foreign_keys="ModerationLog.user_id")
+    moderation_logs: Mapped[list["ModerationLog"]] = relationship(
+        "ModerationLog", back_populates="user", foreign_keys="ModerationLog.user_id",
+        order_by="desc(ModerationLog.timestamp)"
+    )
     moderator_actions: Mapped[list["ModerationLog"]] = relationship("ModerationLog", back_populates="moderator", foreign_keys="ModerationLog.moderator_id")
 
     def get_id(self):
@@ -97,4 +100,20 @@ class User(db.Model, UserMixin):
         self.is_blocked = False
 
         self.moderate(moderator, 'unblock', reason)
+        db.session.commit()
+        
+    def verify_email_manually(self, moderator, reason):
+        """Manually verify the user's email address"""
+        if self.is_email_confirmed():
+            raise ValueError("User's email is already verified")
+            
+        if not self.unconfirmed_email:
+            raise ValueError("No email address to verify")
+            
+        # Move unconfirmed email to confirmed email
+        self.email = self.unconfirmed_email
+        self.unconfirmed_email = None
+        self.email_confirmed_at = func.now()
+            
+        self.moderate(moderator, 'verify_email', reason)
         db.session.commit()
