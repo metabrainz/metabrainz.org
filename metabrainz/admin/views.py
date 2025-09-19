@@ -1,5 +1,5 @@
 from decimal import Decimal
-from flask import Response, request, redirect, url_for, jsonify
+from flask import Response, request, redirect, url_for
 from flask_admin import expose
 from flask_login import current_user
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
@@ -20,7 +20,7 @@ import time
 import uuid
 import json
 import socket
-from metabrainz.model.user import User, ModerationLog
+from metabrainz.model.user import User
 
 from metabrainz.utils import get_int_query_param
 
@@ -363,6 +363,7 @@ class StatsView(AdminBaseView):
 class UserModelView(AdminModelView):
     column_list = ('name', 'email', 'member_since', 'is_blocked', '')
     column_searchable_list = ('name', 'email')
+    column_filters = ('name', 'email', 'member_since', 'is_blocked',)
     column_default_sort = ('name', True)
     can_create = False
     can_delete = False
@@ -374,30 +375,6 @@ class UserModelView(AdminModelView):
     # todo: add csrf token to admin form
     #  add table for username deletion storage
     #  webhooks
-
-    @expose('/user/<int:user_id>')
-    def user_details(self, user_id):
-        """Show detailed user information and moderation options"""
-        # Use joined loading for moderation logs
-        user = User.query\
-            .options(
-                db.joinedload(User.moderation_logs)
-                .joinedload(ModerationLog.moderator)
-            )\
-            .get_or_404(user_id)
-
-        # Sort moderation logs by timestamp (newest first)
-        moderation_logs = sorted(
-            user.moderation_logs,
-            key=lambda x: x.timestamp,
-            reverse=True
-        )
-
-        return self.render(
-            'admin/users/details.html',
-            user=user,
-            moderation_logs=moderation_logs
-        )
 
     @expose('/user/<int:user_id>/verify-email', methods=['POST'])
     def verify_user_email(self, user_id):
@@ -414,7 +391,7 @@ class UserModelView(AdminModelView):
             flash.error('An error occurred while verifying the email.')
             logging.exception(f'Error verifying email for user {user_id}:')
 
-        return redirect(url_for('.user_details', user_id=user_id))
+        return redirect(url_for('.details_view', id=user_id))
 
     @expose('/user/<int:user_id>/moderate', methods=['POST'])
     def moderate_user(self, user_id):
@@ -422,14 +399,14 @@ class UserModelView(AdminModelView):
         action = request.form.get('action')
         if action not in ['block', 'unblock', 'comment']:
             flash.error('Invalid moderation action.')
-            return redirect(url_for('.user_details', user_id=user_id))
+            return redirect(url_for('.details_view', id=user_id))
 
         user = User.query.get_or_404(user_id)
         reason = request.form.get('reason', '').strip()
 
         if not reason:
             flash.error('A reason is required to take a moderation action on a user.')
-            return redirect(url_for('.user_details', user_id=user_id))
+            return redirect(url_for('.details_view', id=user_id))
 
         try:
             if action == "block":
@@ -457,4 +434,4 @@ class UserModelView(AdminModelView):
             flash.error(f'An error occurred while processing the {action} action.')
             logging.exception(f'Error in moderation action {action} for user {user_id}:')
 
-        return redirect(url_for('.user_details', user_id=user_id))
+        return redirect(url_for('.details_view', id=user_id))
