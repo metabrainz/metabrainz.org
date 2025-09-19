@@ -225,7 +225,7 @@ def profile_edit():
         if current_user.supporter.is_commercial:
             form_data["datasets"] = []
         else:
-            form_data["datasets"] = [dataset.id for dataset in current_user.datasets]
+            form_data["datasets"] = [dataset.id for dataset in current_user.supporter.datasets]
 
     return render_template("index/profile-edit.html", props=json.dumps({
         "datasets": [{"id": d.id, "description": d.description, "name": d.name} for d in available_datasets],
