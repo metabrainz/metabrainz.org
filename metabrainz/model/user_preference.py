@@ -22,7 +22,7 @@ class UserPreference(db.Model):
         return cls.query.filter_by(**kwargs).first()
     
     @classmethod
-    def set_notifications_preference(cls: Type["UserPreference"], musicbrainz_row_id: int, digest: bool, digest_age: Optional[int]=None) -> Optional["UserPreference"]:
+    def set_notification_preference(cls: Type["UserPreference"], musicbrainz_row_id: int, digest: bool, digest_age: Optional[int]=None) -> Optional["UserPreference"]:
         params = {cls.digest: digest}
         if digest_age:
             params[cls.digest_age] = digest_age

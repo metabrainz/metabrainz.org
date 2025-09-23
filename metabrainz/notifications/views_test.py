@@ -273,7 +273,7 @@ class NotificationViewsTest(FlaskTestCase):
         self.assertEqual(res.json['error'], 'Invalid user_id.')
 
         # POST method test
-        mock_digest.set_notifications_preference.return_value = mock.MagicMock(
+        mock_digest.set_notification_preference.return_value = mock.MagicMock(
             notifications_enabled=True, digest=True, digest_age=21
         )
         params = {"notifications_enabled": True, "digest": True, "digest_age": 21}
@@ -309,7 +309,7 @@ class NotificationViewsTest(FlaskTestCase):
             self.assert400(res)
             self.assertEqual(res.json['error'], b[1])
 
-        mock_digest.set_notifications_preference.side_effect = Exception()
+        mock_digest.set_notification_preference.side_effect = Exception()
         res = self.client.post(url, headers=headers, json=params)
         self.assert503(res)
         self.assertEqual(res.json['error'], "Cannot update digest preference right now.")

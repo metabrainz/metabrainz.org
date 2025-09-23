@@ -414,7 +414,7 @@ def notification_preference(user_id):
                 raise APIBadRequest("Invalid digest age.")
 
         try:
-            result = UserPreference.set_notifications_preference(
+            result = UserPreference.set_notification_preference(
                 musicbrainz_row_id=user_id,
                 notifications_enabled=notifications_enabled,
                 digest=digest,
