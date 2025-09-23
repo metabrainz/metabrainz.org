@@ -52,6 +52,7 @@ def init_db(force=False, create_db=False):
         db.run_sql_script_without_transaction(os.path.join(ADMIN_SQL_DIR, 'create_db.sql'))
         click.echo('Done.')
 
+        db.init_db_engine(application.config["POSTGRES_ADMIN_MEB_URI"])
         click.echo('Creating database extensions... ', nl=False)
         db.run_sql_script_without_transaction(os.path.join(ADMIN_SQL_DIR, 'create_extensions.sql'))
         click.echo('Done.')

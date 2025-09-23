@@ -332,18 +332,19 @@ def send_notifications():
     return jsonify({'status':'ok'}), 200
 
 
-@notification_bp.route("/<int:user_id>/digest-preference", methods=["GET", "POST"])
+@notification_bp.route("/<int:user_id>/notification-preference", methods=["GET", "POST"])
 @ccg_token_required
-def set_digest_preference(user_id):
+def notification_preference(user_id):
     """
-    Get and update the digest preference of the user.
+    Get and update the notification preference of the user.
     An access token must be provided in the Authorization header, formatted as `Bearer <token>`.
-    
-    **To get the digest preference of the user, a GET request must be made to this endpoint.**
+
+    **To get the notification preference of the user, a GET request must be made to this endpoint.**
     Returns JSON of the following format:
 
     ..code-block:: json
         {
+            "notifications_enabled": true,
             "digest": false,
             "digest_age": 7
         }
@@ -353,9 +354,10 @@ def set_digest_preference(user_id):
     :statuscode 400: Invalid user_id.
     :resheader Content-Type: *application/json*
 
-    **To update the digest preference of the user, a POST request must be made to this endpoint.**
+    **To update the notification preference of the user, a POST request must be made to this endpoint.**
 
     Request JSON must contain:
+        - ``notifications_enabled``: (bool) Required
         - ``digest``: (bool) Required
         - ``digest_age``: (int) Optional, Defaults to 7
 
@@ -363,6 +365,7 @@ def set_digest_preference(user_id):
 
     ..code-block:: json
         {
+            "notifications_enabled": true,
             "digest": true,
             "digest_age": 17
         }
@@ -371,6 +374,7 @@ def set_digest_preference(user_id):
 
     ..code-block:: json
         {
+            "notifications_enabled": true,
             "digest": true,
             "digest_age": 17
         }
@@ -387,13 +391,22 @@ def set_digest_preference(user_id):
         res = UserPreference.get(musicbrainz_row_id=user_id)
         if not res:
             raise APIBadRequest("Invalid user_id.")
-        return jsonify({"digest": res.digest, "digest_age": res.digest_age})
+        return jsonify(
+            {
+                "notifications_enabled": res.notifications_enabled,
+                "digest": res.digest,
+                "digest_age": res.digest_age,
+            }
+        )
 
     elif request.method == "POST":
         data = request.json
+        notifications_enabled = data.get("notifications_enabled")
         digest = data.get("digest")
         digest_age = data.get("digest_age")
 
+        if notifications_enabled is None or not isinstance(notifications_enabled, bool):
+            raise APIBadRequest("Invalid notifications_enabled value.")
         if digest is None or not isinstance(digest, bool):
             raise APIBadRequest("Invalid digest value.")
         if digest_age is not None:
@@ -401,8 +414,19 @@ def set_digest_preference(user_id):
                 raise APIBadRequest("Invalid digest age.")
 
         try:
-            result = UserPreference.set_digest_info(musicbrainz_row_id=user_id, digest=digest, digest_age=digest_age)
-            return jsonify({"digest": result.digest, "digest_age": result.digest_age})
+            result = UserPreference.set_notifications_preference(
+                musicbrainz_row_id=user_id,
+                notifications_enabled=notifications_enabled,
+                digest=digest,
+                digest_age=digest_age,
+            )
+            return jsonify(
+                {
+                    "notifications_enabled": result.notifications_enabled,
+                    "digest": result.digest,
+                    "digest_age": result.digest_age,
+                }
+            )
 
         except Exception as err:
             current_app.logger.error("Cannot update digest preference %s", str(err))
