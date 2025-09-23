@@ -10,6 +10,7 @@ SQLALCHEMY_MUSICBRAINZ_URI = ""
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 POSTGRES_ADMIN_URI = "postgresql://postgres:postgres@meb_db/postgres"
+POSTGRES_ADMIN_MEB_URI = "postgresql://postgres:postgres@meb_db:5432/metabrainz"
 
 # DATABASES
 
