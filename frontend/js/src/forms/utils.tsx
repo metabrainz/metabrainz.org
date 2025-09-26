@@ -174,47 +174,49 @@ export type AuthCardContainerProps = {
   children?: any;
 };
 
+export function ProjectIconPills() {
+  return (
+    <div className="icon-pills">
+      <div className="icon-pill" data-logo-width="160">
+        <img
+          src="/static/img/logos/musicbrainz.svg"
+          alt="MusicBrainz"
+          title="MusicBrainz"
+        />
+      </div>
+      <div className="icon-pill" data-logo-width="162">
+        <img
+          src="/static/img/logos/listenbrainz.svg"
+          alt="ListenBrainz"
+          title="ListenBrainz"
+        />
+      </div>
+      <div className="icon-pill" data-logo-width="151">
+        <img
+          src="/static/img/logos/bookbrainz.svg"
+          alt="BookBrainz"
+          title="BookBrainz"
+        />
+      </div>
+      <div className="icon-pill" data-logo-width="177">
+        <img
+          src="/static/img/logos/critiquebrainz.svg"
+          alt="CritiqueBrainz"
+          title="CritiqueBrainz"
+        />
+      </div>
+      <div className="icon-pill" data-logo-width="101">
+        <img src="/static/img/logos/picard.svg" alt="Picard" title="Picard" />
+      </div>
+    </div>
+  );
+}
+
 export function AuthCardContainer({ children }: AuthCardContainerProps) {
   return (
     <section id="auth-page">
       <div className="auth-page-container">
-        <div className="icon-pills">
-          <div className="icon-pill">
-            <img
-              src="/static/img/projects/musicbrainz.svg"
-              alt="MusicBrainz"
-              title="MusicBrainz"
-            />
-          </div>
-          <div className="icon-pill">
-            <img
-              src="/static/img/projects/listenbrainz.svg"
-              alt="ListenBrainz"
-              title="ListenBrainz"
-            />
-          </div>
-          <div className="icon-pill">
-            <img
-              src="/static/img/projects/bookbrainz.svg"
-              alt="BookBrainz"
-              title="BookBrainz"
-            />
-          </div>
-          <div className="icon-pill">
-            <img
-              src="/static/img/projects/critiquebrainz.svg"
-              alt="CritiqueBrainz"
-              title="CritiqueBrainz"
-            />
-          </div>
-          <div className="icon-pill">
-            <img
-              src="/static/img/projects/picard.svg"
-              alt="Picard"
-              title="Picard"
-            />
-          </div>
-        </div>
+        <ProjectIconPills />
         {children}
       </div>
     </section>
