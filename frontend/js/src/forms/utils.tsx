@@ -224,6 +224,7 @@ export function AuthCardContainer({ children }: AuthCardContainerProps) {
 export type AuthCardTextInputProps = JSX.IntrinsicElements["input"] &
   FieldConfig & {
     label: string | JSX.Element;
+    optionalInputButton?: JSX.Element;
   };
 
 export function AuthCardTextInput({
@@ -232,6 +233,7 @@ export function AuthCardTextInput({
   ...props
 }: AuthCardTextInputProps) {
   const [field, meta] = useField(props);
+  const { optionalInputButton } = props;
   return (
     <div className="form-group">
       <div
@@ -246,20 +248,48 @@ export function AuthCardTextInput({
         </label>
         {children}
       </div>
-      <div>
+      <div className={optionalInputButton ? "input-group" : ""}>
         <input
           className="form-control"
           {...field}
           {...props}
           required={props.required}
         />
-        {meta.touched && meta.error ? (
-          <div className="small" style={{ paddingTop: "7px", color: "red" }}>
-            {meta.error}
-          </div>
-        ) : null}
+        {optionalInputButton}
       </div>
+      {meta.touched && meta.error ? (
+        <div className="small" style={{ paddingTop: "7px", color: "red" }}>
+          {meta.error}
+        </div>
+      ) : null}
     </div>
+  );
+}
+
+export function AuthCardPasswordInput({ ...props }: AuthCardTextInputProps) {
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const glyphIcon = passwordVisible
+    ? "glyphicon-eye-close"
+    : "glyphicon-eye-open";
+  const passwordShowButton = (
+    <span className="input-group-btn">
+      <button
+        className="btn btn-info"
+        type="button"
+        onClick={() => {
+          setPasswordVisible((prev) => !prev);
+        }}
+      >
+        <span className={`glyphicon ${glyphIcon}`} aria-hidden="true" />
+      </button>
+    </span>
+  );
+  return (
+    <AuthCardTextInput
+      {...props}
+      type={passwordVisible ? "text" : "password"}
+      optionalInputButton={passwordShowButton}
+    />
   );
 }
 
