@@ -235,7 +235,7 @@ export function AuthCardTextInput({
   ...props
 }: AuthCardTextInputProps) {
   const [field, meta] = useField(props);
-  const { optionalInputButton } = props;
+  const { optionalInputButton, ...otherProps } = props;
   return (
     <div className="form-group">
       <div
@@ -254,7 +254,7 @@ export function AuthCardTextInput({
         <input
           className="form-control"
           {...field}
-          {...props}
+          {...otherProps}
           required={props.required}
         />
         {optionalInputButton}
@@ -273,10 +273,12 @@ export function AuthCardPasswordInput({ ...props }: AuthCardTextInputProps) {
   const glyphIcon = passwordVisible
     ? "glyphicon-eye-close"
     : "glyphicon-eye-open";
+  const title = passwordVisible ? "Hide password" : "Show password";
   const passwordShowButton = (
     <span className="input-group-btn">
       <button
         className="btn btn-info"
+        title={title}
         type="button"
         onClick={() => {
           setPasswordVisible((prev) => !prev);
