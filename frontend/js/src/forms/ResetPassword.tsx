@@ -3,7 +3,11 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
 import { getPageProps } from "../utils";
-import { AuthCardContainer, AuthCardTextInput } from "./utils";
+import {
+  AuthCardContainer,
+  AuthCardPasswordInput,
+  AuthCardTextInput,
+} from "./utils";
 
 type ResetPasswordProps = {
   csrf_token: string;
@@ -61,17 +65,15 @@ function ResetPassword({
                   )}
                 </div>
 
-                <AuthCardTextInput
+                <AuthCardPasswordInput
                   label="Password"
-                  type="password"
                   name="password"
                   id="password"
                   required
                 />
 
-                <AuthCardTextInput
+                <AuthCardPasswordInput
                   label="Confirm Password"
-                  type="password"
                   name="confirm_password"
                   id="confirm_password"
                   required
