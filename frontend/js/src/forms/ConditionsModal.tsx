@@ -1,4 +1,5 @@
 import React from "react";
+import { ProjectIconPills } from "./utils";
 
 export default function ConditionsModal() {
   return (
@@ -16,11 +17,12 @@ export default function ConditionsModal() {
             </button>
             <h4 className="modal-title">Privacy policy</h4>
           </div>
+          <h5>Licensing</h5>
           <p>
-            Note that any contributions you make to MusicBrainz will be released
-            into the Public Domain and/or licensed under a Creative Commons
-            by-nc-sa license. Furthermore, you give the MetaBrainz Foundation
-            the right to license this data for commercial use.
+            Any contributions you make to MusicBrainz will be released into the
+            Public Domain and/or licensed under a Creative Commons by-nc-sa
+            license. Furthermore, you give the MetaBrainz Foundation the right
+            to license this data for commercial use.
             <br />
             Please read our{" "}
             <a
@@ -33,8 +35,9 @@ export default function ConditionsModal() {
             </a>{" "}
             for more details.
           </p>
+          <h5>Privacy</h5>
           <p>
-            MusicBrainz believes strongly in the privacy of its users. Any
+            MusicBrainz strongly believes in the privacy of its users. Any
             personal information you choose to provide will not be sold or
             shared with anyone else.
             <br />
@@ -44,6 +47,7 @@ export default function ConditionsModal() {
             </a>{" "}
             for more details.
           </p>
+          <h5>GDPR compliance</h5>
           <p>
             You may remove your personal information from our services anytime
             by deleting your account.
@@ -54,14 +58,14 @@ export default function ConditionsModal() {
             </a>{" "}
             for more details.
           </p>
+          <ProjectIconPills />
           <p>
-            Creating an account on MetaBrainz will give you access to accounts
-            on our other services, such as ListenBrainz, MusicBrainz,
-            BookBrainz, and more.
+            Creating an account on MetaBrainz will give you access to all of our
+            projects, such as MusicBrainz, ListenBrainz, BookBrainz, and more.
             <br />
             We do not automatically create accounts for these services when you
-            create a MetaBrainz account, but you will only be a few clicks away
-            doing so.
+            create a MetaBrainz account, but you will be just a few clicks away
+            from doing so.
           </p>
           <button
             className="btn btn-primary center-block"
