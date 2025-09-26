@@ -6,6 +6,7 @@ import { getPageProps } from "../utils";
 import {
   AuthCardCheckboxInput,
   AuthCardContainer,
+  AuthCardPasswordInput,
   AuthCardTextInput,
 } from "./utils";
 
@@ -80,9 +81,8 @@ function LoginUser({
                   </a>
                 </AuthCardTextInput>
 
-                <AuthCardTextInput
+                <AuthCardPasswordInput
                   label="Password"
-                  type="password"
                   name="password"
                   id="password"
                   required
@@ -90,7 +90,7 @@ function LoginUser({
                   <a className="form-label-link small" href="/lost-password">
                     Forgot password?
                   </a>
-                </AuthCardTextInput>
+                </AuthCardPasswordInput>
 
                 <small className="checkbox">
                   <AuthCardCheckboxInput

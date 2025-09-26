@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { getPageProps } from "../utils";
 import {
   AuthCardContainer,
+  AuthCardPasswordInput,
   AuthCardTextInput,
   CheckboxInput,
   TextAreaInput,
@@ -239,17 +240,15 @@ function SignupCommercial({
                   required
                 />
 
-                <AuthCardTextInput
+                <AuthCardPasswordInput
                   label="Password"
-                  type="password"
                   name="password"
                   id="password"
                   required
                 />
 
-                <AuthCardTextInput
+                <AuthCardPasswordInput
                   label="Confirm Password"
-                  type="password"
                   name="confirm_password"
                   id="confirm_password"
                   required

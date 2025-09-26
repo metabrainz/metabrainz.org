@@ -108,7 +108,6 @@ function SignupUser({
 
                 <AuthCardPasswordInput
                   label="Password"
-                  type="password"
                   name="password"
                   id="password"
                   required
@@ -116,7 +115,6 @@ function SignupUser({
 
                 <AuthCardPasswordInput
                   label="Confirm Password"
-                  type="password"
                   name="confirm_password"
                   id="confirm_password"
                   required
