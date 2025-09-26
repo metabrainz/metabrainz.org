@@ -4,7 +4,11 @@ import { createRoot } from "react-dom/client";
 import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from "yup";
 import { getPageProps } from "../utils";
-import { AuthCardContainer, AuthCardTextInput } from "./utils";
+import {
+  AuthCardContainer,
+  AuthCardPasswordInput,
+  AuthCardTextInput,
+} from "./utils";
 import ConditionsModal from "./ConditionsModal";
 
 type SignupUserProps = {
@@ -102,7 +106,7 @@ function SignupUser({
                   required
                 />
 
-                <AuthCardTextInput
+                <AuthCardPasswordInput
                   label="Password"
                   type="password"
                   name="password"
@@ -110,7 +114,7 @@ function SignupUser({
                   required
                 />
 
-                <AuthCardTextInput
+                <AuthCardPasswordInput
                   label="Confirm Password"
                   type="password"
                   name="confirm_password"
@@ -126,9 +130,9 @@ function SignupUser({
                 </div>
 
                 <div className="small" style={{ fontSize: "1.3rem" }}>
-                  Please note that your contributions will be released into the
-                  public domain or licensed for use. We will never share your
-                  personal information.
+                  Your contributions will be released into the public domain or
+                  licensed for use. We will never share your personal
+                  information.
                   <br />
                   <button
                     className="small btn-link"
