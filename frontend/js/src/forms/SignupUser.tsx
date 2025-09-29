@@ -62,7 +62,7 @@ function SignupUser({
             })}
             onSubmit={() => {}}
           >
-            {({ errors, setFieldValue }) => (
+            {({ errors, setFieldValue, isValid, dirty }) => (
               <form method="POST">
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
@@ -83,13 +83,7 @@ function SignupUser({
                 <AuthCardTextInput
                   label={
                     <>
-                      Username{" "}
-                      <span
-                        className="small"
-                        style={{ display: "inline-block" }}
-                      >
-                        (public)
-                      </span>
+                      Username <span className="small">(public)</span>
                     </>
                   }
                   type="text"
@@ -111,6 +105,11 @@ function SignupUser({
                   name="password"
                   id="password"
                   required
+                  labelLink={
+                    <div className="small text-muted form-label-link">
+                      Must be at least 8 characters
+                    </div>
+                  }
                 />
 
                 <AuthCardPasswordInput
@@ -120,20 +119,13 @@ function SignupUser({
                   required
                 />
 
-                <div className="form-group">
-                  <ReCAPTCHA
-                    sitekey={recaptcha_site_key}
-                    onChange={(value) => setFieldValue("recaptcha", value)}
-                  />
-                </div>
-
-                <div className="small" style={{ fontSize: "1.3rem" }}>
+                <div className="text-center" style={{ fontSize: "1.3rem" }}>
                   Your contributions will be released into the public domain or
-                  licensed for use. We will never share your personal
-                  information.
+                  licensed for use.{" "}
+                  <b>We will never share your personal information.</b>
                   <br />
                   <button
-                    className="small btn-link"
+                    className="btn btn-link"
                     type="button"
                     role="link"
                     data-toggle="modal"
@@ -143,9 +135,23 @@ function SignupUser({
                   </button>
                 </div>
 
+                <div
+                  className="main-action-button"
+                  style={{
+                    width: "fit-content",
+                  }}
+                >
+                  <ReCAPTCHA
+                    sitekey={recaptcha_site_key}
+                    onChange={(value) => setFieldValue("recaptcha", value)}
+                    size="compact"
+                  />
+                </div>
+
                 <button
                   className="btn btn-primary main-action-button"
                   type="submit"
+                  disabled={!isValid || !dirty}
                 >
                   Create account
                 </button>
