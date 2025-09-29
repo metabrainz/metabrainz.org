@@ -94,7 +94,7 @@ function LoginUser({
                 </div>
 
                 <button
-                  className="btn btn-primary main-action-button"
+                  className="btn btn-primary btn-block main-action-button"
                   type="submit"
                 >
                   Sign in
