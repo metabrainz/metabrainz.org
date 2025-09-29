@@ -29,9 +29,7 @@ function UserProfileEdit({
         initialErrors={initial_errors}
         initialTouched={initial_errors}
         validationSchema={Yup.object({
-          contact_email: Yup.string()
-            .email()
-            .required("Email address is required!"),
+          email: Yup.string().email().required("Email address is required!"),
         })}
         onSubmit={() => {}}
       >

@@ -43,6 +43,40 @@ function LoginUser({
           >
             {({ errors }) => (
               <form method="POST">
+                <AuthCardTextInput
+                  label="Username"
+                  labelLink={
+                    <a className="form-label-link small" href="/lost-username">
+                      Forgot username?
+                    </a>
+                  }
+                  type="text"
+                  name="username"
+                  id="username"
+                  required
+                />
+
+                <AuthCardPasswordInput
+                  label="Password"
+                  labelLink={
+                    <a className="form-label-link small" href="/lost-password">
+                      Forgot password?
+                    </a>
+                  }
+                  name="password"
+                  id="password"
+                  required
+                />
+
+                <small className="checkbox">
+                  <AuthCardCheckboxInput
+                    label="Remember me"
+                    id="remember_me"
+                    name="remember_me"
+                    type="checkbox"
+                  />
+                </small>
+
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
                     <input
@@ -58,48 +92,6 @@ function LoginUser({
                     </div>
                   )}
                 </div>
-
-                <AuthCardTextInput
-                  label={
-                    <>
-                      Username{" "}
-                      <span
-                        className="small"
-                        style={{ display: "inline-block", color: "#404040" }}
-                      >
-                        (public)
-                      </span>
-                    </>
-                  }
-                  type="text"
-                  name="username"
-                  id="username"
-                  required
-                >
-                  <a className="form-label-link small" href="/lost-username">
-                    Forgot username?
-                  </a>
-                </AuthCardTextInput>
-
-                <AuthCardPasswordInput
-                  label="Password"
-                  name="password"
-                  id="password"
-                  required
-                >
-                  <a className="form-label-link small" href="/lost-password">
-                    Forgot password?
-                  </a>
-                </AuthCardPasswordInput>
-
-                <small className="checkbox">
-                  <AuthCardCheckboxInput
-                    label="Remember me"
-                    id="remember_me"
-                    name="remember_me"
-                    type="checkbox"
-                  />
-                </small>
 
                 <button
                   className="btn btn-primary main-action-button"
