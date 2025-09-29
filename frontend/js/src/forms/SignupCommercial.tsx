@@ -455,6 +455,9 @@ function SignupCommercial({
           </Formik>
           <div className="auth-card-footer">
             <div className="small">
+              Not a supporter? <a href="/signup">Create a user account </a>
+            </div>
+            <div className="small">
               Already have an account? <a href="/login">Sign in </a>
             </div>
           </div>
