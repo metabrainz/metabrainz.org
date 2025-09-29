@@ -8,8 +8,9 @@ export type TextInputProps = JSX.IntrinsicElements["input"] &
 
 export function TextInput({ label, children, ...props }: TextInputProps) {
   const [field, meta] = useField(props);
+  const hasError = meta.touched && meta.error;
   return (
-    <div className="form-group">
+    <div className={`form-group ${hasError ? "has-error" : ""}`}>
       <label className="col-sm-4 control-label" htmlFor={props.id}>
         {label} {props.required && <span style={{ color: "red" }}>*</span>}
       </label>
@@ -17,11 +18,8 @@ export function TextInput({ label, children, ...props }: TextInputProps) {
         <input className="form-control" {...field} {...props} />
       </div>
       {children}
-      {meta.touched && meta.error ? (
-        <div
-          className="col-sm-offset-4 col-sm-5"
-          style={{ paddingTop: "7px", color: "red" }}
-        >
+      {hasError ? (
+        <div className="col-sm-offset-4 col-sm-5 small help-block text-danger">
           {meta.error}
         </div>
       ) : null}
@@ -40,22 +38,16 @@ export function TextAreaInput({
   ...props
 }: TextAreaInputProps) {
   const [field, meta] = useField(props);
+  const hasError = meta.touched && meta.error;
   return (
-    <div className="form-group">
-      <label className="col-sm-4 control-label" htmlFor={props.id}>
+    <div className={`form-group ${hasError ? "has-error" : ""}`}>
+      <label className="control-label" htmlFor={props.id}>
         {label} {props.required && <span style={{ color: "red" }}>*</span>}
       </label>
-      <div className="col-sm-5">
-        <textarea className="form-control" {...field} {...props} />
-      </div>
       {children}
-      {meta.touched && meta.error ? (
-        <div
-          className="col-sm-offset-4 col-sm-5"
-          style={{ paddingTop: "7px", color: "red" }}
-        >
-          {meta.error}
-        </div>
+      <textarea className="form-control" {...field} {...props} />
+      {hasError ? (
+        <div className="small help-block text-danger">{meta.error}</div>
       ) : null}
     </div>
   );
@@ -72,59 +64,18 @@ export function CheckboxInput({
   ...props
 }: CheckboxInputProps) {
   const [field, meta] = useField(props);
+  const hasError = meta.touched && meta.error;
   return (
-    <div className="form-group">
-      <div className="col-sm-offset-4 col-sm-8">
+    <div className={`form-group ${hasError ? "has-error" : ""}`}>
+      <div>
         <div className="checkbox">
           <label htmlFor={props.id}>
             <input {...props} {...field} />
             {children}
           </label>
-          {meta.touched && meta.error ? (
-            <div style={{ paddingTop: "7px", color: "red" }}>{meta.error}</div>
+          {hasError ? (
+            <div className="small help-block text-danger">{meta.error}</div>
           ) : null}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export type DatasetsProps = {
-  datasets: Dataset[];
-};
-
-export function DatasetsInput({ datasets }: DatasetsProps) {
-  return (
-    <div className="form-group">
-      <div className="col-sm-4 control-label">
-        <strong>Datasets</strong>
-      </div>
-      <div className="col-sm-5">
-        <div className="list-group">
-          {datasets.map((dataset) => (
-            <div
-              className="form-check list-group-item"
-              key={`datasets-${dataset.id}`}
-            >
-              <h4 className="list-group-item-heading">
-                <Field
-                  className="form-check-input"
-                  id={`datasets-${dataset.id}`}
-                  name="datasets"
-                  type="checkbox"
-                  value={`${dataset.id}`}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor={`datasets-${dataset.id}`}
-                >
-                  {" "}
-                  {dataset.name}
-                </label>
-              </h4>
-              <p className="list-group-item-text">{dataset.description}</p>
-            </div>
-          ))}
         </div>
       </div>
     </div>
@@ -142,17 +93,153 @@ export function OAuthTextInput({
   ...props
 }: OAuthTextInputProps) {
   const [field, meta] = useField(props);
+  const hasError = meta.touched && meta.error;
   return (
-    <div className="form-group">
+    <div className={`form-group ${hasError ? "has-error" : ""}`}>
       <label className="col-sm-3 control-label">
         {label} {props.required && <span style={{ color: "red" }}>*</span>}
       </label>
-      <div className="col-sm-5">
+      <div className="col-sm-9">
         <input className="form-control" {...field} {...props} />
-        {meta.touched && meta.error ? (
-          <div style={{ paddingTop: "7px", color: "red" }}>{meta.error}</div>
+        {hasError ? (
+          <div className="small help-block text-danger">{meta.error}</div>
         ) : null}
       </div>
+    </div>
+  );
+}
+
+export type AuthCardTextInputProps = JSX.IntrinsicElements["input"] &
+  FieldConfig & {
+    label: string | JSX.Element;
+    labelLink?: string | JSX.Element;
+    optionalInputButton?: JSX.Element;
+  };
+
+export function AuthCardTextInput({
+  label,
+  labelLink,
+  children,
+  ...props
+}: AuthCardTextInputProps) {
+  const [field, meta] = useField(props);
+  const hasError = meta.touched && meta.error;
+  const { optionalInputButton, ...otherProps } = props;
+  const labelElement = (
+    <label className="control-label" htmlFor={props.id}>
+      {label} {props.required && <span style={{ color: "red" }}>*</span>}
+    </label>
+  );
+  return (
+    <div className={`form-group ${hasError ? "has-error" : ""}`}>
+      {labelLink ? (
+        <div className="label-with-link">
+          {labelElement}
+          {labelLink}
+        </div>
+      ) : (
+        labelElement
+      )}
+      {children}
+      <div className={optionalInputButton ? "input-group" : ""}>
+        <input
+          className="form-control"
+          {...field}
+          {...otherProps}
+          required={props.required}
+        />
+        {optionalInputButton}
+      </div>
+      {hasError ? (
+        <div className="small help-block text-danger">{meta.error}</div>
+      ) : null}
+    </div>
+  );
+}
+
+export function AuthCardPasswordInput({ ...props }: AuthCardTextInputProps) {
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const glyphIcon = passwordVisible
+    ? "glyphicon-eye-close"
+    : "glyphicon-eye-open";
+  const title = passwordVisible ? "Hide password" : "Show password";
+  const passwordShowButton = (
+    <span className="input-group-btn">
+      <button
+        className="btn btn-info"
+        title={title}
+        type="button"
+        onClick={() => {
+          setPasswordVisible((prev) => !prev);
+        }}
+      >
+        <span className={`glyphicon ${glyphIcon}`} aria-hidden="true" />
+      </button>
+    </span>
+  );
+  return (
+    <AuthCardTextInput
+      {...props}
+      type={passwordVisible ? "text" : "password"}
+      optionalInputButton={passwordShowButton}
+    />
+  );
+}
+
+export type AuthCardCheckboxInputProps = JSX.IntrinsicElements["input"] &
+  FieldConfig & {
+    label: string;
+  };
+
+export function AuthCardCheckboxInput({
+  label,
+  children,
+  ...props
+}: AuthCardCheckboxInputProps) {
+  const [field, meta] = useField(props);
+  const hasError = meta.touched && meta.error;
+  return (
+    <div className={`form-group ${hasError ? "has-error" : ""}`}>
+      <label className="control-label" htmlFor={props.id}>
+        <input {...props} {...field} />
+        Remember me
+      </label>
+      {hasError ? (
+        <div className="small help-block text-danger">{meta.error}</div>
+      ) : null}
+    </div>
+  );
+}
+export type DatasetsProps = {
+  datasets: Dataset[];
+};
+
+export function DatasetsInput({ datasets }: DatasetsProps) {
+  return (
+    <div className="list-group small" id="datasets">
+      {datasets.map((dataset) => (
+        <div
+          className="form-check list-group-item"
+          key={`datasets-${dataset.id}`}
+        >
+          <h5 className="checkbox-inline list-group-item-heading">
+            <label
+              className="form-check-label"
+              htmlFor={`datasets-${dataset.id}`}
+            >
+              <Field
+                className="form-check-input"
+                id={`datasets-${dataset.id}`}
+                name="datasets"
+                type="checkbox"
+                value={`${dataset.id}`}
+              />{" "}
+              {dataset.name}
+            </label>
+          </h5>
+          <p className="list-group-item-text">{dataset.description}</p>
+        </div>
+      ))}
     </div>
   );
 }
@@ -162,7 +249,7 @@ export function OAuthScopeDesc(scopes: Array<Scope>) {
     <ul>
       {/* eslint-disable-next-line react/destructuring-assignment */}
       {scopes.map((scope) => (
-        <li>
+        <li key={scope.name}>
           {scope.name}: {scope.description}
         </li>
       ))}
@@ -220,103 +307,5 @@ export function AuthCardContainer({ children }: AuthCardContainerProps) {
         {children}
       </div>
     </section>
-  );
-}
-
-export type AuthCardTextInputProps = JSX.IntrinsicElements["input"] &
-  FieldConfig & {
-    label: string | JSX.Element;
-    optionalInputButton?: JSX.Element;
-  };
-
-export function AuthCardTextInput({
-  label,
-  children,
-  ...props
-}: AuthCardTextInputProps) {
-  const [field, meta] = useField(props);
-  const { optionalInputButton, ...otherProps } = props;
-  return (
-    <div className="form-group">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
-      >
-        <label className="form-label" htmlFor={props.id}>
-          {label} {props.required && <span style={{ color: "red" }}>*</span>}
-        </label>
-        {children}
-      </div>
-      <div className={optionalInputButton ? "input-group" : ""}>
-        <input
-          className="form-control"
-          {...field}
-          {...otherProps}
-          required={props.required}
-        />
-        {optionalInputButton}
-      </div>
-      {meta.touched && meta.error ? (
-        <div className="small" style={{ paddingTop: "7px", color: "red" }}>
-          {meta.error}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-export function AuthCardPasswordInput({ ...props }: AuthCardTextInputProps) {
-  const [passwordVisible, setPasswordVisible] = React.useState(false);
-  const glyphIcon = passwordVisible
-    ? "glyphicon-eye-close"
-    : "glyphicon-eye-open";
-  const title = passwordVisible ? "Hide password" : "Show password";
-  const passwordShowButton = (
-    <span className="input-group-btn">
-      <button
-        className="btn btn-info"
-        title={title}
-        type="button"
-        onClick={() => {
-          setPasswordVisible((prev) => !prev);
-        }}
-      >
-        <span className={`glyphicon ${glyphIcon}`} aria-hidden="true" />
-      </button>
-    </span>
-  );
-  return (
-    <AuthCardTextInput
-      {...props}
-      type={passwordVisible ? "text" : "password"}
-      optionalInputButton={passwordShowButton}
-    />
-  );
-}
-
-export type AuthCardCheckboxInputProps = JSX.IntrinsicElements["input"] &
-  FieldConfig & {
-    label: string;
-  };
-
-export function AuthCardCheckboxInput({
-  label,
-  children,
-  ...props
-}: AuthCardCheckboxInputProps) {
-  const [field, meta] = useField(props);
-  return (
-    <div className="form-group">
-      <label htmlFor={props.id}>
-        <input {...props} {...field} />
-        Remember me
-      </label>
-      {meta.touched && meta.error ? (
-        <div style={{ paddingTop: "7px", color: "red" }}>{meta.error}</div>
-      ) : null}
-    </div>
   );
 }

@@ -81,7 +81,14 @@ function ProfileEdit({
             <br />
 
             {is_supporter && !is_commercial && (
-              <DatasetsInput datasets={datasets} />
+              <div className="form-group">
+                <div className="col-sm-4 control-label">
+                  <strong>Datasets</strong>
+                </div>
+                <div className="col-sm-5">
+                  <DatasetsInput datasets={datasets} />
+                </div>
+              </div>
             )}
 
             <div className="form-group">
