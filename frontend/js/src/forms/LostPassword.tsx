@@ -37,22 +37,6 @@ function LostPassword({
           >
             {({ errors }) => (
               <form method="POST">
-                <div className="form-group">
-                  <div className="col-sm-offset-4 col-sm-5">
-                    <input
-                      id="csrf_token"
-                      name="csrf_token"
-                      type="hidden"
-                      value={csrf_token}
-                    />
-                  </div>
-                  {errors.csrf_token && (
-                    <div className="alert alert-danger">
-                      {errors.csrf_token}
-                    </div>
-                  )}
-                </div>
-
                 <AuthCardTextInput
                   label="Username"
                   type="text"
@@ -69,6 +53,21 @@ function LostPassword({
                   required
                 />
 
+                <div className="form-group">
+                  <div className="col-sm-offset-4 col-sm-5">
+                    <input
+                      id="csrf_token"
+                      name="csrf_token"
+                      type="hidden"
+                      value={csrf_token}
+                    />
+                  </div>
+                  {errors.csrf_token && (
+                    <div className="alert alert-danger">
+                      {errors.csrf_token}
+                    </div>
+                  )}
+                </div>
                 <button
                   className="btn btn-primary main-action-button"
                   type="submit"

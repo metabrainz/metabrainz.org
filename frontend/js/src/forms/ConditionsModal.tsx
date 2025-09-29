@@ -58,6 +58,7 @@ export default function ConditionsModal() {
             </a>{" "}
             for more details.
           </p>
+          <hr />
           <ProjectIconPills />
           <p>
             Creating an account on MetaBrainz will give you access to all of our

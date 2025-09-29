@@ -78,9 +78,6 @@ function SignupNonCommercial({
                 .required("Please, tell us how you (will) use our data.")
                 .max(500, "Please, limit usage description to 500 characters."),
               contact_name: Yup.string().required("Contact name is required!"),
-              contact_email: Yup.string()
-                .email()
-                .required("Email address is required!"),
               agreement: Yup.boolean()
                 .required("You need to accept the agreement!")
                 .oneOf([true], "You need to accept the agreement!"),
@@ -88,7 +85,7 @@ function SignupNonCommercial({
             })}
             onSubmit={() => {}}
           >
-            {({ errors, setFieldValue }) => (
+            {({ errors, setFieldValue, isValid, dirty }) => (
               <form method="POST" className="d-flex flex-column">
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
@@ -105,19 +102,23 @@ function SignupNonCommercial({
                     </div>
                   )}
                 </div>
-
-                <div className="form-group">
-                  <div className="col-sm-4 control-label">
-                    <strong>Account type</strong>
-                  </div>
-                  <div className="col-sm-5" style={{ paddingTop: "7px" }}>
-                    Non-commercial
-                  </div>
-                  <div
-                    className="col-sm-6 col-sm-offset-4"
-                    style={{ paddingTop: "7px" }}
-                  >
-                    <a href="/supporters/account-type">Change account type</a>
+                <div className="form-horizontal">
+                  <div className="form-group">
+                    <div className="col-sm- col-xs-6 control-label">
+                      <strong>Account type</strong>
+                    </div>
+                    <div
+                      className="col-sm-5 col-xs-6 label label-success"
+                      style={{ padding: "10px" }}
+                    >
+                      Non-commercial
+                    </div>
+                    <div
+                      className="btn btn-link col-sm-offset-4 col-xs-offset-5"
+                      style={{ marginTop: "10px" }}
+                    >
+                      <a href="/supporters/account-type">Change account type</a>
+                    </div>
                   </div>
                 </div>
                 <hr />
@@ -125,13 +126,7 @@ function SignupNonCommercial({
                 <AuthCardTextInput
                   label={
                     <>
-                      Username{" "}
-                      <span
-                        className="small help-block"
-                        style={{ display: "inline-block" }}
-                      >
-                        (public)
-                      </span>
+                      Username <span className="small">(public)</span>
                     </>
                   }
                   type="text"
@@ -162,6 +157,11 @@ function SignupNonCommercial({
                   name="password"
                   id="password"
                   autoComplete="new-password"
+                  labelLink={
+                    <div className="small text-muted form-label-link">
+                      Must be at least 8 characters
+                    </div>
+                  }
                   required
                 />
 
@@ -174,16 +174,28 @@ function SignupNonCommercial({
                 />
                 <br />
 
-                <DatasetsInput datasets={datasets} />
+                <div className="form-group">
+                  <label htmlFor="datasets">
+                    Which datasets are you interested in?
+                  </label>
+                  <DatasetsInput datasets={datasets} />
+                </div>
 
                 <TextAreaInput
                   id="usage_desc"
                   name="usage_desc"
-                  label="Can you please tell us more about the project in which you'd like to use our data? Do you plan to self host the data or use our APIs?"
+                  label="About your project"
                   maxLength={150}
+                  rows={6}
                   required
                   placeholder="(max 150 characters)"
-                />
+                >
+                  <p>
+                    Can you please tell us more about the project in which
+                    you&apos;d like to use our data? Do you plan to self host
+                    the data or use our APIs?
+                  </p>
+                </TextAreaInput>
                 <hr />
 
                 <CheckboxInput
@@ -205,21 +217,27 @@ function SignupNonCommercial({
                   </p>
                 </CheckboxInput>
 
-                <div className="form-group">
-                  <div className="col-sm-offset-4 col-sm-8">
-                    <ReCAPTCHA
-                      sitekey={recaptcha_site_key}
-                      onChange={(value) => setFieldValue("recaptcha", value)}
-                    />
-                  </div>
+                <div
+                  className="main-action-button"
+                  style={{
+                    width: "fit-content",
+                  }}
+                >
+                  <ReCAPTCHA
+                    sitekey={recaptcha_site_key}
+                    onChange={(value) => setFieldValue("recaptcha", value)}
+                    size="compact"
+                  />
                 </div>
 
-                <div className="form-group">
-                  <div className="col-sm-offset-4 col-sm-8">
-                    <button type="submit" className="btn btn-primary">
-                      Sign up
-                    </button>
-                  </div>
+                <div className="form-group main-action-button">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block"
+                    disabled={!isValid || !dirty}
+                  >
+                    Sign up
+                  </button>
                 </div>
                 <br />
               </form>
