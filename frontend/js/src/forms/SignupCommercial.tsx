@@ -24,11 +24,11 @@ function AmountPledgedField({ tier, ...props }: AmountPledgedFieldProps) {
   const [field, meta] = useField(props);
   return (
     <div className="form-group">
-      <label className="col-sm-offset-4 col-sm-5" htmlFor="amount_pledged">
+      <label htmlFor="amount_pledged">
         If you would like to support us with more than ${tier.price}, please
         enter the actual amount here:
       </label>
-      <div className="col-sm-offset-4 col-sm-5">
+      <div>
         <input
           step="any"
           className="form-control"
@@ -38,12 +38,7 @@ function AmountPledgedField({ tier, ...props }: AmountPledgedFieldProps) {
         />
       </div>
       {meta.touched && meta.error ? (
-        <div
-          className="col-sm-offset-4 col-sm-5"
-          style={{ paddingTop: "7px", color: "red" }}
-        >
-          {meta.error}
-        </div>
+        <div style={{ paddingTop: "7px", color: "red" }}>{meta.error}</div>
       ) : null}
     </div>
   );
@@ -162,8 +157,8 @@ function SignupCommercial({
             })}
             onSubmit={() => {}}
           >
-            {({ errors, setFieldValue }) => (
-              <form method="POST" className="form-horizontal">
+            {({ errors, setFieldValue, isValid, dirty }) => (
+              <form method="POST">
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
                     <input
@@ -180,27 +175,39 @@ function SignupCommercial({
                   )}
                 </div>
 
-                <div className="form-group">
-                  <div className="col-sm-4 control-label">
-                    <strong>Account type</strong>
+                <div className="form-horizontal">
+                  <div className="form-group">
+                    <div className="col-xs-6 col-sm-4 control-label">
+                      <strong>Account type</strong>
+                    </div>
+                    <div className="col-xs-6 col-sm-5">
+                      <div
+                        className="label label-success"
+                        style={{ padding: "10px" }}
+                      >
+                        Commercial
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-sm-5" style={{ paddingTop: "7px" }}>
-                    Commercial
-                  </div>
-                  <div className="col-sm-4 control-label">
-                    <strong>Selected tier</strong>
-                  </div>
-                  <div className="col-sm-5" style={{ paddingTop: "7px" }}>
-                    <b>{tier.name}</b>
-                    <em className="text-muted">${tier.price}/month and up</em>
-                  </div>
-                  <div
-                    className="col-sm-6 col-sm-offset-4"
-                    style={{ paddingTop: "7px" }}
-                  >
-                    <a href="/supporters/account-type">
-                      Change account type or tier
-                    </a>
+                  <div className="form-group">
+                    <div className="col-xs-6 col-sm-4 control-label">
+                      <strong>Selected tier</strong>
+                    </div>
+                    <div
+                      className="col-xs-6 col-sm-5"
+                      style={{ paddingTop: "7px" }}
+                    >
+                      <b>{tier.name}</b>
+                      <p className="text-muted">${tier.price}/month and up</p>
+                    </div>
+                    <div
+                      className="btn btn-link col-xs-offset-1 col-sm-offset-4"
+                      style={{ marginTop: "10px" }}
+                    >
+                      <a href="/supporters/account-type">
+                        Change account type or tier
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -209,13 +216,7 @@ function SignupCommercial({
                 <AuthCardTextInput
                   label={
                     <>
-                      Username{" "}
-                      <span
-                        className="small help-block"
-                        style={{ display: "inline-block" }}
-                      >
-                        (public)
-                      </span>
+                      Username <span className="small">(public)</span>
                     </>
                   }
                   type="text"
@@ -245,6 +246,11 @@ function SignupCommercial({
                   name="password"
                   id="password"
                   required
+                  labelLink={
+                    <div className="small text-muted form-label-link">
+                      Must be at least 8 characters
+                    </div>
+                  }
                 />
 
                 <AuthCardPasswordInput
@@ -253,7 +259,6 @@ function SignupCommercial({
                   id="confirm_password"
                   required
                 />
-                <br />
 
                 <AuthCardTextInput
                   type="text"
@@ -262,19 +267,14 @@ function SignupCommercial({
                   label="Organization name"
                   required
                 >
-                  <div
-                    className="col-sm-offset-4 col-sm-5"
-                    style={{ paddingTop: "7px" }}
-                  >
-                    <em className="text-muted">
-                      If you don&apos;t have an organization name, you probably
-                      want to sign up as a{" "}
-                      <a href="/signup/noncommercial">
-                        non-commercial / personal
-                      </a>{" "}
-                      user.
-                    </em>
-                  </div>
+                  <p className="text-muted">
+                    If you don&apos;t have an organization name, you probably
+                    want to sign up as a{" "}
+                    <a href="/signup/noncommercial">
+                      non-commercial / personal
+                    </a>{" "}
+                    user.
+                  </p>
                 </AuthCardTextInput>
 
                 <TextAreaInput
@@ -283,23 +283,18 @@ function SignupCommercial({
                   label="Organization description"
                   required
                 >
-                  <div
-                    className="col-sm-offset-4 col-sm-5"
-                    style={{ paddingTop: "7px" }}
-                  >
-                    <em className="text-muted">
-                      Please tell us a little about your company and whether you
-                      plan to use our{" "}
-                      <a href="https://musicbrainz.org/doc/Development/XML_Web_Service/Version_2">
-                        API
-                      </a>
-                      or to{" "}
-                      <a href="https://musicbrainz.org/doc/MusicBrainz_Server/Setup">
-                        host your own copy
-                      </a>{" "}
-                      of the data.
-                    </em>
-                  </div>
+                  <p className="text-muted">
+                    Please tell us a little about your company and whether you
+                    plan to use our{" "}
+                    <a href="https://musicbrainz.org/doc/Development/XML_Web_Service/Version_2">
+                      API
+                    </a>{" "}
+                    or to{" "}
+                    <a href="https://musicbrainz.org/doc/MusicBrainz_Server/Setup">
+                      host your own copy
+                    </a>{" "}
+                    of the data.
+                  </p>
                 </TextAreaInput>
 
                 <AuthCardTextInput
@@ -317,15 +312,10 @@ function SignupCommercial({
                   label="Logo URL"
                   placeholder="(preferably in SVG format)"
                 >
-                  <div
-                    className="col-sm-offset-4 col-sm-5"
-                    style={{ paddingTop: "7px" }}
-                  >
-                    <em className="text-muted">
-                      Image should be about 250 pixels wide on a white or
-                      transparent background. We will host it on our site.
-                    </em>
-                  </div>
+                  <p className="text-muted">
+                    Image should be about 250 pixels wide on a white or
+                    transparent background. We will host it on our site.
+                  </p>
                 </AuthCardTextInput>
 
                 <AuthCardTextInput
@@ -334,26 +324,27 @@ function SignupCommercial({
                   name="api_url"
                   label="API URL"
                 >
-                  <div
-                    className="col-sm-offset-4 col-sm-5"
-                    style={{ paddingTop: "7px" }}
-                  >
-                    <em className="text-muted">
-                      URL to where developers can use your APIs using
-                      MusicBrainz IDs, if available..
-                    </em>
-                  </div>
+                  <p className="text-muted">
+                    URL to where developers can use your APIs using MusicBrainz
+                    IDs, if available..
+                  </p>
                 </AuthCardTextInput>
 
                 <TextAreaInput
                   id="usage_desc"
                   name="usage_desc"
-                  label="Can you please tell us more about the project in which you'd like to use our data? Do you plan to self host the data or use our APIs?"
+                  label="Your project"
                   maxLength={150}
+                  rows={6}
                   required
                   placeholder="(max 150 characters)"
-                />
-                <br />
+                >
+                  <p className="text-muted">
+                    Can you please tell us more about the project in which
+                    you&apos;d like to use our data? Do you plan to self host
+                    the data or use our APIs?
+                  </p>
+                </TextAreaInput>
 
                 <AmountPledgedField
                   id="amount_pledged"
@@ -361,13 +352,9 @@ function SignupCommercial({
                   type="number"
                   tier={tier}
                 />
-                <br />
+                <hr />
 
-                <div className="form-group">
-                  <div className="col-sm-offset-4 col-sm-5">
-                    <strong>Billing address</strong>
-                  </div>
-                </div>
+                <h4>Billing address</h4>
 
                 <AuthCardTextInput
                   type="text"
@@ -408,7 +395,6 @@ function SignupCommercial({
                   label="Country"
                   required
                 />
-                <br />
                 <hr />
 
                 <CheckboxInput
@@ -430,41 +416,40 @@ function SignupCommercial({
                   </p>
                 </CheckboxInput>
 
-                <div className="col-sm-offset-4 col-sm-8 small">
-                  <em>
+                <div className="text-center small">
+                  <p>
                     The following information will be shown publicly:
                     organization name, logo, website and API URLs, data usage
                     description.
-                    <br />
-                  </em>
-                </div>
-
-                <div className="col-sm-offset-4 col-sm-8 small">
-                  <em>
+                  </p>
+                  <p>
                     We&apos;ll send you more details about payment process once
                     your application is approved.
-                    <br />
-                    <br />
-                  </em>
+                  </p>
                 </div>
 
-                <div className="form-group">
-                  <div className="col-sm-offset-4 col-sm-8">
-                    <ReCAPTCHA
-                      sitekey={recaptcha_site_key}
-                      onChange={(value) => setFieldValue("recaptcha", value)}
-                    />
-                  </div>
+                <div
+                  className="main-action-button"
+                  style={{
+                    width: "fit-content",
+                  }}
+                >
+                  <ReCAPTCHA
+                    sitekey={recaptcha_site_key}
+                    onChange={(value) => setFieldValue("recaptcha", value)}
+                    size="compact"
+                  />
                 </div>
 
-                <div className="form-group">
-                  <div className="col-sm-offset-4 col-sm-8">
-                    <button type="submit" className="btn btn-primary">
-                      Sign up
-                    </button>
-                  </div>
+                <div className="form-group main-action-button">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block"
+                    disabled={!isValid || !dirty}
+                  >
+                    Sign up
+                  </button>
                 </div>
-                <br />
               </form>
             )}
           </Formik>

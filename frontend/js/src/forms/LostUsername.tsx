@@ -35,6 +35,14 @@ function LostUsername({
           >
             {({ errors }) => (
               <form method="POST">
+                <AuthCardTextInput
+                  label="Email"
+                  type="email"
+                  name="email"
+                  id="email"
+                  required
+                />
+
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
                     <input
@@ -50,14 +58,6 @@ function LostUsername({
                     </div>
                   )}
                 </div>
-
-                <AuthCardTextInput
-                  label="Email"
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                />
 
                 <button
                   className="btn btn-primary main-action-button"
