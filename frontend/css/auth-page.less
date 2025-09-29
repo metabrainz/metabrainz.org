@@ -9,6 +9,17 @@
   .form-label {
     font-weight: normal;
   }
+  .label-with-link {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    label {
+      flex-shrink: 0;
+    }
+  }
+  .form-label-link {
+    text-align: right;
+  }
 
   .auth-page-container {
     max-width: 600px;
@@ -33,6 +44,9 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
     padding: 1rem 6rem;
     border-radius: 3px;
+    @media screen and (max-width: @screen-xs-max) {
+      padding: 1rem 3rem;
+    }
   }
   .auth-card-bottom {
     display: flex;
