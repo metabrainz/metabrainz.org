@@ -21,7 +21,7 @@
       <table class="table table-striped">
         <thead>
         <tr>
-          <th>MusicBrainz ID (Organization)</th>
+          <th>Username (Organization)</th>
           <th>State</th>
           <th>Contact name</th>
           <th>Contact email</th>
@@ -36,7 +36,7 @@
           <tr>
             <td>
               <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">
-                <strong>{{ supporter.musicbrainz_id }}</strong>
+                <strong>{{ supporter.user.name }}</strong>
                 {{ '('+supporter.org_name+')' if supporter.org_name }}
               </a>
             </td>
@@ -56,7 +56,7 @@
               {% endif %}
             </td>
             <td>{{ supporter.contact_name }}</td>
-            <td>{{ supporter.contact_email }}</td>
+            <td>{{ supporter.user.email }}</td>
             <td>
               {% if supporter.is_commercial %}
                 <span class="label label-success">Commercial</span>

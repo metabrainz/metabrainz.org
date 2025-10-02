@@ -10,9 +10,7 @@ def update(supporter_id, **kwargs):
 
     multiparams = {
         "id": supporter_id,
-        "musicbrainz_id": kwargs.pop("musicbrainz_id", supporter.musicbrainz_id),
         "contact_name": kwargs.pop("contact_name", supporter.contact_name),
-        "contact_email": kwargs.pop("contact_email", supporter.contact_email),
         "state": kwargs.pop("state", supporter.state),
         "is_commercial": kwargs.pop("is_commercial", supporter.is_commercial),
         "org_name": kwargs.pop("org_name", supporter.org_name),
@@ -39,9 +37,7 @@ def update(supporter_id, **kwargs):
     with db.engine.connect() as connection:
         connection.execute(sqlalchemy.text("""
             UPDATE supporter
-               SET musicbrainz_id = :musicbrainz_id,
-                   contact_name = :contact_name,
-                   contact_email = :contact_email,
+               SET contact_name = :contact_name,
                    state = :state,
                    is_commercial = :is_commercial,
                    org_name = :org_name,

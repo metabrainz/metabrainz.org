@@ -6,10 +6,10 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>Name</th>
+        <th>Organization Name</th>
         <th>Contact name</th>
         <th>Contact email</th>
-        <th>MusicBrainz ID</th>
+        <th>Username</th>
         <th>Tier</th>
         <th>Applied on</th>
       </tr>
@@ -18,8 +18,8 @@
         <tr>
           <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
           <td>{{ supporter.contact_name }}</td>
-          <td>{{ supporter.contact_email }}</td>
-          <td>{{ supporter.musicbrainz_id }}</td>
+          <td>{{ supporter.user.email }}</td>
+          <td>{{ supporter.user.name }}</td>
           <td>{{ supporter.tier }}</td>
           <td>{{ supporter.created }}</td>
         </tr>

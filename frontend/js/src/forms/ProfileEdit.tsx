@@ -3,44 +3,46 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
 import { getPageProps } from "../utils";
-import { Dataset, DatasetsInput, TextInput } from "./utils";
+import { DatasetsInput, TextInput } from "./utils";
 
-type SupporterProfileEditProps = {
+type ProfileEditProps = {
   datasets: Dataset[];
+  is_supporter: boolean;
   is_commercial: boolean;
   csrf_token: string;
   initial_form_data: any;
   initial_errors: any;
 };
 
-function SupporterProfileEdit({
+function ProfileEdit({
   datasets,
   is_commercial,
+  is_supporter,
   csrf_token,
   initial_form_data,
   initial_errors,
-}: SupporterProfileEditProps): JSX.Element {
+}: ProfileEditProps): JSX.Element {
+  const schema: any = {
+    email: Yup.string().email().required("Email address is required!"),
+  };
+  if (is_supporter) {
+    schema.contact_name = Yup.string().required("Contact name is required!");
+  }
   return (
     <>
       <h1 className="page-title">Your Profile</h1>
       <h2>Edit contact information</h2>
-
       <Formik
         initialValues={{
           datasets:
             initial_form_data.datasets?.map((x: number) => x.toString()) ?? [],
-          contact_name: initial_form_data.contact_name ?? "",
-          contact_email: initial_form_data.contact_email ?? "",
+          contact_name: initial_form_data?.contact_name ?? "",
+          email: initial_form_data?.email ?? "",
           csrf_token,
         }}
         initialErrors={initial_errors}
         initialTouched={initial_errors}
-        validationSchema={Yup.object({
-          contact_name: Yup.string().required("Contact name is required!"),
-          contact_email: Yup.string()
-            .email()
-            .required("Email address is required!"),
-        })}
+        validationSchema={Yup.object(schema)}
         onSubmit={() => {}}
       >
         {({ errors }) => (
@@ -59,24 +61,35 @@ function SupporterProfileEdit({
               )}
             </div>
 
-            <TextInput
-              type="text"
-              id="contact_name"
-              name="contact_name"
-              label="Name"
-              required
-            />
+            {is_supporter && (
+              <TextInput
+                type="text"
+                id="contact_name"
+                name="contact_name"
+                label="Name"
+                required
+              />
+            )}
 
             <TextInput
               type="email"
-              id="contact_email"
-              name="contact_email"
+              id="email"
+              name="email"
               label="Email"
               required
             />
             <br />
 
-            {!is_commercial && <DatasetsInput datasets={datasets} />}
+            {is_supporter && !is_commercial && (
+              <div className="form-group">
+                <div className="col-sm-4 control-label">
+                  <strong>Datasets</strong>
+                </div>
+                <div className="col-sm-5">
+                  <DatasetsInput datasets={datasets} />
+                </div>
+              </div>
+            )}
 
             <div className="form-group">
               <div className="col-sm-offset-4 col-sm-10">
@@ -93,10 +106,11 @@ function SupporterProfileEdit({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const {
     datasets,
     is_commercial,
+    is_supporter,
     csrf_token,
     initial_form_data,
     initial_errors,
@@ -104,8 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
-    <SupporterProfileEdit
+    <ProfileEdit
       datasets={datasets}
+      is_supporter={is_supporter}
       is_commercial={is_commercial}
       csrf_token={csrf_token}
       initial_form_data={initial_form_data}

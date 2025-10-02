@@ -1,7 +1,9 @@
 from decimal import Decimal
 from flask import Response, request, redirect, url_for
 from flask_admin import expose
-from metabrainz.admin import AdminIndexView, AdminBaseView, forms
+from flask_login import current_user
+from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
+from metabrainz.model import db
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
@@ -18,6 +20,7 @@ import time
 import uuid
 import json
 import socket
+from metabrainz.model.user import User
 
 from metabrainz.utils import get_int_query_param
 
@@ -57,9 +60,9 @@ class SupportersView(AdminBaseView):
         supporter = Supporter.get(id=supporter_id)
 
         form = forms.SupporterEditForm(defaults={
-            'musicbrainz_id': supporter.musicbrainz_id,
+            'username': supporter.user.name,
+            'email': supporter.user.email,
             'contact_name': supporter.contact_name,
-            'contact_email': supporter.contact_email,
             'state': supporter.state,
             'is_commercial': supporter.is_commercial,
             'org_name': supporter.org_name,
@@ -82,9 +85,7 @@ class SupportersView(AdminBaseView):
 
         if form.validate_on_submit():
             update_data = {
-                'musicbrainz_id': form.musicbrainz_id.data,
                 'contact_name': form.contact_name.data,
-                'contact_email': form.contact_email.data,
                 'state': form.state.data,
                 'is_commercial': form.is_commercial.data,
                 'org_name': form.org_name.data,
@@ -118,6 +119,10 @@ class SupportersView(AdminBaseView):
                         logging.warning(e)
                 # Saving new one
                 image_storage.save(os.path.join(forms.LOGO_STORAGE_DIR, logo_filename))
+
+            supporter.user.name = form.username.data
+            supporter.user.email = form.email.data
+            db.session.commit()
             db_supporter.update(supporter_id=supporter.id, **update_data)
             return redirect(url_for('.details', supporter_id=supporter.id))
 
@@ -248,6 +253,7 @@ class StatsView(AdminBaseView):
             token_actions=TokenLog.list(10)[0],
         )
 
+
     @staticmethod
     def dns_lookup(ip):
         try:
@@ -298,6 +304,7 @@ class StatsView(AdminBaseView):
             days=days
         )
 
+
     @expose('/top-tokens/')
     def top_tokens(self):
         days = get_int_query_param('days', default=7)
@@ -327,6 +334,7 @@ class StatsView(AdminBaseView):
             count=count,
         )
 
+
     @expose('/usage')
     def hourly_usage_data(self):
         stats = AccessLog.get_hourly_usage()
@@ -350,3 +358,80 @@ class StatsView(AdminBaseView):
             supporters=supporters,
             total=total
         )
+
+
+class UserModelView(AdminModelView):
+    column_list = ('name', 'email', 'member_since', 'is_blocked', '')
+    column_searchable_list = ('name', 'email')
+    column_filters = ('name', 'email', 'member_since', 'is_blocked',)
+    column_default_sort = ('name', True)
+    can_create = False
+    can_delete = False
+    can_view_details = True
+
+    list_template = "admin/users/index.html"
+    details_template = "admin/users/details.html"
+
+    # todo: add csrf token to admin form
+    #  add table for username deletion storage
+    #  webhooks
+
+    @expose('/user/<int:user_id>/verify-email', methods=['POST'])
+    def verify_user_email(self, user_id):
+        """Verify a user's email address manually"""
+        user = User.query.get_or_404(user_id)
+
+        try:
+            user.verify_email_manually(current_user, f"Email manually verified by moderator {current_user.name}.")
+            flash.success(f'Email for {user.name} has been manually verified.')
+        except ValueError as e:
+            flash.error(str(e))
+        except Exception as e:
+            db.session.rollback()
+            flash.error('An error occurred while verifying the email.')
+            logging.exception(f'Error verifying email for user {user_id}:')
+
+        return redirect(url_for('.details_view', id=user_id))
+
+    @expose('/user/<int:user_id>/moderate', methods=['POST'])
+    def moderate_user(self, user_id):
+        """Handle user moderation actions"""
+        action = request.form.get('action')
+        if action not in ['block', 'unblock', 'comment']:
+            flash.error('Invalid moderation action.')
+            return redirect(url_for('.details_view', id=user_id))
+
+        user = User.query.get_or_404(user_id)
+        reason = request.form.get('reason', '').strip()
+
+        if not reason:
+            flash.error('A reason is required to take a moderation action on a user.')
+            return redirect(url_for('.details_view', id=user_id))
+
+        try:
+            if action == "block":
+                if user.is_blocked:
+                    flash.warning('User is already blocked.')
+                else:
+                    user.block(current_user, reason)
+                    flash.success(f'User {user.name} has been blocked.')
+            elif action == "unblock":
+                if not user.is_blocked:
+                    flash.warning('User is not currently blocked.')
+                else:
+                    user.unblock(current_user, reason)
+                    flash.success(f'User {user.name} has been unblocked.')
+            elif action == "comment":
+                user.moderate(current_user, "comment", reason)
+                flash.success(f'Moderation note added for user {user.name}.')
+
+            db.session.commit()
+
+        except ValueError as e:
+            flash.error(str(e))
+        except Exception as e:
+            db.session.rollback()
+            flash.error(f'An error occurred while processing the {action} action.')
+            logging.exception(f'Error in moderation action {action} for user {user_id}:')
+
+        return redirect(url_for('.details_view', id=user_id))
