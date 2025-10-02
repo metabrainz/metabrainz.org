@@ -89,7 +89,7 @@ def create_csv_file(out_file: str, transactions: Dict[str, Transaction]):
                 ic(t)
                 assert False
 
-        print(t.date, t.balance, balance)
+        print(t.date, t.gross, t.balance, balance)
 
         assert t.gross != Decimal(0.0)
         if t.description == "":

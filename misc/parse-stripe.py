@@ -85,7 +85,7 @@ for row in rows:
     date = parser.parse(row[2] + " UTC")
     amount = Decimal(row[6])
     fee = Decimal(row[7])
-    sender = row[19]
+    sender = row[21]
 
     if not sender:
         sender = "Subscription from %s" % row[41]
