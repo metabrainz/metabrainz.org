@@ -167,7 +167,8 @@ class NotificationViewsTest(FlaskTestCase):
 
     @requests_mock.Mocker()
     @mock.patch('metabrainz.notifications.views.insert_notifications')
-    def test_send_notifications(self, mock_requests, mock_insert):
+    @mock.patch('metabrainz.mail.NotificationSender.send_immediate_notifications')
+    def test_send_notifications(self, mock_requests, mock_insert, mock_mail):
         test_data = [
             {   "id": 102,
                 "user_id": 1,
@@ -196,7 +197,7 @@ class NotificationViewsTest(FlaskTestCase):
                 "send_email": True
             }
         ]
-
+        mock_mail.return_value = None
         mock_insert.return_value= test_data
         mock_requests.post(self.introspect_url, json={
             "active": True,
