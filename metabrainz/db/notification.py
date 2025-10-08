@@ -138,13 +138,25 @@ def insert_notifications(notifications: List[dict]) -> List[tuple[int]]:
     insert_query = """
                     INSERT INTO
                         notification
-                            (musicbrainz_row_id, project, subject, body, template_id, template_params, important, expire_age, email_id)
-                    VALUES
-                        %s
-                    RETURNING 
-                        id
+                        (
+                            musicbrainz_row_id, recipient,
+                            project, sent_from, reply_to,
+                            expire_age, important, send_email, email_id,
+                            subject, body, template_id, template_params
+                        )
+                        VALUES
+                            %s
+                        RETURNING 
+                            id
         """
-    template = "(%(musicbrainz_row_id)s, %(project)s, %(subject)s, %(body)s, %(template_id)s, %(template_params)s, %(important)s, %(expire_age)s, %(email_id)s)"
+    template = """
+        (
+            %(musicbrainz_row_id)s, %(recipient)s,
+            %(project)s, %(sent_from)s, %(reply_to)s,
+            %(expire_age)s, %(important)s, %(send_email)s, %(email_id)s,
+            %(subject)s, %(body)s, %(template_id)s, %(template_params)s
+        )
+        """
 
     conn = db.engine.raw_connection()
     try:
@@ -166,11 +178,13 @@ def _prepare_notifications(notifications: List[dict]) -> List[dict]:
         params.append(
             {
                 "musicbrainz_row_id": notif["user_id"],
+                "recipient": notif["to"],
                 "project": notif["project"],
+                "sent_from": notif["sent_from"],
+                "reply_to": notif["reply_to"],
                 "important": notif["important"],
                 "expire_age": notif["expire_age"],
-                # If we use pgsql's default UUID column, test cases fail due to "uuid-ossp" extension not being found.
-                # So, generating UUID in python before inserting.
+                "send_email": notif["send_email"],
                 "email_id": notif.get("email_id", str(uuid.uuid4())),
                 "subject": notif.get("subject"),
                 "body": notif.get("body"),
@@ -187,11 +201,11 @@ def _prepare_notifications(notifications: List[dict]) -> List[dict]:
 
 
 def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
-    """Filter notifications which belongs to users with digest disabled.
+    """Filter notifications which belongs to users with notifications enabled and digest disabled.
     Args:
         notifications (List[dict]): List of notifications.
     Returns:
-        List[dict] : List of notifications for users with digest disabled.
+        List[dict] : List of notifications for users with notifications enabled and digest disabled.
 
     """
     user_ids_to_check = tuple(i["user_id"] for i in notifications)
@@ -202,7 +216,10 @@ def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
         query = sqlalchemy.text("""
                         SELECT musicbrainz_row_id
                         FROM user_preference
-                        WHERE musicbrainz_row_id IN :user_ids AND digest = FALSE
+                        WHERE 
+                            musicbrainz_row_id IN :user_ids 
+                            AND digest = FALSE 
+                            AND notifications_enabled = TRUE
         """)
         result = connection.execute(query, {"user_ids": user_ids_to_check})
         non_digest_user_ids = {user_id[0] for user_id in result}

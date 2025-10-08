@@ -23,17 +23,21 @@ class Notification(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     musicbrainz_row_id = db.Column(db.Integer, nullable=False)
+    recipient = db.Column(db.Text, nullable=False)
     project = db.Column(db.Enum(NotificationProjectType, name = 'notification_project_type', values_callable=lambda x: [i.value for i in x]), nullable=False)
+    sent_from = db.Column(db.Text, nullable=False)
+    reply_to = db.Column(db.Text, nullable=False)
     read = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime(timezone=True), default=func.now())
     expire_age = db.Column(db.SmallInteger, nullable=False)
     important = db.Column(db.Boolean, default=False)
+    send_email = db.Column(db.Text)
+    notification_sent = db.Column(db.Boolean, default=False)
     email_id = db.Column(db.Text, unique=True, default=lambda: str(uuid.uuid4()))
     subject = db.Column(db.Text)
     body = db.Column(db.Text)
     template_id = db.Column(db.Text)
     template_params = db.Column(JSONB)
-    notification_sent = db.Column(db.Boolean, default=False)
 
     __table_args__=(
         db.CheckConstraint(
