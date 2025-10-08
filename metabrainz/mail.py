@@ -40,7 +40,7 @@ class NotificationSender:
                 )
 
     def send_immediate_notifications(self):
-        """Sends notifications that are marked as important or are for users with digest disabled."""
+        """Sends notifications that are marked as important or are for users with notifications enabled and digest disabled."""
 
         immediate_notifications = []
         unimportant_notifications = []

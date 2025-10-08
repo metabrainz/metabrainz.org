@@ -16,7 +16,7 @@ CREATE TABLE notification (
     created                   TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     expire_age                SMALLINT NOT NULL, -- in days.
     important                 BOOLEAN DEFAULT FALSE,
-    email_id                  TEXT UNIQUE,
+    email_id                  TEXT UNIQUE NOT NULL DEFAULT uuid_generate_v4()::text,
     subject                   TEXT,
     body                      TEXT,
     template_id               TEXT, --MB Mail template id.

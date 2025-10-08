@@ -233,11 +233,13 @@ class NotificationDbTestCase(FlaskTestCase):
         # Prepare user_preference table.
         digest_data = [
             # User's digest_age is more than 3, so no digest notification.
-            {"musicbrainz_row_id": 1, "digest": True, "digest_age": 7, "user_email":"1@abc.com"},
+            {"musicbrainz_row_id": 1, "notifications_enabled": True, "digest": True, "digest_age": 7, "user_email":"1@abc.com"},
             # User who should get their digest notification.
-            {"musicbrainz_row_id": 2, "digest": True, "digest_age": 3, "user_email":"2@abc.com"},
+            {"musicbrainz_row_id": 2, "notifications_enabled": True, "digest": True, "digest_age": 3, "user_email":"2@abc.com"},
             # Digest is false, so no digest notification.
-            {"musicbrainz_row_id": 3, "digest": False, "digest_age": None, "user_email":"3@abc.com"},
+            {"musicbrainz_row_id": 3, "notifications_enabled": True, "digest": False, "digest_age": None, "user_email":"3@abc.com"},
+            # Notifications are not enabled, so no digest notification.
+            {"musicbrainz_row_id": 4, "notifications_enabled": False, "digest": True, "digest_age": 6, "user_email": "4@abc.com"},
         ]
         query = sqlalchemy.text(
             """INSERT INTO user_preference(musicbrainz_row_id, digest, digest_age, user_email) VALUES(:musicbrainz_row_id, :digest, :digest_age, :user_email)"""
