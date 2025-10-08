@@ -243,8 +243,9 @@ def send_notifications():
         - ``expire_age``: (int) Required
         - ``send_email``: (bool) Required
         - ``important``: (bool) Required
+        - ``reply_to``: (str) Required
         - ``email_id``: (str) Optional, Defaults to a generated UUID
-        - ``reply_to``: (str) Optional
+
         EITHER
         - ``body``: (str) Required
         - ``subject``: (str) Requried
@@ -307,7 +308,16 @@ def send_notifications():
     # Validate data
     if not isinstance(data, list):
         raise APIBadRequest("Expected a list of notifications.")
-    required_keys = ("user_id", "project", "sent_from", "to", "expire_age", "send_email", "important")
+    required_keys = (
+        "user_id",
+        "project",
+        "sent_from",
+        "to",
+        "expire_age",
+        "send_email",
+        "important",
+        "reply_to",
+    )
     for idx, d in enumerate(data):
         if not isinstance(d, dict):
             raise APIBadRequest(f'Notification {idx} should be a dict.')

@@ -138,13 +138,25 @@ def insert_notifications(notifications: List[dict]) -> List[tuple[int]]:
     insert_query = """
                     INSERT INTO
                         notification
-                            (musicbrainz_row_id, project, subject, body, template_id, template_params, important, expire_age, email_id)
-                    VALUES
-                        %s
-                    RETURNING 
-                        id
+                        (
+                            musicbrainz_row_id, recipient,
+                            project, sent_from, reply_to,
+                            expire_age, important, send_email, email_id,
+                            subject, body, template_id, template_params
+                        )
+                        VALUES
+                            %s
+                        RETURNING 
+                            id
         """
-    template = "(%(musicbrainz_row_id)s, %(project)s, %(subject)s, %(body)s, %(template_id)s, %(template_params)s, %(important)s, %(expire_age)s, %(email_id)s)"
+    template = """
+        (
+            %(musicbrainz_row_id)s, %(recipient)s,
+            %(project)s, %(sent_from)s, %(reply_to)s,
+            %(expire_age)s, %(important)s, %(send_email)s, %(email_id)s,
+            %(subject)s, %(body)s, %(template_id)s, %(template_params)s
+        )
+        """
 
     conn = db.engine.raw_connection()
     try:
@@ -166,11 +178,13 @@ def _prepare_notifications(notifications: List[dict]) -> List[dict]:
         params.append(
             {
                 "musicbrainz_row_id": notif["user_id"],
+                "recipient": notif["to"],
                 "project": notif["project"],
+                "sent_from": notif["sent_from"],
+                "reply_to": notif["reply_to"],
                 "important": notif["important"],
                 "expire_age": notif["expire_age"],
-                # If we use pgsql's default UUID column, test cases fail due to "uuid-ossp" extension not being found.
-                # So, generating UUID in python before inserting.
+                "send_email": notif["send_email"],
                 "email_id": notif.get("email_id", str(uuid.uuid4())),
                 "subject": notif.get("subject"),
                 "body": notif.get("body"),
