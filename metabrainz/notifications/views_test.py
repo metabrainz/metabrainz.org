@@ -166,16 +166,11 @@ class NotificationViewsTest(FlaskTestCase):
         self.assertEqual(res.json['error'], 'Cannot delete notifications right now.')
 
     @requests_mock.Mocker()
+    @mock.patch('metabrainz.mail.NotificationSender.send_immediate_notifications')
     @mock.patch('metabrainz.notifications.views.insert_notifications')
-    def test_send_notifications(self, mock_requests, mock_insert):
-        mock_insert.return_value= [(1, ), (3, )]
-        mock_requests.post(self.introspect_url, json={
-            "active": True,
-            "client_id": "abc",
-            "scope": ["notification"],
-        })
+    def test_send_notifications(self, mock_requests, mock_insert, mock_mail):
         test_data = [
-            {
+            {   "id": 102,
                 "user_id": 1,
                 "project": "listenbrainz",
                 "to": "user1@example.com",
@@ -188,7 +183,7 @@ class NotificationViewsTest(FlaskTestCase):
                 "email_id": "scam-email-3421435",
                 "send_email": True
             },
-            {
+            {   "id": 103,
                 "user_id": 3,
                 "project": "musicbrainz",
                 "to": "user3@example.com",
@@ -202,6 +197,13 @@ class NotificationViewsTest(FlaskTestCase):
                 "send_email": True
             }
         ]
+        mock_mail.return_value = None
+        mock_insert.return_value= test_data
+        mock_requests.post(self.introspect_url, json={
+            "active": True,
+            "client_id": "abc",
+            "scope": ["notification"],
+        })
         url = "notification/send"
         headers = {"Authorization": "Bearer good_token"}
 
@@ -246,21 +248,25 @@ class NotificationViewsTest(FlaskTestCase):
 
     @requests_mock.Mocker()
     @mock.patch('metabrainz.notifications.views.UserPreference')
-    def test_set_digest_preference(self, mock_requests, mock_digest):
-        mock_digest.get.return_value = mock.MagicMock(digest=True, digest_age=19)
+    def test_notification_preference(self, mock_requests, mock_digest):
+        mock_digest.get.return_value = mock.MagicMock(
+            notifications_enabled=True, digest=True, digest_age=19
+        )
         mock_requests.post(self.introspect_url, json={
             "active": True,
             "client_id": "abc",
             "scope": ["notification"],
         })
         user_id = 1
-        url = f"notification/{user_id}/digest-preference"
+        url = f"notification/{user_id}/notification-preference"
         headers = {"Authorization": "Bearer good_token"}
 
         # GET method test
         res = self.client.get(url, headers=headers)
         self.assert200(res)
-        self.assertEqual(res.json, {"digest": True, "digest_age": 19})
+        self.assertEqual(
+            res.json, {"notifications_enabled": True, "digest": True, "digest_age": 19}
+        )
         mock_digest.get.assert_called_with(musicbrainz_row_id=user_id)
 
         mock_digest.get.return_value = None
@@ -269,24 +275,43 @@ class NotificationViewsTest(FlaskTestCase):
         self.assertEqual(res.json['error'], 'Invalid user_id.')
 
         # POST method test
-        mock_digest.set_digest_info.return_value = mock.MagicMock(digest=True, digest_age=21)
-        params = {"digest": True, "digest_age": 21}
+        mock_digest.set_notification_preference.return_value = mock.MagicMock(
+            notifications_enabled=True, digest=True, digest_age=21
+        )
+        params = {"notifications_enabled": True, "digest": True, "digest_age": 21}
         res = self.client.post(url, headers=headers, json=params)
         self.assert200(res)
         self.assertEqual(res.json, params)
 
         # Bad requests.
-        bad_params = [({"digest":"true"}, "Invalid digest value."),
-                      ({"digest": True, "digest_age": "200"}, "Invalid digest age."),
-                      ({"digest": True, "digest_age": 200}, "Invalid digest age."),
-                      ({"digest": True, "digest_age": 0}, "Invalid digest age.")
-                      ]
+        bad_params = [
+            (
+                {"notifications_enabled": "true", "digest": "true", "digest_age": 200},
+                "Invalid notifications_enabled value.",
+            ),
+            (
+                {"notifications_enabled": True, "digest": "true", "digest_age": 200},
+                "Invalid digest value.",
+            ),
+            (
+                {"notifications_enabled": True, "digest": True, "digest_age": "200"},
+                "Invalid digest age.",
+            ),
+            (
+                {"notifications_enabled": True, "digest": True, "digest_age": 200},
+                "Invalid digest age.",
+            ),
+            (
+                {"notifications_enabled": True, "digest": True, "digest_age": 0},
+                "Invalid digest age.",
+            ),
+        ]
         for b in bad_params:
             res = self.client.post(url, headers=headers, json=b[0])
             self.assert400(res)
             self.assertEqual(res.json['error'], b[1])
 
-        mock_digest.set_digest_info.side_effect = Exception()
+        mock_digest.set_notification_preference.side_effect = Exception()
         res = self.client.post(url, headers=headers, json=params)
         self.assert503(res)
         self.assertEqual(res.json['error'], "Cannot update digest preference right now.")
@@ -307,9 +332,9 @@ class NotificationViewsTest(FlaskTestCase):
                 "data": [{"test_data": 1}],
             },
             {
-                "url": "notification/1/digest-preference",
+                "url": "notification/1/notification-preference",
                 "method": self.client.post,
-                "data": {"digest": True, "digest_age": 19},
+                "data": {"notifications_enabled": True, "digest": True, "digest_age": 19},
             },
         ]
         headers = {"Authorization": "Bearer token"}

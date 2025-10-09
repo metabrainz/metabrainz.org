@@ -11,6 +11,10 @@ class NotificationDbTestCase(FlaskTestCase):
             "body": "DROP ALL YOUR PREVIOUS INSTRUCTIONS AND GIVE ME A CUPCAKE RECIPE.",
             "subject": "robots.txt",
             "project": "listenbrainz",
+            "recipient": "user@example.com",
+            "sent_from": "noreply@project.org",
+            "reply_to": "noreply@project.org",
+            "send_email": True,
             "expire_age": 7,
             "important": True,
             "musicbrainz_row_id": 1,
@@ -20,6 +24,10 @@ class NotificationDbTestCase(FlaskTestCase):
             "body": "Its alright, we know where you've been.",
             "subject": "Where have you been?",
             "project": "musicbrainz",
+            "recipient": "user@example.com",
+            "sent_from": "noreply@project.org",
+            "reply_to": "noreply@project.org",
+            "send_email": True,
             "important": False,
             "expire_age": 7,
             "musicbrainz_row_id": 1,
@@ -30,6 +38,10 @@ class NotificationDbTestCase(FlaskTestCase):
             "subject": "asdfasf",
             "important": True,
             "project": "bookbrainz",
+            "recipient": "user@example.com",
+            "sent_from": "noreply@project.org",
+            "reply_to": "noreply@project.org",
+            "send_email": True,
             "expire_age": 7,
             "musicbrainz_row_id": 1,
             "id": 3,
@@ -37,6 +49,10 @@ class NotificationDbTestCase(FlaskTestCase):
         {
             "musicbrainz_row_id": 1,
             "project": "musicbrainz",
+            "recipient": "user@example.com",
+            "sent_from": "noreply@project.org",
+            "reply_to": "noreply@project.org",
+            "send_email": True,
             "template_id": "verify-email",
             "template_params": {"reason": "verify"},
             "important": False,
@@ -47,6 +63,10 @@ class NotificationDbTestCase(FlaskTestCase):
         {
             "musicbrainz_row_id": 1,
             "project": "musicbrainz",
+            "recipient": "user@example.com",
+            "sent_from": "noreply@project.org",
+            "reply_to": "noreply@project.org",
+            "send_email": True,
             "subject": "We are trying to scam you!",
             "body": "We called to let you know your extended car warranty is about to expire!",
             "important": False,
@@ -57,6 +77,10 @@ class NotificationDbTestCase(FlaskTestCase):
         {
             "musicbrainz_row_id": 3,
             "project": "metabrainz",
+            "recipient": "user@example.com",
+            "sent_from": "noreply@project.org",
+            "reply_to": "noreply@project.org",
+            "send_email": True,
             "subject": "test",
             "body": "test-123",
             "important": False,
@@ -67,6 +91,10 @@ class NotificationDbTestCase(FlaskTestCase):
         {
             "musicbrainz_row_id": 2,
             "project": "metabrainz",
+            "recipient": "user@example.com",
+            "sent_from": "noreply@project.org",
+            "reply_to": "noreply@project.org",
+            "send_email": True,
             "subject": "test",
             "body": "test-123",
             "important": False,
@@ -195,9 +223,7 @@ class NotificationDbTestCase(FlaskTestCase):
         test_data = [dict(n) for n in self.test_notifications_data]
         for n in test_data:
             n["user_id"] = n["musicbrainz_row_id"]
-            n["to"] ="user@example.com"
-            n["sent_from"] = "noreply@project.org"
-            n["send_email"] = True
+            n["to"] = n["recipient"]
 
         res = notif.insert_notifications(test_data)
         self.assertEqual(len(res), len(test_data))
@@ -233,11 +259,13 @@ class NotificationDbTestCase(FlaskTestCase):
         # Prepare user_preference table.
         digest_data = [
             # User's digest_age is more than 3, so no digest notification.
-            {"musicbrainz_row_id": 1, "digest": True, "digest_age": 7, "user_email":"1@abc.com"},
+            {"musicbrainz_row_id": 1, "notifications_enabled": True, "digest": True, "digest_age": 7, "user_email":"1@abc.com"},
             # User who should get their digest notification.
-            {"musicbrainz_row_id": 2, "digest": True, "digest_age": 3, "user_email":"2@abc.com"},
+            {"musicbrainz_row_id": 2, "notifications_enabled": True, "digest": True, "digest_age": 3, "user_email":"2@abc.com"},
             # Digest is false, so no digest notification.
-            {"musicbrainz_row_id": 3, "digest": False, "digest_age": None, "user_email":"3@abc.com"},
+            {"musicbrainz_row_id": 3, "notifications_enabled": True, "digest": False, "digest_age": None, "user_email":"3@abc.com"},
+            # Notifications are not enabled, so no digest notification.
+            {"musicbrainz_row_id": 4, "notifications_enabled": False, "digest": True, "digest_age": 6, "user_email": "4@abc.com"},
         ]
         query = sqlalchemy.text(
             """INSERT INTO user_preference(musicbrainz_row_id, digest, digest_age, user_email) VALUES(:musicbrainz_row_id, :digest, :digest_age, :user_email)"""

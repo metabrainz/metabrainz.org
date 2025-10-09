@@ -10,6 +10,7 @@ SQLALCHEMY_MUSICBRAINZ_URI = ""
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 POSTGRES_ADMIN_URI = "postgresql://postgres:postgres@meb_db/postgres"
+POSTGRES_ADMIN_MEB_URI = "postgresql://postgres:postgres@meb_db:5432/metabrainz"
 
 # DATABASES
 
@@ -96,6 +97,7 @@ ADMINS = [
 SMTP_SERVER = "metabrainz-mail"
 SMTP_PORT = 25
 MAIL_FROM_DOMAIN = "metabrainz.org"
+MB_MAIL_SERVER_URI = "http://localhost:3000"
 
 # OTHER STUFF
 

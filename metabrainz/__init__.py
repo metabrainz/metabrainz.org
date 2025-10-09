@@ -2,7 +2,6 @@ import os
 import pprint
 import sys
 
-import stripe
 from brainzutils.flask import CustomFlask
 from brainzutils import sentry
 from flask import send_from_directory, request
@@ -61,7 +60,7 @@ def create_app(debug=None, config_path=None):
                 sleep(1)
                     
         if not os.path.exists(consul_config):
-            print("No configuration file generated yet. Retried %d times, exiting." % CONSUL_CONFIG_FILE_RETRY_COUNT);
+            print("No configuration file generated yet. Retried %d times, exiting." % CONSUL_CONFIG_FILE_RETRY_COUNT)
             sys.exit(-1)
 
         app.config.from_pyfile(consul_config, silent=True)
