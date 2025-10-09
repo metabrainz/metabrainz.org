@@ -166,8 +166,8 @@ class NotificationViewsTest(FlaskTestCase):
         self.assertEqual(res.json['error'], 'Cannot delete notifications right now.')
 
     @requests_mock.Mocker()
-    @mock.patch('metabrainz.notifications.views.insert_notifications')
     @mock.patch('metabrainz.mail.NotificationSender.send_immediate_notifications')
+    @mock.patch('metabrainz.notifications.views.insert_notifications')
     def test_send_notifications(self, mock_requests, mock_insert, mock_mail):
         test_data = [
             {   "id": 102,
