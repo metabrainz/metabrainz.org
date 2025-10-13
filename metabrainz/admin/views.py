@@ -5,6 +5,7 @@ from flask_login import current_user
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
 from metabrainz.admin.forms import get_logo_storage_dir
 from metabrainz.model import db
+from metabrainz.model.old_username import OldUsername
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
@@ -374,7 +375,6 @@ class UserModelView(AdminModelView):
     details_template = "admin/users/details.html"
 
     # todo: add csrf token to admin form
-    #  add table for username deletion storage
     #  webhooks
 
     @expose('/user/<int:user_id>/verify-email', methods=['POST'])
@@ -391,6 +391,45 @@ class UserModelView(AdminModelView):
             db.session.rollback()
             flash.error('An error occurred while verifying the email.')
             logging.exception(f'Error verifying email for user {user_id}:')
+
+        return redirect(url_for('.details_view', id=user_id))
+
+    @expose('/user/<int:user_id>/edit-username', methods=['POST'])
+    def edit_username(self, user_id):
+        """Edit a user's username"""
+        user = User.query.get_or_404(user_id)
+        
+        new_username = request.form.get('username', '').strip()
+        if not new_username:
+            flash.error('Username cannot be empty')
+            return redirect(url_for('.details_view', id=user_id))
+
+        if new_username == user.name:
+            flash.error("Username is already set to this value.")
+            return redirect(url_for('.details_view', id=user_id))
+
+        if User.query.filter_by(name=new_username).first() is not None:
+            flash.error("Username is already in use.")
+            return redirect(url_for('.details_view', id=user_id))
+
+        if OldUsername.query.filter_by(username=new_username).first() is not None:
+            flash.error("Username cannot be used.")
+            return redirect(url_for('.details_view', id=user_id))
+
+        try:
+            old_username = user.name
+            user.name = new_username
+
+            log_message = f"Username changed from '{old_username}' to '{new_username}'."
+            user.moderate(current_user, "edit_username", log_message)
+
+            db.session.add(OldUsername(username=old_username))
+
+            db.session.commit()
+            flash.success("Username updated successfully.")
+        except Exception as e:
+            db.session.rollback()
+            flash.error(f"Error updating username: {str(e)}")
 
         return redirect(url_for('.details_view', id=user_id))
 
@@ -436,3 +475,9 @@ class UserModelView(AdminModelView):
             logging.exception(f'Error in moderation action {action} for user {user_id}:')
 
         return redirect(url_for('.details_view', id=user_id))
+
+
+class OldUsernameModelView(AdminModelView):
+    column_list = ('username', 'deleted_at')
+    can_edit = False
+    can_view_details = False
