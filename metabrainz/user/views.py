@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from metabrainz import bcrypt, flash
 from metabrainz.index.forms import MeBFlaskForm
 from metabrainz.model import db
-from metabrainz.model.user import User
+from metabrainz.model.user import User, UsernameNotAllowedException
 from metabrainz.user import login_forbidden
 from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
     VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
@@ -34,19 +34,28 @@ def signup():
             if user is not None:
                 form.email.errors.append(f"Another user with email '{form.email.data}' exists.")
             else:
-                user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
-                db.session.commit()
-                send_verification_email(
-                    user,
-                    "Please verify your email address",
-                    "email/user-email-address-verification.txt"
-                )
-                login_user(user)
-                flash.success("Account created. Please check your inbox to complete verification.")
-                redirect_to = request.args.get("next")
-                if not redirect_to:
-                    redirect_to = url_for("index.home")
-                return redirect(redirect_to)
+                try:
+                    user = User.add(
+                        name=form.username.data,
+                        unconfirmed_email=form.email.data,
+                        password=form.password.data
+                    )
+                    db.session.commit()
+                    send_verification_email(
+                        user,
+                        "Please verify your email address",
+                        "email/user-email-address-verification.txt"
+                    )
+                    login_user(user)
+                    flash.success("Account created. Please check your inbox to complete verification.")
+                    redirect_to = request.args.get("next") or url_for("index.home")
+                    return redirect(redirect_to)
+                except UsernameNotAllowedException:
+                    form.username.errors.append("Username is not allowed.")
+                    db.session.rollback()
+                except Exception as e:
+                    flash.error(f"An unexpected error occurred: {e}")
+                    current_app.logger.exception("Error creating user", exc_info=True)
 
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
