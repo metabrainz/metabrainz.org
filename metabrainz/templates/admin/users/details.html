@@ -1,6 +1,31 @@
 {% extends admin_base_template %}
 
 {% block body %}
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editBtn = document.getElementById('edit-username-btn');
+    const usernameModal = new bootstrap.Modal(document.getElementById('usernameModal'));
+    const usernameInput = document.getElementById('new-username');
+    const currentUsername = '{{ model.name }}';
+    
+    if (editBtn && usernameModal && usernameInput) {
+        editBtn.addEventListener('click', function() {
+            usernameInput.value = currentUsername;
+            usernameModal.show();
+        });
+        
+        document.getElementById('username-form').addEventListener('submit', function(e) {
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.add('was-validated');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>User Details: {{ model.name }}</h2>
@@ -17,7 +42,14 @@
                 <div class="col-md-6">
                     <dl class="row">
                         <dt class="col-sm-4">Username:</dt>
-                        <dd class="col-sm-8">{{ model.name }}</dd>
+                        <dd class="col-sm-8">
+                            <div class="d-flex align-items-center">
+                                <span id="username-display">{{ model.name }}</span>
+                                <button type="button" class="btn btn-sm btn-link ms-2" id="edit-username-btn">
+                                    <i class="fa fa-edit"></i> Edit
+                                </button>
+                            </div>
+                        </dd>
                         
                         <dt class="col-sm-4">Email:</dt>
                         <dd class="col-sm-8">
@@ -111,6 +143,33 @@
             {% else %}
                 <p class="text-muted">No moderation history found.</p>
             {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="usernameModal" tabindex="-1" aria-labelledby="usernameModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usernameModalLabel">Edit Username</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="username-form" method="POST" action="{{ url_for('.edit_username', user_id=model.id) }}" class="needs-validation" novalidate>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="new-username" class="form-label">New Username</label>
+                        <input type="text" class="form-control" id="new-username" name="username" 
+                               value="{{ model.name }}" required>
+                        <div class="invalid-feedback">
+                            Please provide a username.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
