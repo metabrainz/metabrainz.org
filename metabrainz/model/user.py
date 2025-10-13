@@ -1,11 +1,17 @@
 from uuid import uuid4
 from flask_login import UserMixin
-from sqlalchemy import UUID, Column, Integer, Identity, Text, DateTime, func, Boolean
+from sqlalchemy import Column, Integer, Identity, Text, DateTime, func, Boolean
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.attributes import Mapped
 
 from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
+from metabrainz.model.old_username import OldUsername
+
+
+class UsernameNotAllowedException(Exception):
+    pass
 
 
 class User(db.Model, UserMixin):
@@ -13,10 +19,10 @@ class User(db.Model, UserMixin):
 
     id = Column(Integer, Identity(), primary_key=True)
     login_id = Column(UUID, nullable=False, unique=True, default=uuid4)
-    name = Column(Text, nullable=False)  # TODO: add a uniqueness constraint maybe in conjunction with the deleted field
+    name = Column(Text, unique=True, nullable=False)
     password = Column(Text, nullable=False)  # TODO: add a constraint to ensure password is cleared when deleted field is set
 
-    email = Column(Text, unique=True) # TODO: check if unique should be only deleted = false
+    email = Column(Text, unique=True)
     unconfirmed_email = Column(Text)
     email_confirmed_at = Column(DateTime(timezone=True))
 
@@ -53,11 +59,16 @@ class User(db.Model, UserMixin):
     def add(cls, **kwargs):
         from metabrainz import bcrypt
 
+        name = kwargs.pop("name")
+        if OldUsername.query.filter_by(username=name).first() is not None:
+            raise UsernameNotAllowedException()
+
         password = kwargs.pop("password")
         password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
-        new_user = cls(name=kwargs.pop("name"), password=password_hash, unconfirmed_email=kwargs.pop("unconfirmed_email"))
+        new_user = cls(name=name, password=password_hash, unconfirmed_email=kwargs.pop("unconfirmed_email"))
         if kwargs:
             raise TypeError("Unexpected **kwargs: %r" % (kwargs,))
+
         db.session.add(new_user)
         return new_user
 
@@ -92,7 +103,7 @@ class User(db.Model, UserMixin):
 
         self.moderate(moderator, 'block', reason)
         db.session.commit()
-    
+
     def unblock(self, moderator, reason):
         """Unblock the user account"""
         if not self.is_blocked:
@@ -116,4 +127,29 @@ class User(db.Model, UserMixin):
         self.email_confirmed_at = func.now()
             
         self.moderate(moderator, 'verify_email', reason)
+        db.session.commit()
+        
+    def delete(self, moderator=None, reason=None):
+        """Mark the user as deleted and store the username in old_username table.
+        
+        Args:
+            moderator: Optional, the moderator performing the deletion
+            reason: Optional, the reason for deletion
+        """
+        if self.deleted:
+            raise ValueError("User is already deleted")
+            
+        deleted_username = OldUsername(username=self.name)
+        db.session.add(deleted_username)
+        
+        self.deleted = True
+        self.name = f"deleted-{self.id}"
+        self.email = None
+        self.unconfirmed_email = None
+        self.password = ""
+        self.login_id = uuid4()
+
+        if moderator is not None and reason is not None:
+            self.moderate(moderator, "delete", reason)
+
         db.session.commit()
