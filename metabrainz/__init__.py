@@ -10,6 +10,8 @@ from flask_bcrypt import Bcrypt
 
 from metabrainz.admin import AdminModelView
 from metabrainz.admin.quickbooks.views import QuickBooksView
+from metabrainz.admin.views import OldUsernameModelView
+from metabrainz.model.old_username import OldUsername
 from metabrainz.model.user import User
 from metabrainz.utils import get_global_props
 
@@ -165,6 +167,7 @@ def create_app(debug=None, config_path=None):
     admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
     admin.add_view(StatsView(name='Supporters', endpoint="statsview/supporters", category='Statistics'))
     admin.add_view(UserModelView(User, model.db.session, endpoint="users-admin", category="Users"))
+    admin.add_view(OldUsernameModelView(OldUsername, model.db.session, endpoint="old-username-admin", category="Old Usernames"))
     if app.config["QUICKBOOKS_CLIENT_ID"]:
         admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
 
