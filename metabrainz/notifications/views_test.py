@@ -166,16 +166,11 @@ class NotificationViewsTest(FlaskTestCase):
         self.assertEqual(res.json['error'], 'Cannot delete notifications right now.')
 
     @requests_mock.Mocker()
+    @mock.patch('metabrainz.mail.NotificationSender.send_immediate_notifications')
     @mock.patch('metabrainz.notifications.views.insert_notifications')
-    def test_send_notifications(self, mock_requests, mock_insert):
-        mock_insert.return_value= [(1, ), (3, )]
-        mock_requests.post(self.introspect_url, json={
-            "active": True,
-            "client_id": "abc",
-            "scope": ["notification"],
-        })
+    def test_send_notifications(self, mock_requests, mock_insert, mock_mail):
         test_data = [
-            {
+            {   "id": 102,
                 "user_id": 1,
                 "project": "listenbrainz",
                 "to": "user1@example.com",
@@ -188,7 +183,7 @@ class NotificationViewsTest(FlaskTestCase):
                 "email_id": "scam-email-3421435",
                 "send_email": True
             },
-            {
+            {   "id": 103,
                 "user_id": 3,
                 "project": "musicbrainz",
                 "to": "user3@example.com",
@@ -202,6 +197,13 @@ class NotificationViewsTest(FlaskTestCase):
                 "send_email": True
             }
         ]
+        mock_mail.return_value = None
+        mock_insert.return_value= test_data
+        mock_requests.post(self.introspect_url, json={
+            "active": True,
+            "client_id": "abc",
+            "scope": ["notification"],
+        })
         url = "notification/send"
         headers = {"Authorization": "Bearer good_token"}
 

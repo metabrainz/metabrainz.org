@@ -4,7 +4,7 @@ import orjson
 from datetime import datetime
 from typing import List, Tuple, Optional
 from flask import current_app
-from psycopg2.extras import execute_values
+from psycopg2.extras import execute_values, RealDictCursor
 
 from metabrainz import db
 
@@ -125,14 +125,14 @@ def delete_notifications(user_id: int, delete_ids: Tuple[int, ...]):
         connection.execute(delete_query, {'user_id': user_id, 'delete_ids': delete_ids})
 
 
-def insert_notifications(notifications: List[dict]) -> List[tuple[int]]:
+def insert_notifications(notifications: List[dict]) -> List[dict]:
     """
     Inserts a batch of notifications into the table.
     Args:
         notifications (List[dict]): List of notifications to be inserted.
 
     Returns:
-        List[tuple[int]]: List of tuples with each tuple contaning ID of an inserted notification.
+        List[dict]: List of inserted notifications.
     """
     params = _prepare_notifications(notifications)
     insert_query = """
@@ -147,7 +147,7 @@ def insert_notifications(notifications: List[dict]) -> List[tuple[int]]:
                         VALUES
                             %s
                         RETURNING 
-                            id
+                            *
         """
     template = """
         (
@@ -160,14 +160,14 @@ def insert_notifications(notifications: List[dict]) -> List[tuple[int]]:
 
     conn = db.engine.raw_connection()
     try:
-        with conn.cursor() as cur:
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
             execute_values(cur, insert_query, params, template)
-            notification_ids = cur.fetchall()
+            inserted_notifications = cur.fetchall()
         conn.commit()
     finally:
         conn.close()
 
-    return notification_ids
+    return inserted_notifications
 
 
 def _prepare_notifications(notifications: List[dict]) -> List[dict]:

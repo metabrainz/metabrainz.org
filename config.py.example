@@ -97,6 +97,7 @@ ADMINS = [
 SMTP_SERVER = "metabrainz-mail"
 SMTP_PORT = 25
 MAIL_FROM_DOMAIN = "metabrainz.org"
+MB_MAIL_SERVER_URI = "http://localhost:3000"
 
 # OTHER STUFF
 

@@ -327,12 +327,9 @@ def send_notifications():
             raise APIBadRequest(f'Notification {idx} should include either subject and body or template_id and template_params.')
 
     try:
-        notification_ids = insert_notifications(data)
+        notifications = insert_notifications(data)
 
-        for index, id_tuple in enumerate(notification_ids):
-            data[index]["id"] = id_tuple[0]
-
-        sender = NotificationSender(data)
+        sender = NotificationSender(notifications)
         sender.send_immediate_notifications()
 
     except Exception as err:
