@@ -246,21 +246,25 @@ class NotificationViewsTest(FlaskTestCase):
 
     @requests_mock.Mocker()
     @mock.patch('metabrainz.notifications.views.UserPreference')
-    def test_set_digest_preference(self, mock_requests, mock_digest):
-        mock_digest.get.return_value = mock.MagicMock(digest=True, digest_age=19)
+    def test_notification_preference(self, mock_requests, mock_digest):
+        mock_digest.get.return_value = mock.MagicMock(
+            notifications_enabled=True, digest=True, digest_age=19
+        )
         mock_requests.post(self.introspect_url, json={
             "active": True,
             "client_id": "abc",
             "scope": ["notification"],
         })
         user_id = 1
-        url = f"notification/{user_id}/digest-preference"
+        url = f"notification/{user_id}/notification-preference"
         headers = {"Authorization": "Bearer good_token"}
 
         # GET method test
         res = self.client.get(url, headers=headers)
         self.assert200(res)
-        self.assertEqual(res.json, {"digest": True, "digest_age": 19})
+        self.assertEqual(
+            res.json, {"notifications_enabled": True, "digest": True, "digest_age": 19}
+        )
         mock_digest.get.assert_called_with(musicbrainz_row_id=user_id)
 
         mock_digest.get.return_value = None
@@ -269,24 +273,43 @@ class NotificationViewsTest(FlaskTestCase):
         self.assertEqual(res.json['error'], 'Invalid user_id.')
 
         # POST method test
-        mock_digest.set_digest_info.return_value = mock.MagicMock(digest=True, digest_age=21)
-        params = {"digest": True, "digest_age": 21}
+        mock_digest.set_notification_preference.return_value = mock.MagicMock(
+            notifications_enabled=True, digest=True, digest_age=21
+        )
+        params = {"notifications_enabled": True, "digest": True, "digest_age": 21}
         res = self.client.post(url, headers=headers, json=params)
         self.assert200(res)
         self.assertEqual(res.json, params)
 
         # Bad requests.
-        bad_params = [({"digest":"true"}, "Invalid digest value."),
-                      ({"digest": True, "digest_age": "200"}, "Invalid digest age."),
-                      ({"digest": True, "digest_age": 200}, "Invalid digest age."),
-                      ({"digest": True, "digest_age": 0}, "Invalid digest age.")
-                      ]
+        bad_params = [
+            (
+                {"notifications_enabled": "true", "digest": "true", "digest_age": 200},
+                "Invalid notifications_enabled value.",
+            ),
+            (
+                {"notifications_enabled": True, "digest": "true", "digest_age": 200},
+                "Invalid digest value.",
+            ),
+            (
+                {"notifications_enabled": True, "digest": True, "digest_age": "200"},
+                "Invalid digest age.",
+            ),
+            (
+                {"notifications_enabled": True, "digest": True, "digest_age": 200},
+                "Invalid digest age.",
+            ),
+            (
+                {"notifications_enabled": True, "digest": True, "digest_age": 0},
+                "Invalid digest age.",
+            ),
+        ]
         for b in bad_params:
             res = self.client.post(url, headers=headers, json=b[0])
             self.assert400(res)
             self.assertEqual(res.json['error'], b[1])
 
-        mock_digest.set_digest_info.side_effect = Exception()
+        mock_digest.set_notification_preference.side_effect = Exception()
         res = self.client.post(url, headers=headers, json=params)
         self.assert503(res)
         self.assertEqual(res.json['error'], "Cannot update digest preference right now.")
@@ -307,9 +330,9 @@ class NotificationViewsTest(FlaskTestCase):
                 "data": [{"test_data": 1}],
             },
             {
-                "url": "notification/1/digest-preference",
+                "url": "notification/1/notification-preference",
                 "method": self.client.post,
-                "data": {"digest": True, "digest_age": 19},
+                "data": {"notifications_enabled": True, "digest": True, "digest_age": 19},
             },
         ]
         headers = {"Authorization": "Bearer token"}
