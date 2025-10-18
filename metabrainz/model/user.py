@@ -65,7 +65,9 @@ class User(db.Model, UserMixin):
 
         password = kwargs.pop("password")
         password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
-        new_user = cls(name=name, password=password_hash, unconfirmed_email=kwargs.pop("unconfirmed_email"))
+        unconfirmed_email = kwargs.pop("unconfirmed_email")
+        
+        new_user = cls(name=name, password=password_hash, unconfirmed_email=unconfirmed_email)
         if kwargs:
             raise TypeError("Unexpected **kwargs: %r" % (kwargs,))
 
@@ -101,8 +103,7 @@ class User(db.Model, UserMixin):
         self.is_blocked = True
         self.login_id = uuid4()
 
-        self.moderate(moderator, 'block', reason)
-        db.session.commit()
+        self.moderate(moderator, "block", reason)
 
     def unblock(self, moderator, reason):
         """Unblock the user account"""
@@ -110,9 +111,8 @@ class User(db.Model, UserMixin):
             raise ValueError("User is not blocked")
         self.is_blocked = False
 
-        self.moderate(moderator, 'unblock', reason)
-        db.session.commit()
-        
+        self.moderate(moderator, "unblock", reason)
+
     def verify_email_manually(self, moderator, reason):
         """Manually verify the user's email address"""
         if self.is_email_confirmed():
@@ -120,15 +120,14 @@ class User(db.Model, UserMixin):
             
         if not self.unconfirmed_email:
             raise ValueError("No email address to verify")
-            
+
         # Move unconfirmed email to confirmed email
         self.email = self.unconfirmed_email
         self.unconfirmed_email = None
         self.email_confirmed_at = func.now()
-            
-        self.moderate(moderator, 'verify_email', reason)
-        db.session.commit()
-        
+
+        self.moderate(moderator, "verify_email", reason)
+
     def delete(self, moderator=None, reason=None):
         """Mark the user as deleted and store the username in old_username table.
         
@@ -138,7 +137,7 @@ class User(db.Model, UserMixin):
         """
         if self.deleted:
             raise ValueError("User is already deleted")
-            
+
         deleted_username = OldUsername(username=self.name)
         db.session.add(deleted_username)
         
@@ -151,5 +150,3 @@ class User(db.Model, UserMixin):
 
         if moderator is not None and reason is not None:
             self.moderate(moderator, "delete", reason)
-
-        db.session.commit()

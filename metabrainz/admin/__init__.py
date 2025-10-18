@@ -1,5 +1,6 @@
 from flask_admin import BaseView, AdminIndexView as IndexView
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.form import SecureForm
 from flask_login import current_user
 from flask import request, redirect, url_for, current_app
 
@@ -16,5 +17,8 @@ class AuthMixin(object):
 
 
 class AdminBaseView(AuthMixin, BaseView): pass
-class AdminModelView(AuthMixin, ModelView): pass
+class AdminModelView(AuthMixin, ModelView):
+    """Admin model view with CSRF protection enabled."""
+    form_base_class = SecureForm
+
 class AdminIndexView(AuthMixin, IndexView): pass
