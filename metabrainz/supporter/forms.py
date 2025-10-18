@@ -1,11 +1,11 @@
-from flask_wtf import FlaskForm, RecaptchaField
 from flask_babel import gettext
-from wtforms import BooleanField, TextAreaField, validators
-from wtforms.fields import StringField, EmailField, URLField, DecimalField
+from wtforms import BooleanField, TextAreaField
+from wtforms.fields import StringField, URLField, DecimalField
 from wtforms.validators import DataRequired, Length
 
 from metabrainz.index.forms import DatasetsField
 from metabrainz.user.forms import UserSignupForm
+from metabrainz.mtcaptcha import MTCaptchaField, validate_mtcaptcha
 
 
 class SupporterSignUpForm(UserSignupForm):
@@ -23,7 +23,7 @@ class SupporterSignUpForm(UserSignupForm):
         ]
     )
     agreement = BooleanField(validators=[DataRequired(message=gettext("You need to accept the agreement!"))])
-    recaptcha = RecaptchaField()
+    mtcaptcha = MTCaptchaField(validators=[validate_mtcaptcha])
 
 
 class NonCommercialSignUpForm(SupporterSignUpForm):

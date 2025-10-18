@@ -110,9 +110,9 @@ MAIL_FROM_DOMAIN = "metabrainz.org"
 
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-# reCAPTCHA (https://www.google.com/recaptcha/)
-RECAPTCHA_PUBLIC_KEY = ""
-RECAPTCHA_PRIVATE_KEY = ""
+# MTCaptcha (https://www.mtcaptcha.com/)
+MTCAPTCHA_PUBLIC_KEY = ""
+MTCAPTCHA_PRIVATE_KEY = ""
 
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [
