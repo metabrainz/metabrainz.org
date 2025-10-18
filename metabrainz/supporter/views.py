@@ -63,7 +63,7 @@ def signup_commercial():
     `tier_id` argument with ID of a tier of choice is required there.
     """
     csrf_token = generate_csrf()
-    recaptcha_site_key = current_app.config["RECAPTCHA_PUBLIC_KEY"]
+    mtcaptcha_site_key = current_app.config["MTCAPTCHA_PUBLIC_KEY"]
 
     tier_id = request.args.get('tier_id')
     if not tier_id:
@@ -105,7 +105,7 @@ def signup_commercial():
             form.username.errors.append(f"Another user with username '{form.username.data}' exists.")
             return render_template("supporters/signup-commercial.html", props=json.dumps({
                 "tier": _tier,
-                "recaptcha_site_key": recaptcha_site_key,
+                "mtcaptcha_site_key": mtcaptcha_site_key,
                 "csrf_token": csrf_token,
                 "initial_form_data": form_data,
                 "initial_errors": form.props_errors
@@ -117,7 +117,7 @@ def signup_commercial():
             form.email.errors.append(f"Another user with email '{form.email.data}' exists.")
             return render_template("supporters/signup-commercial.html", props=json.dumps({
                 "tier": _tier,
-                "recaptcha_site_key": recaptcha_site_key,
+                "mtcaptcha_site_key": mtcaptcha_site_key,
                 "csrf_token": csrf_token,
                 "initial_form_data": form_data,
                 "initial_errors": form.props_errors
@@ -162,7 +162,7 @@ def signup_commercial():
 
     return render_template("supporters/signup-commercial.html", props=json.dumps({
         "tier": _tier,
-        "recaptcha_site_key": recaptcha_site_key,
+        "mtcaptcha_site_key": mtcaptcha_site_key,
         "csrf_token": csrf_token,
         "initial_form_data": form_data,
         "initial_errors": form.props_errors
@@ -179,7 +179,7 @@ def signup_noncommercial():
         for d in available_dataset_objs
     ]
     csrf_token = generate_csrf()
-    recaptcha_site_key = current_app.config["RECAPTCHA_PUBLIC_KEY"]
+    mtcaptcha_site_key = current_app.config["MTCAPTCHA_PUBLIC_KEY"]
 
     form = NonCommercialSignUpForm(available_datasets)
     form_data = dict(**form.data)
@@ -191,7 +191,7 @@ def signup_noncommercial():
             form.username.errors.append(f"Another user with username '{form.username.data}' exists.")
             return render_template("supporters/signup-non-commercial.html", props=json.dumps({
                 "datasets": available_datasets,
-                "recaptcha_site_key": recaptcha_site_key,
+                "mtcaptcha_site_key": mtcaptcha_site_key,
                 "csrf_token": csrf_token,
                 "initial_form_data": form_data,
                 "initial_errors": form.props_errors
@@ -203,7 +203,7 @@ def signup_noncommercial():
             form.email.errors.append(f"Another user with email '{form.email.data}' exists.")
             return render_template("supporters/signup-non-commercial.html", props=json.dumps({
                 "datasets": available_datasets,
-                "recaptcha_site_key": recaptcha_site_key,
+                "mtcaptcha_site_key": mtcaptcha_site_key,
                 "csrf_token": csrf_token,
                 "initial_form_data": form_data,
                 "initial_errors": form.props_errors
@@ -237,7 +237,7 @@ def signup_noncommercial():
 
     return render_template("supporters/signup-non-commercial.html", props=json.dumps({
         "datasets": available_datasets,
-        "recaptcha_site_key": recaptcha_site_key,
+        "mtcaptcha_site_key": mtcaptcha_site_key,
         "csrf_token": csrf_token,
         "initial_form_data": form_data,
         "initial_errors": form.props_errors
