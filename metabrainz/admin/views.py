@@ -26,14 +26,25 @@ from metabrainz.model.user import User
 from metabrainz.utils import get_int_query_param
 
 
-class HomeView(AdminIndexView):
+class SupporterManagementHomeView(AdminIndexView):
+    """Home view for Supporter Management admin section"""
 
     @expose('/')
     def index(self):
         return self.render(
-            'admin/home.html',
+            'admin/supporter_home.html',
             pending_supporters=Supporter.get_all(state=STATE_PENDING),
             waiting_supporters=Supporter.get_all(state=STATE_WAITING),
+        )
+
+
+class UserManagementHomeView(AdminIndexView):
+    """Home view for User Management admin section"""
+
+    @expose('/')
+    def index(self):
+        return self.render(
+            'admin/user_home.html',
         )
 
 
@@ -373,8 +384,7 @@ class UserModelView(AdminModelView):
     list_template = "admin/users/index.html"
     details_template = "admin/users/details.html"
 
-    # todo: add csrf token to admin form
-    #  webhooks
+    # todo: webhooks, use mt-captcha
 
     @expose('/user/<int:user_id>/verify-email', methods=['POST'])
     def verify_user_email(self, user_id):
@@ -383,6 +393,7 @@ class UserModelView(AdminModelView):
 
         try:
             user.verify_email_manually(current_user, f"Email manually verified by moderator {current_user.name}.")
+            db.session.commit()
             flash.success(f'Email for {user.name} has been manually verified.')
         except ValueError as e:
             flash.error(str(e))

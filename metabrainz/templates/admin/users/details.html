@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </span>
                             {% if not model.is_email_confirmed() %}
                             <form action="{{ url_for('.verify_user_email', user_id=model.id) }}" method="POST" class="d-inline ms-2">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                 <button type="submit" class="btn btn-sm btn-outline-success">Verify Email</button>
                            </form>
                             {% endif %}
@@ -83,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="card-body">
                             <form action="{{ url_for('.moderate_user', user_id=model.id) }}" method="POST" id="moderationForm">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                 <div class="form-group mb-3">
                                     <label for="action" class="form-label">Action</label>
                                     <select class="form-select" id="action" name="action" required>
@@ -155,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="username-form" method="POST" action="{{ url_for('.edit_username', user_id=model.id) }}" class="needs-validation" novalidate>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="new-username" class="form-label">New Username</label>

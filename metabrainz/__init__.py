@@ -7,10 +7,9 @@ from brainzutils import sentry
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
 from flask_bcrypt import Bcrypt
+from flask_wtf.csrf import CSRFProtect
 
 from metabrainz.admin import AdminModelView
-from metabrainz.admin.quickbooks.views import QuickBooksView
-from metabrainz.admin.views import OldUsernameModelView
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.user import User
 from metabrainz.utils import get_global_props
@@ -22,6 +21,7 @@ deploy_env = os.environ.get('DEPLOY_ENV', '')
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 bcrypt = Bcrypt()
+csrf = CSRFProtect()
 
 
 def create_app(debug=None, config_path=None):
@@ -110,6 +110,9 @@ def create_app(debug=None, config_path=None):
     # bcrypt setup
     bcrypt.init_app(app)
 
+    # CSRF protection
+    csrf.init_app(app)
+
     # MusicBrainz OAuth
     from metabrainz.user import login_manager
     login_manager.init_app(app)
@@ -135,41 +138,70 @@ def create_app(debug=None, config_path=None):
     # Blueprints
     _register_blueprints(app)
 
-    # ADMIN SECTION
-
     from flask_admin import Admin
-    from metabrainz.admin.views import HomeView
-    admin = Admin(app, index_view=HomeView(name='Pending supporters'))
+    from metabrainz.admin.views import SupporterManagementHomeView, UserManagementHomeView
 
-    # Models
+    # Supporter Management Admin
+    supporter_admin = Admin(
+        app, 
+        name="Supporter Management",
+        index_view=SupporterManagementHomeView(
+            name="Pending supporters",
+            url="/admin/supporters",
+            endpoint="supporter_admin"
+        ),
+        url="/admin/supporters",
+        endpoint="supporter_admin",
+    )
+
     from metabrainz.model.supporter import SupporterAdminView
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
     from metabrainz.model.dataset import DatasetAdminView
-    admin.add_view(SupporterAdminView(model.db.session, category='Supporters', endpoint="supporter_model"))
-    admin.add_view(PaymentAdminView(model.db.session, category='Payments', endpoint="payment_model"))
-    admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
-    admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
+    supporter_admin.add_view(SupporterAdminView(model.db.session, category="Supporters", endpoint="supporter_model"))
+    supporter_admin.add_view(PaymentAdminView(model.db.session, category="Payments", endpoint="payment_model"))
+    supporter_admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
+    supporter_admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
 
-    # Custom stuff
     from metabrainz.admin.views import CommercialSupportersView
     from metabrainz.admin.views import SupportersView
     from metabrainz.admin.views import PaymentsView
     from metabrainz.admin.views import TokensView
     from metabrainz.admin.views import StatsView
-    from metabrainz.admin.views import UserModelView
-    admin.add_view(CommercialSupportersView(name='Commercial supporters', category='Supporters'))
-    admin.add_view(SupportersView(name='Search', category='Supporters'))
-    admin.add_view(PaymentsView(name='All', category='Payments'))
-    admin.add_view(TokensView(name='Access tokens', category='Supporters'))
-    admin.add_view(StatsView(name='Statistics', category='Statistics'))
-    admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
-    admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
-    admin.add_view(StatsView(name='Supporters', endpoint="statsview/supporters", category='Statistics'))
-    admin.add_view(UserModelView(User, model.db.session, endpoint="users-admin", category="Users"))
-    admin.add_view(OldUsernameModelView(OldUsername, model.db.session, endpoint="old-username-admin", category="Old Usernames"))
+
+    supporter_admin.add_view(CommercialSupportersView(name="Commercial supporters", category="Supporters"))
+    supporter_admin.add_view(SupportersView(name="Search", category="Supporters"))
+    supporter_admin.add_view(PaymentsView(name="All", category="Payments"))
+    supporter_admin.add_view(TokensView(name="Access tokens", category="Supporters"))
+    supporter_admin.add_view(StatsView(name="Statistics", category="Statistics"))
+    supporter_admin.add_view(StatsView(name="Top IPs", endpoint="statsview/top-ips", category="Statistics"))
+    supporter_admin.add_view(StatsView(name="Top Tokens", endpoint="statsview/top-tokens", category="Statistics"))
+    supporter_admin.add_view(StatsView(name="Supporters", endpoint="statsview/supporters", category="Statistics"))
+
     if app.config["QUICKBOOKS_CLIENT_ID"]:
-        admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
+        from metabrainz.admin.quickbooks.views import QuickBooksView
+        supporter_admin.add_view(QuickBooksView(name="Invoices", endpoint="quickbooks/", category="Quickbooks"))
+
+    # User Management Admin
+    user_admin = Admin(
+        app,
+        name="User Management",
+        index_view=UserManagementHomeView(
+            name="Dashboard",
+            url="/admin/users",
+            endpoint="user_admin"
+        ),
+        url="/admin/users",
+        endpoint="user_admin"
+    )
+
+    from metabrainz.admin.views import UserModelView
+    from metabrainz.admin.views import OldUsernameModelView
+
+    user_admin.add_view(UserModelView(User, model.db.session, endpoint="users-admin", category="Users"))
+    user_admin.add_view(OldUsernameModelView(
+        OldUsername, model.db.session, endpoint="old-username-admin", name="Old Usernames", category="Users"
+    ))
 
     return app
 
