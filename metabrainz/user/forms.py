@@ -1,10 +1,10 @@
 from flask_babel import gettext
-from flask_wtf import RecaptchaField
 from wtforms import BooleanField, PasswordField
 from wtforms.fields import StringField, EmailField
 from wtforms.validators import DataRequired, EqualTo, Length
 
 from metabrainz.index.forms import MeBFlaskForm
+from metabrainz.mtcaptcha import MTCaptchaField, validate_mtcaptcha
 
 
 class UserSignupForm(MeBFlaskForm):
@@ -20,10 +20,7 @@ class UserSignupForm(MeBFlaskForm):
         Length(min=8, max=64),
         EqualTo("password", gettext("Confirm Password should match password!"))
     ])
-    recaptcha = RecaptchaField("Recaptcha")
-
-
-# TODO: Consider adding recaptcha fields to remaining forms
+    mtcaptcha = MTCaptchaField("MTCaptcha", validators=[validate_mtcaptcha])
 
 
 class UserLoginForm(MeBFlaskForm):

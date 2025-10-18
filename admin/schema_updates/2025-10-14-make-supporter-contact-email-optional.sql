@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE supporter ALTER COLUMN contact_email DROP NOT NULL;
+
+COMMIT;

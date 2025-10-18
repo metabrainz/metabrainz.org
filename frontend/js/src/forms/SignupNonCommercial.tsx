@@ -1,8 +1,8 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
-import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from "yup";
+import MTCaptcha from "./MTCaptcha";
 import { getPageProps } from "../utils";
 import {
   AuthCardContainer,
@@ -15,7 +15,7 @@ import {
 
 type SignupNonCommercialProps = {
   datasets: Dataset[];
-  recaptcha_site_key: string;
+  mtcaptcha_site_key: string;
   csrf_token: string;
   initial_form_data: any;
   initial_errors: any;
@@ -24,7 +24,7 @@ type SignupNonCommercialProps = {
 function SignupNonCommercial({
   datasets,
   csrf_token,
-  recaptcha_site_key,
+  mtcaptcha_site_key,
   initial_form_data,
   initial_errors,
 }: SignupNonCommercialProps): JSX.Element {
@@ -52,7 +52,7 @@ function SignupNonCommercial({
               usage_desc: initial_form_data.usage_desc ?? "",
               contact_name: initial_form_data.contact_name ?? "",
               agreement: false,
-              recaptcha: "",
+              mtcaptcha: "",
               csrf_token,
             }}
             initialErrors={initial_errors}
@@ -81,11 +81,11 @@ function SignupNonCommercial({
               agreement: Yup.boolean()
                 .required("You need to accept the agreement!")
                 .oneOf([true], "You need to accept the agreement!"),
-              recaptcha: Yup.string().required(),
+              mtcaptcha: Yup.string().required(),
             })}
             onSubmit={() => {}}
           >
-            {({ errors, setFieldValue, isValid, dirty }) => (
+            {({ errors, isValid, dirty }) => (
               <form method="POST" className="d-flex flex-column">
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
@@ -223,10 +223,10 @@ function SignupNonCommercial({
                     width: "fit-content",
                   }}
                 >
-                  <ReCAPTCHA
-                    sitekey={recaptcha_site_key}
-                    onChange={(value) => setFieldValue("recaptcha", value)}
+                  <MTCaptcha
+                    sitekey={mtcaptcha_site_key}
                     size="compact"
+                    fieldName="mtcaptcha"
                   />
                 </div>
 
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
   const {
     datasets,
-    recaptcha_site_key,
+    mtcaptcha_site_key,
     csrf_token,
     initial_form_data,
     initial_errors,
@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderRoot.render(
     <SignupNonCommercial
       datasets={datasets}
-      recaptcha_site_key={recaptcha_site_key}
+      mtcaptcha_site_key={mtcaptcha_site_key}
       csrf_token={csrf_token}
       initial_form_data={initial_form_data}
       initial_errors={initial_errors}

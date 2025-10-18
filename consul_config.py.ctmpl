@@ -81,9 +81,9 @@ LOG_SENTRY = {
     'release': os.getenv('GIT_SHA', None),
 }
 
-# reCAPTCHA (https://www.google.com/recaptcha/)
-RECAPTCHA_PUBLIC_KEY = '''{{template "KEY" "recaptcha/public_key"}}'''
-RECAPTCHA_PRIVATE_KEY = '''{{template "KEY" "recaptcha/private_key"}}'''
+# MTCaptcha (https://www.mtcaptcha.com/)
+MTCAPTCHA_PUBLIC_KEY = '''{{template "KEY" "mtcaptcha/public_key"}}'''
+MTCAPTCHA_PRIVATE_KEY = '''{{template "KEY" "mtcaptcha/private_key"}}'''
 
 {{if service "metabrainz-org.exim-relay"}}
 {{with index (service "metabrainz-org.exim-relay") 0}}
