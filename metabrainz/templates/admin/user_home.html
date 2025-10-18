@@ -1,0 +1,22 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h2>User Management Dashboard</h2>
+  <p>Manage users, webhooks, and user-related activities.</p>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Users</h3>
+        </div>
+        <div class="panel-body">
+          <p>Search and manage user accounts, verify emails, and handle moderation.</p>
+          <a href="{{ url_for('users-admin.index_view') }}" class="btn btn-primary">Manage Users</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <p><a href="{{ url_for('supporter_admin.index') }}" class="btn btn-primary">Go to Supporter Management Dashboard</a></p>
+{% endblock %}
