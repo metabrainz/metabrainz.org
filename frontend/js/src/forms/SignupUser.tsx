@@ -1,8 +1,8 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
-import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from "yup";
+import MTCaptcha from "./MTCaptcha";
 import { getPageProps } from "../utils";
 import {
   AuthCardContainer,
@@ -12,7 +12,7 @@ import {
 import ConditionsModal from "./ConditionsModal";
 
 type SignupUserProps = {
-  recaptcha_site_key: string;
+  mtcaptcha_site_key: string;
   csrf_token: string;
   initial_form_data: any;
   initial_errors: any;
@@ -20,7 +20,7 @@ type SignupUserProps = {
 
 function SignupUser({
   csrf_token,
-  recaptcha_site_key,
+  mtcaptcha_site_key,
   initial_form_data,
   initial_errors,
 }: SignupUserProps): JSX.Element {
@@ -36,7 +36,7 @@ function SignupUser({
               email: initial_form_data.email ?? "",
               password: initial_form_data.password ?? "",
               confirm_password: initial_form_data.confirm_password ?? "",
-              recaptcha: "",
+              mtcaptcha: "",
               csrf_token,
             }}
             initialErrors={initial_errors}
@@ -58,11 +58,11 @@ function SignupUser({
                   [Yup.ref("password")],
                   "Confirm Password should match password!"
                 ),
-              recaptcha: Yup.string().required(),
+              mtcaptcha: Yup.string().required(),
             })}
             onSubmit={() => {}}
           >
-            {({ errors, setFieldValue, isValid, dirty }) => (
+            {({ errors, setFieldValue, isValid, dirty, values }) => (
               <form method="POST">
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
@@ -141,10 +141,10 @@ function SignupUser({
                     width: "fit-content",
                   }}
                 >
-                  <ReCAPTCHA
-                    sitekey={recaptcha_site_key}
-                    onChange={(value) => setFieldValue("recaptcha", value)}
+                  <MTCaptcha
+                    sitekey={mtcaptcha_site_key}
                     size="compact"
+                    fieldName="mtcaptcha"
                   />
                 </div>
 
@@ -170,13 +170,13 @@ function SignupUser({
 
 document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
-  const { recaptcha_site_key, csrf_token, initial_form_data, initial_errors } =
+  const { mtcaptcha_site_key, csrf_token, initial_form_data, initial_errors } =
     reactProps;
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
     <SignupUser
-      recaptcha_site_key={recaptcha_site_key}
+      mtcaptcha_site_key={mtcaptcha_site_key}
       csrf_token={csrf_token}
       initial_form_data={initial_form_data}
       initial_errors={initial_errors}

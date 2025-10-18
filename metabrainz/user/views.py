@@ -61,7 +61,7 @@ def signup():
     form_data.pop("csrf_token", None)
 
     return render_template("users/signup.html", props=json.dumps({
-        "recaptcha_site_key": current_app.config["RECAPTCHA_PUBLIC_KEY"],
+        "mtcaptcha_site_key": current_app.config["MTCAPTCHA_PUBLIC_KEY"],
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
         "initial_errors": form.props_errors
@@ -102,7 +102,7 @@ def login():
     form_data.pop("csrf_token", None)
 
     return render_template("users/login.html", props=json.dumps({
-        "recaptcha_site_key": current_app.config["RECAPTCHA_PUBLIC_KEY"],
+        "mtcaptcha_site_key": current_app.config["MTCAPTCHA_PUBLIC_KEY"],
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
         "initial_errors": form_errors
@@ -176,7 +176,7 @@ def lost_username():
     form_data.pop("csrf_token", None)
 
     return render_template("users/lost-username.html", props=json.dumps({
-        "recaptcha_site_key": current_app.config["RECAPTCHA_PUBLIC_KEY"],
+        "mtcaptcha_site_key": current_app.config["MTCAPTCHA_PUBLIC_KEY"],
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
         "initial_errors": form_errors
@@ -202,7 +202,7 @@ def lost_password():
     form_data.pop("csrf_token", None)
 
     return render_template("users/lost-password.html", props=json.dumps({
-        "recaptcha_site_key": current_app.config["RECAPTCHA_PUBLIC_KEY"],
+        "mtcaptcha_site_key": current_app.config["MTCAPTCHA_PUBLIC_KEY"],
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
         "initial_errors": form_errors
