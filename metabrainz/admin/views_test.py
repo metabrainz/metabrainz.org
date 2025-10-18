@@ -20,6 +20,12 @@ class AdminViewsTestCase(FlaskTestCase):
     def test_index_unauthenticated(self):
         self.assertStatus(self.client.get(url_for('admin.index')), 302)
 
+    def test_supporter_admin_index(self):
+        self.assertStatus(self.client.get(url_for('supporter_admin.index')), 302)
+
+    def test_user_admin_index(self):
+        self.assertStatus(self.client.get(url_for('user_admin.index')), 302)
+
     def test_index_as_admin(self):
         self._login_admin()
         self.assert200(self.client.get(url_for('admin.index')))

@@ -31,6 +31,7 @@
   </div>
 
   <form method="POST" action="{{ url_for('supporter_model.delete_view') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <input id="id" name="id" type="hidden" value="{{ supporter.id }}">
     <input id="url" name="url" type="hidden" value="{{ url_for('supporter_model.index_view') }}">
     <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}"
