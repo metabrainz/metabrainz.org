@@ -25,26 +25,6 @@ services:
     ports:
       - "8000:8000"
 
-  oauth:
-    build:
-      context: ..
-      dockerfile: Dockerfile
-      target: metabrainz-dev
-    command: flask run --debug -h 0.0.0.0 -p 8150
-    environment:
-      FLASK_APP: "oauth:create_app()"
-      AUTHLIB_INSECURE_TRANSPORT: 1
-    volumes:
-      - ..:/code/metabrainz
-      - ../frontend:/static
-    depends_on:
-      - meb_db
-      - redis
-    ports:
-      - "8150:8150"
-    expose:
-      - "8150"
-
   meb_db:
     image: postgres:12.3
     volumes:

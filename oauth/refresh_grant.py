@@ -1,6 +1,6 @@
 from authlib.oauth2.rfc6749 import grants, InvalidRequestError
 
-from oauth import login
+from metabrainz.model.user import User
 from oauth.model import db, OAuth2RefreshToken, OAuth2AccessToken
 
 
@@ -30,7 +30,7 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
         return token
 
     def authenticate_user(self, credential):
-        return login.load_user_from_db(credential.user_id)
+        return User.get(id=credential.user_id)
 
     def revoke_old_credential(self, credential):
         old_access_tokens = db.session\
