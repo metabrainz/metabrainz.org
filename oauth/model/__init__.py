@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
+from metabrainz.model import db
 
 from .client import OAuth2Client
 from .relation_scope import OAuth2AccessTokenScope, OAuth2RefreshTokenScope, OAuth2CodeScope
