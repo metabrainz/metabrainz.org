@@ -3,7 +3,8 @@ from urllib.parse import urlparse, parse_qs
 from authlib.oauth2.rfc6749 import grants, InvalidGrantError, InvalidRequestError
 from flask import render_template, current_app
 
-from oauth import login
+from metabrainz.model.user import User
+
 from oauth.model import db, OAuth2AccessToken, OAuth2RefreshToken
 from oauth.model.code import OAuth2AuthorizationCode
 from oauth.model.scope import get_scopes
@@ -94,4 +95,4 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         db.session.commit()
 
     def authenticate_user(self, authorization_code):
-        return login.load_user_from_db(authorization_code.user_id)
+        return User.get(id=authorization_code.user_id)

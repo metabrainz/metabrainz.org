@@ -1,6 +1,7 @@
 BEGIN;
 
 DROP TABLE IF EXISTS "user"             CASCADE;
+DROP TABLE IF EXISTS old_username       CASCADE;
 DROP TABLE IF EXISTS payment            CASCADE;
 DROP TABLE IF EXISTS oauth_grant        CASCADE;
 DROP TABLE IF EXISTS oauth_token        CASCADE;

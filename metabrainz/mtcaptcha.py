@@ -1,5 +1,7 @@
 """MTCaptcha integration for Flask-WTF forms."""
 import requests
+
+from flask import current_app
 from wtforms import StringField
 from wtforms.validators import ValidationError
 
@@ -30,7 +32,9 @@ def validate_mtcaptcha(form, field):
     Raises:
         ValidationError: If the MTCaptcha validation fails
     """
-    from flask import current_app
+    # skip capcha validation during tests
+    if current_app.config["TESTING"]:
+        return
 
     if not field.data:
         raise ValidationError("Please complete the captcha challenge.")

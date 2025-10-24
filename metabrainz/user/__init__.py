@@ -10,9 +10,8 @@ login_manager.login_view = "users.login"
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(login_id):
     try:
-        login_id = UUID(user_id)
         return User.get(login_id=login_id)
     except (ValueError, TypeError):
         return None

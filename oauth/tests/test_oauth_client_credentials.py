@@ -8,6 +8,8 @@ class ClientCredentialsGrantTestCase(OAuthTestCase):
         self.app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"] = [
             application["client_id"],
         ]
+
+        self.temporary_login(self.user2)
         data = {
             "client_id": application["client_id"],
             "client_secret": application["client_secret"],
@@ -23,6 +25,8 @@ class ClientCredentialsGrantTestCase(OAuthTestCase):
 
     def test_oauth_client_credentials_unauthorized_client(self):
         application = self.create_oauth_app()
+
+        self.temporary_login(self.user2)
         data = {
             "client_id": application["client_id"],
             "client_secret": application["client_secret"],

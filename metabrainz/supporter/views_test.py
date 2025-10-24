@@ -1,6 +1,5 @@
 from urllib.parse import urlparse
 
-from metabrainz import create_app
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model.tier import Tier
 from flask import url_for
