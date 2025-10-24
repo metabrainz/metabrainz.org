@@ -6,12 +6,12 @@ from time import sleep
 from brainzutils import sentry
 from brainzutils.flask import CustomFlask
 from flask import send_from_directory, request
+from flask_admin import Admin
 from flask_bcrypt import Bcrypt
-from flask_wtf.csrf import CSRFProtect
+from flask_uploads import configure_uploads
+from jinja2 import FileSystemLoader
 
 from metabrainz.admin import AdminModelView
-from metabrainz.model.old_username import OldUsername
-from metabrainz.model.user import User
 from metabrainz.utils import get_global_props
 
 # Check to see if we're running under a docker deployment. If so, don't second guess
@@ -21,7 +21,6 @@ deploy_env = os.environ.get('DEPLOY_ENV', '')
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 bcrypt = Bcrypt()
-csrf = CSRFProtect()
 
 
 def create_app(debug=None, config_path=None):
@@ -67,7 +66,7 @@ def create_app(debug=None, config_path=None):
                 sleep(1)
 
         if not os.path.exists(consul_config):
-            print("No configuration file generated yet. Retried %d times, exiting." % CONSUL_CONFIG_FILE_RETRY_COUNT);
+            print("No configuration file generated yet. Retried %d times, exiting." % CONSUL_CONFIG_FILE_RETRY_COUNT)
             sys.exit(-1)
 
         app.config.from_pyfile(consul_config, silent=True)
@@ -97,6 +96,7 @@ def create_app(debug=None, config_path=None):
     from metabrainz import db
     db.init_db_engine(app.config["SQLALCHEMY_DATABASE_URI"])
     from metabrainz import model
+    from oauth import model as oauth_model
     model.db.init_app(app)
 
     # Redis (cache)
@@ -110,9 +110,6 @@ def create_app(debug=None, config_path=None):
     # bcrypt setup
     bcrypt.init_app(app)
 
-    # CSRF protection
-    csrf.init_app(app)
-
     # MusicBrainz OAuth
     from metabrainz.user import login_manager
     login_manager.init_app(app)
@@ -121,6 +118,10 @@ def create_app(debug=None, config_path=None):
     from metabrainz.utils import reformat_datetime
     app.jinja_env.filters['datetime'] = reformat_datetime
     app.jinja_env.filters['nl2br'] = lambda val: val.replace('\n', '<br />') if val else ''
+    app.jinja_loader = FileSystemLoader([
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), 'templates'),
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'oauth', 'templates')
+    ])
 
     # Error handling
     from metabrainz.errors import init_error_handlers
@@ -131,14 +132,15 @@ def create_app(debug=None, config_path=None):
     from metabrainz import babel
     babel.init_app(app)
 
-    from flask_uploads import configure_uploads
     from metabrainz.admin.forms import LOGO_UPLOAD_SET
     configure_uploads(app, upload_sets=[LOGO_UPLOAD_SET])
+
+    from oauth.authorization_server import authorization_server
+    authorization_server.init_app(app)
 
     # Blueprints
     _register_blueprints(app)
 
-    from flask_admin import Admin
     from metabrainz.admin.views import SupporterManagementHomeView, UserManagementHomeView
 
     # Supporter Management Admin
@@ -198,9 +200,9 @@ def create_app(debug=None, config_path=None):
     from metabrainz.admin.views import UserModelView
     from metabrainz.admin.views import OldUsernameModelView
 
-    user_admin.add_view(UserModelView(User, model.db.session, endpoint="users-admin", category="Users"))
+    user_admin.add_view(UserModelView(model.db.session, endpoint="users-admin", category="Users"))
     user_admin.add_view(OldUsernameModelView(
-        OldUsername, model.db.session, endpoint="old-username-admin", name="Old Usernames", category="Users"
+        model.db.session, endpoint="old-username-admin", name="Old Usernames", category="Users"
     ))
 
     return app
@@ -242,3 +244,7 @@ def _register_blueprints(app):
     app.register_blueprint(api_index_bp, url_prefix='/api')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')
+
+    from oauth.views import oauth2_bp, wellknown_bp
+    app.register_blueprint(oauth2_bp, url_prefix="/oauth2")
+    app.register_blueprint(wellknown_bp, url_prefix="/.well-known")

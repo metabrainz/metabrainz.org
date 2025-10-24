@@ -34,6 +34,12 @@ CREATE TABLE tier (
   "primary"  BOOLEAN           NOT NULL
 );
 
+CREATE TABLE old_username (
+  id            INTEGER GENERATED ALWAYS AS IDENTITY,
+  username      TEXT NOT NULL,
+  deleted_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE dataset (
     id          INTEGER GENERATED ALWAYS AS IDENTITY,
     name        TEXT NOT NULL,

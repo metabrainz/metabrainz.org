@@ -1,21 +1,12 @@
 import json
-from unittest.mock import patch
 
 from flask import g
 
-from oauth.login import User
 from oauth.model import OAuth2Client, db, OAuth2AccessToken, OAuth2RefreshToken
-from oauth.tests import OAuthTestCase, login_user
+from oauth.tests import OAuthTestCase
 
 
 class ClientTestCase(OAuthTestCase):
-
-    def setUp(self):
-        super().setUp()
-
-        patcher = patch("oauth.login.load_user_from_request", return_value=self.user1)
-        self.mock_load_user_from_request = patcher.start()
-        self.addCleanup(patcher.stop)
 
     def create_application(self):
         response = self.client.get("/oauth2/client/create")
@@ -36,6 +27,7 @@ class ClientTestCase(OAuthTestCase):
         return application
 
     def test_oauth_client_create(self):
+        self.temporary_login(self.user1)
         application = self.create_application()
 
         self.assertEqual(application["name"], "test-client")
@@ -44,6 +36,7 @@ class ClientTestCase(OAuthTestCase):
         self.assertEqual(application["redirect_uris"], ["https://example.com/callback"])
 
     def test_oauth_client_create_multiple_redirect_uris(self):
+        self.temporary_login(self.user1)
         response = self.client.get("/oauth2/client/create")
 
         response = self.client.post("/oauth2/client/create", data={
@@ -67,6 +60,7 @@ class ClientTestCase(OAuthTestCase):
         ])
 
     def test_oauth_client_create_invalid_csrf(self):
+        self.temporary_login(self.user1)
         response = self.client.get("/oauth2/client/create")
 
         response = self.client.post("/oauth2/client/create", data={
@@ -79,6 +73,7 @@ class ClientTestCase(OAuthTestCase):
         self.assertEqual(props["initial_errors"]["csrf_token"], "The CSRF token is missing.")
 
     def test_oauth_client_create_invalid(self):
+        self.temporary_login(self.user1)
         response = self.client.get("/oauth2/client/create")
 
         response = self.client.post("/oauth2/client/create", data={
@@ -124,6 +119,7 @@ class ClientTestCase(OAuthTestCase):
         self.assertEqual(props["initial_errors"]["client_name"], "Application name needs to be at least 3 characters long.")
 
     def test_oauth_client_edit(self):
+        self.temporary_login(self.user1)
         application = self.create_application()
 
         response = self.client.post(f"/oauth2/client/edit/{application['client_id']}", data={
@@ -171,6 +167,7 @@ class ClientTestCase(OAuthTestCase):
         ])
 
     def test_oauth_client_delete(self):
+        self.temporary_login(self.user1)
         application = self.create_application()
 
         response = self.client.get(f"/oauth2/client/delete/{application['client_id']}", follow_redirects=True)
@@ -198,6 +195,7 @@ class ClientTestCase(OAuthTestCase):
         self.assertListEqual(props["applications"], [])
 
     def test_oauth_client_delete_invalid_csrf(self):
+        self.temporary_login(self.user1)
         application = self.create_application()
         response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", data={
             "confirm": "yes",
@@ -211,66 +209,70 @@ class ClientTestCase(OAuthTestCase):
         self.assertEqual(len(props["applications"]), 1)
 
     def test_oauth_client_owner_check(self):
+        self.temporary_login(self.user1)
         application = self.create_application()
-        user2 = User(2, "test-user-2")
 
-        with patch.object(g, "_login_user", return_value=user2):
-            response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", follow_redirects=True)
-            self.assertEqual(response.status_code, 403)
+        self.temporary_login(self.user2)
+        response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", follow_redirects=True)
+        self.assertEqual(response.status_code, 403)
 
-            response = self.client.post(f"/oauth2/client/edit/{application['client_id']}", data={
-                "client_name": "test-client-new",
-                "description": "test-description",
-                "website": "https://example.com",
-                "redirect_uris.0": "https://example.com/callback",
-                "csrf_token": g.csrf_token
-            }, follow_redirects=True)
-            self.assertEqual(response.status_code, 403)
+        response = self.client.post(f"/oauth2/client/edit/{application['client_id']}", data={
+            "client_name": "test-client-new",
+            "description": "test-description",
+            "website": "https://example.com",
+            "redirect_uris.0": "https://example.com/callback",
+            "csrf_token": g.csrf_token
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 403)
 
     def revoke_from_user_helper(self, application):
-        with login_user(self.user2):
-            response = self.client.post(f"/oauth2/client/{application['client_id']}/revoke/user")
-            self.assertEqual(response.status_code, 302)
-            self.assertEqual(response.location, "/oauth2/client/list")
+        response = self.client.post(f"/oauth2/client/{application['client_id']}/revoke/user")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.location, "/oauth2/client/list")
 
-            tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
-                OAuth2Client.client_id == application["client_id"],
-                OAuth2AccessToken.client_id == OAuth2Client.id,
-                OAuth2AccessToken.user_id == self.user2.id,
-            )
-            for token in tokens:
-                self.assertEqual(token.revoked, True)
+        tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
+            OAuth2Client.client_id == application["client_id"],
+            OAuth2AccessToken.client_id == OAuth2Client.id,
+            OAuth2AccessToken.user_id == self.user2.id,
+        )
+        for token in tokens:
+            self.assertEqual(token.revoked, True)
 
-            tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
-                OAuth2Client.client_id == application["client_id"],
-                OAuth2RefreshToken.client_id == OAuth2Client.id,
-                OAuth2RefreshToken.user_id == self.user2.id,
-            )
-            for token in tokens:
-                self.assertEqual(token.revoked, True)
+        tokens = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
+            OAuth2Client.client_id == application["client_id"],
+            OAuth2RefreshToken.client_id == OAuth2Client.id,
+            OAuth2RefreshToken.user_id == self.user2.id,
+        )
+        for token in tokens:
+            self.assertEqual(token.revoked, True)
 
     def test_oauth_client_revoke_from_user_authorization_grant(self):
+        self.temporary_login(self.user1)
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
-        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
-        token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
+        self.temporary_login(self.user2)
+        code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
+        self.token_success_token_grant_helper(application, code, redirect_uri, True)
         self.revoke_from_user_helper(application)
 
     def test_oauth_client_revoke_from_user_implicit_grant(self):
+        self.temporary_login(self.user1)
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
-        token = self.authorize_success_helper(application, redirect_uri, True)
 
+        self.temporary_login(self.user2)
+        self.authorize_success_helper(application, redirect_uri, True)
         self.revoke_from_user_helper(application)
 
     def test_oauth_client_not_found(self):
-        with login_user(self.user2):
-            response = self.client.post(f"/oauth2/client/abc/revoke/user")
-            self.assert404(response)
+        self.temporary_login(self.user1)
 
-            response = self.client.post(f"/oauth2/client/abc/edit")
-            self.assert404(response)
+        response = self.client.post(f"/oauth2/client/abc/revoke/user")
+        self.assert404(response)
 
-            response = self.client.post(f"/oauth2/client/abc/delete")
-            self.assert404(response)
+        response = self.client.post(f"/oauth2/client/abc/edit")
+        self.assert404(response)
+
+        response = self.client.post(f"/oauth2/client/abc/delete")
+        self.assert404(response)

@@ -9,6 +9,7 @@ from freezegun import freeze_time
 from sqlalchemy import delete
 
 from metabrainz.model import db
+from metabrainz.model.old_username import OldUsername
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
 from metabrainz.user.email import VERIFY_EMAIL, create_email_link_checksum, RESET_PASSWORD
@@ -22,6 +23,7 @@ class UsersViewsTestCase(FlaskTestCase):
     def tearDown(self):
         db.session.rollback()
         db.session.execute(delete(User))
+        db.session.execute(delete(OldUsername))
         db.session.commit()
         super(UsersViewsTestCase, self).tearDown()
 

@@ -384,7 +384,8 @@ class UserModelView(AdminModelView):
     list_template = "admin/users/index.html"
     details_template = "admin/users/details.html"
 
-    # todo: webhooks, use mt-captcha
+    def __init__(self, session, **kwargs):
+        super().__init__(User, session, **kwargs)
 
     @expose('/user/<int:user_id>/verify-email', methods=['POST'])
     def verify_user_email(self, user_id):
@@ -491,3 +492,6 @@ class OldUsernameModelView(AdminModelView):
     column_list = ('username', 'deleted_at')
     can_edit = False
     can_view_details = False
+
+    def __init__(self, session, **kwargs):
+        super().__init__(OldUsername, session, **kwargs)
