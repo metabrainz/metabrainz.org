@@ -1,6 +1,4 @@
 import base64
-from unittest.mock import patch
-
 import pytest
 
 from oauth.tests import OAuthTestCase
@@ -9,14 +7,15 @@ from oauth.tests import OAuthTestCase
 class RevocationTestCase(OAuthTestCase):
 
     def _test_oauth_introspection_error_helper(self, data):
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/introspect", data=data)
-            self.assert200(response)
-            self.assertEqual(response.json["active"], False)
+        response = self.client.post("/oauth2/introspect", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json["active"], False)
 
     def test_oauth_revoke_success(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
@@ -27,16 +26,17 @@ class RevocationTestCase(OAuthTestCase):
         }
         self.introspection_success_helper(data)
 
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert200(response)
-            self.assertEqual(response.json, {})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json, {})
 
         self._test_oauth_introspection_error_helper(data)
 
     def test_oauth_revoke_access_token_refresh_still_works(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
@@ -47,10 +47,9 @@ class RevocationTestCase(OAuthTestCase):
         }
         self.introspection_success_helper(data)
 
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert200(response)
-            self.assertEqual(response.json, {})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json, {})
 
         self._test_oauth_introspection_error_helper(data)
 
@@ -65,6 +64,8 @@ class RevocationTestCase(OAuthTestCase):
     def test_oauth_revoke_refresh_token(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
@@ -75,10 +76,9 @@ class RevocationTestCase(OAuthTestCase):
         }
         self.introspection_success_helper(data)
 
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert200(response)
-            self.assertEqual(response.json, {})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json, {})
 
         self._test_oauth_introspection_error_helper(data)
 
@@ -93,23 +93,25 @@ class RevocationTestCase(OAuthTestCase):
     def test_oauth_revoke_missing_credentials(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
         data = {
             "token": token["refresh_token"],
         }
-
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert401(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert401(response)
+        self.assertEqual(response.json, {"error": "invalid_client"})
 
     @pytest.mark.skip
     def test_oauth_revoke_different_credentials(self):
         application = self.create_oauth_app()
         application2 = self.create_oauth_app()[1]
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
@@ -118,15 +120,15 @@ class RevocationTestCase(OAuthTestCase):
             "client_secret": application2["client_secret"],
             "token": token["refresh_token"],
         }
-
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert401(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert401(response)
+        self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_missing_client_id(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
@@ -134,15 +136,15 @@ class RevocationTestCase(OAuthTestCase):
             "client_secret": application["client_secret"],
             "token": token["refresh_token"],
         }
-
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert401(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert401(response)
+        self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_invalid_client_id(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
@@ -151,15 +153,15 @@ class RevocationTestCase(OAuthTestCase):
             "client_secret": application["client_id"],
             "token": token["refresh_token"],
         }
-
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert400(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert400(response)
+        self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_missing_client_secret(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
@@ -167,15 +169,15 @@ class RevocationTestCase(OAuthTestCase):
             "client_id": application["client_id"],
             "token": token["refresh_token"],
         }
-
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert401(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert401(response)
+        self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_invalid_client_secret(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
@@ -185,14 +187,15 @@ class RevocationTestCase(OAuthTestCase):
             "token": token["refresh_token"],
         }
 
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert401(response)
-            self.assertEqual(response.json, {"error": "invalid_client"})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert401(response)
+        self.assertEqual(response.json, {"error": "invalid_client"})
 
     def test_oauth_revoke_invalid_token_type_hint(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
         data = {
@@ -202,14 +205,15 @@ class RevocationTestCase(OAuthTestCase):
             "token_type_hint": "code"
         }
         
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert401(response)
-            self.assertEqual(response.json, {"error": "unsupported_token_type"})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert401(response)
+        self.assertEqual(response.json, {"error": "unsupported_token_type"})
 
     def test_oauth_revoke_wrong_token_type_hint(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
         data = {
@@ -219,14 +223,15 @@ class RevocationTestCase(OAuthTestCase):
             "token_type_hint": "access_token"
         }
 
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert200(response)
-            self.assertEqual(response.json, {})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json, {})
     
     def test_oauth_revoke_wrong_token(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
         data = {
@@ -235,27 +240,27 @@ class RevocationTestCase(OAuthTestCase):
             "token": "refresh_token",
         }
 
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post("/oauth2/revoke", data=data)
-            self.assert200(response)
-            self.assertEqual(response.json, {})
+        response = self.client.post("/oauth2/revoke", data=data)
+        self.assert200(response)
+        self.assertEqual(response.json, {})
 
     def test_oauth_revoke_basic_auth(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+
+        self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
         token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
 
         auth = base64.b64encode((application["client_id"] + ":" + application["client_secret"]).encode("utf-8")).decode("utf-8")
 
-        with patch("oauth.login.load_user_from_db", return_value=self.user2):
-            response = self.client.post(
-                "/oauth2/revoke",
-                data={"token": token["access_token"]},
-                headers={"Authorization": "Basic " + auth}
-            )
-            self.assert200(response)
-            self.assertEqual(response.json, {})
+        response = self.client.post(
+            "/oauth2/revoke",
+            data={"token": token["access_token"]},
+            headers={"Authorization": "Basic " + auth}
+        )
+        self.assert200(response)
+        self.assertEqual(response.json, {})
 
     def test_oauth_revoke_client_credentials(self):
         application = self.create_oauth_app()
@@ -263,6 +268,7 @@ class RevocationTestCase(OAuthTestCase):
             application["client_id"],
         ]
 
+        self.temporary_login(self.user2)
         data = {
             "client_id": application["client_id"],
             "client_secret": application["client_secret"],

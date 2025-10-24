@@ -1,6 +1,7 @@
 from authlib.oauth2.rfc7662 import IntrospectionEndpoint
 
-from oauth import login
+from metabrainz.model.user import User
+
 from oauth.model import db
 from oauth.model.access_token import OAuth2AccessToken
 from oauth.model.refresh_token import OAuth2RefreshToken
@@ -33,8 +34,8 @@ class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
 
         if token.user_id is not None:
             data["metabrainz_user_id"] = token.user_id
-            user = login.load_user_from_db(token.user_id)
-            sub = user.user_name
+            user = User.get(id=token.user_id)
+            sub = user.name
         else:
             # user_id is None for client credentials grant
             sub = token.client.name
