@@ -3,14 +3,14 @@ import json
 from authlib.oauth2.rfc6749 import InvalidRequestError
 from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash, g, current_app
 from flask_babel import gettext
+from flask_login import login_required, current_user
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
 from urllib.parse import urljoin
 
+from metabrainz.model.user import User
 from metabrainz.decorators import nocache, crossdomain
-from oauth import login
 from oauth.generator import create_client_secret, create_client_id
-from oauth.login import login_required, current_user
 from oauth.model import db, OAuth2RefreshToken, OAuth2Scope
 from oauth.model.client import OAuth2Client
 from oauth.model.scope import get_scopes
@@ -19,7 +19,7 @@ from oauth.forms import ApplicationForm, AuthorizationForm, DeleteApplicationFor
 from oauth.authorization_server import authorization_server
 from metabrainz.utils import build_url
 
-oauth2_bp = Blueprint("oauth2", __name__, static_folder="/static")
+oauth2_bp = Blueprint("oauth2", __name__)
 wellknown_bp = Blueprint("well-known", __name__)
 
 
@@ -292,10 +292,10 @@ def user_info():
     if token.user_id is None:
         return jsonify({"error": "access token not associated with a user"}), 400
 
-    user = login.load_user_from_db(token.user_id)
+    user = User.get(id=token.user_id)
 
     return {
-        "sub": user.user_name,
+        "sub": user.name,
         "metabrainz_user_id": user.id
     }
 

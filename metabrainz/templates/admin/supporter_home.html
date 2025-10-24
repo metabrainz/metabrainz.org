@@ -1,0 +1,48 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <h2>Supporter Management Dashboard</h2>
+  <p>Manage supporters, payments, and commercial accounts.</p>
+
+  {% macro print_table(supporters) %}
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Organization Name</th>
+        <th>Contact name</th>
+        <th>Contact email</th>
+        <th>Username</th>
+        <th>Tier</th>
+        <th>Applied on</th>
+      </tr>
+      </thead>
+      {% for supporter in supporters %}
+        <tr>
+          <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
+          <td>{{ supporter.contact_name }}</td>
+          <td>{{ supporter.user.email }}</td>
+          <td>{{ supporter.user.name }}</td>
+          <td>{{ supporter.tier }}</td>
+          <td>{{ supporter.created }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% endmacro %}
+
+
+  <h3>Commercial supporters pending approval</h3>
+  {% if pending_supporters %}
+    {{ print_table(pending_supporters) }}
+  {% else %}
+    None! Go take a break. :)
+  {% endif %}
+
+  <h3>Commercial supporters in the waiting list</h3>
+  {% if waiting_supporters %}
+    {{ print_table(waiting_supporters) }}
+  {% else %}
+    None! Go take a break. :)
+  {% endif %}
+
+  <hr>
+  <p><a href="{{ url_for('user_admin.index') }}" class="btn btn-primary">Go to User Management Dashboard</a></p>
+{% endblock %}

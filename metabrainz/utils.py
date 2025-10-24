@@ -3,7 +3,6 @@ from urllib.parse import urlparse, parse_qsl, urlunparse, urlencode
 
 import random
 import string
-import subprocess
 
 from flask import request
 

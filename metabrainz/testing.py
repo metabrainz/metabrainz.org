@@ -1,13 +1,15 @@
 import unittest
 
-from flask import template_rendered, message_flashed
+from flask import template_rendered, message_flashed, g
+from flask_login import login_user, logout_user
 
 from metabrainz import create_app as create_web_app
 from metabrainz import model
 from metabrainz import db
-import logging
 import os.path
 import os
+
+from metabrainz.model.user import User
 
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'admin', 'sql')
 
@@ -31,43 +33,36 @@ class FlaskTestCase(unittest.TestCase):
             os.path.dirname(os.path.realpath(__file__)),
             '..', 'config.py'
         ))
+        app.config['DEBUG'] = False
         app.config['TESTING'] = True
         db.init_db_engine(app.config['SQLALCHEMY_DATABASE_URI'])
         return app
 
-    def temporary_login(self, user_login_id):
-        with self.client.session_transaction() as session:
-            session['_user_id'] = user_login_id
-            session['_fresh'] = True
+    def temporary_login(self, user: User):
+        logout_user()
+        login_user(user)
 
     @classmethod
     def setUpClass(cls):
-        logging.basicConfig(level=logging.DEBUG)
-
         cls.app = cls.create_app()
         cls.client = cls.app.test_client()
-
-        template_rendered.connect(cls._set_template)
-        message_flashed.connect(cls._add_flash_message)
-
-        cls.template = None
-        cls.flashed_messages = []
+        template_rendered.connect(FlaskTestCase._set_template)
+        message_flashed.connect(FlaskTestCase._add_flash_message)
 
     def setUp(self):
         self._ctx = self.app.test_request_context()
         self._ctx.push()
         self.reset_db()
-
         FlaskTestCase.template = None
         FlaskTestCase.flashed_messages = []
 
     @classmethod
     def _add_flash_message(cls, app, message, category):
-        cls.flashed_messages.append((message, category))
+        FlaskTestCase.flashed_messages.append((message, category))
 
     @classmethod
     def _set_template(cls, app, template, context):
-        cls.template = (template, context)
+        FlaskTestCase.template = (template, context)
 
     def tearDown(self):
         model.db.session.remove()
@@ -78,8 +73,8 @@ class FlaskTestCase(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        template_rendered.disconnect(cls._set_template)
-        message_flashed.disconnect(cls._add_flash_message)
+        template_rendered.disconnect(FlaskTestCase._set_template)
+        message_flashed.disconnect(FlaskTestCase._add_flash_message)
         del cls.client
         del cls.app
 
@@ -121,7 +116,7 @@ class FlaskTestCase(unittest.TestCase):
         :versionadded: 0.2
         :param name: template name
         """
-        used_template = FlaskTestCase.template[0].name
+        used_template = self.template[0].name
         self.assertEqual(used_template, name, f"Template {name} not used. Template used: {used_template}")
 
     def get_context_variable(self, name):

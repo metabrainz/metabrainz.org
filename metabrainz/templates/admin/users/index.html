@@ -1,0 +1,28 @@
+{% extends "admin/model/list.html" %}
+
+{% block list_row %}
+  <tr>
+    <td>{{ row.id }}</td>
+    <td>{{ row.name }}</td>
+    <td>
+      {{ row.get_email_any() }}
+      <span class="badge {% if row.is_email_confirmed() %}bg-success{% else %}bg-danger{% endif %}">
+        {{ 'Confirmed' if row.is_email_confirmed() else 'Unconfirmed' }}
+      </span>
+    </td>
+    <td>{{ row.member_since.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+    <td>
+      <span class="badge {% if row.is_blocked %}bg-danger{% else %}bg-success{% endif %}">
+        {{ 'Blocked' if row.is_blocked else 'Active' }}
+      </span>
+    </td>
+    <td>
+      <a href="{{ url_for('.details_view', id=row.id) }}"
+         class="btn btn-sm btn-primary">View Details</a>
+    </td>
+  </tr>
+{% endblock %}
+
+{% block empty_list_message %}
+  <p>No users found.</p>
+{% endblock %}
