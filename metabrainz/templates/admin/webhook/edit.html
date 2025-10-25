@@ -1,0 +1,126 @@
+{% extends 'admin/master.html' %}
+{% import 'admin/lib.html' as lib with context %}
+{% import 'admin/static.html' as admin_static with context %}
+{% import 'admin/model/layout.html' as model_layout with context %}
+
+{% block head %}
+    {{ super() }}
+    {{ lib.form_css() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Edit Webhook</h1>
+        
+        {% if form.errors %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong><i class="fa fa-exclamation-triangle"></i> Please correct the following errors:</strong>
+                <ul class="mb-0 mt-2">
+                    {% for field_name, errors in form.errors.items() %}
+                        {% if field_name != 'csrf_token' %}
+                            {% for error in errors %}
+                                <li><strong>{{ form[field_name].label.text if field_name in form else field_name }}:</strong> {{ error }}</li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        <form method="POST" class="admin-form form-horizontal" role="form">
+            {{ form.hidden_tag() if form.hidden_tag }}
+            {% if form.csrf_token %}
+                {{ form.csrf_token }}
+            {% endif %}
+            
+            <div class="form-group{% if form.name.errors %} has-error{% endif %}">
+                <label for="name" class="col-md-2 control-label"><strong>Name</strong> <span class="text-danger">*</span></label>
+                <div class="col-md-10">
+                    {{ form.name(class="form-control", placeholder="My webhook") }}
+                    {% if form.name.description %}
+                        <p class="help-block">{{ form.name.description }}</p>
+                    {% endif %}
+                    {% if form.name.errors %}
+                        {% for error in form.name.errors %}
+                            <p class="help-block text-danger"><i class="fa fa-exclamation-circle"></i> {{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group{% if form.url.errors %} has-error{% endif %}">
+                <label for="url" class="col-md-2 control-label"><strong>URL</strong> <span class="text-danger">*</span></label>
+                <div class="col-md-10">
+                    {{ form.url(class="form-control", placeholder="https://example.com/webhook") }}
+                    {% if form.url.description %}
+                        <p class="help-block">{{ form.url.description }}</p>
+                    {% endif %}
+                    {% if form.url.errors %}
+                        {% for error in form.url.errors %}
+                            <p class="help-block text-danger"><i class="fa fa-exclamation-circle"></i> {{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group{% if form.events.errors %} has-error{% endif %}">
+                <label class="col-md-2 control-label"><strong>Events</strong> <span class="text-danger">*</span></label>
+                <div class="col-md-10">
+                    {% if form.events.description %}
+                        <p class="help-block">{{ form.events.description }}</p>
+                    {% endif %}
+                    <div class="checkbox-list">
+                        {% for choice in form.events %}
+                            <div class="checkbox">
+                                <label>
+                                    {{ choice() }}
+                                    {{ choice.label.text }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if form.events.errors %}
+                        {% for error in form.events.errors %}
+                            <p class="help-block text-danger"><i class="fa fa-exclamation-circle"></i> {{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group{% if form.is_active.errors %} has-error{% endif %}">
+                <label class="col-md-2 control-label"><strong>Active</strong></label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <label>
+                            {{ form.is_active() }}
+                            Active
+                        </label>
+                    </div>
+                    {% if form.is_active.description %}
+                        <p class="help-block">{{ form.is_active.description }}</p>
+                    {% endif %}
+                    {% if form.is_active.errors %}
+                        {% for error in form.is_active.errors %}
+                            <p class="help-block text-danger"><i class="fa fa-exclamation-circle"></i> {{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Save Changes</button>
+                    <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-warning btn-lg"><i class="fa fa-times"></i> Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block tail %}
+    {{ super() }}
+    {{ lib.form_js() }}
+{% endblock %}

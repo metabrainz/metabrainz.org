@@ -156,3 +156,12 @@ OIDC_JWT_PUBLIC_KEY = {
    "x": "Ze2loSV3wrroKUN_4zhwGhCqo3Xhu1td4QjeQ5wIVR0",
    "y": "HlLtdXARY_f55A3fnzQbPcm6hgr34Mp8p-nuzQCE0Zw",
 }
+
+# Webhooks
+WEBHOOK_MAX_RETRIES = 5  # Maximum number of retry attempts for failed webhook deliveries
+WEBHOOK_DELIVERY_TIMEOUT = 30  # Timeout in seconds for webhook delivery attempts
+WEBHOOK_TASK_TIME_LIMIT = 120  # Hard timeout for Celery tasks (seconds)
+WEBHOOK_TASK_SOFT_TIME_LIMIT = 90  # Soft timeout for Celery tasks (seconds)
+WEBHOOK_DEFAULT_RATE_LIMIT = '100/m'  # Default rate limit for webhook deliveries
+WEBHOOK_CIRCUIT_BREAKER_THRESHOLD = 5  # Number of failures before opening circuit breaker
+WEBHOOK_CIRCUIT_BREAKER_TIMEOUT = 300  # Seconds to wait before attempting recovery (5 minutes)
