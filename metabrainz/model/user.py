@@ -1,3 +1,4 @@
+from typing import Any
 from uuid import uuid4
 from flask_login import UserMixin
 from sqlalchemy import Column, Integer, Identity, Text, DateTime, func, Boolean
@@ -8,6 +9,7 @@ from sqlalchemy.orm.attributes import Mapped
 from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
 from metabrainz.model.old_username import OldUsername
+from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_VERIFIED
 
 
 class UsernameNotAllowedException(Exception):
@@ -66,7 +68,7 @@ class User(db.Model, UserMixin):
         password = kwargs.pop("password")
         password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
         unconfirmed_email = kwargs.pop("unconfirmed_email")
-        
+
         new_user = cls(name=name, password=password_hash, unconfirmed_email=unconfirmed_email)
         if kwargs:
             raise TypeError("Unexpected **kwargs: %r" % (kwargs,))
@@ -150,3 +152,24 @@ class User(db.Model, UserMixin):
 
         if moderator is not None and reason is not None:
             self.moderate(moderator, "delete", reason)
+
+    def emit_event(self, event, **extras):
+        """Emit an event for the user.
+
+            This method internally commits the changes to the database, hence be careful when using it
+            to avoid breaking other transactions.
+        """
+        payload: dict[str, Any] = {
+            "user_id": self.id,
+        }
+        if event == EVENT_USER_CREATED:
+            payload["name"] = self.name
+            payload["email"] = self.email
+            payload["is_email_confirmed"] = self.is_email_confirmed()
+            payload["created_at"] = self.member_since.isoformat()
+        elif event == EVENT_USER_VERIFIED:
+            payload["email"] = self.email
+            payload["verified_at"] = self.email_confirmed_at.isoformat()
+        # todo: implement events for username change and user deletion
+        payload.update(extras)
+        Webhook.create_delivery_for_event(event, payload)

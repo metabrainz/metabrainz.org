@@ -10,8 +10,13 @@ import os.path
 
 # ensure that the path is kept in sync with the volume mount path for production in docker-server-configs
 LOGO_STORAGE_DIR = os.path.join("/static", "img", "logos", "supporters")
-if not os.path.exists(LOGO_STORAGE_DIR):
-    os.makedirs(LOGO_STORAGE_DIR)
+try:
+    if not os.path.exists(LOGO_STORAGE_DIR):
+        os.makedirs(LOGO_STORAGE_DIR)
+except (PermissionError, OSError):
+    # Directory creation may fail in restricted environments (e.g., Celery worker)
+    # The directory will be created when needed by the web app
+    pass
 
 LOGO_UPLOAD_SET_NAME = "supporterlogo"
 LOGO_UPLOAD_SET = UploadSet(

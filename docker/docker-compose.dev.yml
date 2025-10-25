@@ -44,3 +44,52 @@ services:
     user: ${STATIC_BUILD_USER:-node}
     volumes:
       - ../frontend:/code/frontend:z
+
+  webhook-worker:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery worker --loglevel=info --queues=webhooks --max-tasks-per-child=1000 --hostname=webhook-worker@%h
+    depends_on:
+      - redis
+      - meb_db
+    volumes:
+      - ..:/code/metabrainz
+
+  webhook-maintenance:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery worker --loglevel=info --queues=webhooks_maintenance --hostname=maintenance-worker@%h
+    depends_on:
+      - redis
+      - meb_db
+    volumes:
+      - ..:/code/metabrainz
+
+  webhook-beat:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery beat --loglevel=info
+    depends_on:
+      - redis
+      - meb_db
+    volumes:
+      - ..:/code/metabrainz
+
+  webhook-flower:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery flower --port=5555
+    depends_on:
+      - redis
+    ports:
+      - "5555:5555"
+    volumes:
+      - ..:/code/metabrainz

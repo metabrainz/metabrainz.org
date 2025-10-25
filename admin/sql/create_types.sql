@@ -34,4 +34,6 @@ CREATE TYPE dataset_project_type AS ENUM (
   'critiquebrainz'
 );
 
+CREATE TYPE webhook_delivery_status_type AS ENUM ('pending', 'processing', 'delivered', 'failed');
+
 COMMIT;

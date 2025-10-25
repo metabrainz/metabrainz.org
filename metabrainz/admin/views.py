@@ -22,6 +22,7 @@ import uuid
 import json
 import socket
 from metabrainz.model.user import User
+from metabrainz.model.webhook import EVENT_USER_VERIFIED
 
 from metabrainz.utils import get_int_query_param
 
@@ -395,6 +396,9 @@ class UserModelView(AdminModelView):
         try:
             user.verify_email_manually(current_user, f"Email manually verified by moderator {current_user.name}.")
             db.session.commit()
+
+            user.emit_event(EVENT_USER_VERIFIED, moderator_id=current_user.id)
+
             flash.success(f'Email for {user.name} has been manually verified.')
         except ValueError as e:
             flash.error(str(e))

@@ -6,12 +6,13 @@ from flask_login import login_user, login_required, current_user
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, BadRequest
 
-from metabrainz import flash, session
+from metabrainz import flash
 from metabrainz.model import Dataset, db
 from metabrainz.model.supporter import Supporter, InactiveSupporterException
 from metabrainz.model.tier import Tier
 from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.model.user import User
+from metabrainz.model.webhook import EVENT_USER_CREATED
 from metabrainz.user import login_forbidden
 from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm
 from metabrainz.user.email import send_verification_email
@@ -148,6 +149,8 @@ def signup_commercial():
         )
         db.session.commit()
 
+        user.emit_event(EVENT_USER_CREATED)
+
         flash.success(gettext(
             "Thanks for signing up! Your application will be reviewed "
             "soon. We will send you updates via email."
@@ -224,6 +227,8 @@ def signup_noncommercial():
             user=user
         )
         db.session.commit()
+
+        user.emit_event(EVENT_USER_CREATED)
 
         send_verification_email(
             user,

@@ -18,3 +18,21 @@ then
     log Enabling oauth
     rm -f /etc/service/oauth/down
 fi
+
+if [ "${CONTAINER_NAME}" = "metabrainz-webhook-worker-${DEPLOY_ENV}" ]
+then
+    log Enabling webhook-worker
+    rm -f /etc/service/webhook-worker/down
+fi
+
+if [ "${CONTAINER_NAME}" = "metabrainz-webhook-maintenance-${DEPLOY_ENV}" ]
+then
+    log Enabling webhook-maintenance
+    rm -f /etc/service/webhook-maintenance/down
+fi
+
+if [ "${CONTAINER_NAME}" = "metabrainz-webhook-beat-${DEPLOY_ENV}" ]
+then
+    log Enabling webhook-beat
+    rm -f /etc/service/webhook-beat/down
+fi
