@@ -1,14 +1,16 @@
-﻿from werkzeug.serving import run_simple
+﻿import urllib.parse
+import subprocess
+import os
+import click
+import logging
+
+from werkzeug.serving import run_simple
+
 from metabrainz import db
 from metabrainz import create_app
 from metabrainz.model.access_log import AccessLog
 from metabrainz.invoices.send_invoices import QuickBooksInvoiceSender
-import urllib.parse
-import subprocess
-import os
-import click
-
-import logging
+from metabrainz.webhooks.cli import webhooks
 
 from metabrainz.supporter.copy_mb_row_ids import copy_row_ids
 
@@ -16,6 +18,8 @@ ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'admin
 
 cli = click.Group()
 application = create_app()
+
+cli.add_command(webhooks)
 
 
 @cli.command()
@@ -156,7 +160,3 @@ def _explode_db_uri(uri):
 
 if __name__ == '__main__':
     cli()
-
-"""
-insert into tier (name, short_desc, long_desc, price, available, "primary") values ('We will contribute, we promise!', 'For lame user lying about supporting us.', 'Whatevs, you dont care anyway.', 0.0, 't', 't');
-"""

@@ -97,6 +97,21 @@ COPY ./docker/oauth/oauth.ini /etc/uwsgi/oauth.ini
 RUN chmod 755 /etc/service/oauth/run
 RUN touch /etc/service/oauth/down
 
+COPY ./docker/webhook-worker/consul-template-webhook-worker.conf /etc/
+COPY ./docker/webhook-worker/webhook-worker.service /etc/service/webhook-worker/run
+RUN chmod 755 /etc/service/webhook-worker/run
+RUN touch /etc/service/webhook-worker/down
+
+COPY ./docker/webhook-maintenance/consul-template-webhook-maintenance.conf /etc/
+COPY ./docker/webhook-maintenance/webhook-maintenance.service /etc/service/webhook-maintenance/run
+RUN chmod 755 /etc/service/webhook-maintenance/run
+RUN touch /etc/service/webhook-maintenance/down
+
+COPY ./docker/webhook-beat/consul-template-webhook-beat.conf /etc/
+COPY ./docker/webhook-beat/webhook-beat.service /etc/service/webhook-beat/run
+RUN chmod 755 /etc/service/webhook-beat/run
+RUN touch /etc/service/webhook-beat/down
+
 COPY ./docker/rc.local /etc/rc.local
 
 # copy the compiled js files and static assets from image to prod
