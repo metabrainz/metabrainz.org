@@ -78,7 +78,6 @@ class OAuthTestCase(FlaskTestCase):
 
     def authorize_oauth_prompt_helper(self, query_string, openid=False):
         response = self.client.get("/oauth2/authorize", query_string=query_string)
-        print(self.template)
         self.assertTemplateUsed("oauth/prompt.html")
         props = json.loads(self.get_context_variable("props"))
         self.assertEqual(props["client_name"], "test-client")

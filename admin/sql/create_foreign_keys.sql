@@ -49,4 +49,9 @@ ALTER TABLE moderation_log
   REFERENCES "user" (id) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE SET NULL;
 
+ALTER TABLE webhook_delivery
+    ADD CONSTRAINT webhook_delivery_webhook_fk FOREIGN KEY (webhook_id)
+    REFERENCES webhook(id)
+    ON DELETE CASCADE;
+
 COMMIT;

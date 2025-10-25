@@ -156,6 +156,9 @@ def create_app(debug=None, config_path=None):
     from oauth.authorization_server import authorization_server
     authorization_server.init_app(app)
 
+    from metabrainz.webhooks.celery import init_celery
+    init_celery(app)
+
     # Blueprints
     _register_blueprints(app)
 
@@ -163,7 +166,7 @@ def create_app(debug=None, config_path=None):
 
     # Supporter Management Admin
     supporter_admin = Admin(
-        app, 
+        app,
         name="Supporter Management",
         index_view=SupporterManagementHomeView(
             name="Pending supporters",
@@ -217,11 +220,21 @@ def create_app(debug=None, config_path=None):
 
     from metabrainz.admin.views import UserModelView
     from metabrainz.admin.views import OldUsernameModelView
+    from metabrainz.admin.webhooks import WebhookModelView
+    from metabrainz.admin.webhooks import WebhookDeliveryModelView
 
     user_admin.add_view(UserModelView(model.db.session, endpoint="users-admin", category="Users"))
     user_admin.add_view(OldUsernameModelView(
         model.db.session, endpoint="old-username-admin", name="Old Usernames", category="Users"
     ))
+    user_admin.add_view(
+        WebhookModelView(model.db.session, endpoint="webhooks-admin", name="Webhooks", category="Webhooks")
+    )
+    user_admin.add_view(
+        WebhookDeliveryModelView(
+            model.db.session, endpoint="webhook-deliveries-admin", name="Webhook Deliveries", category="Webhooks"
+        )
+    )
 
     return app
 
