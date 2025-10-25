@@ -1,0 +1,203 @@
+{% extends 'admin/model/details.html' %}
+
+{% block model_menu_bar %}
+  <div class="btn-toolbar pull-right" style="margin-bottom: 15px;">
+    {% if model.status == 'failed' or model.status == 'pending' %}
+      <form method="POST" action="{{ url_for('.retry_delivery', delivery_id=model.id) }}" style="display: inline-block;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to retry this delivery?');">
+          <i class="fa fa-redo"></i> Retry Delivery
+        </button>
+      </form>
+    {% endif %}
+    <a href="{{ url_for('.index_view') }}" class="btn btn-primary">
+      <i class="fa fa-arrow-left"></i> Back to List
+    </a>
+  </div>
+  <div class="clearfix"></div>
+{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-info-circle"></i> Delivery Information
+        </h3>
+      </div>
+    
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Status & Progress</h4>
+            <table class="table table-bordered">
+              <tr>
+                <th width="40%">Status</th>
+                <td>
+                  {% if model.status == 'delivered' %}
+                    <span class="label label-success"><i class="fa fa-check-circle"></i> Delivered</span>
+                  {% elif model.status == 'failed' %}
+                    <span class="label label-danger"><i class="fa fa-times-circle"></i> Failed</span>
+                  {% elif model.status == 'processing' %}
+                    <span class="label label-info"><i class="fa fa-spinner fa-spin"></i> Processing</span>
+                  {% else %}
+                    <span class="label label-warning"><i class="fa fa-clock"></i> {{ model.status|title }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
+                <th>Retry Count</th>
+                <td>{{ model.retry_count }}</td>
+              </tr>
+              {% if model.response_status %}
+              <tr>
+                <th>HTTP Response</th>
+                <td>
+                  <span class="label {% if model.response_status >= 500 %}label-danger{% elif model.response_status >= 400 %}label-warning{% elif model.response_status >= 300 %}label-info{% else %}label-success{% endif %}">
+                    {{ model.response_status }}
+                  </span>
+                </td>
+              </tr>
+              {% endif %}
+            </table>
+            
+            <h4>Event Details</h4>
+            <table class="table table-bordered">
+              <tr>
+                <th width="40%">Event Type</th>
+                <td>{{ model.event_type }}</td>
+              </tr>
+              <tr>
+                <th>Webhook</th>
+                <td>
+                  <a href="{{ url_for('webhooks-admin.edit_view', id=model.webhook_id) }}">
+                    {{ model.webhook.name if model.webhook.name else model.webhook.url }}
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </div>
+          
+          <div class="col-md-6">
+            <h4>Timeline</h4>
+            <table class="table table-bordered">
+              <tr>
+                <th width="40%">Created</th>
+                <td>{{ model.created_at.strftime('%Y-%m-%d %H:%M:%S UTC') if model.created_at else 'N/A' }}</td>
+              </tr>
+              <tr>
+                <th>Last Updated</th>
+                <td>{{ model.updated_at.strftime('%Y-%m-%d %H:%M:%S UTC') if model.updated_at else 'N/A' }}</td>
+              </tr>
+              {% if model.next_retry_at %}
+              <tr>
+                <th>Next Retry</th>
+                <td>{{ model.next_retry_at.strftime('%Y-%m-%d %H:%M:%S UTC') }}</td>
+              </tr>
+              {% endif %}
+            </table>
+            
+            <h4>Identifiers</h4>
+            <table class="table table-bordered">
+              <tr>
+                <th width="40%">Delivery UUID</th>
+                <td><code>{{ model.id }}</code></td>
+              </tr>
+              <tr>
+                <th>Webhook ID</th>
+                <td><code>{{ model.webhook_id }}</code></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+        {% if model.error_message %}
+          <div class="alert alert-danger" style="margin-top: 20px;">
+            <strong><i class="fa fa-exclamation-triangle"></i> Error Message:</strong>
+            <pre style="margin-top: 10px; margin-bottom: 0;">{{ model.error_message }}</pre>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-code"></i> <strong>Request Payload</strong></h3>
+      </div>
+      <div class="panel-body">
+        <pre class="json-display">{{ model.payload|tojson(indent=2) }}</pre>
+      </div>
+    </div>
+    
+    {% if model.response_status %}
+      <div class="panel panel-{% if model.response_status >= 400 %}danger{% elif model.response_status >= 300 %}warning{% else %}success{% endif %}">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-reply"></i> <strong>Response Details</strong></h3>
+        </div>
+        <div class="panel-body">
+          <p><strong><i class="fa fa-info-circle"></i> HTTP Status:</strong> 
+            <span class="label {% if model.response_status >= 400 %}label-danger{% elif model.response_status >= 300 %}label-warning{% else %}label-success{% endif %} label-lg">
+              {{ model.response_status }}
+            </span>
+          </p>
+          
+          {% if model.response_headers %}
+            <h4><i class="fa fa-list"></i> Response Headers</h4>
+            <pre class="json-display">{{ model.response_headers|tojson(indent=2) }}</pre>
+          {% endif %}
+          
+          {% if model.response_body %}
+            <h4><i class="fa fa-file-alt"></i> Response Body</h4>
+            <pre class="json-display">{{ model.response_body|truncate(2000) }}</pre>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block tail %}
+  {{ super() }}
+  
+  <style>
+    .panel {
+      margin-bottom: 20px;
+    }
+    
+    .panel-body h4 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    
+    .table th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+    
+    .json-display {
+      max-height: 400px;
+      overflow: auto;
+      background-color: #f5f5f5;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 13px;
+      line-height: 1.5;
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+    }
+    
+    code {
+      background-color: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+    
+    .inline-form {
+      display: inline-block;
+      margin-left: 5px;
+    }
+  </style>
+{% endblock %}
