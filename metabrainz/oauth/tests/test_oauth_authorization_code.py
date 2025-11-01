@@ -45,7 +45,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "redirect_uri": redirect_uri,
             "code": code,
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client does not exist on this server."
+        }
         self._test_oauth_token_error_helper(data, error)
 
     def test_oauth_token_no_client_id(self):
@@ -61,7 +64,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "redirect_uri": redirect_uri,
             "code": code,
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(data, error)
 
     def test_oauth_token_no_client_secret(self):
@@ -77,7 +83,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "redirect_uri": redirect_uri,
             "code": code,
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(data, error)
 
     def test_oauth_token_client_secret_mismatch(self):
@@ -95,7 +104,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "redirect_uri": redirect_uri,
             "code": code,
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(data, error)
 
         data = {
@@ -105,7 +117,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "redirect_uri": redirect_uri,
             "code": code,
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(data, error)
 
     def test_oauth_token_invalid_client_secret(self):
@@ -122,7 +137,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "redirect_uri": redirect_uri,
             "code": code,
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(data, error)
 
     def test_oauth_token_invalid_grant_type(self):
@@ -192,7 +210,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_grant",
-            "error_description": "Invalid \"redirect_uri\" in request."
+            "error_description": "Invalid 'redirect_uri' in request."
         }
         self._test_oauth_token_error_helper(data, error)
 
@@ -212,7 +230,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_grant",
-            "error_description": "Invalid \"redirect_uri\" in request."
+            "error_description": "Invalid 'redirect_uri' in request."
         }
         self._test_oauth_token_error_helper(data, error)
 
@@ -233,7 +251,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_grant",
-            "error_description": "Invalid \"redirect_uri\" in request."
+            "error_description": "Invalid 'redirect_uri' in request."
         }
         self._test_oauth_token_error_helper(data, error)
 
@@ -253,7 +271,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_grant",
-            "error_description": "Invalid \"code\" in request.",
+            "error_description": "Invalid 'code' in request.",
         }
         self._test_oauth_token_error_helper(data, error)
 
@@ -272,7 +290,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_request",
-            "error_description": "Missing \"code\" in request."
+            "error_description": "Missing 'code' in request."
         }
         self._test_oauth_token_error_helper(data, error)
 
@@ -293,7 +311,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_grant",
-            "error_description": "\"code\" in request is already used."
+            "error_description": "'code' in request is already used."
         }
         self._test_oauth_token_error_helper(data, error)
 
@@ -318,7 +336,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_grant",
-            "error_description": "\"code\" in request is expired."
+            "error_description": "'code' in request is expired."
         }
         with freeze_time() as frozen_datetime:
             frozen_datetime.tick(timedelta(minutes=60))
@@ -341,7 +359,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         }
         error = {
             "error": "invalid_grant",
-            "error_description": "Invalid \"code\" in request."
+            "error_description": "Invalid 'code' in request."
         }
         self._test_oauth_token_error_helper(data, error)
 
@@ -375,7 +393,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
-        error = {"name": "invalid_client", "description": ""}
+        error = {"name": "invalid_client", "description": "Missing 'client_id' parameter."}
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_client_id(self):
@@ -389,7 +407,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
-        error = {"name": "invalid_client", "description": ""}
+        error = {"name": "invalid_client", "description": "The client does not exist on this server."}
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_missing_response_type(self):
@@ -402,7 +420,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
-        error = {"name": "unsupported_response_type", "description": "response_type=None is not supported"}
+        error = {
+            "name": "unsupported_response_type",
+            "description": "response_type=The response type 'None' is not supported by the server. is not supported"
+        }
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_response_type(self):
@@ -416,7 +437,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
-        error = {"name": "unsupported_response_type", "description": "response_type=invalid is not supported"}
+        error = {
+            "name": "unsupported_response_type",
+            "description": "response_type=The response type 'invalid' is not supported by the server. is not supported"
+        }
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_missing_scope(self):
@@ -456,7 +480,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "scope": "profile",
             "state": "random-state",
         }
-        error = {"name": "invalid_request", "description": "Missing \"redirect_uri\" in request."}
+        error = {"name": "invalid_request", "description": "Missing 'redirect_uri' in request."}
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_redirect_uri(self):
@@ -628,7 +652,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "redirect_uri": "https://example.com/callback2",
             "approval_prompt": "invalid",
         }
-        error = {"name": "invalid_request", "description": "Invalid \"approval_prompt\" in request."}
+        error = {"name": "invalid_request", "description": "Invalid 'approval_prompt' in request."}
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_approval_prompt_scope_mismatch(self):

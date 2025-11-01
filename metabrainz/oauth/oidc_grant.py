@@ -11,7 +11,7 @@ class OpenIDCodeMixin:
             .query(OAuth2AuthorizationCode) \
             .join(OAuth2Client) \
             .filter(
-                OAuth2Client.client_id == request.client_id,
+                OAuth2Client.client_id == request.payload.client_id,
                 OAuth2AuthorizationCode.nonce == nonce,
             ).first()
         return bool(exists)

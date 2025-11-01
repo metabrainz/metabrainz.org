@@ -153,7 +153,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
                 "code_challenge_method": code_challenge_method,
                 "redirect_uri": redirect_uri,
             }
-            error = {"name": "invalid_request", "description": "Missing \"code_challenge\""}
+            error = {"name": "invalid_request", "description": "Missing 'code_challenge'"}
             self.authorize_error_helper(self.user2, query_string, error)
 
     @pytest.mark.skip
@@ -209,7 +209,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
                 "code_challenge_method": "md5",
                 "redirect_uri": redirect_uri,
             }
-            error = {"description": "Unsupported \"code_challenge_method\"", "name": "invalid_request"}
+            error = {"description": "Unsupported 'code_challenge_method'", "name": "invalid_request"}
             self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_pkce_missing_code_verifier(self):
@@ -231,7 +231,7 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
                 "redirect_uri": redirect_uri,
                 "code": code,
             }
-            error = {"error": "invalid_request", "error_description": "Missing \"code_verifier\""}
+            error = {"error": "invalid_request", "error_description": "Missing 'code_verifier'"}
             self._test_oauth_token_error_helper(data, error)
 
     def test_oauth_pkce_invalid_code_verifier(self):
@@ -254,5 +254,5 @@ class AuthorizationCodeGrantPKCETestCase(OAuthTestCase):
                 "code": code,
                 "code_verifier": code_verifier + code_verifier,
             }
-            error = {"error": "invalid_request", "error_description": "Invalid \"code_verifier\""}
+            error = {"error": "invalid_request", "error_description": "Invalid 'code_verifier'"}
             self._test_oauth_token_error_helper(data, error)

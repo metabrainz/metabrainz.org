@@ -42,7 +42,10 @@ class RefreshGrantTestCase(OAuthTestCase):
             "grant_type": "refresh_token",
             "refresh_token": token["refresh_token"],
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(token["access_token"], data, error)
 
     def test_oauth_token_refresh_invalid_client_id(self):
@@ -59,7 +62,10 @@ class RefreshGrantTestCase(OAuthTestCase):
             "grant_type": "refresh_token",
             "refresh_token": token["refresh_token"],
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(token["access_token"], data, error)
 
     def test_oauth_token_refresh_missing_client_secret(self):
@@ -74,7 +80,10 @@ class RefreshGrantTestCase(OAuthTestCase):
             "grant_type": "refresh_token",
             "refresh_token": token["refresh_token"],
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(token["access_token"], data, error)
 
     def test_oauth_token_refresh_invalid_client_secret(self):
@@ -91,7 +100,10 @@ class RefreshGrantTestCase(OAuthTestCase):
             "grant_type": "refresh_token",
             "refresh_token": token["refresh_token"],
         }
-        error = {"error": "invalid_client"}
+        error = {
+            "error": "invalid_client",
+            "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+        }
         self._test_oauth_token_error_helper(token["access_token"], data, error)
 
     def test_oauth_token_refresh_different_client(self):
@@ -123,7 +135,7 @@ class RefreshGrantTestCase(OAuthTestCase):
             "client_secret": application["client_secret"],
             "grant_type": "refresh_token",
         }
-        error = {"error": "invalid_request", "error_description": "Missing \"refresh_token\" in request."}
+        error = {"error": "invalid_request", "error_description": "Missing 'refresh_token' in request."}
         self._test_oauth_token_error_helper(token["access_token"], data, error)
 
     def test_oauth_token_refresh_invalid_refresh_token(self):
@@ -217,7 +229,7 @@ class RefreshGrantTestCase(OAuthTestCase):
         self.assert400(response)
         self.assertEqual(response.json, {
             "error": "invalid_request",
-            "error_description": "\"refresh_token\" in request was already revoked."
+            "error_description": "'refresh_token' in request was already revoked."
         })
 
         latest_access_token = db.session.query(OAuth2AccessToken).filter_by(

@@ -64,33 +64,35 @@ def save_token(token_data, request: FlaskOAuth2Request):
     access_token_scopes = []
     refresh_token_scopes = []
     authorization_code_id = None
+    
+    data = request.payload.data
 
     # saving token for authorization code grant
-    if request.data.get("grant_type") == "authorization_code":
+    if data.get("grant_type") == "authorization_code":
         authorization_code = db.session\
             .query(OAuth2AuthorizationCode)\
-            .filter_by(code=request.data.get("code"))\
+            .filter_by(code=data.get("code"))\
             .first()
         authorization_code_id = authorization_code.id
         refresh_token = token_data["refresh_token"]
         access_token_scopes = authorization_code.scopes
         refresh_token_scopes = authorization_code.scopes
-    elif request.data.get("response_type") == "token":  # saving token for implicit grant
-        access_token_scopes = get_scopes(db.session, request.data.get("scope"))
-    elif request.data.get("grant_type") == "refresh_token":
+    elif data.get("response_type") == "token":  # saving token for implicit grant
+        access_token_scopes = get_scopes(db.session, data.get("scope"))
+    elif data.get("grant_type") == "refresh_token":
         # if only a subset of scopes is requested, use that for access token but retain
         # the original scopes for the refresh token
-        if request.data.get("scope"):
-            access_token_scopes = get_scopes(db.session, request.data.get("scope"))
+        if data.get("scope"):
+            access_token_scopes = get_scopes(db.session, data.get("scope"))
         else:
             access_token_scopes = request.refresh_token.scopes
 
         refresh_token = token_data.get("refresh_token") or request.refresh_token.refresh_token
         refresh_token_scopes = request.refresh_token.scopes
-    elif request.data.get("grant_type") == "client_credentials":
-        access_token_scopes = get_scopes(db.session, request.data.get("scope"))
+    elif data.get("grant_type") == "client_credentials":
+        access_token_scopes = get_scopes(db.session, data.get("scope"))
 
-    if request.data.get("grant_type") == "client_credentials":
+    if data.get("grant_type") == "client_credentials":
         user_id = None
     else:
         user_id = request.user.id
