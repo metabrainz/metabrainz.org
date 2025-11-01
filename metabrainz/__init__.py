@@ -105,7 +105,6 @@ def create_app(debug=None, config_path=None):
     from metabrainz import db
     db.init_db_engine(app.config["SQLALCHEMY_DATABASE_URI"])
     from metabrainz import model
-    from oauth import model as oauth_model
     model.db.init_app(app)
 
     # Redis (cache)
@@ -144,7 +143,7 @@ def create_app(debug=None, config_path=None):
     from metabrainz.admin.forms import LOGO_UPLOAD_SET
     configure_uploads(app, upload_sets=[LOGO_UPLOAD_SET])
 
-    from oauth.authorization_server import authorization_server
+    from metabrainz.oauth.authorization_server import authorization_server
     authorization_server.init_app(app)
 
     from metabrainz.webhooks.celery import init_celery
@@ -267,6 +266,6 @@ def _register_blueprints(app):
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')
 
-    from oauth.views import oauth2_bp, wellknown_bp
+    from metabrainz.oauth.views import oauth2_bp, wellknown_bp
     app.register_blueprint(oauth2_bp, url_prefix="/oauth2")
     app.register_blueprint(wellknown_bp, url_prefix="/.well-known")
