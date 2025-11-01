@@ -208,7 +208,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
-        error = {"name": "invalid_request", "description": "Missing \"nonce\" in request."}
+        error = {"name": "invalid_request", "description": "Missing 'nonce' in request."}
         self.temporary_login(self.user2)
         self.authorize_error_helper(self.user2, query_string, error)
 
@@ -223,7 +223,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
         }
-        error = {"name": "invalid_scope", "description": "Missing \"openid\" scope"}
+        error = {"name": "invalid_scope", "description": "Missing 'openid' scope"}
         self.temporary_login(self.user2)
         self.authorize_error_helper(self.user2, query_string, error)
 
@@ -238,7 +238,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
         }
-        error = {"name": "invalid_client", "description": ""}
+        error = {"name": "invalid_client", "description": "The client does not exist on this server."}
         self.temporary_login(self.user2)
         self.authorize_error_helper(self.user2, query_string, error)
 
@@ -312,6 +312,9 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
         }
-        error = {"name": "unsupported_response_type", "description": "response_type=invalid_type is not supported"}
+        error = {
+            "name": "unsupported_response_type",
+            "description": "response_type=The response type 'invalid_type' is not supported by the server. is not supported"
+        }
         self.temporary_login(self.user2)
         self.authorize_error_helper(self.user2, query_string, error)
