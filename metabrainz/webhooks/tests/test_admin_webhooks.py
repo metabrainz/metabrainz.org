@@ -63,7 +63,10 @@ class WebhookAdminTestCase(FlaskTestCase):
         self.assertEqual(category, "success")
 
     def test_create_webhook_with_http(self):
-        """Test that http:// URLs are only allowed for localhost."""
+        """Test that http:// URLs are only allowed for localhost in debug mode."""
+        # Enable debug mode to allow localhost URLs
+        self.app.config["DEBUG"] = True
+
         self.client.get(url_for("webhooks-admin.create_view"))
         csrf_token = self.get_context_variable("form").csrf_token.current_token
 
@@ -101,6 +104,74 @@ class WebhookAdminTestCase(FlaskTestCase):
 
         self.assertEqual(response.status_code, 200)
         webhook = Webhook.query.filter_by(name="Insecure Webhook").first()
+        self.assertIsNone(webhook)
+
+        # Disable debug mode
+        self.app.config["DEBUG"] = False
+
+    def test_create_webhook_with_localhost_blocked_in_production(self):
+        """Test that localhost URLs are blocked when DEBUG is False."""
+        # Ensure debug mode is disabled
+        self.app.config["DEBUG"] = False
+
+        self.client.get(url_for("webhooks-admin.create_view"))
+        csrf_token = self.get_context_variable("form").csrf_token.current_token
+
+        # Try to create webhook with localhost URL
+        response = self.client.post(
+            url_for("webhooks-admin.create_view"),
+            data={
+                "name": "Blocked Localhost Webhook",
+                "url": "http://localhost:8000/webhook",
+                "events": [EVENT_USER_CREATED],
+                "is_active": True,
+                "csrf_token": csrf_token
+            },
+            follow_redirects=False
+        )
+
+        self.assertEqual(response.status_code, 200)
+        webhook = Webhook.query.filter_by(name="Blocked Localhost Webhook").first()
+        self.assertIsNone(webhook)
+
+        # Try with https localhost URL
+        self.client.get(url_for("webhooks-admin.create_view"))
+        csrf_token = self.get_context_variable("form").csrf_token.current_token
+
+        response = self.client.post(
+            url_for("webhooks-admin.create_view"),
+            data={
+                "name": "Blocked HTTPS Localhost Webhook",
+                "url": "https://localhost:8000/webhook",
+                "events": [EVENT_USER_CREATED],
+                "is_active": True,
+                "csrf_token": csrf_token
+            },
+            follow_redirects=False
+        )
+
+        self.assertEqual(response.status_code, 200)
+        webhook = Webhook.query.filter_by(name="Blocked HTTPS Localhost Webhook").first()
+        self.assertIsNone(webhook)
+
+        # Try with private IP
+        self.client.get(url_for("webhooks-admin.create_view"))
+        csrf_token = self.get_context_variable("form").csrf_token.current_token
+
+        response = self.client.post(
+            url_for("webhooks-admin.create_view"),
+            data={
+                "name": "Blocked Private IP Webhook",
+                "url": "https://192.168.1.100/webhook",
+                "events": [EVENT_USER_CREATED],
+                "is_active": True,
+                "csrf_token": csrf_token
+            },
+            follow_redirects=False
+        )
+
+        self.assertEqual(response.status_code, 200)
+        webhook = Webhook.query.filter_by(name="Blocked Private IP Webhook").first()
         self.assertIsNone(webhook)
 
     def test_create_webhook_without_events_fails(self):
