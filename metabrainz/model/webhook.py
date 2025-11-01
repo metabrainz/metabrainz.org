@@ -1,6 +1,5 @@
 import hashlib
 import hmac
-import json
 from typing import Any
 
 from flask import current_app
