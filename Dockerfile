@@ -91,12 +91,6 @@ COPY ./docker/web/web.ini /etc/uwsgi/web.ini
 RUN chmod 755 /etc/service/web/run
 RUN touch /etc/service/web/down
 
-COPY ./docker/oauth/consul-template-oauth.conf /etc/
-COPY ./docker/oauth/oauth.service /etc/service/oauth/run
-COPY ./docker/oauth/oauth.ini /etc/uwsgi/oauth.ini
-RUN chmod 755 /etc/service/oauth/run
-RUN touch /etc/service/oauth/down
-
 COPY ./docker/webhook-worker/consul-template-webhook-worker.conf /etc/
 COPY ./docker/webhook-worker/webhook-worker.service /etc/service/webhook-worker/run
 RUN chmod 755 /etc/service/webhook-worker/run
