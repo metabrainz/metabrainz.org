@@ -16,23 +16,24 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
     def validate_authorization_request(self):
         result = super().validate_authorization_request()
 
-        response_mode = self.request.data.get("response_mode")
+        response_mode = self.request.payload.data.get("response_mode")
         if response_mode and response_mode != "form_post":
-            raise InvalidRequestError("Invalid \"response_mode\" in request.", state=self.request.state)
+            raise InvalidRequestError("Invalid 'response_mode' in request.", state=self.request.state)
 
         return result
 
     def save_authorization_code(self, code, request):
-        code_challenge = request.data.get("code_challenge")
-        code_challenge_method = request.data.get("code_challenge_method")
-        nonce = request.data.get("nonce")
+        data = request.payload.data
+        code_challenge = data.get("code_challenge")
+        code_challenge_method = data.get("code_challenge_method")
+        nonce = data.get("nonce")
 
-        scopes = get_scopes(db.session, request.scope)
+        scopes = get_scopes(db.session, request.payload.scope)
 
         auth_code = OAuth2AuthorizationCode(
             code=code,
             client_id=request.client.id,
-            redirect_uri=request.redirect_uri,
+            redirect_uri=request.payload.redirect_uri,
             scopes=scopes,
             user_id=request.user.id,
             code_challenge=code_challenge,
@@ -54,7 +55,7 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
             return None
 
         if authorization_code.is_expired():
-            raise InvalidGrantError("\"code\" in request is expired.")
+            raise InvalidGrantError("'code' in request is expired.")
 
         # authorization code is already used, revoke tokens previously issued based on this code in compliance with
         # Section 4.1.2 of RFC 6749
@@ -69,14 +70,14 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
             ).update({OAuth2RefreshToken.revoked: True})
             db.session.commit()
 
-            raise InvalidGrantError("\"code\" in request is already used.")
+            raise InvalidGrantError("'code' in request is already used.")
 
         return authorization_code
 
     def create_authorization_response(self, redirect_uri: str, grant_user):
         response = super().create_authorization_response(redirect_uri, grant_user)
 
-        if self.request.data.get("response_mode") == "form_post":
+        if self.request.payload.data.get("response_mode") == "form_post":
             headers = response[2]
             location = headers[0][1]
             parsed = urlparse(location)

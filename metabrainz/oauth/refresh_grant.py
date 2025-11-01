@@ -26,7 +26,7 @@ class RefreshTokenGrant(grants.RefreshTokenGrant):
                 user_id=token.user_id
             ).update({OAuth2RefreshToken.revoked: True})
             db.session.commit()
-            raise InvalidRequestError("\"refresh_token\" in request was already revoked.")
+            raise InvalidRequestError("'refresh_token' in request was already revoked.")
         return token
 
     def authenticate_user(self, credential):

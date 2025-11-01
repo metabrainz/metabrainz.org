@@ -51,7 +51,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
-        error = {"name": "invalid_client", "description": ""}
+        error = {"name": "invalid_client", "description": "The client cannot authenticate with methods: ['none']"}
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_client_id(self):
@@ -64,7 +64,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
-        error = {"name": "invalid_client", "description": ""}
+        error = {"name": "invalid_client", "description": "The client does not exist on this server."}
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_missing_response_type(self):
@@ -76,7 +76,10 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
-        error = {"name": "unsupported_response_type", "description": "response_type=None is not supported"}
+        error = {
+            "name": "unsupported_response_type",
+            "description": "response_type=The response type 'None' is not supported by the server. is not supported"
+        }
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_response_type(self):
@@ -89,7 +92,10 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
-        error = {"name": "unsupported_response_type", "description": "response_type=invalid is not supported"}
+        error = {
+            "name": "unsupported_response_type",
+            "description": "response_type=The response type 'invalid' is not supported by the server. is not supported"
+        }
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_missing_scope(self):
@@ -126,7 +132,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "scope": "profile",
             "state": "random-state",
         }
-        error = {"name": "invalid_request", "description": "Missing \"redirect_uri\" in request."}
+        error = {"name": "invalid_request", "description": "Missing 'redirect_uri' in request."}
         self.authorize_error_helper(self.user2, query_string, error)
 
     def test_oauth_authorize_invalid_redirect_uri(self):
@@ -274,7 +280,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             "redirect_uri": "https://example.com/callback2",
             "approval_prompt": "invalid",
         }
-        error = {"name": "invalid_request", "description": "Invalid \"approval_prompt\" in request."}
+        error = {"name": "invalid_request", "description": "Invalid 'approval_prompt' in request."}
 
         self.temporary_login(self.user2)
         self.authorize_error_helper(self.user2, query_string, error)
