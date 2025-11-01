@@ -131,7 +131,13 @@ class IntrospectionTestCase(OAuthTestCase):
         self.temporary_login(self.user2)
         response = self.client.post("/oauth2/introspect", data=data)
         self.assert401(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(
+            response.json,
+            {
+                "error": "invalid_client",
+                "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+            }
+        )
 
     def test_oauth_introspection_invalid_client_id(self):
         application = self.create_oauth_app()
@@ -148,7 +154,10 @@ class IntrospectionTestCase(OAuthTestCase):
         }
         response = self.client.post("/oauth2/introspect", data=data)
         self.assert400(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(response.json, {
+            "error": "invalid_client",
+            "error_description": "The client does not exist on this server."
+        })
 
     def test_oauth_introspection_missing_client_secret(self):
         application = self.create_oauth_app()
@@ -165,7 +174,13 @@ class IntrospectionTestCase(OAuthTestCase):
         }
         response = self.client.post("/oauth2/introspect", data=data)
         self.assert401(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(
+            response.json,
+            {
+                "error": "invalid_client",
+                "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+            }
+        )
 
     def test_oauth_introspection_invalid_client_secret(self):
         application = self.create_oauth_app()
@@ -182,7 +197,13 @@ class IntrospectionTestCase(OAuthTestCase):
         }
         response = self.client.post("/oauth2/introspect", data=data)
         self.assert401(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(
+            response.json,
+            {
+                "error": "invalid_client",
+                "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+            }
+        )
 
     def test_oauth_introspection_invalid_token(self):
         application = self.create_oauth_app()

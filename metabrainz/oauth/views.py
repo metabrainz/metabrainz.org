@@ -36,21 +36,21 @@ def after_oauth2_request(response):
 def authorize():
     """ OAuth 2.0 authorization endpoint. """
     grant = authorization_server.get_consent_grant(end_user=current_user)
-    scopes = get_scopes(db.session, grant.request.scope)
+    scopes = get_scopes(db.session, grant.request.payload.scope)
 
-    approval = grant.request.data.get("approval_prompt", "auto")
+    approval = grant.request.payload.data.get("approval_prompt", "auto")
     if approval not in {"auto", "force"}:
-        raise InvalidRequestError(description="Invalid \"approval_prompt\" in request.")
+        raise InvalidRequestError(description="Invalid 'approval_prompt' in request.")
 
     # TODO: decide if auto approval should revoke existing tokens issued to the same client for the given user
     #   if not improve UI for approved applications in the user page.
     # do not auto approve consent for implicit grant (https://datatracker.ietf.org/doc/html/rfc6819#section-5.2.3.2)
-    if approval == "auto" and grant.request.response_type == "code" \
+    if approval == "auto" and grant.request.payload.response_type == "code" \
             and grant.client.check_already_approved(current_user.id, scopes):
         return authorization_server.create_authorization_response(grant_user=current_user)
 
-    submission_url = build_url(url_for(".confirm_authorization", _external=False), grant.request.data)
-    cancel_url = build_url(grant.request.data.get("redirect_uri"), {"error": "access_denied"})
+    submission_url = build_url(url_for(".confirm_authorization", _external=False), grant.request.payload.data)
+    cancel_url = build_url(grant.request.payload.data.get("redirect_uri"), {"error": "access_denied"})
     return render_template("oauth/prompt.html", props=json.dumps({
         "client_name": grant.client.name,
         "scopes": [{
@@ -72,7 +72,7 @@ def confirm_authorization():
 
     redirect_uri = request.args.get("redirect_uri")
     if not redirect_uri:
-        raise InvalidRequestError(description="Missing \"redirect_uri\" in request.")
+        raise InvalidRequestError(description="Missing 'redirect_uri' in request.")
     cancel_url = build_url(redirect_uri, {"error": "access_denied"})
     return redirect(cancel_url)
 

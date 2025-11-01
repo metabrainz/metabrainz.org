@@ -50,3 +50,9 @@ class OAuth2AuthorizationCode(db.Model, AuthorizationCodeMixin):
 
     def get_auth_time(self):
         return int(self.issued_at.timestamp())
+
+    def get_acr(self):
+        return None
+
+    def get_amr(self):
+        return None
