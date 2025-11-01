@@ -103,7 +103,13 @@ class RevocationTestCase(OAuthTestCase):
         }
         response = self.client.post("/oauth2/revoke", data=data)
         self.assert401(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(
+            response.json,
+            {
+                "error": "invalid_client",
+                "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+            }
+        )
 
     @pytest.mark.skip
     def test_oauth_revoke_different_credentials(self):
@@ -122,7 +128,13 @@ class RevocationTestCase(OAuthTestCase):
         }
         response = self.client.post("/oauth2/revoke", data=data)
         self.assert401(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(
+            response.json,
+            {
+                "error": "invalid_client",
+                "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+            }
+        )
 
     def test_oauth_revoke_missing_client_id(self):
         application = self.create_oauth_app()
@@ -138,7 +150,13 @@ class RevocationTestCase(OAuthTestCase):
         }
         response = self.client.post("/oauth2/revoke", data=data)
         self.assert401(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(
+            response.json,
+            {
+                "error": "invalid_client",
+                "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+            }
+        )
 
     def test_oauth_revoke_invalid_client_id(self):
         application = self.create_oauth_app()
@@ -155,7 +173,10 @@ class RevocationTestCase(OAuthTestCase):
         }
         response = self.client.post("/oauth2/revoke", data=data)
         self.assert400(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(response.json, {
+            "error": "invalid_client",
+            "error_description": "The client does not exist on this server."
+        })
 
     def test_oauth_revoke_missing_client_secret(self):
         application = self.create_oauth_app()
@@ -171,7 +192,13 @@ class RevocationTestCase(OAuthTestCase):
         }
         response = self.client.post("/oauth2/revoke", data=data)
         self.assert401(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(
+            response.json,
+            {
+                "error": "invalid_client",
+                "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+            }
+        )
 
     def test_oauth_revoke_invalid_client_secret(self):
         application = self.create_oauth_app()
@@ -189,7 +216,13 @@ class RevocationTestCase(OAuthTestCase):
 
         response = self.client.post("/oauth2/revoke", data=data)
         self.assert401(response)
-        self.assertEqual(response.json, {"error": "invalid_client"})
+        self.assertEqual(
+            response.json,
+            {
+                "error": "invalid_client",
+                "error_description": "The client cannot authenticate with methods: ['client_secret_basic', 'client_secret_post']"
+            }
+        )
 
     def test_oauth_revoke_invalid_token_type_hint(self):
         application = self.create_oauth_app()
