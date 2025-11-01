@@ -10,6 +10,7 @@ from wtforms.validators import DataRequired
 from wtforms.widgets import ListWidget, CheckboxInput
 
 from metabrainz.admin import AdminModelView
+from metabrainz.admin.forms import RetryDeliveryForm
 from metabrainz.model import db
 from metabrainz.model.webhook import Webhook, WebhookDelivery, EVENT_USER_CREATED, EVENT_USER_DELETED, \
     EVENT_USER_VERIFIED, EVENT_USER_UPDATED
@@ -17,15 +18,15 @@ from metabrainz.model.webhook import Webhook, WebhookDelivery, EVENT_USER_CREATE
 
 def validate_webhook_url(form, field):
     """Custom validator for webhook URLs.
-    
-    - Allow localhost URLs with http or https
-    - Require https for all other URLs
+
+    - Allow localhost URLs only when debug mode is enabled
+    - Require https for all non-localhost URLs
     - Disallow javascript: and other dangerous protocols
     """
     url = field.data
     if not url:
         return
-    
+
     try:
         parsed = urlparse(url)
 
@@ -43,6 +44,13 @@ def validate_webhook_url(form, field):
                       (parsed.hostname and parsed.hostname.startswith("192.168.")) or \
                       (parsed.hostname and parsed.hostname.startswith("10.")) or \
                       (parsed.hostname and parsed.hostname.startswith("172."))
+
+        # Check if localhost URLs are allowed
+        if is_localhost and not current_app.config.get("DEBUG", False):
+            raise ValidationError(
+                "Localhost and private IP addresses are not allowed. "
+                "The webhook URL must be publicly accessible for webhook delivery to work."
+            )
 
         if not is_localhost and scheme == "http":
             raise ValidationError("Non-localhost URLs must use https://.")
@@ -87,7 +95,7 @@ class WebhookModelView(AdminModelView):
         "url": StringField(
             "URL",
             validators=[DataRequired(), validate_webhook_url],
-            description="The URL that will receive the webhook events. Use https:// for production URLs (http:// allowed for localhost)."
+            description="The URL that will receive the webhook events. Must be publicly accessible and use https:// (localhost URLs are only allowed in debug mode)."
         ),
         "events": EventsMultiSelectField(
             "Events",
@@ -159,22 +167,26 @@ class WebhookDeliveryModelView(AdminModelView):
     def details_view(self):
         """Custom details view."""
         return_url = self.get_url(".index_view")
-        
+
         # Get the ID from the query string
         deliver_id = request.args.get("id")
         if not deliver_id:
             flash("No delivery ID provided.", "error")
             return redirect(return_url)
-        
+
         model = self.get_one(deliver_id)
         if model is None:
             flash("Delivery not found.", "error")
             return redirect(return_url)
-        
+
+        # Create form instance
+        retry_form = RetryDeliveryForm()
+
         return self.render(
             "admin/webhook_deliveries/details.html",
             model=model,
-            return_url=return_url
+            return_url=return_url,
+            retry_form=retry_form
         )
 
     @action("retry_failed", "Retry Failed Deliveries", "Are you sure you want to retry the selected failed deliveries?")
@@ -209,9 +221,15 @@ class WebhookDeliveryModelView(AdminModelView):
     @expose("/retry/<delivery_id>", methods=["POST"])
     def retry_delivery(self, delivery_id):
         """Retry a single delivery from the detail page."""
+        form = RetryDeliveryForm()
+
+        if not form.validate_on_submit():
+            flash("Invalid form submission.", "error")
+            return redirect(url_for(".details_view", id=delivery_id))
+
         try:
             delivery = WebhookDelivery.query.get_or_404(delivery_id)
-            
+
             if delivery.status not in ["failed", "pending"]:
                 flash(
                     f"Cannot retry delivery with status: {delivery.status}. "
@@ -219,17 +237,17 @@ class WebhookDeliveryModelView(AdminModelView):
                     "warning"
                 )
                 return redirect(url_for(".details_view", id=delivery_id))
-            
+
             delivery.status = "pending"
             delivery.error_message = None
             db.session.commit()
-            
+
             flash("Delivery has been queued for retry.", "success")
         except Exception as e:
             db.session.rollback()
             current_app.logger.error(f"Error retrying delivery {delivery_id}: {str(e)}", exc_info=True)
             flash(f"Error retrying delivery: {str(e)}", "error")
-        
+
         return redirect(url_for(".details_view", id=delivery_id))
 
 

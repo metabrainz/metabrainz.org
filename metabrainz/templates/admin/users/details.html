@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </span>
                             {% if not model.is_email_confirmed() %}
                             <form action="{{ url_for('.verify_user_email', user_id=model.id) }}" method="POST" class="d-inline ms-2">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                {{ verify_email_form.hidden_tag() }}
                                 <button type="submit" class="btn btn-sm btn-outline-success">Verify Email</button>
                            </form>
                             {% endif %}
@@ -84,20 +84,30 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="card-body">
                             <form action="{{ url_for('.moderate_user', user_id=model.id) }}" method="POST" id="moderationForm">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                {{ moderate_user_form.hidden_tag() }}
                                 <div class="form-group mb-3">
-                                    <label for="action" class="form-label">Action</label>
-                                    <select class="form-select" id="action" name="action" required>
-                                        <option value="" disabled selected>Select an action</option>
-                                        <option value="block" {% if model.is_blocked %}disabled{% endif %}>Block User</option>
-                                        <option value="unblock" {% if not model.is_blocked %}disabled{% endif %}>Unblock User</option>
-                                        <option value="comment">Add Note</option>
-                                    </select>
+                                    {{ moderate_user_form.action.label(class="form-label") }}
+                                    {{ moderate_user_form.action(class="form-select", id="action") }}
+                                    {% if model.is_blocked %}
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const blockOption = document.querySelector('#action option[value="block"]');
+                                            if (blockOption) blockOption.disabled = true;
+                                        });
+                                        </script>
+                                    {% endif %}
+                                    {% if not model.is_blocked %}
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const unblockOption = document.querySelector('#action option[value="unblock"]');
+                                            if (unblockOption) unblockOption.disabled = true;
+                                        });
+                                        </script>
+                                    {% endif %}
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="reason" class="form-label">Reason / Notes</label>
-                                    <textarea class="form-control" id="reason" name="reason" 
-                                              rows="3" required></textarea>
+                                    {{ moderate_user_form.reason.label(class="form-label") }}
+                                    {{ moderate_user_form.reason(class="form-control", rows="3") }}
                                     <div class="form-text">Please provide a detailed reason for this action.</div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -157,12 +167,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="username-form" method="POST" action="{{ url_for('.edit_username', user_id=model.id) }}" class="needs-validation" novalidate>
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                {{ edit_username_form.hidden_tag() }}
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="new-username" class="form-label">New Username</label>
-                        <input type="text" class="form-control" id="new-username" name="username" 
-                               value="{{ model.name }}" required>
+                        {{ edit_username_form.username.label(for="new-username", class="form-label") }}
+                        {{ edit_username_form.username(class="form-control", id="new-username", value=model.name) }}
                         <div class="invalid-feedback">
                             Please provide a username.
                         </div>
