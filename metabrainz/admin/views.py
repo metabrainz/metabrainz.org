@@ -3,6 +3,7 @@ from flask import Response, request, redirect, url_for
 from flask_admin import expose
 from flask_login import current_user
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
+from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm
 from metabrainz.model import db
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
@@ -388,10 +389,45 @@ class UserModelView(AdminModelView):
     def __init__(self, session, **kwargs):
         super().__init__(User, session, **kwargs)
 
+    @expose('/details/')
+    def details_view(self):
+        """Override details view to inject forms."""
+        return_url = self.get_url('.index_view')
+
+        user_id = request.args.get('id')
+        if not user_id:
+            flash.error('No user ID provided.')
+            return redirect(return_url)
+
+        model = self.get_one(user_id)
+        if model is None:
+            flash.error('User not found.')
+            return redirect(return_url)
+
+        verify_email_form = VerifyEmailForm()
+        edit_username_form = EditUsernameForm()
+        moderate_user_form = ModerateUserForm()
+
+        return self.render(
+            self.details_template,
+            model=model,
+            details_columns=self._details_columns,
+            get_value=self.get_list_value,
+            return_url=return_url,
+            verify_email_form=verify_email_form,
+            edit_username_form=edit_username_form,
+            moderate_user_form=moderate_user_form,
+        )
+
     @expose('/user/<int:user_id>/verify-email', methods=['POST'])
     def verify_user_email(self, user_id):
         """Verify a user's email address manually"""
+        form = VerifyEmailForm()
         user = User.query.get_or_404(user_id)
+
+        if not form.validate_on_submit():
+            flash.error('Invalid form submission.')
+            return redirect(url_for('.details_view', id=user_id))
 
         try:
             user.verify_email_manually(current_user, f"Email manually verified by moderator {current_user.name}.")
@@ -412,12 +448,16 @@ class UserModelView(AdminModelView):
     @expose('/user/<int:user_id>/edit-username', methods=['POST'])
     def edit_username(self, user_id):
         """Edit a user's username"""
+        form = EditUsernameForm()
         user = User.query.get_or_404(user_id)
-        
-        new_username = request.form.get('username', '').strip()
-        if not new_username:
-            flash.error('Username cannot be empty')
+
+        if not form.validate_on_submit():
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash.error(error)
             return redirect(url_for('.details_view', id=user_id))
+
+        new_username = form.username.data.strip()
 
         if new_username == user.name:
             flash.error("Username is already set to this value.")
@@ -451,16 +491,20 @@ class UserModelView(AdminModelView):
     @expose('/user/<int:user_id>/moderate', methods=['POST'])
     def moderate_user(self, user_id):
         """Handle user moderation actions"""
-        action = request.form.get('action')
-        if action not in ['block', 'unblock', 'comment']:
-            flash.error('Invalid moderation action.')
+        form = ModerateUserForm()
+        user = User.query.get_or_404(user_id)
+
+        if not form.validate_on_submit():
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash.error(error)
             return redirect(url_for('.details_view', id=user_id))
 
-        user = User.query.get_or_404(user_id)
-        reason = request.form.get('reason', '').strip()
+        action = form.action.data
+        reason = form.reason.data.strip()
 
-        if not reason:
-            flash.error('A reason is required to take a moderation action on a user.')
+        if action not in ['block', 'unblock', 'comment']:
+            flash.error('Invalid moderation action.')
             return redirect(url_for('.details_view', id=user_id))
 
         try:
