@@ -208,7 +208,7 @@ def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
         List[dict] : List of notifications for users with notifications enabled and digest disabled.
 
     """
-    user_ids_to_check = tuple(i["user_id"] for i in notifications)
+    user_ids_to_check = tuple(i["musicbrainz_row_id"] for i in notifications)
     if not user_ids_to_check:
         return []
     
@@ -226,7 +226,7 @@ def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
 
     non_digest_notifications = []
     for notification in notifications:
-        if notification["user_id"] in non_digest_user_ids:
+        if notification["musicbrainz_row_id"] in non_digest_user_ids:
             non_digest_notifications.append(notification)
 
     return non_digest_notifications
