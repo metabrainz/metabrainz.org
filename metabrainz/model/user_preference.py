@@ -10,7 +10,6 @@ class UserPreference(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     musicbrainz_row_id = db.Column(db.Integer, unique=True)
-    user_email = db.Column(db.Text, unique=True)
     notifications_enabled = db.Column(db.Boolean, default=True)
     digest = db.Column(db.Boolean, default=False)
     digest_age = db.Column(db.SmallInteger, default=DEFAULT_DIGEST_AGE)
