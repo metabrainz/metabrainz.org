@@ -208,7 +208,7 @@ def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
         List[dict] : List of notifications for users with notifications enabled and digest disabled.
 
     """
-    user_ids_to_check = tuple(i["user_id"] for i in notifications)
+    user_ids_to_check = tuple(i["musicbrainz_row_id"] for i in notifications)
     if not user_ids_to_check:
         return []
     
@@ -226,7 +226,7 @@ def filter_non_digest_notifications(notifications: List[dict]) -> List[dict]:
 
     non_digest_notifications = []
     for notification in notifications:
-        if notification["user_id"] in non_digest_user_ids:
+        if notification["musicbrainz_row_id"] in non_digest_user_ids:
             non_digest_notifications.append(notification)
 
     return non_digest_notifications
@@ -253,7 +253,7 @@ def get_digest_notifications() -> List[dict]:
 
     Returns:
         List[dict]: List of dictionaries containing the keys
-            `musicbrainz_row_id`, `to`, `sent_from`, `subject`,
+            `musicbrainz_row_id`, `recipient`, `sent_from`, `subject`,
             `body`, `template_id`, `template_params`
     """
 
@@ -263,11 +263,11 @@ def get_digest_notifications() -> List[dict]:
                 SELECT 
                          notification.id
                         ,notification.musicbrainz_row_id
+                        ,notification.recipient
                         ,notification.subject
                         ,notification.body
                         ,notification.template_id
                         ,notification.template_params
-                        ,user_preference.user_email AS to
                         ,notification.project::TEXT
                 FROM
                         notification
@@ -276,7 +276,8 @@ def get_digest_notifications() -> List[dict]:
                 ON
                         notification.musicbrainz_row_id = user_preference.musicbrainz_row_id
                 WHERE
-                        user_preference.digest = true
+                        user_preference.notifications_enabled = true
+                        AND user_preference.digest = true
                         AND (notification.created + (INTERVAL '1 day' * user_preference.digest_age)) <= NOW()
                         AND notification.notification_sent = false      
             """

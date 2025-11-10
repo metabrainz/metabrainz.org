@@ -10,7 +10,6 @@ class UserPreference(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     musicbrainz_row_id = db.Column(db.Integer, unique=True)
-    user_email = db.Column(db.Text, unique=True)
     notifications_enabled = db.Column(db.Boolean, default=True)
     digest = db.Column(db.Boolean, default=False)
     digest_age = db.Column(db.SmallInteger, default=DEFAULT_DIGEST_AGE)
@@ -22,10 +21,18 @@ class UserPreference(db.Model):
         return cls.query.filter_by(**kwargs).first()
     
     @classmethod
-    def set_notification_preference(cls: Type["UserPreference"], musicbrainz_row_id: int, digest: bool, digest_age: Optional[int]=None) -> Optional["UserPreference"]:
-        params = {cls.digest: digest}
-        if digest_age:
-            params[cls.digest_age] = digest_age
+    def set_notification_preference(
+        cls: Type["UserPreference"],
+        musicbrainz_row_id: int,
+        notifications_enabled: bool,
+        digest: bool,
+        digest_age: Optional[int] = None,
+    ) -> Optional["UserPreference"]:
+        params = {
+            cls.notifications_enabled: notifications_enabled,
+            cls.digest: digest,
+            cls.digest_age: digest_age,
+        }
 
         cls.query.filter(cls.musicbrainz_row_id == musicbrainz_row_id).update(params)
         db.session.commit()
