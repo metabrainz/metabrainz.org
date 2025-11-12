@@ -1,6 +1,7 @@
 import React, { JSX, useCallback, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { getPageProps } from "./utils";
+import ProfileTabs from "./ProfileTabs";
 
 type ProfileProps = {
   user: User;
@@ -165,8 +166,8 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     stateClass = "text-warning";
   }
   return (
-    <>
-      <p>
+    <div className="flex flex-col gap-3">
+      <div>
         <strong>Type:</strong> {is_commercial ? "Commercial" : "Non-commercial"}
         <br />
         {is_commercial && (
@@ -177,11 +178,11 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         )}
         <strong>State:</strong>
         <span className={stateClass}> {state.toUpperCase()}</span>
-      </p>
+      </div>
       {!is_commercial && (
         <p>
           NOTE: If you would like to change your account from non-commercial to
-          commercial, please
+          commercial, please&nbsp;
           <a href="/contact">contact us</a>.
         </p>
       )}
@@ -208,7 +209,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         )}
         <div className="col-md-12">
           <h3>Contact information</h3>
-          <p>
+          <div className="mb-3">
             <strong>Contact Name:</strong> {contact_name}
             <br />
             <Email
@@ -224,14 +225,16 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                 <br />
               </>
             )}
-          </p>
-          <p>
-            <a href="/profile/edit" className="btn btn-lg btn-primary">
-              {is_commercial
-                ? "Edit contact information"
-                : "Edit datasets/contact information"}
-            </a>
-          </p>
+          </div>
+          <a
+            href="/profile/edit"
+            className="btn btn-lg btn-primary"
+            style={{ whiteSpace: "normal" }}
+          >
+            {is_commercial
+              ? "Edit contact information"
+              : "Edit datasets/contact information"}
+          </a>
         </div>
       </div>
       {is_commercial &&
@@ -294,35 +297,34 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
             token, your token is revoked.
           </p>
           <div className="dataset-summary">
-            <p>
+            <div className="mb-3">
               <div
                 id="token"
                 style={{
                   fontSize: "14pt",
                   padding: ".5em",
                   color: "#AA0000",
+                  wordBreak: "break-all",
                 }}
               >
                 {currentToken || "[ there is no valid token currently ]"}
               </div>
-            </p>
-            <p>
-              <button
-                id="btn-generate-token"
-                className="btn btn-default"
-                type="button"
-                onClick={regenerateToken}
-              >
-                Generate new token
-              </button>
-            </p>
+            </div>
+            <button
+              id="btn-generate-token"
+              className="btn btn-default"
+              type="button"
+              onClick={regenerateToken}
+            >
+              Generate new token
+            </button>
           </div>
           <p>
             See the <a href="/api">API documentation</a> for more information.
           </p>
         </>
       )}
-    </>
+    </div>
   );
 }
 
@@ -331,7 +333,7 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
   return (
     <>
       <h3>Contact information</h3>
-      <p>
+      <div className="mb-3">
         <strong>Name:</strong> {name}
         <br />
         <Email
@@ -340,12 +342,14 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
           email={email}
           csrf_token={csrf_token}
         />
-      </p>
-      <p>
-        <a href="/profile/edit" className="btn btn-lg btn-primary">
-          Edit information
-        </a>
-      </p>
+      </div>
+      <a
+        href="/profile/edit"
+        className="btn btn-lg btn-primary"
+        style={{ whiteSpace: "normal" }}
+      >
+        Edit information
+      </a>
     </>
   );
 }
@@ -353,12 +357,52 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
 function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
   return (
     <>
-      <h1 className="page-title">Your Profile</h1>
+      <ProfileTabs activeTab="profile" />
+      <h2 className="page-title">Your Profile</h2>
       {user.supporter ? (
         <SupporterProfile user={user} csrf_token={csrf_token} />
       ) : (
         <UserProfile user={user} csrf_token={csrf_token} />
       )}
+
+      <h3>MetaBrainz Applications</h3>
+      <div className="metabrainz-projects-list">
+        <a
+          href={`https://musicbrainz.org/user/${user.name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="MusicBrainz"
+        >
+          <img src="/static/img/projects/musicbrainz.svg" alt="MusicBrainz" />
+        </a>
+        <a
+          href={`https://listenbrainz.org/user/${user.name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="ListenBrainz"
+        >
+          <img src="/static/img/projects/listenbrainz.svg" alt="ListenBrainz" />
+        </a>
+        <a
+          href={`https://bookbrainz.org/user/${user.name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="BookBrainz"
+        >
+          <img src="/static/img/projects/bookbrainz.svg" alt="BookBrainz" />
+        </a>
+        <a
+          href={`https://critiquebrainz.org/user/${user.name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="CritiqueBrainz"
+        >
+          <img
+            src="/static/img/projects/critiquebrainz.svg"
+            alt="CritiqueBrainz"
+          />
+        </a>
+      </div>
     </>
   );
 }
