@@ -53,10 +53,6 @@ body {
 img { .img-responsive(); }
 img.pull-right { padding-left: 15px; }
 
-h1.page-title, h2.page-title {
-  @media (max-width: @grid-float-breakpoint) { margin-top: 0px; }
-}
-
 
 // ---------------
 // Different pages
@@ -541,4 +537,15 @@ table.finances td:nth-child(2) {
 // otherwise they make the page overflow
 .oauth-applications-table>tbody>tr>td {
     word-break: break-word;
+}
+
+
+.metabrainz-projects-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  a {
+    display: block;
+    width: 50px;
+  }
 }
