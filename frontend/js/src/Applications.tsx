@@ -2,6 +2,7 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import { getPageProps } from "./utils";
 import { OAuthScopeDesc } from "./forms/utils";
+import ProfileTabs from "./ProfileTabs";
 
 type ApplicationProps = {
   urlPrefix: string;
@@ -26,12 +27,12 @@ function Applications({
 }: ApplicationProps): JSX.Element {
   return (
     <>
-      <h2>Applications</h2>
+      <ProfileTabs activeTab="applications" />
 
       <div className="clearfix">
         <h3 className="pull-left">Your applications</h3>
         <a
-          href={`${urlPrefix}/client/create`}
+          href="/profile/applications/create"
           className="btn btn-success pull-right"
           style={{ marginTop: "12px" }}
         >
@@ -64,13 +65,13 @@ function Applications({
                 <td>
                   <a
                     className="btn btn-block btn-primary btn-xs"
-                    href={`${urlPrefix}/client/edit/${application.client_id}`}
+                    href={`/profile/applications/edit/${application.client_id}`}
                   >
                     Modify
                   </a>
                   <a
                     className="btn btn-block btn-danger btn-xs"
-                    href={`${urlPrefix}/client/delete/${application.client_id}`}
+                    href={`/profile/applications/delete/${application.client_id}`}
                   >
                     Delete
                   </a>
