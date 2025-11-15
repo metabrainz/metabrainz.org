@@ -1,3 +1,5 @@
+from os import path
+
 # CUSTOM CONFIGURATION
 
 DEBUG = True  # set to False in production mode
@@ -146,3 +148,5 @@ OIDC_JWT_PUBLIC_KEY = {
    "x": "Ze2loSV3wrroKUN_4zhwGhCqo3Xhu1td4QjeQ5wIVR0",
    "y": "HlLtdXARY_f55A3fnzQbPcm6hgr34Mp8p-nuzQCE0Zw",
 }
+
+STATIC_RESOURCES_DIR = path.join(path.dirname(__file__), 'frontend')

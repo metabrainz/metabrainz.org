@@ -8,16 +8,20 @@ from flask_uploads import UploadSet, IMAGES
 
 import os.path
 
-# ensure that the path is kept in sync with the volume mount path for production in docker-server-configs
-LOGO_STORAGE_DIR = os.path.join("/static", "img", "logos", "supporters")
-if not os.path.exists(LOGO_STORAGE_DIR):
-    os.makedirs(LOGO_STORAGE_DIR)
+
+def get_logo_storage_dir(app):
+    # ensure that the path is kept in sync with the volume mount path for production in docker-server-configs
+    logo_storage_dir = os.path.join(app.config["STATIC_RESOURCES_DIR"], "img", "logos", "supporters")
+    if not os.path.exists(logo_storage_dir):
+        os.makedirs(logo_storage_dir)
+    return logo_storage_dir
+
 
 LOGO_UPLOAD_SET_NAME = "supporterlogo"
 LOGO_UPLOAD_SET = UploadSet(
     name=LOGO_UPLOAD_SET_NAME,
     extensions=IMAGES,
-    default_dest=lambda app: LOGO_STORAGE_DIR,
+    default_dest=get_logo_storage_dir,
 )
 
 

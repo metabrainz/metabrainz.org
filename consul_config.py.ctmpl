@@ -139,3 +139,5 @@ OAUTH2_WHITELISTED_CCG_CLIENTS = [
 OIDC_ID_TOKEN_EXPIRATION = 3600
 OIDC_JWT_PRIVATE_KEY = {{template "KEY" "oidc/jwt_private_key"}}
 OIDC_JWT_PUBLIC_KEY = {{template "KEY" "oidc/jwt_public_key"}}
+
+STATIC_RESOURCES_DIR = '/static'

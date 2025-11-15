@@ -24,15 +24,6 @@ def create_app(debug=None, config_path=None):
         use_flask_uuid=True,
     )
 
-    # Static files
-    from metabrainz import static_manager
-    static_manager.read_manifest()
-    app.static_folder = '/static'
-    app.context_processor(lambda: dict(
-        get_static_path=static_manager.get_static_path,
-        global_props=get_global_props()
-    ))
-
     # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
@@ -86,6 +77,15 @@ def create_app(debug=None, config_path=None):
     sentry_config = app.config.get('LOG_SENTRY')
     if sentry_config:
         sentry.init_sentry(**sentry_config)
+
+    # Static files
+    from metabrainz import static_manager
+    static_manager.read_manifest(app)
+    app.static_folder = app.config["STATIC_RESOURCES_DIR"]
+    app.context_processor(lambda: dict(
+        get_static_path=static_manager.get_static_path,
+        global_props=get_global_props()
+    ))
 
     # Database
     from metabrainz import db
