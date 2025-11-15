@@ -1,14 +1,14 @@
 import os.path
 import json
 
-MANIFEST_PATH = os.path.join("/", "static", "dist", "manifest.json")
 
 manifest_content = {}
 
 
-def read_manifest():
-    if os.path.isfile(MANIFEST_PATH):
-        with open(MANIFEST_PATH) as manifest_file:
+def read_manifest(app):
+    manifest_path = os.path.join(app.config["STATIC_RESOURCES_DIR"], "dist", "manifest.json")
+    if os.path.isfile(manifest_path):
+        with open(manifest_path) as manifest_file:
             global manifest_content
             manifest_content = json.load(manifest_file)
 

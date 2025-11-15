@@ -157,3 +157,5 @@ WEBHOOK_TASK_SOFT_TIME_LIMIT = {{template "KEY" "webhook/soft_time_limit"}}
 WEBHOOK_DEFAULT_RATE_LIMIT = '''{{template "KEY" "webhook/rate_limit"}}'''
 WEBHOOK_CIRCUIT_BREAKER_THRESHOLD = {{template "KEY" "webhook/circuit_breaker_threshold"}}
 WEBHOOK_CIRCUIT_BREAKER_TIMEOUT = {{template "KEY" "webhook/circuit_breaker_timeout"}}
+
+STATIC_RESOURCES_DIR = '/static'
