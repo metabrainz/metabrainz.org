@@ -228,7 +228,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
           </div>
           <a
             href="/profile/edit"
-            className="btn btn-lg btn-primary"
+            className="btn btn-lg btn-warning"
             style={{ whiteSpace: "normal" }}
           >
             {is_commercial
@@ -333,7 +333,7 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
   return (
     <>
       <h3>Contact information</h3>
-      <div className="mb-3">
+      <div style={{ marginBottom: "1rem" }}>
         <strong>Name:</strong> {name}
         <br />
         <Email
@@ -345,7 +345,7 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
       </div>
       <a
         href="/profile/edit"
-        className="btn btn-lg btn-primary"
+        className="btn btn-warning"
         style={{ whiteSpace: "normal" }}
       >
         Edit information
@@ -358,7 +358,7 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
   return (
     <>
       <ProfileTabs activeTab="profile" />
-      <h2 className="page-title">Your Profile</h2>
+      <h2 className="page-title">{user.name}</h2>
       {user.supporter ? (
         <SupporterProfile user={user} csrf_token={csrf_token} />
       ) : (
@@ -366,42 +366,66 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
       )}
 
       <h3>MetaBrainz Applications</h3>
-      <div className="metabrainz-projects-list">
-        <a
-          href={`https://musicbrainz.org/user/${user.name}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="MusicBrainz"
-        >
-          <img src="/static/img/projects/musicbrainz.svg" alt="MusicBrainz" />
-        </a>
-        <a
-          href={`https://listenbrainz.org/user/${user.name}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="ListenBrainz"
-        >
-          <img src="/static/img/projects/listenbrainz.svg" alt="ListenBrainz" />
-        </a>
-        <a
-          href={`https://bookbrainz.org/user/${user.name}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="BookBrainz"
-        >
-          <img src="/static/img/projects/bookbrainz.svg" alt="BookBrainz" />
-        </a>
-        <a
-          href={`https://critiquebrainz.org/user/${user.name}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="CritiqueBrainz"
-        >
-          <img
-            src="/static/img/projects/critiquebrainz.svg"
-            alt="CritiqueBrainz"
-          />
-        </a>
+      <p>
+        With your MetaBrainz account, you can access every project in the
+        MetaBrainz family:
+      </p>
+      <div className="row metabrainz-projects-list">
+        <div className="col-md-3 col-sm-6">
+          <a
+            href={`https://musicbrainz.org/user/${user.name}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/static/img/logos/musicbrainz.svg" alt="MusicBrainz" />
+            <div className="project-description">
+              The open-source music encyclopedia
+            </div>
+          </a>
+        </div>
+
+        <div className="col-md-3 col-sm-6">
+          <a
+            href={`https://listenbrainz.org/user/${user.name}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/static/img/logos/listenbrainz.svg" alt="ListenBrainz" />
+            <div className="project-description">
+              Track, visualise and share the music you listen to and discover
+              great new music.
+            </div>
+          </a>
+        </div>
+
+        <div className="col-md-3 col-sm-6">
+          <a
+            href={`https://bookbrainz.org/user/${user.name}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/static/img/logos/bookbrainz.svg" alt="BookBrainz" />
+            <div className="project-description">
+              The opensource book database
+            </div>
+          </a>
+        </div>
+
+        <div className="col-md-3 col-sm-6">
+          <a
+            href={`https://critiquebrainz.org/user/${user.name}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/static/img/logos/critiquebrainz.svg"
+              alt="CritiqueBrainz"
+            />
+            <div className="project-description">
+              Creative Commons licensed music and book reviews
+            </div>
+          </a>
+        </div>
       </div>
     </>
   );

@@ -541,11 +541,18 @@ table.finances td:nth-child(2) {
 
 
 .metabrainz-projects-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  a {
-    display: block;
-    width: 50px;
+  .project-description {
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin: 10px 0 10px 0;
+    text-align: center;
+
+    @media (max-width: @screen-xs-max) {
+      text-align: left;
+    }
+  }
+
+  img {
+    max-width: 200px;
   }
 }
