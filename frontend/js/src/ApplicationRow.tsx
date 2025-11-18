@@ -8,14 +8,10 @@ type Application = {
 };
 
 type ApplicationRowProps = {
-  urlPrefix: string;
   application: Application;
 };
 
-function ApplicationRow({
-  application,
-  urlPrefix,
-}: ApplicationRowProps): JSX.Element {
+function ApplicationRow({ application }: ApplicationRowProps): JSX.Element {
   const { name, website, client_id, client_secret } = application;
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const glyphIcon = passwordVisible
