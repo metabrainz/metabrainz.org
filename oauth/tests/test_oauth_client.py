@@ -9,9 +9,9 @@ from oauth.tests import OAuthTestCase
 class ClientTestCase(OAuthTestCase):
 
     def create_application(self):
-        response = self.client.get("/oauth2/client/create")
+        response = self.client.get("/profile/applications/create")
 
-        response = self.client.post("/oauth2/client/create", data={
+        response = self.client.post("/profile/applications/create", data={
             "client_name": "test-client",
             "description": "test-description",
             "website": "https://example.com",
@@ -37,9 +37,9 @@ class ClientTestCase(OAuthTestCase):
 
     def test_oauth_client_create_multiple_redirect_uris(self):
         self.temporary_login(self.user1)
-        response = self.client.get("/oauth2/client/create")
+        response = self.client.get("/profile/applications/create")
 
-        response = self.client.post("/oauth2/client/create", data={
+        response = self.client.post("/profile/applications/create", data={
             "client_name": "test-client",
             "description": "test-description",
             "website": "https://example.com",
@@ -61,9 +61,9 @@ class ClientTestCase(OAuthTestCase):
 
     def test_oauth_client_create_invalid_csrf(self):
         self.temporary_login(self.user1)
-        response = self.client.get("/oauth2/client/create")
+        response = self.client.get("/profile/applications/create")
 
-        response = self.client.post("/oauth2/client/create", data={
+        response = self.client.post("/profile/applications/create", data={
             "client_name": "test-client",
             "description": "test-description",
             "website": "https://example.com",
@@ -74,9 +74,9 @@ class ClientTestCase(OAuthTestCase):
 
     def test_oauth_client_create_invalid(self):
         self.temporary_login(self.user1)
-        response = self.client.get("/oauth2/client/create")
+        response = self.client.get("/profile/applications/create")
 
-        response = self.client.post("/oauth2/client/create", data={
+        response = self.client.post("/profile/applications/create", data={
             "client_name": "test-client",
             "description": "test-description",
             "redirect_uris.0": "https://example.com/callback",
@@ -85,7 +85,7 @@ class ClientTestCase(OAuthTestCase):
         props = json.loads(self.get_context_variable("props"))
         self.assertEqual(props["initial_errors"]["website"], "Homepage field is empty.")
 
-        response = self.client.post("/oauth2/client/create", data={
+        response = self.client.post("/profile/applications/create", data={
             "client_name": "test-client",
             "description": "test-description",
             "redirect_uris.0": "javascript:alert('example');",
@@ -97,7 +97,7 @@ class ClientTestCase(OAuthTestCase):
             "Authorization callback URL is invalid. Authorization callback URL must use http or https."
         ])
 
-        response = self.client.post("/oauth2/client/create", data={
+        response = self.client.post("/profile/applications/create", data={
             "client_name": "test-client",
             "description": "test-description",
             "website": "https://example.com",
@@ -108,7 +108,7 @@ class ClientTestCase(OAuthTestCase):
             "Authorization callback URL field is empty."
         ])
 
-        response = self.client.post("/oauth2/client/create", data={
+        response = self.client.post("/profile/applications/create", data={
             "client_name": "te",
             "description": "test-description",
             "website": "https://example.com",
@@ -122,7 +122,7 @@ class ClientTestCase(OAuthTestCase):
         self.temporary_login(self.user1)
         application = self.create_application()
 
-        response = self.client.post(f"/oauth2/client/edit/{application['client_id']}", data={
+        response = self.client.post(f"/profile/applications/edit/{application['client_id']}", data={
             "client_name": "test-client-new",
             "description": "test-description",
             "website": "https://example.com",
@@ -136,7 +136,7 @@ class ClientTestCase(OAuthTestCase):
         self.assertEqual(application["name"], "test-client-new")
         self.assertEqual(application["redirect_uris"], ["https://example.com/callback"])
 
-        response = self.client.post(f"/oauth2/client/edit/{application['client_id']}", data={
+        response = self.client.post(f"/profile/applications/edit/{application['client_id']}", data={
             "client_name": "test-client",
             "description": "test-description",
             "website": "https://example.com",
@@ -148,7 +148,7 @@ class ClientTestCase(OAuthTestCase):
             "Authorization callback URL is invalid. Authorization callback URL must use http or https."
         ])
 
-        response = self.client.post(f"/oauth2/client/edit/{application['client_id']}", data={
+        response = self.client.post(f"/profile/applications/edit/{application['client_id']}", data={
             "client_name": "test-client-new",
             "description": "test-description",
             "website": "https://example.com",
@@ -170,7 +170,7 @@ class ClientTestCase(OAuthTestCase):
         self.temporary_login(self.user1)
         application = self.create_application()
 
-        response = self.client.get(f"/oauth2/client/delete/{application['client_id']}", follow_redirects=True)
+        response = self.client.get(f"/profile/applications/delete/{application['client_id']}", follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("oauth/delete.html")
         self.maxDiff = None
@@ -181,9 +181,9 @@ class ClientTestCase(OAuthTestCase):
             "description": application["description"],
             "website": application["website"]
         })
-        self.assertEqual(props["cancel_url"], "/oauth2/client/list")
+        self.assertEqual(props["cancel_url"], "/profile/applications")
 
-        response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", data={
+        response = self.client.post(f"/profile/applications/delete/{application['client_id']}", data={
             "confirm": "yes",
             "csrf_token": g.csrf_token
         }, follow_redirects=True)
@@ -197,7 +197,7 @@ class ClientTestCase(OAuthTestCase):
     def test_oauth_client_delete_invalid_csrf(self):
         self.temporary_login(self.user1)
         application = self.create_application()
-        response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", data={
+        response = self.client.post(f"/profile/applications/delete/{application['client_id']}", data={
             "confirm": "yes",
             "csrf_token": "abc"
         }, follow_redirects=True)
@@ -213,10 +213,10 @@ class ClientTestCase(OAuthTestCase):
         application = self.create_application()
 
         self.temporary_login(self.user2)
-        response = self.client.post(f"/oauth2/client/delete/{application['client_id']}", follow_redirects=True)
+        response = self.client.post(f"/profile/applications/delete/{application['client_id']}", follow_redirects=True)
         self.assertEqual(response.status_code, 403)
 
-        response = self.client.post(f"/oauth2/client/edit/{application['client_id']}", data={
+        response = self.client.post(f"/profile/applications/edit/{application['client_id']}", data={
             "client_name": "test-client-new",
             "description": "test-description",
             "website": "https://example.com",
@@ -226,9 +226,9 @@ class ClientTestCase(OAuthTestCase):
         self.assertEqual(response.status_code, 403)
 
     def revoke_from_user_helper(self, application):
-        response = self.client.post(f"/oauth2/client/{application['client_id']}/revoke/user")
+        response = self.client.post(f"/profile/applications/revoke/{application['client_id']}/user")
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.location, "/oauth2/client/list")
+        self.assertEqual(response.location, "/profile/applications")
 
         tokens = db.session.query(OAuth2AccessToken).join(OAuth2Client).filter(
             OAuth2Client.client_id == application["client_id"],
@@ -268,11 +268,11 @@ class ClientTestCase(OAuthTestCase):
     def test_oauth_client_not_found(self):
         self.temporary_login(self.user1)
 
-        response = self.client.post(f"/oauth2/client/abc/revoke/user")
+        response = self.client.post(f"/profile/applications/revoke/abc/user")
         self.assert404(response)
 
-        response = self.client.post(f"/oauth2/client/abc/edit")
+        response = self.client.post(f"/profile/applications/edit/abc")
         self.assert404(response)
 
-        response = self.client.post(f"/oauth2/client/abc/delete")
+        response = self.client.post(f"/profile/applications/delete/abc")
         self.assert404(response)
