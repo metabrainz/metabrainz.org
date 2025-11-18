@@ -51,13 +51,13 @@ function ApplicationRow({
       <td>
         <a
           className="btn btn-block btn-warning btn-xs"
-          href={`${urlPrefix}/client/edit/${client_id}`}
+          href={`/profile/applications/edit/${client_id}`}
         >
           Modify
         </a>
         <a
           className="btn btn-block btn-danger btn-xs"
-          href={`${urlPrefix}/client/delete/${client_id}`}
+          href={`/profile/applications/delete/${client_id}`}
         >
           Delete
         </a>
