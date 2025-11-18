@@ -2,9 +2,10 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import { getPageProps } from "./utils";
 import { OAuthScopeDesc } from "./forms/utils";
+import ProfileTabs from "./ProfileTabs";
+import ApplicationRow from "./ApplicationRow";
 
 type ApplicationProps = {
-  urlPrefix: string;
   applications: Array<{
     name: string;
     website: string;
@@ -19,26 +20,24 @@ type ApplicationProps = {
   }>;
 };
 
-function Applications({
-  applications,
-  tokens,
-  urlPrefix,
-}: ApplicationProps): JSX.Element {
+function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
   return (
     <>
-      <h2>Applications</h2>
+      <ProfileTabs activeTab="applications" />
 
-      <div className="clearfix">
-        <h3 className="pull-left">Your applications</h3>
-        <a
-          href={`${urlPrefix}/client/create`}
-          className="btn btn-success pull-right"
-          style={{ marginTop: "12px" }}
-        >
-          <span className="glyphicon glyphicon-plus-sign" />
-          Create new application
-        </a>
+      <div>
+        <h3>
+          Your applications
+          <a
+            href="/profile/applications/create"
+            className="btn btn-success pull-right"
+          >
+            <span className="glyphicon glyphicon-plus-sign" />
+            Create new application
+          </a>
+        </h3>
       </div>
+
       {applications.length === 0 ? (
         <p className="lead" style={{ textAlign: "center" }}>
           No applications found
@@ -50,32 +49,16 @@ function Applications({
               <th>Name</th>
               <th>Website</th>
               <th>Client ID</th>
-              <th>Client secret</th>
+              <th style={{ width: "400px" }}>Client secret</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {applications.map((application) => (
-              <tr>
-                <td>{application.name}</td>
-                <td>{application.website}</td>
-                <td>{application.client_id}</td>
-                <td>{application.client_secret}</td>
-                <td>
-                  <a
-                    className="btn btn-block btn-primary btn-xs"
-                    href={`${urlPrefix}/client/edit/${application.client_id}`}
-                  >
-                    Modify
-                  </a>
-                  <a
-                    className="btn btn-block btn-danger btn-xs"
-                    href={`${urlPrefix}/client/delete/${application.client_id}`}
-                  >
-                    Delete
-                  </a>
-                </td>
-              </tr>
+              <ApplicationRow
+                key={application.client_id}
+                application={application}
+              />
             ))}
           </tbody>
         </table>
@@ -107,7 +90,7 @@ function Applications({
                 <td>{OAuthScopeDesc(token.scopes)}</td>
                 <td>
                   <form
-                    action={`${urlPrefix}/client/${token.client_id}/revoke/user`}
+                    action={`/profile/application/revoke/${token.client_id}/user`}
                     method="post"
                     className="btn btn-danger btn-xs"
                   >
@@ -130,16 +113,11 @@ function Applications({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { applications, tokens } = reactProps;
-  const { url_prefix } = globalProps;
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
-    <Applications
-      applications={applications}
-      tokens={tokens}
-      urlPrefix={url_prefix}
-    />
+    <Applications applications={applications} tokens={tokens} />
   );
 });

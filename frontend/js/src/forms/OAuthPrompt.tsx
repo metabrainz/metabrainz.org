@@ -4,7 +4,6 @@ import { getPageProps } from "../utils";
 import { OAuthScopeDesc } from "./utils";
 
 type OAuthPromptProps = {
-  urlPrefix: string;
   scopes: Array<Scope>;
   csrf_token: string;
   client_name: string;
@@ -13,7 +12,6 @@ type OAuthPromptProps = {
 };
 
 function OAuthPrompt({
-  urlPrefix,
   scopes,
   csrf_token,
   cancel_url,
@@ -29,10 +27,7 @@ function OAuthPrompt({
       <div className="permissions">
         <div className="permission">
           <div className="icon">
-            <img
-              src={`${urlPrefix}/static/img/oauth/identity.svg`}
-              alt="Identity"
-            />
+            <img src="/static/img/oauth/identity.svg" alt="Identity" />
           </div>
           <div className="description">Your identity on MetaBrainz</div>
         </div>
@@ -69,15 +64,13 @@ function OAuthPrompt({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { csrf_token, scopes, client_name, cancel_url, submission_url } =
     reactProps;
-  const { url_prefix } = globalProps;
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
     <OAuthPrompt
-      urlPrefix={url_prefix}
       scopes={scopes}
       csrf_token={csrf_token}
       client_name={client_name}
