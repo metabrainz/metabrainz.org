@@ -6,7 +6,6 @@ import ProfileTabs from "./ProfileTabs";
 import ApplicationRow from "./ApplicationRow";
 
 type ApplicationProps = {
-  urlPrefix: string;
   applications: Array<{
     name: string;
     website: string;
@@ -21,11 +20,7 @@ type ApplicationProps = {
   }>;
 };
 
-function Applications({
-  applications,
-  tokens,
-  urlPrefix,
-}: ApplicationProps): JSX.Element {
+function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
   return (
     <>
       <ProfileTabs activeTab="applications" />
@@ -63,7 +58,6 @@ function Applications({
               <ApplicationRow
                 key={application.client_id}
                 application={application}
-                urlPrefix={urlPrefix}
               />
             ))}
           </tbody>
@@ -96,7 +90,7 @@ function Applications({
                 <td>{OAuthScopeDesc(token.scopes)}</td>
                 <td>
                   <form
-                    action={`${urlPrefix}/client/${token.client_id}/revoke/user`}
+                    action={`/profile/application/revoke/${token.client_id}/user`}
                     method="post"
                     className="btn btn-danger btn-xs"
                   >
@@ -119,16 +113,11 @@ function Applications({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { applications, tokens } = reactProps;
-  const { url_prefix } = globalProps;
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
-    <Applications
-      applications={applications}
-      tokens={tokens}
-      urlPrefix={url_prefix}
-    />
+    <Applications applications={applications} tokens={tokens} />
   );
 });
