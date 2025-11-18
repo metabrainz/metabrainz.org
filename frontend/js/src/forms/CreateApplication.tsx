@@ -124,7 +124,7 @@ function CreateApplication({
               <label className="col-sm-3 control-label" htmlFor="redirect_uris">
                 Redirect URIs <span style={{ color: "red" }}>*</span>
               </label>
-              <div className="col-sm-9">
+              <div className="col-sm-5">
                 <FieldArray name="redirect_uris">
                   {({ insert, remove, push }) => {
                     return values.redirect_uris &&
