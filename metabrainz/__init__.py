@@ -32,6 +32,15 @@ def create_app(debug=None, config_path=None):
     # Static files
     from metabrainz import static_manager
     static_manager.read_manifest()
+
+    # OAuth static files
+    from oauth import static_manager as oauth_static_manager
+    oauth_static_manager.read_manifest()
+
+    # OAuth authorization server
+    from oauth.authorization_server import authorization_server
+    authorization_server.init_app(app)
+
     app.static_folder = '/static'
     app.context_processor(lambda: dict(
         get_static_path=static_manager.get_static_path,
