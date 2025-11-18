@@ -15,7 +15,7 @@ from metabrainz.model.user import User
 from metabrainz.user.email import send_verification_email
 
 from oauth.generator import create_client_secret, create_client_id
-from oauth.model import db as oauth_db, OAuth2AccessToken
+from oauth.model import db as oauth_db, OAuth2AccessToken, OAuth2RefreshToken
 from oauth.model.client import OAuth2Client
 from oauth.forms import ApplicationForm, AuthorizationForm, DeleteApplicationForm
 

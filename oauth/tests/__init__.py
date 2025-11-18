@@ -54,9 +54,9 @@ class OAuthTestCase(FlaskTestCase):
 
         self.temporary_login(owner)
 
-        self.client.get("/oauth2/client/create")
+        self.client.get("/profile/applications/create")
         data["csrf_token"] = g.csrf_token
-        self.client.post("/oauth2/client/create", data=data, follow_redirects=True)
+        self.client.post("/profile/applications/create", data=data, follow_redirects=True)
 
         applications = json.loads(self.get_context_variable("props"))["applications"]
         if len(applications) == 1:
