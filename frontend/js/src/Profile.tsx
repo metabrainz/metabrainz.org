@@ -1,7 +1,6 @@
 import React, { JSX, useCallback, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { getPageProps } from "./utils";
-import ProfileTabs from "./ProfileTabs";
 
 type ProfileProps = {
   user: User;
@@ -166,8 +165,8 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     stateClass = "text-warning";
   }
   return (
-    <div className="flex flex-col gap-3">
-      <div>
+    <>
+      <p>
         <strong>Type:</strong> {is_commercial ? "Commercial" : "Non-commercial"}
         <br />
         {is_commercial && (
@@ -178,11 +177,11 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         )}
         <strong>State:</strong>
         <span className={stateClass}> {state.toUpperCase()}</span>
-      </div>
+      </p>
       {!is_commercial && (
         <p>
           NOTE: If you would like to change your account from non-commercial to
-          commercial, please&nbsp;
+          commercial, please
           <a href="/contact">contact us</a>.
         </p>
       )}
@@ -209,7 +208,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         )}
         <div className="col-md-12">
           <h3>Contact information</h3>
-          <div className="mb-3">
+          <p>
             <strong>Contact Name:</strong> {contact_name}
             <br />
             <Email
@@ -225,16 +224,14 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                 <br />
               </>
             )}
-          </div>
-          <a
-            href="/profile/edit"
-            className="btn btn-lg btn-warning"
-            style={{ whiteSpace: "normal" }}
-          >
-            {is_commercial
-              ? "Edit contact information"
-              : "Edit datasets/contact information"}
-          </a>
+          </p>
+          <p>
+            <a href="/profile/edit" className="btn btn-lg btn-primary">
+              {is_commercial
+                ? "Edit contact information"
+                : "Edit datasets/contact information"}
+            </a>
+          </p>
         </div>
       </div>
       {is_commercial &&
@@ -297,34 +294,35 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
             token, your token is revoked.
           </p>
           <div className="dataset-summary">
-            <div className="mb-3">
+            <p>
               <div
                 id="token"
                 style={{
                   fontSize: "14pt",
                   padding: ".5em",
                   color: "#AA0000",
-                  wordBreak: "break-all",
                 }}
               >
                 {currentToken || "[ there is no valid token currently ]"}
               </div>
-            </div>
-            <button
-              id="btn-generate-token"
-              className="btn btn-default"
-              type="button"
-              onClick={regenerateToken}
-            >
-              Generate new token
-            </button>
+            </p>
+            <p>
+              <button
+                id="btn-generate-token"
+                className="btn btn-default"
+                type="button"
+                onClick={regenerateToken}
+              >
+                Generate new token
+              </button>
+            </p>
           </div>
           <p>
             See the <a href="/api">API documentation</a> for more information.
           </p>
         </>
       )}
-    </div>
+    </>
   );
 }
 
@@ -333,7 +331,7 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
   return (
     <>
       <h3>Contact information</h3>
-      <div style={{ marginBottom: "1rem" }}>
+      <p>
         <strong>Name:</strong> {name}
         <br />
         <Email
@@ -342,14 +340,12 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
           email={email}
           csrf_token={csrf_token}
         />
-      </div>
-      <a
-        href="/profile/edit"
-        className="btn btn-warning"
-        style={{ whiteSpace: "normal" }}
-      >
-        Edit information
-      </a>
+      </p>
+      <p>
+        <a href="/profile/edit" className="btn btn-lg btn-primary">
+          Edit information
+        </a>
+      </p>
     </>
   );
 }
@@ -357,76 +353,12 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
 function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
   return (
     <>
-      <ProfileTabs activeTab="profile" />
-      <h2 className="page-title">{user.name}</h2>
+      <h1 className="page-title">Your Profile</h1>
       {user.supporter ? (
         <SupporterProfile user={user} csrf_token={csrf_token} />
       ) : (
         <UserProfile user={user} csrf_token={csrf_token} />
       )}
-
-      <h3>MetaBrainz Applications</h3>
-      <p>
-        With your MetaBrainz account, you can access every project in the
-        MetaBrainz family:
-      </p>
-      <div className="row metabrainz-projects-list">
-        <div className="col-md-3 col-sm-6">
-          <a
-            href={`https://musicbrainz.org/user/${user.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src="/static/img/logos/musicbrainz.svg" alt="MusicBrainz" />
-            <div className="project-description">
-              The open-source music encyclopedia
-            </div>
-          </a>
-        </div>
-
-        <div className="col-md-3 col-sm-6">
-          <a
-            href={`https://listenbrainz.org/user/${user.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src="/static/img/logos/listenbrainz.svg" alt="ListenBrainz" />
-            <div className="project-description">
-              Track, visualise and share the music you listen to and discover
-              great new music.
-            </div>
-          </a>
-        </div>
-
-        <div className="col-md-3 col-sm-6">
-          <a
-            href={`https://bookbrainz.org/user/${user.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src="/static/img/logos/bookbrainz.svg" alt="BookBrainz" />
-            <div className="project-description">
-              The opensource book database
-            </div>
-          </a>
-        </div>
-
-        <div className="col-md-3 col-sm-6">
-          <a
-            href={`https://critiquebrainz.org/user/${user.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="/static/img/logos/critiquebrainz.svg"
-              alt="CritiqueBrainz"
-            />
-            <div className="project-description">
-              Creative Commons licensed music and book reviews
-            </div>
-          </a>
-        </div>
-      </div>
     </>
   );
 }
