@@ -44,7 +44,7 @@ services:
       - "8150"
 
   meb_db:
-    image: postgres:12.3
+    image: postgres:16.6
     volumes:
       - db:/var/lib/postgresql/data:z
     environment:
