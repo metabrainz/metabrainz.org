@@ -1,9 +1,11 @@
 import datetime
 import json
 
-from flask import Blueprint, render_template, redirect, url_for, make_response
+from flask import Blueprint, render_template, redirect, url_for, make_response, g, request
 from flask_login import current_user, login_required
 from flask_wtf.csrf import generate_csrf
+from werkzeug.exceptions import NotFound, Forbidden
+from flask_babel import gettext
 
 from metabrainz import flash
 from metabrainz.index.forms import CommercialSupporterEditForm, NonCommercialSupporterEditForm, UserEditForm
@@ -11,6 +13,11 @@ from metabrainz.model import Dataset, db
 from metabrainz.model.supporter import Supporter
 from metabrainz.model.user import User
 from metabrainz.user.email import send_verification_email
+
+from oauth.generator import create_client_secret, create_client_id
+from oauth.model import db as oauth_db, OAuth2AccessToken, OAuth2RefreshToken
+from oauth.model.client import OAuth2Client
+from oauth.forms import ApplicationForm, AuthorizationForm, DeleteApplicationForm
 
 index_bp = Blueprint('index', __name__)
 
@@ -235,3 +242,180 @@ def profile_edit():
         "initial_form_data": form_data,
         "initial_errors": form.props_errors
     }))
+
+
+@index_bp.route('/profile/applications')
+@login_required
+def profile_applications():
+    applications = oauth_db \
+        .session \
+        .query(OAuth2Client) \
+        .filter(OAuth2Client.owner_id == current_user.id) \
+        .order_by(OAuth2Client.client_id_issued_at) \
+        .all()
+    # todo: de-dup access tokens, show auth-ed applications instead?
+    tokens = db \
+        .session \
+        .query(OAuth2AccessToken) \
+        .filter(
+        OAuth2AccessToken.user_id == current_user.id,
+        OAuth2AccessToken.revoked.is_(False)
+    ) \
+        .order_by(OAuth2AccessToken.issued_at.desc()) \
+        .all()
+
+    return render_template("oauth/index.html", props=json.dumps({
+        "applications": [{
+            "name": application.name,
+            "description": application.description,
+            "client_id": application.client_id,
+            "client_secret": application.client_secret,
+            "website": application.website,
+            "redirect_uris": application.redirect_uris,
+        } for application in applications],
+        "tokens": [{
+            "name": token.client.name,
+            "scopes": [{
+                "name": scope.name,
+                "description": scope.description
+            } for scope in token.scopes],
+            "client_id": token.client.client_id,
+            "website": token.client.website,
+        } for token in tokens],
+    }))
+
+
+@index_bp.route("/profile/applications/create", methods=("GET", "POST"))
+@login_required
+def profile_applications_create():
+    # todo: add client_secret rotation option
+    form = ApplicationForm()
+    if form.validate_on_submit():
+        client_id = create_client_id()
+        client_secret = create_client_secret()
+        client = OAuth2Client(
+            client_id=client_id,
+            client_secret=client_secret,
+            owner_id=current_user.id,
+            name=form.client_name.data,
+            description=form.description.data,
+            website=form.website.data,
+            redirect_uris=form.redirect_uris.data
+        )
+        db.session.add(client)
+        db.session.commit()
+        return redirect(url_for(".profile_applications"))
+
+    form_errors = {
+        "client_name": " ".join(form.client_name.errors),
+        "website": " ".join(form.website.errors),
+        "description": " ".join(form.description.errors),
+        "redirect_uris": [" ".join(errors) for errors in form.redirect_uris.errors],
+        "csrf_token": " ".join(form.csrf_token.errors),
+    }
+    form_data = dict(**form.data)
+    form_data.pop("csrf_token", None)
+
+    return render_template("oauth/create.html", props=json.dumps({
+        "csrf_token": generate_csrf(),
+        "is_edit_mode": False,
+        "initial_form_data": form_data,
+        "initial_errors": form_errors
+    }))
+
+
+@index_bp.route("/profile/applications/edit/<client_id>", methods=["GET", "POST"])
+@login_required
+def profile_applications_edit(client_id):
+    application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
+    if application is None:
+        raise NotFound()
+    if application.owner_id != current_user.id:
+        raise Forbidden()
+
+    form = ApplicationForm()
+    if form.validate_on_submit():
+        application.name = form.client_name.data
+        application.description = form.description.data
+        application.website = form.website.data
+        application.redirect_uris = form.redirect_uris.data
+        db.session.commit()
+        flash.success(gettext("You have updated an application!"))
+        return redirect(url_for(".profile_applications"))
+
+    form_errors = {
+        "client_name": " ".join(form.client_name.errors),
+        "website": " ".join(form.website.errors),
+        "description": " ".join(form.description.errors),
+        "redirect_uris": [" ".join(errors) for errors in form.redirect_uris.errors]
+    }
+    form_data = {
+        "client_name": form.client_name.data or application.name,
+        "description": form.description.data or application.description,
+        "website": form.website.data or application.website,
+    }
+
+    if form.redirect_uris.data and len(form.redirect_uris.data) > 0 and form.redirect_uris.data[0]:
+        form_data["redirect_uris"] = form.redirect_uris.data
+    else:
+        form_data["redirect_uris"] = application.redirect_uris
+
+    return render_template("oauth/edit.html", props=json.dumps({
+        "client_name": form_data["client_name"],
+        "is_edit_mode": True,
+        "csrf_token": generate_csrf(),
+        "initial_form_data": form_data,
+        "initial_errors": form_errors
+    }))
+
+
+@index_bp.route("/profile/applications/delete/<client_id>", methods=["GET", "POST"])
+@login_required
+def profile_applications_delete(client_id):
+    form = DeleteApplicationForm()
+    application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
+    if application is None:
+        raise NotFound()
+    if application.owner_id != current_user.id:
+        raise Forbidden()
+
+    if request.method == "GET":
+        return render_template("oauth/delete.html", props=json.dumps({
+            "csrf_token": g.csrf_token,
+            "application": {
+                "name": application.name,
+                "description": application.description,
+                "website": application.website,
+            },
+            "cancel_url": url_for(".profile_applications"),
+        }))
+    elif form.validate_on_submit():
+        db.session.delete(application)
+        db.session.commit()
+        flash.success(gettext("You have deleted an application."))
+    else:
+        flash.error(gettext("Failed to delete an application."))
+    return redirect(url_for(".profile_applications"))
+
+
+
+@index_bp.route("/profile/applications/revoke/<client_id>/user", methods=["POST"])
+@login_required
+def profile_applications_revoke_user(client_id):
+    application = db.session().query(OAuth2Client).filter(OAuth2Client.client_id == client_id).first()
+    if application is None:
+        raise NotFound()
+
+    db.session.query(OAuth2AccessToken).filter_by(
+        client_id=application.id,
+        user_id=current_user.id
+    ).update({OAuth2AccessToken.revoked: True})
+    db.session.query(OAuth2RefreshToken).filter_by(
+        client_id=application.id,
+        user_id=current_user.id
+    ).update({OAuth2RefreshToken.revoked: True})
+
+    db.session.commit()
+
+    flash.success(gettext("Revoked tokens successfully!"))
+    return redirect(url_for(".profile_applications"))
