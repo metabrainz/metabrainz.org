@@ -14,7 +14,7 @@ services:
       AUTHLIB_INSECURE_TRANSPORT: 1
 
   meb_db:
-    image: postgres:16.6
+    image: postgres:16.11
     environment:
       POSTGRES_PASSWORD: postgres
 
