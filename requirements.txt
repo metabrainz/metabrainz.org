@@ -4,7 +4,7 @@ certifi==2025.10.5
 click==8.3.0
 email_validator==2.3.0
 Flask==3.1.2
-git+https://github.com/pallets-eco/flask-admin.git@a4e7be8b08c6b95179dc691f9887d96be32b68e7
+Flask-Admin==2.0.2
 Flask-Babel==4.0.0
 Flask-Bcrypt==1.0.1
 Flask-DebugToolbar@git+https://github.com/amCap1712/flask-debugtoolbar.git@f42bb238cd3fbc79c51b93c341164c2be820025e

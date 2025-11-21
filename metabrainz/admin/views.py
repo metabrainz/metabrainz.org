@@ -50,14 +50,62 @@ class UserManagementHomeView(AdminIndexView):
         )
 
 
+class MainAdminHomeView(AdminIndexView):
+    """Main admin landing page"""
+
+    @expose('/')
+    def index(self):
+        return self.render(
+            'admin/admin_home.html',
+        )
+
+
+def _get_boolean_param(name):
+    value = request.args.get(name)
+    if value is None:
+        return None
+    if value.lower() == "true":
+        return True
+    return False
+
+
 class SupportersView(AdminBaseView):
 
     @expose('/')
     def index(self):
-        value = request.args.get('value')
-        results = Supporter.search(value) if value else []
+        page = get_int_query_param('page', default=1)
+        if page < 1:
+            return redirect(url_for('.index'))
+        limit = 20
+        offset = (page - 1) * limit
+
+        state = request.args.get('state') or None
+        search = request.args.get('search') or None
+
+        is_commercial = _get_boolean_param("is_commercial")
+        featured = _get_boolean_param("featured")
+
+        standing_arg = request.args.get('standing')
+        good_standing = None
+        if standing_arg == 'good':
+            good_standing = True
+        elif standing_arg == 'bad':
+            good_standing = False
+
+        supporters, count = Supporter.get_all_with_filters(
+            limit=limit,
+            offset=offset,
+            state=state,
+            is_commercial=is_commercial,
+            featured=featured,
+            good_standing=good_standing,
+            search=search
+        )
         return self.render('admin/supporters/index.html',
-                           value=value, results=results)
+                           supporters=supporters,
+                           page=page,
+                           limit=limit,
+                           count=count)
 
     @expose('/<int:supporter_id>')
     def details(self, supporter_id):
@@ -218,7 +266,27 @@ class CommercialSupportersView(AdminBaseView):
             return redirect(url_for('.index'))
         limit = 20
         offset = (page - 1) * limit
-        supporters, count = Supporter.get_all_commercial(limit=limit, offset=offset)
+
+        state = request.args.get('state') or None
+        search = request.args.get('search') or None
+
+        featured = _get_boolean_param('featured')
+
+        standing_arg = request.args.get('standing')
+        good_standing = None
+        if standing_arg == 'good':
+            good_standing = True
+        elif standing_arg == 'bad':
+            good_standing = False
+
+        supporters, count = Supporter.get_all_commercial(
+            limit=limit,
+            offset=offset,
+            state=state,
+            featured=featured,
+            good_standing=good_standing,
+            search=search
+        )
         return self.render('admin/commercial-supporters/index.html', supporters=supporters,
                            page=page, limit=limit, count=count)
 
@@ -375,13 +443,21 @@ class StatsView(AdminBaseView):
 
 
 class UserModelView(AdminModelView):
-    column_list = ('name', 'email', 'member_since', 'is_blocked', '')
+    column_list = ('name', 'email', 'member_since', 'is_blocked')
+    column_labels = {
+        'name': 'Username',
+        'email': 'Email',
+        'member_since': 'Member Since',
+        'is_blocked': 'Status'
+    }
     column_searchable_list = ('name', 'email')
     column_filters = ('name', 'email', 'member_since', 'is_blocked',)
     column_default_sort = ('name', True)
     can_create = False
     can_delete = False
     can_view_details = True
+    can_edit = False
+    column_display_actions = True
 
     list_template = "admin/users/index.html"
     details_template = "admin/users/details.html"

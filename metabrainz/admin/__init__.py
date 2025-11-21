@@ -18,7 +18,15 @@ class AuthMixin(object):
 
 class AdminBaseView(AuthMixin, BaseView): pass
 class AdminModelView(AuthMixin, ModelView):
-    """Admin model view with CSRF protection enabled."""
+    """Admin model view with CSRF protection enabled and themed templates."""
     form_base_class = SecureForm
+
+    list_template = "admin/model/list.html"
+    edit_template = "admin/model/edit.html"
+    create_template = "admin/model/create.html"
+
+    create_modal = False
+    edit_modal = False
+    details_modal = False
 
 class AdminIndexView(AuthMixin, IndexView): pass

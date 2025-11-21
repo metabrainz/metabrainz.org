@@ -1,48 +1,86 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h2>Supporter Management Dashboard</h2>
-  <p>Manage supporters, payments, and commercial accounts.</p>
+  <div class="page-title">
+    <i class="fa fa-users"></i> Supporter Management Dashboard
+  </div>
+  <p class="page-subtitle">Manage supporters, payments, and commercial accounts.</p>
 
   {% macro print_table(supporters) %}
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Organization Name</th>
-        <th>Contact name</th>
-        <th>Contact email</th>
-        <th>Username</th>
-        <th>Tier</th>
-        <th>Applied on</th>
-      </tr>
-      </thead>
-      {% for supporter in supporters %}
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
         <tr>
-          <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
-          <td>{{ supporter.contact_name }}</td>
-          <td>{{ supporter.user.email }}</td>
-          <td>{{ supporter.user.name }}</td>
-          <td>{{ supporter.tier }}</td>
-          <td>{{ supporter.created }}</td>
+          <th>Organization Name</th>
+          <th>Contact name</th>
+          <th>Contact email</th>
+          <th>Username</th>
+          <th>Tier</th>
+          <th>Applied on</th>
         </tr>
-      {% endfor %}
-    </table>
+        </thead>
+        <tbody>
+        {% for supporter in supporters %}
+          <tr>
+            <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
+            <td>{{ supporter.contact_name }}</td>
+            <td>{{ supporter.user.email }}</td>
+            <td>{{ supporter.user.name }}</td>
+            <td>{{ supporter.tier }}</td>
+            <td>{{ supporter.created.strftime('%Y-%m-%d %H:%M:%S') if supporter.created else 'N/A' }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
   {% endmacro %}
 
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-6">
+      <div class="stats-card-primary">
+        <h4><i class="fa fa-clock-o"></i> Pending Approval</h4>
+        <p class="count">{{ pending_supporters|length }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="stats-card-success">
+        <h4><i class="fa fa-hourglass-half"></i> Waiting List</h4>
+        <p class="count">{{ waiting_supporters|length }}</p>
+      </div>
+    </div>
+  </div>
 
-  <h3>Commercial supporters pending approval</h3>
-  {% if pending_supporters %}
-    {{ print_table(pending_supporters) }}
-  {% else %}
-    None! Go take a break. :)
-  {% endif %}
+  <div class="admin-card">
+    <h3><i class="fa fa-exclamation-circle"></i> Commercial supporters pending approval</h3>
+    {% if pending_supporters %}
+      {{ print_table(pending_supporters) }}
+    {% else %}
+      <div class="empty-state">
+        <i class="fa fa-check-circle" style="font-size: 48px; margin-bottom: 15px;"></i>
+        <p>No pending supporters! All caught up.</p>
+      </div>
+    {% endif %}
+  </div>
 
-  <h3>Commercial supporters in the waiting list</h3>
-  {% if waiting_supporters %}
-    {{ print_table(waiting_supporters) }}
-  {% else %}
-    None! Go take a break. :)
-  {% endif %}
+  <div class="admin-card">
+    <h3><i class="fa fa-list"></i> Commercial supporters in the waiting list</h3>
+    {% if waiting_supporters %}
+      {{ print_table(waiting_supporters) }}
+    {% else %}
+      <div class="empty-state">
+        <i class="fa fa-inbox" style="font-size: 48px; margin-bottom: 15px;"></i>
+        <p>No supporters in the waiting list.</p>
+      </div>
+    {% endif %}
+  </div>
 
-  <hr>
-  <p><a href="{{ url_for('user_admin.index') }}" class="btn btn-primary">Go to User Management Dashboard</a></p>
+  <div class="admin-card" style="margin-top: 20px;">
+    <h3><i class="fa fa-arrow-right"></i> Quick Navigation</h3>
+    <p class="text-muted" style="margin-bottom: 15px;">Switch to other admin areas:</p>
+    <a href="{{ url_for('main_admin.index') }}" class="btn btn-primary">
+      <i class="fa fa-home"></i> Admin Home
+    </a>
+    <a href="{{ url_for('user_admin.index') }}" class="btn btn-primary">
+      <i class="fa fa-user"></i> User Management
+    </a>
+  </div>
 {% endblock %}

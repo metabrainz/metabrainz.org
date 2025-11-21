@@ -1,4 +1,4 @@
-{% extends admin_base_template %}
+{% extends 'admin/master.html' %}
 
 {% block body %}
 {% block extra_js %}
@@ -185,4 +185,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
+
+{% block tail %}
+{{ super() }}
+{% endblock %}
+
 {% endblock %} 

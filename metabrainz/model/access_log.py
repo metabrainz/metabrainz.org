@@ -100,24 +100,26 @@ class AccessLog(db.Model):
             List of <datetime, request count> tuples for every hour.
         """
         if not supporter_id:
-            rows = db.engine.execute(
-                'SELECT max("timestamp") as ts, count(*) '
-                'FROM access_log '
-                'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
-                '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
-                'ORDER BY ts'
-            )
+            rows = db.session.execute(text("""
+                SELECT max("timestamp") as ts, count(*)
+                FROM access_log
+                GROUP BY extract(year from "timestamp"), extract(month from "timestamp"),
+                         extract(day from "timestamp"), trunc(extract(hour from "timestamp"))
+                ORDER BY ts
+            """))
         else:
-            rows = db.engine.execute(
-                'SELECT max(access_log."timestamp") as ts, count(access_log.*) '
-                'FROM access_log '
-                'JOIN token ON access_log.token = token.value '
-                'JOIN supporter ON token.owner_id = supporter.id '
-                'WHERE supporter.id = %s '
-                'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
-                '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
-                'ORDER BY ts',
-                (supporter_id,)
+            rows = db.session.execute(
+                text("""
+                    SELECT max(access_log."timestamp") as ts, count(access_log.*)
+                    FROM access_log
+                    JOIN token ON access_log.token = token.value
+                    JOIN supporter ON token.owner_id = supporter.id
+                    WHERE supporter.id = :supporter_id
+                    GROUP BY extract(year from "timestamp"), extract(month from "timestamp"),
+                             extract(day from "timestamp"), trunc(extract(hour from "timestamp"))
+                    ORDER BY ts
+                """),
+                {"supporter_id": supporter_id}
             )
         return [(
             r[0].replace(
@@ -148,14 +150,30 @@ class AccessLog(db.Model):
         Returns:
             List of <Supporter, request count> pairs
         """
-        query = db.session.query(func.count("AccessLog.*").label("count")) \
-            .select_from(Supporter).join(Token).join(AccessLog) \
-            .filter(cls.timestamp > datetime.now() - timedelta(days=1)) \
-            .group_by(Supporter.id) \
-            .order_by(text("count DESC"))
+        count_query = db.session.query(
+            Token.owner_id.label("supporter_id"),
+            func.count(cls.token).label("count")
+        ).select_from(cls) \
+        .join(Token) \
+        .filter(cls.timestamp > datetime.now() - timedelta(days=1)) \
+        .group_by(Token.owner_id) \
+        .order_by(text("count DESC"))
+
         if limit:
-            query = query.limit(limit)
-        return query.all()
+            count_query = count_query.limit(limit)
+
+        count_results = count_query.all()
+
+        if not count_results:
+            return []
+
+        counts_dict = {row.supporter_id: row.count for row in count_results}
+        supporter_ids = list(counts_dict.keys())
+
+        supporters = Supporter.query.filter(Supporter.id.in_(supporter_ids)).all()
+        result = [(supporter, counts_dict[supporter.id]) for supporter in supporters]
+        result.sort(key=lambda x: x[1], reverse=True)
+        return result
 
     @classmethod
     def top_ips(cls, days=7, limit=None):

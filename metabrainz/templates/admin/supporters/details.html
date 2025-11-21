@@ -1,46 +1,48 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h1>supporters</h1>
-  <hr />
-
-  <div class="row">
-    <div class="col-sm-8 pull-left">
-      <h2 style="margin-top:0px;">
-        Supporter
-        {% if supporter.is_commercial %}
-          <strong>{{ supporter.org_name }}</strong>
-          ({{ supporter.user.name }})
-        {% else %}
-          {{ supporter.user.name }}
-        {% endif %}
-        <small>
-          #{{ supporter.id }}
-        </small>
-      </h2>
-      <p class="text-muted"><em>Created on {{ supporter.created }}.</em></p>
-    </div>
-    {% if supporter.logo_filename %}
-      <div class="col-sm-4 pull-right">
-        <img src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}" style="max-width:280px;max-height:73px;" />
-      </div>
-    {% elif supporter.org_logo_url %}
-      <div class="col-sm-4 pull-right">
-        <img src="{{ supporter.org_logo_url }}" style="max-width:280px;max-height:73px;" />
-      </div>
-    {% endif %}
+  <div class="page-title" style="margin-bottom: 5px;">
+    <i class="fa fa-user-circle"></i> Supporter Details
   </div>
 
-  <form method="POST" action="{{ url_for('supporter_model.delete_view') }}">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <input id="id" name="id" type="hidden" value="{{ supporter.id }}">
-    <input id="url" name="url" type="hidden" value="{{ url_for('supporter_model.index_view') }}">
-    <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}"
-       class="btn btn-primary" role="button">Edit supporter</a>
-    <button onclick="return confirm('Are you sure you want to delete this supporter?');"
-            class="btn btn-danger">Delete supporter</button>
-  </form>
+  <div class="admin-card" style="margin-bottom: 25px;">
+    <div class="row">
+      <div class="col-sm-8">
+        <h2 style="margin-top:0; color: #2d3748; font-weight: 700;">
+          {% if supporter.is_commercial %}
+            <strong>{{ supporter.org_name }}</strong>
+            <small class="text-muted" style="font-size: 18px;">({{ supporter.user.name }})</small>
+          {% else %}
+            {{ supporter.user.name }}
+          {% endif %}
+          <span class="badge" style="background-color: #e2e8f0; color: #4a5568; font-size: 14px;">
+            #{{ supporter.id }}
+          </span>
+        </h2>
+        <p class="text-muted"><i class="fa fa-calendar"></i> Created on {{ supporter.created.strftime('%Y-%m-%d %H:%M:%S') if supporter.created else 'N/A' }}</p>
 
-  <h3>General info</h3>
+        <div style="margin-top: 20px;">
+          <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}"
+             class="btn btn-primary" role="button">
+            <i class="fa fa-edit"></i> Edit supporter
+          </a>
+        </div>
+      </div>
+      {% if supporter.logo_filename %}
+        <div class="col-sm-4 text-right">
+          <img src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"
+               class="supporter-logo" style="max-width:280px; max-height:73px;" />
+        </div>
+      {% elif supporter.org_logo_url %}
+        <div class="col-sm-4 text-right">
+          <img src="{{ supporter.org_logo_url }}"
+               class="supporter-logo" style="max-width:280px; max-height:73px;" />
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <h3><i class="fa fa-info-circle"></i> General info</h3>
   <div class="row">
 
     <div class="form-group col-md-6">
@@ -66,8 +68,10 @@
     </div>
 
   </div>
+  </div>
 
-  <h3>Data access</h3>
+  <div class="admin-card">
+    <h3><i class="fa fa-database"></i> Data access</h3>
   <div class="row">
     <div class="form-group col-md-6">
       <label>State</label>
@@ -88,8 +92,10 @@
       </ul>
     </div>
   </div>
+  </div>
 
-  <h3>Commercial info</h3>
+  <div class="admin-card">
+    <h3><i class="fa fa-building"></i> Commercial info</h3>
   <div class="row">
 
     <div style="font-size:15px;font-weight:bold;margin-bottom:20px" class="col-md-12">
@@ -118,10 +124,11 @@
     {% endif %}
 
   </div>
+  </div>
 
   {% if supporter.is_commercial %}
-
-    <h4>Address</h4>
+  <div class="admin-card">
+    <h4><i class="fa fa-map-marker"></i> Address</h4>
     <div class="row">
       <div class="form-group col-md-6">
         <label>Street</label>
@@ -144,8 +151,10 @@
         <input class="form-control" type="text" value="{{ supporter.address_country }}" readonly>
       </div>
     </div>
+  </div>
 
-    <h4>Financial info</h4>
+  <div class="admin-card">
+    <h4><i class="fa fa-dollar"></i> Financial info</h4>
     <div class="row">
       <div class="form-group col-md-6">
         <label>Tier</label>
@@ -159,8 +168,10 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <h3>Promotion</h3>
+  <div class="admin-card">
+    <h3><i class="fa fa-star"></i> Promotion</h3>
     <div class="row">
 
     <div style="font-size:15px;font-weight:bold;margin-bottom:20px" class="col-md-12">
@@ -190,11 +201,13 @@
       </div>
 
     {% endif %}
-
+  </div>
+  </div>
   {% endif %}
 
   {% if supporter.state == 'pending' or supporter.state == 'waiting' %}
-    <h3>State modification</h3>
+  <div class="admin-card" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); color: #2d3748;">
+    <h3><i class="fa fa-edit"></i> State modification</h3>
     <div>
       <p>
         <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id) }}"
@@ -216,14 +229,16 @@
         </em>
       </p>
     </div>
+  </div>
   {% endif %}
 
-  <h3>Active tokens</h3>
+  <div class="admin-card">
+    <h3><i class="fa fa-key"></i> Active tokens</h3>
   {% if active_tokens %}
     <p class="text-muted">
       <em>
         If you need to revoke existing tokens <b>and</b> prevent supporter from
-        generating new ones, <a href="{{ url_for('supporter_model.edit_view', id=supporter.id) }}">
+        generating new ones, <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}">
         set their status</a> to <code>rejected</code>.
       </em>
     </p>
@@ -238,7 +253,7 @@
       {% for token in active_tokens %}
         <tr>
           <td>{{ token.value }}</td>
-          <td>{{ token.created }}</td>
+          <td>{{ token.created.strftime('%Y-%m-%d %H:%M:%S') if token.created else 'N/A' }}</td>
           <td><a href="{{ url_for('supportersview.revoke_token', token_value=token.value) }}"
                  class="btn btn-warning" role="button"
                  title="Revoke this access token">Revoke</a></td>
@@ -246,21 +261,26 @@
       {% endfor %}
     </table>
   {% else %}
-    This supporter has no active access tokens.
+    <div class="empty-state">
+      <i class="fa fa-key" style="font-size: 48px; margin-bottom: 15px;"></i>
+      <p>This supporter has no active access tokens.</p>
+    </div>
   {% endif %}
+  </div>
 
-  <h3>Hourly API usage</h3>
-  <div id="chart"><svg style="height:500px; width:100%;"></svg></div>
+  <div class="admin-card">
+    <h3><i class="fa fa-line-chart"></i> Hourly API usage</h3>
+    <div id="chart" style="height:500px; width:100%;"></div>
+  </div>
 {% endblock %}
 
 {% block tail_js %}
   {{ super() }}
 
-  <script src="{{ url_for('static', filename="js/highstock.js") }}"></script>
   <script>
-    $(function () {
+    jQuery(function ($) {
       $.getJSON('{{ url_for('supportersview.details_stats', supporter_id=supporter.id) }}', function (data) {
-        $("#chart").highcharts("StockChart", {
+        Highcharts.stockChart('chart', {
           rangeSelector: { selected: 1 },
           series: data,
           yAxis: { min: 0 },
