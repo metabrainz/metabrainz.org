@@ -1,0 +1,45 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <div class="page-title">
+    <i class="fa fa-shield"></i> MetaBrainz Admin
+  </div>
+  <p class="page-subtitle">Choose an admin section to manage</p>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="admin-card" style="min-height: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h2 style="margin-top: 0; color: #eb743b;">
+            <i class="fa fa-users"></i> Supporter Management
+          </h2>
+          <p class="text-muted" style="font-size: 16px; margin-bottom: 20px;">
+            Manage supporters, payments, commercial accounts, and API access tokens.
+          </p>
+        </div>
+        <div>
+          <a href="{{ url_for('supporter_admin.index') }}" class="btn btn-primary btn-lg">
+            <i class="fa fa-arrow-right"></i> Go to Supporter Management
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="admin-card" style="min-height: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h2 style="margin-top: 0; color: #44a248;">
+            <i class="fa fa-user"></i> User Management
+          </h2>
+          <p class="text-muted" style="font-size: 16px; margin-bottom: 20px;">
+            Manage user accounts, verify emails, handle moderation, and configure webhooks.
+          </p>
+        </div>
+        <div>
+          <a href="{{ url_for('user_admin.index') }}" class="btn btn-success btn-lg">
+            <i class="fa fa-arrow-right"></i> Go to User Management
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

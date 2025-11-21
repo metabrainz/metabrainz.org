@@ -1,76 +1,93 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h1>Statistics</h1>
+  <div class="page-title">
+    <i class="fa fa-bar-chart"></i> Statistics Overview
+  </div>
+  <p class="page-subtitle">Monitor API usage and supporter activity</p>
 
-  <p>
-    <strong>Active supporters:  {{ active_supporter_count }}</strong>
-    <em class="text-muted">(used API in the last 24 hours)</em>
-  </p>
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-12">
+      <div class="stats-card-primary">
+        <h4><i class="fa fa-users"></i> Active Supporters (Last 24 Hours)</h4>
+        <p class="count">{{ active_supporter_count }}</p>
+        <p style="opacity: 0.9; margin: 0; font-size: 14px;">Supporters who used the API</p>
+      </div>
+    </div>
+  </div>
 
   {% if top_downloaders %}
-    <p>
-      <strong>Top downloaders (last 24 hours):</strong>
-      <ol>
-        {% for supporter, req_count in top_downloaders %}
-          <li>
-            <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.user.name }}</a>
-            {{ '('+supporter.org_name+')' if supporter.is_commercial }}
-            - {{ req_count }} requests
-          </li>
-        {% endfor %}
-      </ol>
-    </p>
+  <div class="admin-card">
+    <h3><i class="fa fa-trophy"></i> Top Downloaders (Last 24 Hours)</h3>
+    <ol style="padding-left: 20px;">
+      {% for supporter, req_count in top_downloaders %}
+        <li class="list-item-border">
+          <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}" style="font-weight: 600;">
+            {{ supporter.user.name }}
+          </a>
+          {% if supporter.is_commercial %}
+            <span class="text-muted">({{ supporter.org_name }})</span>
+          {% endif %}
+          <span class="badge-orange" style="float: right;">{{ req_count }} requests</span>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
   {% endif %}
 
   {% if token_actions %}
-    <p>
-      <strong>Last access token changes:</strong>
-      <ol>
-        {% for action in token_actions %}
-          <li>
-            {% if action.supporter %}
-              <a href="{{ url_for('supportersview.details', supporter_id=action.supporter.id) }}">{{ action.supporter.user.name }}</a>
-            {% else %}
-              Deleted Supporter
+  <div class="admin-card">
+    <h3><i class="fa fa-key"></i> Recent Access Token Changes</h3>
+    <ol style="padding-left: 20px;">
+      {% for action in token_actions %}
+        <li class="list-item-border">
+          {% if action.supporter %}
+            <a href="{{ url_for('supportersview.details', supporter_id=action.supporter.id) }}">{{ action.supporter.user.name }}</a>
+          {% else %}
+            <span class="text-muted">Deleted Supporter</span>
+          {% endif %}
+          {% if action.supporter.id == action.token.owner.id %}
+            {% if action.action == "create" %}
+              <span class="text-green">generated their token</span>
+            {% elif action.action == "deactivate" %}
+              <span class="text-danger">revoked their token</span>
             {% endif %}
-            {% if action.supporter.id == action.token.owner.id %}
-              {% if action.action == "create" %}
-                generated their token:
-              {% elif action.action == "deactivate" %}
-                revoked their token:
-              {% endif %}
-            {% else %}
-              {% if action.action == "create" %}
-                generated new token for supporter
-              {% elif action.action == "deactivate" %}
-                revoked token owned by supporter
-              {% endif %}
-              {% if action.token.owner %}
-                  <a href="{{ url_for('supportersview.details', supporter_id=action.token.owner.id) }}">{{ action.token.owner }}</a>:
-              {% else %}
-                  [ invalid owner row suppressed ]
-              {% endif %}
+          {% else %}
+            {% if action.action == "create" %}
+              <span class="text-green">generated new token for supporter</span>
+            {% elif action.action == "deactivate" %}
+              <span class="text-danger">revoked token owned by supporter</span>
             {% endif %}
-            <code class="text-muted">{{ action.token_value }}</code>
-          </li>
-        {% endfor %}
-      </ol>
-      <a href="{{ url_for('statsview.token_log') }}">View all changes...</a>
-    </p>
+            {% if action.token.owner %}
+                <a href="{{ url_for('supportersview.details', supporter_id=action.token.owner.id) }}">{{ action.token.owner }}</a>
+            {% else %}
+                <span class="text-muted">[ invalid owner ]</span>
+            {% endif %}
+          {% endif %}
+          <code>{{ action.token_value }}</code>
+        </li>
+      {% endfor %}
+    </ol>
+    <div style="margin-top: 15px;">
+      <a href="{{ url_for('statsview.token_log') }}" class="btn btn-primary">
+        <i class="fa fa-list"></i> View All Changes
+      </a>
+    </div>
+  </div>
   {% endif %}
 
-  <h3>Hourly API usage</h3>
-  <div id="chart"><svg style="height:500px; width:100%;"></svg></div>
+  <div class="admin-card">
+    <h3><i class="fa fa-line-chart"></i> Hourly API Usage</h3>
+    <div id="chart" style="height:500px; width:100%;"></div>
+  </div>
 {% endblock %}
 
 {% block tail_js %}
   {{ super() }}
 
-  <script src="{{ url_for('static', filename="js/highstock.js") }}"></script>
   <script>
-    $(function () {
+    jQuery(function ($) {
       $.getJSON('{{ url_for('statsview.hourly_usage_data') }}', function (data) {
-        $("#chart").highcharts("StockChart", {
+        Highcharts.stockChart('chart', {
           rangeSelector: { selected: 1 },
           series: data,
           yAxis: { min: 0 },

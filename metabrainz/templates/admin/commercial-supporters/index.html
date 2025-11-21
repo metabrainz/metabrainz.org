@@ -1,77 +1,193 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h1>Supporters</h1>
+  <div class="page-title">
+    <i class="fa fa-building"></i> Commercial Supporters
+  </div>
+  <p class="page-subtitle">View and manage all commercial supporter accounts</p>
 
-  <h2>Commercial supporters</h2>
-  {% if supporters %}
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Organization (MusicBrainz ID)</th>
-        <th>State</th>
-        <th>Contact name</th>
-        <th>Contact email</th>
-        <th>Standing</th>
-        <th>Tier</th>
-        <th>Featured</th>
-        <th>{# Buttons #}</th>
-      </tr>
-      </thead>
-      {% for supporter in supporters %}
+  <div class="admin-card" style="margin-bottom: 25px;">
+    <h3><i class="fa fa-filter"></i> Filters & Search</h3>
+    <form method="GET" action="{{ url_for('commercialsupportersview.index') }}">
+      <div class="row">
+        <div class="col-md-12" style="margin-bottom: 15px;">
+          <label><strong>Search</strong></label>
+          <input type="text" name="search" class="form-control"
+                 value="{{ request.args.get('search', '') }}"
+                 placeholder="Search by organization, username, contact name, or email...">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label><strong>State</strong></label>
+            <select name="state" class="form-control">
+              <option value="">All States</option>
+              <option value="active" {% if request.args.get('state') == 'active' %}selected{% endif %}>Active</option>
+              <option value="pending" {% if request.args.get('state') == 'pending' %}selected{% endif %}>Pending</option>
+              <option value="waiting" {% if request.args.get('state') == 'waiting' %}selected{% endif %}>Waiting</option>
+              <option value="rejected" {% if request.args.get('state') == 'rejected' %}selected{% endif %}>Rejected</option>
+              <option value="limited" {% if request.args.get('state') == 'limited' %}selected{% endif %}>Limited</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label><strong>Featured</strong></label>
+            <select name="featured" class="form-control">
+              <option value="">All</option>
+              <option value="true" {% if request.args.get('featured') == 'true' %}selected{% endif %}>Featured Only</option>
+              <option value="false" {% if request.args.get('featured') == 'false' %}selected{% endif %}>Not Featured</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label><strong>Standing</strong></label>
+            <select name="standing" class="form-control">
+              <option value="">All</option>
+              <option value="good" {% if request.args.get('standing') == 'good' %}selected{% endif %}>Good Standing</option>
+              <option value="bad" {% if request.args.get('standing') == 'bad' %}selected{% endif %}>Bad Standing</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="text-right">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-filter"></i> Apply Filters
+        </button>
+        <a href="{{ url_for('commercialsupportersview.index') }}" class="btn btn-secondary" style="background-color: #e2e8f0 !important; color: #4a5568 !important; border: 1px solid #cbd5e0 !important;">
+          <i class="fa fa-times"></i> Clear
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <div class="admin-card">
+    <h3><i class="fa fa-list"></i> Commercial Supporters List ({{ count }} total)</h3>
+    {% if supporters %}
+      <table class="table table-striped">
+        <thead>
         <tr>
-          <td>
-            <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">
-              <strong>{{ supporter.org_name }}</strong>
-              ({{ supporter.user.name }})
+          <th style="min-width: 100px;">Actions</th>
+          <th>Organization (MusicBrainz ID)</th>
+          <th>State</th>
+          <th>Contact name</th>
+          <th>Contact email</th>
+          <th>Standing</th>
+          <th>Tier</th>
+          <th>Featured</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for supporter in supporters %}
+        <tr>
+          <td style="white-space: nowrap;">
+            <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}"
+               class="btn btn-secondary btn-sm" role="button" title="Details">
+              <i class="fa fa-eye"></i>
+            </a>
+            <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}"
+               class="btn btn-primary btn-sm" role="button" title="Edit">
+              <i class="fa fa-edit"></i>
             </a>
           </td>
           <td>
+            <strong>{{ supporter.org_name }}</strong>
+            ({{ supporter.user.name }})
+          </td>
+          <td>
             {% if supporter.state == 'active' %}
-              <span class="label label-success">Active</span>
+              <span class="badge bg-success">Active</span>
             {% elif supporter.state == 'pending' %}
-              <span class="label label-warning">Pending</span>
+              <span class="badge" style="background-color: #ed8936;">Pending</span>
             {% elif supporter.state == 'waiting' %}
-              <span class="label label-warning">Waiting</span>
+              <span class="badge" style="background-color: #ed8936;">Waiting</span>
+            {% elif supporter.state == 'limited' %}
+              <span class="badge" style="background-color: #718096;">Limited</span>
+            {% elif supporter.state == 'rejected' %}
+              <span class="badge bg-danger">Rejected</span>
             {% else %}
-              <span class="label label-important">Rejected</span>
+              <span class="badge" style="background-color: #718096;">Unknown</span>
             {% endif %}
           </td>
           <td>{{ supporter.contact_name }}</td>
           <td>{{ supporter.user.email }}</td>
           <td>
             {% if supporter.good_standing %}
-              <span class="label label-success">Good standing</span>
+              <span class="badge bg-success">Good</span>
             {% else %}
-              <span class="label label-important">Bad standing</span>
+              <span class="badge bg-danger">Bad</span>
             {% endif %}
           </td>
           <td>{{ supporter.tier }}</td>
           <td>
             {% if supporter.featured %}
-              <span class="label label-success">Featured</span>
+              <span class="badge badge-orange"><i class="fa fa-star"></i> Featured</span>
             {% else %}
-              <span class="label label-default">Not featured</span>
+              <span class="badge badge-not-featured">Not featured</span>
             {% endif %}
           </td>
-          <td>
-            <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}"
-               class="btn btn-xs btn-primary" role="button">Edit</a>
-          </td>
         </tr>
-      {% endfor %}
-    </table>
+        {% endfor %}
+        </tbody>
+      </table>
 
-    {% if count > limit %}
-      <ul class="pager">
-        {% if page > 1 %}
-          <li class="previous"><a href="{{ url_for('commercialsupportersview.index', page=page-1) }}">&larr; Previous</a></li>
-        {% endif %}
-        {% if page-1 < count//limit %}
-          <li class="next"><a href="{{ url_for('commercialsupportersview.index', page=page+1) }}">Next &rarr;</a></li>
-        {% endif %}
-      </ul>
+      {% if count > limit %}
+        <div style="margin-top: 20px; text-align: center;">
+          <div class="btn-group" role="group">
+            {% if page > 1 %}
+              <a href="{{ url_for('commercialsupportersview.index', page=page-1, state=request.args.get('state', ''), featured=request.args.get('featured', ''), standing=request.args.get('standing', ''), search=request.args.get('search', '')) }}"
+                 class="btn btn-primary">
+                <i class="fa fa-arrow-left"></i> Previous
+              </a>
+            {% endif %}
+
+            {% set total_pages = (count // limit) + 1 %}
+            {% set start_page = [1, page - 2]|max %}
+            {% set end_page = [total_pages, page + 2]|min %}
+
+            {% if start_page > 1 %}
+              <a href="{{ url_for('commercialsupportersview.index', page=1, state=request.args.get('state', ''), featured=request.args.get('featured', ''), standing=request.args.get('standing', ''), search=request.args.get('search', '')) }}"
+                 class="btn btn-secondary" style="background-color: #e2e8f0 !important; color: #4a5568 !important; border: 1px solid #cbd5e0 !important;">
+                1
+              </a>
+              {% if start_page > 2 %}
+                <span class="btn btn-secondary" style="background-color: #f7fafc !important; color: #4a5568 !important; border: 1px solid #cbd5e0 !important; cursor: default;">...</span>
+              {% endif %}
+            {% endif %}
+
+            {% for p in range(start_page, end_page + 1) %}
+              <a href="{{ url_for('commercialsupportersview.index', page=p, state=request.args.get('state', ''), featured=request.args.get('featured', ''), standing=request.args.get('standing', ''), search=request.args.get('search', '')) }}"
+                 class="btn {{ 'btn-primary' if p == page else 'btn-secondary' }}"
+                 {% if p != page %}style="background-color: #e2e8f0 !important; color: #4a5568 !important; border: 1px solid #cbd5e0 !important;"{% endif %}>
+                {{ p }}
+              </a>
+            {% endfor %}
+
+            {% if end_page < total_pages %}
+              {% if end_page < total_pages - 1 %}
+                <span class="btn btn-secondary" style="background-color: #f7fafc !important; color: #4a5568 !important; border: 1px solid #cbd5e0 !important; cursor: default;">...</span>
+              {% endif %}
+              <a href="{{ url_for('commercialsupportersview.index', page=total_pages, state=request.args.get('state', ''), featured=request.args.get('featured', ''), standing=request.args.get('standing', ''), search=request.args.get('search', '')) }}"
+                 class="btn btn-secondary" style="background-color: #e2e8f0 !important; color: #4a5568 !important; border: 1px solid #cbd5e0 !important;">
+                {{ total_pages }}
+              </a>
+            {% endif %}
+
+            {% if page < total_pages %}
+              <a href="{{ url_for('commercialsupportersview.index', page=page+1, state=request.args.get('state', ''), featured=request.args.get('featured', ''), standing=request.args.get('standing', ''), search=request.args.get('search', '')) }}"
+                 class="btn btn-primary">
+                Next <i class="fa fa-arrow-right"></i>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="empty-state">
+        <i class="fa fa-building" style="font-size: 48px; margin-bottom: 15px;"></i>
+        <p>No commercial supporters found.</p>
+      </div>
     {% endif %}
-  {% else %}
-    None!
-  {% endif %}
+  </div>
 {% endblock %}

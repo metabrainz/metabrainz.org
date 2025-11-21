@@ -462,8 +462,44 @@ class PaymentAdminView(AdminModelView):
         'anonymous',
     )
 
+    can_create = False
+    can_delete = False
+    can_view_details = True
+    can_edit = True
+
+    column_details_list = (
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'is_donation',
+        'amount',
+        'fee',
+        'currency',
+        'payment_date',
+        'payment_method',
+        'transaction_id',
+        'address_street',
+        'address_city',
+        'address_state',
+        'address_postcode',
+        'address_country',
+        'editor_name',
+        'can_contact',
+        'anonymous',
+        'invoice_number',
+        'memo',
+    )
+
+    details_template = 'admin/payments/details.html'
+    edit_template = 'admin/payments/edit.html'
+
     def __init__(self, session, **kwargs):
         super(PaymentAdminView, self).__init__(Payment, session, name='Payments', **kwargs)
+
+    def is_visible(self):
+        # Hide from menu - accessed only via edit/details links
+        return False
 
     def after_model_change(self, form, new_donation, is_created):
         if is_created:

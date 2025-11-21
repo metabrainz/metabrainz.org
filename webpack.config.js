@@ -44,6 +44,7 @@ module.exports = function (env, argv) {
       // Otherwise with a standalone entrypoint Webpack would generate a superfluous js file.
       // All the Less/CSS will be exported separately to a main.css file and not appear in the main module
       main: path.resolve(cssDir, "main.less"),
+      admin: path.resolve(cssDir, "admin.css"),
       signupCommercial: path.resolve(jsDir, "src/forms/SignupCommercial.tsx"),
       signupNonCommercial: path.resolve(
         jsDir,
@@ -92,6 +93,13 @@ module.exports = function (env, argv) {
               math: "always",
               plugins: [new LessPluginCleanCSS({ advanced: true })],
             },
+          },
+        },
+        {
+          test: /\.css$/i,
+          type: "asset/resource",
+          generator: {
+            filename: isProd ? "[name].[contenthash].css" : "[name].css",
           },
         },
       ],

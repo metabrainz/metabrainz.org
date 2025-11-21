@@ -1,6 +1,9 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h2>Welcome!</h2>
+  <div class="page-title">
+    <i class="fa fa-dashboard"></i> Admin Dashboard
+  </div>
+  <p class="page-subtitle">Welcome to the MetaBrainz administration panel</p>
 
   {% macro print_table(supporters) %}
     <table class="table table-striped">
@@ -14,6 +17,7 @@
         <th>Applied on</th>
       </tr>
       </thead>
+      <tbody>
       {% for supporter in supporters %}
         <tr>
           <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
@@ -21,24 +25,49 @@
           <td>{{ supporter.user.email }}</td>
           <td>{{ supporter.user.name }}</td>
           <td>{{ supporter.tier }}</td>
-          <td>{{ supporter.created }}</td>
+          <td>{{ supporter.created.strftime('%Y-%m-%d %H:%M:%S') if supporter.created else 'N/A' }}</td>
         </tr>
       {% endfor %}
+      </tbody>
     </table>
   {% endmacro %}
 
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-6">
+      <div class="stats-card-primary">
+        <h4><i class="fa fa-clock-o"></i> Pending Approval</h4>
+        <p class="count">{{ pending_supporters|length }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="stats-card-success">
+        <h4><i class="fa fa-hourglass-half"></i> Waiting List</h4>
+        <p class="count">{{ waiting_supporters|length }}</p>
+      </div>
+    </div>
+  </div>
 
-  <h3>Commercial supporters pending approval</h3>
-  {% if pending_supporters %}
-    {{ print_table(pending_supporters) }}
-  {% else %}
-    None! Go take a break. :)
-  {% endif %}
+  <div class="admin-card">
+    <h3><i class="fa fa-exclamation-circle"></i> Commercial supporters pending approval</h3>
+    {% if pending_supporters %}
+      {{ print_table(pending_supporters) }}
+    {% else %}
+      <div class="empty-state">
+        <i class="fa fa-check-circle" style="font-size: 48px; margin-bottom: 15px;"></i>
+        <p>No pending supporters! All caught up.</p>
+      </div>
+    {% endif %}
+  </div>
 
-  <h3>Commercial supporters in the waiting list</h3>
-  {% if waiting_supporters %}
-    {{ print_table(waiting_supporters) }}
-  {% else %}
-    None! Go take a break. :)
-  {% endif %}
+  <div class="admin-card">
+    <h3><i class="fa fa-list"></i> Commercial supporters in the waiting list</h3>
+    {% if waiting_supporters %}
+      {{ print_table(waiting_supporters) }}
+    {% else %}
+      <div class="empty-state">
+        <i class="fa fa-inbox" style="font-size: 48px; margin-bottom: 15px;"></i>
+        <p>No supporters in the waiting list.</p>
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}

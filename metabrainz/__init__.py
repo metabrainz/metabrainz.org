@@ -143,9 +143,20 @@ def create_app(debug=None, config_path=None):
     # Blueprints
     _register_blueprints(app)
 
-    from metabrainz.admin.views import SupporterManagementHomeView, UserManagementHomeView
+    from metabrainz.admin.views import SupporterManagementHomeView, UserManagementHomeView, MainAdminHomeView
 
-    # Supporter Management Admin
+    main_admin = Admin(
+        app,
+        name="MetaBrainz Admin",
+        index_view=MainAdminHomeView(
+            name="Admin Home",
+            url="/admin",
+            endpoint="main_admin"
+        ),
+        url="/admin",
+        endpoint="main_admin",
+    )
+
     supporter_admin = Admin(
         app,
         name="Supporter Management",
@@ -158,25 +169,22 @@ def create_app(debug=None, config_path=None):
         endpoint="supporter_admin",
     )
 
-    from metabrainz.model.supporter import SupporterAdminView
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
     from metabrainz.model.dataset import DatasetAdminView
-    supporter_admin.add_view(SupporterAdminView(model.db.session, category="Supporters", endpoint="supporter_model"))
-    supporter_admin.add_view(PaymentAdminView(model.db.session, category="Payments", endpoint="payment_model"))
-    supporter_admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
-    supporter_admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
-
     from metabrainz.admin.views import CommercialSupportersView
     from metabrainz.admin.views import SupportersView
     from metabrainz.admin.views import PaymentsView
     from metabrainz.admin.views import TokensView
     from metabrainz.admin.views import StatsView
 
+    supporter_admin.add_view(SupportersView(name="All Supporters", category="Supporters"))
     supporter_admin.add_view(CommercialSupportersView(name="Commercial supporters", category="Supporters"))
-    supporter_admin.add_view(SupportersView(name="Search", category="Supporters"))
-    supporter_admin.add_view(PaymentsView(name="All", category="Payments"))
     supporter_admin.add_view(TokensView(name="Access tokens", category="Supporters"))
+    supporter_admin.add_view(PaymentsView(name="All", category="Payments"))
+    supporter_admin.add_view(PaymentAdminView(model.db.session, endpoint="payment_model"))
+    supporter_admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
+    supporter_admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
     supporter_admin.add_view(StatsView(name="Statistics", category="Statistics"))
     supporter_admin.add_view(StatsView(name="Top IPs", endpoint="statsview/top-ips", category="Statistics"))
     supporter_admin.add_view(StatsView(name="Top Tokens", endpoint="statsview/top-tokens", category="Statistics"))
@@ -186,7 +194,6 @@ def create_app(debug=None, config_path=None):
         from metabrainz.admin.quickbooks.views import QuickBooksView
         supporter_admin.add_view(QuickBooksView(name="Invoices", endpoint="quickbooks/", category="Quickbooks"))
 
-    # User Management Admin
     user_admin = Admin(
         app,
         name="User Management",
