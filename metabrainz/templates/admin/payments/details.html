@@ -1,0 +1,172 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+  <div class="page-title">
+    <i class="fa fa-eye"></i> Payment Details
+  </div>
+  <p class="page-subtitle">
+    View payment information
+  </p>
+
+  <div class="admin-card" style="margin-bottom: 25px;">
+    <div class="btn-group" role="group">
+      <a href="{{ get_url('paymentsview.list') }}" class="btn btn-secondary">
+        <i class="fa fa-list"></i> {{ _gettext('Back to List') }}
+      </a>
+      {% if admin_view.can_edit %}
+      <a href="{{ get_url('.edit_view', id=model.id, url=return_url) }}" class="btn btn-primary">
+        <i class="fa fa-edit"></i> {{ _gettext('Edit') }}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="row">
+      <div class="col-md-6">
+        <h4 style="margin-bottom: 20px; color: #2d3748;">
+          <i class="fa fa-user"></i> Personal Information
+        </h4>
+        <dl class="row">
+          <dt class="col-sm-4">ID:</dt>
+          <dd class="col-sm-8"><code>{{ model.id }}</code></dd>
+
+          <dt class="col-sm-4">First Name:</dt>
+          <dd class="col-sm-8">{{ model.first_name }}</dd>
+
+          <dt class="col-sm-4">Last Name:</dt>
+          <dd class="col-sm-8">{{ model.last_name }}</dd>
+
+          <dt class="col-sm-4">Email:</dt>
+          <dd class="col-sm-8">{{ model.email }}</dd>
+
+          {% if model.editor_name %}
+          <dt class="col-sm-4">MusicBrainz Username:</dt>
+          <dd class="col-sm-8">{{ model.editor_name }}</dd>
+          {% endif %}
+        </dl>
+      </div>
+
+      <div class="col-md-6">
+        <h4 style="margin-bottom: 20px; color: #2d3748;">
+          <i class="fa fa-credit-card"></i> Transaction Details
+        </h4>
+        <dl class="row">
+          <dt class="col-sm-4">Type:</dt>
+          <dd class="col-sm-8">
+            {% if model.is_donation %}
+              <span class="badge bg-success"><i class="fa fa-heart"></i> Donation</span>
+            {% else %}
+              <span class="badge badge-orange"><i class="fa fa-credit-card"></i> Payment</span>
+            {% endif %}
+          </dd>
+
+          <dt class="col-sm-4">Amount:</dt>
+          <dd class="col-sm-8"><strong>{{ model.amount }} {{ model.currency|upper }}</strong></dd>
+
+          {% if model.fee %}
+          <dt class="col-sm-4">Fee:</dt>
+          <dd class="col-sm-8">{{ model.fee }} {{ model.currency|upper }}</dd>
+          {% endif %}
+
+          <dt class="col-sm-4">Payment Date:</dt>
+          <dd class="col-sm-8">{{ model.payment_date|datetime }}</dd>
+
+          {% if model.payment_method %}
+          <dt class="col-sm-4">Payment Method:</dt>
+          <dd class="col-sm-8">{{ model.payment_method }}</dd>
+          {% endif %}
+
+          {% if model.transaction_id %}
+          <dt class="col-sm-4">Transaction ID:</dt>
+          <dd class="col-sm-8"><code>{{ model.transaction_id }}</code></dd>
+          {% endif %}
+
+          {% if model.invoice_number %}
+          <dt class="col-sm-4">Invoice Number:</dt>
+          <dd class="col-sm-8">{{ model.invoice_number }}</dd>
+          {% endif %}
+        </dl>
+      </div>
+    </div>
+
+    <hr style="margin: 20px 0;">
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4 style="margin-bottom: 20px; color: #2d3748;">
+          <i class="fa fa-map-marker"></i> Address
+        </h4>
+        <dl class="row">
+          {% if model.address_street %}
+          <dt class="col-sm-4">Street:</dt>
+          <dd class="col-sm-8">{{ model.address_street }}</dd>
+          {% endif %}
+
+          {% if model.address_city %}
+          <dt class="col-sm-4">City:</dt>
+          <dd class="col-sm-8">{{ model.address_city }}</dd>
+          {% endif %}
+
+          {% if model.address_state %}
+          <dt class="col-sm-4">State:</dt>
+          <dd class="col-sm-8">{{ model.address_state }}</dd>
+          {% endif %}
+
+          {% if model.address_postcode %}
+          <dt class="col-sm-4">Postal Code:</dt>
+          <dd class="col-sm-8">{{ model.address_postcode }}</dd>
+          {% endif %}
+
+          {% if model.address_country %}
+          <dt class="col-sm-4">Country:</dt>
+          <dd class="col-sm-8">{{ model.address_country }}</dd>
+          {% endif %}
+
+          {% if not model.address_street and not model.address_city and not model.address_state and not model.address_postcode and not model.address_country %}
+          <dd class="col-sm-12 text-muted">No address information available</dd>
+          {% endif %}
+        </dl>
+      </div>
+
+      {% if model.is_donation %}
+      <div class="col-md-6">
+        <h4 style="margin-bottom: 20px; color: #2d3748;">
+          <i class="fa fa-cog"></i> Donation Preferences
+        </h4>
+        <dl class="row">
+          <dt class="col-sm-4">Can Contact:</dt>
+          <dd class="col-sm-8">
+            {% if model.can_contact %}
+              <span class="badge bg-success">Yes</span>
+            {% else %}
+              <span class="badge bg-secondary">No</span>
+            {% endif %}
+          </dd>
+
+          <dt class="col-sm-4">Anonymous:</dt>
+          <dd class="col-sm-8">
+            {% if model.anonymous %}
+              <span class="badge bg-warning">Yes</span>
+            {% else %}
+              <span class="badge bg-secondary">No</span>
+            {% endif %}
+          </dd>
+        </dl>
+      </div>
+      {% endif %}
+    </div>
+
+    {% if model.memo %}
+    <hr style="margin: 20px 0;">
+    <div class="row">
+      <div class="col-12">
+        <h4 style="margin-bottom: 20px; color: #2d3748;">
+          <i class="fa fa-sticky-note"></i> Memo
+        </h4>
+        <p>{{ model.memo }}</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

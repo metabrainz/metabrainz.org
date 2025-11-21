@@ -1,0 +1,1241 @@
+/* MetaBrainz Admin Panel Styles */
+
+body {
+  background-color: #f5f7fa;
+}
+
+/* Flask-Admin Navbar Styling - Override Bootstrap 4 dark navbar */
+.navbar.navbar-dark.bg-dark {
+  background: linear-gradient(135deg, #eb743b 0%, #44a248 100%) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.navbar .navbar-brand {
+  color: #fff !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+}
+
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
+  color: #fff !important;
+}
+
+/* Main navigation links */
+.navbar .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 4px;
+  margin: 0 2px;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:focus {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+}
+
+.navbar .navbar-nav .active > .nav-link,
+.navbar .navbar-nav .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  color: #fff !important;
+}
+
+/* Dropdown menu styling */
+.navbar .navbar-nav .dropdown-menu {
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 8px 0;
+}
+
+.navbar .navbar-nav .dropdown-menu .dropdown-item {
+  color: #4a5568;
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+}
+
+.navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
+.navbar .navbar-nav .dropdown-menu .dropdown-item:focus {
+  background-color: #f7fafc !important;
+  color: #eb743b !important;
+}
+
+.navbar .navbar-nav .dropdown-menu .dropdown-item:active,
+.navbar .navbar-nav .dropdown-menu .dropdown-item.active {
+  background-color: rgba(235, 116, 59, 0.1) !important;
+  color: #eb743b !important;
+}
+
+/* Override Bootstrap's default blue background for active dropdown items */
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: rgba(235, 116, 59, 0.1) !important;
+  color: #eb743b !important;
+}
+
+.navbar .navbar-nav .dropdown-toggle::after {
+  margin-left: 6px;
+}
+
+/* Show dropdown on hover for better UX */
+.navbar .navbar-nav .dropdown:hover > .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}
+
+/* Card Styles */
+.admin-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow-x: auto;
+}
+
+.admin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.admin-card h2, .admin-card h3 {
+  color: #2d3748;
+  margin-top: 0;
+}
+
+.admin-card h2 {
+  font-size: 28px;
+  font-weight: 600;
+  border-bottom: 3px solid #eb743b;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.admin-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #4a5568;
+}
+
+/* Dashboard Stats Cards */
+.stats-card {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card h4 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.stats-card .count {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Table Improvements */
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #f8f9fa;
+}
+
+.table > thead > tr > th {
+  background-color: #eb743b;
+  color: white;
+  border: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 250px;
+}
+
+.table > tbody > tr > td {
+  padding: 12px;
+  vertical-align: middle;
+  border-color: #e2e8f0;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 250px;
+}
+
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  table-layout: auto;
+}
+
+/* Button Improvements */
+.btn {
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary,
+a.btn-primary,
+a.btn-primary:link,
+a.btn-primary:visited {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%);
+  border: none;
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-primary:hover,
+a.btn-primary:hover,
+a.btn-primary:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(235, 116, 59, 0.4);
+  background: linear-gradient(135deg, #d9653a 0%, #c85732 100%);
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-success,
+a.btn-success,
+a.btn-success:link,
+a.btn-success:visited {
+  background-color: #44a248;
+  border: none;
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-success:hover,
+a.btn-success:hover,
+a.btn-success:focus {
+  background-color: #3a8e3e;
+  transform: translateY(-1px);
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-warning,
+a.btn-warning,
+a.btn-warning:link,
+a.btn-warning:visited {
+  background-color: #ed8936;
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-warning:hover,
+a.btn-warning:hover,
+a.btn-warning:focus {
+  background-color: #dd6b20;
+  transform: translateY(-1px);
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-danger,
+a.btn-danger,
+a.btn-danger:link,
+a.btn-danger:visited {
+  background-color: #f56565;
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-danger:hover,
+a.btn-danger:hover,
+a.btn-danger:focus {
+  background-color: #e53e3e;
+  transform: translateY(-1px);
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-secondary,
+a.btn-secondary,
+a.btn-secondary:link,
+a.btn-secondary:visited {
+  background-color: #e2e8f0 !important;
+  color: #4a5568 !important;
+  border: 1px solid #cbd5e0 !important;
+  text-decoration: none;
+}
+
+.btn-secondary:hover,
+a.btn-secondary:hover,
+a.btn-secondary:focus {
+  background-color: #cbd5e0 !important;
+  color: #2d3748 !important;
+  text-decoration: none;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  background: #f7fafc;
+  border-radius: 8px;
+  color: #718096;
+  font-style: italic;
+}
+
+/* Badge Improvements */
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 12px;
+  color: white !important;
+}
+
+.bg-success {
+  background-color: #44a248 !important;
+  color: white !important;
+}
+
+.bg-danger {
+  background-color: #f56565 !important;
+}
+
+/* Page Title */
+.page-title {
+  color: #2d3748;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.page-subtitle {
+  color: #718096;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+/* Content Wrapper */
+.admin-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
+/* Links */
+a {
+  color: #eb743b;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #d9653a;
+  text-decoration: none;
+}
+
+.admin-card a {
+  color: #eb743b;
+  font-weight: 500;
+}
+
+.admin-card a:hover {
+  color: #d9653a;
+}
+
+/* Table header links - white on orange background */
+.table > thead a {
+  color: white;
+  font-weight: 600;
+}
+
+.table > thead a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Table body links - orange on white background */
+.table > tbody a {
+  color: #eb743b;
+  font-weight: 600;
+}
+
+.table > tbody a:hover {
+  color: #d9653a;
+  text-decoration: underline;
+}
+
+/* Stat card variations */
+.stats-card-primary {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card-success {
+  background: linear-gradient(135deg, #44a248 0%, #3a8e3e 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card-light-success {
+  background: linear-gradient(135deg, #5b9a5f 0%, #44a248 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card h4,
+.stats-card-primary h4,
+.stats-card-success h4,
+.stats-card-light-success h4 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.stats-card .count,
+.stats-card-primary .count,
+.stats-card-success .count,
+.stats-card-light-success .count {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Badge colors */
+.badge-orange {
+  background-color: #eb743b;
+  color: white !important;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.badge-green {
+  background-color: #44a248;
+  color: white !important;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* Bootstrap badge variants */
+.badge-primary {
+  background-color: #eb743b !important;
+  color: white !important;
+}
+
+.badge-success {
+  background-color: #44a248 !important;
+  color: white !important;
+}
+
+.badge-danger {
+  background-color: #f56565 !important;
+  color: white !important;
+}
+
+.badge-warning {
+  background-color: #ed8936 !important;
+  color: white !important;
+}
+
+.badge-info {
+  background-color: #4299e1 !important;
+  color: white !important;
+}
+
+.badge-secondary {
+  background-color: #718096 !important;
+  color: white !important;
+}
+
+.badge-not-featured {
+  background-color: #718096 !important;
+  color: white !important;
+}
+
+/* Bootstrap 3 label classes (used as badges) */
+.label {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 12px;
+  color: white !important;
+  display: inline-block;
+}
+
+.label-primary {
+  background-color: #eb743b !important;
+  color: white !important;
+}
+
+.label-success {
+  background-color: #44a248 !important;
+  color: white !important;
+}
+
+.label-danger {
+  background-color: #f56565 !important;
+  color: white !important;
+}
+
+.label-warning {
+  background-color: #ed8936 !important;
+  color: white !important;
+}
+
+.label-info {
+  background-color: #4299e1 !important;
+  color: white !important;
+}
+
+.label-default {
+  background-color: #718096 !important;
+  color: white !important;
+}
+
+.label-lg {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+/* Text colors */
+.text-orange {
+  color: #eb743b;
+}
+
+.text-green {
+  color: #44a248;
+}
+
+.text-muted {
+  color: #718096;
+}
+
+/* Button on light background */
+.btn-light-green,
+a.btn-light-green,
+a.btn-light-green:link,
+a.btn-light-green:visited {
+  background: white;
+  color: #44a248 !important;
+  font-weight: 600;
+  border: none;
+  text-decoration: none;
+}
+
+.btn-light-green:hover,
+a.btn-light-green:hover,
+a.btn-light-green:focus {
+  background: #f7fafc;
+  color: #3a8e3e !important;
+  text-decoration: none;
+}
+
+/* List item borders */
+.list-item-border {
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Code styling */
+code {
+  background: #f7fafc;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #4a5568;
+}
+
+/* Supporter logo */
+.supporter-logo {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Text danger */
+.text-danger {
+  color: #f56565;
+}
+
+/* Button spacing */
+.btn + .btn {
+  margin-left: 10px;
+}
+
+/* ============================================
+   Flask-Admin Model List View Styles
+   ============================================ */
+
+/* Filter form styling */
+.filter-form {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Pagination styling */
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%) !important;
+  border-color: #eb743b !important;
+  color: white !important;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  color: #eb743b;
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover {
+  color: #d9653a;
+  background-color: #f7fafc;
+}
+
+/* Search form styling */
+.search-form {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.search-form .btn {
+  margin-left: 10px;
+}
+
+/* Action buttons column */
+.list-buttons-column {
+  white-space: nowrap;
+}
+
+.list-buttons-column .btn {
+  margin-right: 5px;
+}
+
+/* Card for model count */
+.model-count {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+/* Button state overrides for button elements */
+.btn-primary,
+button.btn-primary,
+input.btn-primary {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%) !important;
+  border: none !important;
+  color: white !important;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover,
+button.btn-primary:hover,
+input.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(235, 116, 59, 0.4);
+  background: linear-gradient(135deg, #d9653a 0%, #c85732 100%) !important;
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-danger,
+button.btn-danger {
+  background-color: #f56565 !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 500;
+}
+
+.btn-danger:hover,
+button.btn-danger:hover {
+  background-color: #e53e3e !important;
+  color: white !important;
+}
+
+.btn-success,
+button.btn-success {
+  background-color: #44a248 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-success:hover,
+button.btn-success:hover {
+  background-color: #3a8e3e !important;
+  color: white !important;
+}
+
+.btn-warning,
+button.btn-warning {
+  background-color: #ed8936 !important;
+  border: none !important;
+  color: white !important;
+  text-decoration: none;
+}
+
+.btn-warning:hover,
+button.btn-warning:hover {
+  background-color: #dd6b20 !important;
+  color: white !important;
+  text-decoration: none;
+}
+
+/* ============================================
+   Flask-Admin Model Edit/Create Form Styles
+   ============================================ */
+
+/* Page header styling */
+.page-header {
+  border-bottom: 3px solid #eb743b;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  color: #2d3748;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Form sections */
+.form-horizontal {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.help-block {
+  color: #718096;
+  font-size: 13px;
+}
+
+/* Form controls */
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #cbd5e0;
+  padding: 10px 12px;
+}
+
+.form-control:focus {
+  border-color: #eb743b;
+  box-shadow: 0 0 0 3px rgba(235, 116, 59, 0.1);
+}
+
+/* Checkboxes */
+.checkbox label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+/* Default button styling */
+.btn-default,
+a.btn-default {
+  background-color: #e2e8f0 !important;
+  color: #4a5568 !important;
+  border: 1px solid #cbd5e0 !important;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+.btn-default:hover,
+a.btn-default:hover {
+  background-color: #cbd5e0 !important;
+  color: #2d3748 !important;
+}
+
+/* Form actions */
+.form-group .btn {
+  margin-right: 10px;
+}
+
+/* Inline model forms */
+.inline-model {
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.inline-model legend {
+  color: #eb743b;
+  font-weight: 600;
+  font-size: 18px;
+  border-bottom: 2px solid #eb743b;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Panel headers */
+.panel-heading {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%) !important;
+  color: white !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.panel-heading h3 {
+  color: white !important;
+  margin: 0;
+  font-weight: 600;
+}
+
+.panel {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+/* Fieldset styling */
+fieldset {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+fieldset legend {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  width: auto;
+  margin-bottom: 0;
+  border: none;
+}
+
+/* File upload */
+input[type="file"] {
+  border: 2px dashed #cbd5e0;
+  border-radius: 6px;
+  padding: 20px;
+  width: 100%;
+}
+
+input[type="file"]:hover {
+  border-color: #eb743b;
+  background-color: #fef5f1;
+}
+
+/* Error states */
+.has-error .control-label,
+.has-error .help-block {
+  color: #f56565;
+}
+
+.has-error .form-control {
+  border-color: #f56565;
+}
+
+/* Alert styling */
+.alert-danger {
+  background-color: #fff5f5;
+  border-color: #feb2b2;
+  color: #c53030;
+}
+
+.alert-success {
+  background-color: #f0fff4;
+  border-color: #9ae6b4;
+  color: #22543d;
+}
+
+.alert-info {
+  background-color: #ebf8ff;
+  border-color: #90cdf4;
+  color: #2c5282;
+}
+
+/* Checkbox list */
+.checkbox-list .checkbox {
+  margin-bottom: 10px;
+}
+
+/* ============================================
+   Flask-Admin List View Enhancements
+   ============================================ */
+
+/* Filter table styling */
+.filters {
+  width: 100%;
+  margin-bottom: 15px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.filters tr {
+  background: #f7fafc;
+  border-radius: 8px;
+}
+
+.filters td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.filters td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.filters td:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.filters .remove-filter {
+  background-color: #e2e8f0 !important;
+  color: #4a5568 !important;
+  border: 1px solid #cbd5e0 !important;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.filters .remove-filter:hover {
+  background-color: #f56565 !important;
+  color: white !important;
+  border-color: #f56565 !important;
+}
+
+.filters .remove-filter .close-icon {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.filters select,
+.filters input[type="text"],
+.filters input[type="number"],
+.filters input[type="date"],
+.filters input[type="hidden"] + .select2-container {
+  border-radius: 6px;
+  border: 1px solid #cbd5e0;
+  padding: 8px 12px;
+  min-width: 200px;
+}
+
+.filters select:focus,
+.filters input:focus {
+  border-color: #eb743b;
+  box-shadow: 0 0 0 3px rgba(235, 116, 59, 0.1);
+}
+
+/* Select2 styling for filters */
+.filters .select2-container {
+  min-width: 200px;
+}
+
+.filters .select2-container .select2-selection--single {
+  border-radius: 6px;
+  border: 1px solid #cbd5e0;
+  height: 38px;
+  padding: 4px 0;
+}
+
+.filters .select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 28px;
+  padding-left: 12px;
+}
+
+.filters .select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 36px;
+}
+
+/* Filter form container */
+#filter_form {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Move the buttons below the filters table */
+#filter_form .pull-right {
+  order: 2;
+}
+
+#filter_form .filters {
+  order: 1;
+}
+
+#filter_form .clearfix {
+  order: 3;
+}
+
+/* Search form styling */
+.form-inline.my-2.my-lg-0 input[type="text"] {
+  border-radius: 6px;
+  border: 1px solid #cbd5e0;
+  padding: 8px 12px;
+}
+
+.form-inline.my-2.my-lg-0 input[type="text"]:focus {
+  border-color: #eb743b;
+  box-shadow: 0 0 0 3px rgba(235, 116, 59, 0.1);
+}
+
+/* Dropdown menu improvements for filters */
+.dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+.dropdown-item {
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #f7fafc;
+  color: #eb743b;
+}
+
+/* Action checkbox styling */
+.action-checkbox,
+.action-rowtoggle {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.list-checkbox-column {
+  width: 40px;
+  text-align: center;
+}
+
+/* Model list table specific */
+.model-list {
+  margin-top: 0;
+}
+
+/* Button info variant */
+.btn-info,
+a.btn-info,
+button.btn-info {
+  background-color: #4299e1 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-info:hover,
+a.btn-info:hover,
+button.btn-info:hover {
+  background-color: #3182ce !important;
+  color: white !important;
+}
+
+/* Filter form button spacing */
+#filter_form .pull-right {
+  float: none;
+  text-align: right;
+  margin-top: 10px;
+  margin-bottom: 0;
+  clear: both;
+}
+
+#filter_form .pull-right .btn {
+  margin-left: 10px;
+}
+
+/* Clearfix after filter form */
+#filter_form::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Gap utility for flexbox */
+.gap-2 {
+  gap: 0.5rem;
+}
+
+/* Filter dropdown button */
+#filterDropdown {
+  white-space: nowrap;
+}
+
+/* Dropdown toggle arrow */
+.dropdown-toggle::after {
+  margin-left: 6px;
+}
+
+/* ============================================
+   Bootstrap Card Styles (for detail views)
+   ============================================ */
+
+/* Card styling */
+.card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%);
+  color: white;
+  border-radius: 12px 12px 0 0 !important;
+  border: none;
+}
+
+.card-header h3,
+.card-header h4 {
+  color: white !important;
+  margin: 0;
+}
+
+.btn-outline-success {
+  border: 2px solid #44a248 !important;
+  color: #44a248 !important;
+  background: transparent !important;
+}
+
+.btn-outline-success:hover {
+  background-color: #44a248 !important;
+  color: white !important;
+}
+
+/* Modal styling */
+.modal-header {
+  background: linear-gradient(135deg, #eb743b 0%, #d9653a 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-title {
+  color: white !important;
+}
+
+.btn-close {
+  filter: brightness(0) invert(1);
+}
+
+/* ============================================
+   Detail View Specific Styles
+   ============================================ */
+
+.panel-body h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.json-display {
+  max-height: 400px;
+  overflow: auto;
+  background-color: #f5f5f5;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+}
+
+.inline-form {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+/* Fix dropdown menu positioning and scrolling */
+.field-filters.dropdown-menu {
+  max-height: 400px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 1050;
+}
+
+/* Ensure admin-card doesn't clip dropdowns */
+.admin-card {
+  overflow: visible;
+}
+
+/* Fix filter form visibility */
+#filter_form .filters-row {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f7fafc;
+  border-radius: 8px;
+}
+
+#filter_form .filters-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure proper button styling in filter form */
+#filter_form .btn {
+  margin-right: 5px;
+}
+
+#filter_form .form-control {
+  display: inline-block;
+  width: auto;
+  min-width: 200px;
+}
+
+/* Bootstrap 5 compatibility for filter dropdowns */
+.dropdown-menu.show {
+  display: block;
+}

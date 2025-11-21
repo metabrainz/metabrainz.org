@@ -1,0 +1,254 @@
+{% extends 'admin/master.html' %}
+{% import 'admin/lib.html' as lib with context %}
+{% from 'admin/lib.html' import extra with context %}
+
+{% block head %}
+  {{ super() }}
+  {{ lib.form_css() }}
+{% endblock %}
+
+{% block body %}
+  <div class="page-title">
+    <i class="fa fa-edit"></i> Edit Payment
+  </div>
+  <p class="page-subtitle">
+    Update payment details
+  </p>
+
+  <div class="admin-card" style="margin-bottom: 25px;">
+    <div class="btn-group" role="group">
+      <a href="{{ get_url('paymentsview.list') }}" class="btn btn-secondary">
+        <i class="fa fa-list"></i> {{ _gettext('Back to List') }}
+      </a>
+      {% if admin_view.can_view_details %}
+      <a class="btn btn-secondary" href="{{ get_url('.details_view', id=request.args.get('id'), url=return_url) }}">
+        <i class="fa fa-eye"></i> {{ _gettext('Details') }}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <form action="" method="POST" role="form" class="admin-form" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+
+    <div class="admin-card">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 style="margin-bottom: 20px; color: #2d3748;">
+            <i class="fa fa-user"></i> Personal Information
+          </h4>
+
+          <div class="mb-3">
+            {{ form.first_name.label(class="form-label") }}
+            {{ form.first_name(class="form-control") }}
+            {% if form.first_name.errors %}
+              <div class="text-danger">{{ form.first_name.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            {{ form.last_name.label(class="form-label") }}
+            {{ form.last_name(class="form-control") }}
+            {% if form.last_name.errors %}
+              <div class="text-danger">{{ form.last_name.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+            {% if form.email.errors %}
+              <div class="text-danger">{{ form.email.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            {{ form.editor_name.label(class="form-label") }}
+            {{ form.editor_name(class="form-control") }}
+            <small class="form-text text-muted">MusicBrainz username</small>
+            {% if form.editor_name.errors %}
+              <div class="text-danger">{{ form.editor_name.errors[0] }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <h4 style="margin-bottom: 20px; color: #2d3748;">
+            <i class="fa fa-credit-card"></i> Transaction Details
+          </h4>
+
+          <div class="mb-3">
+            <div class="form-check">
+              {{ form.is_donation(class="form-check-input") }}
+              {{ form.is_donation.label(class="form-check-label") }}
+            </div>
+            {% if form.is_donation.errors %}
+              <div class="text-danger">{{ form.is_donation.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.amount.label(class="form-label") }}
+                {{ form.amount(class="form-control") }}
+                <small class="form-text text-muted">USD</small>
+                {% if form.amount.errors %}
+                  <div class="text-danger">{{ form.amount.errors[0] }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.fee.label(class="form-label") }}
+                {{ form.fee(class="form-control") }}
+                <small class="form-text text-muted">USD</small>
+                {% if form.fee.errors %}
+                  <div class="text-danger">{{ form.fee.errors[0] }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            {{ form.payment_date.label(class="form-label") }}
+            {{ form.payment_date(class="form-control") }}
+            {% if form.payment_date.errors %}
+              <div class="text-danger">{{ form.payment_date.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            {{ form.invoice_number.label(class="form-label") }}
+            {{ form.invoice_number(class="form-control") }}
+            {% if form.invoice_number.errors %}
+              <div class="text-danger">{{ form.invoice_number.errors[0] }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <hr style="margin: 20px 0;">
+
+      <div class="row">
+        <div class="col-md-6">
+          <h4 style="margin-bottom: 20px; color: #2d3748;">
+            <i class="fa fa-map-marker"></i> Address
+          </h4>
+
+          <div class="mb-3">
+            {{ form.address_street.label(class="form-label") }}
+            {{ form.address_street(class="form-control") }}
+            {% if form.address_street.errors %}
+              <div class="text-danger">{{ form.address_street.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.address_city.label(class="form-label") }}
+                {{ form.address_city(class="form-control") }}
+                {% if form.address_city.errors %}
+                  <div class="text-danger">{{ form.address_city.errors[0] }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.address_state.label(class="form-label") }}
+                {{ form.address_state(class="form-control") }}
+                {% if form.address_state.errors %}
+                  <div class="text-danger">{{ form.address_state.errors[0] }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.address_postcode.label(class="form-label") }}
+                {{ form.address_postcode(class="form-control") }}
+                {% if form.address_postcode.errors %}
+                  <div class="text-danger">{{ form.address_postcode.errors[0] }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.address_country.label(class="form-label") }}
+                {{ form.address_country(class="form-control") }}
+                {% if form.address_country.errors %}
+                  <div class="text-danger">{{ form.address_country.errors[0] }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <h4 style="margin-bottom: 20px; color: #2d3748;">
+            <i class="fa fa-cog"></i> Donation Preferences
+          </h4>
+
+          <div class="mb-3">
+            <div class="form-check">
+              {{ form.can_contact(class="form-check-input") }}
+              {{ form.can_contact.label(class="form-check-label") }}
+            </div>
+            <small class="form-text text-muted">This donor may be contacted</small>
+            {% if form.can_contact.errors %}
+              <div class="text-danger">{{ form.can_contact.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <div class="form-check">
+              {{ form.anonymous(class="form-check-input") }}
+              {{ form.anonymous.label(class="form-check-label") }}
+            </div>
+            <small class="form-text text-muted">This donor wishes to remain anonymous</small>
+            {% if form.anonymous.errors %}
+              <div class="text-danger">{{ form.anonymous.errors[0] }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <hr style="margin: 20px 0;">
+
+      <div class="row">
+        <div class="col-12">
+          <h4 style="margin-bottom: 20px; color: #2d3748;">
+            <i class="fa fa-sticky-note"></i> Notes
+          </h4>
+
+          <div class="mb-3">
+            {{ form.memo.label(class="form-label") }}
+            {{ form.memo(class="form-control", rows="3") }}
+            {% if form.memo.errors %}
+              <div class="text-danger">{{ form.memo.errors[0] }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <hr style="margin: 20px 0;">
+
+      <div class="d-flex justify-content-between">
+        <a href="{{ get_url('paymentsview.list') }}" class="btn btn-secondary">
+          <i class="fa fa-times"></i> Cancel
+        </a>
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-save"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
+{% block tail %}
+  {{ super() }}
+  {{ lib.form_js() }}
+{% endblock %}

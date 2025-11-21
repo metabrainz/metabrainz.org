@@ -1,34 +1,48 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-  <h2>User Management Dashboard</h2>
-  <p>Manage users, webhooks, and user-related activities.</p>
+  <div class="page-title">
+    <i class="fa fa-user"></i> User Management Dashboard
+  </div>
+  <p class="page-subtitle">Manage users, webhooks, and user-related activities.</p>
 
   <div class="row">
     <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Users</h3>
+      <div class="admin-card" style="min-height: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h3><i class="fa fa-users"></i> Users</h3>
+          <p class="text-muted" style="margin-bottom: 20px;">Search and manage user accounts, verify emails, and handle moderation.</p>
         </div>
-        <div class="panel-body">
-          <p>Search and manage user accounts, verify emails, and handle moderation.</p>
-          <a href="{{ url_for('users-admin.index_view') }}" class="btn btn-primary">Manage Users</a>
+        <div>
+          <a href="{{ url_for('users-admin.index_view') }}" class="btn btn-primary">
+            <i class="fa fa-cog"></i> Manage Users
+          </a>
         </div>
       </div>
     </div>
 
     <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Webhooks</h3>
+      <div class="admin-card" style="min-height: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h3><i class="fa fa-bell"></i> Webhooks</h3>
+          <p class="text-muted" style="margin-bottom: 20px;">Configure and monitor webhooks for user events.</p>
         </div>
-        <div class="panel-body">
-          <p>Configure and monitor webhooks for user events.</p>
-          <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-primary">Manage Webhooks</a>
+        <div>
+          <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-primary">
+            <i class="fa fa-cog"></i> Manage Webhooks
+          </a>
         </div>
       </div>
     </div>
   </div>
 
-  <hr>
-  <p><a href="{{ url_for('supporter_admin.index') }}" class="btn btn-primary">Go to Supporter Management Dashboard</a></p>
+  <div class="admin-card" style="margin-top: 20px;">
+    <h3><i class="fa fa-arrow-right"></i> Quick Navigation</h3>
+    <p class="text-muted" style="margin-bottom: 15px;">Switch to other admin areas:</p>
+    <a href="{{ url_for('main_admin.index') }}" class="btn btn-primary">
+      <i class="fa fa-home"></i> Admin Home
+    </a>
+    <a href="{{ url_for('supporter_admin.index') }}" class="btn btn-primary">
+      <i class="fa fa-users"></i> Supporter Management
+    </a>
+  </div>
 {% endblock %}

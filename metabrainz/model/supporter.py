@@ -142,13 +142,85 @@ class Supporter(db.Model):
         return cls.query.filter_by(**kwargs).order_by(cls.created.desc()).all()
 
     @classmethod
-    def get_all_commercial(cls, limit=None, offset=None):
-        query = cls.query.filter(cls.is_commercial==True).order_by(cls.org_name)
+    def get_all_commercial(cls, limit=None, offset=None, state=None, featured=None, good_standing=None, search=None):
+        query = cls.query.filter(cls.is_commercial==True)
+
+        if state:
+            query = query.filter(cls.state == state)
+        if featured is not None:
+            query = query.filter(cls.featured == featured)
+        if good_standing is not None:
+            query = query.filter(cls.good_standing == good_standing)
+        if search:
+            # Search across multiple fields
+            from sqlalchemy import or_
+            search_term = f"%{search}%"
+            query = query.join(User).filter(
+                or_(
+                    cls.org_name.ilike(search_term),
+                    cls.contact_name.ilike(search_term),
+                    User.name.ilike(search_term),
+                    User.email.ilike(search_term)
+                )
+            )
+
+        query = query.order_by(cls.org_name)
         count = query.count()  # Total count should be calculated before limits
         if limit is not None:
             query = query.limit(limit)
         if offset is not None:
             query = query.offset(offset)
+        return query.all(), count
+
+    @classmethod
+    def get_all_with_filters(cls, limit=None, offset=None, state=None, is_commercial=None,
+                            featured=None, good_standing=None, search=None):
+        """Get all supporters with optional filters and pagination.
+
+        Args:
+            limit: Maximum number of results to return
+            offset: Number of results to skip
+            state: Filter by supporter state (active, pending, waiting, rejected, limited)
+            is_commercial: Filter by commercial status (True/False/None for all)
+            featured: Filter by featured status (True/False/None for all)
+            good_standing: Filter by good standing status (True/False/None for all)
+            search: Search term to filter by org_name, contact_name, username, or email
+
+        Returns:
+            Tuple of (supporters_list, total_count)
+        """
+        query = cls.query
+
+        if state:
+            query = query.filter(cls.state == state)
+        if is_commercial is not None:
+            query = query.filter(cls.is_commercial == is_commercial)
+        if featured is not None:
+            query = query.filter(cls.featured == featured)
+        if good_standing is not None:
+            query = query.filter(cls.good_standing == good_standing)
+        if search:
+            # Search across multiple fields
+            from sqlalchemy import or_
+            search_term = f"%{search}%"
+            query = query.join(User).filter(
+                or_(
+                    cls.org_name.ilike(search_term),
+                    cls.contact_name.ilike(search_term),
+                    User.name.ilike(search_term),
+                    User.email.ilike(search_term)
+                )
+            )
+
+        # Order by created date descending (most recent first)
+        query = query.order_by(cls.created.desc())
+        count = query.count()  # Total count should be calculated before limits
+
+        if limit is not None:
+            query = query.limit(limit)
+        if offset is not None:
+            query = query.offset(offset)
+
         return query.all(), count
 
     @classmethod
@@ -274,84 +346,3 @@ def send_supporter_signup_notification(supporter):
 
 class InactiveSupporterException(Exception):
     pass
-
-
-class _InlineOneToOneModelConverter(InlineOneToOneModelConverter):
-
-    def _calculate_mapping_key_pair(self, model, info):
-        return {"user": "supporter"}
-
-
-class UserSupporterModelForm(InlineFormAdmin):
-    form_columns = ('name', 'email', 'unconfirmed_email', 'email_confirmed_at')
-    inline_converter = _InlineOneToOneModelConverter
-
-
-class SupporterAdminView(AdminModelView):
-    column_labels = dict(
-        id='ID',
-        is_commercial='Commercial',
-        data_usage_desc='Data usage description',
-        org_desc='Organization description',
-        good_standing='Good standing',
-        amount_pledged='Amount pledged',
-        org_name='Organization name',
-        org_logo_url='Organization logo URL',
-        website_url='Organization homepage URL',
-        api_url='Organization API page URL',
-        contact_name='Contact name',
-        address_street='Street',
-        address_city='City',
-        address_state='State',
-        address_postcode='Postal code',
-        address_country='Country',
-        in_deadbeat_club='In Deadbeat Club',
-        datasets='Datasets'
-    )
-    column_labels["user.name"] = "Username"
-    column_labels["user.email"] = "Email"
-
-    column_descriptions = dict(
-        featured='Indicates if this supporter is publicly displayed on the website. '
-                 'If this is set, make sure to fill up information like '
-                 'organization name, logo URL, descriptions, etc.',
-        data_usage_desc='Short description of how our products are being used '
-                        'by this supporter. Usually one sentence.',
-        org_desc='Description of the organization (private).',
-        tier='Optional tier that is used only for commercial supporters.',
-        amount_pledged='USD',
-        in_deadbeat_club='Indicates if this supporter refuses to support us.',
-    )
-    column_list = (
-        'is_commercial', 'user.name', 'org_name', 'tier', 'featured',
-        'good_standing', 'state', 'datasets'
-    )
-    inline_models = (UserSupporterModelForm(User),)
-    form_columns = (
-        'contact_name',
-        'state',
-        'is_commercial',
-        'good_standing',
-        'tier',
-        'amount_pledged',
-        'org_name',
-        'org_logo_url',
-        'website_url',
-        'api_url',
-        'data_usage_desc',
-        'org_desc',
-        'in_deadbeat_club',
-        'featured',
-        'address_street',
-        'address_city',
-        'address_state',
-        'address_postcode',
-        'address_country',
-    )
-
-    def __init__(self, session, **kwargs):
-        super(SupporterAdminView, self).__init__(Supporter, session, name='All supporters', **kwargs)
-
-    def after_model_change(self, form, supporter, is_created):
-        if supporter.state != STATE_ACTIVE:
-            Token.revoke_tokens(supporter.id)
