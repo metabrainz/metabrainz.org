@@ -1,23 +1,38 @@
+{% import 'admin/layout.html' as layout with context -%}
 {% extends admin_base_template %}
 
 {% block head_css %}
   {{ super() }}
   <link href="{{ url_for('static', filename='fonts/font_awesome/less/font-awesome.css') }}" rel="stylesheet" media="screen" />
-  <style>
-    body {
-      padding-top: 20px;
-    }
-  </style>
+  <link href="{{ get_static_path('admin.css') }}" rel="stylesheet" media="screen" />
 {% endblock %}
 
 {% block brand %}
-  <span class="navbar-brand">
-    <a href="/">MetaBrainz</a>
-    ::
-    Admin
-    ::
-    <a href="/admin/supporters/">Supporters</a>
-    |
-    <a href="/admin/users/">Users</a>
-  </span>
+  <a href="/admin/" class="navbar-brand" style="display: inline-flex; align-items: center;">
+    <i class="fa fa-shield" style="margin-right: 8px;"></i>
+    MetaBrainz Admin
+  </a>
+{% endblock %}
+
+{% block main_menu %}
+  <ul class="nav navbar-nav mr-auto">
+    {{ layout.menu() }}
+  </ul>
+{% endblock %}
+
+{% block menu_links %}
+  <ul class="nav navbar-nav navbar-right">
+    {{ layout.menu_links() }}
+    <li class="nav-item">
+      <a href="/" class="nav-link">
+        <i class="fa fa-home"></i> Back to Site
+      </a>
+    </li>
+  </ul>
+{% endblock %}
+
+{% block page_body %}
+  <div class="admin-content">
+    {{ super() }}
+  </div>
 {% endblock %}

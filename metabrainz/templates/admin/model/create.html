@@ -1,0 +1,36 @@
+{% extends 'admin/master.html' %}
+{% import 'admin/lib.html' as lib with context %}
+{% from 'admin/lib.html' import extra with context %} {# backward compatible #}
+
+{% block head %}
+  {{ super() }}
+  {{ lib.form_css() }}
+{% endblock %}
+
+{% block body %}
+  <div class="page-title">
+    <i class="fa fa-plus"></i> Create {{ admin_view.name }}
+  </div>
+  <p class="page-subtitle">
+    Add a new record
+  </p>
+
+  <div class="admin-card" style="margin-bottom: 25px;">
+    <div class="btn-group" role="group">
+      <a href="{{ return_url }}" class="btn btn-secondary">
+        <i class="fa fa-list"></i> {{ _gettext('List') }}
+      </a>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    {% block create_form %}
+      {{ lib.render_form(form, return_url, extra(), form_opts) }}
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block tail %}
+  {{ super() }}
+  {{ lib.form_js() }}
+{% endblock %}

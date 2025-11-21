@@ -39,6 +39,6 @@ def list_payments(*, is_donation=None, limit=None, offset=None):
              LIMIT :limit
             OFFSET :offset
         """.format(where_clause=where_clause))
-        payments = [dict(p) for p in connection.execute(query, filter_data).fetchall()]
+        payments = [dict(p) for p in connection.execute(query, filter_data).mappings().fetchall()]
 
         return payments, count

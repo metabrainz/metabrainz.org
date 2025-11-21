@@ -9,15 +9,13 @@ from flask_babel import gettext
 
 from metabrainz import flash
 from metabrainz.index.forms import CommercialSupporterEditForm, NonCommercialSupporterEditForm, UserEditForm
-from metabrainz.model import Dataset, db
+from metabrainz.model import Dataset, db, OAuth2Client, OAuth2AccessToken, OAuth2RefreshToken
 from metabrainz.model.supporter import Supporter
 from metabrainz.model.user import User
+from metabrainz.oauth.forms import ApplicationForm, DeleteApplicationForm
+from metabrainz.oauth.generator import create_client_id, create_client_secret
 from metabrainz.user.email import send_verification_email
 
-from oauth.generator import create_client_secret, create_client_id
-from oauth.model import db as oauth_db, OAuth2AccessToken, OAuth2RefreshToken
-from oauth.model.client import OAuth2Client
-from oauth.forms import ApplicationForm, AuthorizationForm, DeleteApplicationForm
 
 index_bp = Blueprint('index', __name__)
 
@@ -247,7 +245,7 @@ def profile_edit():
 @index_bp.route('/profile/applications')
 @login_required
 def profile_applications():
-    applications = oauth_db \
+    applications = db \
         .session \
         .query(OAuth2Client) \
         .filter(OAuth2Client.owner_id == current_user.id) \

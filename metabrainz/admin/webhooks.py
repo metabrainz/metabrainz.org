@@ -294,14 +294,14 @@ def _format_response_status(response_status):
 
 
 def _format_webhook_link(webhook):
-    """Format webhook as a link with name."""    
+    """Format webhook as a link with name."""
     if not webhook:
         return ""
-    
+
     name = webhook.name if webhook.name else webhook.url[:40] + ("..." if len(webhook.url) > 40 else "")
-    
+
     return Markup(
-        f'<a href="{url_for("webhooks-admin.edit_view", id=webhook.id)}" class="btn btn-xs btn-info">'
+        f'<a href="{url_for("webhooks-admin.edit_view", id=webhook.id)}" class="btn btn-xs btn-primary">'
         f'<i class="fa fa-link"></i> {name}'
         f"</a>"
     )

@@ -57,6 +57,8 @@ services:
       - meb_db
     volumes:
       - ..:/code/metabrainz
+    profiles:
+      - webhooks
 
   webhook-maintenance:
     build:
@@ -69,6 +71,8 @@ services:
       - meb_db
     volumes:
       - ..:/code/metabrainz
+    profiles:
+      - webhooks
 
   webhook-beat:
     build:
@@ -81,6 +85,8 @@ services:
       - meb_db
     volumes:
       - ..:/code/metabrainz
+    profiles:
+      - webhooks
 
   webhook-flower:
     build:
@@ -94,3 +100,5 @@ services:
       - "5555:5555"
     volumes:
       - ..:/code/metabrainz
+    profiles:
+      - webhooks
