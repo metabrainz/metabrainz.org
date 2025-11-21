@@ -1,9 +1,10 @@
 from metabrainz import db
+import sqlalchemy
 
 
 def get_all():
     with db.engine.connect() as connection:
-        result = connection.execute("""
+        result = connection.execute(sqlalchemy.text("""
             SELECT id,
                    name,
                    short_desc,
@@ -12,5 +13,5 @@ def get_all():
                    available,
                    "primary"
               FROM tier
-        """)
-        return result.fetchall()
+        """))
+        return [dict(row._mapping) for row in result.fetchall()]

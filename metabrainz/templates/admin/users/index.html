@@ -1,26 +1,54 @@
 {% extends "admin/model/list.html" %}
 
-{% block list_row %}
-  <tr>
-    <td>{{ row.id }}</td>
-    <td>{{ row.name }}</td>
-    <td>
-      {{ row.get_email_any() }}
-      <span class="badge {% if row.is_email_confirmed() %}bg-success{% else %}bg-danger{% endif %}">
-        {{ 'Confirmed' if row.is_email_confirmed() else 'Unconfirmed' }}
-      </span>
+{% block page_header %}
+  <div class="page-title">
+    <i class="fa fa-users"></i> Users
+  </div>
+  <p class="page-subtitle">
+    {% if count %}{{ count }} user{{ 's' if count != 1 else '' }} found{% else %}Manage user accounts{% endif %}
+  </p>
+{% endblock %}
+
+{% block list_row scoped %}
+  {% if actions %}
+  <td>
+    <input type="checkbox" name="rowid" class="action-checkbox" value="{{ get_pk_value(row) }}" title="{{ _gettext('Select record') }}" />
+  </td>
+  {% endif %}
+  {% block list_row_actions_column scoped %}
+    {% if admin_view.column_display_actions %}
+    <td class="list-buttons-column">
+      {% block list_row_actions scoped %}
+        {%- if admin_view.can_view_details -%}
+          <a class="btn btn-info btn-sm" href="{{ get_url('.details_view', id=get_pk_value(row), url=return_url) }}" title="View Details">
+            <i class="fa fa-eye"></i>
+          </a>
+        {%- endif -%}
+      {% endblock %}
     </td>
-    <td>{{ row.member_since.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-    <td>
-      <span class="badge {% if row.is_blocked %}bg-danger{% else %}bg-success{% endif %}">
-        {{ 'Blocked' if row.is_blocked else 'Active' }}
-      </span>
-    </td>
-    <td>
-      <a href="{{ url_for('.details_view', id=row.id) }}"
-         class="btn btn-sm btn-primary">View Details</a>
-    </td>
-  </tr>
+    {%- endif -%}
+  {% endblock %}
+
+  <td class="col-name">{{ row.name }}</td>
+
+  <td class="col-email">
+    {{ row.get_email_any() }}
+    {% if row.is_email_confirmed() %}
+      <span class="badge bg-success" style="margin-left: 8px;">Confirmed</span>
+    {% else %}
+      <span class="badge bg-danger" style="margin-left: 8px;">Unconfirmed</span>
+    {% endif %}
+  </td>
+
+  <td class="col-member_since">{{ row.member_since.strftime('%Y-%m-%d %H:%M:%S') if row.member_since else 'N/A' }}</td>
+
+  <td class="col-is_blocked">
+    {% if row.is_blocked %}
+      <span class="badge bg-danger">Blocked</span>
+    {% else %}
+      <span class="badge bg-success">Active</span>
+    {% endif %}
+  </td>
 {% endblock %}
 
 {% block empty_list_message %}

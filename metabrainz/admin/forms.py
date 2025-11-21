@@ -113,3 +113,8 @@ class ModerateUserForm(FlaskForm):
 class RetryDeliveryForm(FlaskForm):
     """Form for retrying a failed webhook delivery."""
     pass
+
+
+class DeleteForm(FlaskForm):
+    """Simple form for CSRF protection on delete operations."""
+    pass
