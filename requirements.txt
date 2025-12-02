@@ -38,5 +38,5 @@ SQLAlchemy==1.4.52
 sqlalchemy-dst>=1.0.1
 stripe==8.7.0
 urllib3==2.5.0
-Werkzeug==3.0.6
+Werkzeug==3.1.4
 WTForms==3.1.2
