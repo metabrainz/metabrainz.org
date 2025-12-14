@@ -67,7 +67,7 @@ function SignupNonCommercial({
     agreement: Yup.boolean()
       .required("You need to accept the agreement!")
       .oneOf([true], "You need to accept the agreement!"),
-    mtcaptcha: Yup.string().required(),
+    mtcaptcha: mtcaptcha_site_key ? Yup.string().required() : Yup.string(),
   };
 
   const validationSchema = Yup.object(
@@ -267,18 +267,20 @@ function SignupNonCommercial({
                   </p>
                 </CheckboxInput>
 
-                <div
-                  className="main-action-button"
-                  style={{
-                    width: "fit-content",
-                  }}
-                >
-                  <MTCaptcha
-                    sitekey={mtcaptcha_site_key}
-                    size="compact"
-                    fieldName="mtcaptcha"
-                  />
-                </div>
+                {mtcaptcha_site_key && (
+                  <div
+                    className="main-action-button"
+                    style={{
+                      width: "fit-content",
+                    }}
+                  >
+                    <MTCaptcha
+                      sitekey={mtcaptcha_site_key}
+                      size="compact"
+                      fieldName="mtcaptcha"
+                    />
+                  </div>
+                )}
 
                 <div className="form-group main-action-button">
                   <button

@@ -58,7 +58,9 @@ function SignupUser({
                   [Yup.ref("password")],
                   "Confirm Password should match password!"
                 ),
-              mtcaptcha: Yup.string().required(),
+              mtcaptcha: mtcaptcha_site_key
+                ? Yup.string().required()
+                : Yup.string(),
             })}
             onSubmit={() => {}}
           >
@@ -135,18 +137,20 @@ function SignupUser({
                   </button>
                 </div>
 
-                <div
-                  className="main-action-button"
-                  style={{
-                    width: "fit-content",
-                  }}
-                >
-                  <MTCaptcha
-                    sitekey={mtcaptcha_site_key}
-                    size="compact"
-                    fieldName="mtcaptcha"
-                  />
-                </div>
+                {mtcaptcha_site_key && (
+                  <div
+                    className="main-action-button"
+                    style={{
+                      width: "fit-content",
+                    }}
+                  >
+                    <MTCaptcha
+                      sitekey={mtcaptcha_site_key}
+                      size="compact"
+                      fieldName="mtcaptcha"
+                    />
+                  </div>
+                )}
 
                 <button
                   className="btn btn-primary btn-block main-action-button"
