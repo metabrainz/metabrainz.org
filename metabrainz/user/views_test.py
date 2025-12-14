@@ -659,3 +659,20 @@ class UsersViewsTestCase(FlaskTestCase):
             })
             self.assertEqual(response.status_code, 302)
             self.assertMessageFlashed("Password reset link expired.", "error")
+
+    def test_user_signup_without_mtcaptcha_not_configured(self):
+        self.app.config["MTCAPTCHA_PRIVATE_KEY"] = ""
+        self.app.config["MTCAPTCHA_PUBLIC_KEY"] = ""
+
+        self._test_user_signup_helper({
+            "username": "test_user_no_captcha",
+            "email": "test_no_captcha@example.com",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+        }, 302)
+        self.assertMessageFlashed("Account created. Please check your inbox to complete verification.", "success")
+
+        user = User.get(name="test_user_no_captcha")
+        self.assertIsNotNone(user)
+        self.assertEqual(user.name, "test_user_no_captcha")
+        self.assertEqual(user.unconfirmed_email, "test_no_captcha@example.com")
