@@ -34,12 +34,12 @@ class DatasetsField(SelectMultipleField):
 
     def iter_choices(self):
         for dataset in self.choices:
-            selected = self.data is not None and dataset["id"] in self.data
-            yield dataset["id"], dataset["name"], selected
+            selected = self.data is not None and dataset.id in self.data
+            yield dataset.id, dataset.name, selected
 
     def pre_validate(self, form):
         if self.data:
-            values = list(c["id"] for c in self.choices)
+            values = list(c.id for c in self.choices)
             for d in self.data:
                 if d not in values:
                     raise ValueError(self.gettext("'%(value)s' is not a valid choice for this field") % dict(value=d))
@@ -47,8 +47,8 @@ class DatasetsField(SelectMultipleField):
     def post_validate(self, form, validation_stopped):
         if validation_stopped:
             return
-        datasets_dict = {self.coerce(dataset["id"]): dataset for dataset in self.choices}
-        self.data = [datasets_dict.get(x) for x in self.data]
+        datasets_by_id = {obj.id: obj for obj in self.choices}
+        self.data = [datasets_by_id[x] for x in self.data]
 
 
 class UserEditForm(MeBFlaskForm):
@@ -68,7 +68,6 @@ class NonCommercialSupporterEditForm(SupporterEditForm):
     def __init__(self, available_datasets, **kwargs):
         super().__init__(**kwargs)
         self.datasets.choices = available_datasets
-        self.descriptions = {d.id: d.description for d in available_datasets}
 
 
 class CommercialSupporterEditForm(SupporterEditForm):

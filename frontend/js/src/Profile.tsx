@@ -343,13 +343,30 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
           csrf_token={csrf_token}
         />
       </div>
-      <a
-        href="/profile/edit"
-        className="btn btn-warning"
-        style={{ whiteSpace: "normal" }}
-      >
-        Edit information
-      </a>
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <a
+          href="/profile/edit"
+          className="btn btn-warning"
+          style={{ whiteSpace: "normal" }}
+        >
+          Edit information
+        </a>
+        <a
+          href="/supporters/account-type"
+          className="btn btn-primary"
+          style={{ whiteSpace: "normal" }}
+        >
+          Become a Supporter
+        </a>
+      </div>
+      <div className="alert alert-info" style={{ marginTop: "1.5rem" }}>
+        <strong>Want access to MetaBrainz datasets?</strong>
+        <p style={{ marginBottom: 0 }}>
+          Upgrade your account to a supporter account to access our datasets and
+          the Live Data Feed. Choose between non-commercial (free) and
+          commercial options.
+        </p>
+      </div>
     </>
   );
 }
