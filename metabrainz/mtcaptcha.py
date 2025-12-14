@@ -32,18 +32,18 @@ def validate_mtcaptcha(form, field):
     Raises:
         ValidationError: If the MTCaptcha validation fails
     """
-    # skip capcha validation during tests
+    # skip captcha validation during tests
     if current_app.config["TESTING"]:
+        return
+
+    mtcaptcha_private_key = current_app.config.get("MTCAPTCHA_PRIVATE_KEY")
+
+    # skip captcha validation if keys are not configured
+    if not mtcaptcha_private_key:
         return
 
     if not field.data:
         raise ValidationError("Please complete the captcha challenge.")
-
-    mtcaptcha_private_key = current_app.config.get("MTCAPTCHA_PRIVATE_KEY")
-
-    if not mtcaptcha_private_key:
-        current_app.logger.error("MTCAPTCHA_PRIVATE_KEY not configured")
-        raise ValidationError("Captcha configuration error.")
 
     verify_url = "https://service.mtcaptcha.com/mtcv1/api/checktoken"
 

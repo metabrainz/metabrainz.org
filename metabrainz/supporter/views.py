@@ -119,7 +119,7 @@ def signup_commercial():
         return redirect(url_for('index.profile'))
 
     csrf_token = generate_csrf()
-    mtcaptcha_site_key = current_app.config["MTCAPTCHA_PUBLIC_KEY"]
+    mtcaptcha_site_key = current_app.config.get("MTCAPTCHA_PUBLIC_KEY")
 
     tier_id = request.args.get('tier_id')
     if not tier_id:
@@ -224,7 +224,7 @@ def signup_noncommercial():
         for d in available_datasets
     ]
     csrf_token = generate_csrf()
-    mtcaptcha_site_key = current_app.config["MTCAPTCHA_PUBLIC_KEY"]
+    mtcaptcha_site_key = current_app.config.get("MTCAPTCHA_PUBLIC_KEY")
 
     if existing_user:
         form = NonCommercialUpgradeForm(available_datasets)
