@@ -13,8 +13,7 @@ from metabrainz.model.tier import Tier
 from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.model.user import User
 from metabrainz.model.webhook import EVENT_USER_CREATED
-from metabrainz.user import login_forbidden
-from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm
+from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialUpgradeForm, NonCommercialUpgradeForm
 from metabrainz.user.email import send_verification_email
 
 supporters_bp = Blueprint('supporters', __name__)
@@ -40,10 +39,17 @@ def bad_standing():
 
 @supporters_bp.route('/supporters/account-type')
 def account_type():
+    """Account type selection page for new supporters."""
+    existing_user = current_user.is_authenticated
+    if existing_user and current_user.supporter:
+        flash.info(gettext("You are already a supporter."))
+        return redirect(url_for('index.profile'))
+
     return render_template(
         'supporters/account-type.html',
         tiers=Tier.get_available(sort=True),
-        featured_supporters=Supporter.get_featured()
+        featured_supporters=Supporter.get_featured(),
+        existing_user=existing_user,
     )
 
 
@@ -55,14 +61,63 @@ def tier(tier_id):
     return render_template('supporters/tier.html', tier=t)
 
 
-@supporters_bp.route('/signup/commercial', methods=('GET', 'POST'))
-@login_forbidden
-def signup_commercial():
-    """Sign up endpoint for commercial supporters.
+def _create_commercial_supporter(form, tier_id, user):
+    """Create a commercial supporter record."""
+    Supporter.add(
+        is_commercial=True,
+        contact_name=form.contact_name.data,
+        data_usage_desc=form.usage_desc.data,
+        org_name=form.org_name.data,
+        org_desc=form.org_desc.data,
+        website_url=form.website_url.data,
+        org_logo_url=form.logo_url.data,
+        api_url=form.api_url.data,
+        address_street=form.address_street.data,
+        address_city=form.address_city.data,
+        address_state=form.address_state.data,
+        address_postcode=form.address_postcode.data,
+        address_country=form.address_country.data,
+        tier_id=tier_id,
+        amount_pledged=float(form.amount_pledged.data),
+        datasets=[],
+        user=user
+    )
 
-    Commercial supporters need to choose support tier before filling out the form.
-    `tier_id` argument with ID of a tier of choice is required there.
-    """
+
+def _create_noncommercial_supporter(form, user):
+    """Create a non-commercial supporter record."""
+    Supporter.add(
+        is_commercial=False,
+        contact_name=form.contact_name.data,
+        data_usage_desc=form.usage_desc.data,
+        datasets=form.datasets.data,
+        user=user
+    )
+
+
+def _check_user_exists(form):
+    """Check if username or email already exists. Returns error field name or None."""
+    user = User.get(name=form.username.data)
+    if user is not None:
+        form.username.errors.append(f"Another user with username '{form.username.data}' exists.")
+        return "username"
+
+    user = User.get(email=form.email.data)
+    if user is not None:
+        form.email.errors.append(f"Another user with email '{form.email.data}' exists.")
+        return "email"
+
+    return None
+
+
+@supporters_bp.route('/signup/commercial', methods=('GET', 'POST'))
+def signup_commercial():
+    """Sign up endpoint for commercial supporters (new users and existing users)."""
+    existing_user = bool(current_user.is_authenticated)
+    if existing_user and current_user.supporter:
+        flash.info(gettext("You are already a supporter."))
+        return redirect(url_for('index.profile'))
+
     csrf_token = generate_csrf()
     mtcaptcha_site_key = current_app.config["MTCAPTCHA_PUBLIC_KEY"]
 
@@ -85,168 +140,155 @@ def signup_commercial():
         "price": float(selected_tier.price)
     }
 
-    form = CommercialSignUpForm()
-    form_data = dict(**form.data)
+    # Use different form based on whether user is logged in
+    if existing_user:
+        form = CommercialUpgradeForm(selected_tier)
+        form_data = dict(**form.data)
+        if not form_data.get("contact_name"):
+            form_data["contact_name"] = current_user.name
+    else:
+        form = CommercialSignUpForm(selected_tier)
+        form_data = dict(**form.data)
     if form_data["amount_pledged"]:
         form_data["amount_pledged"] = float(form_data["amount_pledged"])
     form_data.pop("csrf_token", None)
 
-    def custom_validation(f):
-        if f.amount_pledged.data < selected_tier.price:
-            flash.warning(gettext(
-                "Custom amount must be more than threshold amount"
-                "for selected tier or equal to it!"
+    if form.validate_on_submit():
+        if existing_user:
+            # Existing user becoming a supporter
+            _create_commercial_supporter(form, tier_id, current_user)
+            db.session.commit()
+
+            flash.success(gettext(
+                "Thanks for becoming a supporter! Your application will be reviewed "
+                "soon. We will send you updates via email."
             ))
-            return False
-        return True
+            return redirect(url_for('index.profile'))
+        else:
+            # New user signup
+            if _check_user_exists(form):
+                return render_template("supporters/signup-commercial.html", props=json.dumps({
+                    "tier": _tier,
+                    "mtcaptcha_site_key": mtcaptcha_site_key,
+                    "csrf_token": csrf_token,
+                    "initial_form_data": form_data,
+                    "initial_errors": form.props_errors,
+                    "existing_user": False
+                }))
 
-    if form.validate_on_submit() and custom_validation(form):
-        user = User.get(name=form.username.data)
-        if user is not None:
-            form.username.errors.append(f"Another user with username '{form.username.data}' exists.")
-            return render_template("supporters/signup-commercial.html", props=json.dumps({
-                "tier": _tier,
-                "mtcaptcha_site_key": mtcaptcha_site_key,
-                "csrf_token": csrf_token,
-                "initial_form_data": form_data,
-                "initial_errors": form.props_errors
-            }))
+            user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
+            _create_commercial_supporter(form, tier_id, user)
+            db.session.commit()
 
-        # TODO: Handle the case where multiple users sign up with same email but haven"t verified it yet
-        user = User.get(email=form.email.data)
-        if user is not None:
-            form.email.errors.append(f"Another user with email '{form.email.data}' exists.")
-            return render_template("supporters/signup-commercial.html", props=json.dumps({
-                "tier": _tier,
-                "mtcaptcha_site_key": mtcaptcha_site_key,
-                "csrf_token": csrf_token,
-                "initial_form_data": form_data,
-                "initial_errors": form.props_errors
-            }))
+            user.emit_event(EVENT_USER_CREATED)
+            flash.success(gettext(
+                "Thanks for signing up! Your application will be reviewed "
+                "soon. We will send you updates via email."
+            ))
+            send_verification_email(
+                user,
+                "[MetaBrainz] Sign up confirmation",
+                "email/supporter-commercial-welcome-email-address-verification.txt"
+            )
+            login_user(user)
+            return redirect(url_for('index.profile'))
 
-        user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
-        Supporter.add(
-            is_commercial=True,
-            contact_name=form.contact_name.data,
-            data_usage_desc=form.usage_desc.data,
-
-            org_name=form.org_name.data,
-            org_desc=form.org_desc.data,
-            website_url=form.website_url.data,
-            org_logo_url=form.logo_url.data,
-            api_url=form.api_url.data,
-
-            address_street=form.address_street.data,
-            address_city=form.address_city.data,
-            address_state=form.address_state.data,
-            address_postcode=form.address_postcode.data,
-            address_country=form.address_country.data,
-
-            tier_id=tier_id,
-            amount_pledged=form.amount_pledged.data,
-            datasets=[],
-            user=user
-        )
-        db.session.commit()
-
-        user.emit_event(EVENT_USER_CREATED)
-
-        flash.success(gettext(
-            "Thanks for signing up! Your application will be reviewed "
-            "soon. We will send you updates via email."
-        ))
-        send_verification_email(
-            user,
-            "[MetaBrainz] Sign up confirmation",
-            "email/supporter-commercial-welcome-email-address-verification.txt"
-        )
-        login_user(user)
-        return redirect(url_for('index.profile'))
-
-    return render_template("supporters/signup-commercial.html", props=json.dumps({
+    props = {
         "tier": _tier,
         "mtcaptcha_site_key": mtcaptcha_site_key,
         "csrf_token": csrf_token,
         "initial_form_data": form_data,
-        "initial_errors": form.props_errors
-    }))
+        "initial_errors": form.props_errors,
+        "existing_user": existing_user
+    }
+    if existing_user:
+        props["user"] = {
+            "username": current_user.name,
+            "email": current_user.get_email_any()
+        }
+
+    return render_template("supporters/signup-commercial.html", props=json.dumps(props))
 
 
 @supporters_bp.route('/signup/noncommercial', methods=('GET', 'POST'))
-@login_forbidden
 def signup_noncommercial():
-    """Sign up endpoint for non-commercial supporters."""
-    available_dataset_objs = Dataset.query.all()
-    available_datasets = [
+    """Sign up endpoint for non-commercial supporters (new users and existing users)."""
+    existing_user = bool(current_user.is_authenticated)
+    if existing_user and current_user.supporter:
+        flash.info(gettext("You are already a supporter."))
+        return redirect(url_for('index.profile'))
+
+    available_datasets = Dataset.query.all()
+    dataset_dicts = [
         {"id": d.id, "description": d.description, "name": d.name}
-        for d in available_dataset_objs
+        for d in available_datasets
     ]
     csrf_token = generate_csrf()
     mtcaptcha_site_key = current_app.config["MTCAPTCHA_PUBLIC_KEY"]
 
-    form = NonCommercialSignUpForm(available_datasets)
-    form_data = dict(**form.data)
+    if existing_user:
+        form = NonCommercialUpgradeForm(available_datasets)
+        form_data = dict(**form.data)
+        if not form_data.get("contact_name"):
+            form_data["contact_name"] = current_user.name
+    else:
+        form = NonCommercialSignUpForm(available_datasets)
+        form_data = dict(**form.data)
+
     form_data.pop("csrf_token", None)
 
     if form.validate_on_submit():
-        user = User.get(name=form.username.data)
-        if user is not None:
-            form.username.errors.append(f"Another user with username '{form.username.data}' exists.")
-            return render_template("supporters/signup-non-commercial.html", props=json.dumps({
-                "datasets": available_datasets,
-                "mtcaptcha_site_key": mtcaptcha_site_key,
-                "csrf_token": csrf_token,
-                "initial_form_data": form_data,
-                "initial_errors": form.props_errors
-            }))
+        if existing_user:
+            # Existing user becoming a supporter
+            _create_noncommercial_supporter(form, current_user)
+            db.session.commit()
 
-        # TODO: Handle the case where multiple users sign up with same email but haven"t verified it yet
-        user = User.get(email=form.email.data)
-        if user is not None:
-            form.email.errors.append(f"Another user with email '{form.email.data}' exists.")
-            return render_template("supporters/signup-non-commercial.html", props=json.dumps({
-                "datasets": available_datasets,
-                "mtcaptcha_site_key": mtcaptcha_site_key,
-                "csrf_token": csrf_token,
-                "initial_form_data": form_data,
-                "initial_errors": form.props_errors
-            }))
+            flash.success(gettext("Thanks for becoming a supporter!"))
+            return redirect(url_for('index.profile'))
+        else:
+            # New user signup
+            if _check_user_exists(form):
+                return render_template("supporters/signup-non-commercial.html", props=json.dumps({
+                    "datasets": dataset_dicts,
+                    "mtcaptcha_site_key": mtcaptcha_site_key,
+                    "csrf_token": csrf_token,
+                    "initial_form_data": form_data,
+                    "initial_errors": form.props_errors,
+                    "existing_user": False
+                }))
 
-        user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
-        selected_datasets = []
-        for dataset_dict in form.datasets.data:
-            for dataset_obj in available_dataset_objs:
-                if dataset_obj.id == dataset_dict["id"]:
-                    selected_datasets.append(dataset_obj)
+            user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
+            _create_noncommercial_supporter(form, user)
+            db.session.commit()
 
-        Supporter.add(
-            is_commercial=False,
-            contact_name=form.contact_name.data,
-            data_usage_desc=form.usage_desc.data,
-            datasets=selected_datasets,
-            user=user
-        )
-        db.session.commit()
+            user.emit_event(EVENT_USER_CREATED)
+            send_verification_email(
+                user,
+                "[MetaBrainz] Sign up confirmation",
+                "email/supporter-noncommercial-welcome-email-address-verification.txt"
+            )
 
-        user.emit_event(EVENT_USER_CREATED)
+            flash.success(gettext("Thanks for signing up! Please check your inbox to complete verification."))
 
-        send_verification_email(
-            user,
-            "[MetaBrainz] Sign up confirmation",
-            "email/supporter-noncommercial-welcome-email-address-verification.txt"
-        )
-        flash.success(gettext("Thanks for signing up! Please check your inbox to complete verification."))
+            login_user(user)
+            return redirect(url_for('index.profile'))
 
-        login_user(user)
-        return redirect(url_for('index.profile'))
-
-    return render_template("supporters/signup-non-commercial.html", props=json.dumps({
-        "datasets": available_datasets,
+    props = {
+        "datasets": dataset_dicts,
         "mtcaptcha_site_key": mtcaptcha_site_key,
         "csrf_token": csrf_token,
         "initial_form_data": form_data,
-        "initial_errors": form.props_errors
-    }))
+        "initial_errors": form.props_errors,
+        "existing_user": existing_user,
+    }
+    if existing_user:
+        props["user"] = {
+            "username": current_user.name,
+            "email": current_user.get_email_any()
+        }
+    print(props)
+
+    return render_template("supporters/signup-non-commercial.html", props=json.dumps(props))
 
 
 @supporters_bp.route('/supporters/profile/regenerate-token', methods=['POST'])

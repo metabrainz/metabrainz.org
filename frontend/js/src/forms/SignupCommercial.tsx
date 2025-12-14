@@ -12,12 +12,19 @@ import {
   TextAreaInput,
 } from "./utils";
 
+type TierInfo = {
+  name: string;
+  price: number;
+};
+
+type UserInfo = {
+  username: string;
+  email: string;
+};
+
 type AmountPledgedFieldProps = JSX.IntrinsicElements["input"] &
   FieldConfig & {
-    tier: {
-      name: string;
-      price: number;
-    };
+    tier: TierInfo;
   };
 
 function AmountPledgedField({ tier, ...props }: AmountPledgedFieldProps) {
@@ -44,30 +51,118 @@ function AmountPledgedField({ tier, ...props }: AmountPledgedFieldProps) {
   );
 }
 
-type SignupCommercialProps = {
-  tier: {
-    name: string;
-    price: number;
-  };
+type SupporterCommercialProps = {
+  tier: TierInfo;
+  user?: UserInfo;
   mtcaptcha_site_key: string;
   csrf_token: string;
   initial_form_data: any;
   initial_errors: any;
+  existing_user: boolean;
 };
 
 function SignupCommercial({
   tier,
+  user,
   csrf_token,
   mtcaptcha_site_key,
   initial_form_data,
   initial_errors,
-}: SignupCommercialProps): JSX.Element {
+  existing_user,
+}: SupporterCommercialProps): JSX.Element {
+  const accountTypeUrl = "/supporters/account-type";
+  const nonCommercialUrl = "/signup/noncommercial";
+
+  const baseInitialValues = {
+    org_name: initial_form_data.org_name ?? "",
+    org_desc: initial_form_data.org_desc ?? "",
+    website_url: initial_form_data.website_url ?? "",
+    logo_url: initial_form_data.logo_url ?? "",
+    api_url: initial_form_data.api_url ?? "",
+    address_street: initial_form_data.address_street ?? "",
+    address_city: initial_form_data.address_city ?? "",
+    address_state: initial_form_data.address_state ?? "",
+    address_postcode: initial_form_data.address_postcode ?? "",
+    address_country: initial_form_data.address_country ?? "",
+    amount_pledged: initial_form_data.amount_pledged ?? tier.price,
+    usage_desc: initial_form_data.usage_desc ?? "",
+    contact_name: initial_form_data.contact_name ?? "",
+    agreement: false,
+    mtcaptcha: "",
+    csrf_token,
+  };
+
+  const initialValues = existing_user
+    ? baseInitialValues
+    : {
+        ...baseInitialValues,
+        username: initial_form_data.username ?? "",
+        email: initial_form_data.email ?? "",
+        password: initial_form_data.password ?? "",
+        confirm_password: initial_form_data.confirm_password ?? "",
+      };
+
+  // Build validation schema based on whether it's signup or upgrade
+  const baseValidationSchema = {
+    org_name: Yup.string().required(
+      "You need to specify the name of your organization."
+    ),
+    org_desc: Yup.string().required(
+      "You need to provide description of your organization."
+    ),
+    website_url: Yup.string().required(
+      "You need to specify website of the organization."
+    ),
+    logo_url: Yup.string(),
+    api_url: Yup.string(),
+    address_street: Yup.string().required("You need to specify street."),
+    address_city: Yup.string().required("You need to specify city."),
+    address_state: Yup.string().required("You need to specify state/province."),
+    address_postcode: Yup.string().required("You need to specify postcode."),
+    address_country: Yup.string().required("You need to specify country."),
+    amount_pledged: Yup.number().min(
+      tier.price,
+      "Custom amount must be more than threshold amount for selected tier or equal to it!"
+    ),
+    usage_desc: Yup.string()
+      .required("Please, tell us how you (will) use our data.")
+      .max(500, "Please, limit usage description to 500 characters."),
+    contact_name: Yup.string().required("Contact name is required!"),
+    agreement: Yup.boolean()
+      .required("You need to accept the agreement!")
+      .oneOf([true], "You need to accept the agreement!"),
+    mtcaptcha: Yup.string().required(),
+  };
+
+  const validationSchema = Yup.object(
+    existing_user
+      ? baseValidationSchema
+      : {
+          ...baseValidationSchema,
+          username: Yup.string().required("Username is required!"),
+          email: Yup.string().email().required("Email address is required!"),
+          password: Yup.string()
+            .required("Password is required!")
+            .min(8)
+            .max(64),
+          confirm_password: Yup.string()
+            .required()
+            .min(8)
+            .max(64)
+            .oneOf(
+              [Yup.ref("password")],
+              "Confirm Password should match password!"
+            ),
+        }
+  );
+
   return (
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
           <h1 className="page-title text-center">
-            Sign up <small>Commercial</small>
+            {existing_user ? "Become a Supporter" : "Sign up"}{" "}
+            <small>Commercial</small>
           </h1>
           <div className="h4 text-center">access all MetaBrainz projects</div>
           <p>
@@ -77,84 +172,10 @@ function SignupCommercial({
           </p>
 
           <Formik
-            initialValues={{
-              username: initial_form_data.username ?? "",
-              email: initial_form_data.email ?? "",
-              password: initial_form_data.password ?? "",
-              confirm_password: initial_form_data.confirm_password ?? "",
-              org_name: initial_form_data.org_name ?? "",
-              org_desc: initial_form_data.org_desc ?? "",
-              website_url: initial_form_data.website_url ?? "",
-              logo_url: initial_form_data.logo_url ?? "",
-              api_url: initial_form_data.api_url ?? "",
-              address_street: initial_form_data.address_street ?? "",
-              address_city: initial_form_data.address_city ?? "",
-              address_state: initial_form_data.address_state ?? "",
-              address_postcode: initial_form_data.address_postcode ?? "",
-              address_country: initial_form_data.address_country ?? "",
-              amount_pledged: initial_form_data.amount_pledged ?? tier.price,
-              usage_desc: initial_form_data.usage_desc ?? "",
-              contact_name: initial_form_data.contact_name ?? "",
-              agreement: false,
-              mtcaptcha: "",
-              csrf_token,
-            }}
+            initialValues={initialValues}
             initialErrors={initial_errors}
             initialTouched={initial_errors}
-            validationSchema={Yup.object({
-              username: Yup.string().required("Username is required!"),
-              email: Yup.string()
-                .email()
-                .required("Email address is required!"),
-              password: Yup.string()
-                .required("Password is required!")
-                .min(8)
-                .max(64),
-              confirm_password: Yup.string()
-                .required()
-                .min(8)
-                .max(64)
-                .oneOf(
-                  [Yup.ref("password")],
-                  "Confirm Password should match password!"
-                ),
-              org_name: Yup.string().required(
-                "You need to specify the name of your organization."
-              ),
-              org_desc: Yup.string().required(
-                "You need to provide description of your organization."
-              ),
-              website_url: Yup.string().required(
-                "You need to specify website of the organization."
-              ),
-              logo_url: Yup.string(),
-              api_url: Yup.string(),
-              address_street: Yup.string().required(
-                "You need to specify street."
-              ),
-              address_city: Yup.string().required("You need to specify city."),
-              address_state: Yup.string().required(
-                "You need to specify state/province."
-              ),
-              address_postcode: Yup.string().required(
-                "You need to specify postcode."
-              ),
-              address_country: Yup.string().required(
-                "You need to specify country."
-              ),
-              amount_pledged: Yup.number().min(
-                tier.price,
-                "Custom amount must be more than threshold amount for selected tier or equal to it!"
-              ),
-              usage_desc: Yup.string()
-                .required("Please, tell us how you (will) use our data.")
-                .max(500, "Please, limit usage description to 500 characters."),
-              contact_name: Yup.string().required("Contact name is required!"),
-              agreement: Yup.boolean()
-                .required("You need to accept the agreement!")
-                .oneOf([true], "You need to accept the agreement!"),
-              mtcaptcha: Yup.string().required(),
-            })}
+            validationSchema={validationSchema}
             onSubmit={() => {}}
           >
             {({ errors, isValid, dirty }) => (
@@ -204,61 +225,80 @@ function SignupCommercial({
                       className="btn btn-link col-xs-offset-1 col-sm-offset-4"
                       style={{ marginTop: "10px" }}
                     >
-                      <a href="/supporters/account-type">
-                        Change account type or tier
-                      </a>
+                      <a href={accountTypeUrl}>Change account type or tier</a>
                     </div>
                   </div>
                 </div>
 
                 <hr />
 
-                <AuthCardTextInput
-                  label={
-                    <>
-                      Username <span className="small">(public)</span>
-                    </>
-                  }
-                  type="text"
-                  name="username"
-                  id="username"
-                  required
-                />
-
-                <AuthCardTextInput
-                  type="text"
-                  id="contact_name"
-                  name="contact_name"
-                  label="Contact Name"
-                  required
-                />
-
-                <AuthCardTextInput
-                  label="E-mail address"
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                />
-
-                <AuthCardPasswordInput
-                  label="Password"
-                  name="password"
-                  id="password"
-                  required
-                  labelLink={
-                    <div className="small text-muted form-label-link">
-                      Must be at least 8 characters
+                {existing_user && user ? (
+                  <div className="form-group">
+                    <div className="alert alert-info">
+                      <strong>Your account:</strong> {user.username} (
+                      {user.email})
                     </div>
-                  }
-                />
+                  </div>
+                ) : (
+                  <>
+                    <AuthCardTextInput
+                      label={
+                        <>
+                          Username <span className="small">(public)</span>
+                        </>
+                      }
+                      type="text"
+                      name="username"
+                      id="username"
+                      required
+                    />
 
-                <AuthCardPasswordInput
-                  label="Confirm Password"
-                  name="confirm_password"
-                  id="confirm_password"
-                  required
-                />
+                    <AuthCardTextInput
+                      type="text"
+                      id="contact_name"
+                      name="contact_name"
+                      label="Contact Name"
+                      required
+                    />
+
+                    <AuthCardTextInput
+                      label="E-mail address"
+                      type="email"
+                      name="email"
+                      id="email"
+                      required
+                    />
+
+                    <AuthCardPasswordInput
+                      label="Password"
+                      name="password"
+                      id="password"
+                      required
+                      labelLink={
+                        <div className="small text-muted form-label-link">
+                          Must be at least 8 characters
+                        </div>
+                      }
+                    />
+
+                    <AuthCardPasswordInput
+                      label="Confirm Password"
+                      name="confirm_password"
+                      id="confirm_password"
+                      required
+                    />
+                  </>
+                )}
+
+                {existing_user && (
+                  <AuthCardTextInput
+                    type="text"
+                    id="contact_name"
+                    name="contact_name"
+                    label="Contact Name"
+                    required
+                  />
+                )}
 
                 <AuthCardTextInput
                   type="text"
@@ -269,11 +309,10 @@ function SignupCommercial({
                 >
                   <p className="text-muted">
                     If you don&apos;t have an organization name, you probably
-                    want to sign up as a{" "}
-                    <a href="/signup/noncommercial">
-                      non-commercial / personal
-                    </a>{" "}
-                    user.
+                    want to {existing_user ? "become a supporter" : "sign up"}{" "}
+                    as a{" "}
+                    <a href={nonCommercialUrl}>non-commercial / personal</a>{" "}
+                    {existing_user ? "supporter" : "user"}.
                   </p>
                 </AuthCardTextInput>
 
@@ -447,19 +486,27 @@ function SignupCommercial({
                     className="btn btn-primary btn-block"
                     disabled={!isValid || !dirty}
                   >
-                    Sign up
+                    {existing_user ? "Become a Supporter" : "Sign up"}
                   </button>
                 </div>
               </form>
             )}
           </Formik>
           <div className="auth-card-footer">
-            <div className="small">
-              Not a supporter? <a href="/signup">Create a user account </a>
-            </div>
-            <div className="small">
-              Already have an account? <a href="/login">Sign in </a>
-            </div>
+            {existing_user ? (
+              <div className="small">
+                <a href="/profile">Back to profile</a>
+              </div>
+            ) : (
+              <>
+                <div className="small">
+                  Not a supporter? <a href="/signup">Create a user account </a>
+                </div>
+                <div className="small">
+                  Already have an account? <a href="/login">Sign in </a>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -471,20 +518,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
   const {
     tier,
+    user,
     mtcaptcha_site_key,
     csrf_token,
     initial_form_data,
     initial_errors,
+    existing_user,
   } = reactProps;
 
   const renderRoot = createRoot(domContainer!);
   renderRoot.render(
     <SignupCommercial
       tier={tier}
+      user={user}
       mtcaptcha_site_key={mtcaptcha_site_key}
       csrf_token={csrf_token}
       initial_form_data={initial_form_data}
       initial_errors={initial_errors}
+      existing_user={existing_user}
     />
   );
 });

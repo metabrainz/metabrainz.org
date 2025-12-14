@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ _('Support') }} - MetaBrainz Foundation{% endblock %}
+{% block title %}{{ _('Become a Supporter') if existing_user else _('Support') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">{{ _('Support us') }}</h1>
+  <h1 class="page-title">{{ _('Become a Supporter') if existing_user else _('Support us') }}</h1>
 
+  {% if existing_user %}
+  <p>
+    You already have a MetaBrainz account. To access our datasets or the
+    <a href="https://musicbrainz.org/register">MusicBrainz Live Data Feed</a>, please
+    choose between non-commercial and commercial use below.
+  </p>
+  {% else %}
   <p>
     Do you rely on data from MetaBrainz? We rely on contributions to keep providing it. To access our
     datasets or the <a href="https://musicbrainz.org/register">MusicBrainz Live Data Feed</a>, please
@@ -12,6 +19,7 @@
     <a href="https://musicbrainz.org/register">MusicBrainz account</a> with a verified email address to
     sign-up.
   </p>
+  {% endif %}
 
   <h3 id="non-commercial">{{ _('Non-commercial / Personal') }}</h3>
 
@@ -35,8 +43,13 @@
               <div class="price">{{ _('$0.00/month and up') }}</div>
               <div class="description">{{ _('Personal or university assignment user.') }}</div>
               <div class="buttons">
+                {% if is_upgrade %}
+                <p><a href="{{ url_for('supporters.upgrade_noncommercial') }}"
+                      class="btn btn-primary btn-block" role="button">{{ _('Upgrade') }}</a></p>
+                {% else %}
                 <p><a href="{{ url_for('supporters.signup_noncommercial') }}"
                       class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a></p>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -53,7 +66,7 @@
      getting started and we're happy for your MetaBrainz support to grow as you grow. If you would like
      to use our data, but are not ready to state this publicly yet, sign up for the stealth start-up tier;
      we will keep your data-usage confidential and contact you to discuss your plans. If you are an
-     established company, choose the tier that appropriately fits the size and revenue of your company.   
+     established company, choose the tier that appropriately fits the size and revenue of your company.
   </p>
 
   {% if tiers %}
@@ -72,8 +85,13 @@
                     <div class="buttons">
                       <p><a href="{{ url_for('supporters.tier', tier_id=tier.id) }}"
                             class="btn btn-default btn-block" role="button">{{ _('More info') }}</a></p>
+                      {% if is_upgrade %}
+                      <p><a href="{{ url_for('supporters.upgrade_commercial', tier_id=tier.id) }}"
+                            class="btn btn-primary btn-block" role="button">{{ _('Upgrade') }}</a></p>
+                      {% else %}
                       <p><a href="{{ url_for('supporters.signup_commercial', tier_id=tier.id) }}"
                             class="btn btn-primary btn-block" role="button">{{ _('Sign up') }}</a></p>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -118,8 +136,13 @@
               <td>
                 <a href="{{ url_for('supporters.tier', tier_id=tier.id) }}"
                    class="btn btn-default btn-xs" role="button">{{ _('More info') }}</a>
+                {% if is_upgrade %}
+                <a href="{{ url_for('supporters.upgrade_commercial', tier_id=tier.id) }}"
+                   class="btn btn-primary btn-xs" role="button">{{ _('Upgrade') }}</a>
+                {% else %}
                 <a href="{{ url_for('supporters.signup_commercial', tier_id=tier.id) }}"
                    class="btn btn-primary btn-xs" role="button">{{ _('Sign up') }}</a>
+                {% endif %}
               </td>
             </tr>
           {% endfor %}
@@ -136,6 +159,12 @@
       <a href="%(contact_url)s">contact us</a>.', contact_url=url_for('index.contact')) }}
     </div>
 
+  {% endif %}
+
+  {% if is_upgrade %}
+  <div style="margin-top: 20px">
+    <a href="{{ url_for('index.profile') }}" class="btn btn-default">{{ _('Back to Profile') }}</a>
+  </div>
   {% endif %}
 
 {% endblock %}
