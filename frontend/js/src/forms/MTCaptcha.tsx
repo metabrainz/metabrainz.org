@@ -24,16 +24,20 @@ function MTCaptcha({
   sitekey,
   size = "normal",
   fieldName,
-}: MTCaptchaProps): JSX.Element {
+}: MTCaptchaProps): JSX.Element | null {
   const [field] = useField(fieldName);
   const { setFieldValue } = useFormikContext();
   const containerRef = useRef<HTMLDivElement>(null);
-
   const callbackIdRef = useRef<string>(
     `mtcaptcha_${Math.random().toString(36).substring(7)}`
   );
 
   useEffect(() => {
+    // Don't set up captcha if sitekey is not configured
+    if (!sitekey) {
+      return () => {};
+    }
+
     const callbackId = callbackIdRef.current;
 
     (window as any)[`${callbackId}_verified`] = (token: string) => {
@@ -79,7 +83,13 @@ function MTCaptcha({
       delete (window as any)[`${callbackId}_expired`];
       delete (window as any)[`${callbackId}_error`];
     };
-  }, [sitekey]);
+  }, [sitekey, fieldName, setFieldValue]);
+
+  // Don't render captcha if sitekey is not configured
+  if (!sitekey) {
+    return null;
+  }
+
   return (
     <>
       <input type="hidden" {...field} />
