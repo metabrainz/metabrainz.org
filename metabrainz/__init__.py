@@ -208,12 +208,16 @@ def create_app(debug=None, config_path=None):
 
     from metabrainz.admin.views import UserModelView
     from metabrainz.admin.views import OldUsernameModelView
+    from metabrainz.admin.views import DomainBlacklistModelView
     from metabrainz.admin.webhooks import WebhookModelView
     from metabrainz.admin.webhooks import WebhookDeliveryModelView
 
     user_admin.add_view(UserModelView(model.db.session, endpoint="users-admin", category="Users"))
     user_admin.add_view(OldUsernameModelView(
         model.db.session, endpoint="old-username-admin", name="Old Usernames", category="Users"
+    ))
+    user_admin.add_view(DomainBlacklistModelView(
+        model.db.session, endpoint="domain-blacklist-admin", name="Domain Blacklist", category="Users"
     ))
     user_admin.add_view(
         WebhookModelView(model.db.session, endpoint="webhooks-admin", name="Webhooks", category="Webhooks")
