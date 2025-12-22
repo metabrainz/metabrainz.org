@@ -22,3 +22,4 @@ from .oauth.base_token import save_token
 
 from .webhook_delivery import WebhookDelivery
 from .webhook import Webhook
+from .domain_blacklist import DomainBlacklist
