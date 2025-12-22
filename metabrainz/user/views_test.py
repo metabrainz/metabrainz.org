@@ -9,6 +9,7 @@ from freezegun import freeze_time
 from sqlalchemy import delete
 
 from metabrainz.model import db
+from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
@@ -24,6 +25,7 @@ class UsersViewsTestCase(FlaskTestCase):
         db.session.rollback()
         db.session.execute(delete(User))
         db.session.execute(delete(OldUsername))
+        db.session.execute(delete(DomainBlacklist))
         db.session.commit()
         super(UsersViewsTestCase, self).tearDown()
 
@@ -676,3 +678,89 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertIsNotNone(user)
         self.assertEqual(user.name, "test_user_no_captcha")
         self.assertEqual(user.unconfirmed_email, "test_no_captcha@example.com")
+
+    def test_user_signup_blacklisted_domain(self):
+        DomainBlacklist.add("spam.com", reason="Known spam domain")
+        db.session.commit()
+
+        self._test_user_signup_helper({
+            "username": "test_user_1",
+            "email": "user@spam.com",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+        }, 200)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(
+            props["initial_errors"],
+            {"email": "Registration from this email domain is not allowed."}
+        )
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user)
+
+        self._test_user_signup_helper({
+            "username": "test_user_1",
+            "email": "user@SPAM.COM",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+        }, 200)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(
+            props["initial_errors"],
+            {"email": "Registration from this email domain is not allowed."}
+        )
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user)
+
+    def _check_email_helper(self, email):
+        return self.client.post(
+            "/check-email",
+            json={"email": email},
+            content_type="application/json"
+        )
+
+    def test_check_email_valid(self):
+        response = self._check_email_helper("newuser@example.com")
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertTrue(data["valid"])
+        self.assertIsNone(data["reason"])
+
+    def test_check_email_already_registered(self):
+        self.create_user()
+
+        response = self._check_email_helper("test@example.com")
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertFalse(data["valid"])
+        self.assertEqual(data["reason"], "email_taken")
+
+    def test_check_email_blacklisted_domain(self):
+        DomainBlacklist.add("spam.com")
+        db.session.commit()
+
+        response = self._check_email_helper("user@spam.com")
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertFalse(data["valid"])
+        self.assertEqual(data["reason"], "domain_blacklisted")
+
+        response = self._check_email_helper("user@SPAM.COM")
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertFalse(data["valid"])
+        self.assertEqual(data["reason"], "domain_blacklisted")
+
+    def test_check_email_errors(self):
+        response = self.client.post(
+            "/check-email",
+            json={},
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 400)
+        data = response.get_json()
+        self.assertEqual(data["error"], "Email is required")
+
+        response = self._check_email_helper("invalid-email")
+        self.assertEqual(response.status_code, 400)
+        data = response.get_json()
+        self.assertEqual(data["error"], "Invalid email format")

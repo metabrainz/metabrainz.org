@@ -16,5 +16,6 @@ DROP TABLE IF EXISTS dataset_supporter  CASCADE;
 DROP TABLE IF EXISTS dataset            CASCADE;
 DROP TABLE IF EXISTS webhook            CASCADE;
 DROP TABLE IF EXISTS webhook_delivery   CASCADE;
+DROP TABLE IF EXISTS domain_blacklist   CASCADE;
 
 COMMIT;

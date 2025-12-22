@@ -10,6 +10,7 @@ import {
   AuthCardTextInput,
 } from "./utils";
 import ConditionsModal from "./ConditionsModal";
+import useEmailValidation from "../hooks/useEmailValidation";
 
 type SignupUserProps = {
   mtcaptcha_site_key: string;
@@ -24,6 +25,8 @@ function SignupUser({
   initial_form_data,
   initial_errors,
 }: SignupUserProps): JSX.Element {
+  const { isValidatingEmail, validateEmailAsync } = useEmailValidation();
+
   return (
     <AuthCardContainer>
       <div className="auth-card-container">
@@ -43,9 +46,6 @@ function SignupUser({
             initialTouched={initial_errors}
             validationSchema={Yup.object({
               username: Yup.string().required("Username is required!"),
-              email: Yup.string()
-                .email()
-                .required("Email address is required!"),
               password: Yup.string()
                 .required("Password is required!")
                 .min(8)
@@ -95,11 +95,19 @@ function SignupUser({
                 />
 
                 <AuthCardTextInput
-                  label="E-mail address"
+                  label={
+                    <>
+                      E-mail address
+                      {isValidatingEmail && (
+                        <span className="small text-muted"> (checking...)</span>
+                      )}
+                    </>
+                  }
                   type="email"
                   name="email"
                   id="email"
                   required
+                  validate={validateEmailAsync}
                 />
 
                 <AuthCardPasswordInput
@@ -155,9 +163,9 @@ function SignupUser({
                 <button
                   className="btn btn-primary btn-block main-action-button"
                   type="submit"
-                  disabled={!isValid || !dirty}
+                  disabled={!isValid || !dirty || isValidatingEmail}
                 >
-                  Create account
+                  {isValidatingEmail ? "Validating..." : "Create account"}
                 </button>
               </form>
             )}
