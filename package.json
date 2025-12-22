@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.6",
+    "@types/lodash": "^4.17.21",
     "core-js": "^3.26.1",
     "formik": "^2.4.5",
     "less": "^4.1.1",

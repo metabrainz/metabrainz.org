@@ -1,7 +1,7 @@
 import json
 from datetime import datetime, timezone
 
-from flask import Blueprint, current_app, redirect, render_template, request, url_for
+from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
 from flask_login import logout_user, login_required, login_user, current_user
 from flask_wtf.csrf import generate_csrf
 from sqlalchemy.exc import IntegrityError
@@ -11,6 +11,7 @@ from metabrainz.index.forms import MeBFlaskForm
 from metabrainz.model import db
 from metabrainz.model.user import User, UsernameNotAllowedException
 from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_VERIFIED
+from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.user import login_forbidden
 from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
     VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
@@ -147,6 +148,54 @@ def verify_email():
         db.session.rollback()
 
     return redirect(url_for("index.home"))
+
+
+@users_bp.post("/check-email")
+def check_email():
+    """Check if an email is valid for registration.
+
+    This endpoint checks:
+    1. If the email is already registered (confirmed or unconfirmed)
+    2. If the email's domain is blacklisted
+
+    Example Request:
+
+    .. json::
+
+        {"email": "user@example.com"}
+
+    Example Response:
+
+    .. json::
+
+        {
+            "valid": boolean,
+            "reason": "email_taken" | "domain_blacklisted" | null
+        }
+    """
+    data = request.get_json()
+    if not data or "email" not in data:
+        return jsonify({"error": "Email is required"}), 400
+
+    email = data["email"].strip().lower()
+
+    if not email or '@' not in email:
+        return jsonify({"error": "Invalid email format"}), 400
+
+    if DomainBlacklist.is_email_blacklisted(email):
+        return jsonify({
+            "valid": False,
+            "reason": "domain_blacklisted"
+        })
+
+    existing_user = User.get(email=email)
+    if existing_user is not None:
+        return jsonify({
+            "valid": False,
+            "reason": "email_taken"
+        })
+
+    return jsonify({"valid": True, "reason": None})
 
 
 @users_bp.route("/resend-verification-email", methods=["POST"])

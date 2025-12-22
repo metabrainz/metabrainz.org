@@ -12,6 +12,7 @@ import {
   DatasetsInput,
   TextAreaInput,
 } from "./utils";
+import useEmailValidation from "../hooks/useEmailValidation";
 
 type UserInfo = {
   username: string;
@@ -38,6 +39,7 @@ function SignupNonCommercial({
   existing_user,
 }: SupporterNonCommercialProps): JSX.Element {
   const accountTypeUrl = "/supporters/account-type";
+  const { isValidatingEmail, validateEmailAsync } = useEmailValidation();
 
   const baseInitialValues = {
     datasets: [],
@@ -182,12 +184,23 @@ function SignupNonCommercial({
                     />
 
                     <AuthCardTextInput
-                      label="E-mail address"
+                      label={
+                        <>
+                          E-mail address
+                          {isValidatingEmail && (
+                            <span className="small text-muted">
+                              {" "}
+                              (checking...)
+                            </span>
+                          )}
+                        </>
+                      }
                       type="email"
                       name="email"
                       id="email"
                       autoComplete="email"
                       required
+                      validate={validateEmailAsync}
                     />
 
                     <AuthCardPasswordInput
@@ -286,9 +299,18 @@ function SignupNonCommercial({
                   <button
                     type="submit"
                     className="btn btn-primary btn-block"
-                    disabled={!isValid || !dirty}
+                    disabled={
+                      !isValid ||
+                      !dirty ||
+                      (!existing_user && isValidatingEmail)
+                    }
                   >
-                    {existing_user ? "Become a Supporter" : "Sign up"}
+                    {/* eslint-disable-next-line no-nested-ternary */}
+                    {!existing_user && isValidatingEmail
+                      ? "Validating..."
+                      : existing_user
+                      ? "Become a Supporter"
+                      : "Sign up"}
                   </button>
                 </div>
                 <br />

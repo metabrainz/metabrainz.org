@@ -7,6 +7,7 @@ from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUs
 from metabrainz.admin.forms import get_logo_storage_dir
 from metabrainz.model import db
 from metabrainz.model.old_username import OldUsername
+from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
@@ -620,3 +621,25 @@ class OldUsernameModelView(AdminModelView):
 
     def __init__(self, session, **kwargs):
         super().__init__(OldUsername, session, **kwargs)
+
+
+class DomainBlacklistModelView(AdminModelView):
+    """Admin view for managing blacklisted email domains."""
+    column_list = ('domain', 'reason', 'created_at')
+    column_labels = {
+        'domain': 'Domain',
+        'reason': 'Reason',
+        'created_at': 'Created At'
+    }
+    column_searchable_list = ('domain', 'reason')
+    column_filters = ('domain', 'created_at')
+    column_default_sort = ('created_at', True)
+    can_create = True
+    can_delete = True
+    can_edit = True
+    can_view_details = True
+
+    form_columns = ('domain', 'reason')
+
+    def __init__(self, session, **kwargs):
+        super().__init__(DomainBlacklist, session, **kwargs)
