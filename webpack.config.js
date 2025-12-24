@@ -1,11 +1,11 @@
-const path = require("path");
-const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const LessPluginCleanCSS = require("less-plugin-clean-css");
-const StylelintPlugin = require("stylelint-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
+import {WebpackManifestPlugin} from "webpack-manifest-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import path from "path";
+import StylelintPlugin from "stylelint-webpack-plugin";
+import ESLintPlugin from "eslint-webpack-plugin";
+import LessPluginCleanCSS from "less-plugin-clean-css";
 
-module.exports = function (env, argv) {
+export default function (env, argv) {
   const isProd = argv.mode === "production";
   const baseDir = "./frontend";
   const jsDir = path.join(baseDir, "js");
@@ -36,6 +36,9 @@ module.exports = function (env, argv) {
     new ESLintPlugin({
       files: path.join(jsDir, "src/**/*.{ts,tsx,js,jsx}"),
       fix: !isProd,
+      extensions: ["js", "jsx", "ts", "tsx"],
+      failOnError: isProd,
+      cache: false,
     }),
   ];
   return {
@@ -114,4 +117,4 @@ module.exports = function (env, argv) {
     },
     plugins,
   };
-};
+}
