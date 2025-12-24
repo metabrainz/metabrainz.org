@@ -9,6 +9,7 @@ import {
   AuthCardPasswordInput,
   AuthCardTextInput,
   CheckboxInput,
+  FormLevelAlert,
   TextAreaInput,
 } from "./utils";
 import useEmailValidation from "../hooks/useEmailValidation";
@@ -182,6 +183,7 @@ function SignupCommercial({
           >
             {({ errors, isValid, dirty }) => (
               <form method="POST">
+                <FormLevelAlert errors={initial_errors} />
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
                     <input

@@ -1,7 +1,9 @@
 import json
 from urllib.parse import urlparse
 
+from brainzutils import cache
 from flask import url_for, g
+from flask_login import current_user
 from sqlalchemy import delete
 
 from metabrainz.model import db
@@ -32,6 +34,8 @@ class SupportersViewsTestCase(FlaskTestCase):
             description="A test dataset",
             project="musicbrainz"
         )
+        self.app.config["SIGNUP_RATE_LIMIT_PER_IP"] = 2
+        self.ip_address = "10.0.0.100"
 
     def tearDown(self):
         db.session.rollback()
@@ -40,6 +44,7 @@ class SupportersViewsTestCase(FlaskTestCase):
         db.session.execute(delete(Tier))
         db.session.execute(delete(Dataset))
         db.session.commit()
+        cache._r.flushall()
         super().tearDown()
 
     def test_supporters_list(self):
@@ -517,3 +522,93 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assert200(response)
         props = json.loads(self.get_context_variable("props"))
         self.assertIn("confirm_password", props["initial_errors"])
+
+    def _signup_with_ip(self, is_commercial: bool, username: str | None, email: str | None, ip_address: str = None):
+        """Helper to perform commercial signup with a specific IP address."""
+        data = {
+            "username": username,
+            "email": email,
+            "password": "securepassword123",
+            "confirm_password": "securepassword123",
+            "contact_name": "Test Contact",
+            "usage_desc": "Testing",
+            "agreement": "y",
+        }
+        if is_commercial:
+            url = url_for('supporters.signup_commercial', tier_id=self.tier.id)
+            data.update({
+                "org_name": "Test Org 1",
+                "org_desc": "Test description",
+                "website_url": "https://example1.com",
+                "address_street": "123 Test St",
+                "address_city": "Test City",
+                "address_state": "Test State",
+                "address_postcode": "12345",
+                "address_country": "Test Country",
+                "amount_pledged": "150",
+            })
+        else:
+            url = url_for("supporters.signup_noncommercial")
+            data[f"datasets.{self.dataset.id}"] = "y"
+
+        env = {"REMOTE_ADDR": ip_address or self.ip_address}
+        self.client.get(url, environ_base=env)
+        data["csrf_token"] = g.csrf_token
+        return self.client.post(url, data=data, environ_base=env)
+
+    def _test_signup_rate_limit(self, is_commercial: bool):
+        # test failed validation doesn't increase signup count
+        for _ in range(5):
+            response = self._signup_with_ip(
+                is_commercial=is_commercial,
+                username=None,
+                email="test@email.com"
+            )
+            self.assert200(response)
+            props = json.loads(self.get_context_variable("props"))
+            self.assertIn("username", props["initial_errors"])
+            self.assertIn("Username is required!", props["initial_errors"]["username"])
+
+        response = self._signup_with_ip(
+            is_commercial=is_commercial,
+            username="new_user_1",
+            email="new_user_1@example.com"
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+        self.client.get("/logout")
+        response = self._signup_with_ip(
+            is_commercial=is_commercial,
+            username="new_user_2",
+            email="new_user_2@example.com"
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+        self.client.get("/logout")
+
+        response = self._signup_with_ip(
+            is_commercial=is_commercial,
+            username="new_user_3",
+            email="new_user_3@example.com"
+        )
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("null", props["initial_errors"])
+        self.assertIn("Too many registration attempts", props["initial_errors"]["null"])
+
+        user = User.get(name="new_user_3")
+        self.assertIsNone(user)
+
+        # existing user becoming supporter is not rate-limited
+        self.temporary_login(self.existing_user)
+        response = self._signup_with_ip(
+            is_commercial=is_commercial,
+            username=self.existing_user.name,
+            email=self.existing_user.email
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+        self.assertIsNotNone(current_user.supporter)
+
+    def test_signup_commercial_rate_limit(self):
+        self._test_signup_rate_limit(is_commercial=True)
+
+    def test_signup_noncommercial_rate_limit(self):
+        self._test_signup_rate_limit(is_commercial=False)

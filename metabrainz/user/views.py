@@ -17,6 +17,7 @@ from metabrainz.user.email import send_forgot_password_email, send_forgot_userna
     VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
 from metabrainz.user.forms import UserLoginForm, UserSignupForm, ForgotPasswordForm, ForgotUsernameForm, \
     ResetPasswordForm
+from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup_count
 
 users_bp = Blueprint("users", __name__)
 
@@ -26,7 +27,7 @@ users_bp = Blueprint("users", __name__)
 def signup():
     """ User signup endpoint. """
     form = UserSignupForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit() and not check_signup_rate_limit(form):
         user = User.get(name=form.username.data)
         if user is not None:
             form.username.errors.append(f"Another user with username '{form.username.data}' exists.")
@@ -43,6 +44,7 @@ def signup():
                         password=form.password.data
                     )
                     db.session.commit()
+                    increment_signup_count()
                     user.emit_event(EVENT_USER_CREATED)
 
                     send_verification_email(
