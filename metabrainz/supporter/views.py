@@ -15,6 +15,7 @@ from metabrainz.model.user import User
 from metabrainz.model.webhook import EVENT_USER_CREATED
 from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialUpgradeForm, NonCommercialUpgradeForm
 from metabrainz.user.email import send_verification_email
+from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup_count
 
 supporters_bp = Blueprint('supporters', __name__)
 
@@ -166,7 +167,7 @@ def signup_commercial():
             return redirect(url_for('index.profile'))
         else:
             # New user signup
-            if _check_user_exists(form):
+            if check_signup_rate_limit(form) or _check_user_exists(form):
                 return render_template("supporters/signup-commercial.html", props=json.dumps({
                     "tier": _tier,
                     "mtcaptcha_site_key": mtcaptcha_site_key,
@@ -179,6 +180,7 @@ def signup_commercial():
             user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
             _create_commercial_supporter(form, tier_id, user)
             db.session.commit()
+            increment_signup_count()
 
             user.emit_event(EVENT_USER_CREATED)
             flash.success(gettext(
@@ -247,7 +249,7 @@ def signup_noncommercial():
             return redirect(url_for('index.profile'))
         else:
             # New user signup
-            if _check_user_exists(form):
+            if check_signup_rate_limit(form) or _check_user_exists(form):
                 return render_template("supporters/signup-non-commercial.html", props=json.dumps({
                     "datasets": dataset_dicts,
                     "mtcaptcha_site_key": mtcaptcha_site_key,
@@ -260,6 +262,7 @@ def signup_noncommercial():
             user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
             _create_noncommercial_supporter(form, user)
             db.session.commit()
+            increment_signup_count()
 
             user.emit_event(EVENT_USER_CREATED)
             send_verification_email(
@@ -286,7 +289,6 @@ def signup_noncommercial():
             "username": current_user.name,
             "email": current_user.get_email_any()
         }
-    print(props)
 
     return render_template("supporters/signup-non-commercial.html", props=json.dumps(props))
 

@@ -8,6 +8,7 @@ import {
   AuthCardContainer,
   AuthCardPasswordInput,
   AuthCardTextInput,
+  FormLevelAlert,
 } from "./utils";
 import ConditionsModal from "./ConditionsModal";
 import useEmailValidation from "../hooks/useEmailValidation";
@@ -64,8 +65,9 @@ function SignupUser({
             })}
             onSubmit={() => {}}
           >
-            {({ errors, setFieldValue, isValid, dirty, values }) => (
+            {({ errors, isValid, dirty }) => (
               <form method="POST">
+                <FormLevelAlert errors={initial_errors} />
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
                     <input

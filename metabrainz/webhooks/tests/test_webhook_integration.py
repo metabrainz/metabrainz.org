@@ -3,6 +3,7 @@ import hashlib
 import hmac
 
 import requests_mock
+from brainzutils import cache
 from flask import g
 
 from metabrainz.model import db
@@ -31,6 +32,10 @@ class WebhookIntegrationTestCase(FlaskTestCase):
     def setUp(self):
         super().setUp()
         WebhookDeliveryEngine._circuit_breakers.clear()
+
+    def tearDown(self):
+        cache._r.flushall()
+        super().tearDown()
 
     @requests_mock.Mocker(real_http=False)
     def test_user_signup_triggers_webhook(self, mock_requests):
