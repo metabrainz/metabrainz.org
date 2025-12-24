@@ -22,7 +22,7 @@ function OAuthError({ error }: OAuthErrorProps): JSX.Element {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { error } = reactProps;
 
   const renderRoot = createRoot(domContainer!);
