@@ -10,6 +10,7 @@ import {
   AuthCardTextInput,
   CheckboxInput,
   DatasetsInput,
+  FormLevelAlert,
   TextAreaInput,
 } from "./utils";
 import useEmailValidation from "../hooks/useEmailValidation";
@@ -118,6 +119,7 @@ function SignupNonCommercial({
           >
             {({ errors, isValid, dirty }) => (
               <form method="POST" className="d-flex flex-column">
+                <FormLevelAlert errors={initial_errors} />
                 <div className="form-group">
                   <div className="col-sm-offset-4 col-sm-5">
                     <input
