@@ -1,6 +1,17 @@
 import React, { JSX } from "react";
 import { Field, FieldConfig, useField } from "formik";
 
+export type FormLevelAlertProps = {
+  errors: Record<string, string> | null | undefined;
+};
+
+export function FormLevelAlert({ errors }: FormLevelAlertProps) {
+  if (!errors?.null) {
+    return null;
+  }
+  return <div className="alert alert-danger">{errors.null}</div>;
+}
+
 export type TextInputProps = JSX.IntrinsicElements["input"] &
   FieldConfig & {
     label: string;

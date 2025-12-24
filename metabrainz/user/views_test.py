@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timezone, timedelta
 from urllib.parse import urlparse, parse_qs
 
+from brainzutils import cache
 from flask import g, url_for
 from flask_login import current_user
 from flask_wtf.csrf import generate_csrf
@@ -20,6 +21,8 @@ class UsersViewsTestCase(FlaskTestCase):
 
     def setUp(self):
         super(UsersViewsTestCase, self).setUp()
+        self.ip_address = "192.168.100.1"
+        self.app.config["SIGNUP_RATE_LIMIT_PER_IP"] = 2
 
     def tearDown(self):
         db.session.rollback()
@@ -27,6 +30,7 @@ class UsersViewsTestCase(FlaskTestCase):
         db.session.execute(delete(OldUsername))
         db.session.execute(delete(DomainBlacklist))
         db.session.commit()
+        cache._r.flushall()
         super(UsersViewsTestCase, self).tearDown()
 
     def create_user(self, data=None):
@@ -764,3 +768,53 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(response.status_code, 400)
         data = response.get_json()
         self.assertEqual(data["error"], "Invalid email format")
+
+    def _signup_with_ip(self, username: str | None, email: str | None, ip_address: str = None):
+        data = {
+            "username": username,
+            "email": email,
+            "password": "securepassword123",
+            "confirm_password": "securepassword123",
+        }
+        url = "/signup"
+        env = {"REMOTE_ADDR": ip_address or self.ip_address}
+        self.client.get(url, environ_base=env)
+        data["csrf_token"] = g.csrf_token
+        return self.client.post(url, data=data, environ_base=env)
+
+    def test_user_signup_rate_limited(self):
+        # test failed validation doesn't increase signup count
+        for _ in range(5):
+            response = self._signup_with_ip(
+                username=None,
+                email="test@email.com"
+            )
+            self.assert200(response)
+            props = json.loads(self.get_context_variable("props"))
+            self.assertIn("username", props["initial_errors"])
+            self.assertIn("Username is required!", props["initial_errors"]["username"])
+
+        response = self._signup_with_ip(
+            username="new_user_1",
+            email="new_user_1@example.com"
+        )
+        self.assertRedirects(response, url_for("index.home"))
+        self.client.get("/logout")
+        response = self._signup_with_ip(
+            username="new_user_2",
+            email="new_user_2@example.com"
+        )
+        self.assertRedirects(response, url_for("index.home"))
+        self.client.get("/logout")
+
+        response = self._signup_with_ip(
+            username="new_user_3",
+            email="new_user_3@example.com"
+        )
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("null", props["initial_errors"])
+        self.assertIn("Too many registration attempts", props["initial_errors"]["null"])
+
+        user = User.get(name="new_user_3")
+        self.assertIsNone(user)
