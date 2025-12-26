@@ -1,0 +1,8 @@
+{% extends 'base-react.html' %}
+
+{% block title %}{{ _('Delete Account') }} - MetaBrainz Foundation{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ get_static_path('profileDelete.js') }}" type="text/javascript"></script>
+{% endblock %}

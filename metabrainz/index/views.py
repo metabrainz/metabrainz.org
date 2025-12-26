@@ -2,7 +2,7 @@ import datetime
 import json
 
 from flask import Blueprint, render_template, redirect, url_for, make_response, g, request
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, fresh_login_required, logout_user
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
 from flask_babel import gettext
@@ -12,6 +12,7 @@ from metabrainz.index.forms import CommercialSupporterEditForm, NonCommercialSup
 from metabrainz.model import Dataset, db, OAuth2Client, OAuth2AccessToken, OAuth2RefreshToken
 from metabrainz.model.supporter import Supporter
 from metabrainz.model.user import User
+from metabrainz.model.webhook import EVENT_USER_DELETED
 from metabrainz.oauth.forms import ApplicationForm, DeleteApplicationForm
 from metabrainz.oauth.generator import create_client_id, create_client_secret
 from metabrainz.user.email import send_verification_email
@@ -417,3 +418,32 @@ def profile_applications_revoke_user(client_id):
 
     flash.success(gettext("Revoked tokens successfully!"))
     return redirect(url_for(".profile_applications"))
+
+
+@index_bp.route("/profile/delete", methods=["GET", "POST"])
+@fresh_login_required
+def profile_delete():
+    """Delete the current user's account.
+
+    Only non-supporter users can delete their own accounts.
+    Supporter accounts must be deleted by admins.
+    """
+    if current_user.supporter:
+        flash.error("The deletion of supporter accounts requires manual review. Please contact an administrator.")
+        return redirect(url_for("index.home"))
+
+    if request.method == "GET":
+        return render_template("index/profile-delete.html", props=json.dumps({
+            "csrf_token": generate_csrf(),
+            "username": current_user.name,
+        }))
+
+    current_user.delete()
+    db.session.commit()
+
+    current_user.emit_event(EVENT_USER_DELETED, reason="User requested account deletion")
+
+    logout_user()
+
+    flash.success(gettext("Your account has been deleted."))
+    return redirect(url_for("index.home"))

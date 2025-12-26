@@ -2,8 +2,10 @@ from decimal import Decimal
 from flask import Response, request, redirect, url_for
 from flask_admin import expose
 from flask_login import current_user
+from markupsafe import Markup
+
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
-from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm
+from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm, DeleteUserForm, DeleteSupporterForm
 from metabrainz.model import db
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.domain_blacklist import DomainBlacklist
@@ -11,7 +13,6 @@ from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, S
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
-from metabrainz.db import supporter as db_supporter
 from metabrainz.db import payment as db_payment
 from metabrainz import flash
 from brainzutils import cache
@@ -24,7 +25,7 @@ import uuid
 import json
 import socket
 from metabrainz.model.user import User
-from metabrainz.model.webhook import EVENT_USER_VERIFIED
+from metabrainz.model.webhook import EVENT_USER_DELETED, EVENT_USER_VERIFIED
 
 from metabrainz.utils import get_int_query_param
 
@@ -257,6 +258,57 @@ class SupportersView(AdminBaseView):
         flash.info('Token %s has been revoked.' % token_value)
         return redirect(url_for('.details', supporter_id=token.owner_id))
 
+    @expose('/<int:supporter_id>/delete', methods=('GET', 'POST'))
+    def delete(self, supporter_id):
+        """Delete a supporter and their associated user account."""
+        supporter = Supporter.get(id=supporter_id)
+        if supporter is None:
+            flash.error('Supporter not found.')
+            return redirect(url_for('.index'))
+
+        user = supporter.user
+        form = DeleteSupporterForm()
+
+        if request.method == 'GET':
+            return self.render(
+                'admin/supporters/delete.html',
+                supporter=supporter,
+                form=form,
+            )
+
+        if not form.validate_on_submit():
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash.error(error)
+            return self.render(
+                'admin/supporters/delete.html',
+                supporter=supporter,
+                form=form,
+            )
+
+        if user.deleted:
+            flash.warning('User is already deleted.')
+            return redirect(url_for('.details', supporter_id=supporter_id))
+
+        reason = form.reason.data.strip()
+
+        try:
+            # Delete supporter first (removes FK constraint)
+            db.session.delete(supporter)
+            db.session.flush()
+
+            user.delete(current_user, reason)
+            db.session.commit()
+
+            user.emit_event(EVENT_USER_DELETED, reason=reason, moderator_id=current_user.id)
+            flash.success('Supporter has been deleted.')
+            return redirect(url_for('.index'))
+        except Exception:
+            db.session.rollback()
+            flash.error('An error occurred while deleting the supporter.')
+            logging.exception(f'Error deleting supporter {supporter_id}:')
+            return redirect(url_for('.details', supporter_id=supporter_id))
+
 
 class CommercialSupportersView(AdminBaseView):
 
@@ -484,6 +536,7 @@ class UserModelView(AdminModelView):
         verify_email_form = VerifyEmailForm()
         edit_username_form = EditUsernameForm()
         moderate_user_form = ModerateUserForm()
+        delete_user_form = DeleteUserForm()
 
         return self.render(
             self.details_template,
@@ -494,6 +547,7 @@ class UserModelView(AdminModelView):
             verify_email_form=verify_email_form,
             edit_username_form=edit_username_form,
             moderate_user_form=moderate_user_form,
+            delete_user_form=delete_user_form,
         )
 
     @expose('/user/<int:user_id>/verify-email', methods=['POST'])
@@ -609,6 +663,51 @@ class UserModelView(AdminModelView):
             db.session.rollback()
             flash.error(f'An error occurred while processing the {action} action.')
             logging.exception(f'Error in moderation action {action} for user {user_id}:')
+
+        return redirect(url_for('.details_view', id=user_id))
+
+    @expose('/user/<int:user_id>/delete', methods=['POST'])
+    def delete_user(self, user_id):
+        """Handle user deletion with confirmation.
+
+        If the user is a supporter, deletion is refused and the admin
+        is directed to delete through the supporter portal instead.
+        """
+        form = DeleteUserForm()
+        user = User.query.get_or_404(user_id)
+
+        if not form.validate_on_submit():
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash.error(error)
+            return redirect(url_for('.details_view', id=user_id))
+
+        if user.deleted:
+            flash.warning('User is already deleted.')
+            return redirect(url_for('.details_view', id=user_id))
+
+        if user.supporter:
+            flash.error(
+                Markup(
+                    'This user is a supporter. Please delete them through the '
+                    '<a href="{}">Supporter Portal</a> instead.'.format(
+                        url_for('supportersview.details', supporter_id=user.supporter.id)
+                    )
+                )
+            )
+            return redirect(url_for('.details_view', id=user_id))
+
+        reason = form.reason.data.strip()
+
+        try:
+            user.delete(current_user, reason)
+            db.session.commit()
+            user.emit_event(EVENT_USER_DELETED, reason=reason, moderator_id=current_user.id)
+            flash.success('User has been deleted.')
+        except Exception:
+            db.session.rollback()
+            flash.error('An error occurred while deleting the user.')
+            logging.exception(f'Error deleting user {user_id}:')
 
         return redirect(url_for('.details_view', id=user_id))
 
