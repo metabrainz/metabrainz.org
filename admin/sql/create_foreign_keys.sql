@@ -7,7 +7,7 @@ ALTER TABLE token
 
 ALTER TABLE supporter ADD CONSTRAINT supporter_user_id_fkey
     FOREIGN KEY (user_id) REFERENCES "user" (id)
-    ON UPDATE CASCADE ON DELETE SET NULL;
+    ON UPDATE CASCADE ON DELETE RESTRICT;
 
 ALTER TABLE supporter
   ADD CONSTRAINT supporter_tier_id_fkey FOREIGN KEY (tier_id)
