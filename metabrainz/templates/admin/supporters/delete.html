@@ -1,0 +1,87 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <div class="page-title" style="margin-bottom: 5px;">
+    <i class="fa fa-trash"></i> Delete Supporter
+  </div>
+
+  <div class="admin-card" style="margin-bottom: 25px; border: 2px solid #d9534f;">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2 style="margin-top:0; color: #d9534f; font-weight: 700;">
+          <i class="fa fa-exclamation-triangle"></i> Warning: This action is irreversible
+        </h2>
+        <p style="font-size: 16px; margin-bottom: 20px;">
+          You are about to delete the following supporter and their associated user account:
+        </p>
+
+        <div class="well" style="background-color: #f5f5f5; border: 1px solid #ddd;">
+          <dl class="dl-horizontal" style="margin-bottom: 0;">
+            <dt>Supporter ID</dt>
+            <dd>#{{ supporter.id }}</dd>
+            <dt>Username</dt>
+            <dd>{{ supporter.user.name }}</dd>
+            <dt>Email</dt>
+            <dd>{{ supporter.user.email or 'N/A' }}</dd>
+            <dt>Contact Name</dt>
+            <dd>{{ supporter.contact_name }}</dd>
+            {% if supporter.is_commercial %}
+            <dt>Organization</dt>
+            <dd>{{ supporter.org_name }}</dd>
+            {% endif %}
+            <dt>Type</dt>
+            <dd>{{ 'Commercial' if supporter.is_commercial else 'Non-commercial' }}</dd>
+            <dt>State</dt>
+            <dd>{{ supporter.state }}</dd>
+          </dl>
+        </div>
+
+        <div class="alert alert-danger" style="margin-top: 20px;">
+          <strong>This will:</strong>
+          <ul style="margin-top: 10px; margin-bottom: 0;">
+            <li>Permanently delete the supporter record</li>
+            <li>Permanently delete the associated user account</li>
+            <li>Revoke all access tokens</li>
+            <li>Reserve the username (cannot be reused)</li>
+            <li>Remove all personal information</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <h3><i class="fa fa-trash"></i> Confirm Deletion</h3>
+    <form method="POST" action="{{ url_for('supportersview.delete', supporter_id=supporter.id) }}">
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        <label for="reason">{{ form.reason.label.text }}</label>
+        {{ form.reason(class="form-control", rows=3, placeholder="Enter the reason for deletion...") }}
+        {% for error in form.reason.errors %}
+          <span class="help-block text-danger">{{ error }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            {{ form.confirm() }}
+            {{ form.confirm.label.text }}
+          </label>
+          {% for error in form.confirm.errors %}
+            <span class="help-block text-danger">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <button type="submit" class="btn btn-danger">
+          <i class="fa fa-trash"></i> Delete Supporter and User Account
+        </button>
+        <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}" class="btn btn-default">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

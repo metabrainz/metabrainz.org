@@ -65,6 +65,7 @@ export default function (env, argv) {
       resetPassword: path.resolve(jsDir, "src/forms/ResetPassword.tsx"),
       profileEdit: path.resolve(jsDir, "src/forms/ProfileEdit.tsx"),
       profile: path.resolve(jsDir, "src/Profile.tsx"),
+      profileDelete: path.resolve(jsDir, "src/ProfileDelete.tsx"),
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",

@@ -369,6 +369,60 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
   );
 }
 
+function DeleteAccountSection() {
+  return (
+    <div
+      className="panel panel-danger"
+      style={{ marginTop: "2rem", borderColor: "#d9534f" }}
+    >
+      <div
+        className="panel-heading"
+        style={{ backgroundColor: "#d9534f", color: "white" }}
+      >
+        <h3 className="panel-title">Danger Zone</h3>
+      </div>
+      <div className="panel-body">
+        <p>
+          <strong>Delete your account</strong>
+        </p>
+        <p className="text-muted">
+          Once you delete your account, there is no going back. Please be
+          certain.
+        </p>
+        <a href="/profile/delete" className="btn btn-danger">
+          Delete My Account
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function SupporterAccountDeletionNotice() {
+  return (
+    <div
+      className="panel panel-info"
+      style={{ marginTop: "2rem", borderColor: "#5bc0de" }}
+    >
+      <div
+        className="panel-heading"
+        style={{ backgroundColor: "#5bc0de", color: "white" }}
+      >
+        <h3 className="panel-title">Account Deletion</h3>
+      </div>
+      <div className="panel-body">
+        <p>
+          <strong>Need to delete your account?</strong>
+        </p>
+        <p className="text-muted">
+          Deletion of supporter accounts requires manual review. If you need
+          to delete your account, please contact us at{" "}
+          <a href="mailto:support@metabrainz.org">support@metabrainz.org</a>.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
   return (
     <>
@@ -378,6 +432,12 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
         <SupporterProfile user={user} csrf_token={csrf_token} />
       ) : (
         <UserProfile user={user} csrf_token={csrf_token} />
+      )}
+
+      {user.supporter ? (
+        <SupporterAccountDeletionNotice />
+      ) : (
+        <DeleteAccountSection />
       )}
 
       <h3>MetaBrainz Applications</h3>

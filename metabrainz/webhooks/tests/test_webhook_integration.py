@@ -374,6 +374,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
     @requests_mock.Mocker()
     def test_concurrent_deliveries_to_same_webhook(self, mock_requests):
         """Test multiple users signing up triggers multiple deliveries."""
+        self.app.config["SIGNUP_RATE_LIMIT_PER_IP"] = 5
         webhook = Webhook(
             name="Concurrent Test Webhook",
             url="https://example.com/webhook",
@@ -388,13 +389,14 @@ class WebhookIntegrationTestCase(FlaskTestCase):
 
         for i in range(3):
             self.client.get("/signup")
-            self.client.post("/signup", data={
+            response = self.client.post("/signup", data={
                 "username": f"user{i}",
                 "email": f"user{i}@example.com",
                 "password": "password123",
                 "confirm_password": "password123",
                 "csrf_token": g.csrf_token
             })
+            self.assertStatus(response, 302)
             self.client.get("/logout")
 
         deliveries = WebhookDelivery.query.filter_by(webhook_id=webhook.id).all()
