@@ -66,7 +66,7 @@ function ProfileEdit({
                 type="text"
                 id="contact_name"
                 name="contact_name"
-                label="Name"
+                label="Contact Name"
                 required
               />
             )}
@@ -75,7 +75,7 @@ function ProfileEdit({
               type="email"
               id="email"
               name="email"
-              label="Email"
+              label={is_supporter ? "Contact Email" : "Email"}
               required
             />
             <br />
@@ -92,8 +92,22 @@ function ProfileEdit({
             )}
 
             <div className="form-group">
-              <div className="col-sm-offset-4 col-sm-10">
-                <button type="submit" className="btn btn-primary">
+              <div
+                className="col-sm-offset-4 col-sm-5"
+                style={{ display: "flex", gap: "10px" }}
+              >
+                <a
+                  href="/profile"
+                  className="btn btn-default"
+                  style={{ flex: 1, textAlign: "center" }}
+                >
+                  Cancel
+                </a>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{ flex: 1 }}
+                >
                   Update
                 </button>
               </div>

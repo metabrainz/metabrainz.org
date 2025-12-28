@@ -146,8 +146,8 @@ def funding_json():
 def profile():
     user = {
         "name": current_user.name,
-        "email": current_user.get_email_any(),
-        "is_email_confirmed": current_user.is_email_confirmed()
+        "email": current_user.email,
+        "unconfirmed_email": current_user.unconfirmed_email,
     }
 
     if current_user.supporter:
@@ -182,7 +182,7 @@ def profile():
 
     return render_template('index/profile.html', props=json.dumps({
         "user": user,
-        "csrf_token": generate_csrf() if not user["is_email_confirmed"] else None,
+        "csrf_token": generate_csrf() if user["unconfirmed_email"] else None,
     }))
 
 
@@ -224,6 +224,9 @@ def profile_edit():
             if not current_user.supporter.is_commercial:
                 kwargs["datasets"] = form.datasets.data
             current_user.supporter.update(**kwargs)
+
+        flash.success(gettext("Profile updated successfully."))
+        return redirect(url_for("index.profile"))
 
     form_data = {"email": current_user.email}
     if current_user.supporter:

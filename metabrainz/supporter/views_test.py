@@ -8,7 +8,7 @@ from sqlalchemy import delete
 
 from metabrainz.model import db
 from metabrainz.model.dataset import Dataset
-from metabrainz.model.supporter import Supporter
+from metabrainz.model.supporter import Supporter, STATE_ACTIVE
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
@@ -612,3 +612,91 @@ class SupportersViewsTestCase(FlaskTestCase):
 
     def test_signup_noncommercial_rate_limit(self):
         self._test_signup_rate_limit(is_commercial=False)
+
+    def test_noncommercial_supporter_profile_edit(self):
+        """Test that non-commercial supporters can update only contact_name, contact_email
+         and dataset via profile edit."""
+        self.temporary_login(self.existing_user)
+        response = self._signup_with_ip(
+            is_commercial=False,
+            username=self.existing_user.name,
+            email=self.existing_user.email
+        )
+        self.assertStatus(response, 302)
+
+        dataset2 = Dataset.create(
+            name="Second Dataset",
+            description="Another test dataset",
+            project="listenbrainz"
+        )
+
+        original_state = self.existing_user.supporter.state
+        original_email = self.existing_user.email
+        original_data_usage_desc = self.existing_user.supporter.data_usage_desc
+        new_email = "updated-existing-user@gmail.com"
+        self.client.get(url_for("index.profile_edit"))
+        response = self.client.post(
+            url_for('index.profile_edit'),
+            data={
+                "contact_name": "Updated Contact Name",
+                "email": new_email,
+                "usage_desc": "Trying to change usage description",
+                "datasets": dataset2.id,
+                "csrf_token": g.csrf_token,
+                "state": STATE_ACTIVE,
+            },
+            follow_redirects=False
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+
+        supporter = Supporter.get(user_id=self.existing_user.id)
+        self.assertEqual(supporter.contact_name, "Updated Contact Name")
+        self.assertEqual(supporter.data_usage_desc, original_data_usage_desc)
+        self.assertEqual(len(supporter.datasets), 1)
+        self.assertEqual(supporter.datasets[0].id, dataset2.id)
+        self.assertEqual(self.existing_user.email, original_email)
+        self.assertEqual(self.existing_user.unconfirmed_email, new_email)
+        self.assertEqual(supporter.state, original_state)
+
+    def test_commercial_supporter_profile_edit(self):
+        """Test that commercial supporters cannot change org info via profile edit."""
+        self.temporary_login(self.existing_user)
+        response = self._signup_with_ip(
+            is_commercial=True,
+            username=self.existing_user.name,
+            email=self.existing_user.email
+        )
+        self.assertStatus(response, 302)
+
+        supporter = self.existing_user.supporter
+        original_email = self.existing_user.email
+        original_state = supporter.state
+        original_org_name = supporter.org_name
+        original_website_url = supporter.website_url
+        original_amount_pledged = supporter.amount_pledged
+        original_good_standing = supporter.good_standing
+
+        self.client.get(url_for("index.profile_edit"))
+        response = self.client.post(
+            url_for("index.profile_edit"),
+            data={
+                "contact_name": supporter.contact_name,
+                "email": "updated@example.com",
+                "org_name": "Trying to change org name",
+                "website_url": "https://malicious.com",
+                "amount_pledged": "125",
+                "good_standing": not original_good_standing,
+                "state": STATE_ACTIVE,
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+
+        self.assertEqual(supporter.org_name, original_org_name)
+        self.assertEqual(supporter.website_url, original_website_url)
+        self.assertEqual(supporter.amount_pledged, original_amount_pledged)
+        self.assertEqual(supporter.good_standing, original_good_standing)
+        self.assertEqual(self.existing_user.email, original_email)
+        self.assertEqual(self.existing_user.unconfirmed_email, "updated@example.com")
+        self.assertEqual(supporter.state, original_state)
