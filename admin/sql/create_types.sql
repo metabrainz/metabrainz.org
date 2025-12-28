@@ -1,6 +1,6 @@
 BEGIN;
 
-CREATE TYPE moderation_action_type AS ENUM ('block', 'unblock', 'comment', 'delete');
+CREATE TYPE moderation_action_type AS ENUM ('block', 'unblock', 'comment', 'verify_email', 'delete', 'edit_username');
 
 CREATE TYPE payment_method_types AS ENUM (
   'stripe',

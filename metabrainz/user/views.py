@@ -10,7 +10,7 @@ from metabrainz import bcrypt, flash
 from metabrainz.index.forms import MeBFlaskForm
 from metabrainz.model import db
 from metabrainz.model.user import User, UsernameNotAllowedException
-from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_VERIFIED
+from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_UPDATED
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.user import login_forbidden
 from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
@@ -137,12 +137,17 @@ def verify_email():
         return redirect(url_for("index.home"))
 
     try:
+        old_email = user.email
         user.email = user.unconfirmed_email
         user.unconfirmed_email = None
         user.email_confirmed_at = datetime.now(tz=timezone.utc)
         db.session.commit()
 
-        user.emit_event(EVENT_USER_VERIFIED)
+        user.emit_event(
+            EVENT_USER_UPDATED,
+            old={"email": old_email},
+            new={"email": user.email},
+        )
 
         flash.success("Email verified!")
     except IntegrityError:

@@ -13,7 +13,7 @@ from metabrainz.admin import AdminModelView
 from metabrainz.admin.forms import RetryDeliveryForm
 from metabrainz.model import db
 from metabrainz.model.webhook import Webhook, WebhookDelivery, EVENT_USER_CREATED, EVENT_USER_DELETED, \
-    EVENT_USER_VERIFIED, EVENT_USER_UPDATED
+    EVENT_USER_UPDATED
 
 
 def validate_webhook_url(form, field):
@@ -102,7 +102,6 @@ class WebhookModelView(AdminModelView):
             choices=[
                 (EVENT_USER_CREATED, "User Created"),
                 (EVENT_USER_DELETED, "User Deleted"),
-                (EVENT_USER_VERIFIED, "User Verified"),
                 (EVENT_USER_UPDATED, "User Updated"),
             ],
             validators=[DataRequired()],
