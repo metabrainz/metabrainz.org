@@ -122,7 +122,19 @@
                   {% endif %}
                 </td>
                 <td>{{ supporter.contact_name }}</td>
-                <td>{{ supporter.user.email }}</td>
+                <td>
+                  {% if supporter.user.email and supporter.user.unconfirmed_email %}
+                    {{ supporter.user.email }} <span class="badge bg-success" style="font-size: 10px;">Confirmed</span>
+                    <br>
+                    <small class="text-muted">{{ supporter.user.unconfirmed_email }}</small> <span class="badge bg-danger" style="font-size: 10px;">Pending</span>
+                  {% elif supporter.user.email %}
+                    {{ supporter.user.email }}
+                  {% elif supporter.user.unconfirmed_email %}
+                    {{ supporter.user.unconfirmed_email }} <span class="badge bg-danger" style="font-size: 10px;">Unconfirmed</span>
+                  {% else %}
+                    <span class="text-muted">No email</span>
+                  {% endif %}
+                </td>
                 <td>
                   {% if supporter.is_commercial %}
                     <span class="badge bg-success"><i class="fa fa-briefcase"></i> Commercial</span>
