@@ -2,7 +2,7 @@ from flask import url_for
 
 from metabrainz.model import db
 from metabrainz.model.user import User
-from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_VERIFIED
+from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_UPDATED
 from metabrainz.testing import FlaskTestCase
 
 
@@ -38,7 +38,7 @@ class WebhookAdminTestCase(FlaskTestCase):
             data={
                 "name": "Test Webhook",
                 "url": "https://example.com/webhook",
-                "events": [EVENT_USER_CREATED, EVENT_USER_VERIFIED],
+                "events": [EVENT_USER_CREATED, EVENT_USER_UPDATED],
                 "is_active": True,
                 "csrf_token": csrf_token
             },
@@ -51,7 +51,7 @@ class WebhookAdminTestCase(FlaskTestCase):
         self.assertIsNotNone(webhook)
         self.assertEqual(webhook.url, "https://example.com/webhook")
         self.assertIn(EVENT_USER_CREATED, webhook.events)
-        self.assertIn(EVENT_USER_VERIFIED, webhook.events)
+        self.assertIn(EVENT_USER_UPDATED, webhook.events)
         self.assertTrue(webhook.is_active)
 
         self.assertIsNotNone(webhook.secret)
@@ -259,7 +259,7 @@ class WebhookAdminTestCase(FlaskTestCase):
             data={
                 "name": "Updated Webhook",
                 "url": "https://example.com/updated",
-                "events": [EVENT_USER_CREATED, EVENT_USER_VERIFIED],
+                "events": [EVENT_USER_CREATED, EVENT_USER_UPDATED],
                 # absence of is_active field means set to inactive
                 "csrf_token": csrf_token
             },
@@ -271,7 +271,7 @@ class WebhookAdminTestCase(FlaskTestCase):
         self.assertEqual(webhook.name, "Updated Webhook")
         self.assertEqual(webhook.url, "https://example.com/updated")
         self.assertFalse(webhook.is_active)
-        self.assertIn(EVENT_USER_VERIFIED, webhook.events)
+        self.assertIn(EVENT_USER_UPDATED, webhook.events)
         self.assertEqual(webhook.secret, original_secret)
 
     def test_create_webhook_with_multiple_events(self):
@@ -284,7 +284,7 @@ class WebhookAdminTestCase(FlaskTestCase):
             data={
                 "name": "Multi-Event Webhook",
                 "url": "https://example.com/webhook",
-                "events": [EVENT_USER_CREATED, EVENT_USER_VERIFIED],
+                "events": [EVENT_USER_CREATED, EVENT_USER_UPDATED],
                 "is_active": True,
                 "csrf_token": csrf_token
             },
@@ -297,4 +297,4 @@ class WebhookAdminTestCase(FlaskTestCase):
         self.assertIsNotNone(webhook)
         self.assertEqual(len(webhook.events), 2)
         self.assertIn(EVENT_USER_CREATED, webhook.events)
-        self.assertIn(EVENT_USER_VERIFIED, webhook.events)
+        self.assertIn(EVENT_USER_UPDATED, webhook.events)

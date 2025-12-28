@@ -3,7 +3,7 @@ from datetime import datetime, timezone, timedelta
 import requests_mock
 
 from metabrainz.model import db
-from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_VERIFIED
+from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_UPDATED
 from metabrainz.model.webhook_delivery import WebhookDelivery
 from metabrainz.testing import FlaskTestCase
 from metabrainz.webhooks.tasks import (
@@ -23,7 +23,7 @@ class WebhookTasksTestCase(FlaskTestCase):
             name="Test Webhook",
             url="https://example.com/webhook",
             secret="mebw_test_secret",
-            events=[EVENT_USER_CREATED, EVENT_USER_VERIFIED],
+            events=[EVENT_USER_CREATED, EVENT_USER_UPDATED],
             is_active=True
         )
         db.session.add(self.webhook)
@@ -103,7 +103,7 @@ class WebhookTasksTestCase(FlaskTestCase):
 
         delivery2 = WebhookDelivery(
             webhook_id=self.webhook.id,
-            event_type=EVENT_USER_VERIFIED,
+            event_type=EVENT_USER_UPDATED,
             payload=self.payload,
             status="failed",
             retry_count=2,
@@ -129,9 +129,6 @@ class WebhookTasksTestCase(FlaskTestCase):
         self.assertEqual(result["errors"], 0)
 
         db.session.expire_all()
-
-        for delivery in WebhookDelivery.query.all():
-            print(delivery.to_dict())
 
         self.assertEqual(delivery1.status, "pending")
         self.assertEqual(delivery2.status, "pending")

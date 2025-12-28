@@ -8,55 +8,80 @@ type ProfileProps = {
   csrf_token?: string;
 };
 
-type EmailProps = {
-  label: string;
-  is_email_confirmed: boolean;
-  email: string;
+type EmailDisplayProps = {
+  email: string | null;
+  unconfirmed_email: string | null;
   csrf_token?: string;
 };
 
-function Email({
-  label,
-  is_email_confirmed,
+function EmailDisplay({
   email,
+  unconfirmed_email,
   csrf_token,
-}: EmailProps): JSX.Element {
+}: EmailDisplayProps): JSX.Element {
+  const hasBothEmails = email && unconfirmed_email;
+
+  const ResendButton = () => (
+    <form
+      method="post"
+      action="/resend-verification-email"
+      style={{ display: "inline-block" }}
+    >
+      <input
+        id="csrf_token"
+        name="csrf_token"
+        type="hidden"
+        value={csrf_token}
+      />
+      <button className="btn btn-link text-danger" type="submit" style={{ padding: "0 4px" }}>
+        (Resend Verification Email)
+      </button>
+    </form>
+  );
+
   return (
     <>
-      <strong>{label}:</strong> {email}{" "}
-      {is_email_confirmed ? (
-        <span className="badge" style={{ background: "green" }}>
-          Verified
-        </span>
-      ) : (
+      {hasBothEmails ? (
         <>
+          <strong>Current: </strong>
+          {email}{" "}
+          <span className="badge" style={{ background: "green" }}>
+            Verified
+          </span>
+          <br />
+          <strong>New: </strong>
+          {unconfirmed_email}{" "}
           <span className="badge" style={{ background: "red" }}>
             Unverified
           </span>
-          <form
-            method="post"
-            action="/resend-verification-email"
-            style={{ display: "inline-block" }}
-          >
-            <input
-              id="csrf_token"
-              name="csrf_token"
-              type="hidden"
-              value={csrf_token}
-            />
-            <button className="btn btn-link text-danger" type="submit">
-              (Resend Verification Email)
-            </button>
-          </form>
+          <ResendButton />
+          <br />
+          <small className="text-muted">
+            Your current email will be replaced once the new email is verified.
+          </small>
         </>
-      )}
-      <br />
+      ) : email ? (
+        <>
+          <>{email}{" "}</>
+          <span className="badge" style={{ background: "green" }}>
+            Verified
+          </span>
+        </>
+      ) : unconfirmed_email ? (
+        <>
+          <>{unconfirmed_email}{" "}</>
+          <span className="badge" style={{ background: "red" }}>
+            Unverified
+          </span>
+          <ResendButton />
+        </>
+      ) : null}
     </>
   );
 }
 
 function SupporterProfile({ user, csrf_token }: ProfileProps) {
-  const { email, is_email_confirmed, supporter } = user;
+  const { email, unconfirmed_email, supporter } = user;
   const {
     is_commercial,
     tier,
@@ -163,207 +188,265 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
   } else {
     stateClass = "text-warning";
   }
+
   return (
-    <div className="flex flex-col gap-3">
-      <div>
-        <strong>Type:</strong> {is_commercial ? "Commercial" : "Non-commercial"}
-        <br />
-        {is_commercial && (
-          <>
-            <strong>Tier:</strong> {tier.name}
-            <br />
-          </>
-        )}
-        <strong>State:</strong>
-        <span className={stateClass}> {state.toUpperCase()}</span>
-      </div>
-      {!is_commercial && (
-        <p>
-          NOTE: If you would like to change your account from non-commercial to
-          commercial, please&nbsp;
-          <a href="/contact">contact us</a>.
-        </p>
-      )}
-      <div className="row">
-        {is_commercial && (
-          <div className="col-md-7">
-            <h3>Organization information</h3>
-            <p>
-              <strong>Name:</strong>{" "}
-              {org_name || <em className="text-muted">Unspecified</em>}
-              <br />
-              <strong>Website URL:</strong>{" "}
-              {website_url || <em className="text-muted">Unspecified</em>}
-              <br />
-              <strong>API URL:</strong>{" "}
-              {api_url || <em className="text-muted">Unspecified</em>}
-              <br />
-            </p>
-            <p>
-              Please <a href="/contact">contact us</a> if you wish for us to
-              update this information.
-            </p>
-          </div>
-        )}
+    <>
+      <div className="row" style={{ marginBottom: "1.5rem" }}>
         <div className="col-md-12">
-          <h3>Contact information</h3>
-          <div className="mb-3">
-            <strong>Contact Name:</strong> {contact_name}
-            <br />
-            <Email
-              label="Contact Email"
-              is_email_confirmed={is_email_confirmed}
-              email={email}
-              csrf_token={csrf_token}
-            />
-            {!is_commercial && (
-              <>
-                <strong>Datasets used:</strong>{" "}
-                {datasets.map((d) => d.name).join(", ")}
-                <br />
-              </>
-            )}
-          </div>
-          <a
-            href="/profile/edit"
-            className="btn btn-lg btn-warning"
-            style={{ whiteSpace: "normal" }}
-          >
-            {is_commercial
-              ? "Edit contact information"
-              : "Edit datasets/contact information"}
-          </a>
-        </div>
-      </div>
-      {is_commercial &&
-        ((state === "active" || state === "limited") && good_standing ? (
-          <>
-            <h3>Data use permission granted</h3>
-            <div style={{ fontSize: "13pt" }}>
-              <p>
-                <b>Your support agreement has been completed -- thank you!</b>
-              </p>
-              <p>
-                You have permission to use any of the data published by the
-                MetaBrainz Foundation. This includes data dumps released under a
-                Creative Commons non-commercial license. Thank you for your
-                support!
-              </p>
-              <p>
-                Note 1: If your support falls behind by more than 60 days, this
-                permission may be withdrawn. You can always check your current
-                permission status on this page.
-              </p>
-              <p>
-                Note 2: The IP addresses from which replication packets for the
-                Live Data Feed are downloaded are logged.
-              </p>
-            </div>
-          </>
-        ) : (
-          <>
-            <h3>Limited/no data use permission granted</h3>
-            <div style={{ fontSize: "13pt" }}>{applicationState}</div>
-          </>
-        ))}
-      {(state === "active" || state === "limited") && good_standing && (
-        <>
-          <h2>Data Download</h2>
-          <div style={{ fontSize: "13pt" }}>
-            {!is_commercial && (
-              <p>
-                Thank you for registering with us -- we really appreciate it!
-              </p>
-            )}
-            <p>Please proceed to our download page to download our datasets:</p>
-            <p>
-              <a href="/download" className="btn btn-lg btn-primary">
-                Download Datasets
-              </a>
-            </p>
-          </div>
-        </>
-      )}
-      {state === "active" && (
-        <>
-          <h2>Live Data Feed Access token</h2>
-          <p style={{ fontStyle: "italic", color: "#444" }}>
-            This access token should be considered private. Don&apos;t check
-            this token into any publicly visible version control systems and
-            similar places. If the token has been exposed, you should
-            immediately immediately generate a new one! When you generate a new
-            token, your token is revoked.
-          </p>
-          <div className="dataset-summary">
-            <div className="mb-3">
-              <div
-                id="token"
-                style={{
-                  fontSize: "14pt",
-                  padding: ".5em",
-                  color: "#AA0000",
-                  wordBreak: "break-all",
-                }}
-              >
-                {currentToken || "[ there is no valid token currently ]"}
+          <div className="well" style={{ marginBottom: 0 }}>
+            <div className="row">
+              <div className="col-sm-4">
+                <strong>Type:</strong>{" "}
+                {is_commercial ? "Commercial" : "Non-commercial"}
+              </div>
+              {is_commercial && (
+                <div className="col-sm-4">
+                  <strong>Tier:</strong> {tier.name}
+                </div>
+              )}
+              <div className="col-sm-4">
+                <strong>State:</strong>
+                <span className={stateClass}> {state.toUpperCase()}</span>
               </div>
             </div>
-            <button
-              id="btn-generate-token"
-              className="btn btn-default"
-              type="button"
-              onClick={regenerateToken}
-            >
-              Generate new token
-            </button>
           </div>
-          <p>
-            See the <a href="/api">API documentation</a> for more information.
-          </p>
-        </>
+          {!is_commercial && (
+            <p className="text-muted" style={{ marginTop: "0.5rem" }}>
+              If you would like to change your account from non-commercial to
+              commercial, please <a href="/contact">contact us</a>.
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="row" style={{ marginBottom: "1.5rem", display: "flex", flexWrap: "wrap" }}>
+        {is_commercial && (
+          <div className="col-md-6" style={{ display: "flex" }}>
+            <div className="panel panel-default" style={{ flex: 1 }}>
+              <div className="panel-heading">
+                <h3 className="panel-title">Organization Information</h3>
+              </div>
+              <div className="panel-body">
+                <dl style={{ marginBottom: 0 }}>
+                  <dt>Name</dt>
+                  <dd style={{ marginBottom: "1rem" }}>
+                    {org_name || <em className="text-muted">Unspecified</em>}
+                  </dd>
+                  <dt>Website URL</dt>
+                  <dd style={{ marginBottom: "1rem" }}>
+                    {website_url || <em className="text-muted">Unspecified</em>}
+                  </dd>
+                  <dt>API URL</dt>
+                  <dd>
+                    {api_url || <em className="text-muted">Unspecified</em>}
+                  </dd>
+                </dl>
+                <p className="text-muted" style={{ marginTop: "1rem", marginBottom: 0 }}>
+                  <a href="/contact">Contact us</a> to update this information.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className={is_commercial ? "col-md-6" : "col-md-12"} style={{ display: "flex" }}>
+          <div className="panel panel-default" style={{ flex: 1 }}>
+            <div className="panel-heading">
+              <h3 className="panel-title">Contact Information</h3>
+            </div>
+            <div className="panel-body">
+              <dl style={{ marginBottom: 0 }}>
+                <dt>Contact Name</dt>
+                <dd style={{ marginBottom: "1rem" }}>{contact_name}</dd>
+                <dt>Contact Email</dt>
+                <dd style={{ marginBottom: !is_commercial ? "1rem" : 0 }}>
+                  <EmailDisplay
+                    email={email}
+                    unconfirmed_email={unconfirmed_email}
+                    csrf_token={csrf_token}
+                  />
+                </dd>
+                {!is_commercial && (
+                  <>
+                    <dt>Datasets Used</dt>
+                    <dd>{datasets.map((d) => d.name).join(", ")}</dd>
+                  </>
+                )}
+              </dl>
+              <a
+                href="/profile/edit"
+                className="btn btn-warning"
+                style={{ marginTop: "1rem" }}
+              >
+                {is_commercial
+                  ? "Edit Contact Information"
+                  : "Edit Datasets / Contact Information"}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {is_commercial && (
+        <div className="row" style={{ marginBottom: "1.5rem" }}>
+          <div className="col-md-12">
+            {(state === "active" || state === "limited") && good_standing ? (
+              <div className="panel panel-success">
+                <div className="panel-heading">
+                  <h3 className="panel-title">Data Use Permission Granted</h3>
+                </div>
+                <div className="panel-body">
+                  <p>
+                    <b>Your support agreement has been completed -- thank you!</b>
+                  </p>
+                  <p>
+                    You have permission to use any of the data published by the
+                    MetaBrainz Foundation. This includes data dumps released under a
+                    Creative Commons non-commercial license.
+                  </p>
+                  <ul className="text-muted">
+                    <li>
+                      If your support falls behind by more than 60 days, this
+                      permission may be withdrawn.
+                    </li>
+                    <li>
+                      IP addresses from which replication packets are downloaded are
+                      logged.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <div className="panel panel-warning">
+                <div className="panel-heading">
+                  <h3 className="panel-title">Limited/No Data Use Permission</h3>
+                </div>
+                <div className="panel-body">{applicationState}</div>
+              </div>
+            )}
+          </div>
+        </div>
       )}
-    </div>
+
+      {(state === "active" || state === "limited") && good_standing && (
+        <div className="row" style={{ marginBottom: "1.5rem" }}>
+          <div className="col-md-12">
+            <div className="panel panel-primary">
+              <div className="panel-heading">
+                <h3 className="panel-title">Data Download</h3>
+              </div>
+              <div className="panel-body">
+                {!is_commercial && (
+                  <p>
+                    Thank you for registering with us -- we really appreciate it!
+                  </p>
+                )}
+                <p>Proceed to our download page to download datasets:</p>
+                <a href="/download" className="btn btn-primary">
+                  Download Datasets
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {state === "active" && (
+        <div className="row" style={{ marginBottom: "1.5rem" }}>
+          <div className="col-md-12">
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <h3 className="panel-title">Live Data Feed Access Token</h3>
+              </div>
+              <div className="panel-body">
+                <p className="text-muted" style={{ fontStyle: "italic" }}>
+                  This access token should be considered private. Don&apos;t check
+                  it into publicly visible version control systems. If exposed,
+                  generate a new one immediately.
+                </p>
+                <div
+                  className="well"
+                  style={{
+                    fontFamily: "monospace",
+                    fontSize: "14pt",
+                    color: "#AA0000",
+                    wordBreak: "break-all",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  {currentToken || "[ no valid token currently ]"}
+                </div>
+                <button
+                  className="btn btn-default"
+                  type="button"
+                  onClick={regenerateToken}
+                >
+                  Generate New Token
+                </button>
+                <p style={{ marginTop: "1rem", marginBottom: 0 }}>
+                  See the <a href="/api">API documentation</a> for more information.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
 function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
-  const { name, is_email_confirmed, email } = user;
+  const { name, email, unconfirmed_email } = user;
   return (
     <>
-      <h3>Contact information</h3>
-      <div style={{ marginBottom: "1rem" }}>
-        <strong>Name:</strong> {name}
-        <br />
-        <Email
-          label="Email"
-          is_email_confirmed={is_email_confirmed}
-          email={email}
-          csrf_token={csrf_token}
-        />
+      <div className="row" style={{ marginBottom: "1.5rem" }}>
+        <div className="col-md-12">
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <h3 className="panel-title">Contact Information</h3>
+            </div>
+            <div className="panel-body">
+              <dl style={{ marginBottom: 0 }}>
+                <dt>Name</dt>
+                <dd style={{ marginBottom: "1rem" }}>{name}</dd>
+                <dt>Email</dt>
+                <dd>
+                  <EmailDisplay
+                    email={email}
+                    unconfirmed_email={unconfirmed_email}
+                    csrf_token={csrf_token}
+                  />
+                </dd>
+              </dl>
+              <a
+                href="/profile/edit"
+                className="btn btn-warning"
+                style={{ marginTop: "1rem" }}
+              >
+                Edit Information
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        <a
-          href="/profile/edit"
-          className="btn btn-warning"
-          style={{ whiteSpace: "normal" }}
-        >
-          Edit information
-        </a>
-        <a
-          href="/supporters/account-type"
-          className="btn btn-primary"
-          style={{ whiteSpace: "normal" }}
-        >
-          Become a Supporter
-        </a>
-      </div>
-      <div className="alert alert-info" style={{ marginTop: "1.5rem" }}>
-        <strong>Want access to MetaBrainz datasets?</strong>
-        <p style={{ marginBottom: 0 }}>
-          Upgrade your account to a supporter account to access our datasets and
-          the Live Data Feed. Choose between non-commercial (free) and
-          commercial options.
-        </p>
+
+      <div className="row" style={{ marginBottom: "1.5rem" }}>
+        <div className="col-md-12">
+          <div className="panel panel-info">
+            <div className="panel-heading">
+              <h3 className="panel-title">Want access to MetaBrainz datasets?</h3>
+            </div>
+            <div className="panel-body">
+              <p>
+                Upgrade your account to a supporter account to access our datasets and
+                the Live Data Feed. Choose between non-commercial (free) and
+                commercial options.
+              </p>
+              <a href="/supporters/account-type" className="btn btn-primary">
+                Become a Supporter
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -371,27 +454,25 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
 
 function DeleteAccountSection() {
   return (
-    <div
-      className="panel panel-danger"
-      style={{ marginTop: "2rem", borderColor: "#d9534f" }}
-    >
-      <div
-        className="panel-heading"
-        style={{ backgroundColor: "#d9534f", color: "white" }}
-      >
-        <h3 className="panel-title">Danger Zone</h3>
-      </div>
-      <div className="panel-body">
-        <p>
-          <strong>Delete your account</strong>
-        </p>
-        <p className="text-muted">
-          Once you delete your account, there is no going back. Please be
-          certain.
-        </p>
-        <a href="/profile/delete" className="btn btn-danger">
-          Delete My Account
-        </a>
+    <div className="row" style={{ marginBottom: "1.5rem" }}>
+      <div className="col-md-12">
+        <div className="panel panel-danger">
+          <div className="panel-heading">
+            <h3 className="panel-title">Danger Zone</h3>
+          </div>
+          <div className="panel-body">
+            <p>
+              <strong>Delete your account</strong>
+            </p>
+            <p className="text-muted">
+              Once you delete your account, there is no going back. Please be
+              certain.
+            </p>
+            <a href="/profile/delete" className="btn btn-danger">
+              Delete My Account
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -399,25 +480,23 @@ function DeleteAccountSection() {
 
 function SupporterAccountDeletionNotice() {
   return (
-    <div
-      className="panel panel-info"
-      style={{ marginTop: "2rem", borderColor: "#5bc0de" }}
-    >
-      <div
-        className="panel-heading"
-        style={{ backgroundColor: "#5bc0de", color: "white" }}
-      >
-        <h3 className="panel-title">Account Deletion</h3>
-      </div>
-      <div className="panel-body">
-        <p>
-          <strong>Need to delete your account?</strong>
-        </p>
-        <p className="text-muted">
-          Deletion of supporter accounts requires manual review. If you need
-          to delete your account, please contact us at{" "}
-          <a href="mailto:support@metabrainz.org">support@metabrainz.org</a>.
-        </p>
+    <div className="row" style={{ marginBottom: "1.5rem" }}>
+      <div className="col-md-12">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">Account Deletion</h3>
+          </div>
+          <div className="panel-body">
+            <p>
+              <strong>Need to delete your account?</strong>
+            </p>
+            <p className="text-muted" style={{ marginBottom: 0 }}>
+              Deletion of supporter accounts requires manual review. Please
+              contact us at{" "}
+              <a href="mailto:support@metabrainz.org">support@metabrainz.org</a>.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -434,74 +513,77 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
         <UserProfile user={user} csrf_token={csrf_token} />
       )}
 
+      <div className="row" style={{ marginBottom: "1.5rem" }}>
+        <div className="col-md-12">
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <h3 className="panel-title">MetaBrainz Applications</h3>
+            </div>
+            <div className="panel-body">
+              <p>
+                With your MetaBrainz account, you can access every project in the
+                MetaBrainz family:
+              </p>
+              <div className="row metabrainz-projects-list">
+                <div className="col-md-3 col-sm-6">
+                  <a
+                    href={`https://musicbrainz.org/user/${user.name}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/static/img/logos/musicbrainz.svg" alt="MusicBrainz" />
+                    <div className="project-description">
+                      The open-source music encyclopedia
+                    </div>
+                  </a>
+                </div>
+                <div className="col-md-3 col-sm-6">
+                  <a
+                    href={`https://listenbrainz.org/user/${user.name}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/static/img/logos/listenbrainz.svg" alt="ListenBrainz" />
+                    <div className="project-description">
+                      Track, visualise and share the music you listen to
+                    </div>
+                  </a>
+                </div>
+                <div className="col-md-3 col-sm-6">
+                  <a
+                    href={`https://bookbrainz.org/user/${user.name}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/static/img/logos/bookbrainz.svg" alt="BookBrainz" />
+                    <div className="project-description">
+                      The open-source book database
+                    </div>
+                  </a>
+                </div>
+                <div className="col-md-3 col-sm-6">
+                  <a
+                    href={`https://critiquebrainz.org/user/${user.name}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/static/img/logos/critiquebrainz.svg" alt="CritiqueBrainz" />
+                    <div className="project-description">
+                      Creative Commons licensed reviews
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {user.supporter ? (
         <SupporterAccountDeletionNotice />
       ) : (
         <DeleteAccountSection />
       )}
-
-      <h3>MetaBrainz Applications</h3>
-      <p>
-        With your MetaBrainz account, you can access every project in the
-        MetaBrainz family:
-      </p>
-      <div className="row metabrainz-projects-list">
-        <div className="col-md-3 col-sm-6">
-          <a
-            href={`https://musicbrainz.org/user/${user.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src="/static/img/logos/musicbrainz.svg" alt="MusicBrainz" />
-            <div className="project-description">
-              The open-source music encyclopedia
-            </div>
-          </a>
-        </div>
-
-        <div className="col-md-3 col-sm-6">
-          <a
-            href={`https://listenbrainz.org/user/${user.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src="/static/img/logos/listenbrainz.svg" alt="ListenBrainz" />
-            <div className="project-description">
-              Track, visualise and share the music you listen to and discover
-              great new music.
-            </div>
-          </a>
-        </div>
-
-        <div className="col-md-3 col-sm-6">
-          <a
-            href={`https://bookbrainz.org/user/${user.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src="/static/img/logos/bookbrainz.svg" alt="BookBrainz" />
-            <div className="project-description">
-              The opensource book database
-            </div>
-          </a>
-        </div>
-
-        <div className="col-md-3 col-sm-6">
-          <a
-            href={`https://critiquebrainz.org/user/${user.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="/static/img/logos/critiquebrainz.svg"
-              alt="CritiqueBrainz"
-            />
-            <div className="project-description">
-              Creative Commons licensed music and book reviews
-            </div>
-          </a>
-        </div>
-      </div>
     </>
   );
 }

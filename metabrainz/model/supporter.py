@@ -286,11 +286,56 @@ class Supporter(db.Model):
             raise InactiveSupporterException("Can't generate token for inactive supporter.")
 
     def update(self, **kwargs):
-        datasets = kwargs.pop('datasets', None)
+        """Update supporter fields."""
+        contact_name = kwargs.pop("contact_name", None)
+        if contact_name is not None:
+            self.contact_name = contact_name
+
+        datasets = kwargs.pop("datasets", None)
         if datasets is not None:
             self.datasets = datasets
+
+        if "state" in kwargs:
+            self.state = kwargs.pop("state")
+        if "is_commercial" in kwargs:
+            self.is_commercial = kwargs.pop("is_commercial")
+        if "org_name" in kwargs:
+            self.org_name = kwargs.pop("org_name")
+        if "org_desc" in kwargs:
+            self.org_desc = kwargs.pop("org_desc")
+        if "api_url" in kwargs:
+            self.api_url = kwargs.pop("api_url")
+        if "address_street" in kwargs:
+            self.address_street = kwargs.pop("address_street")
+        if "address_city" in kwargs:
+            self.address_city = kwargs.pop("address_city")
+        if "address_state" in kwargs:
+            self.address_state = kwargs.pop("address_state")
+        if "address_postcode" in kwargs:
+            self.address_postcode = kwargs.pop("address_postcode")
+        if "address_country" in kwargs:
+            self.address_country = kwargs.pop("address_country")
+        if "tier_id" in kwargs:
+            self.tier_id = kwargs.pop("tier_id")
+        if "amount_pledged" in kwargs:
+            self.amount_pledged = kwargs.pop("amount_pledged")
+        if "featured" in kwargs:
+            self.featured = kwargs.pop("featured")
+        if "website_url" in kwargs:
+            self.website_url = kwargs.pop("website_url")
+        if "logo_filename" in kwargs:
+            self.logo_filename = kwargs.pop("logo_filename")
+        if "org_logo_url" in kwargs:
+            self.org_logo_url = kwargs.pop("org_logo_url")
+        if "data_usage_desc" in kwargs:
+            self.data_usage_desc = kwargs.pop("data_usage_desc")
+        if "good_standing" in kwargs:
+            self.good_standing = kwargs.pop("good_standing")
+        if "in_deadbeat_club" in kwargs:
+            self.in_deadbeat_club = kwargs.pop("in_deadbeat_club")
+
         if kwargs:
-            raise TypeError('Unexpected **kwargs: %r' % kwargs)
+            raise TypeError("Unexpected **kwargs: %r" % kwargs)
         db.session.commit()
 
     def set_state(self, state):
