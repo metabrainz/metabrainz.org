@@ -1,24 +1,27 @@
-"""Integration tests for the complete webhook flow using actual APIs."""
 import hashlib
 import hmac
+import json
+from datetime import datetime
 
 import requests_mock
 from brainzutils import cache
-from flask import g
+from flask import g, url_for
 
 from metabrainz.model import db
+from metabrainz.model.user import User
 from metabrainz.model.webhook import (
     Webhook,
     EVENT_USER_CREATED,
-    EVENT_USER_VERIFIED
+    EVENT_USER_DELETED,
+    EVENT_USER_UPDATED
 )
 from metabrainz.model.webhook_delivery import WebhookDelivery
 from metabrainz.testing import FlaskTestCase
+from metabrainz.user.email import create_email_link_checksum, VERIFY_EMAIL
 from metabrainz.webhooks.delivery import WebhookDeliveryEngine
 
 
 class WebhookIntegrationTestCase(FlaskTestCase):
-    """Integration tests for the complete webhook system using real APIs."""
 
     @classmethod
     def create_app(cls):
@@ -44,7 +47,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             name="User Events Webhook",
             url="https://example.com/webhooks/user-events",
             secret="mebw_secret_key",
-            events=[EVENT_USER_CREATED, EVENT_USER_VERIFIED],
+            events=[EVENT_USER_CREATED, EVENT_USER_UPDATED],
             is_active=True
         )
         db.session.add(webhook)
@@ -88,19 +91,19 @@ class WebhookIntegrationTestCase(FlaskTestCase):
 
     @requests_mock.Mocker()
     def test_email_verification_triggers_webhook(self, mock_requests):
-        """Test that email verification triggers webhook."""
+        """Test that email verification triggers user.updated webhook."""
         webhook = Webhook(
-            name="User Verified Webhook",
-            url="https://example.com/webhooks/verified",
+            name="User Updated Webhook",
+            url="https://example.com/webhooks/updated",
             secret="mebw_secret",
-            events=[EVENT_USER_VERIFIED],
+            events=[EVENT_USER_UPDATED],
             is_active=True
         )
         db.session.add(webhook)
         db.session.commit()
 
         mock_requests.post(
-            "https://example.com/webhooks/verified",
+            "https://example.com/webhooks/updated",
             status_code=200,
             text="OK"
         )
@@ -126,16 +129,16 @@ class WebhookIntegrationTestCase(FlaskTestCase):
 
         deliveries = WebhookDelivery.query.filter_by(
             webhook_id=webhook.id,
-            event_type=EVENT_USER_VERIFIED
+            event_type=EVENT_USER_UPDATED
         ).all()
 
         self.assertEqual(len(deliveries), 1)
         delivery = deliveries[0]
 
         self.assertIn("user_id", delivery.payload)
-        self.assertIn("email", delivery.payload)
-        self.assertEqual(delivery.payload["email"], "verify@example.com")
-        self.assertIn("verified_at", delivery.payload)
+        self.assertIn("old", delivery.payload)
+        self.assertIn("new", delivery.payload)
+        self.assertEqual(delivery.payload["new"]["email"], "verify@example.com")
 
         self.assertEqual(len(mock_requests.request_history), 1)
         self.assertEqual(delivery.status, "delivered")
@@ -154,7 +157,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             name="Webhook 2",
             url="https://api.example.org/hooks",
             secret="secret2",
-            events=[EVENT_USER_CREATED, EVENT_USER_VERIFIED],
+            events=[EVENT_USER_CREATED, EVENT_USER_UPDATED],
             is_active=True
         )
         webhook3 = Webhook(
@@ -304,7 +307,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             name="Webhook 2",
             url="https://example.com/webhook2",
             secret="secret2",
-            events=[EVENT_USER_VERIFIED],
+            events=[EVENT_USER_UPDATED],
             is_active=True
         )
 
@@ -406,3 +409,344 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             self.assertEqual(delivery.status, "delivered")
 
         self.assertEqual(len(mock_requests.request_history), 3)
+
+    @requests_mock.Mocker()
+    def test_user_deleted_via_profile_triggers_webhook(self, mock_requests):
+        """Test that user self-deletion via profile triggers webhook with correct payload."""
+        webhook = Webhook(
+            name="User Deleted Webhook",
+            url="https://example.com/webhooks/user-events",
+            secret="mebw_secret_key",
+            events=[EVENT_USER_DELETED],
+            is_active=True
+        )
+        db.session.add(webhook)
+        db.session.commit()
+
+        mock_requests.post(
+            "https://example.com/webhooks/user-events",
+            status_code=200,
+            text='{"received": true}'
+        )
+
+        self.client.get("/signup")
+        self.client.post("/signup", data={
+            "username": "deleteuser",
+            "email": "delete@example.com",
+            "password": "password123",
+            "confirm_password": "password123",
+            "csrf_token": g.csrf_token
+        })
+
+        user = User.get(name="deleteuser")
+        user_id = user.id
+
+        WebhookDelivery.query.delete()
+        db.session.commit()
+        mock_requests.reset_mock()
+
+        self.client.get("/profile/delete")
+        response = self.client.post("/profile/delete", data={
+            "csrf_token": g.csrf_token
+        })
+        self.assertEqual(response.status_code, 302)
+
+        deliveries = WebhookDelivery.query.filter_by(
+            webhook_id=webhook.id,
+            event_type=EVENT_USER_DELETED
+        ).all()
+
+        self.assertEqual(len(deliveries), 1)
+        delivery = deliveries[0]
+
+        self.assertEqual(len(mock_requests.request_history), 1)
+        request = mock_requests.last_request
+        self.assertEqual(request.headers["X-MetaBrainz-Event"], EVENT_USER_DELETED)
+
+        body = json.loads(request.body)
+        self.assertEqual(body["user_id"], user_id)
+        self.assertEqual(body["reason"], "User requested account deletion")
+        self.assertEqual(delivery.status, "delivered")
+
+    @requests_mock.Mocker()
+    def test_user_email_change_via_profile_triggers_webhook(self, mock_requests):
+        """Test that email change via profile and verification triggers webhook."""
+        webhook = Webhook(
+            name="User Updated Webhook",
+            url="https://example.com/webhooks/user-events",
+            secret="mebw_secret_key",
+            events=[EVENT_USER_UPDATED],
+            is_active=True
+        )
+        db.session.add(webhook)
+        db.session.commit()
+
+        mock_requests.post(
+            "https://example.com/webhooks/user-events",
+            status_code=200,
+            text='{"received": true}'
+        )
+
+        # Create user and verify initial email
+        self.client.get("/signup")
+        self.client.post("/signup", data={
+            "username": "emailchangeuser",
+            "email": "old@example.com",
+            "password": "password123",
+            "confirm_password": "password123",
+            "csrf_token": g.csrf_token
+        })
+
+        verification_link = self.get_context_variable("verification_link")
+        self.client.get(verification_link)
+
+        user = User.get(name="emailchangeuser")
+        user_id = user.id
+        self.assertEqual(user.email, "old@example.com")
+
+        WebhookDelivery.query.delete()
+        db.session.commit()
+        mock_requests.reset_mock()
+
+        self.client.get("/profile/edit")
+        self.client.post("/profile/edit", data={
+            "email": "new@example.com",
+            "csrf_token": g.csrf_token
+        })
+
+        db.session.refresh(user)
+        self.assertEqual(user.email, "old@example.com")
+        self.assertEqual(user.unconfirmed_email, "new@example.com")
+
+        WebhookDelivery.query.delete()
+        db.session.commit()
+        mock_requests.reset_mock()
+
+        timestamp = int(datetime.now().timestamp())
+        checksum = create_email_link_checksum(VERIFY_EMAIL, user.id, "new@example.com", timestamp)
+        verification_link = url_for(
+            "users.verify_email",
+            user_id=user.id,
+            timestamp=timestamp,
+            checksum=checksum,
+            _external=True
+        )
+        response = self.client.get(verification_link)
+        self.assertEqual(response.status_code, 302)
+
+        deliveries = WebhookDelivery.query.filter_by(
+            webhook_id=webhook.id,
+            event_type=EVENT_USER_UPDATED
+        ).all()
+
+        self.assertEqual(len(deliveries), 1)
+        delivery = deliveries[0]
+
+        self.assertEqual(delivery.payload["user_id"], user_id)
+        self.assertEqual(delivery.payload["old"]["email"], "old@example.com")
+        self.assertEqual(delivery.payload["new"]["email"], "new@example.com")
+
+        self.assertEqual(len(mock_requests.request_history), 1)
+        self.assertEqual(delivery.status, "delivered")
+
+    @requests_mock.Mocker()
+    def test_admin_verify_email_triggers_webhook(self, mock_requests):
+        """Test that admin email verification triggers webhook with correct payload."""
+        self.app.config["ADMINS"] = ["adminuser"]
+        admin_user = User.add(
+            name="adminuser",
+            unconfirmed_email="admin@example.com",
+            password="adminpassword123"
+        )
+        db.session.commit()
+        self.temporary_login(admin_user)
+
+        webhook = Webhook(
+            name="User Updated Webhook",
+            url="https://example.com/webhooks/user-events",
+            secret="mebw_secret_key",
+            events=[EVENT_USER_UPDATED],
+            is_active=True
+        )
+        db.session.add(webhook)
+        db.session.commit()
+
+        mock_requests.post(
+            "https://example.com/webhooks/user-events",
+            status_code=200,
+            text='{"received": true}'
+        )
+
+        regular_user = User.add(
+            name="regularuser",
+            unconfirmed_email="unverified@example.com",
+            password="password123"
+        )
+        db.session.commit()
+        user_id = regular_user.id
+
+        response = self.client.get(url_for("users-admin.details_view", id=user_id))
+        self.assertEqual(response.status_code, 200)
+
+        verify_email_form = self.get_context_variable("verify_email_form")
+
+        response = self.client.post(
+            url_for("users-admin.verify_user_email", user_id=user_id),
+            data={"csrf_token": verify_email_form.csrf_token.current_token},
+            follow_redirects=False
+        )
+        self.assertEqual(response.status_code, 302)
+
+        deliveries = WebhookDelivery.query.filter_by(
+            webhook_id=webhook.id,
+            event_type=EVENT_USER_UPDATED
+        ).all()
+
+        self.assertEqual(len(deliveries), 1)
+        delivery = deliveries[0]
+
+        self.assertEqual(delivery.payload["user_id"], user_id)
+        self.assertIsNone(delivery.payload["old"]["email"])
+        self.assertEqual(delivery.payload["new"]["email"], "unverified@example.com")
+
+        self.assertEqual(len(mock_requests.request_history), 1)
+        request = mock_requests.last_request
+        self.assertEqual(request.headers["X-MetaBrainz-Event"], EVENT_USER_UPDATED)
+        self.assertEqual(delivery.status, "delivered")
+
+    @requests_mock.Mocker()
+    def test_admin_edit_username_triggers_webhook(self, mock_requests):
+        """Test that admin username edit triggers webhook with correct payload."""
+        self.app.config["ADMINS"] = ["adminuser"]
+        admin_user = User.add(
+            name="adminuser",
+            unconfirmed_email="admin@example.com",
+            password="adminpassword123"
+        )
+        db.session.commit()
+        self.temporary_login(admin_user)
+
+        webhook = Webhook(
+            name="User Updated Webhook",
+            url="https://example.com/webhooks/user-events",
+            secret="mebw_secret_key",
+            events=[EVENT_USER_UPDATED],
+            is_active=True
+        )
+        db.session.add(webhook)
+        db.session.commit()
+
+        mock_requests.post(
+            "https://example.com/webhooks/user-events",
+            status_code=200,
+            text='{"received": true}'
+        )
+
+        regular_user = User.add(
+            name="oldusername",
+            unconfirmed_email="user@example.com",
+            password="password123"
+        )
+        db.session.commit()
+        user_id = regular_user.id
+
+        response = self.client.get(url_for("users-admin.details_view", id=user_id))
+        self.assertEqual(response.status_code, 200)
+
+        edit_username_form = self.get_context_variable("edit_username_form")
+
+        response = self.client.post(
+            url_for("users-admin.edit_username", user_id=user_id),
+            data={
+                "username": "newusername",
+                "csrf_token": edit_username_form.csrf_token.current_token,
+            },
+            follow_redirects=False
+        )
+        self.assertEqual(response.status_code, 302)
+
+        deliveries = WebhookDelivery.query.filter_by(
+            webhook_id=webhook.id,
+            event_type=EVENT_USER_UPDATED
+        ).all()
+
+        self.assertEqual(len(deliveries), 1)
+        delivery = deliveries[0]
+
+        self.assertEqual(delivery.payload["user_id"], user_id)
+        self.assertEqual(delivery.payload["old"]["name"], "oldusername")
+        self.assertEqual(delivery.payload["new"]["name"], "newusername")
+
+        self.assertEqual(len(mock_requests.request_history), 1)
+        request = mock_requests.last_request
+        self.assertEqual(request.headers["X-MetaBrainz-Event"], EVENT_USER_UPDATED)
+        self.assertEqual(delivery.status, "delivered")
+
+    @requests_mock.Mocker()
+    def test_admin_delete_user_triggers_webhook(self, mock_requests):
+        """Test that admin user deletion triggers webhook with correct payload."""
+        self.app.config["ADMINS"] = ["adminuser"]
+        admin_user = User.add(
+            name="adminuser",
+            unconfirmed_email="admin@example.com",
+            password="adminpassword123"
+        )
+        db.session.commit()
+        self.temporary_login(admin_user)
+
+        webhook = Webhook(
+            name="User Deleted Webhook",
+            url="https://example.com/webhooks/user-events",
+            secret="mebw_secret_key",
+            events=[EVENT_USER_DELETED],
+            is_active=True
+        )
+        db.session.add(webhook)
+        db.session.commit()
+
+        mock_requests.post(
+            "https://example.com/webhooks/user-events",
+            status_code=200,
+            text='{"received": true}'
+        )
+
+        regular_user = User.add(
+            name="userToDelete",
+            unconfirmed_email="todelete@example.com",
+            password="password123"
+        )
+        db.session.commit()
+        user_id = regular_user.id
+
+        response = self.client.get(url_for("users-admin.details_view", id=user_id))
+        self.assertEqual(response.status_code, 200)
+
+        delete_form = self.get_context_variable("delete_user_form")
+
+        response = self.client.post(
+            url_for("users-admin.delete_user", user_id=user_id),
+            data={
+                "reason": "Test deletion by admin",
+                "confirm": "y",
+                "csrf_token": delete_form.csrf_token.current_token,
+            },
+            follow_redirects=False
+        )
+        self.assertEqual(response.status_code, 302)
+
+        deliveries = WebhookDelivery.query.filter_by(
+            webhook_id=webhook.id,
+            event_type=EVENT_USER_DELETED
+        ).all()
+
+        self.assertEqual(len(deliveries), 1)
+        delivery = deliveries[0]
+
+        self.assertEqual(delivery.payload["user_id"], user_id)
+        self.assertEqual(delivery.payload["reason"], "Test deletion by admin")
+        self.assertEqual(delivery.payload["moderator_id"], admin_user.id)
+
+        self.assertEqual(len(mock_requests.request_history), 1)
+        request = mock_requests.last_request
+        self.assertEqual(request.headers["X-MetaBrainz-Event"], EVENT_USER_DELETED)
+        self.assertEqual(delivery.status, "delivered")

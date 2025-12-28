@@ -915,3 +915,62 @@ class UsersViewsTestCase(FlaskTestCase):
         user = User.get(name="test_user_1")
         self.assertIsNotNone(user)
         self.assertFalse(user.deleted)
+
+    def test_user_verify_new_email_replaces_old_email(self):
+        """Test that verifying a new email replaces the old confirmed email."""
+        self.create_user()
+
+        user = User.get(name="test_user_1")
+        old_email = user.unconfirmed_email
+        timestamp = int(datetime.now().timestamp())
+        checksum = create_email_link_checksum(VERIFY_EMAIL, user.id, old_email, timestamp)
+        new_verification_link = url_for(
+            "users.verify_email",
+            user_id=user.id,
+            timestamp=timestamp,
+            checksum=checksum,
+            _external=True
+        )
+        response = self.client.get(new_verification_link)
+        self.assertEqual(response.status_code, 302)
+
+        new_email = "new@example.com"
+        user = User.get(name="test_user_1")
+        self.assertEqual(user.email, old_email)
+        old_email_confirmed_at = user.email_confirmed_at
+        user.unconfirmed_email = new_email
+        db.session.commit()
+
+        checksum = create_email_link_checksum(VERIFY_EMAIL, user.id, new_email, timestamp)
+        new_verification_link = url_for(
+            "users.verify_email",
+            user_id=user.id,
+            timestamp=timestamp,
+            checksum=checksum,
+            _external=True
+        )
+        response = self.client.get(new_verification_link)
+        self.assertEqual(response.status_code, 302)
+
+        user = User.get(name="test_user_1")
+        self.assertEqual(user.email, new_email)
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertGreater(user.email_confirmed_at, old_email_confirmed_at)
+
+    def test_user_verify_old_email_link_fails_after_email_change(self):
+        """Test that old verification link fails after user changes email."""
+        self.create_user()
+
+        old_verification_link = self.get_context_variable("verification_link")
+
+        user = User.get(name="test_user_1")
+        user.unconfirmed_email = "new@example.com"
+        db.session.commit()
+
+        response = self.client.get(old_verification_link)
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed("Unable to verify email.", "error")
+
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user.email)
+        self.assertEqual(user.unconfirmed_email, "new@example.com")

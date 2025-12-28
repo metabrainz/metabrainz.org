@@ -52,19 +52,42 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </dd>
 
-                        <dt class="col-sm-4">Email:</dt>
+                        {% if model.email and model.unconfirmed_email %}
+                        <dt class="col-sm-4">Email (Current):</dt>
                         <dd class="col-sm-8">
-                            {{ model.get_email_any() }}
-                            <span class="badge {% if model.is_email_confirmed() %}bg-success{% else %}bg-danger{% endif %}">
-                                {{ 'Confirmed' if model.is_email_confirmed() else 'Unconfirmed' }}
-                            </span>
-                            {% if not model.is_email_confirmed() %}
+                            {{ model.email }}
+                            <span class="badge bg-success">Confirmed</span>
+                        </dd>
+                        <dt class="col-sm-4">Email (New):</dt>
+                        <dd class="col-sm-8">
+                            {{ model.unconfirmed_email }}
+                            <span class="badge bg-danger">Unconfirmed</span>
                             <form action="{{ url_for('.verify_user_email', user_id=model.id) }}" method="POST" class="d-inline ms-2">
                                 {{ verify_email_form.hidden_tag() }}
                                 <button type="submit" class="btn btn-sm btn-outline-success">Verify Email</button>
-                           </form>
-                            {% endif %}
+                            </form>
+                            <div class="text-muted small mt-1">Current email will be replaced once new email is verified.</div>
                         </dd>
+                        {% elif model.email %}
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">
+                            {{ model.email }}
+                            <span class="badge bg-success">Confirmed</span>
+                        </dd>
+                        {% elif model.unconfirmed_email %}
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">
+                            {{ model.unconfirmed_email }}
+                            <span class="badge bg-danger">Unconfirmed</span>
+                            <form action="{{ url_for('.verify_user_email', user_id=model.id) }}" method="POST" class="d-inline ms-2">
+                                {{ verify_email_form.hidden_tag() }}
+                                <button type="submit" class="btn btn-sm btn-outline-success">Verify Email</button>
+                            </form>
+                        </dd>
+                        {% else %}
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8 text-muted">No email</dd>
+                        {% endif %}
 
                         <dt class="col-sm-4">Created:</dt>
                         <dd class="col-sm-8">{{ model.member_since.strftime('%Y-%m-%d %H:%M:%S') }}</dd>
