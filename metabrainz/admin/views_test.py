@@ -243,3 +243,53 @@ class AdminViewsTestCase(FlaskTestCase):
         db.session.expire_all()
         supporter = Supporter.get(id=supporter.id)
         self.assertIsNotNone(supporter)
+
+    def _test_verify_email_helper(self, user_id):
+        response = self.client.get(url_for("users-admin.details_view", id=user_id))
+        self.assertEqual(response.status_code, 200)
+
+        verify_email_form = self.get_context_variable("verify_email_form")
+
+        response = self.client.post(
+            url_for("users-admin.verify_user_email", user_id=user_id),
+            data={"csrf_token": verify_email_form.csrf_token.current_token},
+            follow_redirects=False
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_admin_verify_email(self):
+        """ Test manual verification of user emails by admin. """
+        user = self.create_user()
+        user_id = user.id
+
+        self.assertIsNone(user.email)
+        self.assertEqual(user.unconfirmed_email, "regular@example.com")
+
+        self._test_verify_email_helper(user_id)
+
+        user = User.get(id=user_id)
+        self.assertEqual(user.email, "regular@example.com")
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertIsNotNone(user.email_confirmed_at)
+        self.assertMessageFlashed(f"Email for {user.name} has been manually verified.", "success")
+
+        # test verifying a new email works
+        first_confirmed_at = user.email_confirmed_at
+        user.unconfirmed_email = "new@example.com"
+        db.session.commit()
+
+        self._test_verify_email_helper(user_id)
+
+        user = User.get(id=user_id)
+        self.assertEqual(user.email, "new@example.com")
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertGreater(user.email_confirmed_at, first_confirmed_at)
+        self.assertMessageFlashed(f"Email for {user.name} has been manually verified.", "success")
+
+        # test error if email is already verified
+        self._test_verify_email_helper(user_id)
+
+        user = User.get(id=user_id)
+        self.assertEqual(user.email, "new@example.com")
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertMessageFlashed("User's email is already verified", "error")

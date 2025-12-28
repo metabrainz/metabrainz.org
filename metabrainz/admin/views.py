@@ -26,7 +26,7 @@ import uuid
 import json
 import socket
 from metabrainz.model.user import User
-from metabrainz.model.webhook import EVENT_USER_DELETED, EVENT_USER_VERIFIED
+from metabrainz.model.webhook import EVENT_USER_DELETED, EVENT_USER_UPDATED
 
 from metabrainz.utils import get_int_query_param
 
@@ -185,10 +185,27 @@ class SupportersView(AdminBaseView):
                 # Saving new one
                 image_storage.save(os.path.join(get_logo_storage_dir(current_app), logo_filename))
 
-            supporter.user.name = form.username.data
-            supporter.user.email = form.email.data
-            db.session.commit()
-            db_supporter.update(supporter_id=supporter.id, **update_data)
+            old_name = supporter.user.name
+            old_email = supporter.user.email
+            new_name = form.username.data
+            new_email = form.email.data
+
+            supporter.user.name = new_name
+            supporter.user.email = new_email
+            supporter.update(**update_data)
+
+            # Emit user.updated event if username or email changed
+            if old_name != new_name or old_email != new_email:
+                old_data = {}
+                new_data = {}
+                if old_name != new_name:
+                    old_data["name"] = old_name
+                    new_data["name"] = new_name
+                if old_email != new_email:
+                    old_data["email"] = old_email
+                    new_data["email"] = new_email
+                supporter.user.emit_event(EVENT_USER_UPDATED, old=old_data, new=new_data)
+
             return redirect(url_for('.details', supporter_id=supporter.id))
 
         return self.render(
@@ -562,10 +579,16 @@ class UserModelView(AdminModelView):
             return redirect(url_for('.details_view', id=user_id))
 
         try:
+            old_email = user.email
+            new_email = user.unconfirmed_email
             user.verify_email_manually(current_user, f"Email manually verified by moderator {current_user.name}.")
             db.session.commit()
 
-            user.emit_event(EVENT_USER_VERIFIED, moderator_id=current_user.id)
+            user.emit_event(
+                EVENT_USER_UPDATED,
+                old={"email": old_email},
+                new={"email": new_email}
+            )
 
             flash.success(f'Email for {user.name} has been manually verified.')
         except ValueError as e:
@@ -613,6 +636,11 @@ class UserModelView(AdminModelView):
             db.session.add(OldUsername(username=old_username))
 
             db.session.commit()
+            user.emit_event(
+                EVENT_USER_UPDATED,
+                old={"name": old_username},
+                new={"name": new_username},
+            )
             flash.success("Username updated successfully.")
         except Exception as e:
             db.session.rollback()

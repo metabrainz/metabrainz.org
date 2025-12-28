@@ -9,7 +9,7 @@ from sqlalchemy.orm.attributes import Mapped
 from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
 from metabrainz.model.old_username import OldUsername
-from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_VERIFIED
+from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED
 
 
 class UsernameNotAllowedException(Exception):
@@ -117,11 +117,11 @@ class User(db.Model, UserMixin):
 
     def verify_email_manually(self, moderator, reason):
         """Manually verify the user's email address"""
-        if self.is_email_confirmed():
-            raise ValueError("User's email is already verified")
-            
         if not self.unconfirmed_email:
-            raise ValueError("No email address to verify")
+            if self.is_email_confirmed():
+                raise ValueError("User's email is already verified")
+            else:
+                raise ValueError("No email address to verify")
 
         # Move unconfirmed email to confirmed email
         self.email = self.unconfirmed_email
@@ -167,9 +167,5 @@ class User(db.Model, UserMixin):
             payload["email"] = self.email
             payload["is_email_confirmed"] = self.is_email_confirmed()
             payload["created_at"] = self.member_since.isoformat()
-        elif event == EVENT_USER_VERIFIED:
-            payload["email"] = self.email
-            payload["verified_at"] = self.email_confirmed_at.isoformat()
-        # todo: implement events for username change and user deletion
         payload.update(extras)
         Webhook.create_delivery_for_event(event, payload)
