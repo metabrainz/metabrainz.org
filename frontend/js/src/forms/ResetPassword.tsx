@@ -6,7 +6,6 @@ import { getPageProps } from "../utils";
 import {
   AuthCardContainer,
   AuthCardPasswordInput,
-  AuthCardTextInput,
 } from "./utils";
 
 type ResetPasswordProps = {

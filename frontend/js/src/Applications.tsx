@@ -82,7 +82,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
           </thead>
           <tbody>
             {tokens.map((token) => (
-              <tr>
+              <tr key={token.client_id}>
                 <td>
                   <b>{token.name}</b>
                 </td>

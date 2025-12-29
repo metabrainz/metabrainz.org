@@ -68,13 +68,12 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     datasets,
     good_standing,
     token,
-  } = supporter!!;
+  } = supporter!;
   const [currentToken, setCurrentToken] = useState(token);
 
   const regenerateToken = useCallback(async () => {
     if (
       !currentToken ||
-      // eslint-disable-next-line no-alert
       window.confirm(
         "Are you sure you want to generate new access token? Current token will be revoked!"
       )
@@ -83,7 +82,6 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         method: "POST",
       });
       if (!response.ok) {
-        // eslint-disable-next-line no-alert
         window.alert("Failed to generate new access token!");
       } else {
         const data = await response.json();
