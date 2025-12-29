@@ -32,11 +32,18 @@
   <td class="col-name">{{ row.name }}</td>
 
   <td class="col-email">
-    {{ row.get_email_any() }}
-    {% if row.is_email_confirmed() %}
+    {% if row.email and row.unconfirmed_email %}
+      {{ row.email }} <span class="badge bg-success" style="margin-left: 4px;">Confirmed</span>
+      <br>
+      <small class="text-muted">{{ row.unconfirmed_email }}</small> <span class="badge bg-danger" style="margin-left: 4px;">Pending</span>
+    {% elif row.email %}
+      {{ row.email }}
       <span class="badge bg-success" style="margin-left: 8px;">Confirmed</span>
-    {% else %}
+    {% elif row.unconfirmed_email %}
+      {{ row.unconfirmed_email }}
       <span class="badge bg-danger" style="margin-left: 8px;">Unconfirmed</span>
+    {% else %}
+      <span class="text-muted">No email</span>
     {% endif %}
   </td>
 

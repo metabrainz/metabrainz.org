@@ -65,10 +65,46 @@
         <label>Name</label>
         <input class="form-control" type="text" value="{{ supporter.contact_name }}" readonly>
       </div>
+      {% if supporter.user.email and supporter.user.unconfirmed_email %}
+      <div class="form-group">
+        <label>Email (Current)</label>
+        <div class="input-group">
+          <input class="form-control" type="email" value="{{ supporter.user.email }}" readonly>
+          <span class="input-group-addon"><span class="badge bg-success">Confirmed</span></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email (New)</label>
+        <div class="input-group">
+          <input class="form-control" type="email" value="{{ supporter.user.unconfirmed_email }}" readonly>
+          <span class="input-group-addon"><span class="badge bg-danger">Pending</span></span>
+        </div>
+        <div style="padding-top: 8px">
+          <em class="text-muted">Current email will be replaced once new email is verified.</em>
+        </div>
+      </div>
+      {% elif supporter.user.email %}
       <div class="form-group">
         <label>Email</label>
-        <input class="form-control" type="email" value="{{ supporter.user.email }}" readonly>
+        <div class="input-group">
+          <input class="form-control" type="email" value="{{ supporter.user.email }}" readonly>
+          <span class="input-group-addon"><span class="badge bg-success">Confirmed</span></span>
+        </div>
       </div>
+      {% elif supporter.user.unconfirmed_email %}
+      <div class="form-group">
+        <label>Email</label>
+        <div class="input-group">
+          <input class="form-control" type="email" value="{{ supporter.user.unconfirmed_email }}" readonly>
+          <span class="input-group-addon"><span class="badge bg-danger">Unconfirmed</span></span>
+        </div>
+      </div>
+      {% else %}
+      <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" type="text" value="No email" readonly disabled>
+      </div>
+      {% endif %}
     </div>
 
   </div>

@@ -15,7 +15,6 @@ from metabrainz.model.webhook_delivery import WebhookDeliveryError, WebhookDeliv
 EVENT_USER_CREATED = "user.created"
 EVENT_USER_DELETED = "user.deleted"
 EVENT_USER_UPDATED = "user.updated"
-EVENT_USER_VERIFIED = "user.verified"
 
 
 class Webhook(db.Model):

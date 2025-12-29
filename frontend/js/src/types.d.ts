@@ -36,7 +36,7 @@ type Supporter = {
 
 type User = {
   name: string;
-  email: string;
-  is_email_confirmed: boolean;
+  email: string | null;
+  unconfirmed_email: string | null;
   supporter?: Supporter;
 };
