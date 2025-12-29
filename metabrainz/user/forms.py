@@ -31,6 +31,7 @@ class UserSignupForm(MeBFlaskForm):
         EqualTo("password", gettext("Confirm Password should match password!"))
     ])
     mtcaptcha = MTCaptchaField("MTCaptcha", validators=[validate_mtcaptcha])
+    remember_me = BooleanField(gettext("Remember me"), default="checked")
 
 
 class UserLoginForm(MeBFlaskForm):

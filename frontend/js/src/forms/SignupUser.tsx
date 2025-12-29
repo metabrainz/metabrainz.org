@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
 import { getPageProps } from "../utils";
 import {
+  AuthCardCheckboxInput,
   AuthCardContainer,
   AuthCardPasswordInput,
   AuthCardTextInput,
@@ -41,6 +42,7 @@ function SignupUser({
               password: initial_form_data.password ?? "",
               confirm_password: initial_form_data.confirm_password ?? "",
               mtcaptcha: "",
+              remember_me: "true",
               csrf_token,
             }}
             initialErrors={initial_errors}
@@ -130,6 +132,15 @@ function SignupUser({
                   id="confirm_password"
                   required
                 />
+
+                <small className="checkbox">
+                  <AuthCardCheckboxInput
+                    label="Remember me"
+                    id="remember_me"
+                    name="remember_me"
+                    type="checkbox"
+                  />
+                </small>
 
                 <div className="text-center" style={{ fontSize: "1.3rem" }}>
                   Your contributions will be released into the public domain or

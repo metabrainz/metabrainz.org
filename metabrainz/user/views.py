@@ -52,7 +52,7 @@ def signup():
                         "Please verify your email address",
                         "email/user-email-address-verification.txt"
                     )
-                    login_user(user)
+                    login_user(user, remember=form.remember_me.data)
                     flash.success("Account created. Please check your inbox to complete verification.")
                     redirect_to = request.args.get("next") or url_for("index.home")
                     return redirect(redirect_to)
