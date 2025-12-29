@@ -12,6 +12,7 @@ from sqlalchemy import delete
 from metabrainz.model import db
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.old_username import OldUsername
+from metabrainz.model.supporter import Supporter
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
 from metabrainz.user.email import VERIFY_EMAIL, create_email_link_checksum, RESET_PASSWORD
@@ -26,6 +27,7 @@ class UsersViewsTestCase(FlaskTestCase):
 
     def tearDown(self):
         db.session.rollback()
+        db.session.execute(delete(Supporter))
         db.session.execute(delete(User))
         db.session.execute(delete(OldUsername))
         db.session.execute(delete(DomainBlacklist))
@@ -818,3 +820,98 @@ class UsersViewsTestCase(FlaskTestCase):
 
         user = User.get(name="new_user_3")
         self.assertIsNone(user)
+
+    def test_profile_delete_page_requires_fresh_login(self):
+        """Test that delete page requires fresh login."""
+        self.create_user()
+        user = User.get(name="test_user_1")
+        self.temporary_login(user)
+
+        response = self.client.get(url_for("index.profile_delete"))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("/login", response.location)
+
+    def test_profile_delete_account_success(self):
+        """Test that a user can delete their own account."""
+        self.create_user()
+
+        self.client.get(url_for("users.login"))
+        response = self.client.post(url_for("users.login"), data={
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+        self.assertRedirects(response, url_for("index.home"))
+
+        user = User.get(name="test_user_1")
+        user_id = user.id
+
+        self.client.get(url_for("index.profile_delete"))
+        response = self.client.post(
+            url_for("index.profile_delete"),
+            data={"csrf_token": g.csrf_token},
+        )
+        self.assertRedirects(response, url_for("index.home"))
+
+        db.session.expire_all()
+        user = User.get(id=user_id)
+        self.assertTrue(user.deleted)
+        self.assertEqual(user.name, f"deleted-{user_id}")
+        self.assertIsNone(user.email)
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertEqual(user.password, "")
+
+        old_username = OldUsername.query.filter_by(username="test_user_1").first()
+        self.assertIsNotNone(old_username)
+
+        # Try to create a new user with the same username
+        self._test_user_signup_helper({
+            "username": "test_user_1",
+            "email": "newemail@example.com",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+        }, 200)
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("username", props["initial_errors"])
+        self.assertIn("Username is not allowed.", props["initial_errors"]["username"])
+
+    def test_profile_delete_forbidden_for_supporters(self):
+        """Test that supporter users cannot delete their own accounts."""
+        self.create_user()
+
+        self.client.get(url_for("users.login"))
+        self.client.post(url_for("users.login"), data={
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+
+        user = User.get(name="test_user_1")
+
+        Supporter.add(
+            is_commercial=False,
+            contact_name="Test Contact",
+            data_usage_desc="Test usage",
+            org_desc="Test org",
+            user=user
+        )
+        db.session.commit()
+
+        response = self.client.get(url_for("index.profile_delete"))
+        self.assertRedirects(response, url_for("index.home"))
+        self.assertMessageFlashed(
+            "The deletion of supporter accounts requires manual review. Please contact an administrator.",
+            "error"
+        )
+
+        response = self.client.post(
+            url_for("index.profile_delete"),
+            data={"csrf_token": g.csrf_token},
+        )
+        self.assertRedirects(response, url_for("index.home"))
+
+        db.session.expire_all()
+        user = User.get(name="test_user_1")
+        self.assertIsNotNone(user)
+        self.assertFalse(user.deleted)

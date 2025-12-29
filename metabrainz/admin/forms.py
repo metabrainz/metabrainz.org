@@ -110,6 +110,30 @@ class ModerateUserForm(FlaskForm):
     )
 
 
+class DeleteUserForm(FlaskForm):
+    """Form for deleting a user with confirmation."""
+    reason = TextAreaField(
+        "Reason for deletion",
+        validators=[DataRequired(message="A reason is required")]
+    )
+    confirm = BooleanField(
+        "I confirm that I want to permanently delete this user",
+        validators=[DataRequired(message="You must confirm the deletion")]
+    )
+
+
+class DeleteSupporterForm(FlaskForm):
+    """Form for deleting a supporter and their associated user account."""
+    reason = TextAreaField(
+        "Reason for deletion",
+        validators=[DataRequired(message="A reason is required")]
+    )
+    confirm = BooleanField(
+        "I confirm that I want to permanently delete this supporter and their user account",
+        validators=[DataRequired(message="You must confirm the deletion")]
+    )
+
+
 class RetryDeliveryForm(FlaskForm):
     """Form for retrying a failed webhook delivery."""
     pass
