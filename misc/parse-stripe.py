@@ -88,7 +88,7 @@ for row in rows:
     sender = row[21]
 
     if not sender:
-        sender = "Subscription from %s" % row[41]
+        sender = "Subscription from %s" % row[43]
         if row[61]:
             sender += ", editor %s" % row[61]
         if row[62]:
@@ -97,16 +97,13 @@ for row in rows:
     if amount < Decimal(0.0):
         sender = "Stripe Additional Fee"
 
-    if row[63] != "":
-        sender += " (inv #%s)" % row[63]
+    if row[65] != "":
+        sender += " (inv #%s)" % row[65]
 
     data.append({ "date": date, "amount": amount, "fee": fee, "sender": sender })
 
 data.extend(payouts)
 data = sorted(data, key=lambda a: a["date"])
-
-for row in data:
-    print(row)
 
 for entry in data:
     date = "%s/%s/%s" % (entry["date"].month, entry["date"].day, entry["date"].year)
