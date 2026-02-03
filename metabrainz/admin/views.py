@@ -1,7 +1,8 @@
 from decimal import Decimal
-from flask import Response, request, redirect, url_for
+from flask import Response, request, redirect, url_for, current_app
 from flask_admin import expose
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms
+from metabrainz.admin.forms import get_logo_storage_dir
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
@@ -113,11 +114,11 @@ class SupportersView(AdminBaseView):
                 if supporter.logo_filename:
                     # Deleting old logo
                     try:
-                        os.remove(os.path.join(forms.LOGO_STORAGE_DIR, supporter.logo_filename))
+                        os.remove(os.path.join(get_logo_storage_dir(current_app), supporter.logo_filename))
                     except OSError as e:
                         logging.warning(e)
                 # Saving new one
-                image_storage.save(os.path.join(forms.LOGO_STORAGE_DIR, logo_filename))
+                image_storage.save(os.path.join(get_logo_storage_dir(current_app), logo_filename))
             db_supporter.update(supporter_id=supporter.id, **update_data)
             return redirect(url_for('.details', supporter_id=supporter.id))
 
