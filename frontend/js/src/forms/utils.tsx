@@ -70,7 +70,6 @@ export type CheckboxInputProps = JSX.IntrinsicElements["input"] &
   };
 
 export function CheckboxInput({
-  label,
   children,
   ...props
 }: CheckboxInputProps) {
@@ -100,7 +99,6 @@ export type OAuthTextInputProps = JSX.IntrinsicElements["input"] &
 
 export function OAuthTextInput({
   label,
-  children,
   ...props
 }: OAuthTextInputProps) {
   const [field, meta] = useField(props);
@@ -203,8 +201,6 @@ export type AuthCardCheckboxInputProps = JSX.IntrinsicElements["input"] &
   };
 
 export function AuthCardCheckboxInput({
-  label,
-  children,
   ...props
 }: AuthCardCheckboxInputProps) {
   const [field, meta] = useField(props);
@@ -258,7 +254,6 @@ export function DatasetsInput({ datasets }: DatasetsProps) {
 export function OAuthScopeDesc(scopes: Array<Scope>) {
   return (
     <ul>
-      {/* eslint-disable-next-line react/destructuring-assignment */}
       {scopes.map((scope) => (
         <li key={scope.name}>
           {scope.name}: {scope.description}

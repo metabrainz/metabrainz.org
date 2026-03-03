@@ -15,7 +15,6 @@ type CreateApplicationProps = {
 function NestedErrorMessage({ name }: { name: string }) {
   return (
     <Field name={name}>
-      {/* eslint-disable-next-line react/no-unused-prop-types */}
       {({ form }: { form: any }) => {
         const error = getIn(form.errors, name);
         const touch = getIn(form.touched, name);
@@ -131,7 +130,6 @@ function CreateApplication({
                       values.redirect_uris.length > 0 ? (
                       values.redirect_uris.map(
                         (redirect_uri: string, index: number) => {
-                          /* eslint-disable react/no-array-index-key */
                           return (
                             <div key={`${index}`}>
                               <Field
@@ -159,7 +157,6 @@ function CreateApplication({
                               </button>
                             </div>
                           );
-                          /* eslint-disable react/no-array-index-key */
                         }
                       )
                     ) : (
@@ -194,7 +191,7 @@ function CreateApplication({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { csrf_token, is_edit_mode, initial_form_data, initial_errors } =
     reactProps;
 

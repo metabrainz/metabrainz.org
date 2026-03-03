@@ -63,7 +63,7 @@ function DeleteApplication({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { csrf_token, cancel_url, application } = reactProps;
 
   const renderRoot = createRoot(domContainer!);
