@@ -1,5 +1,7 @@
 BEGIN;
 
+CREATE TYPE moderation_action_type AS ENUM ('block', 'unblock');
+
 CREATE TYPE payment_method_types AS ENUM (
   'stripe',
   'paypal',

@@ -173,9 +173,10 @@ def signup_commercial():
 @login_forbidden
 def signup_noncommercial():
     """Sign up endpoint for non-commercial supporters."""
+    available_dataset_objs = Dataset.query.all()
     available_datasets = [
         {"id": d.id, "description": d.description, "name": d.name}
-        for d in Dataset.query.all()
+        for d in available_dataset_objs
     ]
     csrf_token = generate_csrf()
     recaptcha_site_key = current_app.config["RECAPTCHA_PUBLIC_KEY"]
@@ -209,11 +210,17 @@ def signup_noncommercial():
             }))
 
         user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
+        selected_datasets = []
+        for dataset_dict in form.datasets.data:
+            for dataset_obj in available_dataset_objs:
+                if dataset_obj.id == dataset_dict["id"]:
+                    selected_datasets.append(dataset_obj)
+
         Supporter.add(
             is_commercial=False,
             contact_name=form.contact_name.data,
             data_usage_desc=form.usage_desc.data,
-            datasets=form.datasets.data,
+            datasets=selected_datasets,
             user=user
         )
         db.session.commit()
