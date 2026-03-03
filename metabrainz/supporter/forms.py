@@ -33,7 +33,7 @@ class NonCommercialSignUpForm(SupporterSignUpForm):
     def __init__(self, available_datasets, **kwargs):
         super().__init__(**kwargs)
         self.datasets.choices = available_datasets
-        self.descriptions = {d.id: d.description for d in available_datasets}
+        self.descriptions = {d["id"]: d["description"] for d in available_datasets}
 
 
 class CommercialSignUpForm(SupporterSignUpForm):
