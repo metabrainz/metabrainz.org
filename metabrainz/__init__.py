@@ -156,6 +156,7 @@ def create_app(debug=None, config_path=None):
     from metabrainz.admin.views import PaymentsView
     from metabrainz.admin.views import TokensView
     from metabrainz.admin.views import StatsView
+    from metabrainz.admin.views import UserManagementView
     admin.add_view(CommercialSupportersView(name='Commercial supporters', category='Supporters'))
     admin.add_view(SupportersView(name='Search', category='Supporters'))
     admin.add_view(PaymentsView(name='All', category='Payments'))
@@ -164,7 +165,7 @@ def create_app(debug=None, config_path=None):
     admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
     admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
     admin.add_view(StatsView(name='Supporters', endpoint="statsview/supporters", category='Statistics'))
-
+    admin.add_view(UserManagementView(name='User Management', endpoint='users-admin', category='Users'))
     if app.config["QUICKBOOKS_CLIENT_ID"]:
         admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
 
