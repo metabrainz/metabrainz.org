@@ -19,4 +19,4 @@ services:
       POSTGRES_PASSWORD: postgres
 
   redis:
-    image: redis:3.2.1
+    image: redis:8.6.1
