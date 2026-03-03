@@ -507,7 +507,6 @@ function SignupCommercial({
                       (!existing_user && isValidatingEmail)
                     }
                   >
-                    {/* eslint-disable-next-line no-nested-ternary */}
                     {!existing_user && isValidatingEmail
                       ? "Validating..."
                       : existing_user
