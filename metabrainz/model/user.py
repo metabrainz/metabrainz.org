@@ -4,7 +4,7 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, Identity, Text, DateTime, func, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm.attributes import Mapped
+from sqlalchemy.orm import Mapped
 
 from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
