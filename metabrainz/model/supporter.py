@@ -1,13 +1,9 @@
-from flask_admin.contrib.sqla.form import InlineOneToOneModelConverter
-from flask_admin.model import InlineFormAdmin
 from sqlalchemy import ForeignKey, Integer
-from sqlalchemy.orm import contains_eager, relationship, mapped_column
-from sqlalchemy.orm.attributes import Mapped
+from sqlalchemy.orm import contains_eager, relationship, mapped_column, Mapped
 
 from metabrainz.model import db
 from brainzutils.mail import send_mail
 from metabrainz.model.token import Token
-from metabrainz.admin import AdminModelView
 from sqlalchemy.sql.expression import func, or_
 from sqlalchemy.dialects import postgresql
 from flask import current_app
@@ -78,8 +74,8 @@ class Supporter(db.Model):
     in_deadbeat_club = db.Column(db.Boolean, nullable=False, default=False)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 
-    tokens = db.relationship("Token", backref="owner", lazy="dynamic")
-    token_log_records = db.relationship("TokenLog", back_populates="supporter", lazy="dynamic")
+    tokens = db.relationship("Token", backref="owner", lazy="select")
+    token_log_records = db.relationship("TokenLog", back_populates="supporter", lazy="select")
 
     datasets = db.relationship("Dataset", secondary="dataset_supporter")
     tier = db.relationship("Tier", uselist=False, back_populates="supporters")

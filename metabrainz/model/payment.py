@@ -86,12 +86,14 @@ class Payment(db.Model):
         """
         days_per_dollar = 6
         result = db.session.execute(
-            "SELECT ((amount + COALESCE(fee, 0)) * :days_per_dollar) - "
-            "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
-            "FROM payment "
-            "WHERE lower(editor_name) = lower(:editor) "
-            "ORDER BY nag DESC "
-            "LIMIT 1",
+            text(
+                "SELECT ((amount + COALESCE(fee, 0)) * :days_per_dollar) - "
+                "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
+                "FROM payment "
+                "WHERE lower(editor_name) = lower(:editor) "
+                "ORDER BY nag DESC "
+                "LIMIT 1"
+            ),
             {'editor': editor, 'days_per_dollar': days_per_dollar}
         ).fetchone()
 
