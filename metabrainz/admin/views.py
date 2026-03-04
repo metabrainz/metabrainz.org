@@ -5,7 +5,8 @@ from flask_login import current_user
 from markupsafe import Markup
 
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
-from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm
+from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm, DeleteUserForm, \
+    DeleteSupporterForm
 from metabrainz.admin.forms import get_logo_storage_dir
 from metabrainz.model import db
 from metabrainz.model.old_username import OldUsername

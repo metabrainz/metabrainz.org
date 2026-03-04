@@ -1,7 +1,7 @@
 
 from sqlalchemy import Column, DateTime, Enum, ForeignKey, Integer, Text, func
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm.attributes import Mapped
+from sqlalchemy.orm import Mapped
 
 from metabrainz.model import db
 

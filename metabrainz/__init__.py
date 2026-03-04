@@ -24,10 +24,7 @@ bcrypt = Bcrypt()
 
 
 def create_app(debug=None, config_path=None):
-    app = CustomFlask(
-        import_name=__name__,
-        use_flask_uuid=True,
-    )
+    app = CustomFlask(import_name=__name__)
 
     # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
