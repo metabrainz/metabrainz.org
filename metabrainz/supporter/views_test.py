@@ -2,6 +2,7 @@ from urllib.parse import urlparse
 
 from metabrainz import create_app
 from metabrainz.testing import FlaskTestCase
+from metabrainz.model.supporter import Supporter
 from metabrainz.model.tier import Tier
 from flask import url_for
 
@@ -75,6 +76,46 @@ class SupportersViewsTestCase(FlaskTestCase):
     def test_regenerate_token(self):
         self.assertStatus(self.client.post(url_for('supporters.regenerate_token')), 302)
         self.assertStatus(self.client.get(url_for('supporters.regenerate_token')), 405)
+
+    def test_regenerate_token_success(self):
+        """Test that generating a token returns it in JSON."""
+        supporter = Supporter.add(
+            is_commercial=False,
+            musicbrainz_id='token_user',
+            musicbrainz_row_id=10,
+            contact_name='Token User',
+            contact_email='token@example.com',
+            data_usage_desc='testing',
+        )
+        self.temporary_login(supporter.id)
+        response = self.client.post(url_for('supporters.regenerate_token'))
+        self.assert200(response)
+        data = response.json
+        self.assertIn('token', data)
+        self.assertEqual(len(data['token']), 40)
+
+    def test_regenerate_token_rate_limit(self):
+        """Test that TokenGenerationLimitException returns 429 with error message"""
+        supporter = Supporter.add(
+            is_commercial=False,
+            musicbrainz_id='rate_limit_user',
+            musicbrainz_row_id=11,
+            contact_name='Rate User',
+            contact_email='rate@example.com',
+            data_usage_desc='testing',
+        )
+        self.temporary_login(supporter.id)
+
+        # First token generation should succeed
+        response = self.client.post(url_for('supporters.regenerate_token'))
+        self.assert200(response)
+
+        # Second token generation within the same hour should be rate limited
+        response = self.client.post(url_for('supporters.regenerate_token'))
+        self.assertStatus(response, 429)
+        data = response.json
+        self.assertIn('error', data)
+        self.assertIn("Can't generate more than one token per hour", data['error'])
 
     def test_login(self):
         self.assert200(self.client.get(url_for('supporters.login')))
