@@ -201,7 +201,7 @@ class CommercialSupportersView(AdminBaseView):
         limit = 20
         offset = (page - 1) * limit
         supporters, count = Supporter.get_all_commercial(limit=limit, offset=offset)
-        return self.render('admin/commercial-supporters/index.html', supporters=supporters,
+        return self.render('admin/commercial-users/index.html', supporters=supporters,
                            page=page, limit=limit, count=count)
 
 

@@ -356,7 +356,7 @@ def regenerate_token():
     except InactiveSupporterException:
         raise BadRequest(gettext("Can't generate new token unless account is active."))
     except TokenGenerationLimitException as e:
-        return jsonify({'error': e.message}), 429  # https://tools.ietf.org/html/rfc6585#page-3
+        return jsonify({'error': str(e)}), 429  # https://tools.ietf.org/html/rfc6585#page-3
 
 
 @supporters_bp.route('/login')
