@@ -409,7 +409,8 @@ class Payment(db.Model):
                 new_donation.editor_id = cls.get_musicbrainz_row_id(new_donation.editor_name)
 
         else:  # Organization payment
-            new_donation.invoice_number = metadata["invoice_number"]
+            if "invoice_number" in metadata:
+                new_donation.invoice_number = metadata["invoice_number"]
 
         db.session.add(new_donation)
         try:

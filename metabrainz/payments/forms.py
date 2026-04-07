@@ -3,7 +3,7 @@ from flask_babel import lazy_gettext
 from wtforms import StringField, BooleanField
 from wtforms.fields import RadioField, DecimalField, IntegerField
 from wtforms.fields.simple import HiddenField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Optional
 from metabrainz.payments import Currency
 
 
@@ -29,4 +29,11 @@ class DonationForm(BasePaymentForm):
 class PaymentForm(BasePaymentForm):
     """Payment form for organizations."""
     currency = HiddenField()
-    invoice_number = IntegerField(validators=[DataRequired(lazy_gettext("You need to specify invoice number!"))])
+    invoice_number = IntegerField(validators=[Optional()])
+
+    def validate(self, extra_validators=None):
+        result = super().validate(extra_validators=extra_validators)
+        if not self.recurring.data and not self.invoice_number.data:
+            self.invoice_number.errors.append(lazy_gettext("You need to specify invoice number!"))
+            result = False
+        return result

@@ -135,6 +135,21 @@
       });
 
 
+      ////////////////////
+      // RECURRING TOGGLE
+      ////////////////////
+      var invoiceNumber = $("#input-invoice-number");
+      function updateRecurringState() {
+        if ($('#recurring-flag').is(":checked")) {
+          invoiceNumber.attr('placeholder', '{{ _('Invoice number (optional)') }}');
+        } else {
+          invoiceNumber.attr('placeholder', '{{ _('Invoice number') }}');
+        }
+      }
+      $('#recurring-flag').on('change', updateRecurringState);
+      updateRecurringState();
+
+
       ///////////
       // PAYMENTS
       ///////////
