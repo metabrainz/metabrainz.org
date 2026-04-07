@@ -38,12 +38,15 @@ def pay():
         charge_metadata["can_contact"] = form.can_contact.data
         description = "Donation to the MetaBrainz Foundation"
     else:  # Using PaymentForm
-        charge_metadata["invoice_number"] = form.invoice_number.data
+        if form.invoice_number.data:
+            charge_metadata["invoice_number"] = form.invoice_number.data
         # Add invoice number to description only for non-recurring payments
         if is_recurring:
             description = "Payment to the MetaBrainz Foundation"
-        else:
+        elif form.invoice_number.data:
             description = f"Payment to the MetaBrainz Foundation for Invoice {form.invoice_number.data}"
+        else:
+            description = "Payment to the MetaBrainz Foundation"
 
     session_config = {
         "billing_address_collection": "required",

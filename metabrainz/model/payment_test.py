@@ -463,3 +463,28 @@ class PaymentModelStripeTestCase(FlaskTestCase):
         mock_stripe.retrieve.return_value = payment_intent
         Payment.log_one_time_charge("usd", self.session_without_metadata)
         self.assertEqual(len(Payment.query.all()), 1)
+
+    @patch("stripe.PaymentIntent")
+    def test_log_stripe_charge_payment_with_invoice_number(self, mock_stripe):
+        payment_intent = self.payment_intent.copy()
+        payment_intent["metadata"] = {
+            "is_donation": "False",
+            "invoice_number": 42,
+        }
+        mock_stripe.retrieve.return_value = payment_intent
+        Payment.log_one_time_charge("usd", self.session_without_metadata)
+        payments = Payment.query.all()
+        self.assertEqual(len(payments), 1)
+        self.assertEqual(payments[0].invoice_number, 42)
+
+    @patch("stripe.PaymentIntent")
+    def test_log_stripe_charge_payment_without_invoice_number(self, mock_stripe):
+        payment_intent = self.payment_intent.copy()
+        payment_intent["metadata"] = {
+            "is_donation": "False",
+        }
+        mock_stripe.retrieve.return_value = payment_intent
+        Payment.log_one_time_charge("usd", self.session_without_metadata)
+        payments = Payment.query.all()
+        self.assertEqual(len(payments), 1)
+        self.assertIsNone(payments[0].invoice_number)
