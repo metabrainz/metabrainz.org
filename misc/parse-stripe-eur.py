@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from datetime import datetime
 from dateutil import parser
 
 # Parse the stripe balance report:  https://dashboard.stripe.com/reports/balance
@@ -13,24 +12,19 @@ def parse_payouts(payouts_file):
     pay = None
     try:
         pay = open(payouts_file, "r")
-        reader = csv.reader(pay)
+        reader = csv.DictReader(pay)
     except IOError:
         print("Cannot open payouts file %s" % payouts_file)
         exit(0)
 
     payouts = []
-    head = None
-    for i, row in enumerate(reader):
-        if i == 0:
-            head = row
-            continue
-
-        for i, d in enumerate(zip(head, row)):
-            print("%d %-40s %s" % (i, d[0], d[1]))
+    for row in reader:
+        for i, (k, v) in enumerate(row.items()):
+            print("%d %-40s %s" % (i, k, v))
         print()
 
-        amount = -Decimal(row[4].replace(",", "."))
-        date = parser.parse(row[2] + " UTC")
+        amount = -Decimal(row["gross"].replace(",", "."))
+        date = parser.parse(row["effective_at_utc"] + " UTC")
         payouts.append({ "date": date, "amount": amount, "sender": "PAYOUT", "fee": Decimal(0.0) })
 
     return payouts
@@ -61,42 +55,40 @@ except IOError:
 out = csv.writer(_out, quoting=csv.QUOTE_MINIMAL)
 out.writerow(["Date","Description","Amount"])
 
-trans = []
-head = None
-reader = csv.reader(fp)
-
-rows = []
-for i, row in enumerate(reader):
-    if not i:
-        head = row
-        continue
-
-    rows.append(row)
-
+reader = csv.DictReader(fp)
+rows = list(reader)
 rows.reverse()
 fp.close()
 
 data = []
 for row in rows:
-    for i, d in enumerate(zip(head, row)):
-        print("%d %-40s %s" % (i, d[0], d[1]))
+    for i, (k, v) in enumerate(row.items()):
+        print("%d %-40s %s" % (i, k, v))
     print()
 
-    date = parser.parse(row[2] + " UTC")
-    amount = Decimal(row[6].replace(",", "."))
-    fee = Decimal(row[7].replace(",", "."))
-    sender = row[21]
-
-    if not sender:
-        sender = "Subscription from %s" % row[43]
-        if row[61]:
-            sender += ", editor %s" % row[63]
+    date = parser.parse(row["created_utc"] + " UTC")
+    amount = Decimal(row["gross"].replace(",", "."))
+    fee = Decimal(row["fee"].replace(",", "."))
+    description = row["description"].lower()
+    editor = row.get("payment_metadata[editor]", "")
+    customer_name = row.get("customer_name", "")
 
     if amount < Decimal(0.0):
         sender = "Stripe Additional Fee"
+    elif "subscription" in description:
+        sender = "Subscription from %s" % customer_name if customer_name else "Subscription"
+        if editor:
+            sender += ", editor %s" % editor
+    elif "donation" in description:
+        sender = "Donation from %s" % customer_name if customer_name else "Donation"
+        if editor:
+            sender += ", editor %s" % editor
+    else:
+        sender = row["description"]
 
-    if row[64] != "":
-        sender += " (inv #%s)" % row[64]
+    invoice_number = row.get("payment_metadata[invoice_number]", "")
+    if invoice_number != "":
+        sender += " (inv #%s)" % invoice_number
 
     data.append({ "date": date, "amount": amount, "fee": fee, "sender": sender })
 
