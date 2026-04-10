@@ -1,4 +1,5 @@
 from metabrainz.testing import FlaskTestCase
+from metabrainz.model.supporter import Supporter
 from flask import url_for
 
 
@@ -7,10 +8,36 @@ class PaymentsViewsTestCase(FlaskTestCase):
     def test_donate(self):
         self.assert200(self.client.get(url_for('payments.donate')))
 
-    def test_payment_selector(self):
+    def test_payment_selector_requires_login(self):
+        resp = self.client.get(url_for('payments.payment_selector'))
+        self.assertIn(resp.status_code, (301, 302))
+        self.assertIn('/login', resp.location)
+
+    def test_payment_requires_login(self):
+        resp = self.client.get(url_for('payments.payment', currency='usd'))
+        self.assertIn(resp.status_code, (301, 302))
+        self.assertIn('/login', resp.location)
+
+    def _create_supporter(self, **kwargs):
+        defaults = dict(
+            is_commercial=True,
+            musicbrainz_id='test_user',
+            musicbrainz_row_id=1,
+            contact_name='Test User',
+            contact_email='test@example.org',
+            data_usage_desc='Testing',
+        )
+        defaults.update(kwargs)
+        return Supporter.add(**defaults)
+
+    def test_payment_selector_logged_in(self):
+        supporter = self._create_supporter()
+        self.temporary_login(supporter.id)
         self.assert200(self.client.get(url_for('payments.payment_selector')))
 
-    def test_payment(self):
+    def test_payment_logged_in(self):
+        supporter = self._create_supporter()
+        self.temporary_login(supporter.id)
         self.assert200(self.client.get(url_for('payments.payment', currency='usd')))
         self.assert200(self.client.get(url_for('payments.payment', currency='eur')))
 

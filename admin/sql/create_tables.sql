@@ -93,7 +93,8 @@ CREATE TABLE payment (
   fee              NUMERIC(11, 2),
   currency         payment_currency  NOT NULL DEFAULT 'usd',
   memo             CHARACTER VARYING,
-  invoice_number   INTEGER
+  invoice_number   INTEGER,
+  supporter_id     INTEGER
 );
 
 COMMIT;
