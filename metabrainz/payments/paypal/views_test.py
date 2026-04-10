@@ -1,5 +1,6 @@
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model.payment import Payment
+from metabrainz.model.supporter import Supporter
 from flask import current_app, url_for
 from metabrainz.payments.paypal import views
 
@@ -64,11 +65,19 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
         self.assertEqual(Payment.query.all()[0].transaction_id, 'RANDOM-ID')
 
     def test_paypal_ipn_payment(self):
+        supporter = Supporter.add(
+            is_commercial=True,
+            musicbrainz_id='test_user',
+            musicbrainz_row_id=1,
+            contact_name='Test User',
+            contact_email='test@example.org',
+            data_usage_desc='Testing',
+        )
         ipn_data = {
             # This is not a complete list
             'first_name': 'Tester',
             'last_name': 'Testing',
-            'custom': 'tester',  # MusicBrainz username
+            'custom': str(supporter.id),
             'payer_email': 'test@example.org',
             'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
             'business': 'donations@metabrainz.org',
@@ -96,9 +105,43 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
         )
         self.assert200(resp)
 
-        # Donation should be in the DB now
-        self.assertEqual(len(Payment.query.all()), 1)
-        self.assertEqual(Payment.query.all()[0].transaction_id, 'RANDOM-ID')
+        # Payment should be in the DB now
+        payments = Payment.query.all()
+        self.assertEqual(len(payments), 1)
+        self.assertEqual(payments[0].transaction_id, 'RANDOM-ID')
+        self.assertEqual(payments[0].invoice_number, 42)
+        self.assertEqual(payments[0].supporter_id, supporter.id)
+
+    def test_paypal_ipn_payment_with_invalid_custom(self):
+        ipn_data = {
+            'first_name': 'Tester',
+            'last_name': 'Testing',
+            'custom': 'not-an-int',
+            'payer_email': 'test@example.org',
+            'receiver_email': current_app.config['PAYPAL_ACCOUNT_IDS']['USD'],
+            'business': 'donations@metabrainz.org',
+            'mc_currency': 'usd',
+            'mc_gross': '42.50',
+            'mc_fee': '1',
+            'txn_id': 'RANDOM-ID',
+            'payment_status': 'Completed',
+
+            'option_name2': 'is_donation',
+            'option_selection2': 'no',
+            'option_name3': 'invoice_number',
+            'option_selection3': '42',
+        }
+        resp = self.client.post(
+            url_for('payments_paypal.ipn'),
+            headers=[('Content-Type', 'application/x-www-form-urlencoded')],
+            data=ipn_data,
+        )
+        self.assert200(resp)
+
+        payments = Payment.query.all()
+        self.assertEqual(len(payments), 1)
+        self.assertIsNone(payments[0].supporter_id)
+        self.assertEqual(payments[0].invoice_number, 42)
 
     def test_paypal_ipn_old(self):
         ipn_data = {

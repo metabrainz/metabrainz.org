@@ -43,6 +43,7 @@ class Payment(db.Model):
 
     # Organization-specific columns
     invoice_number = db.Column(db.Integer)
+    supporter_id = db.Column(db.Integer, db.ForeignKey('supporter.id', ondelete="SET NULL", onupdate="CASCADE"))
 
     # Transaction details
     payment_date = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
@@ -287,6 +288,12 @@ class Payment(db.Model):
             else:
                 new_payment.invoice_number = int(invoice_num_opt)
 
+            if supporter_id := form.get("custom"):
+                try:
+                    new_payment.supporter_id = int(supporter_id)
+                except ValueError:
+                    logging.warning("PayPal: Invalid supporter_id in custom field", extra={"ipn_content": form})
+
         db.session.add(new_payment)
         db.session.commit()
         logging.info('PayPal: Payment added. ID: %s.', new_payment.id)
@@ -303,25 +310,23 @@ class Payment(db.Model):
     @staticmethod
     def _extract_paypal_ipn_options(form: dict) -> dict:
         """Extracts all options from a PayPal IPN.
-        
+
         This is necessary because the order or numbering of options might not
         what you expect it to be.
-         
+
         Returns:
             Dictionary that maps options (by name) to their values.
         """
         options = {}
-        current_number = 1  # option numbering starts from 1, not 0
-        while True:
-            current_key = "option_name" + str(current_number)
-            current_val = "option_selection" + str(current_number)
+        for option_number in range(1, 11):
+            current_key = "option_name" + str(option_number)
+            current_val = "option_selection" + str(option_number)
             if current_key not in form:
-                break
+                continue
             if current_val not in form:
                 logging.warning("PayPal: Value for option `{name}` is missing".format(name=current_key),
                                 extra={"ipn_content": form})
             options[form[current_key]] = form[current_val]
-            current_number += 1
         return options
 
     @classmethod
@@ -411,6 +416,8 @@ class Payment(db.Model):
         else:  # Organization payment
             if "invoice_number" in metadata:
                 new_donation.invoice_number = metadata["invoice_number"]
+            if "supporter_id" in metadata:
+                new_donation.supporter_id = metadata["supporter_id"]
 
         db.session.add(new_donation)
         try:
@@ -434,6 +441,7 @@ class PaymentAdminView(AdminModelView):
         id='ID',
         is_donation='Donation',
         invoice_number='Invoice number',
+        supporter_id='Supporter ID',
         editor_name='MusicBrainz username',
         address_street='Street',
         address_city='City',
@@ -455,6 +463,8 @@ class PaymentAdminView(AdminModelView):
         'is_donation',
         'amount',
         'fee',
+        'supporter_id',
+        'invoice_number',
     )
     form_columns = (
         'first_name',
@@ -471,6 +481,7 @@ class PaymentAdminView(AdminModelView):
         'memo',
         'is_donation',
         'invoice_number',
+        'supporter_id',
         'editor_name',
         'can_contact',
         'anonymous',

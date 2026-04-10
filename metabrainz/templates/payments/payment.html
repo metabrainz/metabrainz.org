@@ -10,6 +10,19 @@
     </div>
   {% endif %}
 
+  {% if supporter.org_name or supporter.tier %}
+  <div class="panel panel-info">
+    <div class="panel-body">
+      {% if supporter.org_name %}
+        <p><strong>{{ _('Organization:') }}</strong> {{ supporter.org_name }}</p>
+      {% endif %}
+      {% if supporter.tier %}
+        <p><strong>{{ _('Supporter level:') }}</strong> {{ supporter.tier.name }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
   <div id="payment-panel" class="panel panel-default">
     <form id="payment-form" method="POST" class="panel-body form-horizontal" role="form">
       {{ form.hidden_tag() }}
@@ -174,6 +187,9 @@
         {# Info about variables can be found at https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/ #}
 
         $('<input>').attr({type: 'hidden', name: 'business', value: '{{ config['PAYPAL_ACCOUNT_IDS'][currency|upper] }}'}).appendTo(form);
+        {% if supporter %}
+        $('<input>').attr({type: 'hidden', name: 'custom', value: '{{ supporter.id }}'}).appendTo(form);
+        {% endif %}
         $('<input>').attr({type: 'hidden', name: 'no_shipping', value: '2'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'return', value: '{{ url_for('payments.complete', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);
         $('<input>').attr({type: 'hidden', name: 'cancel_return', value: '{{ url_for('payments.cancelled', donation=True, _external=True, _scheme=config.PREFERRED_URL_SCHEME) }}'}).appendTo(form);

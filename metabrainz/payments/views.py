@@ -4,7 +4,7 @@ from decimal import Decimal, InvalidOperation
 
 from flask import Blueprint, request, render_template, url_for, redirect, current_app, jsonify
 from flask_babel import gettext
-from flask_login import current_user
+from flask_login import current_user, login_required
 from werkzeug.datastructures import MultiDict
 
 from metabrainz.payments import SUPPORTED_CURRENCIES, Currency
@@ -57,21 +57,27 @@ def donate():
 
 
 @payments_bp.route('/payment/')
+@login_required
 def payment_selector():
     """Payment page for organizations. Shows currency selection."""
     return render_template('payments/payment_selector.html')
 
 
 @payments_bp.route('/payment/<currency>')
+@login_required
 def payment(currency):
     """Payment page for organizations."""
     currency = currency.lower()
     if currency not in SUPPORTED_CURRENCIES:
-        return redirect('.payment_selector')
+        return redirect(url_for('.payment_selector'))
+    formdata = [("currency", currency)]
+    if current_user.amount_pledged:
+        formdata.append(("amount", str(current_user.amount_pledged)))
     return render_template(
         'payments/payment.html',
-        form=PaymentForm(formdata=MultiDict([("currency", currency)])),
-        currency=currency
+        form=PaymentForm(formdata=MultiDict(formdata)),
+        currency=currency,
+        supporter=current_user,
     )
 
 

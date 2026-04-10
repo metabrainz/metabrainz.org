@@ -1,4 +1,5 @@
 from flask import Blueprint, request, current_app, redirect, url_for, jsonify
+from flask_login import current_user
 
 from metabrainz.model import Payment
 from metabrainz.payments.forms import DonationForm, PaymentForm
@@ -38,6 +39,10 @@ def pay():
         charge_metadata["can_contact"] = form.can_contact.data
         description = "Donation to the MetaBrainz Foundation"
     else:  # Using PaymentForm
+        if current_user.is_authenticated:
+            charge_metadata["supporter_id"] = current_user.id
+        else:
+            current_app.logger.warning("Stripe: org payment POST with no authenticated user")
         if form.invoice_number.data:
             charge_metadata["invoice_number"] = form.invoice_number.data
         # Add invoice number to description only for non-recurring payments
