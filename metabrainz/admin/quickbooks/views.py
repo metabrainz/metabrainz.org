@@ -1,6 +1,7 @@
 from calendar import monthrange
 from copy import deepcopy
-import datetime 
+from decimal import Decimal, InvalidOperation
+import datetime
 import time
 from dateutil.parser import parse
 
@@ -14,7 +15,7 @@ from quickbooks.objects.customer import Customer
 from quickbooks.objects.invoice import Invoice, DeliveryInfo
 from quickbooks.objects.detailline import SalesItemLineDetail
 from intuitlib.exceptions import AuthClientError
-from werkzeug.exceptions import BadRequest, InternalServerError
+from werkzeug.exceptions import InternalServerError
 
 from metabrainz.admin.quickbooks.quickbooks import get_client
 from brainzutils import cache
@@ -48,7 +49,31 @@ class QuickBooksView(BaseView):
         new_invoice['number'] = 'NEW'
         new_invoice['qty'] = qty
         new_invoice['price'] = price
+        new_invoice['amount'] = QuickBooksView.get_invoice_line_details(qty, price)['amount']
         cust['invoices'].insert(0, new_invoice)
+
+
+    @staticmethod
+    def get_invoice_amount(qty, price, amount=None):
+        try:
+            qty_decimal = Decimal(str(qty))
+            price_decimal = Decimal(str(price))
+            default_amount = qty_decimal * price_decimal
+            amount_decimal = Decimal(str(amount)) if amount not in (None, "") else default_amount
+        except InvalidOperation as err:
+            raise ValueError("Invoice amount must be numeric.") from err
+
+        if amount_decimal < 0:
+            raise ValueError("Invoice amount cannot be negative.")
+
+        line_price = str(price)
+        if qty_decimal != 0 and amount_decimal != default_amount:
+            line_price = amount_decimal / qty_decimal
+
+        return {
+            'amount': amount_decimal,
+            'price': line_price,
+        }
 
 
     @staticmethod
@@ -78,9 +103,14 @@ class QuickBooksView(BaseView):
             new_invoice.SyncToken = None
             new_invoice.LinkedTxn = None
             new_invoice.EmailStatus = "NeedToSend"
+            line_details = QuickBooksView.get_invoice_line_details(
+                invoice['qty'],
+                invoice['price'],
+                invoice.get('amount'),
+            )
             new_invoice.Line[0].SalesItemLineDetail.Qty = invoice['qty']
-            new_invoice.Line[0].SalesItemLineDetail.UnitPrice = invoice['price']
-            new_invoice.Line[0].Amount = "%d" % round(float(invoice['price']) * float(invoice['qty']))
+            new_invoice.Line[0].SalesItemLineDetail.UnitPrice = line_details['price']
+            new_invoice.Line[0].Amount = line_details['amount']
             new_invoice.CustomField[1].StringValue = invoice['begin']
             new_invoice.CustomField[2].StringValue = invoice['end']
             new_invoice.DeliveryInfo = DeliveryInfo()
@@ -342,9 +372,24 @@ class QuickBooksView(BaseView):
             base_invoice = request.form.get("base_invoice_%d" % customer)
             qty = request.form.get("qty_%d" % customer)
             price = request.form.get("price_%d" % customer)
+            amount = request.form.get("amount_%d" % customer)
 
-            invoices.append( { 'customer' : customer_id, 'begin' : begin_date, 'end' : end_date, 'base_invoice' : base_invoice, 'qty' : qty, 'price' : price })
-            customer += 1 
+            try:
+                amount = self.get_invoice_line_details(qty, price, amount)['amount']
+            except ValueError as err:
+                flash("Invalid invoice amount for customer %s: %s" % (customer_id, err))
+                return redirect(url_for("quickbooks/.index"))
+
+            invoices.append({
+                'customer' : customer_id,
+                'begin' : begin_date,
+                'end' : end_date,
+                'base_invoice' : base_invoice,
+                'qty' : qty,
+                'price' : price,
+                'amount' : amount,
+            })
+            customer += 1
 
         # setup the access nonsense again
         access_token = session.get('access_token', None)
