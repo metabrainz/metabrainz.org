@@ -12,8 +12,14 @@
 
     <h3>Ready to invoice</h3>
     <div style="background: green; width: 100%; height: 5px"></div>
-    <form action="{{ url_for("quickbooks/.index") }}" method="post">
-    {{ section(ready, 1) }}
+    <form action="{{ url_for("quickbooks/.index") }}" method="post" id="qbo-invoice-form">
+      {% if ready %}
+        <div class="btn-group" style="margin: 10px 0">
+          <button type="button" class="btn btn-default" data-qbo-set-invoices="1">Select all invoices</button>
+          <button type="button" class="btn btn-default" data-qbo-set-invoices="0">Deselect all invoices</button>
+        </div>
+      {% endif %}
+      {{ section(ready, 1) }}
       <div class="pull-right">
          <button type="submit" class="btn btn-primary btn-lg">Create invoices</button>
       </div>
@@ -31,6 +37,23 @@
   </div>
 
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script type="text/javascript">
+    document.querySelectorAll('[data-qbo-set-invoices]').forEach(function(button) {
+      button.addEventListener('click', function() {
+        var checked = button.getAttribute('data-qbo-set-invoices') === '1';
+        document
+          .querySelectorAll('#qbo-invoice-form input[type="checkbox"][name^="create_"]')
+          .forEach(function(checkbox) {
+            checkbox.checked = checked;
+          });
+      });
+    });
+  </script>
+{% endblock %}
+
 {% macro section(customers, show_check) -%}        
   {% if customers %}
     <input type="hidden" name="latest_invoice" value="{{ latest_invoice }}">
@@ -63,7 +86,23 @@
                     <td style="width: 18%">{{ invoice.service }}</td>
                     <td style="width: 8%">{{ invoice.qty }}</td>
                     <td style="width: 8%">{{ invoice.price|round }}</td>
-                    <td style="width: 12%">{{ (invoice.qty * invoice.price)|round }} {{ invoice.currency }}</td>
+                    <td style="width: 12%">
+                      {% if show_check and invoice.number == "NEW" %}
+                        <div class="form-inline">
+                          <input
+                            type="number"
+                            class="form-control input-sm"
+                            name="amount_{{ outer_loop.index0 }}"
+                            value="{{ invoice.amount }}"
+                            min="0"
+                            step="1"
+                          >
+                          {{ invoice.currency }}
+                        </div>
+                      {% else %}
+                        {{ invoice.amount|round }} {{ invoice.currency }}
+                      {% endif %}
+                    </td>
                     {% if show_check %}
                       <td style="width: 3%">
                          {% if invoice.number == "NEW" %}
