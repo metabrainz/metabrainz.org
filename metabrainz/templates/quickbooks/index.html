@@ -41,6 +41,18 @@
 {% block scripts %}
   {{ super() }}
   <script type="text/javascript">
+    function updateInvoiceAmount(input) {
+      var qty = Number(input.getAttribute('data-qbo-qty'));
+      var amount = qty * Number(input.value);
+      var amountCell = document.querySelector('[data-qbo-amount="' + input.getAttribute('data-qbo-id') + '"]');
+
+      if (!amountCell || !Number.isFinite(amount)) {
+        return;
+      }
+
+      amountCell.textContent = amount.toFixed(2);
+    }
+
     document.querySelectorAll('[data-qbo-set-invoices]').forEach(function(button) {
       button.addEventListener('click', function() {
         var checked = button.getAttribute('data-qbo-set-invoices') === '1';
@@ -50,6 +62,13 @@
             checkbox.checked = checked;
           });
       });
+    });
+
+    document.querySelectorAll('[data-qbo-price]').forEach(function(input) {
+      input.addEventListener('input', function() {
+        updateInvoiceAmount(input);
+      });
+      updateInvoiceAmount(input);
     });
   </script>
 {% endblock %}
@@ -85,20 +104,28 @@
                     <td style="width: 14%">{{ invoice.end }}</td>
                     <td style="width: 18%">{{ invoice.service }}</td>
                     <td style="width: 8%">{{ invoice.qty }}</td>
-                    <td style="width: 8%">{{ invoice.price|round }}</td>
-                    <td style="width: 12%">
+                    <td style="width: 8%">
                       {% if show_check and invoice.number == "NEW" %}
                         <div class="form-inline">
                           <input
                             type="number"
                             class="form-control input-sm"
-                            name="amount_{{ outer_loop.index0 }}"
-                            value="{{ invoice.amount }}"
+                            name="price_{{ outer_loop.index0 }}"
+                            value="{{ invoice.price }}"
                             min="0"
-                            step="1"
+                            step="0.01"
+                            data-qbo-price
+                            data-qbo-id="{{ outer_loop.index0 }}"
+                            data-qbo-qty="{{ invoice.qty }}"
                           >
-                          {{ invoice.currency }}
                         </div>
+                      {% else %}
+                        {{ invoice.price|round }}
+                      {% endif %}
+                    </td>
+                    <td style="width: 12%">
+                      {% if show_check and invoice.number == "NEW" %}
+                        <span data-qbo-amount="{{ outer_loop.index0 }}">{{ invoice.amount|round(2) }}</span> {{ invoice.currency }}
                       {% else %}
                         {{ invoice.amount|round }} {{ invoice.currency }}
                       {% endif %}
@@ -112,7 +139,6 @@
                             <input type="hidden" name="begin_{{ outer_loop.index0 }}" value="{{ invoice.begin }}">
                             <input type="hidden" name="end_{{ outer_loop.index0 }}" value="{{ invoice.end }}">
                             <input type="hidden" name="qty_{{ outer_loop.index0 }}" value="{{ invoice.qty }}">
-                            <input type="hidden" name="price_{{ outer_loop.index0 }}" value="{{ invoice.price }}">
                          {% endif %}
                       </td>
                     {% endif %}
