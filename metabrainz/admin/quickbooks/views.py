@@ -54,25 +54,19 @@ class QuickBooksView(BaseView):
 
 
     @staticmethod
-    def get_invoice_amount(qty, price, amount=None):
+    def get_invoice_line_details(qty, price):
         try:
             qty_decimal = Decimal(str(qty))
             price_decimal = Decimal(str(price))
-            default_amount = qty_decimal * price_decimal
-            amount_decimal = Decimal(str(amount)) if amount not in (None, "") else default_amount
         except InvalidOperation as err:
-            raise ValueError("Invoice amount must be numeric.") from err
+            raise ValueError("Invoice quantity and price must be numeric.") from err
 
-        if amount_decimal < 0:
-            raise ValueError("Invoice amount cannot be negative.")
-
-        line_price = str(price)
-        if qty_decimal != 0 and amount_decimal != default_amount:
-            line_price = amount_decimal / qty_decimal
+        if qty_decimal < 0 or price_decimal < 0:
+            raise ValueError("Invoice quantity and price cannot be negative.")
 
         return {
-            'amount': amount_decimal,
-            'price': line_price,
+            'amount': qty_decimal * price_decimal,
+            'price': price_decimal,
         }
 
 
@@ -106,7 +100,6 @@ class QuickBooksView(BaseView):
             line_details = QuickBooksView.get_invoice_line_details(
                 invoice['qty'],
                 invoice['price'],
-                invoice.get('amount'),
             )
             new_invoice.Line[0].SalesItemLineDetail.Qty = invoice['qty']
             new_invoice.Line[0].SalesItemLineDetail.UnitPrice = line_details['price']
@@ -372,12 +365,11 @@ class QuickBooksView(BaseView):
             base_invoice = request.form.get("base_invoice_%d" % customer)
             qty = request.form.get("qty_%d" % customer)
             price = request.form.get("price_%d" % customer)
-            amount = request.form.get("amount_%d" % customer)
 
             try:
-                amount = self.get_invoice_line_details(qty, price, amount)['amount']
+                self.get_invoice_line_details(qty, price)
             except ValueError as err:
-                flash("Invalid invoice amount for customer %s: %s" % (customer_id, err))
+                flash("Invalid invoice line details for customer %s: %s" % (customer_id, err))
                 return redirect(url_for("quickbooks/.index"))
 
             invoices.append({
@@ -387,7 +379,6 @@ class QuickBooksView(BaseView):
                 'base_invoice' : base_invoice,
                 'qty' : qty,
                 'price' : price,
-                'amount' : amount,
             })
             customer += 1
 

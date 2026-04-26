@@ -1,7 +1,6 @@
 import datetime
 import io
 import time
-from decimal import Decimal
 
 from flask import current_app
 from intuitlib.enums import Scopes
@@ -17,25 +16,22 @@ from brainzutils import cache
 from brainzutils.mail import send_mail
 
 SEND_DELAY = 5
-MAIL_BODY = """To: %s %s (%s)
+MAIL_SUBJECT = "A note from the MetaBrainz Board"
+MAIL_BODY = """Dear {supporter_name},
 
-Here is your next invoice! For information on how to pay us, please see https://metabrainz.org/payment
+It is with great sadness that we write to share that our dear friend Robert Kaye — founder and Executive Director of MetaBrainz Foundation — died suddenly on February 20th. Many of you will have heard this terrible news already; for those learning about it now, we are sorry to be the ones breaking this news.
 
-Thanks!
+Rob built his life’s work on a simple but radical idea: that the world's music data should be open, owned by the community that builds it, and be reliable and free for anyone to build on. Over two decades, he turned that idea into MusicBrainz, ListenBrainz, Picard, and the infrastructure that quietly underpins many of the world's most-used music products and services. Your support made that possible. In March, the team, the community, and Rob's family gathered in Barcelona to celebrate his life — a fitting send-off for someone whose work brought so many people together.
 
-The MetaBrainz Foundation ( accounting@metabrainz.org ) 
+The work continues. Nicolás Tamargo, who has been with the Foundation a very long time,  has stepped in as Interim Executive Director to keep things steady. Many of you will know Nicolás already — he has been Secretary to our Board for several years and a long-time contributor to the project, and we're lucky to have him at the helm right now. Alongside his work, we've opened a formal search for a permanent ED to lead the MetaBrainz Foundation through a time of real change in music, data, and AI. If someone in your world comes  to mind — with roots in open source or the music community — we'd love an introduction. Full details here: https://blog.metabrainz.org/2026/04/14/seeking-a-new-executive-director/
 
+The mission matters more than ever. As AI, rights, and data systems become ever more consolidated and opaque, the case for an independent, community-maintained source of truth only grows stronger. Meanwhile, if anything is on your mind, just reply to this email and one of us will come back to you.
 
-================================
-Invoice Summary:
+Our invoice for the coming period is attached. Your continued support keeps the team working, the volunteers supported, and the data flowing — and it is, honestly, the most meaningful way we know to honour what Rob spent his life building.
 
-Invoice number: %s
-Invoice date: %s
-Due date: %s
-Invoice amount: %s%s
-================================
-
-Please see the attached PDF file for full details."""
+With gratitude,
+The MetaBrainz Board
+Nick Ashton-Hart, Paul Bennun, Cory Doctorow, Matthew Hawn, Rassami Hök Ljungberg, Hazel Savage"""
 
 
 REMINDER_MAIL_BODY = """To: %s %s (%s)
@@ -115,24 +111,33 @@ class QuickBooksInvoiceSender():
             current_app.logger.warn(err.detail)
             return False
 
+    @staticmethod
+    def get_supporter_name(customer):
+        for field in ("DisplayName", "GivenName", "CompanyName"):
+            value = getattr(customer, field, None)
+            if value:
+                return value
+
+        full_name = " ".join(
+            part for part in (getattr(customer, "GivenName", None), getattr(customer, "FamilyName", None))
+            if part
+        )
+        if full_name:
+            return full_name
+
+        return "Supporter"
+
     def send_invoice(self, client, invoice, customer):
         """ Given a client, invoice and its customer object, send the invoice to the customer. """
 
         current_app.logger.warn("  sending invoice")
         emails = [e.strip() for e in str(invoice.BillEmail).split(",")]
         emails.append("accounting@metabrainz.org")
-        text = MAIL_BODY % (customer.GivenName,
-                            customer.FamilyName,
-                            customer.DisplayName,
-                            invoice.DocNumber,
-                            invoice.TxnDate,
-                            invoice.DueDate,
-                            "%.2f" % float(invoice.TotalAmt),
-                            invoice.CurrencyRef.value)
+        text = MAIL_BODY.format(supporter_name=self.get_supporter_name(customer))
         pdf = invoice.download_pdf(qb=client)
         pdf = io.BytesIO(pdf)
         send_mail(
-            subject="Invoice %s from The MetaBrainz Foundation" % invoice.DocNumber,
+            subject=MAIL_SUBJECT,
             text=text,
             attachments=[(pdf, 'pdf', '%s.pdf' % invoice.DocNumber)],
             recipients=emails,
