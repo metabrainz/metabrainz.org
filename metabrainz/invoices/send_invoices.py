@@ -16,8 +16,20 @@ from brainzutils import cache
 from brainzutils.mail import send_mail
 
 SEND_DELAY = 5
-MAIL_SUBJECT = "A note from the MetaBrainz Board"
+MAIL_SUBJECT = "Invoice {invoice_number} and a note from the MetaBrainz Board"
+INVOICE_SUMMARY = """================================
+Invoice Summary:
+
+Invoice number: {invoice_number}
+Invoice date: {invoice_date}
+Due date: {due_date}
+Invoice amount: {invoice_amount} {currency}
+================================"""
 MAIL_BODY = """Dear {supporter_name},
+
+{invoice_summary}
+
+A note from the MetaBrainz Board
 
 It is with great sadness that we write to share that our dear friend Robert Kaye — founder and Executive Director of MetaBrainz Foundation — died suddenly on February 20th. Many of you will have heard this terrible news already; for those learning about it now, we are sorry to be the ones breaking this news.
 
@@ -127,17 +139,38 @@ class QuickBooksInvoiceSender():
 
         return "Supporter"
 
+    @staticmethod
+    def format_invoice_summary(invoice):
+        return INVOICE_SUMMARY.format(
+            invoice_number=invoice.DocNumber,
+            invoice_date=invoice.TxnDate,
+            due_date=invoice.DueDate,
+            invoice_amount="%.2f" % float(invoice.TotalAmt),
+            currency=invoice.CurrencyRef.value,
+        )
+
+    @classmethod
+    def format_invoice_mail_body(cls, invoice, customer):
+        return MAIL_BODY.format(
+            supporter_name=cls.get_supporter_name(customer),
+            invoice_summary=cls.format_invoice_summary(invoice),
+        )
+
+    @staticmethod
+    def format_invoice_mail_subject(invoice, subject_template=MAIL_SUBJECT):
+        return subject_template.format(invoice_number=invoice.DocNumber)
+
     def send_invoice(self, client, invoice, customer):
         """ Given a client, invoice and its customer object, send the invoice to the customer. """
 
         current_app.logger.warn("  sending invoice")
         emails = [e.strip() for e in str(invoice.BillEmail).split(",")]
         emails.append("accounting@metabrainz.org")
-        text = MAIL_BODY.format(supporter_name=self.get_supporter_name(customer))
+        text = self.format_invoice_mail_body(invoice, customer)
         pdf = invoice.download_pdf(qb=client)
         pdf = io.BytesIO(pdf)
         send_mail(
-            subject=MAIL_SUBJECT,
+            subject=self.format_invoice_mail_subject(invoice),
             text=text,
             attachments=[(pdf, 'pdf', '%s.pdf' % invoice.DocNumber)],
             recipients=emails,
