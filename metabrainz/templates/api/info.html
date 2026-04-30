@@ -18,7 +18,7 @@
     <h3>{{ _('Hourly Replication Packets') }}</h3>
     <p>
       <code>
-        GET {{ url_for('api_musicbrainz.replication_hourly',
+        GET {{ url_for('api_musicbrainz.replication_hourly_v2',
                        _external=True, _scheme=config.PREFERRED_URL_SCHEME,
                        packet_number=42, token="TOKEN")
                   | replace("42", "<PACKET_NUMBER>")
