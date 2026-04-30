@@ -99,7 +99,7 @@ The first time you set up the application, the database needs to be initialized:
 
     $ ./develop.sh manage init-db --create-db
 
-The web server should now be accessible at **http://localhost:80/**.
+The web server should now be accessible at **http://localhost:8000/**.
 
 
 ### Building style sheets
