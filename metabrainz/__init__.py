@@ -82,6 +82,8 @@ def create_app(debug=None, config_path=None):
     # Static files
     from metabrainz import static_manager
     static_manager.read_manifest(app)
+    if is_dev_environment:
+        app.before_request(lambda: static_manager.read_manifest(app))
     app.static_folder = app.config["STATIC_RESOURCES_DIR"]
     app.context_processor(lambda: dict(
         get_static_path=static_manager.get_static_path,
