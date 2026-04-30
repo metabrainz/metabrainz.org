@@ -11,7 +11,7 @@ from flask import render_template, current_app
 
 from oauth.authorization_server import authorization_server
 
-# Check to see if we're running under a docker deployment. If so, don"t second guess
+# Check to see if we're running under a prod deployment. If so, don"t second guess
 # the config file setup and just wait for the correct configuration to be generated.
 deploy_env = os.environ.get("DEPLOY_ENV", "")
 
@@ -24,6 +24,8 @@ def create_app(debug=None, config_path=None):
         use_flask_uuid=True,
         static_folder=None,
     )
+
+    is_dev_environment = not deploy_env or deploy_env == "dev"
 
     # Static files
     from oauth import static_manager
@@ -40,17 +42,16 @@ def create_app(debug=None, config_path=None):
     if config_path:
         print("loading %s" % config_path)
         app.config.from_pyfile(config_path)
-    else:
-        if not deploy_env:
-            print("loading %s" % os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "config.py"))
-            app.config.from_pyfile(os.path.join(
-                os.path.dirname(os.path.realpath(__file__)),
-                "..", "config.py"
-            ))
+    elif is_dev_environment:
+        print("loading %s" % os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "config.py"))
+        app.config.from_pyfile(os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            "..", "config.py"
+        ))
 
-    # Load configuration files: If we're running under a docker deployment, wait until
+    # Load configuration files: If we're running under a prod deployment, wait until
     # the consul configuration is available.
-    if deploy_env:
+    if not is_dev_environment:
         consul_config = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "consul_config.py")
 
         print("loading consul %s" % consul_config)
