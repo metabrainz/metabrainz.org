@@ -10,7 +10,7 @@
     </div>
   {% endif %}
 
-  {% if supporter.org_name or supporter.tier %}
+  {% if supporter and (supporter.org_name or supporter.tier) %}
   <div class="panel panel-info">
     <div class="panel-body">
       {% if supporter.org_name %}
