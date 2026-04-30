@@ -8,15 +8,14 @@ class PaymentsViewsTestCase(FlaskTestCase):
     def test_donate(self):
         self.assert200(self.client.get(url_for('payments.donate')))
 
-    def test_payment_selector_requires_login(self):
-        resp = self.client.get(url_for('payments.payment_selector'))
-        self.assertIn(resp.status_code, (301, 302))
-        self.assertIn('/login', resp.location)
+    def test_payment_selector_is_public(self):
+        self.assert200(self.client.get(url_for('payments.payment_selector')))
 
-    def test_payment_requires_login(self):
+    def test_payment_is_public(self):
         resp = self.client.get(url_for('payments.payment', currency='usd'))
-        self.assertIn(resp.status_code, (301, 302))
-        self.assertIn('/login', resp.location)
+        self.assert200(resp)
+        self.assertNotIn(b'Organization:', resp.data)
+        self.assertNotIn(b'Supporter level:', resp.data)
 
     def _create_supporter(self, **kwargs):
         defaults = dict(
@@ -36,9 +35,12 @@ class PaymentsViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for('payments.payment_selector')))
 
     def test_payment_logged_in(self):
-        supporter = self._create_supporter()
+        supporter = self._create_supporter(org_name='Test Org')
         self.temporary_login(supporter.id)
-        self.assert200(self.client.get(url_for('payments.payment', currency='usd')))
+        resp = self.client.get(url_for('payments.payment', currency='usd'))
+        self.assert200(resp)
+        self.assertIn(b'Organization:', resp.data)
+        self.assertIn(b'Test Org', resp.data)
         self.assert200(self.client.get(url_for('payments.payment', currency='eur')))
 
     def test_cancel_recurring(self):
