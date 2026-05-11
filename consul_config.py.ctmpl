@@ -92,6 +92,10 @@ SERVER_BASE_URL = f"{PREFERRED_URL_SCHEME}://{MAIL_FROM_DOMAIN}"
 {{with index (service "pgbouncer-slave") 0}}
 MB_DATABASE_URI = "postgresql://musicbrainz_ro@{{.Address}}:{{.Port}}/musicbrainz_db"
 {{end}}
+{{else if service "pgbouncer-master"}}
+{{with index (service "pgbouncer-master") 0}}
+MB_DATABASE_URI = "postgresql://musicbrainz_ro@{{.Address}}:{{.Port}}/musicbrainz_db"
+{{end}}
 {{else}}
 MB_DATABASE_URI = ""
 {{end}}
