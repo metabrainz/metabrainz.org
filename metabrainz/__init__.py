@@ -20,10 +20,17 @@ deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
+# Service types control which set of blueprints (and admin views) a process serves.
+# This lets us run the website and the OAuth2 provider as separate, independently
+# scalable containers that never serve each other's URLs.
+SERVICE_ALL = "all"      # everything (used by tests, celery, manage.py and local dev)
+SERVICE_WEB = "web"      # the website: everything except the OAuth2 endpoints
+SERVICE_OAUTH = "oauth"  # the OAuth2 provider: only the OAuth2 endpoints
+
 bcrypt = Bcrypt()
 
 
-def create_app(debug=None, config_path=None):
+def create_app(debug=None, config_path=None, service=SERVICE_ALL):
     app = CustomFlask(import_name=__name__)
 
     # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
@@ -141,8 +148,27 @@ def create_app(debug=None, config_path=None):
     init_celery(app)
 
     # Blueprints
-    _register_blueprints(app)
+    _register_blueprints(app, service)
 
+    # The OAuth2 provider serves only the OAuth2 endpoints, so it skips the admin interface entirely.
+    if service != SERVICE_OAUTH:
+        _register_admin(app)
+
+    return app
+
+
+def create_web_app():
+    """ uWSGI entrypoint for the website service (everything except OAuth2). """
+    return create_app(service=SERVICE_WEB)
+
+
+def create_oauth_app():
+    """ uWSGI entrypoint for the OAuth2 provider service (only OAuth2 endpoints). """
+    return create_app(service=SERVICE_OAUTH)
+
+
+def _register_admin(app):
+    from metabrainz import model
     from metabrainz.admin.views import SupporterManagementHomeView, UserManagementHomeView, MainAdminHomeView
 
     main_admin = Admin(
@@ -228,8 +254,6 @@ def create_app(debug=None, config_path=None):
         )
     )
 
-    return app
-
 
 def add_robots(app):
     @app.route('/robots.txt')
@@ -237,7 +261,21 @@ def add_robots(app):
         return send_from_directory(app.static_folder, request.path[1:])
 
 
-def _register_blueprints(app):
+def _register_blueprints(app, service):
+    """ Register blueprints depending on the service this process is running as.
+
+    The OAuth2 provider (``SERVICE_OAUTH``) serves only the OAuth2 endpoints, the website
+    (``SERVICE_WEB``) serves everything except the OAuth2 endpoints, and ``SERVICE_ALL``
+    serves both (used by tests, celery, manage.py and local development).
+    """
+    if service in (SERVICE_ALL, SERVICE_WEB):
+        _register_web_blueprints(app)
+
+    if service in (SERVICE_ALL, SERVICE_OAUTH):
+        _register_oauth_blueprints(app)
+
+
+def _register_web_blueprints(app):
     from metabrainz.index.views import index_bp
     from metabrainz.reports.financial_reports.views import financial_reports_bp
     from metabrainz.reports.annual_reports.views import annual_reports_bp
@@ -260,13 +298,19 @@ def _register_blueprints(app):
     app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
 
     #############
-    # OAuth / API
+    # API
     #############
 
     from metabrainz.api.views.index import api_index_bp
     app.register_blueprint(api_index_bp, url_prefix='/api')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')
+
+
+def _register_oauth_blueprints(app):
+    #############
+    # OAuth2
+    #############
 
     from metabrainz.oauth.views import oauth2_bp, wellknown_bp
     app.register_blueprint(oauth2_bp, url_prefix="/oauth2")

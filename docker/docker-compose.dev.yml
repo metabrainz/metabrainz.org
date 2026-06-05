@@ -11,7 +11,7 @@ services:
       target: metabrainz-dev
     command: flask run --debug -h 0.0.0.0 -p 8000
     environment:
-      FLASK_APP: "metabrainz:create_app()"
+      FLASK_APP: "metabrainz:create_web_app()"
       DEPLOY_ENV: dev
     volumes:
       - ../data/replication_packets:/data/replication_packets
@@ -25,6 +25,25 @@ services:
       - "8000"
     ports:
       - "8000:8000"
+
+  oauth:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: flask run --debug -h 0.0.0.0 -p 8100
+    environment:
+      FLASK_APP: "metabrainz:create_oauth_app()"
+    volumes:
+      - ..:/code/metabrainz
+      - ../frontend:/static
+    depends_on:
+      - meb_db
+      - redis
+    expose:
+      - "8100"
+    ports:
+      - "8100:8100"
 
   meb_db:
     image: postgres:16.11
