@@ -84,7 +84,7 @@ services:
       context: ..
       dockerfile: Dockerfile
       target: metabrainz-dev
-    command: celery -A celery_worker:celery worker --loglevel=info --queues=webhooks_maintenance --hostname=maintenance-worker@%h
+    command: celery -A celery_worker:celery worker --loglevel=info --concurrency=1 --queues=webhooks_maintenance --hostname=maintenance-worker@%h
     depends_on:
       - redis
       - meb_db
