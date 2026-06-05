@@ -139,6 +139,8 @@ class WebhookIntegrationTestCase(FlaskTestCase):
         self.assertIn("old", delivery.payload)
         self.assertIn("new", delivery.payload)
         self.assertEqual(delivery.payload["new"]["email"], "verify@example.com")
+        user = User.get(name="verifyuser")
+        self.assertEqual(delivery.payload["updated_at"], user.email_confirmed_at.isoformat())
 
         self.assertEqual(len(mock_requests.request_history), 1)
         self.assertEqual(delivery.status, "delivered")
@@ -450,6 +452,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "csrf_token": g.csrf_token
         })
         self.assertEqual(response.status_code, 302)
+        db.session.refresh(user)
 
         deliveries = WebhookDelivery.query.filter_by(
             webhook_id=webhook.id,
@@ -545,6 +548,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
         self.assertEqual(delivery.payload["user_id"], user_id)
         self.assertEqual(delivery.payload["old"]["email"], "old@example.com")
         self.assertEqual(delivery.payload["new"]["email"], "new@example.com")
+        self.assertEqual(delivery.payload["updated_at"], user.email_confirmed_at.isoformat())
 
         self.assertEqual(len(mock_requests.request_history), 1)
         self.assertEqual(delivery.status, "delivered")
@@ -596,6 +600,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             follow_redirects=False
         )
         self.assertEqual(response.status_code, 302)
+        db.session.refresh(regular_user)
 
         deliveries = WebhookDelivery.query.filter_by(
             webhook_id=webhook.id,
@@ -608,6 +613,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
         self.assertEqual(delivery.payload["user_id"], user_id)
         self.assertIsNone(delivery.payload["old"]["email"])
         self.assertEqual(delivery.payload["new"]["email"], "unverified@example.com")
+        self.assertEqual(delivery.payload["updated_at"], regular_user.email_confirmed_at.isoformat())
 
         self.assertEqual(len(mock_requests.request_history), 1)
         request = mock_requests.last_request
@@ -649,6 +655,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
         )
         db.session.commit()
         user_id = regular_user.id
+        old_last_updated = regular_user.last_updated
 
         response = self.client.get(url_for("users-admin.details_view", id=user_id))
         self.assertEqual(response.status_code, 200)
@@ -664,6 +671,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             follow_redirects=False
         )
         self.assertEqual(response.status_code, 302)
+        db.session.refresh(regular_user)
 
         deliveries = WebhookDelivery.query.filter_by(
             webhook_id=webhook.id,
@@ -676,6 +684,8 @@ class WebhookIntegrationTestCase(FlaskTestCase):
         self.assertEqual(delivery.payload["user_id"], user_id)
         self.assertEqual(delivery.payload["old"]["name"], "oldusername")
         self.assertEqual(delivery.payload["new"]["name"], "newusername")
+        self.assertGreater(regular_user.last_updated, old_last_updated)
+        self.assertEqual(delivery.payload["updated_at"], regular_user.last_updated.isoformat())
 
         self.assertEqual(len(mock_requests.request_history), 1)
         request = mock_requests.last_request

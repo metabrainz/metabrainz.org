@@ -1,4 +1,5 @@
 from decimal import Decimal
+from datetime import datetime, timezone
 from flask import Response, request, redirect, url_for, current_app
 from flask_admin import expose
 from flask_login import current_user
@@ -193,19 +194,34 @@ class SupportersView(AdminBaseView):
 
             supporter.user.name = new_name
             supporter.user.email = new_email
+
+            email_changed = old_email != new_email
+            username_changed = old_name != new_name
+
+            updated_at = datetime.now(timezone.utc)
+            if email_changed or username_changed:
+                supporter.user.last_updated = updated_at
+            if email_changed and new_email:
+                supporter.user.email_confirmed_at = updated_at
             supporter.update(**update_data)
 
             # Emit user.updated event if username or email changed
-            if old_name != new_name or old_email != new_email:
+            if email_changed or username_changed:
                 old_data = {}
                 new_data = {}
-                if old_name != new_name:
+                if username_changed:
                     old_data["name"] = old_name
                     new_data["name"] = new_name
-                if old_email != new_email:
+                if email_changed:
                     old_data["email"] = old_email
                     new_data["email"] = new_email
-                supporter.user.emit_event(EVENT_USER_UPDATED, old=old_data, new=new_data)
+
+                supporter.user.emit_event(
+                    EVENT_USER_UPDATED,
+                    old=old_data,
+                    new=new_data,
+                    updated_at=updated_at.isoformat(),
+                )
 
             return redirect(url_for('.details', supporter_id=supporter.id))
 
@@ -588,7 +604,8 @@ class UserModelView(AdminModelView):
             user.emit_event(
                 EVENT_USER_UPDATED,
                 old={"email": old_email},
-                new={"email": new_email}
+                new={"email": new_email},
+                updated_at=user.email_confirmed_at.isoformat(),
             )
 
             flash.success(f'Email for {user.name} has been manually verified.')
@@ -630,6 +647,7 @@ class UserModelView(AdminModelView):
         try:
             old_username = user.name
             user.name = new_username
+            user.last_updated = datetime.now(timezone.utc)
 
             log_message = f"Username changed from '{old_username}' to '{new_username}'."
             user.moderate(current_user, "edit_username", log_message)
@@ -641,6 +659,7 @@ class UserModelView(AdminModelView):
                 EVENT_USER_UPDATED,
                 old={"name": old_username},
                 new={"name": new_username},
+                updated_at=user.last_updated.isoformat(),
             )
             flash.success("Username updated successfully.")
         except Exception as e:
