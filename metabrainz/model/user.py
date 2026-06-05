@@ -1,4 +1,5 @@
 from typing import Any
+from datetime import datetime, timezone
 from uuid import uuid4
 from flask_login import UserMixin
 from sqlalchemy import Column, Integer, Identity, Text, DateTime, func, Boolean
@@ -124,9 +125,11 @@ class User(db.Model, UserMixin):
                 raise ValueError("No email address to verify")
 
         # Move unconfirmed email to confirmed email
+        verified_at = datetime.now(timezone.utc)
         self.email = self.unconfirmed_email
         self.unconfirmed_email = None
-        self.email_confirmed_at = func.now()
+        self.email_confirmed_at = verified_at
+        self.last_updated = verified_at
 
         self.moderate(moderator, "verify_email", reason)
 

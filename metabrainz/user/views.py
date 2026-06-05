@@ -141,12 +141,14 @@ def verify_email():
         user.email = user.unconfirmed_email
         user.unconfirmed_email = None
         user.email_confirmed_at = datetime.now(tz=timezone.utc)
+        user.last_updated = user.email_confirmed_at
         db.session.commit()
 
         user.emit_event(
             EVENT_USER_UPDATED,
             old={"email": old_email},
             new={"email": user.email},
+            updated_at=user.email_confirmed_at.isoformat(),
         )
 
         flash.success("Email verified!")
