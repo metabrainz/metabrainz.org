@@ -167,8 +167,6 @@ class User(db.Model, UserMixin):
         }
         if event == EVENT_USER_CREATED:
             payload["name"] = self.name
-            payload["email"] = self.email
-            payload["is_email_confirmed"] = self.is_email_confirmed()
-            payload["created_at"] = self.member_since.isoformat()
+            payload["member_since"] = self.member_since.isoformat()
         payload.update(extras)
         Webhook.create_delivery_for_event(event, payload)

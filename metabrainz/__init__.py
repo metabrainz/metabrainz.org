@@ -22,10 +22,13 @@ CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
 # Service types control which set of blueprints (and admin views) a process serves.
 # This lets us run the website and the OAuth2 provider as separate, independently
-# scalable containers that never serve each other's URLs.
+# scalable containers. The website container omits the OAuth2 endpoints. The OAuth2
+# container registers everything (the consent page renders the shared chrome and the
+# login redirect both need url_for() to resolve the website's endpoints); the gateway
+# is responsible for routing only OAuth2 traffic to it.
 SERVICE_ALL = "all"      # everything (used by tests, celery, manage.py and local dev)
 SERVICE_WEB = "web"      # the website: everything except the OAuth2 endpoints
-SERVICE_OAUTH = "oauth"  # the OAuth2 provider: only the OAuth2 endpoints
+SERVICE_OAUTH = "oauth"  # the OAuth2 provider: the full app, gated to OAuth2 traffic by the gateway
 
 bcrypt = Bcrypt()
 
@@ -150,9 +153,7 @@ def create_app(debug=None, config_path=None, service=SERVICE_ALL):
     # Blueprints
     _register_blueprints(app, service)
 
-    # The OAuth2 provider serves only the OAuth2 endpoints, so it skips the admin interface entirely.
-    if service != SERVICE_OAUTH:
-        _register_admin(app)
+    _register_admin(app)
 
     return app
 
@@ -264,12 +265,14 @@ def add_robots(app):
 def _register_blueprints(app, service):
     """ Register blueprints depending on the service this process is running as.
 
-    The OAuth2 provider (``SERVICE_OAUTH``) serves only the OAuth2 endpoints, the website
-    (``SERVICE_WEB``) serves everything except the OAuth2 endpoints, and ``SERVICE_ALL``
-    serves both (used by tests, celery, manage.py and local development).
+    Every service registers the website blueprints so that url_for() can resolve the
+    shared chrome (navbar, login redirect, error pages) in every process. The website
+    (``SERVICE_WEB``) stops there. The OAuth2 provider (``SERVICE_OAUTH``) and the
+    all-in-one app (``SERVICE_ALL``, used by tests, celery, manage.py and local dev)
+    additionally register the OAuth2 endpoints; for ``SERVICE_OAUTH`` the gateway is
+    responsible for routing only OAuth2 traffic to the process.
     """
-    if service in (SERVICE_ALL, SERVICE_WEB):
-        _register_web_blueprints(app)
+    _register_web_blueprints(app)
 
     if service in (SERVICE_ALL, SERVICE_OAUTH):
         _register_oauth_blueprints(app)
