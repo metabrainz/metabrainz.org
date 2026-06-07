@@ -70,6 +70,20 @@
               </ul>
             </li>
           {% endif %}
+          <li class="dropdown language-selector">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="{{ _('Language') }}">
+              <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+              <span class="sr-only">{{ _('Language') }}</span>
+              {{ current_locale|upper }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              {% for language in supported_languages %}
+                <li{% if language.code == current_locale %} class="active"{% endif %}>
+                  <a href="{{ get_language_url(language.code) }}">{{ language.name }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
         </ul>
       {%- endif -%}
     </div>

@@ -89,10 +89,11 @@ def init_db(force=False, create_db=False):
 def extract_strings():
     """Extract all strings into messages.pot.
     This command should be run after any translatable strings are updated.
-    Otherwise updates are not going to be available on Transifex.
+    Otherwise updates are not going to be available on Weblate.
     """
-    _run_command("pybabel extract -F metabrainz/babel.cfg "
-                 "-o metabrainz/messages.pot metabrainz/")
+    _run_command("pybabel extract -F metabrainz/babel.cfg -k t "
+                 "-o metabrainz/messages.pot "
+                 "metabrainz/ frontend/js/src/")
     click.echo("Strings have been successfully extracted into messages.pot file.")
 
 

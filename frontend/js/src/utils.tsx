@@ -1,3 +1,5 @@
+import { initI18n } from "./i18n";
+
 const getPageProps = (): {
   domContainer: HTMLElement;
   reactProps: Record<string, any>;
@@ -26,6 +28,8 @@ const getPageProps = (): {
   if (propsElement?.innerHTML) {
     reactProps = JSON.parse(propsElement!.innerHTML);
   }
+
+  initI18n(globalProps);
 
   return {
     domContainer,

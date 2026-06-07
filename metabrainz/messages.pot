@@ -1,12 +1,12 @@
-# Translations template for PROJECT.
-# Copyright (C) 2025 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# Translations template for metabrainz.org.
+# Copyright (C) 2026 MetaBrainz Foundation
+# This file is distributed under the same license as the metabrainz.org project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
+"Project-Id-Version: metabrainz.org\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-09-17 13:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -2934,3 +2934,62 @@ msgstr ""
 msgid "Supporters on this tier"
 msgstr ""
 
+#: frontend/js/src/Applications.tsx
+msgid "Your applications"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Create new application"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "No applications found"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Name"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Website"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Client ID"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Client secret"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Actions"
+msgstr ""
+
+#: frontend/js/src/ApplicationRow.tsx
+msgid "Modify"
+msgstr ""
+
+#: frontend/js/src/ApplicationRow.tsx
+msgid "Delete"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Authorized applications"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "No tokens found"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Access"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx
+msgid "Revoke access"
+msgstr ""
+
+#: metabrainz/templates/navbar.html
+msgid "Language"
+msgstr ""
