@@ -6,6 +6,8 @@ import string
 
 from flask import request
 
+from metabrainz.i18n import get_locale
+
 
 def reformat_datetime(value, format='%x %X %Z'):
     return value.strftime(format)
@@ -50,4 +52,4 @@ def get_int_query_param(key: str, default: int):
 
 
 def get_global_props():
-    return json.dumps({})
+    return json.dumps({"locale": get_locale()})

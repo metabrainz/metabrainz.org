@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type Application = {
   name: string;
@@ -12,6 +13,7 @@ type ApplicationRowProps = {
 };
 
 function ApplicationRow({ application }: ApplicationRowProps): React.JSX.Element {
+  const { t } = useTranslation();
   const { name, website, client_id, client_secret } = application;
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const glyphIcon = passwordVisible
@@ -49,13 +51,13 @@ function ApplicationRow({ application }: ApplicationRowProps): React.JSX.Element
           className="btn btn-block btn-warning btn-xs"
           href={`/profile/applications/edit/${client_id}`}
         >
-          Modify
+          {t("Modify")}
         </a>
         <a
           className="btn btn-block btn-danger btn-xs"
           href={`/profile/applications/delete/${client_id}`}
         >
-          Delete
+          {t("Delete")}
         </a>
       </td>
     </tr>
