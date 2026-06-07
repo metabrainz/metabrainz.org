@@ -12,6 +12,7 @@ from flask_uploads import configure_uploads
 from jinja2 import FileSystemLoader
 
 from metabrainz.admin import AdminModelView
+from metabrainz.i18n import get_locale_context, i18n_bp
 from metabrainz.utils import get_global_props
 
 # Check to see if we're running under a prod deployment. If so, don't second guess
@@ -101,6 +102,7 @@ def create_app(debug=None, config_path=None, service=SERVICE_ALL):
         get_static_path=static_manager.get_static_path,
         global_props=get_global_props()
     ))
+    app.context_processor(get_locale_context)
 
     # Database
     from metabrainz import db
@@ -288,6 +290,7 @@ def _register_web_blueprints(app):
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
 
+    app.register_blueprint(i18n_bp)
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
