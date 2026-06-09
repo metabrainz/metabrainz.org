@@ -5,6 +5,7 @@ from wtforms.fields import EmailField, URLField, DecimalField
 from wtforms.validators import DataRequired, Length
 from metabrainz.model import supporter
 from metabrainz.db import tier as db_tier
+from metabrainz.user.username import validate_username
 from flask_uploads import UploadSet, IMAGES
 
 import os.path
@@ -28,7 +29,7 @@ LOGO_UPLOAD_SET = UploadSet(
 
 class SupporterEditForm(FlaskForm):
     # General info
-    username = StringField("Username")
+    username = StringField("Username", validators=[validate_username])
     email = EmailField("Email")
 
     contact_name = StringField("Name")
@@ -87,7 +88,8 @@ class EditUsernameForm(FlaskForm):
         "New Username",
         validators=[
             DataRequired(message="Username cannot be empty"),
-            Length(min=1, max=255, message="Username must be between 1 and 255 characters")
+            Length(min=1, max=255, message="Username must be between 1 and 255 characters"),
+            validate_username,
         ]
     )
 

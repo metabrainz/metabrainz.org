@@ -6,6 +6,7 @@ from wtforms.validators import DataRequired, EqualTo, Length
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.index.forms import MeBFlaskForm
 from metabrainz.mtcaptcha import MTCaptchaField, validate_mtcaptcha
+from metabrainz.user.username import validate_username
 
 
 def validate_email_domain(form, field):
@@ -16,7 +17,10 @@ def validate_email_domain(form, field):
 
 class UserSignupForm(MeBFlaskForm):
     """ Sign up form for new users. """
-    username = StringField(gettext("Username"), validators=[DataRequired(gettext("Username is required!"))])
+    username = StringField(gettext("Username"), validators=[
+        DataRequired(gettext("Username is required!")),
+        validate_username,
+    ])
     email = EmailField(validators=[
         DataRequired(gettext("Email address is required!")),
         validate_email_domain
