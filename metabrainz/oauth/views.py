@@ -118,7 +118,8 @@ def user_info():
 
     return {
         "sub": user.name,
-        "metabrainz_user_id": user.id
+        "metabrainz_user_id": user.id,
+        "member_since": user.member_since.isoformat() if user.member_since else None,
     }
 
 

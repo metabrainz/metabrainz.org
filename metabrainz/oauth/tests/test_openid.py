@@ -48,6 +48,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         data = response.json
         self.assertEqual(data["sub"], self.user2.name)
         self.assertEqual(data["metabrainz_user_id"], self.user2.id)
+        self.assertEqual(data["member_since"], self.user2.member_since.isoformat())
         self.assert_security_headers(response)
 
     def test_openid_userinfo_endpoint_missing_token(self):
@@ -194,6 +195,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
             data = response.json
             self.assertEqual(data["sub"], self.user2.name)
             self.assertEqual(data["metabrainz_user_id"], self.user2.id)
+            self.assertEqual(data["member_since"], self.user2.member_since.isoformat())
             self.assert_security_headers(response)
         else:
             self.assertEqual(response.status_code, 405)
