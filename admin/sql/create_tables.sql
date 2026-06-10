@@ -50,10 +50,13 @@ CREATE TABLE dataset (
 CREATE TABLE supporter (
   id               SERIAL            NOT NULL, -- PK
   is_commercial    BOOLEAN           NOT NULL,
+  musicbrainz_id   CHARACTER VARYING UNIQUE,
+  musicbrainz_row_id INTEGER UNIQUE,
   user_id          INTEGER UNIQUE,
   created          TIMESTAMP WITH TIME ZONE,
   state            state_types       NOT NULL,
   contact_name     CHARACTER VARYING NOT NULL,
+  contact_email    CHARACTER VARYING,
   data_usage_desc  TEXT,
   org_name         CHARACTER VARYING,
   logo_filename    CHARACTER VARYING,
