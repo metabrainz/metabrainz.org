@@ -4,6 +4,7 @@ module.exports = {
   plugins: ["stylelint-prettier"],
   rules: {
     "prettier/prettier": true,
+    "at-rule-no-unknown": null,
     "no-descending-specificity": null,
     "function-calc-no-unspaced-operator": null,
   },
