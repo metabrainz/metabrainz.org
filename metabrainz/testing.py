@@ -84,12 +84,17 @@ class FlaskTestCase(unittest.TestCase):
 
     def init_db(self):
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_tables.sql'))
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'create_tables.sql'))
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_primary_keys.sql'))
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'create_primary_keys.sql'))
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_foreign_keys.sql'))
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'create_foreign_keys.sql'))
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_indexes.sql'))
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'create_indexes.sql'))
 
     def drop_tables(self):
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'drop_tables.sql'))
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'drop_tables.sql'))
 
     def assertMessageFlashed(self, message, category='message'):
         """
