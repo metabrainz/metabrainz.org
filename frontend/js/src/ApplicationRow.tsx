@@ -11,7 +11,7 @@ type ApplicationRowProps = {
   application: Application;
 };
 
-function ApplicationRow({ application }: ApplicationRowProps): JSX.Element {
+function ApplicationRow({ application }: ApplicationRowProps): React.JSX.Element {
   const { name, website, client_id, client_secret } = application;
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const glyphIcon = passwordVisible

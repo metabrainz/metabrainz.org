@@ -1,6 +1,6 @@
-ARG PYTHON_BASE_IMAGE_VERSION=3.11-20231006
-ARG NODE_VERSION=24-alpine
-FROM metabrainz/python:$PYTHON_BASE_IMAGE_VERSION AS metabrainz-base
+ARG PYTHON_BASE_IMAGE_VERSION=3.13-20260216
+ARG NODE_VERSION=26-alpine
+FROM metabrainz/python:$PYTHON_BASE_IMAGE_VERSION AS metabrainz-python-base
 
 ARG PYTHON_BASE_IMAGE_VERSION
 
@@ -11,23 +11,9 @@ LABEL org.label-schema.vcs-url="https://github.com/metabrainz/metabrainz.org.git
       org.label-schema.name="MetaBrainz" \
       org.metabrainz.based-on-image="metabrainz/python:$PYTHON_BASE_IMAGE_VERSION"
 
-ENV DOCKERIZE_VERSION v0.6.1
+ENV DOCKERIZE_VERSION=v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-
-# Python dependencies
-RUN apt-get update \
-     && apt-get install -y --no-install-recommends \
-                        build-essential \
-                        git \
-                        libpq-dev \
-                        libtiff5-dev \
-                        libffi-dev \
-                        libxml2-dev \
-                        libxslt1-dev \
-                        libssl-dev \
-                        wget \
-     && rm -rf /var/lib/apt/lists/*
 
 # While WORKDIR will create a directory if it doesn't already exist, we do it explicitly here
 # so that we know what user it is created as: https://github.com/moby/moby/issues/36677
@@ -35,9 +21,24 @@ RUN mkdir -p /code/metabrainz /static
 
 WORKDIR /code/metabrainz
 
+RUN pip3 install --no-cache-dir pip==26.1.2
+
+FROM metabrainz-python-base AS metabrainz-python-deps
+
+RUN apt-get update \
+     && apt-get install -y --no-install-recommends \
+                        git \
+     && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt /code/metabrainz
-RUN pip3 install pip==21.0.1
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip wheel --no-cache-dir --wheel-dir /tmp/python-wheels -r requirements.txt
+
+FROM metabrainz-python-base AS metabrainz-base
+
+COPY requirements.txt /code/metabrainz
+COPY --from=metabrainz-python-deps /tmp/python-wheels /tmp/python-wheels
+RUN pip install --no-cache-dir --no-deps /tmp/python-wheels/*.whl \
+     && rm -rf /tmp/python-wheels
 
 ############################################
 # NOTE: The development image starts here. #
@@ -81,9 +82,20 @@ RUN npm run build:prod
 ###########################################
 # NOTE: The production image starts here. #
 ###########################################
+FROM metabrainz-python-base AS metabrainz-uwsgi-deps
+
+RUN apt-get update \
+     && apt-get install -y --no-install-recommends \
+                        build-essential \
+     && rm -rf /var/lib/apt/lists/*
+
+RUN pip wheel --no-cache-dir --wheel-dir /tmp/uwsgi-wheels uWSGI==2.0.31
+
 FROM metabrainz-base AS metabrainz-prod
 
-RUN pip install --no-cache-dir uWSGI==2.0.23
+COPY --from=metabrainz-uwsgi-deps /tmp/uwsgi-wheels /tmp/uwsgi-wheels
+RUN pip install --no-cache-dir /tmp/uwsgi-wheels/*.whl \
+     && rm -rf /tmp/uwsgi-wheels
 
 COPY ./docker/web/consul-template-web.conf /etc/
 COPY ./docker/web/web.service /etc/service/web/run
@@ -130,4 +142,4 @@ RUN rm -f /code/metabrainz/metabrainz/config.py /code/metabrainz/metabrainz/conf
 
 ARG GIT_COMMIT_SHA
 LABEL org.label-schema.vcs-ref=$GIT_COMMIT_SHA
-ENV GIT_SHA ${GIT_COMMIT_SHA}
+ENV GIT_SHA=${GIT_COMMIT_SHA}

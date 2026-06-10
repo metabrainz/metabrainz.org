@@ -6,7 +6,7 @@ type ProfileTabsProps = {
 
 export default function ProfileTabs({
   activeTab,
-}: ProfileTabsProps): JSX.Element {
+}: ProfileTabsProps): React.JSX.Element {
   const isActive = (tab: ProfileTabsProps["activeTab"]) => activeTab === tab;
   return (
     <ul className="nav nav-tabs">

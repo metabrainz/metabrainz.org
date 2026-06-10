@@ -1,11 +1,12 @@
 @min-height: 230px;
-@animation-speed : 0.45s;
+@animation-speed: 0.45s;
 
 .metaCarousel {
   &:not(.iHaveJavasript) {
     .carousel-control,
     .item:not(.active) {
-      &, & * {
+      &,
+      & * {
         display: none;
         height: 0;
       }
@@ -85,7 +86,8 @@
   }
   .carousel-control {
     background: none;
-    &, & > * {
+    &,
+    & > * {
       color: @asphalt;
     }
     @media (max-width: @screen-md) {
@@ -105,5 +107,4 @@
       margin-top: 160px;
     }
   }
-
 }
