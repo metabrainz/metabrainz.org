@@ -26,9 +26,8 @@ CREATE TABLE oauth.client (
         website TEXT,
         redirect_uris TEXT[] NOT NULL,
         client_id_issued_at TIMESTAMP WITH TIME ZONE NOT NULL,
-        PRIMARY KEY (id)
--- no FK for now as user data lives in MB db
---         FOREIGN KEY(owner_id) REFERENCES "user" (id) ON DELETE CASCADE
+        PRIMARY KEY (id),
+        FOREIGN KEY(owner_id) REFERENCES "user" (id) ON DELETE CASCADE
 );
 
 CREATE TABLE oauth.code (
@@ -44,8 +43,7 @@ CREATE TABLE oauth.code (
         revoked BOOLEAN,
         nonce TEXT,
         PRIMARY KEY (id),
--- no FK for now as user data lives in MB db
---         FOREIGN KEY(user_id) REFERENCES "user" (id) ON DELETE CASCADE,
+        FOREIGN KEY(user_id) REFERENCES "user" (id) ON DELETE CASCADE,
         FOREIGN KEY(client_id) REFERENCES oauth.client (id) ON DELETE CASCADE,
         UNIQUE (code)
 );
@@ -60,8 +58,7 @@ CREATE TABLE oauth.access_token (
         expires_in INTEGER,
         revoked BOOLEAN,
         PRIMARY KEY (id),
--- no FK for now as user data lives in MB db
---         FOREIGN KEY(user_id) REFERENCES "user" (id) ON DELETE CASCADE,
+        FOREIGN KEY(user_id) REFERENCES "user" (id) ON DELETE CASCADE,
         FOREIGN KEY (client_id) REFERENCES oauth.client (id) ON DELETE CASCADE,
         FOREIGN KEY (authorization_code_id) REFERENCES oauth.code (id) ON DELETE CASCADE,
         UNIQUE (access_token)
@@ -77,8 +74,7 @@ CREATE TABLE oauth.refresh_token (
         expires_in INTEGER,
         revoked BOOLEAN,
         PRIMARY KEY (id),
--- no FK for now as user data lives in MB db
---         FOREIGN KEY(user_id) REFERENCES "user" (id) ON DELETE CASCADE,
+        FOREIGN KEY(user_id) REFERENCES "user" (id) ON DELETE CASCADE,
         FOREIGN KEY (client_id) REFERENCES oauth.client (id) ON DELETE CASCADE,
         FOREIGN KEY (authorization_code_id) REFERENCES oauth.code (id) ON DELETE CASCADE,
         UNIQUE (refresh_token)

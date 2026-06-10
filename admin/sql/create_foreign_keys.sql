@@ -44,6 +44,11 @@ ALTER TABLE payment
   REFERENCES supporter (id) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE SET NULL;
 
+ALTER TABLE payment
+  ADD CONSTRAINT payment_editor_id_fkey FOREIGN KEY (editor_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE SET NULL;
+
 ALTER TABLE moderation_log
   ADD CONSTRAINT moderation_log_user_id_fkey FOREIGN KEY (user_id)
   REFERENCES "user" (id) MATCH SIMPLE
