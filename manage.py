@@ -13,6 +13,7 @@ from metabrainz.invoices.send_invoices import QuickBooksInvoiceSender
 from metabrainz.webhooks.cli import webhooks
 
 from metabrainz.supporter.copy_mb_row_ids import copy_row_ids
+from metabrainz.user.migrate_mb_users import migrate_mb_users, DEFAULT_BATCH_SIZE
 
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'admin', 'sql')
 
@@ -129,6 +130,15 @@ def import_musicbrainz_row_ids():
     """ Import musicbrainz row ids for users """
     with create_app().app_context():
         copy_row_ids()
+
+
+@cli.command()
+@click.option("--batch-size", "-b", default=DEFAULT_BATCH_SIZE, show_default=True,
+              help="Number of editors to migrate per batch.")
+def migrate_musicbrainz_users(batch_size):
+    """ Migrate users from the MusicBrainz editor table into the MetaBrainz user table. """
+    with create_app().app_context():
+        migrate_mb_users(batch_size=batch_size)
 
 
 def _run_psql(script, uri, database=None):
