@@ -72,11 +72,14 @@ def init_db(force=False, create_db=False):
 
     click.echo('Creating primary and foreign keys... ', nl=False)
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_primary_keys.sql'))
+    db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'create_primary_keys.sql'))
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_foreign_keys.sql'))
+    db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'create_foreign_keys.sql'))
     click.echo('Done.')
 
     click.echo('Creating indexes... ', nl=False)
     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_indexes.sql'))
+    db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'oauth', 'create_indexes.sql'))
     click.echo('Done.')
 
     click.echo("Database has been initialized successfully!")
