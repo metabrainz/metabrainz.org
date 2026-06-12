@@ -715,46 +715,35 @@ msgstr ""
 #: metabrainz/templates/index/about.html:53
 #, fuzzy, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
-"Director <a href=\"%(paul_url)s\">Paul Bennun</a> of <a href=\"%"
-"(somethin_else_url)s\">Somethin' Else</a>"
+msgstr "Director <a href=\"%(paul_url)s\">Paul Bennun</a> de fuchsia, LLC"
 
 #: metabrainz/templates/index/about.html:54
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
-msgstr ""
-"Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a href=\"%"
-"(audio_net_url)s\">Audio Network</a>"
+msgstr "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> de <a href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:55
 #, fuzzy, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
-msgstr ""
-"Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</"
-"a> of the <a href=\"%(m4p5_url)s\">Music 4.5 seminar series</a> put on by <a "
-"href=\"%(two_pears_url)s\">2 Pears</a>"
+msgstr "Director y tesorero <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a> de <a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, fuzzy, python-format
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
-msgstr ""
-"Executive Director <a href=\"%(mayhem_url)s\">Robert Kaye</a> of the "
-"MetaBrainz Foundation"
+msgstr "Director ejecutivo interino <a href=\"%(reo_url)s\">Nicolás Tamargo</a> de la Fundación MetaBrainz"
 
 #: metabrainz/templates/index/about.html:57
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
-msgstr ""
-"Director <a href=\"%(paul_url)s\">Paul Bennun</a> of <a href=\"%"
-"(somethin_else_url)s\">Somethin' Else</a>"
+msgstr "Directora <a href=\"%(hazel_url)s\">Hazel Savage</a> de <a href=\"%(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
@@ -787,7 +776,7 @@ msgstr ""
 #: metabrainz/templates/index/about.html:70
 #, fuzzy, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "Treasurer <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+msgstr "Tesorero Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"

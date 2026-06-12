@@ -700,44 +700,35 @@ msgstr ""
 #: metabrainz/templates/index/about.html:53
 #, fuzzy, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
-"<a href=\"%(paul_url)s\">Paul Bennun</a>董事，<a href=\"%(somethin_else_url)"
-"s\">Somethin’ Else</a>"
+msgstr "<a href=\"%(paul_url)s\">Paul Bennun</a>董事，fuchsia, LLC"
 
 #: metabrainz/templates/index/about.html:54
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
-msgstr ""
-"<a href=\"%(matthew_url)s\">Matthew Hawn</a>董事，<a href=\"%(audio_net_url)"
-"s\">Audio Network</a>"
+msgstr "<a href=\"%(matthew_url)s\">Matthew Hawn</a>董事，<a href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:55
 #, fuzzy, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
-msgstr ""
-"<a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>董事及財務主管，曾負"
-"責<a href=\"%(two_pears_url)s\">2 Pears</a>的<a href=\"%(m4p5_url)s\">Music "
-"4.5 講座系列</a>"
+msgstr "<a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>董事及財務主管，<a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, fuzzy, python-format
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
-msgstr "<a href=\"%(mayhem_url)s\">Robert Kaye</a>執行董事，MetaBrainz基金會"
+msgstr "<a href=\"%(reo_url)s\">Nicolás Tamargo</a>臨時執行董事，MetaBrainz基金會"
 
 #: metabrainz/templates/index/about.html:57
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
-msgstr ""
-"<a href=\"%(paul_url)s\">Paul Bennun</a>董事，<a href=\"%(somethin_else_url)"
-"s\">Somethin’ Else</a>"
+msgstr "<a href=\"%(hazel_url)s\">Hazel Savage</a>董事，<a href=\"%(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
@@ -770,7 +761,7 @@ msgstr ""
 #: metabrainz/templates/index/about.html:70
 #, fuzzy, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "<a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>財務主管"
+msgstr "Rassami Hok Ljungberg財務主管"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"

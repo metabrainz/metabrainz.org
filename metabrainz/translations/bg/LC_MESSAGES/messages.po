@@ -690,46 +690,35 @@ msgstr ""
 #: metabrainz/templates/index/about.html:53
 #, fuzzy, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
-"Директор <a href=\"%(paul_url)s\">Пол Бенън</a> на <a href=\"%"
-"(somethin_else_url)s\">Нещо друго</a>"
+msgstr "Директор <a href=\"%(paul_url)s\">Пол Бенън</a> на fuchsia, LLC"
 
 #: metabrainz/templates/index/about.html:54
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
-msgstr ""
-"Директор <a href=\"%(matthew_url)s\">Матю Хоун</a> на <a href=\"%"
-"(audio_net_url)s\">Аудио Мрежа</a>"
+msgstr "Директор <a href=\"%(matthew_url)s\">Матю Хоун</a> на <a href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:55
 #, fuzzy, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
-msgstr ""
-"Директор &amp; касиер <a href=\"%(rassami_url)s\">Расами Хок Люнберг</a> на "
-"<a href=\"%(m4p5_url)s\">Семинарна серия Музика 4.5</a> сложена от <a "
-"href=\"%(two_pears_url)s\">2 круши</a>"
+msgstr "Директор &amp; касиер <a href=\"%(rassami_url)s\">Расами Хок Люнберг</a> на <a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, fuzzy, python-format
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
-msgstr ""
-"Изпълнителен директор <a href=\"%(mayhem_url)s\">Робърт Кей</a> на "
-"фондацията MetaBrainz"
+msgstr "Временен изпълнителен директор <a href=\"%(reo_url)s\">Nicolás Tamargo</a> на фондацията MetaBrainz"
 
 #: metabrainz/templates/index/about.html:57
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
-msgstr ""
-"Директор <a href=\"%(paul_url)s\">Пол Бенън</a> на <a href=\"%"
-"(somethin_else_url)s\">Нещо друго</a>"
+msgstr "Директор <a href=\"%(hazel_url)s\">Hazel Savage</a> на <a href=\"%(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
@@ -762,7 +751,7 @@ msgstr ""
 #: metabrainz/templates/index/about.html:70
 #, fuzzy, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "Касиер <a href=\"%(rassami_url)s\">Расами Хок Люнгберг</a>"
+msgstr "Касиер Расами Хок Люнгберг"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"

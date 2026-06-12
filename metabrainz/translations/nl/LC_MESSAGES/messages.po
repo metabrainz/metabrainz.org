@@ -715,46 +715,35 @@ msgstr ""
 #: metabrainz/templates/index/about.html:53
 #, fuzzy, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
-"Directeur <a href=\"%(paul_url)s\">Paul Bennun</a> van <a href=\"%"
-"(somethin_else_url)s\">Somethin’ Else</a>"
+msgstr "Directeur <a href=\"%(paul_url)s\">Paul Bennun</a> van fuchsia, LLC"
 
 #: metabrainz/templates/index/about.html:54
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
-msgstr ""
-"Directeur <a href=\"%(matthew_url)s\">Matthew Hawn</a> van <a href=\"%"
-"(audio_net_url)s\">Audio Network</a>"
+msgstr "Directeur <a href=\"%(matthew_url)s\">Matthew Hawn</a> van <a href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:55
 #, fuzzy, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
-msgstr ""
-"Directeur en penningmeester <a href=\"%(rassami_url)s\">Rassami Hok "
-"Ljungberg</a> van de <a href=\"%(m4p5_url)s\">Music 4.5 seminarserie</a>, "
-"opgezet door <a href=\"%(two_pears_url)s\">2 Pears</a>"
+msgstr "Directeur en penningmeester <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a> van <a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, fuzzy, python-format
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
-msgstr ""
-"Uitvoerend directeur <a href=\"%(mayhem_url)s\">Robert Kaye</a> van de "
-"MetaBrainz Foundation"
+msgstr "Interim uitvoerend directeur <a href=\"%(reo_url)s\">Nicolás Tamargo</a> van de MetaBrainz Foundation"
 
 #: metabrainz/templates/index/about.html:57
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
-msgstr ""
-"Directeur <a href=\"%(paul_url)s\">Paul Bennun</a> van <a href=\"%"
-"(somethin_else_url)s\">Somethin’ Else</a>"
+msgstr "Directeur <a href=\"%(hazel_url)s\">Hazel Savage</a> van <a href=\"%(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
@@ -787,7 +776,7 @@ msgstr ""
 #: metabrainz/templates/index/about.html:70
 #, fuzzy, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "Penningmeester <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+msgstr "Penningmeester Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"

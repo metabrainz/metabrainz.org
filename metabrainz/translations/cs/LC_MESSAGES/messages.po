@@ -697,25 +697,21 @@ msgstr ""
 #: metabrainz/templates/index/about.html:53
 #, fuzzy, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
-"Ředitel<a href=\"%(paul_url)s\">Paul Bennun</a> či <a href=\"%"
-"(somethin_else_url)s\">Něco jiného</a>"
+msgstr "Ředitel <a href=\"%(paul_url)s\">Paul Bennun</a> ze společnosti fuchsia, LLC"
 
 #: metabrainz/templates/index/about.html:54
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
-msgstr ""
-"Ředitel<a href=\"%(paul_url)s\">Paul Bennun</a> či <a href=\"%"
-"(somethin_else_url)s\">Něco jiného</a>"
+msgstr "Ředitel <a href=\"%(matthew_url)s\">Matthew Hawn</a> ze společnosti <a href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:55
 #, fuzzy, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
-msgstr "Pokladník <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+msgstr "Ředitel a pokladník <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a> ze společnosti <a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, python-format
@@ -729,9 +725,7 @@ msgstr ""
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
-msgstr ""
-"Ředitel<a href=\"%(paul_url)s\">Paul Bennun</a> či <a href=\"%"
-"(somethin_else_url)s\">Něco jiného</a>"
+msgstr "Ředitelka <a href=\"%(hazel_url)s\">Hazel Savage</a> ze společnosti <a href=\"%(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
@@ -764,7 +758,7 @@ msgstr ""
 #: metabrainz/templates/index/about.html:70
 #, fuzzy, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "Pokladník <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+msgstr "Pokladník Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"

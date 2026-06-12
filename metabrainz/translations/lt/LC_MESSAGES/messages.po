@@ -711,46 +711,35 @@ msgstr ""
 #: metabrainz/templates/index/about.html:53
 #, fuzzy, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
-"direktorius <a href=\"%(paul_url)s\">Paul Bennun</a> iš „<a href=\"%"
-"(somethin_else_url)s\">Somethin’ Else</a>“;"
+msgstr "direktorius <a href=\"%(paul_url)s\">Paul Bennun</a> iš „fuchsia, LLC“"
 
 #: metabrainz/templates/index/about.html:54
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
-msgstr ""
-"Direktorius <a href=\"%(matthew_url)s\">Matėjus Honas</a> iš <a href=\"%"
-"(audio_net_url)s\">Garso tinklo</a>"
+msgstr "Direktorius <a href=\"%(matthew_url)s\">Matthew Hawn</a> iš <a href=\"%(compass_url)s\">„Compass, Map & Key“</a>"
 
 #: metabrainz/templates/index/about.html:55
 #, fuzzy, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
-msgstr ""
-"Direktorius &amp; iždininkas <a href=\"%(rassami_url)s\">Rassamis Hokas "
-"Ljungbergas</a> iš <a href=\"%(m4p5_url)s\">„Music 4.5“ seminarų serijos</a> "
-", kurią rengia <a href=\"%(two_pears_url)s\">„2 Pears“</a>"
+msgstr "Direktorius &amp; iždininkas <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a> iš <a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, fuzzy, python-format
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
-msgstr ""
-"Vykdomasis direktorius <a href=\"%(mayhem_url)s\">Roberas Kėjus</a> , „"
-"MetaBrainz“ fondo"
+msgstr "Laikinasis vykdomasis direktorius <a href=\"%(reo_url)s\">Nicolás Tamargo</a> iš „MetaBrainz“ fondo"
 
 #: metabrainz/templates/index/about.html:57
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
-msgstr ""
-"direktorius <a href=\"%(paul_url)s\">Paul Bennun</a> iš „<a href=\"%"
-"(somethin_else_url)s\">Somethin’ Else</a>“;"
+msgstr "direktorė <a href=\"%(hazel_url)s\">Hazel Savage</a> iš <a href=\"%(leeds_url)s\">„Leeds Angels“</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
@@ -783,7 +772,7 @@ msgstr ""
 #: metabrainz/templates/index/about.html:70
 #, fuzzy, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "Iždininkas <a href=\"%(rassami_url)s\">Rassamis Hokas Ljungbergas</a>"
+msgstr "Iždininkė Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"
