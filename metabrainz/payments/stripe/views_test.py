@@ -2,7 +2,9 @@ from unittest.mock import patch, MagicMock
 
 from flask import url_for
 
+from metabrainz.model import db
 from metabrainz.model.supporter import Supporter
+from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
 
 
@@ -15,16 +17,21 @@ class StripePayViewTestCase(FlaskTestCase):
         return app
 
     def _create_supporter(self, **kwargs):
+        user = User.add(
+            name='test_user',
+            unconfirmed_email='test@example.org',
+            password='testing',
+        )
         defaults = dict(
             is_commercial=True,
-            musicbrainz_id='test_user',
-            musicbrainz_row_id=1,
             contact_name='Test User',
-            contact_email='test@example.org',
             data_usage_desc='Testing',
+            user=user,
         )
         defaults.update(kwargs)
-        return Supporter.add(**defaults)
+        supporter = Supporter.add(**defaults)
+        db.session.flush()
+        return supporter
 
     @patch("stripe.checkout.Session")
     def test_one_time_payment_with_invoice_number(self, mock_session):
@@ -89,7 +96,7 @@ class StripePayViewTestCase(FlaskTestCase):
     @patch("stripe.checkout.Session")
     def test_one_time_payment_includes_supporter_id(self, mock_session):
         supporter = self._create_supporter()
-        self.temporary_login(supporter.id)
+        self.temporary_login(supporter.user)
         self.client.post(
             url_for("payments_stripe.pay", donation=False),
             data={
@@ -106,7 +113,7 @@ class StripePayViewTestCase(FlaskTestCase):
     @patch("stripe.checkout.Session")
     def test_recurring_payment_includes_supporter_id(self, mock_session):
         supporter = self._create_supporter()
-        self.temporary_login(supporter.id)
+        self.temporary_login(supporter.user)
         self.client.post(
             url_for("payments_stripe.pay", donation=False),
             data={
@@ -123,7 +130,7 @@ class StripePayViewTestCase(FlaskTestCase):
     @patch("stripe.checkout.Session")
     def test_donation_does_not_include_supporter_id(self, mock_session):
         supporter = self._create_supporter()
-        self.temporary_login(supporter.id)
+        self.temporary_login(supporter.user)
         self.client.post(
             url_for("payments_stripe.pay", donation=True),
             data={
