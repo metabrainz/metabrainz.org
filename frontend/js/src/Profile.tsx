@@ -1,6 +1,5 @@
 import React, { JSX, useCallback, useState } from "react";
-import { createRoot } from "react-dom/client";
-import { getPageProps } from "./utils";
+import { getPageProps, renderRoot } from "./utils";
 import ProfileTabs from "./ProfileTabs";
 
 type ProfileProps = {
@@ -592,6 +591,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
   const { user, csrf_token } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(<Profile user={user} csrf_token={csrf_token} />);
+  renderRoot(
+    domContainer!,
+    <Profile user={user} csrf_token={csrf_token} />);
 });

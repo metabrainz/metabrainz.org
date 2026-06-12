@@ -1,6 +1,5 @@
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
-import { getPageProps } from "./utils";
+import { getPageProps, renderRoot } from "./utils";
 
 type OAuthErrorProps = {
   error: {
@@ -25,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
   const { error } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(<OAuthError error={error} />);
+  renderRoot(
+    domContainer!,
+    <OAuthError error={error} />);
 });
