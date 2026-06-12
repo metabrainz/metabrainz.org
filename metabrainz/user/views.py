@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
 from flask_login import logout_user, login_required, login_user, current_user
 from flask_wtf.csrf import generate_csrf
-from sqlalchemy.exc import IntegrityError
 
 from metabrainz import bcrypt, flash
 from metabrainz.index.forms import MeBFlaskForm
@@ -136,25 +135,25 @@ def verify_email():
         flash.error("Unable to verify email.")
         return redirect(url_for("index.home"))
 
-    try:
-        old_email = user.email
-        user.email = user.unconfirmed_email
-        user.unconfirmed_email = None
-        user.email_confirmed_at = datetime.now(tz=timezone.utc)
-        user.last_updated = user.email_confirmed_at
-        db.session.commit()
-
-        user.emit_event(
-            EVENT_USER_UPDATED,
-            old={"email": old_email},
-            new={"email": user.email},
-            updated_at=user.email_confirmed_at.isoformat(),
-        )
-
-        flash.success("Email verified!")
-    except IntegrityError:
+    if User.confirmed_email_exists(user.unconfirmed_email, exclude_user_id=user.id):
         flash.error(f"The email is already associated with an another account.")
-        db.session.rollback()
+        return redirect(url_for("index.home"))
+
+    old_email = user.email
+    user.email = user.unconfirmed_email
+    user.unconfirmed_email = None
+    user.email_confirmed_at = datetime.now(tz=timezone.utc)
+    user.last_updated = user.email_confirmed_at
+    db.session.commit()
+
+    user.emit_event(
+        EVENT_USER_UPDATED,
+        old={"email": old_email},
+        new={"email": user.email},
+        updated_at=user.email_confirmed_at.isoformat(),
+    )
+
+    flash.success("Email verified!")
 
     return redirect(url_for("index.home"))
 

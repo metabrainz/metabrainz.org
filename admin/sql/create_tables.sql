@@ -5,7 +5,7 @@ CREATE TABLE "user" (
     login_id                UUID NOT NULL,
     name                    TEXT NOT NULL,
     password                TEXT NOT NULL,
-    email                   TEXT UNIQUE,
+    email                   TEXT,
     unconfirmed_email       TEXT,
     email_confirmed_at      TIMESTAMP WITH TIME ZONE,
     member_since            TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),

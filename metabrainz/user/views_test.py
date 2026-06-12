@@ -384,6 +384,8 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(response.status_code, 302)
         user2 = User.get(name="test_user_2")
         self.assertIsNone(user2.email)
+        self.assertEqual(user2.unconfirmed_email, "test@example.com")
+        self.assertMessageFlashed("The email is already associated with an another account.", "error")
 
     def test_resend_verification_email(self):
         self.create_user()

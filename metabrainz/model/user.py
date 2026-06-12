@@ -25,7 +25,7 @@ class User(db.Model, UserMixin):
     name = Column(Text, unique=True, nullable=False)
     password = Column(Text, nullable=False)  # TODO: add a constraint to ensure password is cleared when deleted field is set
 
-    email = Column(Text, unique=True)
+    email = Column(Text)
     unconfirmed_email = Column(Text)
     email_confirmed_at = Column(DateTime(timezone=True))
 
@@ -55,6 +55,13 @@ class User(db.Model, UserMixin):
     def is_email_confirmed(self):
         return self.email is not None
 
+    @classmethod
+    def confirmed_email_exists(cls, email, exclude_user_id=None):
+        query = cls.query.filter_by(email=email)
+        if exclude_user_id is not None:
+            query = query.filter(cls.id != exclude_user_id)
+        return query.first() is not None
+
     def is_active(self):
         return not self.is_blocked
 
@@ -68,7 +75,9 @@ class User(db.Model, UserMixin):
 
         password = kwargs.pop("password")
         password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
-        unconfirmed_email = kwargs.pop("unconfirmed_email")
+        unconfirmed_email = kwargs.pop("unconfirmed_email", None)
+        if not unconfirmed_email or not unconfirmed_email.strip():
+            raise ValueError("Email address is required.")
 
         new_user = cls(name=name, password=password_hash, unconfirmed_email=unconfirmed_email)
         if kwargs:
@@ -123,6 +132,8 @@ class User(db.Model, UserMixin):
                 raise ValueError("User's email is already verified")
             else:
                 raise ValueError("No email address to verify")
+        if self.confirmed_email_exists(self.unconfirmed_email, exclude_user_id=self.id):
+            raise ValueError("The email is already associated with an another account.")
 
         # Move unconfirmed email to confirmed email
         verified_at = datetime.now(timezone.utc)

@@ -30,7 +30,7 @@ LOGO_UPLOAD_SET = UploadSet(
 class SupporterEditForm(FlaskForm):
     # General info
     username = StringField("Username", validators=[validate_username])
-    email = EmailField("Email")
+    email = EmailField("Email", validators=[DataRequired(message="Email cannot be empty")])
 
     contact_name = StringField("Name")
 
