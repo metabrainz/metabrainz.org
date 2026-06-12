@@ -1,6 +1,5 @@
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
-import { getPageProps } from "../utils";
+import { getPageProps, renderRoot } from "../utils";
 import { OAuthScopeDesc } from "./utils";
 
 type OAuthPromptProps = {
@@ -68,8 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const { csrf_token, scopes, client_name, cancel_url, submission_url } =
     reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <OAuthPrompt
       scopes={scopes}
       csrf_token={csrf_token}

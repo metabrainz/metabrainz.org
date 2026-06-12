@@ -1,8 +1,7 @@
 import { Field, getIn, FieldArray, Formik } from "formik";
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
-import { getPageProps } from "../utils";
+import { getPageProps, renderRoot } from "../utils";
 import { OAuthTextInput } from "./utils";
 
 type CreateApplicationProps = {
@@ -195,8 +194,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const { csrf_token, is_edit_mode, initial_form_data, initial_errors } =
     reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <CreateApplication
       csrf_token={csrf_token}
       is_edit_mode={is_edit_mode}

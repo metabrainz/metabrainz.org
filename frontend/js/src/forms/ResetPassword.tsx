@@ -1,8 +1,7 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
-import { getPageProps } from "../utils";
+import { getPageProps, renderRoot } from "../utils";
 import {
   AuthCardContainer,
   AuthCardPasswordInput,
@@ -97,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
   const { csrf_token, initial_errors } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <ResetPassword csrf_token={csrf_token} initial_errors={initial_errors} />
   );
 });

@@ -19,7 +19,7 @@ function ApplicationRow({ application }: ApplicationRowProps): React.JSX.Element
   const glyphIcon = passwordVisible
     ? "glyphicon-eye-close"
     : "glyphicon-eye-open";
-  const title = passwordVisible ? "Hide password" : "Show password";
+  const title = passwordVisible ? t("Hide password") : t("Show password");
   const passwordShowButton = (
     <button
       className="btn btn-info btn-xs pull-right"

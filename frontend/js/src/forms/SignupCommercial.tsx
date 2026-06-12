@@ -1,9 +1,8 @@
 import { Formik, useField, FieldConfig } from "formik";
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
-import { getPageProps } from "../utils";
+import { getPageProps, renderRoot } from "../utils";
 import {
   AuthCardContainer,
   AuthCardPasswordInput,
@@ -551,8 +550,8 @@ document.addEventListener("DOMContentLoaded", () => {
     existing_user,
   } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <SignupCommercial
       tier={tier}
       user={user}

@@ -1,9 +1,8 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
-import { getPageProps } from "../utils";
+import { getPageProps, renderRoot } from "../utils";
 import {
   AuthCardContainer,
   AuthCardPasswordInput,
@@ -187,8 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const { mtcaptcha_site_key, csrf_token, initial_form_data, initial_errors } =
     reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <SignupUser
       mtcaptcha_site_key={mtcaptcha_site_key}
       csrf_token={csrf_token}
