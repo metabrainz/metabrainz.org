@@ -18,18 +18,18 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2024-05-05 20:42+0000\n"
-"Last-Translator: wileyfoxyx "
-"<wileyfoxyx@users.noreply.translations.metabrainz.org>\n"
+"PO-Revision-Date: 2026-06-12 00:55+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Russian <https://translations.metabrainz.org/projects/"
+"metabrainz/website/ru/>\n"
 "Language: ru\n"
-"Language-Team: Russian "
-"<https://translations.metabrainz.org/projects/metabrainz/website/ru/>\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) "
-"|| (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 2026.6.1\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: metabrainz/index/forms.py:45
@@ -188,8 +188,7 @@ msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
 msgstr ""
-"К сожалению, мы обнаружили ошибку и не можем обработать ваше "
-"пожертвование."
+"К сожалению, мы обнаружили ошибку и не можем обработать ваше пожертвование."
 
 #: metabrainz/payments/views.py:208
 msgid ""
@@ -214,8 +213,7 @@ msgstr ""
 #: metabrainz/supporter/forms.py:17
 msgid "Please, tell us how you (will) use our data."
 msgstr ""
-"Расскажите, пожалуйста, как вы используете (будете использовать) наши "
-"данные."
+"Расскажите, пожалуйста, как вы используете (будете использовать) наши данные."
 
 #: metabrainz/supporter/forms.py:18
 #, fuzzy
@@ -549,8 +547,8 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
-"Всем конечным точкам требуется токен доступа, который вы можете получить "
-"со своей\n"
+"Всем конечным точкам требуется токен доступа, который вы можете получить со "
+"своей\n"
 "<a href=\"%(profile_url)s\">страницы профиля</a>."
 
 #: metabrainz/templates/api/info.html:15
@@ -580,8 +578,7 @@ msgstr ""
 #, fuzzy
 msgid "You can find the latest replication packet number from this endpoint:"
 msgstr ""
-"Вы можете найти последние номера пакетов копирования с этой конечной "
-"точки:"
+"Вы можете найти последние номера пакетов копирования с этой конечной точки:"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
@@ -731,8 +728,8 @@ msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
 msgstr ""
-"Секретарь <a href=\"%(freso_url)s\">Фредерик “Freso” С. Олесен</a>, "
-"менеджер Фонда MetaBrainz по работе с сообществом"
+"Секретарь <a href=\"%(freso_url)s\">Фредерик “Freso” С. Олесен</a>, менеджер "
+"Фонда MetaBrainz по работе с сообществом"
 
 #: metabrainz/templates/index/about.html:57
 #, python-format
@@ -1005,8 +1002,8 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
-"Пожалуйста, задавайте свои вопросы на наших <a "
-"href=\"%(forums_url)s\">форумах</a>! Мы будем рады \n"
+"Пожалуйста, задавайте свои вопросы на наших <a href=\"%(forums_url)s\">"
+"форумах</a>! Мы будем рады \n"
 " ответить на любые ваши вопросы."
 
 #: metabrainz/templates/index/contact.html:92
@@ -1111,8 +1108,8 @@ msgid ""
 "Sign up to use the <a href=\"%(account_type_url)s\">Live Data "
 "Feed</a></em>"
 msgstr ""
-"Зарегистрируйтесь перед тем, как использовать <a "
-"href=\"%(account_type_url)s\"> Ленту прямых трансляций </a> </em>"
+"Зарегистрируйтесь перед тем, как использовать <a href=\"%(account_type_url)"
+"s\"> Ленту прямых трансляций </a> </em>"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
@@ -4161,4 +4158,3 @@ msgstr "Разрешить доступ"
 
 #~ msgid "Login failed!"
 #~ msgstr "Ошибка входа!"
-
