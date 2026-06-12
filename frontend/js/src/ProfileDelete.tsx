@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { createRoot } from "react-dom/client";
-import { getPageProps } from "./utils";
+import { getPageProps, renderRoot } from "./utils";
 
 type ProfileDeleteProps = {
   csrf_token: string;
@@ -108,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
   const { csrf_token, username } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(<ProfileDelete csrf_token={csrf_token} username={username} />);
+  renderRoot(
+    domContainer!,
+    <ProfileDelete csrf_token={csrf_token} username={username} />);
 });
