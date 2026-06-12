@@ -738,7 +738,7 @@ msgstr ""
 #: metabrainz/templates/index/about.html:70
 #, fuzzy, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "כספים, <a href=\"%(rassami_url)s\">ראסאמי לייכנברג</a>"
+msgstr "כספים, ראסאמי לייכנברג"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"

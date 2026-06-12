@@ -728,8 +728,6 @@ msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
 msgstr ""
-"Секретарь <a href=\"%(freso_url)s\">Фредерик “Freso” С. Олесен</a>, менеджер "
-"Фонда MetaBrainz по работе с сообществом"
 
 #: metabrainz/templates/index/about.html:57
 #, python-format

@@ -681,9 +681,7 @@ msgstr ""
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
-msgstr ""
-"Diretor Emeritus <a href=\"%(joi_url)s\">Joichi Ito</a> de <a href=\"%"
-"(neoteny_url)s\">Neoteny Co. Ltd.</a>"
+msgstr "Diretor <a href=\"%(matthew_url)s\">Matthew Hawn</a> de <a href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:55
 #, fuzzy, python-format
@@ -704,9 +702,7 @@ msgstr ""
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
-msgstr ""
-"Diretor Emeritus <a href=\"%(joi_url)s\">Joichi Ito</a> de <a href=\"%"
-"(neoteny_url)s\">Neoteny Co. Ltd.</a>"
+msgstr "Diretora <a href=\"%(hazel_url)s\">Hazel Savage</a> de <a href=\"%(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
@@ -739,7 +735,7 @@ msgstr ""
 #: metabrainz/templates/index/about.html:70
 #, fuzzy, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "Tesoureiro <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+msgstr "Tesoureiro Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"
