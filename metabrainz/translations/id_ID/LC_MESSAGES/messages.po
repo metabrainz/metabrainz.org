@@ -5,21 +5,21 @@
 # Translators:
 # koukei, 2022
 # Transifex Bot <>, 2023
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2017-01-19 20:40+0000\n"
-"Last-Translator: Transifex Bot <>, 2023\n"
+"PO-Revision-Date: 2026-06-12 00:53+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Indonesian <https://translations.metabrainz.org/projects/"
+"metabrainz/website/id/>\n"
 "Language: id_ID\n"
-"Language-Team: Indonesian (Indonesia) "
-"(https://app.transifex.com/musicbrainz/teams/13846/id_ID/)\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2026.6.1\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: metabrainz/index/forms.py:45
@@ -149,25 +149,25 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
-"Terima kasih telah memberikan donasi ke MetaBrainz Foundation. Dukungan "
-"Anda sangat dihargai! Mungkin perlu beberapa saat sebelum donasi Anda "
-"muncul dalam daftar karena penundaan pemrosesan."
+"Terima kasih telah memberikan donasi ke MetaBrainz Foundation. Dukungan Anda "
+"sangat dihargai! Mungkin perlu beberapa saat sebelum donasi Anda muncul "
+"dalam daftar karena penundaan pemrosesan."
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
-"Terima kasih telah melakukan pembayaran ke MetaBrainz Foundation. "
-"Dukungan Anda sangat dihargai!"
+"Terima kasih telah melakukan pembayaran ke MetaBrainz Foundation. Dukungan "
+"Anda sangat dihargai!"
 
 #: metabrainz/payments/views.py:182
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
 msgstr ""
-"Kami menyesal melihat Anda tidak akan menyumbang hari ini. Kami harap "
-"Anda akan berubah pikiran!"
+"Kami menyesal melihat Anda tidak akan menyumbang hari ini. Kami harap Anda "
+"akan berubah pikiran!"
 
 #: metabrainz/payments/views.py:188
 msgid ""
@@ -182,8 +182,8 @@ msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
 msgstr ""
-"Maaf, tampaknya kami mengalami kesalahan dan tidak dapat memproses donasi"
-" Anda."
+"Maaf, tampaknya kami mengalami kesalahan dan tidak dapat memproses donasi "
+"Anda."
 
 #: metabrainz/payments/views.py:208
 msgid ""
@@ -566,14 +566,15 @@ msgid ""
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"Dimungkinkan untuk mendapatkan tanda tangan untuk setiap paket replikasi."
-" Ganti saja\n"
+"Dimungkinkan untuk mendapatkan tanda tangan untuk setiap paket replikasi. "
+"Ganti saja\n"
 "      <code>.tar.bz2</code> dengan <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 #, fuzzy
 msgid "You can find the latest replication packet number from this endpoint:"
-msgstr "Anda dapat menemukan nomor paket replikasi terbaru dari titik akhir ini:"
+msgstr ""
+"Anda dapat menemukan nomor paket replikasi terbaru dari titik akhir ini:"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
@@ -606,8 +607,8 @@ msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"Dimungkinkan untuk mendapatkan tanda tangan untuk setiap paket replikasi."
-" Ganti saja\n"
+"Dimungkinkan untuk mendapatkan tanda tangan untuk setiap paket replikasi. "
+"Ganti saja\n"
 "      <code>.tar.bz2</code> dengan <code>.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
@@ -950,7 +951,8 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:60
 msgid "We are not distributing any of the music listed in MusicBrainz."
-msgstr "Kami tidak mendistribusikan musik apa pun yang terdaftar di MusicBrainz."
+msgstr ""
+"Kami tidak mendistribusikan musik apa pun yang terdaftar di MusicBrainz."
 
 #: metabrainz/templates/index/contact.html:61
 msgid ""
@@ -984,7 +986,8 @@ msgstr "Saya setuju dengan aturan di atas, tunjukkan alamat emailnya"
 
 #: metabrainz/templates/index/contact.html:78
 msgid "You can reach the MetaBrainz staff directly at the following address:"
-msgstr "Anda dapat menghubungi staf MetaBrainz secara langsung di alamat berikut:"
+msgstr ""
+"Anda dapat menghubungi staf MetaBrainz secara langsung di alamat berikut:"
 
 #: metabrainz/templates/index/contact.html:84
 msgid "Forums"
@@ -1087,19 +1090,18 @@ msgid ""
 "data gathering process so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
-"Yayasan MetaBrainz telah dibentuk untuk membangun komunitas yang "
-"dipelihara        \n"
+"Yayasan MetaBrainz telah dibentuk untuk membangun komunitas yang dipelihara"
+"        \n"
 "database dan membuatnya tersedia di domain publik atau di bawah Creative"
 "        \n"
-"Lisensi Commons. Data kami sebagian besar dikumpulkan oleh sukarelawan, "
-"dan diverifikasi\n"
-"oleh sistem pemungutan suara untuk memastikannya konsisten dan benar. "
-"Semua\n"
+"Lisensi Commons. Data kami sebagian besar dikumpulkan oleh sukarelawan, dan "
+"diverifikasi\n"
+"oleh sistem pemungutan suara untuk memastikannya konsisten dan benar. Semua\n"
 "penggunaan non-komersial gratis, tetapi pengguna komersial diminta untuk "
 "membayar\n"
 "pembaruan data secara teratur untuk membantu mendanai proyek. Kita\n"
-"mendorong semua pengguna data untuk berkontribusi pada proses pengumpulan"
-" data sehingga\n"
+"mendorong semua pengguna data untuk berkontribusi pada proses pengumpulan "
+"data sehingga\n"
 "agar data kami bisa selengkap mungkin."
 
 #: metabrainz/templates/index/index.html:38
@@ -4131,4 +4133,3 @@ msgstr ""
 
 #~ msgid "Login failed!"
 #~ msgstr "Gagal masuk!"
-
