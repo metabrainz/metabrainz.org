@@ -11,6 +11,7 @@ existing user is only updated when the MusicBrainz ``editor.last_updated`` is ne
 the stored ``user.last_updated``. Updates only touch MusicBrainz-owned columns and preserve
 MetaBrainz-owned state (``login_id`` and ``is_blocked``).
 """
+from datetime import datetime, timezone
 from uuid import uuid4
 
 import psycopg2
@@ -21,6 +22,7 @@ from metabrainz import db
 
 # Number of editors to read from MusicBrainz and write to MetaBrainz per batch.
 DEFAULT_BATCH_SIZE = 1000
+DEFAULT_MEMBER_SINCE = datetime(1970, 1, 1, tzinfo=timezone.utc)
 
 FETCH_EDITORS_QUERY = """
     SELECT id,
@@ -112,7 +114,7 @@ def _build_user_row(editor):
         "email": email,
         "unconfirmed_email": unconfirmed_email,
         "email_confirmed_at": email_confirmed_at,
-        "member_since": editor["member_since"],
+        "member_since": editor["member_since"] or DEFAULT_MEMBER_SINCE,
         "last_login_at": editor["last_login_date"],
         "last_updated": editor["last_updated"],
         "deleted": deleted,
