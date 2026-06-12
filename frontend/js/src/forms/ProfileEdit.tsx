@@ -1,8 +1,7 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
-import { getPageProps } from "../utils";
+import { getPageProps, renderRoot } from "../utils";
 import { DatasetsInput, TextInput } from "./utils";
 
 type ProfileEditProps = {
@@ -130,8 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
     initial_errors,
   } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <ProfileEdit
       datasets={datasets}
       is_supporter={is_supporter}

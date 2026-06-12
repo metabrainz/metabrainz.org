@@ -1,6 +1,5 @@
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
-import { getPageProps } from "../utils";
+import { getPageProps, renderRoot } from "../utils";
 
 type DeleteApplicationProps = {
   csrf_token: string;
@@ -66,8 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
   const { csrf_token, cancel_url, application } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <DeleteApplication
       csrf_token={csrf_token}
       cancel_url={cancel_url}

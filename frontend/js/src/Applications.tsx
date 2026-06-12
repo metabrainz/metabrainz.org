@@ -1,7 +1,6 @@
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
 import { useTranslation } from "react-i18next";
-import { getPageProps } from "./utils";
+import { getPageProps, renderRoot } from "./utils";
 import { OAuthScopeDesc } from "./forms/utils";
 import ProfileTabs from "./ProfileTabs";
 import ApplicationRow from "./ApplicationRow";
@@ -119,8 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
   const { applications, tokens } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <Applications applications={applications} tokens={tokens} />
   );
 });
