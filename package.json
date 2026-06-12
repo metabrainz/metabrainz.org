@@ -15,6 +15,7 @@
   "scripts": {
     "build:dev": "webpack --mode=development --watch --progress --color",
     "build:prod": "webpack --mode=production --no-watch --color",
+    "build:i18n": "node frontend/js/scripts/build-translations.mjs",
     "build:less": "lessc ./frontend/css/main.less > ./frontend/css/main.css",
     "build:types": "tsc --emitDeclarationOnly",
     "build": "npm run build:dev",

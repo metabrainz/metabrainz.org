@@ -64,6 +64,7 @@ services:
     user: ${STATIC_BUILD_USER:-node}
     volumes:
       - ../frontend:/code/frontend:z
+      - ../metabrainz/translations:/code/metabrainz/translations:z
 
   webhook-worker:
     build:

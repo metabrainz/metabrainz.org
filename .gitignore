@@ -24,6 +24,12 @@ htmlcov/
 
 /node_modules
 
+# Generated frontend translation catalogs (built from metabrainz/translations)
+/frontend/locales
+
+# Compiled gettext catalogs (built from the .po files at image build time)
+*.mo
+
 .DS_Store
 *.swp
 config.py

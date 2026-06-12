@@ -112,11 +112,20 @@ Once you have built and started all the services as mentioned above, run:
 
 ### Compiling the strings
 
-The POT files are compiled automatically every time the services are built, but in case you make any changes to the POT files
-and want to compile the translation files again, run:
+Translations are consumed in two forms, both generated from the `.po` catalogs in
+`metabrainz/translations/`:
 
-`$ ./develop.sh manage compile-translations`
+- **Backend (Flask-Babel)** — the `.mo` files used for server-rendered (Jinja/Python) strings.
+- **Frontend (React/i18next)** — the per-locale JSON catalogs served at
+  `/static/locales/<locale>/messages.json` (written to `frontend/locales/`, gitignored).
 
+In development, a single command builds both (`pybabel compile` in the web container, `i18next-conv`
+via `npm run build:i18n` in the static builder). Run it after pulling in new
+translations (e.g. from Weblate):
+
+`$ ./develop.sh compile-translations`
+
+The production Docker image builds translations automatically.
 
 ## Testing
 
