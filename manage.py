@@ -92,6 +92,9 @@ def extract_strings():
     Otherwise updates are not going to be available on Weblate.
     """
     _run_command("pybabel extract -F metabrainz/babel.cfg -k t "
+                 "--project=metabrainz.org "
+                 "--copyright-holder='MetaBrainz Foundation' "
+                 "--msgid-bugs-address=support@metabrainz.org "
                  "-o metabrainz/messages.pot "
                  "metabrainz/ frontend/js/src/")
     click.echo("Strings have been successfully extracted into messages.pot file.")
