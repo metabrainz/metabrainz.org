@@ -31,7 +31,7 @@ freezegun==1.5.5
 python-dateutil==2.9.0.post0
 python-quickbooks==0.9.12
 pytz==2026.2
-redis==8.0.0
+redis==7.4.1
 reportlab==4.5.1
 requests==2.34.2
 sentry-sdk[flask]==2.62.0
