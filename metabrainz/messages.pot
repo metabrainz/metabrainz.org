@@ -1,54 +1,166 @@
 # Translations template for metabrainz.org.
 # Copyright (C) 2026 MetaBrainz Foundation
-# This file is distributed under the same license as the metabrainz.org project.
+# This file is distributed under the same license as the metabrainz.org
+# project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: metabrainz.org\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-17 13:59+0000\n"
+"Project-Id-Version: metabrainz.org VERSION\n"
+"Report-Msgid-Bugs-To: support@metabrainz.org\n"
+"POT-Creation-Date: 2026-06-12 02:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.18.0\n"
 
-#: metabrainz/payments/views.py:159
+#: metabrainz/index/forms.py:45
+#, python-format
+msgid "'%(value)s' is not a valid choice for this field"
+msgstr ""
+
+#: metabrainz/index/forms.py:56 metabrainz/user/forms.py:25
+#: metabrainz/user/forms.py:49 metabrainz/user/forms.py:55
+msgid "Email address is required!"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx:51 frontend/js/src/Applications.tsx:79
+#: metabrainz/index/forms.py:61
+msgid "Name"
+msgstr ""
+
+#: metabrainz/index/forms.py:62
+msgid "Contact name field is empty."
+msgstr ""
+
+#: metabrainz/index/views.py:228
+msgid "Profile updated successfully."
+msgstr ""
+
+#: metabrainz/index/views.py:345
+msgid "You have updated an application!"
+msgstr ""
+
+#: metabrainz/index/views.py:397
+msgid "You have deleted an application."
+msgstr ""
+
+#: metabrainz/index/views.py:399
+msgid "Failed to delete an application."
+msgstr ""
+
+#: metabrainz/index/views.py:422
+msgid "Revoked tokens successfully!"
+msgstr ""
+
+#: metabrainz/index/views.py:451
+msgid "Your account has been deleted."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:58
+msgid "Application Name"
+msgstr ""
+
+#: metabrainz/oauth/forms.py:59
+msgid "Application name field is empty."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:60
+msgid "Application name needs to be at least 3 characters long."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:61
+msgid "Application name needs to be at most 64 characters long."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:63
+msgid "Description"
+msgstr ""
+
+#: metabrainz/oauth/forms.py:64
+msgid "Client description field is empty."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:65
+msgid "Client description needs to be at least 3 characters long."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:66
+msgid "Client description needs to be at most 512 characters long."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:68
+msgid "Homepage"
+msgstr ""
+
+#: metabrainz/oauth/forms.py:69
+msgid "Homepage field is empty."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:70
+msgid "Homepage is not a valid URI."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:71
+msgid "Homepage URL must use http or https"
+msgstr ""
+
+#: metabrainz/oauth/forms.py:73
+msgid "Authorization callback URL"
+msgstr ""
+
+#: metabrainz/oauth/forms.py:74
+msgid "Authorization callback URL field is empty."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:75
+msgid "Authorization callback URL is invalid."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:76
+msgid "Authorization callback URL must use http or https."
+msgstr ""
+
+#: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
+msgid "Confirm"
+msgstr ""
+
+#: metabrainz/payments/views.py:164
 msgid ""
 "Thank you for making a donation to the MetaBrainz Foundation. Your "
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
 
-#: metabrainz/payments/views.py:166
+#: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
 
-#: metabrainz/payments/views.py:177
+#: metabrainz/payments/views.py:182
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
 msgstr ""
 
-#: metabrainz/payments/views.py:183
+#: metabrainz/payments/views.py:188
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
 msgstr ""
 
-#: metabrainz/payments/views.py:197
+#: metabrainz/payments/views.py:202
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
 msgstr ""
 
-#: metabrainz/payments/views.py:203
+#: metabrainz/payments/views.py:208
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your payment."
@@ -58,180 +170,144 @@ msgstr ""
 msgid "Requested annual report was not found."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:26
-#, python-format
-msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
-
-#: metabrainz/supporter/forms.py:41
+#: metabrainz/supporter/forms.py:13
 msgid "Contact name is required!"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:42
-msgid "Email address is required!"
-msgstr ""
-
-#: metabrainz/supporter/forms.py:44
+#: metabrainz/supporter/forms.py:15
 msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:46
+#: metabrainz/supporter/forms.py:17
 msgid "Please, tell us how you (will) use our data."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:47
+#: metabrainz/supporter/forms.py:18
 msgid "Please, limit usage description to 500 characters."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:50
+#: metabrainz/supporter/forms.py:21
 msgid "You need to accept the agreement!"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:70
+#: metabrainz/supporter/forms.py:27
 msgid "Organization name"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:71
+#: metabrainz/supporter/forms.py:28
 msgid "You need to specify the name of your organization."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:73
+#: metabrainz/supporter/forms.py:30
 msgid "Organization description"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:74
+#: metabrainz/supporter/forms.py:31
 msgid "You need to provide description of your organization."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:77
+#: metabrainz/supporter/forms.py:34
 msgid "Website URL"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:78
+#: metabrainz/supporter/forms.py:35
 msgid "You need to specify website of the organization."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:80
+#: metabrainz/supporter/forms.py:37
 msgid "Logo image URL"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:81
+#: metabrainz/supporter/forms.py:38
 msgid "API URL"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:83
+#: metabrainz/supporter/forms.py:40
 msgid "Street"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:84
+#: metabrainz/supporter/forms.py:41
 msgid "You need to specify street."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:86
+#: metabrainz/supporter/forms.py:43
 msgid "City"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:87
+#: metabrainz/supporter/forms.py:44
 msgid "You need to specify city."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:89
+#: metabrainz/supporter/forms.py:46
 msgid "State / Province"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:90
+#: metabrainz/supporter/forms.py:47
 msgid "You need to specify state/province."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:92
+#: metabrainz/supporter/forms.py:49
 msgid "Postcode"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:93
+#: metabrainz/supporter/forms.py:50
 msgid "You need to specify postcode."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:95
+#: metabrainz/supporter/forms.py:52
 msgid "Country"
 msgstr ""
 
-#: metabrainz/supporter/forms.py:96
+#: metabrainz/supporter/forms.py:53
 msgid "You need to specify country."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:104
-msgid "Name"
-msgstr ""
-
-#: metabrainz/supporter/forms.py:105
-msgid "Contact name field is empty."
-msgstr ""
-
-#: metabrainz/supporter/forms.py:107
-msgid "Email"
-msgstr ""
-
-#: metabrainz/supporter/forms.py:109
-msgid "Email field is not a valid email address."
-msgstr ""
-
-#: metabrainz/supporter/forms.py:110
-msgid "Contact email field is empty."
-msgstr ""
-
-#: metabrainz/supporter/views.py:55
-msgid "Can't find tier with a specified ID."
-msgstr ""
-
-#: metabrainz/supporter/views.py:69 metabrainz/supporter/views.py:75
-msgid "Please select account type to sign up."
-msgstr ""
-
-#: metabrainz/supporter/views.py:92
-msgid "You need to choose support tier before signing up!"
-msgstr ""
-
-#: metabrainz/supporter/views.py:102
-msgid "You need to choose existing tier before signing up!"
-msgstr ""
-
-#: metabrainz/supporter/views.py:122
+#: metabrainz/supporter/forms.py:64
 msgid ""
-"Custom amount must be more than threshold amountfor selected tier or "
+"Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
 msgstr ""
 
-#: metabrainz/supporter/views.py:157
+#: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
+#: metabrainz/supporter/views.py:220
+msgid "You are already a supporter."
+msgstr ""
+
+#: metabrainz/supporter/views.py:61
+msgid "Can't find tier with a specified ID."
+msgstr ""
+
+#: metabrainz/supporter/views.py:127
+msgid "You need to choose support tier before signing up!"
+msgstr ""
+
+#: metabrainz/supporter/views.py:137
+msgid "You need to choose existing tier before signing up!"
+msgstr ""
+
+#: metabrainz/supporter/views.py:164
+msgid ""
+"Thanks for becoming a supporter! Your application will be reviewed soon. "
+"We will send you updates via email."
+msgstr ""
+
+#: metabrainz/supporter/views.py:187
 msgid ""
 "Thanks for signing up! Your application will be reviewed soon. We will "
 "send you updates via email."
 msgstr ""
 
-#: metabrainz/supporter/views.py:174 metabrainz/supporter/views.py:244
-msgid ""
-"Failed to send welcome email to you. We are looking into it. Sorry for "
-"inconvenience!"
+#: metabrainz/supporter/views.py:248
+msgid "Thanks for becoming a supporter!"
 msgstr ""
 
-#: metabrainz/supporter/views.py:178 metabrainz/supporter/views.py:248
-msgid "You already have a MetaBrainz account!"
+#: metabrainz/supporter/views.py:274
+msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr ""
 
-#: metabrainz/supporter/views.py:232
-msgid "Thanks for signing up!"
-msgstr ""
-
-#: metabrainz/supporter/views.py:278 metabrainz/supporter/views.py:286
-msgid "Login failed!"
-msgstr ""
-
-#: metabrainz/supporter/views.py:281
-msgid "Authorization code is missing!"
-msgstr ""
-
-#: metabrainz/supporter/views.py:357
+#: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
 msgstr ""
 
@@ -314,6 +390,7 @@ msgid "Supporters"
 msgstr ""
 
 #: metabrainz/templates/base.html:73 metabrainz/templates/navbar.html:60
+#: metabrainz/templates/users/login.html:3
 msgid "Sign in"
 msgstr ""
 
@@ -415,6 +492,10 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:68
 msgid "OAuth applications"
+msgstr ""
+
+#: metabrainz/templates/navbar.html:74 metabrainz/templates/navbar.html:76
+msgid "Language"
 msgstr ""
 
 #: metabrainz/templates/api/info.html:8
@@ -566,77 +647,77 @@ msgstr ""
 #: metabrainz/templates/index/about.html:52
 #, python-format
 msgid ""
-"Director Nick Ashton-Hart, Executive Director of the <a "
+"Director &amp; Secretary Nick Ashton-Hart, Executive Director of the <a "
 "href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
 "Alliance</a>"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:53
 #, python-format
-msgid ""
-"Director <a href=\"%(paul_url)s\">Paul Bennun</a> is the Chief Content "
-"Officer at <a href=\"%(kcrw_url)s\">KCRW</a>, Los Angeles"
+msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:54
 #, python-format
 msgid ""
-"Director <a href=\"%(cory_url)s\">Cory Doctorow</a>, Sci-Fi author and "
-"editor of the <a href=\"%(boing_url)s\">Boing Boing</a> weblog"
+"Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
+"href=\"%(compass_url)s\">Compass, Map & Key</a>"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:55
 #, python-format
 msgid ""
-"Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
-"href=\"%(audio_net_url)s\">Audio Network</a>"
+"Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
+"Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:56
 #, python-format
 msgid ""
-"Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
-"Ljungberg</a> of the <a href=\"%(m4p5_url)s\">Music 4.5 seminar "
-"series</a> put on by <a href=\"%(two_pears_url)s\">2 Pears</a>"
+"Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
+" the MetaBrainz Foundation"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:57
 #, python-format
 msgid ""
-"Executive Director <a href=\"%(mayhem_url)s\">Robert Kaye</a> of the "
-"MetaBrainz Foundation"
-msgstr ""
-
-#: metabrainz/templates/index/about.html:58
-#, python-format
-msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
-"href=\"%(soundcloud)s\">SoundCloud</a>"
+"href=\"%(leeds_url)s\">Leeds Angels</a>"
 msgstr ""
 
-#: metabrainz/templates/index/about.html:60
-#: metabrainz/templates/index/about.html:69
-#, python-format
-msgid ""
-"Secretary <a href=\"%(reo_url)s\">Nicolás Tamargo</a>, Junior Software "
-"Engineer at MetaBrainz Foundation"
+#: metabrainz/templates/index/about.html:61
+msgid "Advisor"
+msgstr ""
+
+#: metabrainz/templates/index/about.html:62
+msgid "Our board of directors is advised by:"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:64
+#, python-format
+msgid ""
+"<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
+"journalist"
+msgstr ""
+
+#: metabrainz/templates/index/about.html:66
 msgid "Officers"
 msgstr ""
 
-#: metabrainz/templates/index/about.html:65
+#: metabrainz/templates/index/about.html:67
 msgid "The officers of this company are:"
 msgstr ""
 
-#: metabrainz/templates/index/about.html:67
-msgid "President Robert Kaye"
+#: metabrainz/templates/index/about.html:69
+msgid "President Nicolás Tamargo"
 msgstr ""
 
-#: metabrainz/templates/index/about.html:68
-#, python-format
-msgid "Treasurer <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>"
+#: metabrainz/templates/index/about.html:70
+msgid "Treasurer Rassami Hok Ljungberg"
+msgstr ""
+
+#: metabrainz/templates/index/about.html:71
+msgid "Secretary Nick Ashton-Hart"
 msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:3
@@ -1102,6 +1183,19 @@ msgstr ""
 msgid "Exceptions"
 msgstr ""
 
+#: metabrainz/templates/index/profile-delete.html:3
+msgid "Delete Account"
+msgstr ""
+
+#: metabrainz/templates/index/profile-edit.html:3
+msgid "Edit"
+msgstr ""
+
+#: metabrainz/templates/index/profile-edit.html:3
+#: metabrainz/templates/index/profile.html:3
+msgid "Your Profile"
+msgstr ""
+
 #: metabrainz/templates/index/projects.html:6
 msgid "MetaBrainz Projects"
 msgstr ""
@@ -1302,43 +1396,43 @@ msgid "The MetaBrainz Team"
 msgstr ""
 
 #: metabrainz/templates/index/team.html:12
-msgid "<span class=\"name\">Robert Kaye</span> &mdash; Executive Director"
+msgid "<span class=\"name\">Robert Kaye</span> &mdash; Founder"
 msgstr ""
 
 #: metabrainz/templates/index/team.html:14
 #, python-format
 msgid ""
-"Robert is the founder and lead geek for <a "
-"href=\"%(mb_url)s\">MusicBrainz</a>, and Executive Director of\n"
-"          the MetaBrainz Foundation, the non-profit organization that "
-"pays the bills for MusicBrainz. After studying Computer\n"
-"          Engineering at Cal Poly, San Luis Obispo, he joined Xing "
-"Technology where he shaped the MP3 efforts and then spent\n"
-"          time for the dot com boom on EMusic’s FreeAmp team. While at "
-"EMusic he started working on MusicBrainz, the open music\n"
-"          encyclopedia, and fell in love with Open Source software."
+"Robert was the founder and lead geek for <a "
+"href=\"%(mb_url)s\">MusicBrainz</a> and the MetaBrainz Foundation,\n"
+"          the non-profit organization created to protect and support "
+"MusicBrainz. After studying Computer Engineering at Cal\n"
+"          Poly, San Luis Obispo, he joined Xing Technology where he "
+"shaped the MP3 efforts and then spent time for the dot\n"
+"          com boom on EMusic’s FreeAmp team. While at EMusic he started "
+"working on MusicBrainz, the open music encyclopedia,\n"
+"          and fell in love with Open Source software."
 msgstr ""
 
 #: metabrainz/templates/index/team.html:21
 #, python-format
 msgid ""
-"Robert is also an active hardware hacker, creating art projects for "
-"Burning Man and Nowhere. He is the co-founder of\n"
+"Robert was an active hardware hacker, creating art projects for Burning "
+"Man and Nowhere. He was the co-founder of\n"
 "          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created "
 "Bartendro the open source cocktail robot."
 msgstr ""
 
 #: metabrainz/templates/index/team.html:26
-msgid "Originally from Germany, he now lives in Barcelona, Spain."
+msgid "He lives on in our hearts and in open source."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:40
+#: metabrainz/templates/index/team.html:39
 msgid ""
 "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Software "
 "Engineer"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:42
+#: metabrainz/templates/index/team.html:41
 msgid ""
 "Michael is the senior developer for MusicBrainz, residing in his hometown"
 " of Chicago. He heard about MusicBrainz when\n"
@@ -1350,13 +1444,13 @@ msgid ""
 "drummer in the world on Rock Band 4."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:58
+#: metabrainz/templates/index/team.html:57
 msgid ""
 "<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer"
 " Support/Community Manager/Software Engineer"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:60
+#: metabrainz/templates/index/team.html:59
 #, python-format
 msgid ""
 "Nicolás started (and still moonlights as) a hardcore editor, because he "
@@ -1374,15 +1468,15 @@ msgid ""
 "          or traveling around trying to watch some wildlife."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:69
+#: metabrainz/templates/index/team.html:68
 msgid "Originally from Spain, he now lives in Tartu, Estonia."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:82
+#: metabrainz/templates/index/team.html:81
 msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:84
+#: metabrainz/templates/index/team.html:83
 msgid ""
 "A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz "
 "and Picard in attempts to codify his vast\n"
@@ -1392,7 +1486,7 @@ msgid ""
 "system administrator since 1998."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:89
+#: metabrainz/templates/index/team.html:88
 #, python-format
 msgid ""
 "With his extensive repertoire of skills and passions, Laurent has "
@@ -1406,11 +1500,11 @@ msgid ""
 "France."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:106
+#: metabrainz/templates/index/team.html:105
 msgid "<span class=\"name\">Yvan Rivierre</span> &mdash; Software Engineer"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:108
+#: metabrainz/templates/index/team.html:107
 msgid ""
 "Yvan is a software engineer for MusicBrainz and comes from Nancy, France."
 " Initially he discovered MusicBrainz\n"
@@ -1420,13 +1514,13 @@ msgid ""
 "music, eats music, … music, for an healthy way of life."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:121
+#: metabrainz/templates/index/team.html:120
 msgid ""
 "<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  "
 "Software Engineer & Graphic Designer"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:123
+#: metabrainz/templates/index/team.html:122
 msgid ""
 "Nicolas comes from a graphic design background, but was always a computer"
 " and electronics tinkerer at heart.\n"
@@ -1436,26 +1530,26 @@ msgid ""
 "he eventually joined the team."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:128
+#: metabrainz/templates/index/team.html:127
 msgid ""
 "In his free time, Nicolas likes to go rock climbing, hence the nickname, "
 "and designing and building structures."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:131
+#: metabrainz/templates/index/team.html:130
 msgid ""
 "Born in Canada and raised in France, Nicolas now lives in Barcelona, "
 "Spain."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:147
+#: metabrainz/templates/index/team.html:146
 msgid ""
 "<span class=\"name\">Kartik Ohri</span> &mdash; "
 "ListenBrainz/CritiqueBrainz/Android App Lead &amp; Junior Software "
 "Engineer"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:149
+#: metabrainz/templates/index/team.html:148
 msgid ""
 "Kartik joined the MetaBrainz community during Google Code-In 2018 and "
 "since then there has been\n"
@@ -1465,11 +1559,11 @@ msgid ""
 "AcousticBrainz and ListenBrainz projects."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:167
+#: metabrainz/templates/index/team.html:166
 msgid "<span class=\"name\">Adam James</span> &mdash; System Administrator"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:169
+#: metabrainz/templates/index/team.html:168
 msgid ""
 "Adam is a system administrator and occasional developer with over 15 "
 "years experience in Linux and Open Source\n"
@@ -1481,11 +1575,11 @@ msgid ""
 "\t  where he is a consultant and technical director."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:190
+#: metabrainz/templates/index/team.html:189
 msgid "<span class=\"name\">Julian Anderson</span> &mdash; System Administrator"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:192
+#: metabrainz/templates/index/team.html:191
 msgid ""
 "Julian took a liking to terminals as soon as he could get his hands on "
 "one, and in high school, he began building,\n"
@@ -1503,13 +1597,13 @@ msgid ""
 "in natural scenery, reading, and traveling."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:216
+#: metabrainz/templates/index/team.html:215
 msgid ""
 "<span class=\"name\">Simon Hartman</span> &mdash; Design, UX Consultant &"
 " Social Media Jockey"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:218
+#: metabrainz/templates/index/team.html:217
 msgid ""
 "Simon has been contributing data and complaints about UX and design to "
 "MusicBrainz since 2009.\n"
@@ -1519,11 +1613,11 @@ msgid ""
 "design/comms/marketing roles."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:237
+#: metabrainz/templates/index/team.html:236
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:239
+#: metabrainz/templates/index/team.html:238
 msgid ""
 "Ansh is a Software Engineer and is based in New Delhi, India. He joined "
 "MetaBrainz as a Google Summer of Code student in 2022 and has been a part"
@@ -1534,15 +1628,15 @@ msgid ""
 "listening to music."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:251
+#: metabrainz/templates/index/team.html:250
 msgid "Voluntary Project Leaders"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:260
+#: metabrainz/templates/index/team.html:259
 msgid "<span class=\"name\">Akshat Tiwari</span> &mdash; Junior Software Engineer"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:262
+#: metabrainz/templates/index/team.html:261
 msgid ""
 "Akshat started contributing to the MusicBrainz Android App out of love "
 "for the project and after dwelling\n"
@@ -1557,13 +1651,13 @@ msgid ""
 "He resides in New Delhi, India."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:279
+#: metabrainz/templates/index/team.html:278
 msgid ""
 "<span class=\"name\">Param Singh</span> &mdash; Former ListenBrainz team "
 "leader"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:281
+#: metabrainz/templates/index/team.html:280
 msgid ""
 "Param is a software engineer and the former leader of the ListenBrainz "
 "project. Param\n"
@@ -1575,33 +1669,33 @@ msgid ""
 "to listen to new music."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:302
+#: metabrainz/templates/index/team.html:301
 msgid ""
 "<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
 "MusicBrainz Areas"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:304
+#: metabrainz/templates/index/team.html:303
 #, python-format
 msgid ""
-"David is in charge of adding new areas to MusicBrainz when they're "
-"requested by the community. He\n"
-"          has been active in MusicBrainz for over a decade, and is one of"
-" the few editors to have surpassed the one\n"
-"          million edits mark. A proud Canadian, when he's not in "
-"MusicBrainz, he is often enjoying some of his\n"
-"          favourite things, such as <a href=\"%(thc_url)s\">THC</a>, <a "
+"David was in charge of adding new areas to MusicBrainz, as requested by "
+"the community. He was\n"
+"          active in MusicBrainz for over a decade and one of the few "
+"editors to have surpassed the one million\n"
+"          edits mark. A proud Canadian, when not in MusicBrainz he "
+"enjoyed some of his favourite things, such\n"
+"          as <a href=\"%(thc_url)s\">THC</a>, <a "
 "href=\"%(tfc_url)s\">TFC</a>,\n"
 "          <a href=\"%(cts_url)s\">CTS</a> & <a "
 "href=\"%(gnt_url)s\">GnT's</a>,\n"
 "          as well as cheering for the Toronto Raptors."
 msgstr ""
 
-#: metabrainz/templates/index/team.html:329
+#: metabrainz/templates/index/team.html:328
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
 msgstr ""
 
-#: metabrainz/templates/index/team.html:331
+#: metabrainz/templates/index/team.html:330
 msgid ""
 "ApeKattQuest or MonkeyPython has been a MusicBrainz editor since 2004, "
 "and\n"
@@ -1621,6 +1715,32 @@ msgstr ""
 
 #: metabrainz/templates/index/datasets/signup.html:3
 msgid "Please sign up"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx:38 metabrainz/templates/oauth/create.html:3
+msgid "Create new application"
+msgstr ""
+
+#: metabrainz/templates/oauth/delete.html:3
+#, python-format
+msgid "Delete application %(name)s"
+msgstr ""
+
+#: metabrainz/templates/oauth/edit.html:3
+#, python-format
+msgid "Edit application %(name)s"
+msgstr ""
+
+#: metabrainz/templates/oauth/error.html:3
+msgid "OAuth Error"
+msgstr ""
+
+#: metabrainz/templates/oauth/index.html:3
+msgid "Applications"
+msgstr ""
+
+#: metabrainz/templates/oauth/prompt.html:3
+msgid "OAuth Authorization"
 msgstr ""
 
 #: metabrainz/templates/payments/cancel_recurring.html:3
@@ -1700,7 +1820,7 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/payments/donate.html:39
-#: metabrainz/templates/payments/payment.html:18
+#: metabrainz/templates/payments/payment.html:31
 msgid "Amount"
 msgstr ""
 
@@ -1870,7 +1990,15 @@ msgid ""
 "      payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
 
-#: metabrainz/templates/payments/payment.html:31
+#: metabrainz/templates/payments/payment.html:17
+msgid "Organization:"
+msgstr ""
+
+#: metabrainz/templates/payments/payment.html:20
+msgid "Supporter level:"
+msgstr ""
+
+#: metabrainz/templates/payments/payment.html:44
 #, python-format
 msgid ""
 "If you would like to make a large payment, please contact us at\n"
@@ -1878,19 +2006,20 @@ msgid ""
 "          before you do."
 msgstr ""
 
-#: metabrainz/templates/payments/payment.html:39
+#: metabrainz/templates/payments/payment.html:52
+#: metabrainz/templates/payments/payment.html:159
 msgid "Invoice number"
 msgstr ""
 
-#: metabrainz/templates/payments/payment.html:48
+#: metabrainz/templates/payments/payment.html:61
 msgid "Make this a recurring monthly payment"
 msgstr ""
 
-#: metabrainz/templates/payments/payment.html:57
+#: metabrainz/templates/payments/payment.html:70
 msgid "Pay with Credit Card"
 msgstr ""
 
-#: metabrainz/templates/payments/payment.html:71
+#: metabrainz/templates/payments/payment.html:84
 #, python-format
 msgid ""
 "The personal information provided to the MetaBrainz Foundation during the"
@@ -1901,11 +2030,15 @@ msgid ""
 "      privacy policy</a>."
 msgstr ""
 
-#: metabrainz/templates/payments/payment.html:80
+#: metabrainz/templates/payments/payment.html:93
 #, python-format
 msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
+msgstr ""
+
+#: metabrainz/templates/payments/payment.html:157
+msgid "Invoice number (optional)"
 msgstr ""
 
 #: metabrainz/templates/payments/payment_base.html:3
@@ -2034,15 +2167,498 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:36
-#: metabrainz/templates/reports/financial_reports/index.html:52
-#: metabrainz/templates/reports/financial_reports/index.html:73
-#: metabrainz/templates/reports/financial_reports/index.html:94
-#: metabrainz/templates/reports/financial_reports/index.html:114
-#: metabrainz/templates/reports/financial_reports/index.html:134
-#: metabrainz/templates/reports/financial_reports/index.html:154
-#: metabrainz/templates/reports/financial_reports/index.html:175
-#: metabrainz/templates/reports/financial_reports/index.html:199
+#: metabrainz/templates/reports/financial_reports/index.html:50
+#: metabrainz/templates/reports/financial_reports/index.html:70
+#: metabrainz/templates/reports/financial_reports/index.html:91
+#: metabrainz/templates/reports/financial_reports/index.html:112
+#: metabrainz/templates/reports/financial_reports/index.html:132
+#: metabrainz/templates/reports/financial_reports/index.html:152
+#: metabrainz/templates/reports/financial_reports/index.html:172
+#: metabrainz/templates/reports/financial_reports/index.html:193
 #: metabrainz/templates/reports/financial_reports/index.html:217
+#: metabrainz/templates/reports/financial_reports/index.html:235
+#: metabrainz/templates/reports/financial_reports/index.html:264
+#: metabrainz/templates/reports/financial_reports/index.html:293
+#: metabrainz/templates/reports/financial_reports/index.html:322
+#: metabrainz/templates/reports/financial_reports/index.html:351
+#: metabrainz/templates/reports/financial_reports/index.html:380
+#: metabrainz/templates/reports/financial_reports/index.html:409
+#: metabrainz/templates/reports/financial_reports/index.html:438
+#: metabrainz/templates/reports/financial_reports/index.html:467
+#: metabrainz/templates/reports/financial_reports/index.html:496
+msgid "Quarterly reports"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:38
+#: metabrainz/templates/reports/financial_reports/index.html:47
+#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:54
+#: metabrainz/templates/reports/financial_reports/index.html:56
+#: metabrainz/templates/reports/financial_reports/index.html:58
+#: metabrainz/templates/reports/financial_reports/index.html:67
+#: metabrainz/templates/reports/financial_reports/index.html:72
+#: metabrainz/templates/reports/financial_reports/index.html:74
+#: metabrainz/templates/reports/financial_reports/index.html:76
+#: metabrainz/templates/reports/financial_reports/index.html:78
+#: metabrainz/templates/reports/financial_reports/index.html:88
+#: metabrainz/templates/reports/financial_reports/index.html:93
+#: metabrainz/templates/reports/financial_reports/index.html:95
+#: metabrainz/templates/reports/financial_reports/index.html:97
+#: metabrainz/templates/reports/financial_reports/index.html:99
+#: metabrainz/templates/reports/financial_reports/index.html:109
+#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:116
+#: metabrainz/templates/reports/financial_reports/index.html:118
+#: metabrainz/templates/reports/financial_reports/index.html:120
+#: metabrainz/templates/reports/financial_reports/index.html:129
+#: metabrainz/templates/reports/financial_reports/index.html:134
+#: metabrainz/templates/reports/financial_reports/index.html:136
+#: metabrainz/templates/reports/financial_reports/index.html:138
+#: metabrainz/templates/reports/financial_reports/index.html:140
+#: metabrainz/templates/reports/financial_reports/index.html:149
+#: metabrainz/templates/reports/financial_reports/index.html:154
+#: metabrainz/templates/reports/financial_reports/index.html:156
+#: metabrainz/templates/reports/financial_reports/index.html:158
+#: metabrainz/templates/reports/financial_reports/index.html:160
+#: metabrainz/templates/reports/financial_reports/index.html:169
+#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:176
+#: metabrainz/templates/reports/financial_reports/index.html:178
+#: metabrainz/templates/reports/financial_reports/index.html:180
+#: metabrainz/templates/reports/financial_reports/index.html:190
+#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:197
+#: metabrainz/templates/reports/financial_reports/index.html:199
+#: metabrainz/templates/reports/financial_reports/index.html:201
+#: metabrainz/templates/reports/financial_reports/index.html:214
+#: metabrainz/templates/reports/financial_reports/index.html:219
+#: metabrainz/templates/reports/financial_reports/index.html:221
+#: metabrainz/templates/reports/financial_reports/index.html:223
+#: metabrainz/templates/reports/financial_reports/index.html:225
+#: metabrainz/templates/reports/financial_reports/index.html:233
+#: metabrainz/templates/reports/financial_reports/index.html:237
+#: metabrainz/templates/reports/financial_reports/index.html:238
+#: metabrainz/templates/reports/financial_reports/index.html:239
+#: metabrainz/templates/reports/financial_reports/index.html:240
+#: metabrainz/templates/reports/financial_reports/index.html:244
+#: metabrainz/templates/reports/financial_reports/index.html:245
+#: metabrainz/templates/reports/financial_reports/index.html:246
+#: metabrainz/templates/reports/financial_reports/index.html:247
+#: metabrainz/templates/reports/financial_reports/index.html:248
+#: metabrainz/templates/reports/financial_reports/index.html:249
+#: metabrainz/templates/reports/financial_reports/index.html:250
+#: metabrainz/templates/reports/financial_reports/index.html:251
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:253
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:255
+#: metabrainz/templates/reports/financial_reports/index.html:262
+#: metabrainz/templates/reports/financial_reports/index.html:266
+#: metabrainz/templates/reports/financial_reports/index.html:267
+#: metabrainz/templates/reports/financial_reports/index.html:268
+#: metabrainz/templates/reports/financial_reports/index.html:269
+#: metabrainz/templates/reports/financial_reports/index.html:273
+#: metabrainz/templates/reports/financial_reports/index.html:274
+#: metabrainz/templates/reports/financial_reports/index.html:275
+#: metabrainz/templates/reports/financial_reports/index.html:276
+#: metabrainz/templates/reports/financial_reports/index.html:277
+#: metabrainz/templates/reports/financial_reports/index.html:278
+#: metabrainz/templates/reports/financial_reports/index.html:279
+#: metabrainz/templates/reports/financial_reports/index.html:280
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:282
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:284
+#: metabrainz/templates/reports/financial_reports/index.html:291
+#: metabrainz/templates/reports/financial_reports/index.html:295
+#: metabrainz/templates/reports/financial_reports/index.html:296
+#: metabrainz/templates/reports/financial_reports/index.html:297
+#: metabrainz/templates/reports/financial_reports/index.html:298
+#: metabrainz/templates/reports/financial_reports/index.html:302
+#: metabrainz/templates/reports/financial_reports/index.html:303
+#: metabrainz/templates/reports/financial_reports/index.html:304
+#: metabrainz/templates/reports/financial_reports/index.html:305
+#: metabrainz/templates/reports/financial_reports/index.html:306
+#: metabrainz/templates/reports/financial_reports/index.html:307
+#: metabrainz/templates/reports/financial_reports/index.html:308
+#: metabrainz/templates/reports/financial_reports/index.html:309
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:311
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:313
+#: metabrainz/templates/reports/financial_reports/index.html:320
+#: metabrainz/templates/reports/financial_reports/index.html:324
+#: metabrainz/templates/reports/financial_reports/index.html:325
+#: metabrainz/templates/reports/financial_reports/index.html:326
+#: metabrainz/templates/reports/financial_reports/index.html:327
+#: metabrainz/templates/reports/financial_reports/index.html:331
+#: metabrainz/templates/reports/financial_reports/index.html:332
+#: metabrainz/templates/reports/financial_reports/index.html:333
+#: metabrainz/templates/reports/financial_reports/index.html:334
+#: metabrainz/templates/reports/financial_reports/index.html:335
+#: metabrainz/templates/reports/financial_reports/index.html:336
+#: metabrainz/templates/reports/financial_reports/index.html:337
+#: metabrainz/templates/reports/financial_reports/index.html:338
+#: metabrainz/templates/reports/financial_reports/index.html:339
+#: metabrainz/templates/reports/financial_reports/index.html:340
+#: metabrainz/templates/reports/financial_reports/index.html:341
+#: metabrainz/templates/reports/financial_reports/index.html:342
+#: metabrainz/templates/reports/financial_reports/index.html:349
+#: metabrainz/templates/reports/financial_reports/index.html:353
+#: metabrainz/templates/reports/financial_reports/index.html:354
+#: metabrainz/templates/reports/financial_reports/index.html:355
+#: metabrainz/templates/reports/financial_reports/index.html:356
+#: metabrainz/templates/reports/financial_reports/index.html:360
+#: metabrainz/templates/reports/financial_reports/index.html:361
+#: metabrainz/templates/reports/financial_reports/index.html:362
+#: metabrainz/templates/reports/financial_reports/index.html:363
+#: metabrainz/templates/reports/financial_reports/index.html:364
+#: metabrainz/templates/reports/financial_reports/index.html:365
+#: metabrainz/templates/reports/financial_reports/index.html:366
+#: metabrainz/templates/reports/financial_reports/index.html:367
+#: metabrainz/templates/reports/financial_reports/index.html:368
+#: metabrainz/templates/reports/financial_reports/index.html:369
+#: metabrainz/templates/reports/financial_reports/index.html:370
+#: metabrainz/templates/reports/financial_reports/index.html:371
+#: metabrainz/templates/reports/financial_reports/index.html:378
+#: metabrainz/templates/reports/financial_reports/index.html:382
+#: metabrainz/templates/reports/financial_reports/index.html:383
+#: metabrainz/templates/reports/financial_reports/index.html:384
+#: metabrainz/templates/reports/financial_reports/index.html:385
+#: metabrainz/templates/reports/financial_reports/index.html:389
+#: metabrainz/templates/reports/financial_reports/index.html:390
+#: metabrainz/templates/reports/financial_reports/index.html:391
+#: metabrainz/templates/reports/financial_reports/index.html:392
+#: metabrainz/templates/reports/financial_reports/index.html:393
+#: metabrainz/templates/reports/financial_reports/index.html:394
+#: metabrainz/templates/reports/financial_reports/index.html:395
+#: metabrainz/templates/reports/financial_reports/index.html:396
+#: metabrainz/templates/reports/financial_reports/index.html:397
+#: metabrainz/templates/reports/financial_reports/index.html:398
+#: metabrainz/templates/reports/financial_reports/index.html:399
+#: metabrainz/templates/reports/financial_reports/index.html:400
+#: metabrainz/templates/reports/financial_reports/index.html:407
+#: metabrainz/templates/reports/financial_reports/index.html:411
+#: metabrainz/templates/reports/financial_reports/index.html:412
+#: metabrainz/templates/reports/financial_reports/index.html:413
+#: metabrainz/templates/reports/financial_reports/index.html:414
+#: metabrainz/templates/reports/financial_reports/index.html:418
+#: metabrainz/templates/reports/financial_reports/index.html:419
+#: metabrainz/templates/reports/financial_reports/index.html:420
+#: metabrainz/templates/reports/financial_reports/index.html:421
+#: metabrainz/templates/reports/financial_reports/index.html:422
+#: metabrainz/templates/reports/financial_reports/index.html:423
+#: metabrainz/templates/reports/financial_reports/index.html:424
+#: metabrainz/templates/reports/financial_reports/index.html:425
+#: metabrainz/templates/reports/financial_reports/index.html:426
+#: metabrainz/templates/reports/financial_reports/index.html:427
+#: metabrainz/templates/reports/financial_reports/index.html:428
+#: metabrainz/templates/reports/financial_reports/index.html:429
+#: metabrainz/templates/reports/financial_reports/index.html:436
+#: metabrainz/templates/reports/financial_reports/index.html:440
+#: metabrainz/templates/reports/financial_reports/index.html:441
+#: metabrainz/templates/reports/financial_reports/index.html:442
+#: metabrainz/templates/reports/financial_reports/index.html:443
+#: metabrainz/templates/reports/financial_reports/index.html:447
+#: metabrainz/templates/reports/financial_reports/index.html:448
+#: metabrainz/templates/reports/financial_reports/index.html:449
+#: metabrainz/templates/reports/financial_reports/index.html:450
+#: metabrainz/templates/reports/financial_reports/index.html:451
+#: metabrainz/templates/reports/financial_reports/index.html:452
+#: metabrainz/templates/reports/financial_reports/index.html:453
+#: metabrainz/templates/reports/financial_reports/index.html:454
+#: metabrainz/templates/reports/financial_reports/index.html:455
+#: metabrainz/templates/reports/financial_reports/index.html:456
+#: metabrainz/templates/reports/financial_reports/index.html:457
+#: metabrainz/templates/reports/financial_reports/index.html:458
+#: metabrainz/templates/reports/financial_reports/index.html:465
+#: metabrainz/templates/reports/financial_reports/index.html:469
+#: metabrainz/templates/reports/financial_reports/index.html:470
+#: metabrainz/templates/reports/financial_reports/index.html:471
+#: metabrainz/templates/reports/financial_reports/index.html:472
+#: metabrainz/templates/reports/financial_reports/index.html:476
+#: metabrainz/templates/reports/financial_reports/index.html:477
+#: metabrainz/templates/reports/financial_reports/index.html:478
+#: metabrainz/templates/reports/financial_reports/index.html:479
+#: metabrainz/templates/reports/financial_reports/index.html:480
+#: metabrainz/templates/reports/financial_reports/index.html:481
+#: metabrainz/templates/reports/financial_reports/index.html:482
+#: metabrainz/templates/reports/financial_reports/index.html:483
+#: metabrainz/templates/reports/financial_reports/index.html:484
+#: metabrainz/templates/reports/financial_reports/index.html:485
+#: metabrainz/templates/reports/financial_reports/index.html:486
+#: metabrainz/templates/reports/financial_reports/index.html:487
+#: metabrainz/templates/reports/financial_reports/index.html:494
+#: metabrainz/templates/reports/financial_reports/index.html:498
+#: metabrainz/templates/reports/financial_reports/index.html:499
+#: metabrainz/templates/reports/financial_reports/index.html:500
+#: metabrainz/templates/reports/financial_reports/index.html:501
+#: metabrainz/templates/reports/financial_reports/index.html:505
+#: metabrainz/templates/reports/financial_reports/index.html:506
+#: metabrainz/templates/reports/financial_reports/index.html:507
+#: metabrainz/templates/reports/financial_reports/index.html:508
+#: metabrainz/templates/reports/financial_reports/index.html:509
+#: metabrainz/templates/reports/financial_reports/index.html:510
+#: metabrainz/templates/reports/financial_reports/index.html:511
+#: metabrainz/templates/reports/financial_reports/index.html:512
+#: metabrainz/templates/reports/financial_reports/index.html:513
+#: metabrainz/templates/reports/financial_reports/index.html:514
+#: metabrainz/templates/reports/financial_reports/index.html:515
+#: metabrainz/templates/reports/financial_reports/index.html:516
+#: metabrainz/templates/reports/financial_reports/index.html:523
+#: metabrainz/templates/reports/financial_reports/index.html:545
+msgid "profit &amp; loss"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:39
+#: metabrainz/templates/reports/financial_reports/index.html:46
+#: metabrainz/templates/reports/financial_reports/index.html:53
+#: metabrainz/templates/reports/financial_reports/index.html:55
+#: metabrainz/templates/reports/financial_reports/index.html:57
+#: metabrainz/templates/reports/financial_reports/index.html:59
+#: metabrainz/templates/reports/financial_reports/index.html:66
+#: metabrainz/templates/reports/financial_reports/index.html:73
+#: metabrainz/templates/reports/financial_reports/index.html:75
+#: metabrainz/templates/reports/financial_reports/index.html:77
+#: metabrainz/templates/reports/financial_reports/index.html:79
+#: metabrainz/templates/reports/financial_reports/index.html:87
+#: metabrainz/templates/reports/financial_reports/index.html:94
+#: metabrainz/templates/reports/financial_reports/index.html:96
+#: metabrainz/templates/reports/financial_reports/index.html:98
+#: metabrainz/templates/reports/financial_reports/index.html:100
+#: metabrainz/templates/reports/financial_reports/index.html:108
+#: metabrainz/templates/reports/financial_reports/index.html:115
+#: metabrainz/templates/reports/financial_reports/index.html:117
+#: metabrainz/templates/reports/financial_reports/index.html:119
+#: metabrainz/templates/reports/financial_reports/index.html:121
+#: metabrainz/templates/reports/financial_reports/index.html:128
+#: metabrainz/templates/reports/financial_reports/index.html:135
+#: metabrainz/templates/reports/financial_reports/index.html:137
+#: metabrainz/templates/reports/financial_reports/index.html:139
+#: metabrainz/templates/reports/financial_reports/index.html:141
+#: metabrainz/templates/reports/financial_reports/index.html:148
+#: metabrainz/templates/reports/financial_reports/index.html:155
+#: metabrainz/templates/reports/financial_reports/index.html:157
+#: metabrainz/templates/reports/financial_reports/index.html:159
+#: metabrainz/templates/reports/financial_reports/index.html:161
+#: metabrainz/templates/reports/financial_reports/index.html:168
+#: metabrainz/templates/reports/financial_reports/index.html:175
+#: metabrainz/templates/reports/financial_reports/index.html:177
+#: metabrainz/templates/reports/financial_reports/index.html:179
+#: metabrainz/templates/reports/financial_reports/index.html:181
+#: metabrainz/templates/reports/financial_reports/index.html:189
+#: metabrainz/templates/reports/financial_reports/index.html:196
+#: metabrainz/templates/reports/financial_reports/index.html:198
+#: metabrainz/templates/reports/financial_reports/index.html:200
+#: metabrainz/templates/reports/financial_reports/index.html:202
+#: metabrainz/templates/reports/financial_reports/index.html:213
+#: metabrainz/templates/reports/financial_reports/index.html:220
+#: metabrainz/templates/reports/financial_reports/index.html:222
+#: metabrainz/templates/reports/financial_reports/index.html:224
+#: metabrainz/templates/reports/financial_reports/index.html:226
+#: metabrainz/templates/reports/financial_reports/index.html:232
+#: metabrainz/templates/reports/financial_reports/index.html:244
+#: metabrainz/templates/reports/financial_reports/index.html:245
+#: metabrainz/templates/reports/financial_reports/index.html:246
+#: metabrainz/templates/reports/financial_reports/index.html:247
+#: metabrainz/templates/reports/financial_reports/index.html:248
+#: metabrainz/templates/reports/financial_reports/index.html:249
+#: metabrainz/templates/reports/financial_reports/index.html:250
+#: metabrainz/templates/reports/financial_reports/index.html:251
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:253
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:255
+#: metabrainz/templates/reports/financial_reports/index.html:261
+#: metabrainz/templates/reports/financial_reports/index.html:273
+#: metabrainz/templates/reports/financial_reports/index.html:274
+#: metabrainz/templates/reports/financial_reports/index.html:275
+#: metabrainz/templates/reports/financial_reports/index.html:276
+#: metabrainz/templates/reports/financial_reports/index.html:277
+#: metabrainz/templates/reports/financial_reports/index.html:278
+#: metabrainz/templates/reports/financial_reports/index.html:279
+#: metabrainz/templates/reports/financial_reports/index.html:280
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:282
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:284
+#: metabrainz/templates/reports/financial_reports/index.html:290
+#: metabrainz/templates/reports/financial_reports/index.html:302
+#: metabrainz/templates/reports/financial_reports/index.html:303
+#: metabrainz/templates/reports/financial_reports/index.html:304
+#: metabrainz/templates/reports/financial_reports/index.html:305
+#: metabrainz/templates/reports/financial_reports/index.html:306
+#: metabrainz/templates/reports/financial_reports/index.html:307
+#: metabrainz/templates/reports/financial_reports/index.html:308
+#: metabrainz/templates/reports/financial_reports/index.html:309
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:311
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:313
+#: metabrainz/templates/reports/financial_reports/index.html:319
+#: metabrainz/templates/reports/financial_reports/index.html:331
+#: metabrainz/templates/reports/financial_reports/index.html:332
+#: metabrainz/templates/reports/financial_reports/index.html:333
+#: metabrainz/templates/reports/financial_reports/index.html:334
+#: metabrainz/templates/reports/financial_reports/index.html:335
+#: metabrainz/templates/reports/financial_reports/index.html:336
+#: metabrainz/templates/reports/financial_reports/index.html:337
+#: metabrainz/templates/reports/financial_reports/index.html:338
+#: metabrainz/templates/reports/financial_reports/index.html:339
+#: metabrainz/templates/reports/financial_reports/index.html:340
+#: metabrainz/templates/reports/financial_reports/index.html:341
+#: metabrainz/templates/reports/financial_reports/index.html:342
+#: metabrainz/templates/reports/financial_reports/index.html:348
+#: metabrainz/templates/reports/financial_reports/index.html:360
+#: metabrainz/templates/reports/financial_reports/index.html:361
+#: metabrainz/templates/reports/financial_reports/index.html:362
+#: metabrainz/templates/reports/financial_reports/index.html:363
+#: metabrainz/templates/reports/financial_reports/index.html:364
+#: metabrainz/templates/reports/financial_reports/index.html:365
+#: metabrainz/templates/reports/financial_reports/index.html:366
+#: metabrainz/templates/reports/financial_reports/index.html:367
+#: metabrainz/templates/reports/financial_reports/index.html:368
+#: metabrainz/templates/reports/financial_reports/index.html:369
+#: metabrainz/templates/reports/financial_reports/index.html:370
+#: metabrainz/templates/reports/financial_reports/index.html:371
+#: metabrainz/templates/reports/financial_reports/index.html:377
+#: metabrainz/templates/reports/financial_reports/index.html:389
+#: metabrainz/templates/reports/financial_reports/index.html:390
+#: metabrainz/templates/reports/financial_reports/index.html:391
+#: metabrainz/templates/reports/financial_reports/index.html:392
+#: metabrainz/templates/reports/financial_reports/index.html:393
+#: metabrainz/templates/reports/financial_reports/index.html:394
+#: metabrainz/templates/reports/financial_reports/index.html:395
+#: metabrainz/templates/reports/financial_reports/index.html:396
+#: metabrainz/templates/reports/financial_reports/index.html:397
+#: metabrainz/templates/reports/financial_reports/index.html:398
+#: metabrainz/templates/reports/financial_reports/index.html:399
+#: metabrainz/templates/reports/financial_reports/index.html:400
+#: metabrainz/templates/reports/financial_reports/index.html:406
+#: metabrainz/templates/reports/financial_reports/index.html:418
+#: metabrainz/templates/reports/financial_reports/index.html:419
+#: metabrainz/templates/reports/financial_reports/index.html:420
+#: metabrainz/templates/reports/financial_reports/index.html:421
+#: metabrainz/templates/reports/financial_reports/index.html:422
+#: metabrainz/templates/reports/financial_reports/index.html:423
+#: metabrainz/templates/reports/financial_reports/index.html:424
+#: metabrainz/templates/reports/financial_reports/index.html:425
+#: metabrainz/templates/reports/financial_reports/index.html:426
+#: metabrainz/templates/reports/financial_reports/index.html:427
+#: metabrainz/templates/reports/financial_reports/index.html:428
+#: metabrainz/templates/reports/financial_reports/index.html:429
+#: metabrainz/templates/reports/financial_reports/index.html:435
+#: metabrainz/templates/reports/financial_reports/index.html:447
+#: metabrainz/templates/reports/financial_reports/index.html:448
+#: metabrainz/templates/reports/financial_reports/index.html:449
+#: metabrainz/templates/reports/financial_reports/index.html:450
+#: metabrainz/templates/reports/financial_reports/index.html:451
+#: metabrainz/templates/reports/financial_reports/index.html:452
+#: metabrainz/templates/reports/financial_reports/index.html:453
+#: metabrainz/templates/reports/financial_reports/index.html:454
+#: metabrainz/templates/reports/financial_reports/index.html:455
+#: metabrainz/templates/reports/financial_reports/index.html:456
+#: metabrainz/templates/reports/financial_reports/index.html:457
+#: metabrainz/templates/reports/financial_reports/index.html:458
+#: metabrainz/templates/reports/financial_reports/index.html:464
+#: metabrainz/templates/reports/financial_reports/index.html:476
+#: metabrainz/templates/reports/financial_reports/index.html:477
+#: metabrainz/templates/reports/financial_reports/index.html:478
+#: metabrainz/templates/reports/financial_reports/index.html:479
+#: metabrainz/templates/reports/financial_reports/index.html:480
+#: metabrainz/templates/reports/financial_reports/index.html:481
+#: metabrainz/templates/reports/financial_reports/index.html:482
+#: metabrainz/templates/reports/financial_reports/index.html:483
+#: metabrainz/templates/reports/financial_reports/index.html:484
+#: metabrainz/templates/reports/financial_reports/index.html:485
+#: metabrainz/templates/reports/financial_reports/index.html:486
+#: metabrainz/templates/reports/financial_reports/index.html:487
+#: metabrainz/templates/reports/financial_reports/index.html:493
+#: metabrainz/templates/reports/financial_reports/index.html:505
+#: metabrainz/templates/reports/financial_reports/index.html:506
+#: metabrainz/templates/reports/financial_reports/index.html:507
+#: metabrainz/templates/reports/financial_reports/index.html:508
+#: metabrainz/templates/reports/financial_reports/index.html:509
+#: metabrainz/templates/reports/financial_reports/index.html:510
+#: metabrainz/templates/reports/financial_reports/index.html:511
+#: metabrainz/templates/reports/financial_reports/index.html:512
+#: metabrainz/templates/reports/financial_reports/index.html:513
+#: metabrainz/templates/reports/financial_reports/index.html:514
+#: metabrainz/templates/reports/financial_reports/index.html:515
+#: metabrainz/templates/reports/financial_reports/index.html:516
+#: metabrainz/templates/reports/financial_reports/index.html:522
+#: metabrainz/templates/reports/financial_reports/index.html:544
+msgid "balance sheet"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:44
+#: metabrainz/templates/reports/financial_reports/index.html:64
+#: metabrainz/templates/reports/financial_reports/index.html:85
+#: metabrainz/templates/reports/financial_reports/index.html:106
+#: metabrainz/templates/reports/financial_reports/index.html:126
+#: metabrainz/templates/reports/financial_reports/index.html:146
+#: metabrainz/templates/reports/financial_reports/index.html:166
+#: metabrainz/templates/reports/financial_reports/index.html:187
+#: metabrainz/templates/reports/financial_reports/index.html:211
+#: metabrainz/templates/reports/financial_reports/index.html:230
+#: metabrainz/templates/reports/financial_reports/index.html:259
+#: metabrainz/templates/reports/financial_reports/index.html:288
+#: metabrainz/templates/reports/financial_reports/index.html:317
+#: metabrainz/templates/reports/financial_reports/index.html:346
+#: metabrainz/templates/reports/financial_reports/index.html:375
+#: metabrainz/templates/reports/financial_reports/index.html:404
+#: metabrainz/templates/reports/financial_reports/index.html:433
+#: metabrainz/templates/reports/financial_reports/index.html:462
+#: metabrainz/templates/reports/financial_reports/index.html:491
+#: metabrainz/templates/reports/financial_reports/index.html:520
+#: metabrainz/templates/reports/financial_reports/index.html:542
+msgid "Year end reports"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:242
+#: metabrainz/templates/reports/financial_reports/index.html:271
+#: metabrainz/templates/reports/financial_reports/index.html:300
+#: metabrainz/templates/reports/financial_reports/index.html:329
+#: metabrainz/templates/reports/financial_reports/index.html:358
+#: metabrainz/templates/reports/financial_reports/index.html:387
+#: metabrainz/templates/reports/financial_reports/index.html:416
+#: metabrainz/templates/reports/financial_reports/index.html:445
+#: metabrainz/templates/reports/financial_reports/index.html:474
+#: metabrainz/templates/reports/financial_reports/index.html:503
+msgid "Monthly reports"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:244
+#: metabrainz/templates/reports/financial_reports/index.html:273
+#: metabrainz/templates/reports/financial_reports/index.html:302
+#: metabrainz/templates/reports/financial_reports/index.html:331
+#: metabrainz/templates/reports/financial_reports/index.html:360
+#: metabrainz/templates/reports/financial_reports/index.html:389
+#: metabrainz/templates/reports/financial_reports/index.html:418
+#: metabrainz/templates/reports/financial_reports/index.html:447
+#: metabrainz/templates/reports/financial_reports/index.html:476
+#: metabrainz/templates/reports/financial_reports/index.html:505
+#: metabrainz/templates/reports/financial_reports/index.html:527
+#: metabrainz/templates/reports/financial_reports/index.html:549
+#: metabrainz/templates/reports/financial_reports/index.html:565
+msgid "December"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:245
+#: metabrainz/templates/reports/financial_reports/index.html:274
+#: metabrainz/templates/reports/financial_reports/index.html:303
+#: metabrainz/templates/reports/financial_reports/index.html:332
+#: metabrainz/templates/reports/financial_reports/index.html:361
+#: metabrainz/templates/reports/financial_reports/index.html:390
+#: metabrainz/templates/reports/financial_reports/index.html:419
+#: metabrainz/templates/reports/financial_reports/index.html:448
+#: metabrainz/templates/reports/financial_reports/index.html:477
+#: metabrainz/templates/reports/financial_reports/index.html:506
+#: metabrainz/templates/reports/financial_reports/index.html:528
+#: metabrainz/templates/reports/financial_reports/index.html:550
+msgid "November"
+msgstr ""
+
 #: metabrainz/templates/reports/financial_reports/index.html:246
 #: metabrainz/templates/reports/financial_reports/index.html:275
 #: metabrainz/templates/reports/financial_reports/index.html:304
@@ -2052,427 +2668,102 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:420
 #: metabrainz/templates/reports/financial_reports/index.html:449
 #: metabrainz/templates/reports/financial_reports/index.html:478
-msgid "Quarterly reports"
+#: metabrainz/templates/reports/financial_reports/index.html:507
+#: metabrainz/templates/reports/financial_reports/index.html:529
+#: metabrainz/templates/reports/financial_reports/index.html:551
+msgid "October"
 msgstr ""
 
-#: metabrainz/templates/reports/financial_reports/index.html:38
-#: metabrainz/templates/reports/financial_reports/index.html:40
-#: metabrainz/templates/reports/financial_reports/index.html:49
-#: metabrainz/templates/reports/financial_reports/index.html:54
-#: metabrainz/templates/reports/financial_reports/index.html:56
-#: metabrainz/templates/reports/financial_reports/index.html:58
-#: metabrainz/templates/reports/financial_reports/index.html:60
-#: metabrainz/templates/reports/financial_reports/index.html:70
-#: metabrainz/templates/reports/financial_reports/index.html:75
-#: metabrainz/templates/reports/financial_reports/index.html:77
-#: metabrainz/templates/reports/financial_reports/index.html:79
-#: metabrainz/templates/reports/financial_reports/index.html:81
-#: metabrainz/templates/reports/financial_reports/index.html:91
-#: metabrainz/templates/reports/financial_reports/index.html:96
-#: metabrainz/templates/reports/financial_reports/index.html:98
-#: metabrainz/templates/reports/financial_reports/index.html:100
-#: metabrainz/templates/reports/financial_reports/index.html:102
-#: metabrainz/templates/reports/financial_reports/index.html:111
-#: metabrainz/templates/reports/financial_reports/index.html:116
-#: metabrainz/templates/reports/financial_reports/index.html:118
-#: metabrainz/templates/reports/financial_reports/index.html:120
-#: metabrainz/templates/reports/financial_reports/index.html:122
-#: metabrainz/templates/reports/financial_reports/index.html:131
-#: metabrainz/templates/reports/financial_reports/index.html:136
-#: metabrainz/templates/reports/financial_reports/index.html:138
-#: metabrainz/templates/reports/financial_reports/index.html:140
-#: metabrainz/templates/reports/financial_reports/index.html:142
-#: metabrainz/templates/reports/financial_reports/index.html:151
-#: metabrainz/templates/reports/financial_reports/index.html:156
-#: metabrainz/templates/reports/financial_reports/index.html:158
-#: metabrainz/templates/reports/financial_reports/index.html:160
-#: metabrainz/templates/reports/financial_reports/index.html:162
-#: metabrainz/templates/reports/financial_reports/index.html:172
-#: metabrainz/templates/reports/financial_reports/index.html:177
-#: metabrainz/templates/reports/financial_reports/index.html:179
-#: metabrainz/templates/reports/financial_reports/index.html:181
-#: metabrainz/templates/reports/financial_reports/index.html:183
-#: metabrainz/templates/reports/financial_reports/index.html:196
-#: metabrainz/templates/reports/financial_reports/index.html:201
-#: metabrainz/templates/reports/financial_reports/index.html:203
-#: metabrainz/templates/reports/financial_reports/index.html:205
-#: metabrainz/templates/reports/financial_reports/index.html:207
-#: metabrainz/templates/reports/financial_reports/index.html:215
-#: metabrainz/templates/reports/financial_reports/index.html:219
-#: metabrainz/templates/reports/financial_reports/index.html:220
-#: metabrainz/templates/reports/financial_reports/index.html:221
-#: metabrainz/templates/reports/financial_reports/index.html:222
-#: metabrainz/templates/reports/financial_reports/index.html:226
-#: metabrainz/templates/reports/financial_reports/index.html:227
-#: metabrainz/templates/reports/financial_reports/index.html:228
-#: metabrainz/templates/reports/financial_reports/index.html:229
-#: metabrainz/templates/reports/financial_reports/index.html:230
-#: metabrainz/templates/reports/financial_reports/index.html:231
-#: metabrainz/templates/reports/financial_reports/index.html:232
-#: metabrainz/templates/reports/financial_reports/index.html:233
-#: metabrainz/templates/reports/financial_reports/index.html:234
-#: metabrainz/templates/reports/financial_reports/index.html:235
-#: metabrainz/templates/reports/financial_reports/index.html:236
-#: metabrainz/templates/reports/financial_reports/index.html:237
-#: metabrainz/templates/reports/financial_reports/index.html:244
+#: metabrainz/templates/reports/financial_reports/index.html:247
+#: metabrainz/templates/reports/financial_reports/index.html:276
+#: metabrainz/templates/reports/financial_reports/index.html:305
+#: metabrainz/templates/reports/financial_reports/index.html:334
+#: metabrainz/templates/reports/financial_reports/index.html:363
+#: metabrainz/templates/reports/financial_reports/index.html:392
+#: metabrainz/templates/reports/financial_reports/index.html:421
+#: metabrainz/templates/reports/financial_reports/index.html:450
+#: metabrainz/templates/reports/financial_reports/index.html:479
+#: metabrainz/templates/reports/financial_reports/index.html:508
+#: metabrainz/templates/reports/financial_reports/index.html:530
+#: metabrainz/templates/reports/financial_reports/index.html:552
+msgid "September"
+msgstr ""
+
 #: metabrainz/templates/reports/financial_reports/index.html:248
-#: metabrainz/templates/reports/financial_reports/index.html:249
-#: metabrainz/templates/reports/financial_reports/index.html:250
-#: metabrainz/templates/reports/financial_reports/index.html:251
-#: metabrainz/templates/reports/financial_reports/index.html:255
-#: metabrainz/templates/reports/financial_reports/index.html:256
-#: metabrainz/templates/reports/financial_reports/index.html:257
-#: metabrainz/templates/reports/financial_reports/index.html:258
-#: metabrainz/templates/reports/financial_reports/index.html:259
-#: metabrainz/templates/reports/financial_reports/index.html:260
-#: metabrainz/templates/reports/financial_reports/index.html:261
-#: metabrainz/templates/reports/financial_reports/index.html:262
-#: metabrainz/templates/reports/financial_reports/index.html:263
-#: metabrainz/templates/reports/financial_reports/index.html:264
-#: metabrainz/templates/reports/financial_reports/index.html:265
-#: metabrainz/templates/reports/financial_reports/index.html:266
-#: metabrainz/templates/reports/financial_reports/index.html:273
 #: metabrainz/templates/reports/financial_reports/index.html:277
-#: metabrainz/templates/reports/financial_reports/index.html:278
-#: metabrainz/templates/reports/financial_reports/index.html:279
-#: metabrainz/templates/reports/financial_reports/index.html:280
-#: metabrainz/templates/reports/financial_reports/index.html:284
-#: metabrainz/templates/reports/financial_reports/index.html:285
-#: metabrainz/templates/reports/financial_reports/index.html:286
-#: metabrainz/templates/reports/financial_reports/index.html:287
-#: metabrainz/templates/reports/financial_reports/index.html:288
-#: metabrainz/templates/reports/financial_reports/index.html:289
-#: metabrainz/templates/reports/financial_reports/index.html:290
-#: metabrainz/templates/reports/financial_reports/index.html:291
-#: metabrainz/templates/reports/financial_reports/index.html:292
-#: metabrainz/templates/reports/financial_reports/index.html:293
-#: metabrainz/templates/reports/financial_reports/index.html:294
-#: metabrainz/templates/reports/financial_reports/index.html:295
-#: metabrainz/templates/reports/financial_reports/index.html:302
 #: metabrainz/templates/reports/financial_reports/index.html:306
-#: metabrainz/templates/reports/financial_reports/index.html:307
-#: metabrainz/templates/reports/financial_reports/index.html:308
-#: metabrainz/templates/reports/financial_reports/index.html:309
-#: metabrainz/templates/reports/financial_reports/index.html:313
-#: metabrainz/templates/reports/financial_reports/index.html:314
-#: metabrainz/templates/reports/financial_reports/index.html:315
-#: metabrainz/templates/reports/financial_reports/index.html:316
-#: metabrainz/templates/reports/financial_reports/index.html:317
-#: metabrainz/templates/reports/financial_reports/index.html:318
-#: metabrainz/templates/reports/financial_reports/index.html:319
-#: metabrainz/templates/reports/financial_reports/index.html:320
-#: metabrainz/templates/reports/financial_reports/index.html:321
-#: metabrainz/templates/reports/financial_reports/index.html:322
-#: metabrainz/templates/reports/financial_reports/index.html:323
-#: metabrainz/templates/reports/financial_reports/index.html:324
-#: metabrainz/templates/reports/financial_reports/index.html:331
 #: metabrainz/templates/reports/financial_reports/index.html:335
-#: metabrainz/templates/reports/financial_reports/index.html:336
-#: metabrainz/templates/reports/financial_reports/index.html:337
-#: metabrainz/templates/reports/financial_reports/index.html:338
-#: metabrainz/templates/reports/financial_reports/index.html:342
-#: metabrainz/templates/reports/financial_reports/index.html:343
-#: metabrainz/templates/reports/financial_reports/index.html:344
-#: metabrainz/templates/reports/financial_reports/index.html:345
-#: metabrainz/templates/reports/financial_reports/index.html:346
-#: metabrainz/templates/reports/financial_reports/index.html:347
-#: metabrainz/templates/reports/financial_reports/index.html:348
-#: metabrainz/templates/reports/financial_reports/index.html:349
-#: metabrainz/templates/reports/financial_reports/index.html:350
-#: metabrainz/templates/reports/financial_reports/index.html:351
-#: metabrainz/templates/reports/financial_reports/index.html:352
-#: metabrainz/templates/reports/financial_reports/index.html:353
-#: metabrainz/templates/reports/financial_reports/index.html:360
 #: metabrainz/templates/reports/financial_reports/index.html:364
-#: metabrainz/templates/reports/financial_reports/index.html:365
-#: metabrainz/templates/reports/financial_reports/index.html:366
-#: metabrainz/templates/reports/financial_reports/index.html:367
-#: metabrainz/templates/reports/financial_reports/index.html:371
-#: metabrainz/templates/reports/financial_reports/index.html:372
-#: metabrainz/templates/reports/financial_reports/index.html:373
-#: metabrainz/templates/reports/financial_reports/index.html:374
-#: metabrainz/templates/reports/financial_reports/index.html:375
-#: metabrainz/templates/reports/financial_reports/index.html:376
-#: metabrainz/templates/reports/financial_reports/index.html:377
-#: metabrainz/templates/reports/financial_reports/index.html:378
-#: metabrainz/templates/reports/financial_reports/index.html:379
-#: metabrainz/templates/reports/financial_reports/index.html:380
-#: metabrainz/templates/reports/financial_reports/index.html:381
-#: metabrainz/templates/reports/financial_reports/index.html:382
-#: metabrainz/templates/reports/financial_reports/index.html:389
 #: metabrainz/templates/reports/financial_reports/index.html:393
-#: metabrainz/templates/reports/financial_reports/index.html:394
-#: metabrainz/templates/reports/financial_reports/index.html:395
-#: metabrainz/templates/reports/financial_reports/index.html:396
-#: metabrainz/templates/reports/financial_reports/index.html:400
-#: metabrainz/templates/reports/financial_reports/index.html:401
-#: metabrainz/templates/reports/financial_reports/index.html:402
-#: metabrainz/templates/reports/financial_reports/index.html:403
-#: metabrainz/templates/reports/financial_reports/index.html:404
-#: metabrainz/templates/reports/financial_reports/index.html:405
-#: metabrainz/templates/reports/financial_reports/index.html:406
-#: metabrainz/templates/reports/financial_reports/index.html:407
-#: metabrainz/templates/reports/financial_reports/index.html:408
-#: metabrainz/templates/reports/financial_reports/index.html:409
-#: metabrainz/templates/reports/financial_reports/index.html:410
-#: metabrainz/templates/reports/financial_reports/index.html:411
-#: metabrainz/templates/reports/financial_reports/index.html:418
 #: metabrainz/templates/reports/financial_reports/index.html:422
-#: metabrainz/templates/reports/financial_reports/index.html:423
-#: metabrainz/templates/reports/financial_reports/index.html:424
-#: metabrainz/templates/reports/financial_reports/index.html:425
-#: metabrainz/templates/reports/financial_reports/index.html:429
-#: metabrainz/templates/reports/financial_reports/index.html:430
-#: metabrainz/templates/reports/financial_reports/index.html:431
-#: metabrainz/templates/reports/financial_reports/index.html:432
-#: metabrainz/templates/reports/financial_reports/index.html:433
-#: metabrainz/templates/reports/financial_reports/index.html:434
-#: metabrainz/templates/reports/financial_reports/index.html:435
-#: metabrainz/templates/reports/financial_reports/index.html:436
-#: metabrainz/templates/reports/financial_reports/index.html:437
-#: metabrainz/templates/reports/financial_reports/index.html:438
-#: metabrainz/templates/reports/financial_reports/index.html:439
-#: metabrainz/templates/reports/financial_reports/index.html:440
-#: metabrainz/templates/reports/financial_reports/index.html:447
 #: metabrainz/templates/reports/financial_reports/index.html:451
-#: metabrainz/templates/reports/financial_reports/index.html:452
-#: metabrainz/templates/reports/financial_reports/index.html:453
-#: metabrainz/templates/reports/financial_reports/index.html:454
-#: metabrainz/templates/reports/financial_reports/index.html:458
-#: metabrainz/templates/reports/financial_reports/index.html:459
-#: metabrainz/templates/reports/financial_reports/index.html:460
-#: metabrainz/templates/reports/financial_reports/index.html:461
-#: metabrainz/templates/reports/financial_reports/index.html:462
-#: metabrainz/templates/reports/financial_reports/index.html:463
-#: metabrainz/templates/reports/financial_reports/index.html:464
-#: metabrainz/templates/reports/financial_reports/index.html:465
-#: metabrainz/templates/reports/financial_reports/index.html:466
-#: metabrainz/templates/reports/financial_reports/index.html:467
-#: metabrainz/templates/reports/financial_reports/index.html:468
-#: metabrainz/templates/reports/financial_reports/index.html:469
-#: metabrainz/templates/reports/financial_reports/index.html:476
 #: metabrainz/templates/reports/financial_reports/index.html:480
+#: metabrainz/templates/reports/financial_reports/index.html:509
+#: metabrainz/templates/reports/financial_reports/index.html:531
+#: metabrainz/templates/reports/financial_reports/index.html:553
+msgid "August"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:249
+#: metabrainz/templates/reports/financial_reports/index.html:278
+#: metabrainz/templates/reports/financial_reports/index.html:307
+#: metabrainz/templates/reports/financial_reports/index.html:336
+#: metabrainz/templates/reports/financial_reports/index.html:365
+#: metabrainz/templates/reports/financial_reports/index.html:394
+#: metabrainz/templates/reports/financial_reports/index.html:423
+#: metabrainz/templates/reports/financial_reports/index.html:452
 #: metabrainz/templates/reports/financial_reports/index.html:481
+#: metabrainz/templates/reports/financial_reports/index.html:510
+#: metabrainz/templates/reports/financial_reports/index.html:532
+#: metabrainz/templates/reports/financial_reports/index.html:554
+msgid "July"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:250
+#: metabrainz/templates/reports/financial_reports/index.html:279
+#: metabrainz/templates/reports/financial_reports/index.html:308
+#: metabrainz/templates/reports/financial_reports/index.html:337
+#: metabrainz/templates/reports/financial_reports/index.html:366
+#: metabrainz/templates/reports/financial_reports/index.html:395
+#: metabrainz/templates/reports/financial_reports/index.html:424
+#: metabrainz/templates/reports/financial_reports/index.html:453
 #: metabrainz/templates/reports/financial_reports/index.html:482
+#: metabrainz/templates/reports/financial_reports/index.html:511
+#: metabrainz/templates/reports/financial_reports/index.html:533
+#: metabrainz/templates/reports/financial_reports/index.html:555
+msgid "June"
+msgstr ""
+
+#: metabrainz/templates/reports/financial_reports/index.html:251
+#: metabrainz/templates/reports/financial_reports/index.html:280
+#: metabrainz/templates/reports/financial_reports/index.html:309
+#: metabrainz/templates/reports/financial_reports/index.html:338
+#: metabrainz/templates/reports/financial_reports/index.html:367
+#: metabrainz/templates/reports/financial_reports/index.html:396
+#: metabrainz/templates/reports/financial_reports/index.html:425
+#: metabrainz/templates/reports/financial_reports/index.html:454
 #: metabrainz/templates/reports/financial_reports/index.html:483
-#: metabrainz/templates/reports/financial_reports/index.html:487
-#: metabrainz/templates/reports/financial_reports/index.html:488
-#: metabrainz/templates/reports/financial_reports/index.html:489
-#: metabrainz/templates/reports/financial_reports/index.html:490
-#: metabrainz/templates/reports/financial_reports/index.html:491
-#: metabrainz/templates/reports/financial_reports/index.html:492
-#: metabrainz/templates/reports/financial_reports/index.html:493
-#: metabrainz/templates/reports/financial_reports/index.html:494
-#: metabrainz/templates/reports/financial_reports/index.html:495
-#: metabrainz/templates/reports/financial_reports/index.html:496
-#: metabrainz/templates/reports/financial_reports/index.html:497
-#: metabrainz/templates/reports/financial_reports/index.html:498
-#: metabrainz/templates/reports/financial_reports/index.html:505
-#: metabrainz/templates/reports/financial_reports/index.html:527
-msgid "profit &amp; loss"
+#: metabrainz/templates/reports/financial_reports/index.html:512
+#: metabrainz/templates/reports/financial_reports/index.html:534
+#: metabrainz/templates/reports/financial_reports/index.html:556
+msgid "May"
 msgstr ""
 
-#: metabrainz/templates/reports/financial_reports/index.html:39
-#: metabrainz/templates/reports/financial_reports/index.html:41
-#: metabrainz/templates/reports/financial_reports/index.html:48
-#: metabrainz/templates/reports/financial_reports/index.html:55
-#: metabrainz/templates/reports/financial_reports/index.html:57
-#: metabrainz/templates/reports/financial_reports/index.html:59
-#: metabrainz/templates/reports/financial_reports/index.html:61
-#: metabrainz/templates/reports/financial_reports/index.html:69
-#: metabrainz/templates/reports/financial_reports/index.html:76
-#: metabrainz/templates/reports/financial_reports/index.html:78
-#: metabrainz/templates/reports/financial_reports/index.html:80
-#: metabrainz/templates/reports/financial_reports/index.html:82
-#: metabrainz/templates/reports/financial_reports/index.html:90
-#: metabrainz/templates/reports/financial_reports/index.html:97
-#: metabrainz/templates/reports/financial_reports/index.html:99
-#: metabrainz/templates/reports/financial_reports/index.html:101
-#: metabrainz/templates/reports/financial_reports/index.html:103
-#: metabrainz/templates/reports/financial_reports/index.html:110
-#: metabrainz/templates/reports/financial_reports/index.html:117
-#: metabrainz/templates/reports/financial_reports/index.html:119
-#: metabrainz/templates/reports/financial_reports/index.html:121
-#: metabrainz/templates/reports/financial_reports/index.html:123
-#: metabrainz/templates/reports/financial_reports/index.html:130
-#: metabrainz/templates/reports/financial_reports/index.html:137
-#: metabrainz/templates/reports/financial_reports/index.html:139
-#: metabrainz/templates/reports/financial_reports/index.html:141
-#: metabrainz/templates/reports/financial_reports/index.html:143
-#: metabrainz/templates/reports/financial_reports/index.html:150
-#: metabrainz/templates/reports/financial_reports/index.html:157
-#: metabrainz/templates/reports/financial_reports/index.html:159
-#: metabrainz/templates/reports/financial_reports/index.html:161
-#: metabrainz/templates/reports/financial_reports/index.html:163
-#: metabrainz/templates/reports/financial_reports/index.html:171
-#: metabrainz/templates/reports/financial_reports/index.html:178
-#: metabrainz/templates/reports/financial_reports/index.html:180
-#: metabrainz/templates/reports/financial_reports/index.html:182
-#: metabrainz/templates/reports/financial_reports/index.html:184
-#: metabrainz/templates/reports/financial_reports/index.html:195
-#: metabrainz/templates/reports/financial_reports/index.html:202
-#: metabrainz/templates/reports/financial_reports/index.html:204
-#: metabrainz/templates/reports/financial_reports/index.html:206
-#: metabrainz/templates/reports/financial_reports/index.html:208
-#: metabrainz/templates/reports/financial_reports/index.html:214
-#: metabrainz/templates/reports/financial_reports/index.html:226
-#: metabrainz/templates/reports/financial_reports/index.html:227
-#: metabrainz/templates/reports/financial_reports/index.html:228
-#: metabrainz/templates/reports/financial_reports/index.html:229
-#: metabrainz/templates/reports/financial_reports/index.html:230
-#: metabrainz/templates/reports/financial_reports/index.html:231
-#: metabrainz/templates/reports/financial_reports/index.html:232
-#: metabrainz/templates/reports/financial_reports/index.html:233
-#: metabrainz/templates/reports/financial_reports/index.html:234
-#: metabrainz/templates/reports/financial_reports/index.html:235
-#: metabrainz/templates/reports/financial_reports/index.html:236
-#: metabrainz/templates/reports/financial_reports/index.html:237
-#: metabrainz/templates/reports/financial_reports/index.html:243
-#: metabrainz/templates/reports/financial_reports/index.html:255
-#: metabrainz/templates/reports/financial_reports/index.html:256
-#: metabrainz/templates/reports/financial_reports/index.html:257
-#: metabrainz/templates/reports/financial_reports/index.html:258
-#: metabrainz/templates/reports/financial_reports/index.html:259
-#: metabrainz/templates/reports/financial_reports/index.html:260
-#: metabrainz/templates/reports/financial_reports/index.html:261
-#: metabrainz/templates/reports/financial_reports/index.html:262
-#: metabrainz/templates/reports/financial_reports/index.html:263
-#: metabrainz/templates/reports/financial_reports/index.html:264
-#: metabrainz/templates/reports/financial_reports/index.html:265
-#: metabrainz/templates/reports/financial_reports/index.html:266
-#: metabrainz/templates/reports/financial_reports/index.html:272
-#: metabrainz/templates/reports/financial_reports/index.html:284
-#: metabrainz/templates/reports/financial_reports/index.html:285
-#: metabrainz/templates/reports/financial_reports/index.html:286
-#: metabrainz/templates/reports/financial_reports/index.html:287
-#: metabrainz/templates/reports/financial_reports/index.html:288
-#: metabrainz/templates/reports/financial_reports/index.html:289
-#: metabrainz/templates/reports/financial_reports/index.html:290
-#: metabrainz/templates/reports/financial_reports/index.html:291
-#: metabrainz/templates/reports/financial_reports/index.html:292
-#: metabrainz/templates/reports/financial_reports/index.html:293
-#: metabrainz/templates/reports/financial_reports/index.html:294
-#: metabrainz/templates/reports/financial_reports/index.html:295
-#: metabrainz/templates/reports/financial_reports/index.html:301
-#: metabrainz/templates/reports/financial_reports/index.html:313
-#: metabrainz/templates/reports/financial_reports/index.html:314
-#: metabrainz/templates/reports/financial_reports/index.html:315
-#: metabrainz/templates/reports/financial_reports/index.html:316
-#: metabrainz/templates/reports/financial_reports/index.html:317
-#: metabrainz/templates/reports/financial_reports/index.html:318
-#: metabrainz/templates/reports/financial_reports/index.html:319
-#: metabrainz/templates/reports/financial_reports/index.html:320
-#: metabrainz/templates/reports/financial_reports/index.html:321
-#: metabrainz/templates/reports/financial_reports/index.html:322
-#: metabrainz/templates/reports/financial_reports/index.html:323
-#: metabrainz/templates/reports/financial_reports/index.html:324
-#: metabrainz/templates/reports/financial_reports/index.html:330
-#: metabrainz/templates/reports/financial_reports/index.html:342
-#: metabrainz/templates/reports/financial_reports/index.html:343
-#: metabrainz/templates/reports/financial_reports/index.html:344
-#: metabrainz/templates/reports/financial_reports/index.html:345
-#: metabrainz/templates/reports/financial_reports/index.html:346
-#: metabrainz/templates/reports/financial_reports/index.html:347
-#: metabrainz/templates/reports/financial_reports/index.html:348
-#: metabrainz/templates/reports/financial_reports/index.html:349
-#: metabrainz/templates/reports/financial_reports/index.html:350
-#: metabrainz/templates/reports/financial_reports/index.html:351
-#: metabrainz/templates/reports/financial_reports/index.html:352
-#: metabrainz/templates/reports/financial_reports/index.html:353
-#: metabrainz/templates/reports/financial_reports/index.html:359
-#: metabrainz/templates/reports/financial_reports/index.html:371
-#: metabrainz/templates/reports/financial_reports/index.html:372
-#: metabrainz/templates/reports/financial_reports/index.html:373
-#: metabrainz/templates/reports/financial_reports/index.html:374
-#: metabrainz/templates/reports/financial_reports/index.html:375
-#: metabrainz/templates/reports/financial_reports/index.html:376
-#: metabrainz/templates/reports/financial_reports/index.html:377
-#: metabrainz/templates/reports/financial_reports/index.html:378
-#: metabrainz/templates/reports/financial_reports/index.html:379
-#: metabrainz/templates/reports/financial_reports/index.html:380
-#: metabrainz/templates/reports/financial_reports/index.html:381
-#: metabrainz/templates/reports/financial_reports/index.html:382
-#: metabrainz/templates/reports/financial_reports/index.html:388
-#: metabrainz/templates/reports/financial_reports/index.html:400
-#: metabrainz/templates/reports/financial_reports/index.html:401
-#: metabrainz/templates/reports/financial_reports/index.html:402
-#: metabrainz/templates/reports/financial_reports/index.html:403
-#: metabrainz/templates/reports/financial_reports/index.html:404
-#: metabrainz/templates/reports/financial_reports/index.html:405
-#: metabrainz/templates/reports/financial_reports/index.html:406
-#: metabrainz/templates/reports/financial_reports/index.html:407
-#: metabrainz/templates/reports/financial_reports/index.html:408
-#: metabrainz/templates/reports/financial_reports/index.html:409
-#: metabrainz/templates/reports/financial_reports/index.html:410
-#: metabrainz/templates/reports/financial_reports/index.html:411
-#: metabrainz/templates/reports/financial_reports/index.html:417
-#: metabrainz/templates/reports/financial_reports/index.html:429
-#: metabrainz/templates/reports/financial_reports/index.html:430
-#: metabrainz/templates/reports/financial_reports/index.html:431
-#: metabrainz/templates/reports/financial_reports/index.html:432
-#: metabrainz/templates/reports/financial_reports/index.html:433
-#: metabrainz/templates/reports/financial_reports/index.html:434
-#: metabrainz/templates/reports/financial_reports/index.html:435
-#: metabrainz/templates/reports/financial_reports/index.html:436
-#: metabrainz/templates/reports/financial_reports/index.html:437
-#: metabrainz/templates/reports/financial_reports/index.html:438
-#: metabrainz/templates/reports/financial_reports/index.html:439
-#: metabrainz/templates/reports/financial_reports/index.html:440
-#: metabrainz/templates/reports/financial_reports/index.html:446
-#: metabrainz/templates/reports/financial_reports/index.html:458
-#: metabrainz/templates/reports/financial_reports/index.html:459
-#: metabrainz/templates/reports/financial_reports/index.html:460
-#: metabrainz/templates/reports/financial_reports/index.html:461
-#: metabrainz/templates/reports/financial_reports/index.html:462
-#: metabrainz/templates/reports/financial_reports/index.html:463
-#: metabrainz/templates/reports/financial_reports/index.html:464
-#: metabrainz/templates/reports/financial_reports/index.html:465
-#: metabrainz/templates/reports/financial_reports/index.html:466
-#: metabrainz/templates/reports/financial_reports/index.html:467
-#: metabrainz/templates/reports/financial_reports/index.html:468
-#: metabrainz/templates/reports/financial_reports/index.html:469
-#: metabrainz/templates/reports/financial_reports/index.html:475
-#: metabrainz/templates/reports/financial_reports/index.html:487
-#: metabrainz/templates/reports/financial_reports/index.html:488
-#: metabrainz/templates/reports/financial_reports/index.html:489
-#: metabrainz/templates/reports/financial_reports/index.html:490
-#: metabrainz/templates/reports/financial_reports/index.html:491
-#: metabrainz/templates/reports/financial_reports/index.html:492
-#: metabrainz/templates/reports/financial_reports/index.html:493
-#: metabrainz/templates/reports/financial_reports/index.html:494
-#: metabrainz/templates/reports/financial_reports/index.html:495
-#: metabrainz/templates/reports/financial_reports/index.html:496
-#: metabrainz/templates/reports/financial_reports/index.html:497
-#: metabrainz/templates/reports/financial_reports/index.html:498
-#: metabrainz/templates/reports/financial_reports/index.html:504
-#: metabrainz/templates/reports/financial_reports/index.html:526
-msgid "balance sheet"
+#: metabrainz/templates/reports/financial_reports/index.html:252
+#: metabrainz/templates/reports/financial_reports/index.html:281
+#: metabrainz/templates/reports/financial_reports/index.html:310
+#: metabrainz/templates/reports/financial_reports/index.html:339
+#: metabrainz/templates/reports/financial_reports/index.html:368
+#: metabrainz/templates/reports/financial_reports/index.html:397
+#: metabrainz/templates/reports/financial_reports/index.html:426
+#: metabrainz/templates/reports/financial_reports/index.html:455
+#: metabrainz/templates/reports/financial_reports/index.html:484
+#: metabrainz/templates/reports/financial_reports/index.html:513
+#: metabrainz/templates/reports/financial_reports/index.html:535
+#: metabrainz/templates/reports/financial_reports/index.html:557
+msgid "April"
 msgstr ""
 
-#: metabrainz/templates/reports/financial_reports/index.html:46
-#: metabrainz/templates/reports/financial_reports/index.html:67
-#: metabrainz/templates/reports/financial_reports/index.html:88
-#: metabrainz/templates/reports/financial_reports/index.html:108
-#: metabrainz/templates/reports/financial_reports/index.html:128
-#: metabrainz/templates/reports/financial_reports/index.html:148
-#: metabrainz/templates/reports/financial_reports/index.html:169
-#: metabrainz/templates/reports/financial_reports/index.html:193
-#: metabrainz/templates/reports/financial_reports/index.html:212
-#: metabrainz/templates/reports/financial_reports/index.html:241
-#: metabrainz/templates/reports/financial_reports/index.html:270
-#: metabrainz/templates/reports/financial_reports/index.html:299
-#: metabrainz/templates/reports/financial_reports/index.html:328
-#: metabrainz/templates/reports/financial_reports/index.html:357
-#: metabrainz/templates/reports/financial_reports/index.html:386
-#: metabrainz/templates/reports/financial_reports/index.html:415
-#: metabrainz/templates/reports/financial_reports/index.html:444
-#: metabrainz/templates/reports/financial_reports/index.html:473
-#: metabrainz/templates/reports/financial_reports/index.html:502
-#: metabrainz/templates/reports/financial_reports/index.html:524
-msgid "Year end reports"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:224
 #: metabrainz/templates/reports/financial_reports/index.html:253
 #: metabrainz/templates/reports/financial_reports/index.html:282
 #: metabrainz/templates/reports/financial_reports/index.html:311
@@ -2482,10 +2773,27 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:427
 #: metabrainz/templates/reports/financial_reports/index.html:456
 #: metabrainz/templates/reports/financial_reports/index.html:485
-msgid "Monthly reports"
+#: metabrainz/templates/reports/financial_reports/index.html:514
+#: metabrainz/templates/reports/financial_reports/index.html:536
+#: metabrainz/templates/reports/financial_reports/index.html:558
+msgid "March"
 msgstr ""
 
-#: metabrainz/templates/reports/financial_reports/index.html:226
+#: metabrainz/templates/reports/financial_reports/index.html:254
+#: metabrainz/templates/reports/financial_reports/index.html:283
+#: metabrainz/templates/reports/financial_reports/index.html:312
+#: metabrainz/templates/reports/financial_reports/index.html:341
+#: metabrainz/templates/reports/financial_reports/index.html:370
+#: metabrainz/templates/reports/financial_reports/index.html:399
+#: metabrainz/templates/reports/financial_reports/index.html:428
+#: metabrainz/templates/reports/financial_reports/index.html:457
+#: metabrainz/templates/reports/financial_reports/index.html:486
+#: metabrainz/templates/reports/financial_reports/index.html:515
+#: metabrainz/templates/reports/financial_reports/index.html:537
+#: metabrainz/templates/reports/financial_reports/index.html:559
+msgid "February"
+msgstr ""
+
 #: metabrainz/templates/reports/financial_reports/index.html:255
 #: metabrainz/templates/reports/financial_reports/index.html:284
 #: metabrainz/templates/reports/financial_reports/index.html:313
@@ -2495,180 +2803,22 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:429
 #: metabrainz/templates/reports/financial_reports/index.html:458
 #: metabrainz/templates/reports/financial_reports/index.html:487
-#: metabrainz/templates/reports/financial_reports/index.html:509
-#: metabrainz/templates/reports/financial_reports/index.html:531
-#: metabrainz/templates/reports/financial_reports/index.html:547
-msgid "December"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:227
-#: metabrainz/templates/reports/financial_reports/index.html:256
-#: metabrainz/templates/reports/financial_reports/index.html:285
-#: metabrainz/templates/reports/financial_reports/index.html:314
-#: metabrainz/templates/reports/financial_reports/index.html:343
-#: metabrainz/templates/reports/financial_reports/index.html:372
-#: metabrainz/templates/reports/financial_reports/index.html:401
-#: metabrainz/templates/reports/financial_reports/index.html:430
-#: metabrainz/templates/reports/financial_reports/index.html:459
-#: metabrainz/templates/reports/financial_reports/index.html:488
-#: metabrainz/templates/reports/financial_reports/index.html:510
-#: metabrainz/templates/reports/financial_reports/index.html:532
-msgid "November"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:228
-#: metabrainz/templates/reports/financial_reports/index.html:257
-#: metabrainz/templates/reports/financial_reports/index.html:286
-#: metabrainz/templates/reports/financial_reports/index.html:315
-#: metabrainz/templates/reports/financial_reports/index.html:344
-#: metabrainz/templates/reports/financial_reports/index.html:373
-#: metabrainz/templates/reports/financial_reports/index.html:402
-#: metabrainz/templates/reports/financial_reports/index.html:431
-#: metabrainz/templates/reports/financial_reports/index.html:460
-#: metabrainz/templates/reports/financial_reports/index.html:489
-#: metabrainz/templates/reports/financial_reports/index.html:511
-#: metabrainz/templates/reports/financial_reports/index.html:533
-msgid "October"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:229
-#: metabrainz/templates/reports/financial_reports/index.html:258
-#: metabrainz/templates/reports/financial_reports/index.html:287
-#: metabrainz/templates/reports/financial_reports/index.html:316
-#: metabrainz/templates/reports/financial_reports/index.html:345
-#: metabrainz/templates/reports/financial_reports/index.html:374
-#: metabrainz/templates/reports/financial_reports/index.html:403
-#: metabrainz/templates/reports/financial_reports/index.html:432
-#: metabrainz/templates/reports/financial_reports/index.html:461
-#: metabrainz/templates/reports/financial_reports/index.html:490
-#: metabrainz/templates/reports/financial_reports/index.html:512
-#: metabrainz/templates/reports/financial_reports/index.html:534
-msgid "September"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:230
-#: metabrainz/templates/reports/financial_reports/index.html:259
-#: metabrainz/templates/reports/financial_reports/index.html:288
-#: metabrainz/templates/reports/financial_reports/index.html:317
-#: metabrainz/templates/reports/financial_reports/index.html:346
-#: metabrainz/templates/reports/financial_reports/index.html:375
-#: metabrainz/templates/reports/financial_reports/index.html:404
-#: metabrainz/templates/reports/financial_reports/index.html:433
-#: metabrainz/templates/reports/financial_reports/index.html:462
-#: metabrainz/templates/reports/financial_reports/index.html:491
-#: metabrainz/templates/reports/financial_reports/index.html:513
-#: metabrainz/templates/reports/financial_reports/index.html:535
-msgid "August"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:231
-#: metabrainz/templates/reports/financial_reports/index.html:260
-#: metabrainz/templates/reports/financial_reports/index.html:289
-#: metabrainz/templates/reports/financial_reports/index.html:318
-#: metabrainz/templates/reports/financial_reports/index.html:347
-#: metabrainz/templates/reports/financial_reports/index.html:376
-#: metabrainz/templates/reports/financial_reports/index.html:405
-#: metabrainz/templates/reports/financial_reports/index.html:434
-#: metabrainz/templates/reports/financial_reports/index.html:463
-#: metabrainz/templates/reports/financial_reports/index.html:492
-#: metabrainz/templates/reports/financial_reports/index.html:514
-#: metabrainz/templates/reports/financial_reports/index.html:536
-msgid "July"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:232
-#: metabrainz/templates/reports/financial_reports/index.html:261
-#: metabrainz/templates/reports/financial_reports/index.html:290
-#: metabrainz/templates/reports/financial_reports/index.html:319
-#: metabrainz/templates/reports/financial_reports/index.html:348
-#: metabrainz/templates/reports/financial_reports/index.html:377
-#: metabrainz/templates/reports/financial_reports/index.html:406
-#: metabrainz/templates/reports/financial_reports/index.html:435
-#: metabrainz/templates/reports/financial_reports/index.html:464
-#: metabrainz/templates/reports/financial_reports/index.html:493
-#: metabrainz/templates/reports/financial_reports/index.html:515
-#: metabrainz/templates/reports/financial_reports/index.html:537
-msgid "June"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:233
-#: metabrainz/templates/reports/financial_reports/index.html:262
-#: metabrainz/templates/reports/financial_reports/index.html:291
-#: metabrainz/templates/reports/financial_reports/index.html:320
-#: metabrainz/templates/reports/financial_reports/index.html:349
-#: metabrainz/templates/reports/financial_reports/index.html:378
-#: metabrainz/templates/reports/financial_reports/index.html:407
-#: metabrainz/templates/reports/financial_reports/index.html:436
-#: metabrainz/templates/reports/financial_reports/index.html:465
-#: metabrainz/templates/reports/financial_reports/index.html:494
 #: metabrainz/templates/reports/financial_reports/index.html:516
 #: metabrainz/templates/reports/financial_reports/index.html:538
-msgid "May"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:234
-#: metabrainz/templates/reports/financial_reports/index.html:263
-#: metabrainz/templates/reports/financial_reports/index.html:292
-#: metabrainz/templates/reports/financial_reports/index.html:321
-#: metabrainz/templates/reports/financial_reports/index.html:350
-#: metabrainz/templates/reports/financial_reports/index.html:379
-#: metabrainz/templates/reports/financial_reports/index.html:408
-#: metabrainz/templates/reports/financial_reports/index.html:437
-#: metabrainz/templates/reports/financial_reports/index.html:466
-#: metabrainz/templates/reports/financial_reports/index.html:495
-#: metabrainz/templates/reports/financial_reports/index.html:517
-#: metabrainz/templates/reports/financial_reports/index.html:539
-msgid "April"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:235
-#: metabrainz/templates/reports/financial_reports/index.html:264
-#: metabrainz/templates/reports/financial_reports/index.html:293
-#: metabrainz/templates/reports/financial_reports/index.html:322
-#: metabrainz/templates/reports/financial_reports/index.html:351
-#: metabrainz/templates/reports/financial_reports/index.html:380
-#: metabrainz/templates/reports/financial_reports/index.html:409
-#: metabrainz/templates/reports/financial_reports/index.html:438
-#: metabrainz/templates/reports/financial_reports/index.html:467
-#: metabrainz/templates/reports/financial_reports/index.html:496
-#: metabrainz/templates/reports/financial_reports/index.html:518
-#: metabrainz/templates/reports/financial_reports/index.html:540
-msgid "March"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:236
-#: metabrainz/templates/reports/financial_reports/index.html:265
-#: metabrainz/templates/reports/financial_reports/index.html:294
-#: metabrainz/templates/reports/financial_reports/index.html:323
-#: metabrainz/templates/reports/financial_reports/index.html:352
-#: metabrainz/templates/reports/financial_reports/index.html:381
-#: metabrainz/templates/reports/financial_reports/index.html:410
-#: metabrainz/templates/reports/financial_reports/index.html:439
-#: metabrainz/templates/reports/financial_reports/index.html:468
-#: metabrainz/templates/reports/financial_reports/index.html:497
-#: metabrainz/templates/reports/financial_reports/index.html:519
-#: metabrainz/templates/reports/financial_reports/index.html:541
-msgid "February"
-msgstr ""
-
-#: metabrainz/templates/reports/financial_reports/index.html:237
-#: metabrainz/templates/reports/financial_reports/index.html:266
-#: metabrainz/templates/reports/financial_reports/index.html:295
-#: metabrainz/templates/reports/financial_reports/index.html:324
-#: metabrainz/templates/reports/financial_reports/index.html:353
-#: metabrainz/templates/reports/financial_reports/index.html:382
-#: metabrainz/templates/reports/financial_reports/index.html:411
-#: metabrainz/templates/reports/financial_reports/index.html:440
-#: metabrainz/templates/reports/financial_reports/index.html:469
-#: metabrainz/templates/reports/financial_reports/index.html:498
-#: metabrainz/templates/reports/financial_reports/index.html:520
-#: metabrainz/templates/reports/financial_reports/index.html:542
+#: metabrainz/templates/reports/financial_reports/index.html:560
 msgid "January"
 msgstr ""
 
-#: metabrainz/templates/reports/financial_reports/index.html:507
-#: metabrainz/templates/reports/financial_reports/index.html:529
+#: metabrainz/templates/reports/financial_reports/index.html:525
+#: metabrainz/templates/reports/financial_reports/index.html:547
 msgid "Monthly balance sheets"
+msgstr ""
+
+#: metabrainz/templates/supporters/account-type.html:3
+#: metabrainz/templates/supporters/account-type.html:6
+#: metabrainz/templates/supporters/signup-commercial.html:3
+#: metabrainz/templates/supporters/signup-non-commercial.html:3
+msgid "Become a Supporter"
 msgstr ""
 
 #: metabrainz/templates/supporters/account-type.html:3
@@ -2679,68 +2829,75 @@ msgstr ""
 msgid "Support us"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:16
+#: metabrainz/templates/supporters/account-type.html:24
 msgid "Non-commercial / Personal"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:34
+#: metabrainz/templates/supporters/account-type.html:42
 msgid "Non-commercial"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:35
+#: metabrainz/templates/supporters/account-type.html:43
 msgid "$0.00/month and up"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:36
+#: metabrainz/templates/supporters/account-type.html:44
 msgid "Personal or university assignment user."
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:39
-#: metabrainz/templates/supporters/account-type.html:76
-#: metabrainz/templates/supporters/account-type.html:122
-#: metabrainz/templates/supporters/mb-signup.html:3
-#: metabrainz/templates/supporters/mb-signup.html:6
-#: metabrainz/templates/supporters/signup-commercial.html:3
-#: metabrainz/templates/supporters/signup-non-commercial.html:3
+#: metabrainz/templates/supporters/account-type.html:48
+#: metabrainz/templates/supporters/account-type.html:90
+#: metabrainz/templates/supporters/account-type.html:141
+msgid "Upgrade"
+msgstr ""
+
+#: metabrainz/templates/supporters/account-type.html:51
+#: metabrainz/templates/supporters/account-type.html:93
+#: metabrainz/templates/supporters/account-type.html:144
+#: metabrainz/templates/users/signup.html:3
 msgid "Sign up"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:48
+#: metabrainz/templates/supporters/account-type.html:61
 msgid "Commercial"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:70
-#: metabrainz/templates/supporters/account-type.html:117
+#: metabrainz/templates/supporters/account-type.html:83
+#: metabrainz/templates/supporters/account-type.html:135
 #, python-format
 msgid "$%(tier_price)s/month and up"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:74
-#: metabrainz/templates/supporters/account-type.html:120
+#: metabrainz/templates/supporters/account-type.html:87
+#: metabrainz/templates/supporters/account-type.html:138
 msgid "More info"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:86
+#: metabrainz/templates/supporters/account-type.html:104
 msgid "View all tiers"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:94
+#: metabrainz/templates/supporters/account-type.html:112
 msgid "Some of our Unicorn members"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:105
+#: metabrainz/templates/supporters/account-type.html:123
 msgid "See all our supporters"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:128
+#: metabrainz/templates/supporters/account-type.html:151
 msgid "View featured tiers"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:135
+#: metabrainz/templates/supporters/account-type.html:158
 #, python-format
 msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+
+#: metabrainz/templates/supporters/account-type.html:166
+msgid "Back to Profile"
 msgstr ""
 
 #: metabrainz/templates/supporters/bad-standing.html:3
@@ -2754,147 +2911,6 @@ msgid ""
 "support\n"
 "  MetaBrainz and are using one of our data-sets, but are behind in their\n"
 "  payments by more than 60 days."
-msgstr ""
-
-#: metabrainz/templates/supporters/mb-login.html:3
-#: metabrainz/templates/supporters/mb-login.html:6
-msgid "Log in"
-msgstr ""
-
-#: metabrainz/templates/supporters/mb-login.html:8
-msgid "To log in you need to have a MusicBrainz account."
-msgstr ""
-
-#: metabrainz/templates/supporters/mb-login.html:13
-msgid "Log in with MusicBrainz"
-msgstr ""
-
-#: metabrainz/templates/supporters/mb-signup.html:9
-msgid ""
-"Please sign in with the MusicBrainz account that will be associated with\n"
-"    your MetaBrainz profile. If you don't have a MusicBrainz account or "
-"wish to\n"
-"    use a new MusicBrainz account, you can register on the page linked "
-"below."
-msgstr ""
-
-#: metabrainz/templates/supporters/mb-signup.html:17
-msgid "Sign up with MusicBrainz"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile-edit.html:3
-msgid "Edit"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile-edit.html:3
-#: metabrainz/templates/supporters/profile.html:3
-#: metabrainz/templates/supporters/profile.html:6
-msgid "Your Profile"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:34
-msgid "Organization information"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:36
-#: metabrainz/templates/supporters/profile.html:53
-msgid "Name:"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:38
-msgid "Website URL:"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:40
-msgid "API URL:"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:44
-#, python-format
-msgid ""
-"Please <a href=\"%(contact_url)s\">contact us</a>\n"
-"          if you wish for us to update this information."
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:51
-msgid "Contact information"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:54
-msgid "Email:"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:56
-msgid "Datasets used:"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:77
-msgid "Data use permission granted"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:83
-msgid ""
-"You have permission to use any of the data published by the MetaBrainz\n"
-"          Foundation. This includes data dumps released under a Creative "
-"Commons\n"
-"          non-commercial license. Thank you for your support!"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:88
-msgid ""
-"Note 1: If your support falls behind by more than 60 days, this\n"
-"          permission may be withdrawn. You can always check your current "
-"permission\n"
-"          status on this page."
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:93
-msgid ""
-"Note 2: The IP addresses from which replication packets for the Live Data"
-" Feed are downloaded are logged."
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:132
-msgid "Unknown. :("
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:139
-msgid "Data Download"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:159
-msgid "Live Data Feed Access token"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:161
-msgid ""
-"This access token should be considered private. Don't check this token\n"
-"      into any publicly visible version control systems and similar "
-"places.\n"
-"      If the token has been exposed, you should immediately generate a "
-"new one!\n"
-"      When you generate a new token, your current token is revoked."
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:175
-msgid "Generate new token"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:178
-#, python-format
-msgid ""
-"See the <a href=\"%(api_docs_url)s\">API documentation</a> for more "
-"information."
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:193
-msgid ""
-"Are you sure you want to generate new access token? Current token will be"
-" revoked!"
-msgstr ""
-
-#: metabrainz/templates/supporters/profile.html:203
-msgid "Failed to generate new access token!"
 msgstr ""
 
 #: metabrainz/templates/supporters/supporters-list.html:9
@@ -2934,62 +2950,114 @@ msgstr ""
 msgid "Supporters on this tier"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
-msgid "Your applications"
+#: metabrainz/templates/users/lost-password.html:3
+msgid "Forgot password"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
-msgid "Create new application"
+#: metabrainz/templates/users/lost-username.html:3
+msgid "Forgot username"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
-msgid "No applications found"
+#: metabrainz/templates/users/reset-password.html:3
+msgid "Reset your password"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
-msgid "Name"
+#: metabrainz/user/forms.py:15
+msgid "Registration from this email domain is not allowed."
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
-msgid "Website"
+#: metabrainz/user/forms.py:20 metabrainz/user/forms.py:42
+#: metabrainz/user/forms.py:54
+msgid "Username"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
-msgid "Client ID"
+#: metabrainz/user/forms.py:21 metabrainz/user/forms.py:42
+#: metabrainz/user/forms.py:54
+msgid "Username is required!"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
-msgid "Client secret"
+#: metabrainz/user/forms.py:29 metabrainz/user/forms.py:43
+#: metabrainz/user/forms.py:61
+msgid "Password is required!"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
-msgid "Actions"
+#: metabrainz/user/forms.py:33 metabrainz/user/forms.py:65
+msgid "Confirm Password is required!"
 msgstr ""
 
-#: frontend/js/src/ApplicationRow.tsx
+#: metabrainz/user/forms.py:35 metabrainz/user/forms.py:67
+msgid "Confirm Password should match password!"
+msgstr ""
+
+#: metabrainz/user/forms.py:43
+msgid "Password"
+msgstr ""
+
+#: metabrainz/user/forms.py:44
+msgid "Remember me"
+msgstr ""
+
+#: metabrainz/user/username.py:180
+msgid "Username is not valid."
+msgstr ""
+
+#: metabrainz/user/username.py:183
+msgid "Username contains invalid or invisible characters."
+msgstr ""
+
+#: frontend/js/src/ApplicationRow.tsx:22
+msgid "Hide password"
+msgstr ""
+
+#: frontend/js/src/ApplicationRow.tsx:22
+msgid "Show password"
+msgstr ""
+
+#: frontend/js/src/ApplicationRow.tsx:54
 msgid "Modify"
 msgstr ""
 
-#: frontend/js/src/ApplicationRow.tsx
+#: frontend/js/src/ApplicationRow.tsx:60
 msgid "Delete"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
+#: frontend/js/src/Applications.tsx:32
+msgid "Your applications"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx:45
+msgid "No applications found"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
+msgid "Website"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx:53
+msgid "Client ID"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx:54
+msgid "Client secret"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx:55 frontend/js/src/Applications.tsx:82
+msgid "Actions"
+msgstr ""
+
+#: frontend/js/src/Applications.tsx:70
 msgid "Authorized applications"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
+#: frontend/js/src/Applications.tsx:73
 msgid "No tokens found"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
+#: frontend/js/src/Applications.tsx:81
 msgid "Access"
 msgstr ""
 
-#: frontend/js/src/Applications.tsx
+#: frontend/js/src/Applications.tsx:104
 msgid "Revoke access"
 msgstr ""
 
-#: metabrainz/templates/navbar.html
-msgid "Language"
-msgstr ""
