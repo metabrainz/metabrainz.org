@@ -102,7 +102,7 @@ def extract_strings():
 
 @cli.command()
 def compile_translations():
-    """Compile translations for use."""
+    """Compile the backend translation catalogs (.mo files for Flask-Babel)."""
     _run_command("pybabel compile -d metabrainz/translations")
     click.echo("Translated strings have been compiled and ready to be used.")
 

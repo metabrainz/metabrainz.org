@@ -76,6 +76,8 @@ FROM metabrainz-frontend-dev AS metabrainz-frontend-prod
 
 # Compile front-end (static) files
 COPY ./frontend /code/frontend
+COPY ./metabrainz/translations /code/metabrainz/translations
+RUN npm run build:i18n
 RUN npm run build:prod
 
 
@@ -132,13 +134,19 @@ COPY --from=metabrainz-frontend-prod /code/frontend/fonts /static/fonts
 COPY --from=metabrainz-frontend-prod /code/frontend/img /static/img
 COPY --from=metabrainz-frontend-prod /code/frontend/js/lib /static/js/lib
 COPY --from=metabrainz-frontend-prod /code/frontend/dist /static/dist
+COPY --from=metabrainz-frontend-prod /code/frontend/locales /static/locales
 
 # Now install our code, which may change frequently
 COPY . /code/metabrainz/
 
+# Compile the backend translation catalogs (.mo files for Flask-Babel).
+RUN pybabel compile -d /code/metabrainz/metabrainz/translations
+
 # Ensure we use the right files and folders by removing duplicates
 RUN rm -rf ./frontend/
 RUN rm -f /code/metabrainz/metabrainz/config.py /code/metabrainz/metabrainz/config.pyc
+
+EXPOSE 13031
 
 ARG GIT_COMMIT_SHA
 LABEL org.label-schema.vcs-ref=$GIT_COMMIT_SHA
