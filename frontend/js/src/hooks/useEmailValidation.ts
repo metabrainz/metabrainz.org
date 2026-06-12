@@ -1,9 +1,7 @@
 import { useState, useCallback, useRef, useMemo, useEffect } from "react";
 import debounce from "lodash/debounce";
-import {
-  checkEmail,
-  getEmailValidationErrorMessage,
-} from "../api/emailValidation";
+import { useTranslation } from "react-i18next";
+import { checkEmail } from "../api/emailValidation";
 
 const DEBOUNCE_DELAY_MS = 500;
 
@@ -12,6 +10,7 @@ const DEBOUNCE_DELAY_MS = 500;
  * Returns validation state and a validate function for use with Formik
  */
 function useEmailValidation() {
+  const { t } = useTranslation();
   const [isValidatingEmail, setIsValidatingEmail] = useState(false);
   const [lastValidatedEmail, setLastValidatedEmail] = useState<string | null>(
     null
@@ -35,11 +34,17 @@ function useEmailValidation() {
           pendingResolveRef.current = null;
           try {
             const result = await checkEmail(email);
+            let reasonMessage: string | null = null;
+            if (result.reason === "email_taken") {
+              reasonMessage = t("This email address is already registered.");
+            } else if (result.reason === "domain_blacklisted") {
+              reasonMessage = t(
+                "Registration from this email domain is not allowed."
+              );
+            }
             const errorMessage = result.valid
               ? null
-              : getEmailValidationErrorMessage(result.reason) ||
-                result.error ||
-                "Email validation failed";
+              : reasonMessage || result.error || t("Email validation failed");
 
             cacheResult(email, errorMessage);
             resolve(errorMessage || undefined);
@@ -49,7 +54,7 @@ function useEmailValidation() {
         },
         DEBOUNCE_DELAY_MS
       ),
-    []
+    [t]
   );
 
   // Clean up debounced function on unmount
@@ -70,11 +75,11 @@ function useEmailValidation() {
       }
 
       if (!email) {
-        return "Email address is required!";
+        return t("Email address is required!");
       }
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        return "Invalid email address";
+        return t("Invalid email address");
       }
 
       if (emailValidationCache[email] !== undefined) {
@@ -101,7 +106,7 @@ function useEmailValidation() {
         debouncedApiCall(email, resolve, cacheResult);
       });
     },
-    [emailValidationCache, lastValidatedEmail, debouncedApiCall]
+    [emailValidationCache, lastValidatedEmail, debouncedApiCall, t]
   );
 
   return {

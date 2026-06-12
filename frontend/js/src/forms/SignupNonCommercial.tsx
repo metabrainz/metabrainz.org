@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
 import { getPageProps, renderRoot } from "../utils";
@@ -38,6 +39,7 @@ function SignupNonCommercial({
   initial_errors,
   existing_user,
 }: SupporterNonCommercialProps): JSX.Element {
+  const { t } = useTranslation();
   const accountTypeUrl = "/supporters/account-type";
   const { isValidatingEmail, validateEmailAsync } = useEmailValidation();
 
@@ -63,13 +65,15 @@ function SignupNonCommercial({
   // Build validation schema based on whether it's signup or upgrade
   const baseValidationSchema = {
     usage_desc: Yup.string()
-      .required("Please, tell us how you (will) use our data.")
-      .max(500, "Please, limit usage description to 500 characters."),
-    contact_name: Yup.string().required("Contact name is required!"),
+      .required(t("Please, tell us how you (will) use our data."))
+      .max(500, t("Please, limit usage description to 500 characters.")),
+    contact_name: Yup.string().required(t("Contact name is required!")),
     agreement: Yup.boolean()
-      .required("You need to accept the agreement!")
-      .oneOf([true], "You need to accept the agreement!"),
-    mtcaptcha: mtcaptcha_site_key ? Yup.string().required() : Yup.string(),
+      .required(t("You need to accept the agreement!"))
+      .oneOf([true], t("You need to accept the agreement!")),
+    mtcaptcha: mtcaptcha_site_key
+      ? Yup.string().required(t("Captcha is required!"))
+      : Yup.string(),
   };
 
   const validationSchema = Yup.object(
@@ -77,19 +81,19 @@ function SignupNonCommercial({
       ? baseValidationSchema
       : {
           ...baseValidationSchema,
-          username: Yup.string().required("Username is required!"),
-          email: Yup.string().email().required("Email address is required!"),
+          username: Yup.string().required(t("Username is required!")),
+          email: Yup.string().email().required(t("Email address is required!")),
           password: Yup.string()
-            .required("Password is required!")
+            .required(t("Password is required!"))
             .min(8)
             .max(64),
           confirm_password: Yup.string()
-            .required()
+            .required(t("Confirm Password is required!"))
             .min(8)
             .max(64)
             .oneOf(
               [Yup.ref("password")],
-              "Confirm Password should match password!"
+              t("Confirm Password should match password!")
             ),
         }
   );
@@ -99,15 +103,16 @@ function SignupNonCommercial({
       <div className="auth-card-container">
         <div className="auth-card">
           <h1 className="page-title text-center">
-            {existing_user ? "Become a Supporter" : "Sign up"}{" "}
-            <small>non-commercial</small>
+            {existing_user ? t("Become a Supporter") : t("Sign up")}{" "}
+            <small>{t("non-commercial")}</small>
           </h1>
-          <div className="h4 text-center">access all MetaBrainz projects</div>
+          <div className="h4 text-center">
+            {t("access all MetaBrainz projects")}
+          </div>
           <p>
-            Please be aware that misuse of the non-commercial service for
-            commercial purposes will result in us revoking your access token and
-            then billing you for your commercial use of our datasets or the Live
-            Data Feed.
+            {t(
+              "Please be aware that misuse of the non-commercial service for commercial purposes will result in us revoking your access token and then billing you for your commercial use of our datasets or the Live Data Feed."
+            )}
           </p>
           <Formik
             initialValues={initialValues}
@@ -137,19 +142,19 @@ function SignupNonCommercial({
                 <div className="form-horizontal">
                   <div className="form-group">
                     <div className="col-sm- col-xs-6 control-label">
-                      <strong>Account type</strong>
+                      <strong>{t("Account type")}</strong>
                     </div>
                     <div
                       className="col-sm-5 col-xs-6 label label-success"
                       style={{ padding: "10px" }}
                     >
-                      Non-commercial
+                      {t("Non-commercial")}
                     </div>
                     <div
                       className="btn btn-link col-sm-offset-4 col-xs-offset-5"
                       style={{ marginTop: "10px" }}
                     >
-                      <a href={accountTypeUrl}>Change account type</a>
+                      <a href={accountTypeUrl}>{t("Change account type")}</a>
                     </div>
                   </div>
                 </div>
@@ -158,7 +163,7 @@ function SignupNonCommercial({
                 {existing_user && user ? (
                   <div className="form-group">
                     <div className="alert alert-info">
-                      <strong>Your account:</strong> {user.username} (
+                      <strong>{t("Your account:")}</strong> {user.username} (
                       {user.email})
                     </div>
                   </div>
@@ -167,7 +172,8 @@ function SignupNonCommercial({
                     <AuthCardTextInput
                       label={
                         <>
-                          Username <span className="small">(public)</span>
+                          {t("Username")}{" "}
+                          <span className="small">{t("(public)")}</span>
                         </>
                       }
                       type="text"
@@ -180,18 +186,18 @@ function SignupNonCommercial({
                       type="text"
                       id="contact_name"
                       name="contact_name"
-                      label="Contact Name"
+                      label={t("Contact Name")}
                       required
                     />
 
                     <AuthCardTextInput
                       label={
                         <>
-                          E-mail address
+                          {t("E-mail address")}
                           {isValidatingEmail && (
                             <span className="small text-muted">
                               {" "}
-                              (checking...)
+                              {t("(checking...)")}
                             </span>
                           )}
                         </>
@@ -205,20 +211,20 @@ function SignupNonCommercial({
                     />
 
                     <AuthCardPasswordInput
-                      label="Password"
+                      label={t("Password")}
                       name="password"
                       id="password"
                       autoComplete="new-password"
                       labelLink={
                         <div className="small text-muted form-label-link">
-                          Must be at least 8 characters
+                          {t("Must be at least 8 characters")}
                         </div>
                       }
                       required
                     />
 
                     <AuthCardPasswordInput
-                      label="Confirm Password"
+                      label={t("Confirm Password")}
                       name="confirm_password"
                       id="confirm_password"
                       autoComplete="new-password"
@@ -232,7 +238,7 @@ function SignupNonCommercial({
                     type="text"
                     id="contact_name"
                     name="contact_name"
-                    label="Contact Name"
+                    label={t("Contact Name")}
                     required
                   />
                 )}
@@ -240,7 +246,7 @@ function SignupNonCommercial({
 
                 <div className="form-group">
                   <label htmlFor="datasets">
-                    Which datasets are you interested in?
+                    {t("Which datasets are you interested in?")}
                   </label>
                   <DatasetsInput datasets={datasets} />
                 </div>
@@ -248,16 +254,16 @@ function SignupNonCommercial({
                 <TextAreaInput
                   id="usage_desc"
                   name="usage_desc"
-                  label="About your project"
+                  label={t("About your project")}
                   maxLength={150}
                   rows={6}
                   required
-                  placeholder="(max 150 characters)"
+                  placeholder={t("(max 150 characters)")}
                 >
                   <p>
-                    Can you please tell us more about the project in which
-                    you&apos;d like to use our data? Do you plan to self host
-                    the data or use our APIs?
+                    {t(
+                      "Can you please tell us more about the project in which you'd like to use our data? Do you plan to self host the data or use our APIs?"
+                    )}
                   </p>
                 </TextAreaInput>
                 <hr />
@@ -270,14 +276,14 @@ function SignupNonCommercial({
                   required
                 >
                   <p>
-                    I agree to use the MetaBrainz data for non-commercial (less
-                    than $500 income per year) or personal uses only.
+                    {t(
+                      "I agree to use the MetaBrainz data for non-commercial (less than $500 income per year) or personal uses only."
+                    )}
                   </p>
                   <p>
-                    I also agree that if I generate a Live Data Feed access
-                    token, then I will treat my access token as a secret and
-                    will not share this token publicly or commit it to a source
-                    code repository.
+                    {t(
+                      "I also agree that if I generate a Live Data Feed access token, then I will treat my access token as a secret and will not share this token publicly or commit it to a source code repository."
+                    )}
                   </p>
                 </CheckboxInput>
 
@@ -307,10 +313,10 @@ function SignupNonCommercial({
                     }
                   >
                     {!existing_user && isValidatingEmail
-                      ? "Validating..."
+                      ? t("Validating...")
                       : existing_user
-                      ? "Become a Supporter"
-                      : "Sign up"}
+                      ? t("Become a Supporter")
+                      : t("Sign up")}
                   </button>
                 </div>
                 <br />
@@ -320,15 +326,17 @@ function SignupNonCommercial({
           <div className="auth-card-footer">
             {existing_user ? (
               <div className="small">
-                <a href="/profile">Back to profile</a>
+                <a href="/profile">{t("Back to profile")}</a>
               </div>
             ) : (
               <>
                 <div className="small">
-                  Not a supporter? <a href="/signup">Create a user account </a>
+                  {t("Not a supporter?")}{" "}
+                  <a href="/signup">{t("Create a user account")}</a>
                 </div>
                 <div className="small">
-                  Already have an account? <a href="/login">Sign in </a>
+                  {t("Already have an account?")}{" "}
+                  <a href="/login">{t("Sign in")}</a>
                 </div>
               </>
             )}

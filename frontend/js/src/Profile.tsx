@@ -1,4 +1,5 @@
 import React, { JSX, useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getPageProps, renderRoot } from "./utils";
 import ProfileTabs from "./ProfileTabs";
 
@@ -18,6 +19,7 @@ function EmailDisplay({
   unconfirmed_email,
   csrf_token,
 }: EmailDisplayProps): JSX.Element {
+  const { t } = useTranslation();
   const hasBothEmails = email && unconfirmed_email;
 
   const ResendButton = () => (
@@ -33,7 +35,7 @@ function EmailDisplay({
         value={csrf_token}
       />
       <button className="btn btn-link text-danger" type="submit" style={{ padding: "0 4px" }}>
-        (Resend Verification Email)
+        {t("(Resend Verification Email)")}
       </button>
     </form>
   );
@@ -42,35 +44,37 @@ function EmailDisplay({
     <>
       {hasBothEmails ? (
         <>
-          <strong>Current: </strong>
+          <strong>{t("Current:")} </strong>
           {email}{" "}
           <span className="badge" style={{ background: "green" }}>
-            Verified
+            {t("Verified")}
           </span>
           <br />
-          <strong>New: </strong>
+          <strong>{t("New:")} </strong>
           {unconfirmed_email}{" "}
           <span className="badge" style={{ background: "red" }}>
-            Unverified
+            {t("Unverified")}
           </span>
           <ResendButton />
           <br />
           <small className="text-muted">
-            Your current email will be replaced once the new email is verified.
+            {t(
+              "Your current email will be replaced once the new email is verified."
+            )}
           </small>
         </>
       ) : email ? (
         <>
           <>{email}{" "}</>
           <span className="badge" style={{ background: "green" }}>
-            Verified
+            {t("Verified")}
           </span>
         </>
       ) : unconfirmed_email ? (
         <>
           <>{unconfirmed_email}{" "}</>
           <span className="badge" style={{ background: "red" }}>
-            Unverified
+            {t("Unverified")}
           </span>
           <ResendButton />
         </>
@@ -80,6 +84,7 @@ function EmailDisplay({
 }
 
 function SupporterProfile({ user, csrf_token }: ProfileProps) {
+  const { t } = useTranslation();
   const { email, unconfirmed_email, supporter } = user;
   const {
     is_commercial,
@@ -99,20 +104,22 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     if (
       !currentToken ||
       window.confirm(
-        "Are you sure you want to generate new access token? Current token will be revoked!"
+        t(
+          "Are you sure you want to generate new access token? Current token will be revoked!"
+        )
       )
     ) {
       const response = await fetch("/supporters/profile/regenerate-token", {
         method: "POST",
       });
       if (!response.ok) {
-        window.alert("Failed to generate new access token!");
+        window.alert(t("Failed to generate new access token!"));
       } else {
         const data = await response.json();
         setCurrentToken(data.token);
       }
     }
-  }, [currentToken]);
+  }, [currentToken, t]);
 
   let applicationState;
   if (state === "rejected") {
@@ -120,12 +127,15 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
       <>
         <p>
           <b>
-            Your application for using the Live Data Feed has been rejected.
+            {t(
+              "Your application for using the Live Data Feed has been rejected."
+            )}
           </b>
         </p>
         <p>
-          You do not have permission to use our data in a public commercial
-          product.
+          {t(
+            "You do not have permission to use our data in a public commercial product."
+          )}
         </p>
       </>
     );
@@ -133,11 +143,16 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     applicationState = (
       <>
         <p>
-          <b>Your application for using the Live Data Feed is still pending.</b>
+          <b>
+            {t(
+              "Your application for using the Live Data Feed is still pending."
+            )}
+          </b>
         </p>
         <p>
-          You may use our data and APIs for evaluation/development purposes
-          while your application is pending.
+          {t(
+            "You may use our data and APIs for evaluation/development purposes while your application is pending."
+          )}
         </p>
       </>
     );
@@ -146,17 +161,17 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
       <>
         <p>
           <b>
-            Your application for using the Live Data Feed is waiting to finalize
-            our support agreement.
+            {t(
+              "Your application for using the Live Data Feed is waiting to finalize our support agreement."
+            )}
           </b>
         </p>
         <p>
-          You may use our data and APIs for evaluation and development purposes,
-          but you may not use the data in a public commercial product. Once you
-          are nearing the public release of a product that contains our data,
-          please
-          <a href="/contact">contact us</a> again to finalize our support
-          agreement.
+          {t(
+            "You may use our data and APIs for evaluation and development purposes, but you may not use the data in a public commercial product. Once you are nearing the public release of a product that contains our data, please"
+          )}{" "}
+          <a href="/contact">{t("contact us")}</a>{" "}
+          {t("again to finalize our support agreement.")}
         </p>
       </>
     );
@@ -164,17 +179,18 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     applicationState = (
       <>
         <p>
-          <b>Your use of the Live Data Feed is pending suspension.</b>
+          <b>{t("Your use of the Live Data Feed is pending suspension.")}</b>
         </p>
         <p>
-          Your account is in bad standing, which means that you are more than 60
-          days behind in support payments. If you think this is a mistake,
-          please <a href="/contact">contact us</a>.
+          {t(
+            "Your account is in bad standing, which means that you are more than 60 days behind in support payments. If you think this is a mistake, please"
+          )}{" "}
+          <a href="/contact">{t("contact us")}</a>.
         </p>
       </>
     );
   } else {
-    applicationState = <p>Unknown. :(</p>;
+    applicationState = <p>{t("Unknown. :(")}</p>;
   }
 
   let stateClass;
@@ -188,6 +204,21 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     stateClass = "text-warning";
   }
 
+  let stateLabel;
+  if (state === "active") {
+    stateLabel = t("Active");
+  } else if (state === "rejected") {
+    stateLabel = t("Rejected");
+  } else if (state === "pending") {
+    stateLabel = t("Pending");
+  } else if (state === "waiting") {
+    stateLabel = t("Waiting");
+  } else if (state === "limited") {
+    stateLabel = t("Limited");
+  } else {
+    stateLabel = t("Unknown");
+  }
+
   return (
     <>
       <div className="row" style={{ marginBottom: "1.5rem" }}>
@@ -195,24 +226,26 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
           <div className="well" style={{ marginBottom: 0 }}>
             <div className="row">
               <div className="col-sm-4">
-                <strong>Type:</strong>{" "}
-                {is_commercial ? "Commercial" : "Non-commercial"}
+                <strong>{t("Type:")}</strong>{" "}
+                {is_commercial ? t("Commercial") : t("Non-commercial")}
               </div>
               {is_commercial && (
                 <div className="col-sm-4">
-                  <strong>Tier:</strong> {tier.name}
+                  <strong>{t("Tier:")}</strong> {tier.name}
                 </div>
               )}
               <div className="col-sm-4">
-                <strong>State:</strong>
-                <span className={stateClass}> {state.toUpperCase()}</span>
+                <strong>{t("State:")}</strong>
+                <span className={stateClass}> {stateLabel}</span>
               </div>
             </div>
           </div>
           {!is_commercial && (
             <p className="text-muted" style={{ marginTop: "0.5rem" }}>
-              If you would like to change your account from non-commercial to
-              commercial, please <a href="/contact">contact us</a>.
+              {t(
+                "If you would like to change your account from non-commercial to commercial, please"
+              )}{" "}
+              <a href="/contact">{t("contact us")}</a>.
             </p>
           )}
         </div>
@@ -223,25 +256,34 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
           <div className="col-md-6" style={{ display: "flex" }}>
             <div className="panel panel-default" style={{ flex: 1 }}>
               <div className="panel-heading">
-                <h3 className="panel-title">Organization Information</h3>
+                <h3 className="panel-title">
+                  {t("Organization Information")}
+                </h3>
               </div>
               <div className="panel-body">
                 <dl style={{ marginBottom: 0 }}>
-                  <dt>Name</dt>
+                  <dt>{t("Name")}</dt>
                   <dd style={{ marginBottom: "1rem" }}>
-                    {org_name || <em className="text-muted">Unspecified</em>}
+                    {org_name || (
+                      <em className="text-muted">{t("Unspecified")}</em>
+                    )}
                   </dd>
-                  <dt>Website URL</dt>
+                  <dt>{t("Website URL")}</dt>
                   <dd style={{ marginBottom: "1rem" }}>
-                    {website_url || <em className="text-muted">Unspecified</em>}
+                    {website_url || (
+                      <em className="text-muted">{t("Unspecified")}</em>
+                    )}
                   </dd>
-                  <dt>API URL</dt>
+                  <dt>{t("API URL")}</dt>
                   <dd>
-                    {api_url || <em className="text-muted">Unspecified</em>}
+                    {api_url || (
+                      <em className="text-muted">{t("Unspecified")}</em>
+                    )}
                   </dd>
                 </dl>
                 <p className="text-muted" style={{ marginTop: "1rem", marginBottom: 0 }}>
-                  <a href="/contact">Contact us</a> to update this information.
+                  <a href="/contact">{t("Contact us")}</a>{" "}
+                  {t("to update this information.")}
                 </p>
               </div>
             </div>
@@ -250,13 +292,13 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         <div className={is_commercial ? "col-md-6" : "col-md-12"} style={{ display: "flex" }}>
           <div className="panel panel-default" style={{ flex: 1 }}>
             <div className="panel-heading">
-              <h3 className="panel-title">Contact Information</h3>
+              <h3 className="panel-title">{t("Contact Information")}</h3>
             </div>
             <div className="panel-body">
               <dl style={{ marginBottom: 0 }}>
-                <dt>Contact Name</dt>
+                <dt>{t("Contact Name")}</dt>
                 <dd style={{ marginBottom: "1rem" }}>{contact_name}</dd>
-                <dt>Contact Email</dt>
+                <dt>{t("Contact Email")}</dt>
                 <dd style={{ marginBottom: !is_commercial ? "1rem" : 0 }}>
                   <EmailDisplay
                     email={email}
@@ -266,7 +308,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                 </dd>
                 {!is_commercial && (
                   <>
-                    <dt>Datasets Used</dt>
+                    <dt>{t("Datasets Used")}</dt>
                     <dd>{datasets.map((d) => d.name).join(", ")}</dd>
                   </>
                 )}
@@ -277,8 +319,8 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                 style={{ marginTop: "1rem" }}
               >
                 {is_commercial
-                  ? "Edit Contact Information"
-                  : "Edit Datasets / Contact Information"}
+                  ? t("Edit Contact Information")
+                  : t("Edit Datasets / Contact Information")}
               </a>
             </div>
           </div>
@@ -291,25 +333,33 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
             {(state === "active" || state === "limited") && good_standing ? (
               <div className="panel panel-success">
                 <div className="panel-heading">
-                  <h3 className="panel-title">Data Use Permission Granted</h3>
+                  <h3 className="panel-title">
+                    {t("Data Use Permission Granted")}
+                  </h3>
                 </div>
                 <div className="panel-body">
                   <p>
-                    <b>Your support agreement has been completed -- thank you!</b>
+                    <b>
+                      {t(
+                        "Your support agreement has been completed -- thank you!"
+                      )}
+                    </b>
                   </p>
                   <p>
-                    You have permission to use any of the data published by the
-                    MetaBrainz Foundation. This includes data dumps released under a
-                    Creative Commons non-commercial license.
+                    {t(
+                      "You have permission to use any of the data published by the MetaBrainz Foundation. This includes data dumps released under a Creative Commons non-commercial license."
+                    )}
                   </p>
                   <ul className="text-muted">
                     <li>
-                      If your support falls behind by more than 60 days, this
-                      permission may be withdrawn.
+                      {t(
+                        "If your support falls behind by more than 60 days, this permission may be withdrawn."
+                      )}
                     </li>
                     <li>
-                      IP addresses from which replication packets are downloaded are
-                      logged.
+                      {t(
+                        "IP addresses from which replication packets are downloaded are logged."
+                      )}
                     </li>
                   </ul>
                 </div>
@@ -317,7 +367,9 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
             ) : (
               <div className="panel panel-warning">
                 <div className="panel-heading">
-                  <h3 className="panel-title">Limited/No Data Use Permission</h3>
+                  <h3 className="panel-title">
+                    {t("Limited/No Data Use Permission")}
+                  </h3>
                 </div>
                 <div className="panel-body">{applicationState}</div>
               </div>
@@ -331,17 +383,19 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
           <div className="col-md-12">
             <div className="panel panel-primary">
               <div className="panel-heading">
-                <h3 className="panel-title">Data Download</h3>
+                <h3 className="panel-title">{t("Data Download")}</h3>
               </div>
               <div className="panel-body">
                 {!is_commercial && (
                   <p>
-                    Thank you for registering with us -- we really appreciate it!
+                    {t(
+                      "Thank you for registering with us -- we really appreciate it!"
+                    )}
                   </p>
                 )}
-                <p>Proceed to our download page to download datasets:</p>
+                <p>{t("Proceed to our download page to download datasets:")}</p>
                 <a href="/download" className="btn btn-primary">
-                  Download Datasets
+                  {t("Download Datasets")}
                 </a>
               </div>
             </div>
@@ -354,13 +408,15 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
           <div className="col-md-12">
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">Live Data Feed Access Token</h3>
+                <h3 className="panel-title">
+                  {t("Live Data Feed Access Token")}
+                </h3>
               </div>
               <div className="panel-body">
                 <p className="text-muted" style={{ fontStyle: "italic" }}>
-                  This access token should be considered private. Don&apos;t check
-                  it into publicly visible version control systems. If exposed,
-                  generate a new one immediately.
+                  {t(
+                    "This access token should be considered private. Don't check it into publicly visible version control systems. If exposed, generate a new one immediately."
+                  )}
                 </p>
                 <div
                   className="well"
@@ -372,17 +428,18 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                     marginBottom: "1rem",
                   }}
                 >
-                  {currentToken || "[ no valid token currently ]"}
+                  {currentToken || t("[ no valid token currently ]")}
                 </div>
                 <button
                   className="btn btn-default"
                   type="button"
                   onClick={regenerateToken}
                 >
-                  Generate New Token
+                  {t("Generate New Token")}
                 </button>
                 <p style={{ marginTop: "1rem", marginBottom: 0 }}>
-                  See the <a href="/api">API documentation</a> for more information.
+                  {t("See the")} <a href="/api">{t("API documentation")}</a>{" "}
+                  {t("for more information.")}
                 </p>
               </div>
             </div>
@@ -394,6 +451,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
 }
 
 function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
+  const { t } = useTranslation();
   const { name, email, unconfirmed_email } = user;
   return (
     <>
@@ -401,13 +459,13 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
         <div className="col-md-12">
           <div className="panel panel-default">
             <div className="panel-heading">
-              <h3 className="panel-title">Contact Information</h3>
+              <h3 className="panel-title">{t("Contact Information")}</h3>
             </div>
             <div className="panel-body">
               <dl style={{ marginBottom: 0 }}>
-                <dt>Name</dt>
+                <dt>{t("Name")}</dt>
                 <dd style={{ marginBottom: "1rem" }}>{name}</dd>
-                <dt>Email</dt>
+                <dt>{t("Email")}</dt>
                 <dd>
                   <EmailDisplay
                     email={email}
@@ -421,7 +479,7 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
                 className="btn btn-warning"
                 style={{ marginTop: "1rem" }}
               >
-                Edit Information
+                {t("Edit Information")}
               </a>
             </div>
           </div>
@@ -432,16 +490,18 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
         <div className="col-md-12">
           <div className="panel panel-info">
             <div className="panel-heading">
-              <h3 className="panel-title">Want access to MetaBrainz datasets?</h3>
+              <h3 className="panel-title">
+                {t("Want access to MetaBrainz datasets?")}
+              </h3>
             </div>
             <div className="panel-body">
               <p>
-                Upgrade your account to a supporter account to access our datasets and
-                the Live Data Feed. Choose between non-commercial (free) and
-                commercial options.
+                {t(
+                  "Upgrade your account to a supporter account to access our datasets and the Live Data Feed. Choose between non-commercial (free) and commercial options."
+                )}
               </p>
               <a href="/supporters/account-type" className="btn btn-primary">
-                Become a Supporter
+                {t("Become a Supporter")}
               </a>
             </div>
           </div>
@@ -452,23 +512,26 @@ function UserProfile({ user, csrf_token }: ProfileProps): JSX.Element {
 }
 
 function DeleteAccountSection() {
+  const { t } = useTranslation();
+
   return (
     <div className="row" style={{ marginBottom: "1.5rem" }}>
       <div className="col-md-12">
         <div className="panel panel-danger">
           <div className="panel-heading">
-            <h3 className="panel-title">Danger Zone</h3>
+            <h3 className="panel-title">{t("Danger Zone")}</h3>
           </div>
           <div className="panel-body">
             <p>
-              <strong>Delete your account</strong>
+              <strong>{t("Delete your account")}</strong>
             </p>
             <p className="text-muted">
-              Once you delete your account, there is no going back. Please be
-              certain.
+              {t(
+                "Once you delete your account, there is no going back. Please be certain."
+              )}
             </p>
             <a href="/profile/delete" className="btn btn-danger">
-              Delete My Account
+              {t("Delete My Account")}
             </a>
           </div>
         </div>
@@ -478,20 +541,23 @@ function DeleteAccountSection() {
 }
 
 function SupporterAccountDeletionNotice() {
+  const { t } = useTranslation();
+
   return (
     <div className="row" style={{ marginBottom: "1.5rem" }}>
       <div className="col-md-12">
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h3 className="panel-title">Account Deletion</h3>
+            <h3 className="panel-title">{t("Account Deletion")}</h3>
           </div>
           <div className="panel-body">
             <p>
-              <strong>Need to delete your account?</strong>
+              <strong>{t("Need to delete your account?")}</strong>
             </p>
             <p className="text-muted" style={{ marginBottom: 0 }}>
-              Deletion of supporter accounts requires manual review. Please
-              contact us at{" "}
+              {t(
+                "Deletion of supporter accounts requires manual review. Please contact us at"
+              )}{" "}
               <a href="mailto:support@metabrainz.org">support@metabrainz.org</a>.
             </p>
           </div>
@@ -502,6 +568,8 @@ function SupporterAccountDeletionNotice() {
 }
 
 function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <>
       <ProfileTabs activeTab="profile" />
@@ -516,12 +584,13 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
         <div className="col-md-12">
           <div className="panel panel-default">
             <div className="panel-heading">
-              <h3 className="panel-title">MetaBrainz Applications</h3>
+              <h3 className="panel-title">{t("MetaBrainz Applications")}</h3>
             </div>
             <div className="panel-body">
               <p>
-                With your MetaBrainz account, you can access every project in the
-                MetaBrainz family:
+                {t(
+                  "With your MetaBrainz account, you can access every project in the MetaBrainz family:"
+                )}
               </p>
               <div className="row metabrainz-projects-list">
                 <div className="col-md-3 col-sm-6">
@@ -532,7 +601,7 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
                   >
                     <img src="/static/img/logos/musicbrainz.svg" alt="MusicBrainz" />
                     <div className="project-description">
-                      The open-source music encyclopedia
+                      {t("The open-source music encyclopedia")}
                     </div>
                   </a>
                 </div>
@@ -544,7 +613,7 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
                   >
                     <img src="/static/img/logos/listenbrainz.svg" alt="ListenBrainz" />
                     <div className="project-description">
-                      Track, visualise and share the music you listen to
+                      {t("Track, visualise and share the music you listen to")}
                     </div>
                   </a>
                 </div>
@@ -556,7 +625,7 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
                   >
                     <img src="/static/img/logos/bookbrainz.svg" alt="BookBrainz" />
                     <div className="project-description">
-                      The open-source book database
+                      {t("The open-source book database")}
                     </div>
                   </a>
                 </div>
@@ -568,7 +637,7 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
                   >
                     <img src="/static/img/logos/critiquebrainz.svg" alt="CritiqueBrainz" />
                     <div className="project-description">
-                      Creative Commons licensed reviews
+                      {t("Creative Commons licensed reviews")}
                     </div>
                   </a>
                 </div>

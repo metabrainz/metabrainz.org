@@ -1,4 +1,5 @@
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import { getPageProps, renderRoot } from "../utils";
 import { OAuthScopeDesc } from "./utils";
 
@@ -17,18 +18,20 @@ function OAuthPrompt({
   submission_url,
   client_name,
 }: OAuthPromptProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <div id="oauth-prompt">
       <h1 className="page-title">{client_name}</h1>
       <p style={{ fontSize: "1.1em" }}>
-        This app requested permission to access:
+        {t("This app requested permission to access:")}
       </p>
       <div className="permissions">
         <div className="permission">
           <div className="icon">
-            <img src="/static/img/oauth/identity.svg" alt="Identity" />
+            <img src="/static/img/oauth/identity.svg" alt={t("Identity")} />
           </div>
-          <div className="description">Your identity on MetaBrainz</div>
+          <div className="description">{t("Your identity on MetaBrainz")}</div>
         </div>
 
         <div className="permission">{OAuthScopeDesc(scopes)}</div>
@@ -48,12 +51,12 @@ function OAuthPrompt({
         <div className="form-group">
           <div className="col-md-offset-3 col-md-1">
             <a href={cancel_url} className="btn btn-default">
-              Cancel
+              {t("Cancel")}
             </a>
           </div>
           <div className="col-md-1" style={{ marginLeft: "8px" }}>
             <button type="submit" className="btn btn-primary">
-              Allow access
+              {t("Allow access")}
             </button>
           </div>
         </div>

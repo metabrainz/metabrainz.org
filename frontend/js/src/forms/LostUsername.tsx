@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { getPageProps, renderRoot } from "../utils";
 import { AuthCardContainer, AuthCardTextInput } from "./utils";
@@ -15,11 +16,15 @@ function LostUsername({
   initial_form_data,
   initial_errors,
 }: LostUsernameProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h2 className="page-title text-center">Forgot your username?</h2>
+          <h2 className="page-title text-center">
+            {t("Forgot your username?")}
+          </h2>
           <Formik
             initialValues={{
               email: initial_form_data.email ?? "",
@@ -28,14 +33,14 @@ function LostUsername({
             initialErrors={initial_errors}
             initialTouched={initial_errors}
             validationSchema={Yup.object({
-              email: Yup.string().email().required("Email is required!"),
+              email: Yup.string().email().required(t("Email is required!")),
             })}
             onSubmit={() => {}}
           >
             {({ errors }) => (
               <form method="POST">
                 <AuthCardTextInput
-                  label="Email"
+                  label={t("Email")}
                   type="email"
                   name="email"
                   id="email"
@@ -62,7 +67,7 @@ function LostUsername({
                   className="btn btn-primary main-action-button"
                   type="submit"
                 >
-                  Send Email
+                  {t("Send Email")}
                 </button>
               </form>
             )}

@@ -1,4 +1,5 @@
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import { getPageProps, renderRoot } from "./utils";
 
 type OAuthErrorProps = {
@@ -9,10 +10,12 @@ type OAuthErrorProps = {
 };
 
 function OAuthError({ error }: OAuthErrorProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <>
-      <h1>OAuth2 Error</h1>
-      <p>An error occurred during OAuth authentication process.</p>
+      <h1>{t("OAuth2 Error")}</h1>
+      <p>{t("An error occurred during OAuth authentication process.")}</p>
       <p>
         {error.name}: {error.description}
       </p>

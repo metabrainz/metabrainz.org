@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { getPageProps, renderRoot } from "../utils";
 import { DatasetsInput, TextInput } from "./utils";
@@ -21,16 +22,17 @@ function ProfileEdit({
   initial_form_data,
   initial_errors,
 }: ProfileEditProps): JSX.Element {
+  const { t } = useTranslation();
   const schema: any = {
-    email: Yup.string().email().required("Email address is required!"),
+    email: Yup.string().email().required(t("Email address is required!")),
   };
   if (is_supporter) {
-    schema.contact_name = Yup.string().required("Contact name is required!");
+    schema.contact_name = Yup.string().required(t("Contact name is required!"));
   }
   return (
     <>
-      <h1 className="page-title">Your Profile</h1>
-      <h2>Edit contact information</h2>
+      <h1 className="page-title">{t("Your Profile")}</h1>
+      <h2>{t("Edit contact information")}</h2>
       <Formik
         initialValues={{
           datasets:
@@ -65,7 +67,7 @@ function ProfileEdit({
                 type="text"
                 id="contact_name"
                 name="contact_name"
-                label="Contact Name"
+                label={t("Contact Name")}
                 required
               />
             )}
@@ -74,7 +76,7 @@ function ProfileEdit({
               type="email"
               id="email"
               name="email"
-              label={is_supporter ? "Contact Email" : "Email"}
+              label={is_supporter ? t("Contact Email") : t("Email")}
               required
             />
             <br />
@@ -82,7 +84,7 @@ function ProfileEdit({
             {is_supporter && !is_commercial && (
               <div className="form-group">
                 <div className="col-sm-4 control-label">
-                  <strong>Datasets</strong>
+                  <strong>{t("Datasets")}</strong>
                 </div>
                 <div className="col-sm-5">
                   <DatasetsInput datasets={datasets} />
@@ -100,14 +102,14 @@ function ProfileEdit({
                   className="btn btn-default"
                   style={{ flex: 1, textAlign: "center" }}
                 >
-                  Cancel
+                  {t("Cancel")}
                 </a>
                 <button
                   type="submit"
                   className="btn btn-primary"
                   style={{ flex: 1 }}
                 >
-                  Update
+                  {t("Update")}
                 </button>
               </div>
             </div>
