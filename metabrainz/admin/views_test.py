@@ -2,6 +2,7 @@ from brainzutils import cache
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model.supporter import Supporter
 from flask import url_for
+from flask_login import logout_user
 from sqlalchemy import delete
 
 from metabrainz.model import db
@@ -14,19 +15,12 @@ from metabrainz.testing import FlaskTestCase
 
 class AdminViewsTestCase(FlaskTestCase):
     def _login_admin(self):
-        supporter = Supporter.add(
-            is_commercial=False,
-            musicbrainz_id='admin_user',
-            musicbrainz_row_id=1,
-            contact_name='Admin',
-            contact_email='admin@example.com',
-            data_usage_desc='testing',
-        )
         self.app.config['ADMINS'] = ['admin_user']
-        self.temporary_login(supporter.id)
+        self.temporary_login(self.admin_user)
 
     def test_index_unauthenticated(self):
-        self.assertStatus(self.client.get(url_for('admin.index')), 302)
+        logout_user()
+        self.assertStatus(self.client.get(url_for('main_admin.index')), 302)
 
     def setUp(self):
         super().setUp()
@@ -42,10 +36,12 @@ class AdminViewsTestCase(FlaskTestCase):
 
     def test_index_as_admin(self):
         self._login_admin()
-        self.assert200(self.client.get(url_for('admin.index')))
+        self.assert200(self.client.get(url_for('main_admin.index')))
 
     def test_supportersview_index_unauthenticated(self):
+        logout_user()
         self.assertStatus(self.client.get(url_for('supportersview.index')), 302)
+
     def tearDown(self):
         db.session.rollback()
         db.session.execute(delete(ModerationLog))
@@ -61,6 +57,7 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for('supportersview.index')))
 
     def test_tokensview_index_unauthenticated(self):
+        logout_user()
         self.assertStatus(self.client.get(url_for('tokensview.index')), 302)
     def _test_page_access(self, status_code):
         self.assertStatus(self.client.get(url_for("supporter_admin.index")), status_code)
@@ -76,6 +73,7 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for('tokensview.index')))
 
     def test_statsview_index_unauthenticated(self):
+        logout_user()
         self.assertStatus(self.client.get(url_for('statsview.overview')), 302)
     def test_admin_access(self):
         self._test_page_access(200)
@@ -85,8 +83,8 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for('statsview.overview')))
 
     def test_statsview_top_ips_unauthenticated(self):
+        logout_user()
         self.assertStatus(self.client.get(url_for('statsview.top_ips')), 302)
-        self.client.get("/logout")
         self._test_page_access(302)
 
     def test_statsview_top_ips_as_admin(self):
@@ -94,6 +92,7 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for('statsview.top_ips')))
 
     def test_statsview_supporters_unauthenticated(self):
+        logout_user()
         self.assertStatus(self.client.get(url_for('statsview.supporters')), 302)
         non_admin_user = self.create_user()
         self.temporary_login(non_admin_user)
@@ -104,6 +103,7 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for('statsview.supporters')))
 
     def test_commercialsupportersview_index_unauthenticated(self):
+        logout_user()
         self.assertStatus(self.client.get(url_for('commercialsupportersview.index')), 302)
 
     def test_commercialsupportersview_index_as_admin(self):

@@ -1,5 +1,7 @@
 from metabrainz.testing import FlaskTestCase
+from metabrainz.model import db
 from metabrainz.model.supporter import Supporter
+from metabrainz.model.user import User
 from flask import url_for
 
 
@@ -18,25 +20,30 @@ class PaymentsViewsTestCase(FlaskTestCase):
         self.assertNotIn(b'Supporter level:', resp.data)
 
     def _create_supporter(self, **kwargs):
+        user = User.add(
+            name='test_user',
+            unconfirmed_email='test@example.org',
+            password='testing',
+        )
         defaults = dict(
             is_commercial=True,
-            musicbrainz_id='test_user',
-            musicbrainz_row_id=1,
             contact_name='Test User',
-            contact_email='test@example.org',
             data_usage_desc='Testing',
+            user=user,
         )
         defaults.update(kwargs)
-        return Supporter.add(**defaults)
+        supporter = Supporter.add(**defaults)
+        db.session.flush()
+        return supporter
 
     def test_payment_selector_logged_in(self):
         supporter = self._create_supporter()
-        self.temporary_login(supporter.id)
+        self.temporary_login(supporter.user)
         self.assert200(self.client.get(url_for('payments.payment_selector')))
 
     def test_payment_logged_in(self):
         supporter = self._create_supporter(org_name='Test Org')
-        self.temporary_login(supporter.id)
+        self.temporary_login(supporter.user)
         resp = self.client.get(url_for('payments.payment', currency='usd'))
         self.assert200(resp)
         self.assertIn(b'Organization:', resp.data)

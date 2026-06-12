@@ -375,7 +375,7 @@ class CommercialSupportersView(AdminBaseView):
             good_standing=good_standing,
             search=search
         )
-        return self.render('admin/commercial-users/index.html', supporters=supporters,
+        return self.render('admin/commercial-supporters/index.html', supporters=supporters,
                            page=page, limit=limit, count=count)
 
 

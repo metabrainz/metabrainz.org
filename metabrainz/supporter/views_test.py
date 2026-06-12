@@ -102,15 +102,19 @@ class SupportersViewsTestCase(FlaskTestCase):
 
     def test_regenerate_token_success(self):
         """Test that generating a token returns it in JSON."""
+        user = User.add(
+            name='token_user',
+            unconfirmed_email='token@example.com',
+            password='testing',
+        )
         supporter = Supporter.add(
             is_commercial=False,
-            musicbrainz_id='token_user',
-            musicbrainz_row_id=10,
             contact_name='Token User',
-            contact_email='token@example.com',
             data_usage_desc='testing',
+            user=user,
         )
-        self.temporary_login(supporter.id)
+        db.session.flush()
+        self.temporary_login(supporter.user)
         response = self.client.post(url_for('supporters.regenerate_token'))
         self.assert200(response)
         data = response.json
@@ -119,15 +123,19 @@ class SupportersViewsTestCase(FlaskTestCase):
 
     def test_regenerate_token_rate_limit(self):
         """Test that TokenGenerationLimitException returns 429 with error message"""
+        user = User.add(
+            name='rate_limit_user',
+            unconfirmed_email='rate@example.com',
+            password='testing',
+        )
         supporter = Supporter.add(
             is_commercial=False,
-            musicbrainz_id='rate_limit_user',
-            musicbrainz_row_id=11,
             contact_name='Rate User',
-            contact_email='rate@example.com',
             data_usage_desc='testing',
+            user=user,
         )
-        self.temporary_login(supporter.id)
+        db.session.flush()
+        self.temporary_login(supporter.user)
 
         # First token generation should succeed
         response = self.client.post(url_for('supporters.regenerate_token'))
@@ -141,10 +149,10 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertIn("Can't generate more than one token per hour", data['error'])
 
     def test_login(self):
-        self.assert200(self.client.get(url_for('supporters.login')))
+        self.assert200(self.client.get(url_for('users.login')))
 
     def test_logout(self):
-        self.assertStatus(self.client.get(url_for('supporters.logout')), 302)
+        self.assertStatus(self.client.get(url_for('users.logout')), 302)
 
     def test_bad_standing(self):
         self.assert200(self.client.get(url_for('supporters.bad_standing')))

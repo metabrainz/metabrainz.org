@@ -141,7 +141,7 @@ OAUTH2_WHITELISTED_CCG_CLIENTS = []
 OIDC_ID_TOKEN_EXPIRATION = 3600
 # DANGER: DO NOT USE THESE VALUES IN PRODUCTION
 OIDC_JWT_PRIVATE_KEY = {
-   "alg": "P-256",
+   "alg": "ES256",
    "kty": "EC",
    "kid": "admin@example.com",
    "use": "sig",
@@ -151,7 +151,7 @@ OIDC_JWT_PRIVATE_KEY = {
    "d": "r_kHyZ-a06rmxM3yESK84r1otSg-aQcVStkRhA-iCM8"
 }
 OIDC_JWT_PUBLIC_KEY = {
-   "alg": "P-256",
+   "alg": "ES256",
    "kty": "EC",
    "kid": "admin@example.com",
    "use": "sig",

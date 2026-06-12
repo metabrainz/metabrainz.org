@@ -68,7 +68,7 @@ def payment(currency):
     currency = currency.lower()
     if currency not in SUPPORTED_CURRENCIES:
         return redirect(url_for('.payment_selector'))
-    supporter = current_user if current_user.is_authenticated else None
+    supporter = current_user.supporter if current_user.is_authenticated else None
     formdata = [("currency", currency)]
     if supporter and supporter.amount_pledged:
         formdata.append(("amount", str(supporter.amount_pledged)))
