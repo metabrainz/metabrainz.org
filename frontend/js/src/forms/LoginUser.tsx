@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { getPageProps, renderRoot } from "../utils";
 import {
@@ -20,11 +21,13 @@ function LoginUser({
   initial_form_data,
   initial_errors,
 }: LoginUserProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h2 className="page-title text-center">Welcome back!</h2>
+          <h2 className="page-title text-center">{t("Welcome back!")}</h2>
           <Formik
             initialValues={{
               username: initial_form_data.username ?? "",
@@ -35,18 +38,18 @@ function LoginUser({
             initialErrors={initial_errors}
             initialTouched={initial_errors}
             validationSchema={Yup.object({
-              username: Yup.string().required("Username is required!"),
-              password: Yup.string().required("Password is required!"),
+              username: Yup.string().required(t("Username is required!")),
+              password: Yup.string().required(t("Password is required!")),
             })}
             onSubmit={() => {}}
           >
             {({ errors }) => (
               <form method="POST">
                 <AuthCardTextInput
-                  label="Username"
+                  label={t("Username")}
                   labelLink={
                     <a className="form-label-link small" href="/lost-username">
-                      Forgot username?
+                      {t("Forgot username?")}
                     </a>
                   }
                   type="text"
@@ -56,10 +59,10 @@ function LoginUser({
                 />
 
                 <AuthCardPasswordInput
-                  label="Password"
+                  label={t("Password")}
                   labelLink={
                     <a className="form-label-link small" href="/lost-password">
-                      Forgot password?
+                      {t("Forgot password?")}
                     </a>
                   }
                   name="password"
@@ -69,7 +72,7 @@ function LoginUser({
 
                 <small className="checkbox">
                   <AuthCardCheckboxInput
-                    label="Remember me"
+                    label={t("Remember me")}
                     id="remember_me"
                     name="remember_me"
                     type="checkbox"
@@ -96,13 +99,13 @@ function LoginUser({
                   className="btn btn-primary btn-block main-action-button"
                   type="submit"
                 >
-                  Sign in
+                  {t("Sign in")}
                 </button>
               </form>
             )}
           </Formik>
           <div className="auth-card-footer text-center">
-            Don&apos;t have an account? <a href="/signup">Sign up</a>
+            {t("Don't have an account?")} <a href="/signup">{t("Sign up")}</a>
           </div>
         </div>
       </div>

@@ -30,7 +30,7 @@ export async function checkEmail(
       return {
         valid: false,
         reason: null,
-        error: errorData.error || "Failed to validate email",
+        error: errorData.error,
       };
     }
 
@@ -43,21 +43,5 @@ export async function checkEmail(
       valid: true,
       reason: null,
     };
-  }
-}
-
-/**
- * Get a user-friendly error message based on the validation reason
- */
-export function getEmailValidationErrorMessage(
-  reason: "email_taken" | "domain_blacklisted" | null
-): string | null {
-  switch (reason) {
-    case "email_taken":
-      return "This email address is already registered.";
-    case "domain_blacklisted":
-      return "Registration from this email domain is not allowed.";
-    default:
-      return null;
   }
 }

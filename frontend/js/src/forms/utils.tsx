@@ -1,5 +1,6 @@
 import React, { JSX } from "react";
 import { Field, FieldConfig, useField } from "formik";
+import { useTranslation } from "react-i18next";
 
 export type FormLevelAlertProps = {
   errors: Record<string, string> | null | undefined;
@@ -70,6 +71,7 @@ export type CheckboxInputProps = JSX.IntrinsicElements["input"] &
   };
 
 export function CheckboxInput({
+  label: _label,
   children,
   ...props
 }: CheckboxInputProps) {
@@ -167,11 +169,12 @@ export function AuthCardTextInput({
 }
 
 export function AuthCardPasswordInput({ ...props }: AuthCardTextInputProps) {
+  const { t } = useTranslation();
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const glyphIcon = passwordVisible
     ? "glyphicon-eye-close"
     : "glyphicon-eye-open";
-  const title = passwordVisible ? "Hide password" : "Show password";
+  const title = passwordVisible ? t("Hide password") : t("Show password");
   const passwordShowButton = (
     <span className="input-group-btn">
       <button
@@ -197,10 +200,11 @@ export function AuthCardPasswordInput({ ...props }: AuthCardTextInputProps) {
 
 export type AuthCardCheckboxInputProps = JSX.IntrinsicElements["input"] &
   FieldConfig & {
-    label: string;
+    label: string | JSX.Element;
   };
 
 export function AuthCardCheckboxInput({
+  label,
   ...props
 }: AuthCardCheckboxInputProps) {
   const [field, meta] = useField(props);
@@ -209,7 +213,7 @@ export function AuthCardCheckboxInput({
     <div className={`form-group ${hasError ? "has-error" : ""}`}>
       <label className="control-label" htmlFor={props.id}>
         <input {...props} {...field} />
-        Remember me
+        {label}
       </label>
       {hasError ? (
         <div className="small help-block text-danger">{meta.error}</div>

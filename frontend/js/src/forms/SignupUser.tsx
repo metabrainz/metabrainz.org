@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
 import { getPageProps, renderRoot } from "../utils";
@@ -25,14 +26,19 @@ function SignupUser({
   initial_form_data,
   initial_errors,
 }: SignupUserProps): JSX.Element {
+  const { t } = useTranslation();
   const { isValidatingEmail, validateEmailAsync } = useEmailValidation();
 
   return (
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h2 className="page-title text-center">Create your account</h2>
-          <div className="h4 text-center">access all MetaBrainz projects</div>
+          <h2 className="page-title text-center">
+            {t("Create your account")}
+          </h2>
+          <div className="h4 text-center">
+            {t("access all MetaBrainz projects")}
+          </div>
           <Formik
             initialValues={{
               username: initial_form_data.username ?? "",
@@ -45,21 +51,21 @@ function SignupUser({
             initialErrors={initial_errors}
             initialTouched={initial_errors}
             validationSchema={Yup.object({
-              username: Yup.string().required("Username is required!"),
+              username: Yup.string().required(t("Username is required!")),
               password: Yup.string()
-                .required("Password is required!")
+                .required(t("Password is required!"))
                 .min(8)
                 .max(64),
               confirm_password: Yup.string()
-                .required()
+                .required(t("Confirm Password is required!"))
                 .min(8)
                 .max(64)
                 .oneOf(
                   [Yup.ref("password")],
-                  "Confirm Password should match password!"
+                  t("Confirm Password should match password!")
                 ),
               mtcaptcha: mtcaptcha_site_key
-                ? Yup.string().required()
+                ? Yup.string().required(t("Captcha is required!"))
                 : Yup.string(),
             })}
             onSubmit={() => {}}
@@ -86,7 +92,7 @@ function SignupUser({
                 <AuthCardTextInput
                   label={
                     <>
-                      Username <span className="small">(public)</span>
+                      {t("Username")} <span className="small">{t("(public)")}</span>
                     </>
                   }
                   type="text"
@@ -98,9 +104,12 @@ function SignupUser({
                 <AuthCardTextInput
                   label={
                     <>
-                      E-mail address
+                      {t("E-mail address")}
                       {isValidatingEmail && (
-                        <span className="small text-muted"> (checking...)</span>
+                        <span className="small text-muted">
+                          {" "}
+                          {t("(checking...)")}
+                        </span>
                       )}
                     </>
                   }
@@ -112,28 +121,29 @@ function SignupUser({
                 />
 
                 <AuthCardPasswordInput
-                  label="Password"
+                  label={t("Password")}
                   name="password"
                   id="password"
                   required
                   labelLink={
                     <div className="small text-muted form-label-link">
-                      Must be at least 8 characters
+                      {t("Must be at least 8 characters")}
                     </div>
                   }
                 />
 
                 <AuthCardPasswordInput
-                  label="Confirm Password"
+                  label={t("Confirm Password")}
                   name="confirm_password"
                   id="confirm_password"
                   required
                 />
 
                 <div className="text-center" style={{ fontSize: "1.3rem" }}>
-                  Your contributions will be released into the public domain or
-                  licensed for use.{" "}
-                  <b>We will never share your personal information.</b>
+                  {t(
+                    "Your contributions will be released into the public domain or licensed for use."
+                  )}{" "}
+                  <b>{t("We will never share your personal information.")}</b>
                   <br />
                   <button
                     className="btn btn-link"
@@ -142,7 +152,7 @@ function SignupUser({
                     data-toggle="modal"
                     data-target="#conditions-modal"
                   >
-                    Click here to read more
+                    {t("Click here to read more")}
                   </button>
                 </div>
 
@@ -166,14 +176,14 @@ function SignupUser({
                   type="submit"
                   disabled={!isValid || !dirty || isValidatingEmail}
                 >
-                  {isValidatingEmail ? "Validating..." : "Create account"}
+                  {isValidatingEmail ? t("Validating...") : t("Create account")}
                 </button>
               </form>
             )}
           </Formik>
           <ConditionsModal />
           <div className="auth-card-footer text-center">
-            Already have an account? <a href="/login">Sign in </a>
+            {t("Already have an account?")} <a href="/login">{t("Sign in")}</a>
           </div>
         </div>
       </div>

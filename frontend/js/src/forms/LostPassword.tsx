@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { getPageProps, renderRoot } from "../utils";
 import { AuthCardContainer, AuthCardTextInput } from "./utils";
@@ -15,11 +16,15 @@ function LostPassword({
   initial_form_data,
   initial_errors,
 }: LostPasswordProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h2 className="page-title text-center">Forgot your password?</h2>
+          <h2 className="page-title text-center">
+            {t("Forgot your password?")}
+          </h2>
           <Formik
             initialValues={{
               username: initial_form_data.username ?? "",
@@ -29,15 +34,15 @@ function LostPassword({
             initialErrors={initial_errors}
             initialTouched={initial_errors}
             validationSchema={Yup.object({
-              username: Yup.string().required("Username is required!"),
-              email: Yup.string().email().required("Email is required!"),
+              username: Yup.string().required(t("Username is required!")),
+              email: Yup.string().email().required(t("Email is required!")),
             })}
             onSubmit={() => {}}
           >
             {({ errors }) => (
               <form method="POST">
                 <AuthCardTextInput
-                  label="Username"
+                  label={t("Username")}
                   type="text"
                   name="username"
                   id="username"
@@ -45,7 +50,7 @@ function LostPassword({
                 />
 
                 <AuthCardTextInput
-                  label="Email"
+                  label={t("Email")}
                   type="email"
                   name="email"
                   id="email"
@@ -71,7 +76,7 @@ function LostPassword({
                   className="btn btn-primary main-action-button"
                   type="submit"
                 >
-                  Send Email
+                  {t("Send Email")}
                 </button>
               </form>
             )}

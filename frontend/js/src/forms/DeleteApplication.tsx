@@ -1,4 +1,5 @@
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import { getPageProps, renderRoot } from "../utils";
 
 type DeleteApplicationProps = {
@@ -12,24 +13,26 @@ function DeleteApplication({
   cancel_url,
   application,
 }: DeleteApplicationProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <>
-      <h2>Delete application</h2>
+      <h2>{t("Delete application")}</h2>
       <hr />
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Client Details</h5>
+          <h5 className="card-title">{t("Client Details")}</h5>
           <p className="card-text">
-            <strong>Name:</strong> {application.name}
+            <strong>{t("Name:")}</strong> {application.name}
           </p>
           <p className="card-text">
-            <strong>Description:</strong> {application.description}
+            <strong>{t("Description:")}</strong> {application.description}
           </p>
           <p className="card-text">
-            <strong>Website:</strong>{" "}
+            <strong>{t("Website:")}</strong>{" "}
             <a href={`${application.website}`}>{application.website}</a>
           </p>
-          <p>Are you sure you want to delete this client?</p>
+          <p>{t("Are you sure you want to delete this client?")}</p>
           <form method="POST" className="form-horizontal">
             <div className="form-group">
               <div className="col-sm-offset-4 col-sm-5">
@@ -44,14 +47,14 @@ function DeleteApplication({
             </div>
             <div className="btn-group">
               <a href={cancel_url} className="btn btn-default">
-                Cancel
+                {t("Cancel")}
               </a>
               <button
                 type="submit"
                 className="btn btn-danger"
                 style={{ marginLeft: "8px" }}
               >
-                Delete
+                {t("Delete")}
               </button>
             </div>
           </form>

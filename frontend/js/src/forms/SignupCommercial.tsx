@@ -1,5 +1,6 @@
 import { Formik, useField, FieldConfig } from "formik";
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
 import { getPageProps, renderRoot } from "../utils";
@@ -29,12 +30,13 @@ type AmountPledgedFieldProps = JSX.IntrinsicElements["input"] &
   };
 
 function AmountPledgedField({ tier, ...props }: AmountPledgedFieldProps) {
+  const { t } = useTranslation();
   const [field, meta] = useField(props);
   return (
     <div className="form-group">
       <label htmlFor="amount_pledged">
-        If you would like to support us with more than ${tier.price}, please
-        enter the actual amount here:
+        {t("If you would like to support us with more than $")} {tier.price}
+        {t(", please enter the actual amount here:")}
       </label>
       <div>
         <input
@@ -71,6 +73,7 @@ function SignupCommercial({
   initial_errors,
   existing_user,
 }: SupporterCommercialProps): JSX.Element {
+  const { t } = useTranslation();
   const accountTypeUrl = "/supporters/account-type";
   const nonCommercialUrl = "/signup/noncommercial";
   const { isValidatingEmail, validateEmailAsync } = useEmailValidation();
@@ -107,33 +110,39 @@ function SignupCommercial({
   // Build validation schema based on whether it's signup or upgrade
   const baseValidationSchema = {
     org_name: Yup.string().required(
-      "You need to specify the name of your organization."
+      t("You need to specify the name of your organization.")
     ),
     org_desc: Yup.string().required(
-      "You need to provide description of your organization."
+      t("You need to provide description of your organization.")
     ),
     website_url: Yup.string().required(
-      "You need to specify website of the organization."
+      t("You need to specify website of the organization.")
     ),
     logo_url: Yup.string(),
     api_url: Yup.string(),
-    address_street: Yup.string().required("You need to specify street."),
-    address_city: Yup.string().required("You need to specify city."),
-    address_state: Yup.string().required("You need to specify state/province."),
-    address_postcode: Yup.string().required("You need to specify postcode."),
-    address_country: Yup.string().required("You need to specify country."),
+    address_street: Yup.string().required(t("You need to specify street.")),
+    address_city: Yup.string().required(t("You need to specify city.")),
+    address_state: Yup.string().required(
+      t("You need to specify state/province.")
+    ),
+    address_postcode: Yup.string().required(t("You need to specify postcode.")),
+    address_country: Yup.string().required(t("You need to specify country.")),
     amount_pledged: Yup.number().min(
       tier.price,
-      "Custom amount must be more than threshold amount for selected tier or equal to it!"
+      t(
+        "Custom amount must be more than threshold amount for selected tier or equal to it!"
+      )
     ),
     usage_desc: Yup.string()
-      .required("Please, tell us how you (will) use our data.")
-      .max(500, "Please, limit usage description to 500 characters."),
-    contact_name: Yup.string().required("Contact name is required!"),
+      .required(t("Please, tell us how you (will) use our data."))
+      .max(500, t("Please, limit usage description to 500 characters.")),
+    contact_name: Yup.string().required(t("Contact name is required!")),
     agreement: Yup.boolean()
-      .required("You need to accept the agreement!")
-      .oneOf([true], "You need to accept the agreement!"),
-    mtcaptcha: mtcaptcha_site_key ? Yup.string().required() : Yup.string(),
+      .required(t("You need to accept the agreement!"))
+      .oneOf([true], t("You need to accept the agreement!")),
+    mtcaptcha: mtcaptcha_site_key
+      ? Yup.string().required(t("Captcha is required!"))
+      : Yup.string(),
   };
 
   const validationSchema = Yup.object(
@@ -141,19 +150,19 @@ function SignupCommercial({
       ? baseValidationSchema
       : {
           ...baseValidationSchema,
-          username: Yup.string().required("Username is required!"),
-          email: Yup.string().email().required("Email address is required!"),
+          username: Yup.string().required(t("Username is required!")),
+          email: Yup.string().email().required(t("Email address is required!")),
           password: Yup.string()
-            .required("Password is required!")
+            .required(t("Password is required!"))
             .min(8)
             .max(64),
           confirm_password: Yup.string()
-            .required()
+            .required(t("Confirm Password is required!"))
             .min(8)
             .max(64)
             .oneOf(
               [Yup.ref("password")],
-              "Confirm Password should match password!"
+              t("Confirm Password should match password!")
             ),
         }
   );
@@ -163,14 +172,19 @@ function SignupCommercial({
       <div className="auth-card-container">
         <div className="auth-card">
           <h1 className="page-title text-center">
-            {existing_user ? "Become a Supporter" : "Sign up"}{" "}
-            <small>Commercial</small>
+            {existing_user ? t("Become a Supporter") : t("Sign up")}{" "}
+            <small>{t("Commercial")}</small>
           </h1>
-          <div className="h4 text-center">access all MetaBrainz projects</div>
+          <div className="h4 text-center">
+            {t("access all MetaBrainz projects")}
+          </div>
           <p>
-            <strong>Note:</strong> Signing up for any tier other than the{" "}
-            <i>Stealth startup</i> tier will publicly list your company on this
-            web site. However, we will not publish any of your private details.
+            <strong>{t("Note:")}</strong>{" "}
+            {t("Signing up for any tier other than the")}{" "}
+            <i>{t("Stealth startup")}</i>{" "}
+            {t(
+              "tier will publicly list your company on this web site. However, we will not publish any of your private details."
+            )}
           </p>
 
           <Formik
@@ -202,33 +216,37 @@ function SignupCommercial({
                 <div className="form-horizontal">
                   <div className="form-group">
                     <div className="col-xs-6 col-sm-4 control-label">
-                      <strong>Account type</strong>
+                      <strong>{t("Account type")}</strong>
                     </div>
                     <div className="col-xs-6 col-sm-5">
                       <div
                         className="label label-success"
                         style={{ padding: "10px" }}
                       >
-                        Commercial
+                        {t("Commercial")}
                       </div>
                     </div>
                   </div>
                   <div className="form-group">
                     <div className="col-xs-6 col-sm-4 control-label">
-                      <strong>Selected tier</strong>
+                      <strong>{t("Selected tier")}</strong>
                     </div>
                     <div
                       className="col-xs-6 col-sm-5"
                       style={{ paddingTop: "7px" }}
                     >
                       <b>{tier.name}</b>
-                      <p className="text-muted">${tier.price}/month and up</p>
+                      <p className="text-muted">
+                        ${tier.price}/{t("month and up")}
+                      </p>
                     </div>
                     <div
                       className="btn btn-link col-xs-offset-1 col-sm-offset-4"
                       style={{ marginTop: "10px" }}
                     >
-                      <a href={accountTypeUrl}>Change account type or tier</a>
+                      <a href={accountTypeUrl}>
+                        {t("Change account type or tier")}
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -238,7 +256,7 @@ function SignupCommercial({
                 {existing_user && user ? (
                   <div className="form-group">
                     <div className="alert alert-info">
-                      <strong>Your account:</strong> {user.username} (
+                      <strong>{t("Your account:")}</strong> {user.username} (
                       {user.email})
                     </div>
                   </div>
@@ -247,7 +265,8 @@ function SignupCommercial({
                     <AuthCardTextInput
                       label={
                         <>
-                          Username <span className="small">(public)</span>
+                          {t("Username")}{" "}
+                          <span className="small">{t("(public)")}</span>
                         </>
                       }
                       type="text"
@@ -260,18 +279,18 @@ function SignupCommercial({
                       type="text"
                       id="contact_name"
                       name="contact_name"
-                      label="Contact Name"
+                      label={t("Contact Name")}
                       required
                     />
 
                     <AuthCardTextInput
                       label={
                         <>
-                          E-mail address
+                          {t("E-mail address")}
                           {isValidatingEmail && (
                             <span className="small text-muted">
                               {" "}
-                              (checking...)
+                              {t("(checking...)")}
                             </span>
                           )}
                         </>
@@ -284,19 +303,19 @@ function SignupCommercial({
                     />
 
                     <AuthCardPasswordInput
-                      label="Password"
+                      label={t("Password")}
                       name="password"
                       id="password"
                       required
                       labelLink={
                         <div className="small text-muted form-label-link">
-                          Must be at least 8 characters
+                          {t("Must be at least 8 characters")}
                         </div>
                       }
                     />
 
                     <AuthCardPasswordInput
-                      label="Confirm Password"
+                      label={t("Confirm Password")}
                       name="confirm_password"
                       id="confirm_password"
                       required
@@ -309,7 +328,7 @@ function SignupCommercial({
                     type="text"
                     id="contact_name"
                     name="contact_name"
-                    label="Contact Name"
+                    label={t("Contact Name")}
                     required
                   />
                 )}
@@ -318,35 +337,38 @@ function SignupCommercial({
                   type="text"
                   id="org_name"
                   name="org_name"
-                  label="Organization name"
+                  label={t("Organization name")}
                   required
                 >
                   <p className="text-muted">
-                    If you don&apos;t have an organization name, you probably
-                    want to {existing_user ? "become a supporter" : "sign up"}{" "}
-                    as a{" "}
-                    <a href={nonCommercialUrl}>non-commercial / personal</a>{" "}
-                    {existing_user ? "supporter" : "user"}.
+                    {t("If you don't have an organization name, you probably want to")}{" "}
+                    {existing_user ? t("become a supporter") : t("sign up")}{" "}
+                    {t("as a")}{" "}
+                    <a href={nonCommercialUrl}>
+                      {t("non-commercial / personal")}
+                    </a>{" "}
+                    {existing_user ? t("supporter") : t("user")}.
                   </p>
                 </AuthCardTextInput>
 
                 <TextAreaInput
                   id="org_desc"
                   name="org_desc"
-                  label="Organization description"
+                  label={t("Organization description")}
                   required
                 >
                   <p className="text-muted">
-                    Please tell us a little about your company and whether you
-                    plan to use our{" "}
+                    {t(
+                      "Please tell us a little about your company and whether you plan to use our"
+                    )}{" "}
                     <a href="https://musicbrainz.org/doc/Development/XML_Web_Service/Version_2">
-                      API
+                      {t("API")}
                     </a>{" "}
-                    or to{" "}
+                    {t("or to")}{" "}
                     <a href="https://musicbrainz.org/doc/MusicBrainz_Server/Setup">
-                      host your own copy
+                      {t("host your own copy")}
                     </a>{" "}
-                    of the data.
+                    {t("of the data.")}
                   </p>
                 </TextAreaInput>
 
@@ -354,7 +376,7 @@ function SignupCommercial({
                   type="text"
                   id="website_url"
                   name="website_url"
-                  label="Website URL"
+                  label={t("Website URL")}
                   required
                 />
 
@@ -362,12 +384,13 @@ function SignupCommercial({
                   type="text"
                   id="logo_url"
                   name="logo_url"
-                  label="Logo URL"
-                  placeholder="(preferably in SVG format)"
+                  label={t("Logo URL")}
+                  placeholder={t("(preferably in SVG format)")}
                 >
                   <p className="text-muted">
-                    Image should be about 250 pixels wide on a white or
-                    transparent background. We will host it on our site.
+                    {t(
+                      "Image should be about 250 pixels wide on a white or transparent background. We will host it on our site."
+                    )}
                   </p>
                 </AuthCardTextInput>
 
@@ -375,27 +398,28 @@ function SignupCommercial({
                   type="text"
                   id="api_url"
                   name="api_url"
-                  label="API URL"
+                  label={t("API URL")}
                 >
                   <p className="text-muted">
-                    URL to where developers can use your APIs using MusicBrainz
-                    IDs, if available..
+                    {t(
+                      "URL to where developers can use your APIs using MusicBrainz IDs, if available.."
+                    )}
                   </p>
                 </AuthCardTextInput>
 
                 <TextAreaInput
                   id="usage_desc"
                   name="usage_desc"
-                  label="Your project"
+                  label={t("Your project")}
                   maxLength={150}
                   rows={6}
                   required
-                  placeholder="(max 150 characters)"
+                  placeholder={t("(max 150 characters)")}
                 >
                   <p className="text-muted">
-                    Can you please tell us more about the project in which
-                    you&apos;d like to use our data? Do you plan to self host
-                    the data or use our APIs?
+                    {t(
+                      "Can you please tell us more about the project in which you'd like to use our data? Do you plan to self host the data or use our APIs?"
+                    )}
                   </p>
                 </TextAreaInput>
 
@@ -407,13 +431,13 @@ function SignupCommercial({
                 />
                 <hr />
 
-                <h4>Billing address</h4>
+                <h4>{t("Billing address")}</h4>
 
                 <AuthCardTextInput
                   type="text"
                   id="address_street"
                   name="address_street"
-                  label="Street"
+                  label={t("Street")}
                   required
                 />
 
@@ -421,7 +445,7 @@ function SignupCommercial({
                   type="text"
                   id="address_city"
                   name="address_city"
-                  label="City"
+                  label={t("City")}
                   required
                 />
 
@@ -429,7 +453,7 @@ function SignupCommercial({
                   type="text"
                   id="address_state"
                   name="address_state"
-                  label="State / Province"
+                  label={t("State / Province")}
                   required
                 />
 
@@ -437,7 +461,7 @@ function SignupCommercial({
                   type="text"
                   id="address_postcode"
                   name="address_postcode"
-                  label="Postcode"
+                  label={t("Postcode")}
                   required
                 />
 
@@ -445,7 +469,7 @@ function SignupCommercial({
                   type="text"
                   id="address_country"
                   name="address_country"
-                  label="Country"
+                  label={t("Country")}
                   required
                 />
                 <hr />
@@ -458,26 +482,27 @@ function SignupCommercial({
                   required
                 >
                   <p>
-                    I agree to support the MetaBrainz Foundation when my
-                    organization is able to do so.
+                    {t(
+                      "I agree to support the MetaBrainz Foundation when my organization is able to do so."
+                    )}
                   </p>
                   <p>
-                    I also agree that if I generate a Live Data Feed access
-                    token, that I treat my access token as a secret and will not
-                    share this token publicly or commit it to a source code
-                    repository.
+                    {t(
+                      "I also agree that if I generate a Live Data Feed access token, that I treat my access token as a secret and will not share this token publicly or commit it to a source code repository."
+                    )}
                   </p>
                 </CheckboxInput>
 
                 <div className="text-center small">
                   <p>
-                    The following information will be shown publicly:
-                    organization name, logo, website and API URLs, data usage
-                    description.
+                    {t(
+                      "The following information will be shown publicly: organization name, logo, website and API URLs, data usage description."
+                    )}
                   </p>
                   <p>
-                    We&apos;ll send you more details about payment process once
-                    your application is approved.
+                    {t(
+                      "We'll send you more details about payment process once your application is approved."
+                    )}
                   </p>
                 </div>
 
@@ -507,10 +532,10 @@ function SignupCommercial({
                     }
                   >
                     {!existing_user && isValidatingEmail
-                      ? "Validating..."
+                      ? t("Validating...")
                       : existing_user
-                      ? "Become a Supporter"
-                      : "Sign up"}
+                      ? t("Become a Supporter")
+                      : t("Sign up")}
                   </button>
                 </div>
               </form>
@@ -519,15 +544,17 @@ function SignupCommercial({
           <div className="auth-card-footer">
             {existing_user ? (
               <div className="small">
-                <a href="/profile">Back to profile</a>
+                <a href="/profile">{t("Back to profile")}</a>
               </div>
             ) : (
               <>
                 <div className="small">
-                  Not a supporter? <a href="/signup">Create a user account </a>
+                  {t("Not a supporter?")}{" "}
+                  <a href="/signup">{t("Create a user account")}</a>
                 </div>
                 <div className="small">
-                  Already have an account? <a href="/login">Sign in </a>
+                  {t("Already have an account?")}{" "}
+                  <a href="/login">{t("Sign in")}</a>
                 </div>
               </>
             )}

@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { getPageProps, renderRoot } from "../utils";
 import {
@@ -16,11 +17,15 @@ function ResetPassword({
   csrf_token,
   initial_errors,
 }: ResetPasswordProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <AuthCardContainer>
       <div className="auth-card-container">
         <div className="auth-card">
-          <h1 className="page-title text-center">Reset your password</h1>
+          <h1 className="page-title text-center">
+            {t("Reset your password")}
+          </h1>
           <Formik
             initialValues={{
               password: "",
@@ -31,7 +36,7 @@ function ResetPassword({
             initialTouched={initial_errors}
             validationSchema={Yup.object({
               password: Yup.string()
-                .required("Password is required!")
+                .required(t("Password is required!"))
                 .min(8)
                 .max(64),
               confirm_password: Yup.string()
@@ -40,7 +45,7 @@ function ResetPassword({
                 .max(64)
                 .oneOf(
                   [Yup.ref("password")],
-                  "Confirm Password should match password!"
+                  t("Confirm Password should match password!")
                 ),
             })}
             onSubmit={() => {}}
@@ -64,14 +69,14 @@ function ResetPassword({
                 </div>
 
                 <AuthCardPasswordInput
-                  label="Password"
+                  label={t("Password")}
                   name="password"
                   id="password"
                   required
                 />
 
                 <AuthCardPasswordInput
-                  label="Confirm Password"
+                  label={t("Confirm Password")}
                   name="confirm_password"
                   id="confirm_password"
                   required
@@ -81,7 +86,7 @@ function ResetPassword({
                   className="btn btn-primary main-action-button"
                   type="submit"
                 >
-                  Reset Password
+                  {t("Reset Password")}
                 </button>
               </form>
             )}
