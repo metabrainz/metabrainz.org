@@ -5,21 +5,21 @@
 # Translators:
 # Allan Nordhøy <email address hidden>, 2017
 # Transifex Bot <>, 2023
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2017-01-19 20:40+0000\n"
-"Last-Translator: Transifex Bot <>, 2023\n"
+"PO-Revision-Date: 2026-06-12 00:54+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Norwegian Bokmål <https://translations.metabrainz.org/"
+"projects/metabrainz/website/nb_NO/>\n"
 "Language: nb\n"
-"Language-Team: Norwegian Bokmål "
-"(https://app.transifex.com/musicbrainz/teams/13846/nb/)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2026.6.1\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: metabrainz/index/forms.py:45
@@ -150,44 +150,44 @@ msgid ""
 "donation appears in the list due to processing delays."
 msgstr ""
 "Takk for at du donere til MetaBrainz-stiftelsen. Din støtte blir varmt "
-"mottatt. Det kan ta litt tid før din donasjon framtrer på listen som "
-"følge av behandlingsforsinkelser."
+"mottatt. Det kan ta litt tid før din donasjon framtrer på listen som følge "
+"av behandlingsforsinkelser."
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
-"Takk for at du overfører penger til MetaBrains-stiftelsen. Din støtte "
-"blir varmt mottatt."
+"Takk for at du overfører penger til MetaBrains-stiftelsen. Din støtte blir "
+"varmt mottatt."
 
 #: metabrainz/payments/views.py:182
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
-msgstr "Vi er lei oss for at du ikke donerer i dag, og håper du ombestemmer deg."
+msgstr ""
+"Vi er lei oss for at du ikke donerer i dag, og håper du ombestemmer deg."
 
 #: metabrainz/payments/views.py:188
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
-msgstr "Vi er lei oss for at du ikke betaler i dag, og håper du ombestemmer deg."
+msgstr ""
+"Vi er lei oss for at du ikke betaler i dag, og håper du ombestemmer deg."
 
 #: metabrainz/payments/views.py:202
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
 msgstr ""
-"Det later til at vi har støtte på en feil, og kan ikke behandle din "
-"donasjon."
+"Det later til at vi har støtte på en feil, og kan ikke behandle din donasjon."
 
 #: metabrainz/payments/views.py:208
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your payment."
 msgstr ""
-"Det later til at vi har støtt på en feil, og kan ikke behandle din "
-"betaling."
+"Det later til at vi har støtt på en feil, og kan ikke behandle din betaling."
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
@@ -569,8 +569,7 @@ msgid ""
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"Det er mulig å hente en signatur for hver repliseringspakke. Bare erstatt"
-"\n"
+"Det er mulig å hente en signatur for hver repliseringspakke. Bare erstatt\n"
 "      <code>.tar.bz2</code> med <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
@@ -609,8 +608,7 @@ msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"Det er mulig å hente en signatur for hver repliseringspakke. Bare erstatt"
-"\n"
+"Det er mulig å hente en signatur for hver repliseringspakke. Bare erstatt\n"
 "      <code>.tar.bz2</code> med <code>.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
@@ -946,8 +944,8 @@ msgid ""
 "neither the music itself nor the\n"
 "        rights to license the music."
 msgstr ""
-"Vi kan ikke lisensiere musikken som finnes på MusicBrainz, siden vi "
-"hverken har musikken, ei heller\n"
+"Vi kan ikke lisensiere musikken som finnes på MusicBrainz, siden vi hverken "
+"har musikken, ei heller\n"
 "        rettighetene til å lisensiere den."
 
 #: metabrainz/templates/index/contact.html:60
@@ -1005,8 +1003,8 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
-"Kom å still spørsmål på vårt <a href=\"%(forums_url)s\">forum</a>! Vi ser"
-" fram til å svare\n"
+"Kom å still spørsmål på vårt <a href=\"%(forums_url)s\">forum</a>! Vi ser "
+"fram til å svare\n"
 "    på ethvert spørsmål du måtte ha."
 
 #: metabrainz/templates/index/contact.html:92
@@ -1098,18 +1096,18 @@ msgid ""
 "data gathering process so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
-"MetaBrains-stiftelsen har blitt grunnlagt for å bygge databaser "
-"vedlikeholdt av gemenskapen,\n"
+"MetaBrains-stiftelsen har blitt grunnlagt for å bygge databaser vedlikeholdt "
+"av gemenskapen,\n"
 "for å tilby dem som offentlig eiendom eller Creative\n"
 "Commons-lisenser. Vår data blir i hovedsak samlet inn av frivillige, og "
 "verifisert\n"
 "av et stemmesystem for å forsikre at alt er riktig og konsistent.\n"
-"All ukommersiell bruk er gratis, men kommersielle brukere blir spurt om å"
-" betale for\n"
+"All ukommersiell bruk er gratis, men kommersielle brukere blir spurt om å "
+"betale for\n"
 "regelmessige oppdateringer av dataen for å hjelpe til med å drive "
 "prosjektet\n"
-"Vi oppfordrer alle brukere av dataen til å bidra til "
-"innsamlingsprosessen, slik\n"
+"Vi oppfordrer alle brukere av dataen til å bidra til innsamlingsprosessen, "
+"slik\n"
 "at vår data kan være så komplett som mulig."
 
 #: metabrainz/templates/index/index.html:38
@@ -1126,8 +1124,8 @@ msgid ""
 "Sign up to use the <a href=\"%(account_type_url)s\">Live Data "
 "Feed</a></em>"
 msgstr ""
-"Registrer deg og bruk <a "
-"href=\"%(account_type_url)s\">sanntidsdatastrømmen</a></em>"
+"Registrer deg og bruk <a href=\"%(account_type_url)s\">sanntidsdatastrømmen</"
+"a></em>"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
@@ -1148,7 +1146,8 @@ msgstr "En pakkebrønn for Creative Commons-lisensierte musikkanmeldelser"
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
-msgstr "En pakkebrønn med musikkomslagskunst som er fritt og enkelt tilgjengelig"
+msgstr ""
+"En pakkebrønn med musikkomslagskunst som er fritt og enkelt tilgjengelig"
 
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
@@ -1310,8 +1309,8 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
-"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> er fri programvare for "
-"å identifisere, tagge og organisere\n"
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> er fri programvare for å "
+"identifisere, tagge og organisere\n"
 "            digitale mediaopptak."
 
 #: metabrainz/templates/index/projects.html:47
@@ -1326,10 +1325,10 @@ msgid ""
 "            releases in MusicBrainz. It is a joint project with the <a "
 "href=\"%(archive_org_url)s\">Internet Archive</a>."
 msgstr ""
-"<a href=\"%(caa_url)s\">Omslagskunstarkivet</a> er en database som "
-"omfatter omslagskunst som samsvarer\n"
-"            med utgivelsene i MusicBrainz. Det er et samarbeidsprosjekt "
-"med <a href=\"%(archive_org_url)s\">Internettarkivet</a>."
+"<a href=\"%(caa_url)s\">Omslagskunstarkivet</a> er en database som omfatter "
+"omslagskunst som samsvarer\n"
+"            med utgivelsene i MusicBrainz. Det er et samarbeidsprosjekt med "
+"<a href=\"%(archive_org_url)s\">Internettarkivet</a>."
 
 #: metabrainz/templates/index/projects.html:63
 msgid "CritiqueBrainz"
@@ -1488,8 +1487,8 @@ msgid ""
 "Thanks to everyone who has helped make the MetaBrainz Foundation what it "
 "is today!"
 msgstr ""
-"Takk til alle som har hjulpet til med å gjøre MetaBrainz-stiftelsen det "
-"den er i dag!"
+"Takk til alle som har hjulpet til med å gjøre MetaBrainz-stiftelsen det den "
+"er i dag!"
 
 #: metabrainz/templates/index/team.html:6
 msgid "The MetaBrainz Team"
@@ -2007,8 +2006,8 @@ msgid ""
 "You can make a donation, or recurring donations, via bank transfer to the"
 " following IBAN:"
 msgstr ""
-"Du kan utføre en donasjon, eller vedvarende sådan, via bankoverføring til"
-" følgende IBAN:"
+"Du kan utføre en donasjon, eller vedvarende sådan, via bankoverføring til "
+"følgende IBAN:"
 
 #: metabrainz/templates/payments/donate.html:143
 #, python-format
@@ -2143,8 +2142,8 @@ msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
-"For å finne ut hvordan du avbryter gjentagende betalingsavtaler, ta en "
-"titt på\n"
+"For å finne ut hvordan du avbryter gjentagende betalingsavtaler, ta en titt "
+"på\n"
 "        <a href=\"%(cancel_recurring_url)s\">denne siden</a>."
 
 #: metabrainz/templates/payments/payment.html:157
@@ -4174,4 +4173,3 @@ msgstr "Tillat tilgang"
 
 #~ msgid "Login failed!"
 #~ msgstr "Innlogging mislyktes!"
-
