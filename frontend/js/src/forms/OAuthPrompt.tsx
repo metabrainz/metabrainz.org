@@ -49,13 +49,15 @@ function OAuthPrompt({
           </div>
         </div>
         <div className="form-group">
-          <div className="col-md-offset-3 col-md-1">
+          <div className="col-sm-offset-3 col-sm-9">
             <a href={cancel_url} className="btn btn-default">
               {t("Cancel")}
             </a>
-          </div>
-          <div className="col-md-1" style={{ marginLeft: "8px" }}>
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              style={{ marginLeft: "8px" }}
+            >
               {t("Allow access")}
             </button>
           </div>
