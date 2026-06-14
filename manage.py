@@ -13,7 +13,11 @@ from metabrainz.invoices.send_invoices import QuickBooksInvoiceSender
 from metabrainz.webhooks.cli import webhooks
 
 from metabrainz.supporter.copy_mb_row_ids import copy_row_ids
-from metabrainz.user.migrate_mb_users import migrate_mb_users, DEFAULT_BATCH_SIZE
+from metabrainz.user.migrate_mb_users import (
+    DEFAULT_BATCH_SIZE,
+    DEFAULT_CLEARTEXT_PASSWORD_LOG_ROUNDS,
+    migrate_mb_users,
+)
 
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'admin', 'sql')
 
@@ -21,6 +25,15 @@ cli = click.Group()
 application = create_app()
 
 cli.add_command(webhooks)
+
+
+def _configure_cli_logging(app, level=logging.INFO):
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    )
+    logging.getLogger().setLevel(level)
+    app.logger.setLevel(level)
 
 
 @cli.command()
@@ -142,10 +155,19 @@ def import_musicbrainz_row_ids():
 @cli.command()
 @click.option("--batch-size", "-b", default=DEFAULT_BATCH_SIZE, show_default=True,
               help="Number of editors to migrate per batch.")
-def migrate_musicbrainz_users(batch_size):
+@click.option("--cleartext-password-log-rounds", default=DEFAULT_CLEARTEXT_PASSWORD_LOG_ROUNDS,
+              type=click.IntRange(4, 31),
+              show_default=True,
+              help="Bcrypt log rounds for MusicBrainz {CLEARTEXT} passwords.")
+def migrate_musicbrainz_users(batch_size, cleartext_password_log_rounds):
     """ Migrate users from the MusicBrainz editor table into the MetaBrainz user table. """
-    with create_app().app_context():
-        migrate_mb_users(batch_size=batch_size)
+    app = create_app()
+    _configure_cli_logging(app)
+    with app.app_context():
+        migrate_mb_users(
+            batch_size=batch_size,
+            cleartext_password_log_rounds=cleartext_password_log_rounds,
+        )
 
 
 def _run_psql(script, uri, database=None):
