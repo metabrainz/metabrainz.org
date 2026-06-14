@@ -26,7 +26,13 @@ BCRYPT_LOG_ROUNDS = 12
 {{if service "pgbouncer-master"}}
 {{with index (service "pgbouncer-master") 0}}
 SQLALCHEMY_DATABASE_URI = "postgresql://{{template "KEY" "postgresql/username"}}:{{template "KEY" "postgresql/password"}}@{{.Address}}:{{.Port}}/{{template "KEY" "postgresql/db_name"}}"
-SQLALCHEMY_MUSICBRAINZ_URI = 'postgresql://musicbrainz_ro@{{.Address}}:{{.Port}}/musicbrainz_db'
+{{end}}
+{{end}}
+
+{{- $mbDbService := key (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") "postgresql/mb_db_service") | trimSpace -}}
+{{if service $mbDbService}}
+{{with index (service $mbDbService) 0}}
+SQLALCHEMY_MUSICBRAINZ_URI = 'postgresql://{{template "KEY" "postgresql/mb_username"}}:{{template "KEY" "postgresql/mb_password"}}@{{.Address}}:{{.Port}}/{{template "KEY" "postgresql/mb_db_name"}}'
 {{end}}
 {{end}}
 
