@@ -23,7 +23,7 @@ export default function ConditionsModal() {
           <h5>{t("Licensing")}</h5>
           <p>
             {t(
-              "Any contributions you make to MusicBrainz will be released into the Public Domain and/or licensed under a Creative Commons by-nc-sa license. Furthermore, you give the MetaBrainz Foundation the right to license this data for commercial use."
+              "Any contributions you make to any MetaBrainz service will be released into the Public Domain and/or licensed under a Creative Commons by-nc-sa license. Furthermore, you give the MetaBrainz Foundation the right to license this data for commercial use."
             )}
             <br />
             {t("Please read our")}{" "}
@@ -39,7 +39,7 @@ export default function ConditionsModal() {
           <h5>{t("Privacy")}</h5>
           <p>
             {t(
-              "MusicBrainz strongly believes in the privacy of its users. Any personal information you choose to provide will not be sold or shared with anyone else."
+              "MetaBrainz strongly believes in the privacy of its users. Any personal information you choose to provide will not be sold or shared with anyone else."
             )}
             <br />
             {t("Please read our")}{" "}
@@ -68,7 +68,7 @@ export default function ConditionsModal() {
             )}
             <br />
             {t(
-              "We do not automatically create accounts for these services when you create a MetaBrainz account, but you will be just a few clicks away from doing so."
+              "We create a placeholder account for all the MetaBrainz projects when you sign up, and you are one log-in away from activating them."
             )}
           </p>
           <button
