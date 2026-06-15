@@ -48,6 +48,8 @@ class UsersViewsTestCase(FlaskTestCase):
 
     def _test_user_signup_helper(self, data, expected_status_code, include_csrf_token=True):
         self.client.get("/signup")
+        if "agreement" not in data:
+            data["agreement"] = "y"
         if include_csrf_token:
             data["csrf_token"] = g.csrf_token
         response = self.client.post("/signup", data=data)
@@ -136,6 +138,17 @@ class UsersViewsTestCase(FlaskTestCase):
             "password": "<PASSWORD>",
             "confirm_password": "<PASSWORD-1>",
         }, {"confirm_password": "Confirm Password should match password!"})
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user)
+
+    def test_user_signup_missing_agreement(self):
+        self._test_user_signup_missing_fields_helper({
+            "username": "test_user_1",
+            "email": "test@example.com",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+            "agreement": "",
+        }, {"agreement": "You need to accept the agreement!"})
         user = User.get(name="test_user_1")
         self.assertIsNone(user)
 
@@ -779,6 +792,7 @@ class UsersViewsTestCase(FlaskTestCase):
             "email": email,
             "password": "securepassword123",
             "confirm_password": "securepassword123",
+            "agreement": "y",
         }
         url = "/signup"
         env = {"REMOTE_ADDR": ip_address or self.ip_address}

@@ -6,6 +6,7 @@ import MTCaptcha from "./MTCaptcha";
 import { getPageProps, renderRoot } from "../utils";
 import {
   AuthCardContainer,
+  AuthCardCheckboxInput,
   AuthCardPasswordInput,
   AuthCardTextInput,
   FormLevelAlert,
@@ -45,6 +46,7 @@ function SignupUser({
               email: initial_form_data.email ?? "",
               password: initial_form_data.password ?? "",
               confirm_password: initial_form_data.confirm_password ?? "",
+              agreement: initial_form_data.agreement ?? false,
               mtcaptcha: "",
               csrf_token,
             }}
@@ -64,6 +66,9 @@ function SignupUser({
                   [Yup.ref("password")],
                   t("Confirm Password should match password!")
                 ),
+              agreement: Yup.boolean()
+                .required(t("You need to accept the agreement!"))
+                .oneOf([true], t("You need to accept the agreement!")),
               mtcaptcha: mtcaptcha_site_key
                 ? Yup.string().required(t("Captcha is required!"))
                 : Yup.string(),
@@ -139,12 +144,24 @@ function SignupUser({
                   required
                 />
 
+                <AuthCardCheckboxInput
+                  id="agreement"
+                  name="agreement"
+                  type="checkbox"
+                  required
+                  label={
+                  <span style={{ marginLeft: "0.5rem", fontWeight: "normal" }}>
+                      {t(
+                        "I accept that my contributions will be released into the public domain or licensed for use."
+                      )}{" "}
+                    </span>
+                  }
+                  />
+
                 <div className="text-center" style={{ fontSize: "1.3rem" }}>
-                  {t(
-                    "Your contributions will be released into the public domain or licensed for use."
-                  )}{" "}
-                  <b>{t("We will never share your personal information.")}</b>
-                  <br />
+                  <b>
+                    {t("We will never share your personal information.")}
+                  </b>
                   <button
                     className="btn btn-link"
                     type="button"

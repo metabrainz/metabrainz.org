@@ -34,6 +34,9 @@ class UserSignupForm(MeBFlaskForm):
         Length(min=8, max=64),
         EqualTo("password", gettext("Confirm Password should match password!"))
     ])
+    agreement = BooleanField(validators=[
+        DataRequired(message=gettext("You need to accept the agreement!"))
+    ])
     mtcaptcha = MTCaptchaField("MTCaptcha", validators=[validate_mtcaptcha])
 
 
