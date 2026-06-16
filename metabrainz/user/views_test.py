@@ -46,6 +46,19 @@ class UsersViewsTestCase(FlaskTestCase):
         self._test_user_signup_helper(data, 302)
         self.client.get("/logout")
 
+    def login_test_user(self, password="<PASSWORD>"):
+        self.client.get(url_for("users.login"))
+        response = self.client.post(url_for("users.login"), data={
+            "username": "test_user_1",
+            "password": password,
+            "csrf_token": g.csrf_token,
+        })
+        self.assertRedirects(response, url_for("index.home"))
+
+    def mark_session_stale(self):
+        with self.client.session_transaction() as session:
+            session["_fresh"] = False
+
     def _test_user_signup_helper(self, data, expected_status_code, include_csrf_token=True):
         self.client.get("/signup")
         if include_csrf_token:
@@ -823,15 +836,142 @@ class UsersViewsTestCase(FlaskTestCase):
         user = User.get(name="new_user_3")
         self.assertIsNone(user)
 
-    def test_profile_delete_page_requires_fresh_login(self):
-        """Test that delete page requires fresh login."""
+    def test_profile_change_password_page_allows_stale_login(self):
         self.create_user()
-        user = User.get(name="test_user_1")
-        self.temporary_login(user)
+        self.login_test_user()
+        self.mark_session_stale()
+
+        response = self.client.get(url_for("index.profile_change_password"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("index/profile-change-password.html")
+
+    def test_reauthenticate_refreshes_login_and_redirects(self):
+        self.create_user()
+        self.login_test_user()
+        self.mark_session_stale()
+
+        reauth_url = url_for("users.reauthenticate", next=url_for("index.profile_delete"))
+        response = self.client.get(reauth_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("users/reauthenticate.html")
+        csrf_token = self.get_context_variable("form").csrf_token.current_token
+
+        response = self.client.post(reauth_url, data={
+            "password": "<PASSWORD>",
+            "csrf_token": csrf_token,
+        })
+        self.assertRedirects(response, url_for("index.profile_delete"))
+
+        response = self.client.get(url_for("index.profile_delete"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("index/profile-delete.html")
+
+    def test_reauthenticate_rejects_wrong_password(self):
+        self.create_user()
+        self.login_test_user()
+        self.mark_session_stale()
+
+        reauth_url = url_for("users.reauthenticate", next=url_for("index.profile_delete"))
+        self.client.get(reauth_url)
+        csrf_token = self.get_context_variable("form").csrf_token.current_token
+        response = self.client.post(reauth_url, data={
+            "password": "<WRONG-PASSWORD>",
+            "csrf_token": csrf_token,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("users/reauthenticate.html")
+        self.assertIn(b"Invalid password.", response.data)
 
         response = self.client.get(url_for("index.profile_delete"))
         self.assertEqual(response.status_code, 302)
-        self.assertIn("/login", response.location)
+        self.assertIn(url_for("users.reauthenticate"), response.location)
+
+    def test_profile_change_password_success(self):
+        self.create_user()
+
+        self.client.get(url_for("users.login"))
+        response = self.client.post(url_for("users.login"), data={
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+        self.assertRedirects(response, url_for("index.home"))
+
+        self.client.get(url_for("index.profile_change_password"))
+        response = self.client.post(url_for("index.profile_change_password"), data={
+            "current_password": "<PASSWORD>",
+            "password": "<NEW-PASSWORD>",
+            "confirm_password": "<NEW-PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+        self.assertRedirects(response, url_for("index.profile"))
+        self.assertMessageFlashed("Password changed successfully.", "success")
+
+        self.client.get(url_for("users.logout"))
+
+        self.client.get(url_for("users.login"))
+        response = self.client.post(url_for("users.login"), data={
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(current_user.is_anonymous)
+        self.assertEqual(
+            json.loads(self.get_context_variable("props"))["initial_errors"],
+            {"password": "Invalid username or password."}
+        )
+
+        response = self.client.post(url_for("users.login"), data={
+            "username": "test_user_1",
+            "password": "<NEW-PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+        self.assertRedirects(response, url_for("index.home"))
+        self.assertEqual(current_user.name, "test_user_1")
+
+    def test_profile_change_password_wrong_current_password(self):
+        self.create_user()
+
+        self.client.get(url_for("users.login"))
+        response = self.client.post(url_for("users.login"), data={
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+        self.assertRedirects(response, url_for("index.home"))
+
+        self.client.get(url_for("index.profile_change_password"))
+        response = self.client.post(url_for("index.profile_change_password"), data={
+            "current_password": "<WRONG-PASSWORD>",
+            "password": "<NEW-PASSWORD>",
+            "confirm_password": "<NEW-PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            json.loads(self.get_context_variable("props"))["initial_errors"],
+            {"current_password": "Current password is incorrect."}
+        )
+
+        self.client.get(url_for("users.logout"))
+        self.client.get(url_for("users.login"))
+        response = self.client.post(url_for("users.login"), data={
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+        self.assertRedirects(response, url_for("index.home"))
+
+    def test_profile_delete_page_requires_fresh_login(self):
+        """Test that delete page requires fresh login."""
+        self.create_user()
+        self.login_test_user()
+        self.mark_session_stale()
+
+        response = self.client.get(url_for("index.profile_delete"))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(url_for("users.reauthenticate"), response.location)
 
     def test_profile_delete_account_success(self):
         """Test that a user can delete their own account."""

@@ -567,6 +567,27 @@ function SupporterAccountDeletionNotice() {
   );
 }
 
+function SecuritySection() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="row" style={{ marginBottom: "1.5rem" }}>
+      <div className="col-md-12">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">{t("Security")}</h3>
+          </div>
+          <div className="panel-body">
+            <a href="/profile/change-password" className="btn btn-warning">
+              {t("Change Password")}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
   const { t } = useTranslation();
 
@@ -579,6 +600,8 @@ function Profile({ user, csrf_token }: ProfileProps): JSX.Element {
       ) : (
         <UserProfile user={user} csrf_token={csrf_token} />
       )}
+
+      <SecuritySection />
 
       <div className="row" style={{ marginBottom: "1.5rem" }}>
         <div className="col-md-12">

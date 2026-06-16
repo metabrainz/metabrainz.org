@@ -2,8 +2,9 @@ from gettext import gettext
 
 from flask_wtf import FlaskForm
 from wtforms import validators
-from wtforms.fields import SelectMultipleField, EmailField, StringField
+from wtforms.fields import PasswordField, SelectMultipleField, EmailField, StringField
 from wtforms.validators import DataRequired
+from wtforms.validators import EqualTo, Length
 from wtforms.widgets.core import ListWidget, CheckboxInput
 
 
@@ -54,6 +55,22 @@ class DatasetsField(SelectMultipleField):
 class UserEditForm(MeBFlaskForm):
     """ Login form for existing users. """
     email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])
+
+
+class UserChangePasswordForm(MeBFlaskForm):
+    """Password change form for logged in users."""
+    current_password = PasswordField(validators=[
+        DataRequired(gettext("Current password is required!")),
+    ])
+    password = PasswordField(validators=[
+        DataRequired(gettext("Password is required!")),
+        Length(min=8, max=64)
+    ])
+    confirm_password = PasswordField(validators=[
+        DataRequired(gettext("Confirm Password is required!")),
+        Length(min=8, max=64),
+        EqualTo("password", gettext("Confirm Password should match password!"))
+    ])
 
 
 class SupporterEditForm(UserEditForm):
