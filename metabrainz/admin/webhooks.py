@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from flask import redirect, url_for, flash, request, current_app
 from flask_admin import expose
 from flask_admin.actions import action
-from markupsafe import Markup
+from markupsafe import Markup, escape
 from wtforms import StringField, BooleanField, SelectMultipleField, ValidationError
 from wtforms.validators import DataRequired
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -76,10 +76,13 @@ class EventsMultiSelectField(SelectMultipleField):
 class WebhookModelView(AdminModelView):
     """Flask-Admin view for managing webhooks."""
     
-    column_list = ("name", "url", "events", "is_active", "created_at")
+    column_list = ("name", "url", "events", "secret", "is_active", "created_at")
     column_searchable_list = ("name", "url")
     column_filters = ("is_active", "created_at")
     column_default_sort = ("created_at", True)
+    column_formatters = {
+        "secret": lambda v, c, m, p: _format_secret_field(m.secret, f"webhook-secret-{m.id}"),
+    }
 
     create_template = "admin/webhook/create.html"
     edit_template = "admin/webhook/edit.html"
@@ -127,7 +130,7 @@ class WebhookModelView(AdminModelView):
             flash(Markup(
                 f"<strong>Webhook created successfully!</strong> "
                 f"Please copy and save the secret key: <code>{model.secret}</code>. "
-                "You will not be able to see it again."
+                "It is also available from the webhook admin view, hidden by default."
             ), "success")
 
 
@@ -303,4 +306,34 @@ def _format_webhook_link(webhook):
         f'<a href="{url_for("webhooks-admin.edit_view", id=webhook.id)}" class="btn btn-xs btn-primary">'
         f'<i class="fa fa-link"></i> {name}'
         f"</a>"
+    )
+
+
+def _format_secret_field(secret, field_id):
+    """Format a webhook secret as a masked, read-only password field."""
+    escaped_secret = escape(secret or "")
+    escaped_field_id = escape(field_id)
+    toggle_script = (
+        "var input=document.getElementById(this.getAttribute('data-target'));"
+        "var icon=this.querySelector('i');"
+        "var show=input.type==='password';"
+        "input.type=show?'text':'password';"
+        "this.title=show?'Hide secret':'Show secret';"
+        "this.setAttribute('aria-label',this.title);"
+        "icon.className=show?'fa fa-eye-slash':'fa fa-eye';"
+    )
+
+    return Markup(
+        '<div class="input-group input-group-sm">'
+        f'<input id="{escaped_field_id}" type="password" class="form-control" '
+        f'value="{escaped_secret}" readonly autocomplete="off" '
+        'aria-label="Webhook secret">'
+        '<span class="input-group-btn">'
+        '<button type="button" class="btn btn-default js-toggle-webhook-secret" '
+        f'data-target="{escaped_field_id}" title="Show secret" aria-label="Show secret" '
+        f'onclick="{toggle_script}">'
+        '<i class="fa fa-eye"></i>'
+        '</button>'
+        '</span>'
+        '</div>'
     )
