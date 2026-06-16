@@ -65,6 +65,21 @@
                     {% endif %}
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="webhook-secret" class="col-md-2 control-label"><strong>Secret</strong></label>
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <input id="webhook-secret" type="password" class="form-control" value="{{ model.secret }}" readonly autocomplete="off" aria-label="Webhook secret">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default js-toggle-webhook-secret" data-target="webhook-secret" title="Show secret" aria-label="Show secret">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <p class="help-block">Used to verify webhook signatures. It is hidden by default.</p>
+                </div>
+            </div>
             
             <div class="form-group{% if form.events.errors %} has-error{% endif %}">
                 <label class="col-md-2 control-label"><strong>Events</strong> <span class="text-danger">*</span></label>
@@ -123,4 +138,18 @@
 {% block tail %}
     {{ super() }}
     {{ lib.form_js() }}
+    <script>
+        $(".js-toggle-webhook-secret").on("click", function () {
+            var button = $(this);
+            var input = $("#" + button.data("target"));
+            var icon = button.find("i");
+            var show = input.attr("type") === "password";
+
+            input.attr("type", show ? "text" : "password");
+            button.attr("title", show ? "Hide secret" : "Show secret");
+            button.attr("aria-label", show ? "Hide secret" : "Show secret");
+            icon.toggleClass("fa-eye", !show);
+            icon.toggleClass("fa-eye-slash", show);
+        });
+    </script>
 {% endblock %}
