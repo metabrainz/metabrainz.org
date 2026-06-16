@@ -47,6 +47,11 @@ class UserLoginForm(MeBFlaskForm):
     remember_me = BooleanField(gettext("Remember me"), default="checked")
 
 
+class UserReauthenticationForm(MeBFlaskForm):
+    """Form for refreshing an existing login session."""
+    password = PasswordField(gettext("Password"), validators=[DataRequired(gettext("Password is required!"))])
+
+
 class ForgotUsernameForm(MeBFlaskForm):
     """ Form to request lost username email. """
     email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])

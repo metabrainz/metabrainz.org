@@ -6,7 +6,7 @@ from metabrainz.model.user import User
 
 login_manager = LoginManager()
 login_manager.login_view = "users.login"
-login_manager.refresh_view = "users.login"
+login_manager.refresh_view = "users.reauthenticate"
 login_manager.needs_refresh_message = "Please re-enter your password to continue."
 login_manager.needs_refresh_message_category = "info"
 

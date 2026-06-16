@@ -7,8 +7,14 @@ from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
 from flask_babel import gettext
 
+from metabrainz import bcrypt
 from metabrainz import flash
-from metabrainz.index.forms import CommercialSupporterEditForm, NonCommercialSupporterEditForm, UserEditForm
+from metabrainz.index.forms import (
+    CommercialSupporterEditForm,
+    NonCommercialSupporterEditForm,
+    UserChangePasswordForm,
+    UserEditForm,
+)
 from metabrainz.model import Dataset, db, OAuth2Client, OAuth2AccessToken, OAuth2RefreshToken
 from metabrainz.model.supporter import Supporter
 from metabrainz.model.user import User
@@ -242,6 +248,26 @@ def profile_edit():
         "is_commercial": current_user.supporter is not None and current_user.supporter.is_commercial,
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
+        "initial_errors": form.props_errors
+    }))
+
+
+@index_bp.route('/profile/change-password', methods=['GET', 'POST'])
+@login_required
+def profile_change_password():
+    form = UserChangePasswordForm()
+    if form.validate_on_submit():
+        if not bcrypt.check_password_hash(current_user.password, form.current_password.data):
+            form.current_password.errors.append(gettext("Current password is incorrect."))
+        else:
+            current_user.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+            current_user.last_updated = datetime.datetime.now(datetime.timezone.utc)
+            db.session.commit()
+            flash.success(gettext("Password changed successfully."))
+            return redirect(url_for("index.profile"))
+
+    return render_template("index/profile-change-password.html", props=json.dumps({
+        "csrf_token": generate_csrf(),
         "initial_errors": form.props_errors
     }))
 

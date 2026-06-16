@@ -63,6 +63,10 @@ export default function (env, argv) {
       lostPassword: path.resolve(jsDir, "src/forms/LostPassword.tsx"),
       lostUsername: path.resolve(jsDir, "src/forms/LostUsername.tsx"),
       resetPassword: path.resolve(jsDir, "src/forms/ResetPassword.tsx"),
+      profileChangePassword: path.resolve(
+        jsDir,
+        "src/forms/ProfileChangePassword.tsx"
+      ),
       profileEdit: path.resolve(jsDir, "src/forms/ProfileEdit.tsx"),
       profile: path.resolve(jsDir, "src/Profile.tsx"),
       profileDelete: path.resolve(jsDir, "src/ProfileDelete.tsx"),
