@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timezone
 
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
-from flask_login import logout_user, login_required, login_user, current_user
+from flask_login import confirm_login, logout_user, login_required, login_user, current_user
 from flask_wtf.csrf import generate_csrf
 
 from metabrainz import bcrypt, flash
@@ -14,8 +14,8 @@ from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.user import login_forbidden
 from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
     VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
-from metabrainz.user.forms import UserLoginForm, UserSignupForm, ForgotPasswordForm, ForgotUsernameForm, \
-    ResetPasswordForm
+from metabrainz.user.forms import UserLoginForm, UserReauthenticationForm, UserSignupForm, ForgotPasswordForm, \
+    ForgotUsernameForm, ResetPasswordForm
 from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup_count
 
 users_bp = Blueprint("users", __name__)
@@ -112,6 +112,26 @@ def login():
         "initial_form_data": form_data,
         "initial_errors": form_errors
     }))
+
+
+@users_bp.route("/reauthenticate", methods=["GET", "POST"])
+@login_required
+def reauthenticate():
+    """Refresh the current login session before sensitive account actions."""
+    form = UserReauthenticationForm()
+    redirect_to = request.args.get("next") or url_for("index.profile")
+
+    if form.validate_on_submit():
+        if not bcrypt.check_password_hash(current_user.password, form.password.data):
+            form.password.errors.append("Invalid password.")
+        else:
+            confirm_login()
+            return redirect(redirect_to)
+
+    return render_template(
+        "users/reauthenticate.html",
+        form=form,
+    )
 
 
 @users_bp.route("/verify-email")

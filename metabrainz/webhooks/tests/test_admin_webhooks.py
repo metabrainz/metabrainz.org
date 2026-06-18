@@ -274,6 +274,31 @@ class WebhookAdminTestCase(FlaskTestCase):
         self.assertIn(EVENT_USER_UPDATED, webhook.events)
         self.assertEqual(webhook.secret, original_secret)
 
+    def test_webhook_secret_is_masked_in_admin_views(self):
+        """Test that the webhook secret is exposed as a masked field in admin views."""
+        secret = "mebw_masked_secret_12345"
+        webhook = Webhook(
+            name="Masked Secret Webhook",
+            url="https://example.com/masked",
+            secret=secret,
+            events=[EVENT_USER_CREATED],
+            is_active=True
+        )
+        db.session.add(webhook)
+        db.session.commit()
+
+        response = self.client.get(url_for("webhooks-admin.index_view"))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(f'id="webhook-secret-{webhook.id}"'.encode("utf-8"), response.data)
+        self.assertIn(b'type="password"', response.data)
+        self.assertIn(f'value="{secret}"'.encode("utf-8"), response.data)
+
+        response = self.client.get(url_for("webhooks-admin.edit_view", id=webhook.id))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'id="webhook-secret"', response.data)
+        self.assertIn(b'type="password"', response.data)
+        self.assertIn(f'value="{secret}"'.encode("utf-8"), response.data)
+
     def test_create_webhook_with_multiple_events(self):
         """Test creating a webhook with multiple event selections."""
         self.client.get(url_for("webhooks-admin.create_view"))
