@@ -8,6 +8,7 @@ import {
   AuthCardContainer,
   AuthCardPasswordInput,
   AuthCardTextInput,
+  getAuthPageUrl,
 } from "./utils";
 
 type LoginUserProps = {
@@ -105,7 +106,8 @@ function LoginUser({
             )}
           </Formik>
           <div className="auth-card-footer text-center">
-            {t("Don't have an account?")} <a href="/signup">{t("Sign up")}</a>
+            {t("Don't have an account?")}{" "}
+            <a href={getAuthPageUrl("/signup")}>{t("Sign up")}</a>
           </div>
         </div>
       </div>

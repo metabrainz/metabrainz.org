@@ -536,6 +536,31 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             f"/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=profile&state=random-state&redirect_uri=https://example.com/callback"
         )
 
+    def test_oauth_authorize_logged_out_register_hint(self):
+        application = self.create_oauth_app()
+        response = self.client.get(
+            "/oauth2/authorize",
+            query_string={
+                "client_id": application["client_id"],
+                "response_type": "code",
+                "scope": "profile",
+                "state": "random-state",
+                "redirect_uri": "https://example.com/callback",
+                "login_hint": "register",
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+        parsed = urlparse(response.location)
+        self.assertEqual(parsed.path, "/signup")
+
+        fragment_args = parse_qs(parsed.query)
+        expected_next = (
+            f"/oauth2/authorize?client_id={application['client_id']}"
+            "&response_type=code&scope=profile&state=random-state"
+            "&redirect_uri=https://example.com/callback&login_hint=register"
+        )
+        self.assertEqual(unquote(fragment_args["next"][0]), expected_next)
+
     @pytest.mark.skip
     def test_oauth_authorize_parameter_reuse(self):
         application = self.create_oauth_app()
