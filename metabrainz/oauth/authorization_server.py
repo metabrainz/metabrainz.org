@@ -1,13 +1,15 @@
 from urllib.parse import urlparse, urlunparse
 
 from authlib.integrations.flask_oauth2 import AuthorizationServer
+from authlib.integrations.flask_oauth2.authorization_server import create_token_generator, \
+    create_token_expires_in_generator
 from authlib.integrations.sqla_oauth2 import (
     create_query_client_func,
 )
 from authlib.oauth2.rfc6749 import InvalidScopeError, scope_to_list
 from authlib.oauth2.rfc7636 import CodeChallenge
 
-from metabrainz.oauth.authorization_code_grant import AuthorizationCodeGrant
+from metabrainz.oauth.authorization_code_grant import AuthorizationCodeGrant, CustomBearerTokenGenerator
 from metabrainz.oauth.client_credentials import ClientCredentialsGrant
 from metabrainz.oauth.implicit_grant import ImplicitGrant
 from metabrainz.oauth.introspection import OAuth2IntrospectionEndpoint
@@ -43,8 +45,32 @@ class CustomAuthorizationServer(AuthorizationServer):
             response.headers.set("Location", urlunparse((scheme, netloc, path, params, query, fragment)))
         return response
 
+    def load_config(self, config):
+        super().load_config(config)
+        custom_token_generator = self.create_custom_bearer_token_generator(config)
+        self.register_token_generator(
+            "authorization_code",
+            custom_token_generator
+        )
+        self.register_token_generator(
+            "refresh_token",
+            custom_token_generator
+        )
 
-# TODO: configure the expiry time for tokens
+    def create_custom_bearer_token_generator(self, config):
+        conf = config.get("OAUTH2_ACCESS_TOKEN_GENERATOR", True)
+        access_token_generator = create_token_generator(conf, 42)
+
+        conf = config.get("OAUTH2_REFRESH_TOKEN_GENERATOR", False)
+        refresh_token_generator = create_token_generator(conf, 48)
+
+        expires_conf = config.get("OAUTH2_TOKEN_EXPIRES_IN")
+        expires_generator = create_token_expires_in_generator(expires_conf)
+        return CustomBearerTokenGenerator(
+            access_token_generator, refresh_token_generator, expires_generator
+        )
+
+
 authorization_server = CustomAuthorizationServer(query_client=query_client, save_token=save_token)
 authorization_server.register_grant(AuthorizationCodeGrant, [
     CodeChallenge(required=False),

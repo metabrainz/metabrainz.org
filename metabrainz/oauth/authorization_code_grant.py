@@ -1,11 +1,12 @@
 from urllib.parse import urlparse, parse_qs
 
 from authlib.oauth2.rfc6749 import grants, InvalidGrantError, InvalidRequestError
+from authlib.oauth2.rfc6750 import BearerTokenGenerator
 from flask import render_template, current_app
 
 from metabrainz.model.user import User
 
-from metabrainz.model import db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2AuthorizationCode
+from metabrainz.model import db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2AuthorizationCode, OAuth2Client
 from metabrainz.model.oauth.scope import get_scopes
 
 
@@ -96,3 +97,32 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
 
     def authenticate_user(self, authorization_code):
         return User.get(id=authorization_code.user_id)
+
+
+class CustomBearerTokenGenerator(BearerTokenGenerator):
+    """Custom Bearer Token Generator that adds a "remember_me" field to the response for MusicBrainz."""
+
+    def generate(
+        self,
+        grant_type,
+        client: OAuth2Client,
+        user: User | None = None,
+        scope = None,
+        expires_in = None,
+        include_refresh_token = True,
+    ):
+        response = super().generate(
+            grant_type,
+            client,
+            user=user,
+            scope=scope,
+            expires_in=expires_in,
+            include_refresh_token=include_refresh_token
+        )
+
+        remember_me_clients = current_app.config.get("OAUTH2_REMEMBER_ME_CLIENTS", [])
+        if client.client_id in remember_me_clients and user is not None:
+            user = User.get(id=user.id)
+            response["remember_me"] = user.has_active_remember_me()
+
+        return response
