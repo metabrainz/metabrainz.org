@@ -35,7 +35,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
             className="btn btn-success pull-right"
           >
             <span className="glyphicon glyphicon-plus-sign" />
-            {t("Create new application")}
+            {" "}{t("Create new application")}
           </a>
         </h3>
       </div>
