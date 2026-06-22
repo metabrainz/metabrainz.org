@@ -322,39 +322,27 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, "/")
 
-    def test_user_login_prefills_username_from_login_hint(self):
-        self.client.get(url_for("users.login", login_hint="hinted_user"))
+    def test_login_required_register_hint_redirects_to_signup(self):
+        next_url = url_for("index.profile", login_hint="register")
+        response = self.client.get(next_url)
 
-        props = json.loads(self.get_context_variable("props"))
-        self.assertEqual(props["initial_form_data"]["username"], "hinted_user")
-
-    def test_user_login_prefills_username_from_nested_login_hint(self):
-        next_url = "/oauth2/authorize?client_id=test-client&login_hint=hinted_user"
-        self.client.get(url_for("users.login", next=next_url))
-
-        props = json.loads(self.get_context_variable("props"))
-        self.assertEqual(props["initial_form_data"]["username"], "hinted_user")
-
-    def test_user_auth_switch_links_preserve_query_string(self):
-        next_url = "/oauth2/authorize?client_id=test-client&login_hint=hinted_user"
-
-        self.client.get(url_for("users.login", next=next_url, login_hint="direct_hint"))
-        props = json.loads(self.get_context_variable("props"))
-        parsed = urlparse(props["signup_url"])
+        self.assertEqual(response.status_code, 302)
+        parsed = urlparse(response.location)
         query = parse_qs(parsed.query)
 
         self.assertEqual(parsed.path, "/signup")
         self.assertEqual(query["next"], [next_url])
-        self.assertEqual(query["login_hint"], ["direct_hint"])
 
-        self.client.get(url_for("users.signup", next=next_url, login_hint="direct_hint"))
-        props = json.loads(self.get_context_variable("props"))
-        parsed = urlparse(props["login_url"])
+    def test_login_required_login_hint_redirects_to_login(self):
+        next_url = url_for("index.profile", login_hint="login")
+        response = self.client.get(next_url)
+
+        self.assertEqual(response.status_code, 302)
+        parsed = urlparse(response.location)
         query = parse_qs(parsed.query)
 
         self.assertEqual(parsed.path, "/login")
         self.assertEqual(query["next"], [next_url])
-        self.assertEqual(query["login_hint"], ["direct_hint"])
 
     def test_user_verify_email_success(self):
         self.create_user()

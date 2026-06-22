@@ -70,7 +70,6 @@ def signup():
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
         "initial_errors": form.props_errors,
-        "login_url": _get_auth_page_url("users.login"),
     }))
 
 

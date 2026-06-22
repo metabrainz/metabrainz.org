@@ -9,6 +9,7 @@ import {
   AuthCardPasswordInput,
   AuthCardTextInput,
   FormLevelAlert,
+  getAuthPageUrl,
 } from "./utils";
 import ConditionsModal from "./ConditionsModal";
 import useEmailValidation from "../hooks/useEmailValidation";
@@ -183,7 +184,8 @@ function SignupUser({
           </Formik>
           <ConditionsModal />
           <div className="auth-card-footer text-center">
-            {t("Already have an account?")} <a href="/login">{t("Sign in")}</a>
+            {t("Already have an account?")}{" "}
+            <a href={getAuthPageUrl("/login")}>{t("Sign in")}</a>
           </div>
         </div>
       </div>
@@ -193,8 +195,12 @@ function SignupUser({
 
 document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
-  const { mtcaptcha_site_key, csrf_token, initial_form_data, initial_errors } =
-    reactProps;
+  const {
+    mtcaptcha_site_key,
+    csrf_token,
+    initial_form_data,
+    initial_errors,
+  } = reactProps;
 
   renderRoot(
     domContainer!,

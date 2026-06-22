@@ -13,6 +13,10 @@ export function FormLevelAlert({ errors }: FormLevelAlertProps) {
   return <div className="alert alert-danger">{errors.null}</div>;
 }
 
+export function getAuthPageUrl(path: "/login" | "/signup"): string {
+  return `${path}${window.location.search}`;
+}
+
 export type TextInputProps = JSX.IntrinsicElements["input"] &
   FieldConfig & {
     label: string;
