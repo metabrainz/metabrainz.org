@@ -212,6 +212,47 @@ class UsersViewsTestCase(FlaskTestCase):
         self.client.get("/logout")
         self.assertTrue(current_user.is_anonymous)
 
+    def test_user_login_records_remember_me(self):
+        self.create_user()
+
+        self._test_user_login_helper({
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "remember_me": "y",
+        }, 302)
+
+        user = User.get(name="test_user_1")
+        self.assertIsNotNone(user.remember_me_until)
+        self.assertTrue(user.has_active_remember_me())
+
+    def test_user_login_without_remember_me_not_recorded(self):
+        self.create_user()
+
+        self._test_user_login_helper({
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+        }, 302)
+
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user.remember_me_until)
+        self.assertFalse(user.has_active_remember_me())
+
+    def test_logout_clears_remember_me(self):
+        self.create_user()
+
+        self._test_user_login_helper({
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "remember_me": "y",
+        }, 302)
+        user = User.get(name="test_user_1")
+        self.assertIsNotNone(user.remember_me_until)
+
+        self.client.get("/logout")
+        db.session.expire_all()
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user.remember_me_until)
+
     def test_user_login_missing_username(self):
         self.create_user()
 
@@ -280,6 +321,40 @@ class UsersViewsTestCase(FlaskTestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, "/")
+
+    def test_user_login_prefills_username_from_login_hint(self):
+        self.client.get(url_for("users.login", login_hint="hinted_user"))
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(props["initial_form_data"]["username"], "hinted_user")
+
+    def test_user_login_prefills_username_from_nested_login_hint(self):
+        next_url = "/oauth2/authorize?client_id=test-client&login_hint=hinted_user"
+        self.client.get(url_for("users.login", next=next_url))
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(props["initial_form_data"]["username"], "hinted_user")
+
+    def test_user_auth_switch_links_preserve_query_string(self):
+        next_url = "/oauth2/authorize?client_id=test-client&login_hint=hinted_user"
+
+        self.client.get(url_for("users.login", next=next_url, login_hint="direct_hint"))
+        props = json.loads(self.get_context_variable("props"))
+        parsed = urlparse(props["signup_url"])
+        query = parse_qs(parsed.query)
+
+        self.assertEqual(parsed.path, "/signup")
+        self.assertEqual(query["next"], [next_url])
+        self.assertEqual(query["login_hint"], ["direct_hint"])
+
+        self.client.get(url_for("users.signup", next=next_url, login_hint="direct_hint"))
+        props = json.loads(self.get_context_variable("props"))
+        parsed = urlparse(props["login_url"])
+        query = parse_qs(parsed.query)
+
+        self.assertEqual(parsed.path, "/login")
+        self.assertEqual(query["next"], [next_url])
+        self.assertEqual(query["login_hint"], ["direct_hint"])
 
     def test_user_verify_email_success(self):
         self.create_user()

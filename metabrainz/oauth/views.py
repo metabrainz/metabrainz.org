@@ -1,19 +1,16 @@
 import json
-
-from authlib.oauth2.rfc6749 import InvalidRequestError
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify, flash, g, current_app
-from flask_babel import gettext
-from flask_login import login_required, current_user
-from flask_wtf.csrf import generate_csrf
-from werkzeug.exceptions import NotFound, Forbidden
 from urllib.parse import urljoin
 
-from metabrainz.model.user import User
+from authlib.oauth2.rfc6749 import InvalidRequestError
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, current_app
+from flask_login import login_required, current_user
+from flask_wtf.csrf import generate_csrf
+
 from metabrainz.decorators import nocache, crossdomain
-from metabrainz.oauth.generator import create_client_secret, create_client_id
-from metabrainz.model import db, OAuth2RefreshToken, OAuth2Scope, OAuth2Client, get_scopes, OAuth2AccessToken
-from metabrainz.oauth.forms import ApplicationForm, AuthorizationForm, DeleteApplicationForm
+from metabrainz.model import db, OAuth2Scope, get_scopes, OAuth2AccessToken
+from metabrainz.model.user import User
 from metabrainz.oauth.authorization_server import authorization_server
+from metabrainz.oauth.forms import AuthorizationForm
 from metabrainz.utils import build_url
 
 oauth2_bp = Blueprint("oauth2", __name__)

@@ -1,6 +1,7 @@
 from typing import Any
 from datetime import datetime, timezone
 from uuid import uuid4
+from flask import current_app
 from flask_login import UserMixin
 from sqlalchemy import Column, Integer, Identity, Text, DateTime, func, Boolean
 from sqlalchemy.dialects.postgresql import UUID
@@ -36,6 +37,12 @@ class User(db.Model, UserMixin):
     deleted = Column(Boolean, nullable=False, default=False)
     is_blocked = Column(Boolean, nullable=False, default=False)
 
+    # Tracks until when the user's "remember me" login is expected to stay valid. This mirrors the
+    # lifetime of the flask-login remember cookie set at login time and is None when the user did not
+    # opt into being remembered (or after logout). It lets the OAuth2 token endpoint expose the user's
+    # remember-me status to whitelisted clients.
+    remember_me_until = Column(DateTime(timezone=True))
+
     supporter: Mapped["Supporter"] = relationship("Supporter", uselist=False, back_populates="user", lazy="joined")
     moderation_logs: Mapped[list["ModerationLog"]] = relationship(
         "ModerationLog", back_populates="user", foreign_keys="ModerationLog.user_id",
@@ -64,6 +71,20 @@ class User(db.Model, UserMixin):
 
     def is_active(self):
         return not self.is_blocked
+
+    def update_remember_me(self, remember: bool):
+        """ Record whether the user opted into being remembered at login."""
+        if remember:
+            duration = current_app.config.get("REMEMBER_COOKIE_DURATION")
+            self.remember_me_until = datetime.now(timezone.utc) + duration
+        else:
+            self.remember_me_until = None
+
+    def has_active_remember_me(self) -> bool:
+        """ Whether the user currently has an active, unexpired remember-me login. """
+        if self.remember_me_until is None:
+            return False
+        return self.remember_me_until > datetime.now(timezone.utc)
 
     @classmethod
     def add(cls, **kwargs):

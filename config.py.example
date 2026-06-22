@@ -137,6 +137,8 @@ OAUTH2_TOKEN_EXPIRES_IN = {
 }
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
 OAUTH2_WHITELISTED_CCG_CLIENTS = []
+# OAuth2 client ids that are allowed to see the user's "remember me" status in the token response.
+OAUTH2_REMEMBER_ME_CLIENTS = []
 
 OIDC_ID_TOKEN_EXPIRATION = 3600
 # DANGER: DO NOT USE THESE VALUES IN PRODUCTION
@@ -172,3 +174,4 @@ WEBHOOK_CIRCUIT_BREAKER_THRESHOLD = 5  # Number of failures before opening circu
 WEBHOOK_CIRCUIT_BREAKER_TIMEOUT = 300  # Seconds to wait before attempting recovery (5 minutes)
 
 SIGNUP_RATE_LIMIT_PER_IP = 5
+REMEMBER_COOKIE_DURATION = timedelta(days=365)
