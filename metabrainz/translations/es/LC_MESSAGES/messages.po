@@ -3457,7 +3457,7 @@ msgstr "Sus aplicaciones"
 
 #: frontend/js/src/Applications.tsx:45
 msgid "No applications found"
-msgstr "No se encontraron aplicaciones."
+msgstr "No se encontraron aplicaciones"
 
 #: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
 msgid "Website"
@@ -3472,14 +3472,12 @@ msgid "Client secret"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:55 frontend/js/src/Applications.tsx:82
-#, fuzzy
 msgid "Actions"
-msgstr "Donaciones"
+msgstr "Acciones"
 
 #: frontend/js/src/Applications.tsx:70
-#, fuzzy
 msgid "Authorized applications"
-msgstr "OAuth Authorization"
+msgstr "Aplicaciones autorizadas"
 
 #: frontend/js/src/Applications.tsx:73
 msgid "No tokens found"
