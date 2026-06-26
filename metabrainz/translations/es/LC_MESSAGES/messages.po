@@ -12,8 +12,9 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-06-12 00:52+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-06-26 16:54+0000\n"
+"Last-Translator: mr_monkey "
+"<mr_monkey@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Spanish <https://translations.metabrainz.org/projects/"
 "metabrainz/website/es/>\n"
 "Language: es\n"
@@ -3380,19 +3381,19 @@ msgstr "Supporters on this tier"
 
 #: metabrainz/templates/users/lost-password.html:3
 msgid "Forgot password"
-msgstr ""
+msgstr "Contraseña olvidada"
 
 #: metabrainz/templates/users/lost-username.html:3
 msgid "Forgot username"
-msgstr ""
+msgstr "Nombre de usuario olvidado"
 
 #: metabrainz/templates/users/reset-password.html:3
 msgid "Reset your password"
-msgstr ""
+msgstr "Reiniciar contraseña"
 
 #: metabrainz/user/forms.py:15
 msgid "Registration from this email domain is not allowed."
-msgstr ""
+msgstr "No se permite el registro desde este dominio de correo electrónico."
 
 #: metabrainz/user/forms.py:20 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
@@ -3402,71 +3403,65 @@ msgstr "Nombre"
 
 #: metabrainz/user/forms.py:21 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
-#, fuzzy
 msgid "Username is required!"
-msgstr "Contact name is required!"
+msgstr "Se requiere nombre de usuario!"
 
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:43
 #: metabrainz/user/forms.py:61
-#, fuzzy
 msgid "Password is required!"
-msgstr "Email address is required!"
+msgstr "Se requiere contraseña!"
 
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:65
-#, fuzzy
 msgid "Confirm Password is required!"
-msgstr "Contact name is required!"
+msgstr "Se requiere confirmar la contraseña!"
 
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:67
 msgid "Confirm Password should match password!"
-msgstr ""
+msgstr "La confirmación de contraseña debe coincidir!"
 
 #: metabrainz/user/forms.py:43
 msgid "Password"
 msgstr ""
 
 #: metabrainz/user/forms.py:44
-#, fuzzy
 msgid "Remember me"
-msgstr "Diciembre"
+msgstr "Recordarme"
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
-msgstr ""
+msgstr "Nombre de usuario invalido."
 
 #: metabrainz/user/username.py:183
 msgid "Username contains invalid or invisible characters."
-msgstr ""
+msgstr "El nombre de usuario contiene caracteres no válidos o invisibles."
 
 #: frontend/js/src/ApplicationRow.tsx:22
 msgid "Hide password"
-msgstr ""
+msgstr "Ocultar contraseña"
 
 #: frontend/js/src/ApplicationRow.tsx:22
 msgid "Show password"
-msgstr ""
+msgstr "Mostrar contraseña"
 
 #: frontend/js/src/ApplicationRow.tsx:54
 msgid "Modify"
-msgstr ""
+msgstr "Modificar"
 
 #: frontend/js/src/ApplicationRow.tsx:60
-#, fuzzy
 msgid "Delete"
-msgstr "Fecha"
+msgstr "Borrar"
 
 #: frontend/js/src/Applications.tsx:32
 msgid "Your applications"
-msgstr ""
+msgstr "Sus aplicaciones"
 
 #: frontend/js/src/Applications.tsx:45
 msgid "No applications found"
-msgstr ""
+msgstr "No se encontraron aplicaciones."
 
 #: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
-#, fuzzy
 msgid "Website"
-msgstr "Website URL"
+msgstr "Sitio Web"
 
 #: frontend/js/src/Applications.tsx:53
 msgid "Client ID"
@@ -3488,17 +3483,15 @@ msgstr "OAuth Authorization"
 
 #: frontend/js/src/Applications.tsx:73
 msgid "No tokens found"
-msgstr ""
+msgstr "Ninguna clave encontrada"
 
 #: frontend/js/src/Applications.tsx:81
-#, fuzzy
 msgid "Access"
-msgstr "Permitir acceso"
+msgstr "Acceso"
 
 #: frontend/js/src/Applications.tsx:104
-#, fuzzy
 msgid "Revoke access"
-msgstr "Permitir acceso"
+msgstr "Revocar el acceso"
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "¡Tiene que especificar una cantidad!"
