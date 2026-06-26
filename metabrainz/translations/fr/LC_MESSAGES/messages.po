@@ -12,8 +12,9 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-06-12 00:53+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-06-26 16:54+0000\n"
+"Last-Translator: mr_monkey "
+"<mr_monkey@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: French <https://translations.metabrainz.org/projects/"
 "metabrainz/website/fr/>\n"
 "Language: fr\n"
@@ -28,7 +29,7 @@ msgstr ""
 #: metabrainz/index/forms.py:45
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "'%(value)s' n'est pas un choix valide pour ce champ"
 
 #: metabrainz/index/forms.py:56 metabrainz/user/forms.py:25
 #: metabrainz/user/forms.py:49 metabrainz/user/forms.py:55
@@ -42,11 +43,11 @@ msgstr "Nom"
 
 #: metabrainz/index/forms.py:62
 msgid "Contact name field is empty."
-msgstr ""
+msgstr "Le champ \"Nom du contact\" est vide."
 
 #: metabrainz/index/views.py:228
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "Profil mis à jour avec succès."
 
 #: metabrainz/index/views.py:345
 msgid "You have updated an application!"
@@ -54,20 +55,19 @@ msgstr ""
 
 #: metabrainz/index/views.py:397
 msgid "You have deleted an application."
-msgstr ""
+msgstr "Vous avez supprimé une application."
 
 #: metabrainz/index/views.py:399
-#, fuzzy
 msgid "Failed to delete an application."
-msgstr "Échec lors de la génération d'une nouvelle clé !"
+msgstr "Échec lors de la suppression d'une application."
 
 #: metabrainz/index/views.py:422
 msgid "Revoked tokens successfully!"
-msgstr ""
+msgstr "Clé révoquée avec succès !"
 
 #: metabrainz/index/views.py:451
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Votre compte a été supprimé."
 
 #: metabrainz/oauth/forms.py:58
 #, fuzzy
@@ -76,15 +76,15 @@ msgstr "Nom de l'organisation"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr ""
+msgstr "Le champ \"Nom de l'application\" est vide."
 
 #: metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "Le nom de l'application doit contenir au moins 3 caractères."
 
 #: metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
-msgstr ""
+msgstr "Le nom de l'application doit contenir un maximum de 64 caractères."
 
 #: metabrainz/oauth/forms.py:63
 #, fuzzy
@@ -93,15 +93,15 @@ msgstr "Description de l'organisation"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr ""
+msgstr "Le champ \"Description du client\" est vide."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr ""
+msgstr "La description du client doit contenir au moins 3 caractères."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr ""
+msgstr "La description du client doit contenir un maximum de 512 caractères."
 
 #: metabrainz/oauth/forms.py:68
 #, fuzzy
@@ -110,35 +110,35 @@ msgstr "Retour à la page d'accueil"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr ""
+msgstr "Le champ \"Site web\" est vide."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr ""
+msgstr "Le site web n'est pas un URL valide."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
-msgstr ""
+msgstr "Le site web doit commencer par http ou https"
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "URL de redirection d'autorisation"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
-msgstr ""
+msgstr "Le champ \"URL de redirection d'autorisation\" est vide."
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
-msgstr ""
+msgstr "URL de redirection d'autorisation invalide."
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
-msgstr ""
+msgstr "L'URL de redirection d'autorisation doit commencer par http ou https."
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmer"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -146,17 +146,17 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
-"Merci de faire un don à la Fondation MetaBrainz. Votre aide est très "
-"appréciée ! Sachez que cela peut prendre du temps avant que votre don ne "
-"figure dans la liste en raison des délais de traitement."
+"Merci pour votre don à la Fondation MetaBrainz. Votre soutien est très "
+"apprécié ! Votre don figurera dans la liste, mais cela peut prendre un "
+"moment en raison des délais de traitement."
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
-"Merci de faire un don à la Fondation MetaBrainz. Votre aide est très "
-"appréciée !"
+"Merci pour votre don à la Fondation MetaBrainz. Votre soutien est très "
+"apprécié !"
 
 #: metabrainz/payments/views.py:182
 msgid ""
@@ -203,19 +203,20 @@ msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
+"Pourriez vous nous en dire plus sur votre projet utilisant nos données ? "
+"Comptez vous auto-héberger les données ou utiliser nos API ?"
 
 #: metabrainz/supporter/forms.py:17
 msgid "Please, tell us how you (will) use our data."
-msgstr ""
+msgstr "Veuillez nous dire comment vous comptez utiliser nos données."
 
 #: metabrainz/supporter/forms.py:18
-#, fuzzy
 msgid "Please, limit usage description to 500 characters."
-msgstr "S'il vous plaît, limitez votre description à 150 caractères."
+msgstr "Veuillez limiter votre description à 500 caractères."
 
 #: metabrainz/supporter/forms.py:21
 msgid "You need to accept the agreement!"
-msgstr "Vous devez accepter l'accord !"
+msgstr "Vous devez accepter l'accord !"
 
 #: metabrainz/supporter/forms.py:27
 msgid "Organization name"
@@ -243,7 +244,7 @@ msgstr "Vous devez spécifier le site internet de votre organisation."
 
 #: metabrainz/supporter/forms.py:37
 msgid "Logo image URL"
-msgstr ""
+msgstr "URL du logo"
 
 #: metabrainz/supporter/forms.py:38
 msgid "API URL"
@@ -297,33 +298,36 @@ msgstr ""
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
-#, fuzzy
 msgid "You are already a supporter."
-msgstr "Voir tous nos supporters"
+msgstr "Vous êtes déjà un supporter."
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
-msgstr ""
+msgstr "Impossible de trouver le palier avec l'identifiant spécifié."
 
 #: metabrainz/supporter/views.py:127
 msgid "You need to choose support tier before signing up!"
-msgstr ""
+msgstr "Vous devez choisir un palier de soutien avant de vous inscrire !"
 
 #: metabrainz/supporter/views.py:137
 msgid "You need to choose existing tier before signing up!"
-msgstr ""
+msgstr "Vous devez choisir un palier existant avant de vous inscrire !"
 
 #: metabrainz/supporter/views.py:164
 msgid ""
 "Thanks for becoming a supporter! Your application will be reviewed soon. "
 "We will send you updates via email."
 msgstr ""
+"Merci de votre soutien ! Votre demande sera examinée prochainement. Nous "
+"vous tiendrons informés par email."
 
 #: metabrainz/supporter/views.py:187
 msgid ""
 "Thanks for signing up! Your application will be reviewed soon. We will "
 "send you updates via email."
 msgstr ""
+"Merci de votre inscription ! Votre demande sera examinée prochainement. Nous "
+"vous tiendrons informés par email."
 
 #: metabrainz/supporter/views.py:248
 #, fuzzy
@@ -333,10 +337,12 @@ msgstr "Merci pour votre inscription !"
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr ""
+"Merci pour votre inscription ! Veuillez consulter votre boîte de réception "
+"pour finaliser la vérification."
 
 #: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
-msgstr ""
+msgstr "Impossible de générer une clé tant que le compte est inactif."
 
 #: metabrainz/templates/base.html:44
 msgid "Foundation"
@@ -351,9 +357,8 @@ msgstr "Projets"
 #: metabrainz/templates/index/datasets/derived-dumps.html:3
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
-#, fuzzy
 msgid "Datasets"
-msgstr "Date"
+msgstr "Jeux de données"
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
@@ -362,26 +367,25 @@ msgstr "Équipe"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr ""
+msgstr "Magasin"
 
 #: metabrainz/templates/base.html:53
 msgid "Policies"
-msgstr ""
+msgstr "Chartes"
 
 #: metabrainz/templates/base.html:55
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
-#, fuzzy
 msgid "Social Contract"
-msgstr "Contact"
+msgstr "Contrat social"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
 #: metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
-msgstr ""
+msgstr "Code de conduite"
 
 #: metabrainz/templates/base.html:57 metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
@@ -396,9 +400,8 @@ msgstr "Finances"
 
 #: metabrainz/templates/base.html:63 metabrainz/templates/navbar.html:47
 #: metabrainz/templates/reports/annual_reports/view.html:4
-#, fuzzy
 msgid "Archived Annual Reports"
-msgstr "Rapports annuels"
+msgstr "Rapports annuels archivés"
 
 #: metabrainz/templates/base.html:64 metabrainz/templates/navbar.html:49
 #: metabrainz/templates/payments/donors.html:6
@@ -447,37 +450,36 @@ msgstr "Blog"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "Chat"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
-#, fuzzy
 msgid "Twitter/X"
-msgstr "Twitter"
+msgstr "Twitter/X"
 
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
 msgid "Mastodon"
-msgstr ""
+msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
 msgid "Bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: metabrainz/templates/base.html:90
 #: metabrainz/templates/index/contact.html:109
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: metabrainz/templates/base.html:95
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
-msgstr ""
+msgstr "Sponsorisé par <a href=\"%(github_url)s\">GitHub</a>"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
-msgstr "Voir le menu"
+msgstr "Afficher le menu"
 
 #: metabrainz/templates/navbar.html:21
 msgid "About "
@@ -489,21 +491,21 @@ msgstr "La Fondation"
 
 #: metabrainz/templates/navbar.html:32
 msgid "Policies "
-msgstr ""
+msgstr "Règlements "
 
 #: metabrainz/templates/index/conflict-policy.html:2
 #: metabrainz/templates/index/conflict-policy.html:12
 #: metabrainz/templates/navbar.html:37
 msgid "Conflict Resolution Policy"
-msgstr ""
+msgstr "Politique de résolution des conflits"
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
-msgstr ""
+msgstr "Conformité au RGPD"
 
 #: metabrainz/templates/navbar.html:45
 msgid "Reports "
-msgstr "Signalements"
+msgstr "Rapports"
 
 #: metabrainz/templates/navbar.html:48
 msgid "Financial Reports"
@@ -515,16 +517,15 @@ msgstr "Donner"
 
 #: metabrainz/templates/navbar.html:59
 msgid "Register"
-msgstr ""
+msgstr "S'enregistrer"
 
 #: metabrainz/templates/navbar.html:67
 msgid "Your profile"
 msgstr "Votre profil"
 
 #: metabrainz/templates/navbar.html:68
-#, fuzzy
 msgid "OAuth applications"
-msgstr "Autorisation OAuth"
+msgstr "Applications OAuth"
 
 #: metabrainz/templates/navbar.html:74 metabrainz/templates/navbar.html:76
 msgid "Language"
@@ -532,7 +533,7 @@ msgstr ""
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
-msgstr "MetaBrainz API"
+msgstr "API de MetaBrainz"
 
 #: metabrainz/templates/api/info.html:11
 #, python-format
@@ -540,6 +541,8 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
+"Tous les endpoints nécessitent une clé d'accès que vous pouvez obtenir sur\n"
+"    <a href=\"%(profile_url)s\">votre profil</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
@@ -547,11 +550,11 @@ msgstr "Flux de données en direct de MusicBrainz"
 
 #: metabrainz/templates/api/info.html:16
 msgid "There are two endpoints for fetching live data:"
-msgstr ""
+msgstr "Deux endpoints permettent de récupérer les données en temps réel :"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
-msgstr ""
+msgstr "Paquets de réplication horaires"
 
 #: metabrainz/templates/api/info.html:30
 msgid ""
@@ -559,14 +562,18 @@ msgid ""
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
+"Vous pouvez obtenir une signature pour chaque paquet de réplication. "
+"Remplacez simplement\n"
+"      <code>.tar.bz2</code> par <code>.tar.bz2.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 msgid "You can find the latest replication packet number from this endpoint:"
 msgstr ""
+"Vous trouverez le numéro du dernier paquet de réplication à cette adresse :"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
-msgstr ""
+msgstr "Exports JSON incrémentiels horaires"
 
 #: metabrainz/templates/api/info.html:58
 msgid ""
@@ -575,12 +582,19 @@ msgid ""
 "instrument, label, place, recording, release, release-group, series, or "
 "work."
 msgstr ""
+"Les exports JSON sont partitionnés par type d'entité. <code>"
+"&lt;ENTITY_NAME&gt;</code> peut être : area (région), artist (artiste), "
+"event (événement), instrument, label, place (lieu), recording "
+"(enregistrement), release (parution), release-group (groupe de parutions), "
+"series ou work (œuvre)."
 
 #: metabrainz/templates/api/info.html:61
 msgid ""
 "It’s possible that a JSON dump for a particular entity type doesn’t exist"
 " if no entities of that type have changed in a given hour."
 msgstr ""
+"Il est possible qu'un export JSON pour un type d'entité n'existe pas si "
+"aucune entité de ce type n'a changé dans ce créneau horaire."
 
 #: metabrainz/templates/api/info.html:64
 msgid ""
@@ -588,12 +602,17 @@ msgid ""
 "This file must be read line-by-line; each line contains one changed "
 "entity in JSON format."
 msgstr ""
+"Chaque export contient un fichier nommé <code>mbdump/&lt;ENTITY_NAME&gt;</"
+"code>. Ce fichier doit être lu ligne par ligne ; chaque ligne contient une "
+"entité modifiée au format JSON."
 
 #: metabrainz/templates/api/info.html:67
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
+"Comme pour les paquets de réplication, vous pouvez obtenir la signature du "
+"fichier en remplaçant <code>.tar.xz</code> par <code>.tar.xz.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -840,11 +859,11 @@ msgstr ""
 #: metabrainz/templates/index/conflict-policy.html:14
 #: metabrainz/templates/index/gdpr.html:8
 msgid "Introduction"
-msgstr ""
+msgstr "Introduction"
 
 #: metabrainz/templates/index/conflict-policy.html:55
 msgid "Reporting and Response"
-msgstr ""
+msgstr "Signalement et prise en charge"
 
 #: metabrainz/templates/index/contact.html:3
 #: metabrainz/templates/index/contact.html:6
@@ -856,7 +875,7 @@ msgid "Found a bug in one of our projects?"
 msgstr "Bug trouvé dans un de nos projets ?"
 
 #: metabrainz/templates/index/contact.html:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Found a broken link or something that doesn't work as you expect it to? "
 "You can report issues in our\n"
@@ -867,12 +886,13 @@ msgid ""
 "    to happen, and the URLs of any pages involved."
 msgstr ""
 "Vous avez trouvez un lien cassé ou quelque chose ne marche pas comme vous "
-"l’attendiez ? Vous pouvez rapporter ces problèmes sur notre\n"
-"    <a href=\"%(bug_tracker_url)s\">bug tracker</a>, ou nous contacter sur "
-"IRC ou par\n"
-"    mail (voir les détails plus bas). Veuillez préciser ce qui c’est passé, "
-"ce que vous attendiez qu’il se passe, et les URL de toutes les pages "
-"concernées."
+"l’attendiez ?\n"
+"    Vous pouvez rapporter ces problèmes sur notre <a href=\"%"
+"(bug_tracker_url)s\">bug tracker</a>,\n"
+"    ou nous contacter sur notre chat ou par email (voir les détails plus bas)"
+".\n"
+"    Veuillez préciser ce qui s’est passé, ce que vous attendiez qu’il se "
+"passe, et les URL de toute page concernée."
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
@@ -890,9 +910,11 @@ msgid ""
 "href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
 msgstr ""
 "Référez-vous à la <a href=\"%(general_faq_url)s\">FAQ générale</a>, ou une "
-"des autres pages des<a href=\"%(faq_url)s\">questions fréquentes</a>, pour "
-"voir si votre question n’y a pas déjà une réponse. Si vous utilisez <a "
-"href=\"%(picard_homepage)s\">MusicBrainz\n"
+"des autres pages\n"
+"    des <a href=\"%(faq_url)s\">questions fréquentes</a>, pour voir si votre "
+"question\n"
+"    n’y a pas déjà une réponse. Si vous utilisez <a href=\"%(picard_homepage)"
+"s\">MusicBrainz\n"
 "    Picard</a>, consultez sa <a href=\"%(picard_troubleshooting)s\">page de "
 "résolution des problèmes</a>."
 
@@ -908,9 +930,10 @@ msgid ""
 "    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more "
 "information."
 msgstr ""
-"MusicBrainz n’édite ni ne supprime de données factuelles sur demande. "
-"Veuillez lire notre <a href=\"%(dr_policy_url)s\">politique de suppression "
-"de données</a> pour plus d’informations."
+"MusicBrainz n’édite pas ni ne supprime de données factuelles sur demande. "
+"Veuillez lire notre\n"
+"    <a href=\"%(dr_policy_url)s\">politique de suppression de données</a> "
+"pour plus d’informations."
 
 #: metabrainz/templates/index/contact.html:30
 msgid "Copyright issues"
@@ -1042,9 +1065,8 @@ msgid "Mailing address"
 msgstr ""
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "L'équipe MetaBrainz"
+msgstr "Les données de MetaBrainz"
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1202,13 +1224,12 @@ msgid "Summary"
 msgstr "Sommaire"
 
 #: metabrainz/templates/index/privacy.html:33
-#, fuzzy
 msgid "Applicable to all supporters"
-msgstr "Voir tous nos supporters"
+msgstr "Applicable à l'ensemble des supporters"
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: metabrainz/templates/index/privacy.html:54
 msgid "Web and FTP access logs"
@@ -1223,18 +1244,16 @@ msgid "Applicable to account holders"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "Type de compte"
+msgstr "Création de compte"
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:114
-#, fuzzy
 msgid "Subscriptions on MusicBrainz"
-msgstr "Une question à propos de MusicBrainz ?"
+msgstr "Abonnements sur MusicBrainz"
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
@@ -1311,7 +1330,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
-msgstr ""
+msgstr "Cover Art Archive"
 
 #: metabrainz/templates/index/projects.html:49
 #, python-format
@@ -3051,19 +3070,19 @@ msgstr ""
 
 #: metabrainz/templates/users/lost-password.html:3
 msgid "Forgot password"
-msgstr ""
+msgstr "Mot de passe oublié"
 
 #: metabrainz/templates/users/lost-username.html:3
 msgid "Forgot username"
-msgstr ""
+msgstr "Nom d’utilisateur oublié"
 
 #: metabrainz/templates/users/reset-password.html:3
 msgid "Reset your password"
-msgstr ""
+msgstr "Réinitialiser le mot de passe"
 
 #: metabrainz/user/forms.py:15
 msgid "Registration from this email domain is not allowed."
-msgstr ""
+msgstr "L'inscription à partir de ce domaine de messagerie n'est pas autorisée."
 
 #: metabrainz/user/forms.py:20 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
@@ -3073,58 +3092,53 @@ msgstr "Nom"
 
 #: metabrainz/user/forms.py:21 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
-#, fuzzy
 msgid "Username is required!"
-msgstr "Le nom du contact est requis !"
+msgstr "Le nom d'utilisasteur est requis !"
 
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:43
 #: metabrainz/user/forms.py:61
-#, fuzzy
 msgid "Password is required!"
-msgstr "Une adresse email est requise !"
+msgstr "Un mot de passe est requis !"
 
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:65
-#, fuzzy
 msgid "Confirm Password is required!"
-msgstr "Le nom du contact est requis !"
+msgstr "La confirmation du mot de passe est requise !"
 
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:67
 msgid "Confirm Password should match password!"
-msgstr ""
+msgstr "La confirmation du mot de passe ne correspond pas !"
 
 #: metabrainz/user/forms.py:43
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: metabrainz/user/forms.py:44
-#, fuzzy
 msgid "Remember me"
-msgstr "Décembre"
+msgstr "Se souvenir de moi"
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
-msgstr ""
+msgstr "Nom d’utilisateur non valide."
 
 #: metabrainz/user/username.py:183
 msgid "Username contains invalid or invisible characters."
-msgstr ""
+msgstr "Le nom d’utilisateur contient des caractères invalides ou invisibles."
 
 #: frontend/js/src/ApplicationRow.tsx:22
 msgid "Hide password"
-msgstr ""
+msgstr "Cacher le mot de passe"
 
 #: frontend/js/src/ApplicationRow.tsx:22
 msgid "Show password"
-msgstr ""
+msgstr "Afficher le mot de passe"
 
 #: frontend/js/src/ApplicationRow.tsx:54
 msgid "Modify"
-msgstr ""
+msgstr "Modifier"
 
 #: frontend/js/src/ApplicationRow.tsx:60
-#, fuzzy
 msgid "Delete"
-msgstr "Date"
+msgstr "Supprimer"
 
 #: frontend/js/src/Applications.tsx:32
 msgid "Your applications"
@@ -3141,34 +3155,31 @@ msgstr "URL du site web"
 
 #: frontend/js/src/Applications.tsx:53
 msgid "Client ID"
-msgstr ""
+msgstr "Identifiant client"
 
 #: frontend/js/src/Applications.tsx:54
 msgid "Client secret"
-msgstr ""
+msgstr "Code secret client"
 
 #: frontend/js/src/Applications.tsx:55 frontend/js/src/Applications.tsx:82
-#, fuzzy
 msgid "Actions"
-msgstr "Dons"
+msgstr "Actions"
 
 #: frontend/js/src/Applications.tsx:70
-#, fuzzy
 msgid "Authorized applications"
-msgstr "Autorisation OAuth"
+msgstr "Applications autorisées"
 
 #: frontend/js/src/Applications.tsx:73
 msgid "No tokens found"
-msgstr ""
+msgstr "Aucune clé trouvée"
 
 #: frontend/js/src/Applications.tsx:81
-#, fuzzy
 msgid "Access"
-msgstr "Clé d'accès"
+msgstr "Autorisations"
 
 #: frontend/js/src/Applications.tsx:104
 msgid "Revoke access"
-msgstr ""
+msgstr "Révoquer l'autorisation"
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "Vous devez spécifier un montant !"
