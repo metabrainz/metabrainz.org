@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
 "PO-Revision-Date: 2026-06-26 16:54+0000\n"
-"Last-Translator: mr_monkey "
-"<mr_monkey@users.noreply.translations.metabrainz.org>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Spanish <https://translations.metabrainz.org/projects/"
 "metabrainz/website/es/>\n"
 "Language: es\n"
@@ -3397,9 +3397,8 @@ msgstr "No se permite el registro desde este dominio de correo electrónico."
 
 #: metabrainz/user/forms.py:20 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
-#, fuzzy
 msgid "Username"
-msgstr "Nombre"
+msgstr "Nombre de usuario"
 
 #: metabrainz/user/forms.py:21 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
@@ -3421,7 +3420,7 @@ msgstr "La confirmación de contraseña debe coincidir!"
 
 #: metabrainz/user/forms.py:43
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: metabrainz/user/forms.py:44
 msgid "Remember me"
@@ -3457,19 +3456,19 @@ msgstr "Sus aplicaciones"
 
 #: frontend/js/src/Applications.tsx:45
 msgid "No applications found"
-msgstr "No se encontraron aplicaciones"
+msgstr "Ninguna aplicación encontrada"
 
 #: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
 msgid "Website"
-msgstr "Sitio Web"
+msgstr "Página web"
 
 #: frontend/js/src/Applications.tsx:53
 msgid "Client ID"
-msgstr ""
+msgstr "ID del cliente"
 
 #: frontend/js/src/Applications.tsx:54
 msgid "Client secret"
-msgstr ""
+msgstr "Secreto del cliente"
 
 #: frontend/js/src/Applications.tsx:55 frontend/js/src/Applications.tsx:82
 msgid "Actions"
