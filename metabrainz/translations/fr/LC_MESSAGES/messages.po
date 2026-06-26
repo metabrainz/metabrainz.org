@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
 "PO-Revision-Date: 2026-06-26 16:54+0000\n"
-"Last-Translator: mr_monkey "
-"<mr_monkey@users.noreply.translations.metabrainz.org>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: French <https://translations.metabrainz.org/projects/"
 "metabrainz/website/fr/>\n"
 "Language: fr\n"
@@ -51,7 +51,7 @@ msgstr "Profil mis à jour avec succès."
 
 #: metabrainz/index/views.py:345
 msgid "You have updated an application!"
-msgstr ""
+msgstr "Vous avez mis une application à jour !"
 
 #: metabrainz/index/views.py:397
 msgid "You have deleted an application."
@@ -104,9 +104,8 @@ msgid "Client description needs to be at most 512 characters long."
 msgstr "La description du client doit contenir un maximum de 512 caractères."
 
 #: metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "Retour à la page d'accueil"
+msgstr "Site web"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
@@ -529,7 +528,7 @@ msgstr "Applications OAuth"
 
 #: metabrainz/templates/navbar.html:74 metabrainz/templates/navbar.html:76
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
@@ -3086,9 +3085,8 @@ msgstr "L'inscription à partir de ce domaine de messagerie n'est pas autorisée
 
 #: metabrainz/user/forms.py:20 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
-#, fuzzy
 msgid "Username"
-msgstr "Nom"
+msgstr "Nom d’utilisateur"
 
 #: metabrainz/user/forms.py:21 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
@@ -3142,16 +3140,15 @@ msgstr "Supprimer"
 
 #: frontend/js/src/Applications.tsx:32
 msgid "Your applications"
-msgstr ""
+msgstr "Vos applications"
 
 #: frontend/js/src/Applications.tsx:45
 msgid "No applications found"
-msgstr ""
+msgstr "Aucune application trouvée"
 
 #: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
-#, fuzzy
 msgid "Website"
-msgstr "URL du site web"
+msgstr "Site Web"
 
 #: frontend/js/src/Applications.tsx:53
 msgid "Client ID"
