@@ -10,8 +10,9 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-06-12 00:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-06-30 10:17+0000\n"
+"Last-Translator: \"ApeKattQuest, MonkeyPython\" "
+"<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Norwegian Bokmål <https://translations.metabrainz.org/"
 "projects/metabrainz/website/nb_NO/>\n"
 "Language: nb\n"
@@ -25,7 +26,7 @@ msgstr ""
 #: metabrainz/index/forms.py:45
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "%(value)s er ikke et gyldig valg for dette feltet"
 
 #: metabrainz/index/forms.py:56 metabrainz/user/forms.py:25
 #: metabrainz/user/forms.py:49 metabrainz/user/forms.py:55
@@ -43,20 +44,19 @@ msgstr "Feltet for kontaktnavn er tomt."
 
 #: metabrainz/index/views.py:228
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "Profil oppdatert!"
 
 #: metabrainz/index/views.py:345
 msgid "You have updated an application!"
-msgstr ""
+msgstr "Søknaden er oppdatert!"
 
 #: metabrainz/index/views.py:397
 msgid "You have deleted an application."
-msgstr ""
+msgstr "Søknaden er slettet."
 
 #: metabrainz/index/views.py:399
-#, fuzzy
 msgid "Failed to delete an application."
-msgstr "Klarte ikke å opprette nytt tilgangssymbol!"
+msgstr "Kunne ikke slette søknad."
 
 #: metabrainz/index/views.py:422
 msgid "Revoked tokens successfully!"
@@ -2993,7 +2993,7 @@ msgstr "Vis alle nivåer"
 
 #: metabrainz/templates/supporters/account-type.html:112
 msgid "Some of our Unicorn members"
-msgstr "Noen av våre Unicorn-medlemmer"
+msgstr "Noen av våre enhjørningsmedlemmer"
 
 #: metabrainz/templates/supporters/account-type.html:123
 msgid "See all our supporters"
@@ -3067,19 +3067,19 @@ msgstr "Støttespillere på dette nivået"
 
 #: metabrainz/templates/users/lost-password.html:3
 msgid "Forgot password"
-msgstr ""
+msgstr "Glemt passord"
 
 #: metabrainz/templates/users/lost-username.html:3
 msgid "Forgot username"
-msgstr ""
+msgstr "Glemt brukernavn"
 
 #: metabrainz/templates/users/reset-password.html:3
 msgid "Reset your password"
-msgstr ""
+msgstr "Tilbakestill passord"
 
 #: metabrainz/user/forms.py:15
 msgid "Registration from this email domain is not allowed."
-msgstr ""
+msgstr "Dette epostdomenet er ugyldig."
 
 #: metabrainz/user/forms.py:20 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
@@ -3106,11 +3106,11 @@ msgstr "Kontaktnavn kreves!"
 
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:67
 msgid "Confirm Password should match password!"
-msgstr ""
+msgstr "Bekreftelsespassordet må samsvare med passordet!"
 
 #: metabrainz/user/forms.py:43
 msgid "Password"
-msgstr ""
+msgstr "Passord"
 
 #: metabrainz/user/forms.py:44
 #, fuzzy
@@ -3119,23 +3119,23 @@ msgstr "Desember"
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
-msgstr ""
+msgstr "Brukernavn er ugyldig."
 
 #: metabrainz/user/username.py:183
 msgid "Username contains invalid or invisible characters."
-msgstr ""
+msgstr "Brukernavn innholder ugyldige tegn."
 
 #: frontend/js/src/ApplicationRow.tsx:22
 msgid "Hide password"
-msgstr ""
+msgstr "Skjul passord"
 
 #: frontend/js/src/ApplicationRow.tsx:22
 msgid "Show password"
-msgstr ""
+msgstr "Vis passord"
 
 #: frontend/js/src/ApplicationRow.tsx:54
 msgid "Modify"
-msgstr ""
+msgstr "Endre"
 
 #: frontend/js/src/ApplicationRow.tsx:60
 #, fuzzy
@@ -3144,11 +3144,11 @@ msgstr "Dato"
 
 #: frontend/js/src/Applications.tsx:32
 msgid "Your applications"
-msgstr ""
+msgstr "Dine søknader"
 
 #: frontend/js/src/Applications.tsx:45
 msgid "No applications found"
-msgstr ""
+msgstr "Ingen søknader funnet"
 
 #: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
 #, fuzzy
@@ -3157,11 +3157,11 @@ msgstr "Nettsideadresse"
 
 #: frontend/js/src/Applications.tsx:53
 msgid "Client ID"
-msgstr ""
+msgstr "Klient-ID"
 
 #: frontend/js/src/Applications.tsx:54
 msgid "Client secret"
-msgstr ""
+msgstr "Klienthemmelighet"
 
 #: frontend/js/src/Applications.tsx:55 frontend/js/src/Applications.tsx:82
 #, fuzzy
@@ -3170,7 +3170,7 @@ msgstr "Donasjoner"
 
 #: frontend/js/src/Applications.tsx:70
 msgid "Authorized applications"
-msgstr ""
+msgstr "Autoriserte søknader"
 
 #: frontend/js/src/Applications.tsx:73
 msgid "No tokens found"
