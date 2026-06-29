@@ -1,6 +1,8 @@
-from flask import redirect, url_for
-from flask_login import LoginManager, current_user
 from functools import wraps
+
+from flask import abort, flash, redirect, request, url_for
+from flask_login import LoginManager, current_user
+from flask_login.utils import login_url
 
 from metabrainz.model.user import User
 
@@ -17,6 +19,26 @@ def load_user(login_id):
         return User.get(login_id=login_id)
     except (ValueError, TypeError):
         return None
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    login_view = (
+        "users.signup"
+        if request.args.get("login_hint") == "register"
+        else login_manager.login_view
+    )
+    if not login_view:
+        abort(401)
+
+    if login_manager.login_message:
+        flash(
+            login_manager.login_message,
+            category=login_manager.login_message_category,
+        )
+
+    return redirect(login_url(login_view, next_url=request.url))
+
 
 def login_forbidden(f):
     @wraps(f)

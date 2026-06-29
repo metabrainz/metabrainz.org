@@ -225,6 +225,47 @@ class UsersViewsTestCase(FlaskTestCase):
         self.client.get("/logout")
         self.assertTrue(current_user.is_anonymous)
 
+    def test_user_login_records_remember_me(self):
+        self.create_user()
+
+        self._test_user_login_helper({
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "remember_me": "y",
+        }, 302)
+
+        user = User.get(name="test_user_1")
+        self.assertIsNotNone(user.remember_me_until)
+        self.assertTrue(user.has_active_remember_me())
+
+    def test_user_login_without_remember_me_not_recorded(self):
+        self.create_user()
+
+        self._test_user_login_helper({
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+        }, 302)
+
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user.remember_me_until)
+        self.assertFalse(user.has_active_remember_me())
+
+    def test_logout_clears_remember_me(self):
+        self.create_user()
+
+        self._test_user_login_helper({
+            "username": "test_user_1",
+            "password": "<PASSWORD>",
+            "remember_me": "y",
+        }, 302)
+        user = User.get(name="test_user_1")
+        self.assertIsNotNone(user.remember_me_until)
+
+        self.client.get("/logout")
+        db.session.expire_all()
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user.remember_me_until)
+
     def test_user_login_missing_username(self):
         self.create_user()
 
@@ -293,6 +334,28 @@ class UsersViewsTestCase(FlaskTestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, "/")
+
+    def test_login_required_register_hint_redirects_to_signup(self):
+        next_url = url_for("index.profile", login_hint="register")
+        response = self.client.get(next_url)
+
+        self.assertEqual(response.status_code, 302)
+        parsed = urlparse(response.location)
+        query = parse_qs(parsed.query)
+
+        self.assertEqual(parsed.path, "/signup")
+        self.assertEqual(query["next"], [next_url])
+
+    def test_login_required_login_hint_redirects_to_login(self):
+        next_url = url_for("index.profile", login_hint="login")
+        response = self.client.get(next_url)
+
+        self.assertEqual(response.status_code, 302)
+        parsed = urlparse(response.location)
+        query = parse_qs(parsed.query)
+
+        self.assertEqual(parsed.path, "/login")
+        self.assertEqual(query["next"], [next_url])
 
     def test_user_verify_email_success(self):
         self.create_user()

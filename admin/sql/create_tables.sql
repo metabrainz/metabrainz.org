@@ -12,7 +12,8 @@ CREATE TABLE "user" (
     last_login_at           TIMESTAMP WITH TIME ZONE,
     last_updated            TIMESTAMP WITH TIME ZONE,
     deleted                 BOOLEAN NOT NULL DEFAULT FALSE,
-    is_blocked              BOOLEAN NOT NULL DEFAULT FALSE
+    is_blocked              BOOLEAN NOT NULL DEFAULT FALSE,
+    remember_me_until       TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE moderation_log (

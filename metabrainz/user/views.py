@@ -69,7 +69,7 @@ def signup():
         "mtcaptcha_site_key": current_app.config.get("MTCAPTCHA_PUBLIC_KEY"),
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
-        "initial_errors": form.props_errors
+        "initial_errors": form.props_errors,
     }))
 
 
@@ -94,6 +94,7 @@ def login():
                 else:
                     login_user(user, remember=form.remember_me.data)
                     user.last_login_at = datetime.now(timezone.utc)
+                    user.update_remember_me(form.remember_me.data)
                     db.session.commit()
 
                     flash.success("Logged in successfully.")
@@ -332,5 +333,8 @@ def reset_password():
 @users_bp.route("/logout")
 @login_required
 def logout():
+    # the remember cookie is cleared on logout, so clear our record of it as well
+    current_user.update_remember_me(False)
+    db.session.commit()
     logout_user()
     return redirect(url_for("index.home"))

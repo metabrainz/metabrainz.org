@@ -143,7 +143,7 @@ USE_COMPILED_STYLING = True
 
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-OAUTH2_BLUEPRINT_PREFIX = "/new-oauth2"
+OAUTH2_BLUEPRINT_PREFIX = "/oauth2"
 OAUTH2_ACCESS_TOKEN_GENERATOR = "metabrainz.oauth.generator.create_access_token"
 OAUTH2_REFRESH_TOKEN_GENERATOR = "metabrainz.oauth.generator.create_refresh_token"
 OAUTH2_TOKEN_EXPIRES_IN = {
@@ -154,6 +154,10 @@ OAUTH2_TOKEN_EXPIRES_IN = {
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
 OAUTH2_WHITELISTED_CCG_CLIENTS = [
     {{template "KEY_ARRAY" "oauth2/whitelisted_ccg_clients"}}
+]
+# OAuth2 client ids that are allowed to see the user's "remember me" status in the token response.
+OAUTH2_REMEMBER_ME_CLIENTS = [
+    {{template "KEY_ARRAY" "oauth2/remember_me_clients"}}
 ]
 
 OIDC_ID_TOKEN_EXPIRATION = 3600
@@ -171,3 +175,6 @@ WEBHOOK_CIRCUIT_BREAKER_THRESHOLD = {{template "KEY" "webhook/circuit_breaker_th
 WEBHOOK_CIRCUIT_BREAKER_TIMEOUT = {{template "KEY" "webhook/circuit_breaker_timeout"}}
 
 STATIC_RESOURCES_DIR = '/static'
+
+SIGNUP_RATE_LIMIT_PER_IP = 5
+REMEMBER_COOKIE_DURATION = timedelta(days=365)
