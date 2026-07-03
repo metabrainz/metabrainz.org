@@ -161,7 +161,7 @@ class RefreshGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "profile tag",
+            "scope": "musicbrainz:profile musicbrainz:tag",
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
@@ -182,7 +182,7 @@ class RefreshGrantTestCase(OAuthTestCase):
             "client_id": application["client_id"],
             "client_secret": application["client_secret"],
             "grant_type": "refresh_token",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "refresh_token": token["refresh_token"],
         }
         response = self.client.post("/oauth2/token", data=data)
@@ -197,7 +197,7 @@ class RefreshGrantTestCase(OAuthTestCase):
             OAuth2AccessToken.revoked == False,
         ).first()
         self.assertEqual(new_token["access_token"], access_token.access_token)
-        self.assertSetEqual({"profile"}, {s.name for s in access_token.scopes})
+        self.assertSetEqual({"musicbrainz:profile"}, {s.name for s in access_token.scopes})
 
         refresh_token = db.session.query(OAuth2RefreshToken).join(OAuth2Client).filter(
             OAuth2Client.client_id == application["client_id"],
@@ -206,7 +206,7 @@ class RefreshGrantTestCase(OAuthTestCase):
             OAuth2RefreshToken.revoked == False,
         ).first()
         self.assertEqual(new_token["refresh_token"], refresh_token.refresh_token)
-        self.assertSetEqual({"profile", "tag"}, {s.name for s in refresh_token.scopes})
+        self.assertSetEqual({"musicbrainz:profile", "musicbrainz:tag"}, {s.name for s in refresh_token.scopes})
 
     def test_oauth_using_revoked_refresh_token_revokes_new_tokens(self):
         application = self.create_oauth_app()
