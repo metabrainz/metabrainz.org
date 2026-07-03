@@ -17,6 +17,16 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         self.assertIn("userinfo_endpoint", data)
         self.assertIn("jwks_uri", data)
         self.assertIn("scopes_supported", data)
+        self.assertTrue({
+            "musicbrainz:profile",
+            "musicbrainz:email",
+            "musicbrainz:tag",
+            "musicbrainz:rating",
+            "musicbrainz:collection",
+            "musicbrainz:submit_isrc",
+            "musicbrainz:submit_barcode",
+            "openid",
+        }.issubset(data["scopes_supported"]))
         self.assertIn("response_types_supported", data)
         self.assertIn("grant_types_supported", data)
         self.assertIn("id_token_signing_alg_values_supported", data)
@@ -78,7 +88,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "id_token",
-            "scope": "openid profile",
+            "scope": "openid musicbrainz:profile",
             "state": "random-state",
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
@@ -108,7 +118,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "openid profile",
+            "scope": "openid musicbrainz:profile",
             "state": "random-state",
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
@@ -151,7 +161,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "id_token token",
-            "scope": "openid profile",
+            "scope": "openid musicbrainz:profile",
             "state": "random-state",
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
@@ -220,7 +230,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "id_token",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,

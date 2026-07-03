@@ -9,9 +9,13 @@ CREATE TABLE oauth.scope (
 );
 
 INSERT INTO oauth.scope (name, description)
-     VALUES ('profile', 'View your public account information')
-          , ('tag', 'View and modify your private tags')
-          , ('rating', 'View and modify your private ratings')
+     VALUES ('musicbrainz:profile', 'View your public account information')
+          , ('musicbrainz:email', 'View your email address')
+          , ('musicbrainz:tag', 'View and modify your private tags')
+          , ('musicbrainz:rating', 'View and modify your private ratings')
+          , ('musicbrainz:collection', 'View and modify your private collections')
+          , ('musicbrainz:submit_isrc', 'Submit new ISRCs to the database')
+          , ('musicbrainz:submit_barcode', 'Submit new barcodes to the database')
           , ('openid', 'Sign you in and view your unique user id');
 
 CREATE TABLE oauth.client (

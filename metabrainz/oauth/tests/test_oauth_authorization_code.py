@@ -368,7 +368,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -389,7 +389,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         self.temporary_login(self.user2)
         query_string = {
             "response_type": "code",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -403,7 +403,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": "asb",
             "response_type": "code",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -416,7 +416,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         self.temporary_login(self.user2)
         query_string = {
             "client_id": application["client_id"],
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -433,7 +433,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "invalid",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback",
         }
@@ -477,7 +477,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
         }
         error = {"name": "invalid_request", "description": "Missing 'redirect_uri' in request."}
@@ -490,7 +490,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
         }
@@ -506,7 +506,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             query_string={
                 "client_id": application["client_id"],
                 "response_type": "code",
-                "scope": "profile",
+                "scope": "musicbrainz:profile",
                 "state": "random-state",
                 "redirect_uri": "https://example.com/callback",
             }
@@ -521,7 +521,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             query_string={
                 "client_id": application["client_id"],
                 "response_type": "code",
-                "scope": "profile",
+                "scope": "musicbrainz:profile",
                 "state": "random-state",
                 "redirect_uri": "https://example.com/callback",
             }
@@ -533,7 +533,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         fragment_args = parse_qs(parsed.query)
         self.assertEqual(
             unquote(fragment_args["next"][0]),
-            f"/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=profile&state=random-state&redirect_uri=https://example.com/callback"
+            f"/oauth2/authorize?client_id={application['client_id']}&response_type=code&scope=musicbrainz:profile&state=random-state&redirect_uri=https://example.com/callback"
         )
 
     def test_oauth_authorize_logged_out_register_hint(self):
@@ -543,7 +543,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             query_string={
                 "client_id": application["client_id"],
                 "response_type": "code",
-                "scope": "profile",
+                "scope": "musicbrainz:profile",
                 "state": "random-state",
                 "redirect_uri": "https://example.com/callback",
                 "login_hint": "register",
@@ -556,7 +556,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         fragment_args = parse_qs(parsed.query)
         expected_next = (
             f"/oauth2/authorize?client_id={application['client_id']}"
-            "&response_type=code&scope=profile&state=random-state"
+            "&response_type=code&scope=musicbrainz:profile&state=random-state"
             "&redirect_uri=https://example.com/callback&login_hint=register"
         )
         self.assertEqual(unquote(fragment_args["next"][0]), expected_next)
@@ -568,7 +568,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         self.temporary_login(self.user2)
         query_string = MultiDict([
             ("client_id", application["client_id"]),
-            ("scope", "profile"),
+            ("scope", "musicbrainz:profile"),
             ("state", "random-state"),
             ("redirect_uri", "https://example.com/callback"),
             ("response_type", "code"),
@@ -593,7 +593,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
@@ -672,7 +672,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": "https://example.com/callback2",
             "approval_prompt": "invalid",
@@ -692,7 +692,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "profile tag",
+            "scope": "musicbrainz:profile musicbrainz:tag",
             "state": "random-state",
             "redirect_uri": redirect_uri2,
         }
@@ -703,8 +703,8 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
 
         self.assertEqual(props["client_name"], "test-client")
         self.assertEqual(props["scopes"], [
-            {"name": "profile", "description": "View your public account information"},
-            {"name": "tag", "description": "View and modify your private tags"}
+            {"name": "musicbrainz:profile", "description": "View your public account information"},
+            {"name": "musicbrainz:tag", "description": "View and modify your private tags"}
         ])
         self.assertEqual(props["cancel_url"], redirect_uri2 + "?error=access_denied")
         self.assertEqual(props["csrf_token"], g.csrf_token)
@@ -761,7 +761,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "profile",
+            "scope": "musicbrainz:profile",
             "state": "random-state",
             "redirect_uri": redirect_uri,
             "response_mode": "form_post"
