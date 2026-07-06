@@ -14,7 +14,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
 "PO-Revision-Date: 2026-07-07 18:12+0000\n"
-"Last-Translator: zatto13 <zatto0524@gmail.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Japanese <https://translations.metabrainz.org/projects/"
 "metabrainz/website/ja/>\n"
 "Language: ja\n"
@@ -2678,7 +2679,7 @@ msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:29
 msgid "Reports"
-msgstr ""
+msgstr "レポート"
 
 #: metabrainz/templates/reports/financial_reports/index.html:31
 msgid ""
@@ -3556,9 +3557,8 @@ msgid "Modify"
 msgstr "変更"
 
 #: frontend/js/src/ApplicationRow.tsx:60
-#, fuzzy
 msgid "Delete"
-msgstr "日時"
+msgstr "削除"
 
 #: frontend/js/src/Applications.tsx:32
 msgid "Your applications"
