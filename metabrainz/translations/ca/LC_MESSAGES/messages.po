@@ -9,20 +9,22 @@ msgstr ""
 "Project-Id-Version: metabrainz.org VERSION\n"
 "Report-Msgid-Bugs-To: support@metabrainz.org\n"
 "POT-Creation-Date: 2026-06-12 18:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-07-06 17:58+0000\n"
+"Last-Translator: Marc Riera <marc@marcriera.cat>\n"
+"Language-Team: Catalan <https://translations.metabrainz.org/projects/"
+"metabrainz/website/ca/>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2026.7\n"
 
 #: metabrainz/index/forms.py:45
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "«%(value)s» no és una selecció vàlida per a aquest camp"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:27
 #: frontend/js/src/forms/SignupCommercial.tsx:154
@@ -31,69 +33,70 @@ msgstr ""
 #: metabrainz/user/forms.py:25 metabrainz/user/forms.py:49
 #: metabrainz/user/forms.py:55
 msgid "Email address is required!"
-msgstr ""
+msgstr "L'adreça electrònica és obligatòria!"
 
 #: frontend/js/src/Applications.tsx:51 frontend/js/src/Applications.tsx:79
 #: frontend/js/src/Profile.tsx:265 frontend/js/src/Profile.tsx:466
 #: metabrainz/index/forms.py:61
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: metabrainz/index/forms.py:62
 msgid "Contact name field is empty."
-msgstr ""
+msgstr "El camp de nom del contacte és buit."
 
 #: metabrainz/index/views.py:228
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "El perfil s'ha actualitzat correctament."
 
 #: metabrainz/index/views.py:345
 msgid "You have updated an application!"
-msgstr ""
+msgstr "Heu actualitzat una aplicació!"
 
 #: metabrainz/index/views.py:397
 msgid "You have deleted an application."
-msgstr ""
+msgstr "Heu suprimit una aplicació."
 
 #: metabrainz/index/views.py:399
 msgid "Failed to delete an application."
-msgstr ""
+msgstr "No s'ha pogut suprimir una aplicació."
 
 #: metabrainz/index/views.py:422
 msgid "Revoked tokens successfully!"
-msgstr ""
+msgstr "Els testimonis s'han revocat correctament!"
 
 #: metabrainz/index/views.py:451
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "S'ha suprimit el compte."
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
 msgid "Application Name"
-msgstr ""
+msgstr "Nom de l'aplicació"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr ""
+msgstr "El camp de nom de l'aplicació és buit."
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "El nom de l'aplicació ha de tenir 3 caràcters de longitud com a mínim."
 
 #: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
-msgstr ""
+msgstr "El nom de l'aplicació pot tenir 64 caràcters de longitud com a màxim."
 
 #: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
 msgid "Description"
-msgstr ""
+msgstr "Descripció"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr ""
+msgstr "El camp de descripció del client és buit."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
 msgstr ""
+"La descripció del client ha de tenir 3 caràcters de longitud com a mínim."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
@@ -101,7 +104,7 @@ msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
-msgstr ""
+msgstr "Pàgina d'inici"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
