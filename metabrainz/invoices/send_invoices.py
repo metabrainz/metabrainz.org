@@ -16,7 +16,7 @@ from brainzutils import cache
 from brainzutils.mail import send_mail
 
 SEND_DELAY = 5
-MAIL_SUBJECT = "Invoice {invoice_number} and a note from the MetaBrainz Board"
+MAIL_SUBJECT = "Invoice {invoice_number} from the MetaBrainz Foundation"
 INVOICE_SUMMARY = """================================
 Invoice Summary:
 
@@ -25,25 +25,17 @@ Invoice date: {invoice_date}
 Due date: {due_date}
 Invoice amount: {invoice_amount} {currency}
 ================================"""
-MAIL_BODY = """Dear {supporter_name},
+MAIL_BODY = """To {supporter_name},
+
+Here is your next invoice! For information on how to pay us, please see https://metabrainz.org/payment
+
+Thanks!
+
+The MetaBrainz Foundation ( accounting@metabrainz.org ) 
 
 {invoice_summary}
 
-A note from the MetaBrainz Board
-
-It is with great sadness that we write to share that our dear friend Robert Kaye — founder and Executive Director of MetaBrainz Foundation — died suddenly on February 20th. Many of you will have heard this terrible news already; for those learning about it now, we are sorry to be the ones breaking this news.
-
-Rob built his life’s work on a simple but radical idea: that the world's music data should be open, owned by the community that builds it, and be reliable and free for anyone to build on. Over two decades, he turned that idea into MusicBrainz, ListenBrainz, Picard, and the infrastructure that quietly underpins many of the world's most-used music products and services. Your support made that possible. In March, the team, the community, and Rob's family gathered in Barcelona to celebrate his life — a fitting send-off for someone whose work brought so many people together.
-
-The work continues. Nicolás Tamargo, who has been with the Foundation a very long time,  has stepped in as Interim Executive Director to keep things steady. Many of you will know Nicolás already — he has been Secretary to our Board for several years and a long-time contributor to the project, and we're lucky to have him at the helm right now. Alongside his work, we've opened a formal search for a permanent ED to lead the MetaBrainz Foundation through a time of real change in music, data, and AI. If someone in your world comes  to mind — with roots in open source or the music community — we'd love an introduction. Full details here: https://blog.metabrainz.org/2026/04/14/seeking-a-new-executive-director/
-
-The mission matters more than ever. As AI, rights, and data systems become ever more consolidated and opaque, the case for an independent, community-maintained source of truth only grows stronger. Meanwhile, if anything is on your mind, just reply to this email and one of us will come back to you.
-
-Our invoice for the coming period is attached. Your continued support keeps the team working, the volunteers supported, and the data flowing — and it is, honestly, the most meaningful way we know to honour what Rob spent his life building.
-
-With gratitude,
-The MetaBrainz Board
-Nick Ashton-Hart, Paul Bennun, Cory Doctorow, Matthew Hawn, Rassami Hök Ljungberg, Hazel Savage"""
+Please see the attached PDF file for full details."""
 
 
 REMINDER_MAIL_BODY = """To: %s %s (%s)
