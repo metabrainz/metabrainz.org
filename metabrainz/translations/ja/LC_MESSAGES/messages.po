@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-06-12 00:53+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-07-06 17:58+0000\n"
+"Last-Translator: zatto13 <zatto0524@gmail.com>\n"
 "Language-Team: Japanese <https://translations.metabrainz.org/projects/"
 "metabrainz/website/ja/>\n"
 "Language: ja\n"
@@ -22,18 +22,18 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2026.6.1\n"
+"X-Generator: Weblate 2026.7\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: metabrainz/index/forms.py:45
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "'%(value)s'はこのフィールドで選択可能な値ではありません"
 
 #: metabrainz/index/forms.py:56 metabrainz/user/forms.py:25
 #: metabrainz/user/forms.py:49 metabrainz/user/forms.py:55
 msgid "Email address is required!"
-msgstr ""
+msgstr "メールアドレスの入力は必須です！"
 
 #: frontend/js/src/Applications.tsx:51 frontend/js/src/Applications.tsx:79
 #: metabrainz/index/forms.py:61
@@ -42,47 +42,47 @@ msgstr "名前"
 
 #: metabrainz/index/forms.py:62
 msgid "Contact name field is empty."
-msgstr ""
+msgstr "連絡先欄が空欄です。"
 
 #: metabrainz/index/views.py:228
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "プロフィールの更新に成功しました。"
 
 #: metabrainz/index/views.py:345
 msgid "You have updated an application!"
-msgstr ""
+msgstr "アプリケーションを更新しました！"
 
 #: metabrainz/index/views.py:397
 msgid "You have deleted an application."
-msgstr ""
+msgstr "アプリケーションを削除しました。"
 
 #: metabrainz/index/views.py:399
 msgid "Failed to delete an application."
-msgstr ""
+msgstr "アプリケーションの削除に失敗しました。"
 
 #: metabrainz/index/views.py:422
 msgid "Revoked tokens successfully!"
-msgstr ""
+msgstr "トークンの無効化に成功しました！"
 
 #: metabrainz/index/views.py:451
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "アカウントが削除されました。"
 
 #: metabrainz/oauth/forms.py:58
 msgid "Application Name"
-msgstr ""
+msgstr "アプリケーション名"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr ""
+msgstr "アプリケーション名欄が空です。"
 
 #: metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "アプリケーション名は3文字以上である必要があります。"
 
 #: metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
-msgstr ""
+msgstr "アプリケーション名は、最大64文字までです。"
 
 #: metabrainz/oauth/forms.py:63
 msgid "Description"
@@ -90,48 +90,47 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr ""
+msgstr "「クライアントの説明」欄が空欄です。"
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr ""
+msgstr "クライアントの説明は、3文字以上である必要があります。"
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr ""
+msgstr "クライアントの説明は、最大512文字までです。"
 
 #: metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "ホームページに戻る"
+msgstr "ホームページ"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr ""
+msgstr "ホームページ欄が空欄です。"
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr ""
+msgstr "ホームページは有効なURIではありません。"
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
-msgstr ""
+msgstr "ホームページのURLには「http」または「https」を使用する必要があります"
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "認証コールバックURL"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
-msgstr ""
+msgstr "「認証コールバックURL」欄が空欄です。"
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
-msgstr ""
+msgstr "認証コールバックURLが無効です。"
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
-msgstr ""
+msgstr "認証コールバックURLには、http または https を使用する必要があります。"
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
@@ -143,78 +142,94 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
+"MetaBrainz財団へのご寄付、誠にありがとうございます。皆様のご支援に心より感謝"
+"申し上げます！処理の都合上、ご寄付がリストに反映されるまで多少お時間をいただ"
+"く場合がございます。"
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
+"MetaBrainz財団へのご寄付、誠にありがとうございます。皆様のご支援に心より感謝"
+"申し上げます！"
 
 #: metabrainz/payments/views.py:182
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
 msgstr ""
+"本日、ご寄付いただけないとのこと、残念です。ぜひ考え直していただければと思い"
+"ます！"
 
 #: metabrainz/payments/views.py:188
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
 msgstr ""
+"本日お支払いいただけないとのこと、残念です。ぜひ考え直していただければと思い"
+"ます！"
 
 #: metabrainz/payments/views.py:202
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
 msgstr ""
+"申し訳ございませんが、エラーが発生したため、ご寄付を処理することができません"
+"。"
 
 #: metabrainz/payments/views.py:208
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your payment."
 msgstr ""
+"申し訳ございませんが、エラーが発生したため、お支払いを処理することができませ"
+"ん。"
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
-msgstr ""
+msgstr "ご指定の年次レポートが見つかりませんでした。"
 
 #: metabrainz/supporter/forms.py:13
 msgid "Contact name is required!"
-msgstr ""
+msgstr "連絡先の入力は必須です！"
 
 #: metabrainz/supporter/forms.py:15
 msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
+"当サービスのデータを活用したいとお考えのプロジェクトについて、詳しく教えてい"
+"ただけますか？データをご自身でホストする予定ですか、それとも当サービスのAPIを"
+"ご利用になる予定ですか？"
 
 #: metabrainz/supporter/forms.py:17
 msgid "Please, tell us how you (will) use our data."
-msgstr ""
+msgstr "当サービスのデータをどのように（今後）ご利用になるか、お知らせください。"
 
 #: metabrainz/supporter/forms.py:18
 msgid "Please, limit usage description to 500 characters."
-msgstr ""
+msgstr "使用方法の説明は500文字以内に収めてください。"
 
 #: metabrainz/supporter/forms.py:21
 msgid "You need to accept the agreement!"
-msgstr ""
+msgstr "利用規約に同意する必要があります！"
 
 #: metabrainz/supporter/forms.py:27
 msgid "Organization name"
-msgstr ""
+msgstr "組織名"
 
 #: metabrainz/supporter/forms.py:28
 msgid "You need to specify the name of your organization."
-msgstr ""
+msgstr "所属組織名を入力する必要があります。"
 
 #: metabrainz/supporter/forms.py:30
 msgid "Organization description"
-msgstr ""
+msgstr "組織概要"
 
 #: metabrainz/supporter/forms.py:31
 msgid "You need to provide description of your organization."
-msgstr ""
+msgstr "貴組織の概要をご記入ください。"
 
 #: metabrainz/supporter/forms.py:34
 msgid "Website URL"
@@ -222,7 +237,7 @@ msgstr "ウェブサイトURL"
 
 #: metabrainz/supporter/forms.py:35
 msgid "You need to specify website of the organization."
-msgstr ""
+msgstr "組織のウェブサイトを入力する必要があります。"
 
 #: metabrainz/supporter/forms.py:37
 msgid "Logo image URL"
@@ -234,11 +249,11 @@ msgstr "API URL"
 
 #: metabrainz/supporter/forms.py:40
 msgid "Street"
-msgstr "通り"
+msgstr "番地"
 
 #: metabrainz/supporter/forms.py:41
 msgid "You need to specify street."
-msgstr ""
+msgstr "番地を入力する必要があります。"
 
 #: metabrainz/supporter/forms.py:43
 msgid "City"
@@ -246,7 +261,7 @@ msgstr "市"
 
 #: metabrainz/supporter/forms.py:44
 msgid "You need to specify city."
-msgstr ""
+msgstr "市区町村を入力する必要があります。"
 
 #: metabrainz/supporter/forms.py:46
 msgid "State / Province"
@@ -254,7 +269,7 @@ msgstr "州/県"
 
 #: metabrainz/supporter/forms.py:47
 msgid "You need to specify state/province."
-msgstr ""
+msgstr "市/県を入力する必要があります。"
 
 #: metabrainz/supporter/forms.py:49
 msgid "Postcode"
@@ -262,7 +277,7 @@ msgstr "郵便番号"
 
 #: metabrainz/supporter/forms.py:50
 msgid "You need to specify postcode."
-msgstr ""
+msgstr "郵便番号を入力する必要があります。"
 
 #: metabrainz/supporter/forms.py:52
 msgid "Country"
@@ -270,58 +285,64 @@ msgstr "国"
 
 #: metabrainz/supporter/forms.py:53
 msgid "You need to specify country."
-msgstr ""
+msgstr "国を入力する必要があります。"
 
 #: metabrainz/supporter/forms.py:64
 msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
-msgstr ""
+msgstr "カスタム金額は、選択したティアの閾値金額以上でなければなりません！"
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
 msgid "You are already a supporter."
-msgstr ""
+msgstr "あなたはすでにサポーターです。"
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
-msgstr ""
+msgstr "指定されたIDを持つティアが見つかりません。"
 
 #: metabrainz/supporter/views.py:127
 msgid "You need to choose support tier before signing up!"
-msgstr ""
+msgstr "登録する前に、サポートティアを選択する必要があります！"
 
 #: metabrainz/supporter/views.py:137
 msgid "You need to choose existing tier before signing up!"
-msgstr ""
+msgstr "登録する前に、既存のティアを選択する必要があります！"
 
 #: metabrainz/supporter/views.py:164
 msgid ""
 "Thanks for becoming a supporter! Your application will be reviewed soon. "
 "We will send you updates via email."
 msgstr ""
+"サポーターになっていただき、ありがとうございます！お申し込み内容はまもなく審"
+"査されます。進捗状況については、メールでお知らせいたします。"
 
 #: metabrainz/supporter/views.py:187
 msgid ""
 "Thanks for signing up! Your application will be reviewed soon. We will "
 "send you updates via email."
 msgstr ""
+"ご登録ありがとうございます！お申し込み内容はまもなく審査されます。進捗状況に"
+"ついては、メールにてお知らせいたします。"
 
 #: metabrainz/supporter/views.py:248
 msgid "Thanks for becoming a supporter!"
-msgstr ""
+msgstr "サポーターになっていただき、ありがとうございます！"
 
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr ""
+"ご登録ありがとうございます！確認手続きを完了するため、受信トレイをご確認くだ"
+"さい。"
 
 #: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
-msgstr ""
+msgstr "アカウントが有効でない限り、新しいトークンを生成することはできません。"
 
 #: metabrainz/templates/base.html:44
 msgid "Foundation"
-msgstr ""
+msgstr "財団"
 
 #: metabrainz/templates/base.html:46 metabrainz/templates/index/projects.html:3
 #: metabrainz/templates/navbar.html:24
@@ -332,9 +353,8 @@ msgstr "プロジェクト"
 #: metabrainz/templates/index/datasets/derived-dumps.html:3
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
-#, fuzzy
 msgid "Datasets"
-msgstr "日時"
+msgstr "データセット"
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
@@ -347,7 +367,7 @@ msgstr ""
 
 #: metabrainz/templates/base.html:53
 msgid "Policies"
-msgstr ""
+msgstr "ポリシー"
 
 #: metabrainz/templates/base.html:55
 #: metabrainz/templates/index/social-contract.html:3
@@ -372,12 +392,12 @@ msgstr "プライバシーポリシー"
 #: metabrainz/templates/reports/financial_reports/index.html:3
 #: metabrainz/templates/reports/financial_reports/index.html:6
 msgid "Finances"
-msgstr ""
+msgstr "財務"
 
 #: metabrainz/templates/base.html:63 metabrainz/templates/navbar.html:47
 #: metabrainz/templates/reports/annual_reports/view.html:4
 msgid "Archived Annual Reports"
-msgstr ""
+msgstr "年次レポートアーカイブ"
 
 #: metabrainz/templates/base.html:64 metabrainz/templates/navbar.html:49
 #: metabrainz/templates/payments/donors.html:6
@@ -409,7 +429,7 @@ msgstr "サインアウト"
 
 #: metabrainz/templates/base.html:77
 msgid "Access your account"
-msgstr ""
+msgstr "アカウントにアクセス"
 
 #: metabrainz/templates/base.html:78
 msgid "API"
@@ -430,9 +450,8 @@ msgstr ""
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
-#, fuzzy
 msgid "Twitter/X"
-msgstr "Twitter"
+msgstr "Twitter/X"
 
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
@@ -447,12 +466,12 @@ msgstr ""
 #: metabrainz/templates/base.html:90
 #: metabrainz/templates/index/contact.html:109
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: metabrainz/templates/base.html:95
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
-msgstr ""
+msgstr "<a href=\"%(github_url)s\">GitHub</a>の提供"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
@@ -464,17 +483,17 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:23
 msgid "The Foundation"
-msgstr ""
+msgstr "財団"
 
 #: metabrainz/templates/navbar.html:32
 msgid "Policies "
-msgstr ""
+msgstr "ポリシー "
 
 #: metabrainz/templates/index/conflict-policy.html:2
 #: metabrainz/templates/index/conflict-policy.html:12
 #: metabrainz/templates/navbar.html:37
 msgid "Conflict Resolution Policy"
-msgstr ""
+msgstr "議論解決方針"
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
@@ -486,7 +505,7 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:48
 msgid "Financial Reports"
-msgstr ""
+msgstr "財務レポート"
 
 #: metabrainz/templates/navbar.html:52
 msgid "Donate"
@@ -501,9 +520,8 @@ msgid "Your profile"
 msgstr "あなたのプロフィール"
 
 #: metabrainz/templates/navbar.html:68
-#, fuzzy
 msgid "OAuth applications"
-msgstr "OAuth 認証"
+msgstr "OAuthアプリケーション"
 
 #: metabrainz/templates/navbar.html:74 metabrainz/templates/navbar.html:76
 msgid "Language"
@@ -519,18 +537,20 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
+"すべてのエンドポイントにはアクセストークンが必要ですが、これは\n"
+"    <a href=\"%(profile_url)s\">プロフィールページ</a>から取得できます。"
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
-msgstr ""
+msgstr "MusicBrainz稼働データ・フィード"
 
 #: metabrainz/templates/api/info.html:16
 msgid "There are two endpoints for fetching live data:"
-msgstr ""
+msgstr "稼働データを取得するためのエンドポイントは2つあります:"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
-msgstr ""
+msgstr "時間度レプリケーションパケット"
 
 #: metabrainz/templates/api/info.html:30
 msgid ""
@@ -538,14 +558,17 @@ msgid ""
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
+"各レプリケーションパケットの署名を取得することは可能です。単に\n"
+"      <code>.tar.bz2</code> を <code>.tar.bz2.asc</code> に置き換えるだけで済"
+"みます。"
 
 #: metabrainz/templates/api/info.html:34
 msgid "You can find the latest replication packet number from this endpoint:"
-msgstr ""
+msgstr "最新のリプリケーションパケット番号は、このエンドポイントから確認できます:"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
-msgstr ""
+msgstr "時間度JSON増分ダンプ"
 
 #: metabrainz/templates/api/info.html:58
 msgid ""
@@ -554,12 +577,18 @@ msgid ""
 "instrument, label, place, recording, release, release-group, series, or "
 "work."
 msgstr ""
+"JSONダンプは項目タイプごとに分割されています。<code>&lt;ENTITY_NAME&gt;</"
+"code> には、地域、アーティスト、イベント、楽器、レーベル、場所、"
+"レコーディング、リリース、リリース団体、シリーズ、または作品のいずれかが指定"
+"されます。"
 
 #: metabrainz/templates/api/info.html:61
 msgid ""
 "It’s possible that a JSON dump for a particular entity type doesn’t exist"
 " if no entities of that type have changed in a given hour."
 msgstr ""
+"特定の項目タイプについて、その1時間の間にそのタイプの項目に変更がなかった場合"
+"、その項目タイプのJSONダンプが存在しない可能性があります。"
 
 #: metabrainz/templates/api/info.html:64
 msgid ""
@@ -567,12 +596,17 @@ msgid ""
 "This file must be read line-by-line; each line contains one changed "
 "entity in JSON format."
 msgstr ""
+"各ダンプには、<code>mbdump/&lt;ENTITY_NAME&gt;</code> という名前のファイルが"
+"含まれています。このファイルは行単位で読み込む必要があり、各行には変更された"
+"項目が1つ、JSON 形式で記述されています。"
 
 #: metabrainz/templates/api/info.html:67
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
+"レプリケーションパケットと同様に、<code>.tar.xz</code> を <code>.tar.xz.asc</"
+"code> に置き換えることで、ファイルの署名を取得できます。"
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -580,11 +614,11 @@ msgstr "ホームページに戻る"
 
 #: metabrainz/templates/index/about.html:3
 msgid "About"
-msgstr ""
+msgstr "概要"
 
 #: metabrainz/templates/index/about.html:8
 msgid "About the MetaBrainz Foundation"
-msgstr ""
+msgstr "MetaBrainz財団について"
 
 #: metabrainz/templates/index/about.html:13
 #, python-format
@@ -601,6 +635,12 @@ msgid ""
 "        collaborating together to build and maintain the MetaBrainz "
 "comprehensive datasets."
 msgstr ""
+"MetaBrainz財団は、音楽および芸術のメタデータに関するオープンな百科事典を作成"
+"・維持しているグローバルなコミュニティです。当初は音楽コレクター向けの"
+"リソースとして始まりましたが、現在はボランティア、アーティスト、業界の"
+"リーダーたちとの連携を築いています。設立以来、当財団は<a href=\"%"
+"(editors_url)s\">数十万人の編集者</a>からなるグローバルなコミュニティへと成長"
+"し、MetaBrainzの包括的なデータセットの構築と維持に協力し合っています。"
 
 #: metabrainz/templates/index/about.html:22
 #, python-format
@@ -625,6 +665,24 @@ msgid ""
 "of arts and music as possible \n"
 "        and do not discriminate when compiling data."
 msgstr ""
+"当財団は、データセットやコミュニティへの貢献と、データセットの活用がバランス"
+"よく調和した\n"
+"エコシステムの中で活動しています。データを可能な限り包括的なものにするため"
+"、\n"
+"すべてのデータサポーターに対し、データ収集、編集、およびピアレビューの"
+"プロセスへの参加を奨励しています。\n"
+"各項目には永続的な<a href=\"%(mbid_url)s\">MBID（MusicBrainz識別子）</a>\n"
+"が割り当てられ、音楽データのための\n"
+"信頼性が高く、曖昧さのない普遍的な共通言語の構築を促進するために使用されます"
+"。\n"
+"MBIDの導入により、従来の7つの音楽データ識別子を超える、無限の検索クエリの可能"
+"性が開かれ、\n"
+"知識が文字通り手の届くところにあるようになりました。\n"
+"当コミュニティが収集したデータセットは、データの一貫性と正確性を確保するため"
+"、グローバルな投票システムによって検証および編集されています。\n"
+"私たちは、可能な限り多くの異なる芸術や音楽のスタイル・ジャンルに関する情報を"
+"収集しており\n"
+"また、データの収集にあたっては一切の差別を行いません。"
 
 #: metabrainz/templates/index/about.html:36
 #, python-format
@@ -646,14 +704,27 @@ msgid ""
 "href=\"%(financial_reports_url)s\">transparent finances,</a> which are "
 "published quarterly."
 msgstr ""
+"当財団は2004年、カリフォルニア州サンルイスオビスポでロバート・ケイによって設"
+"立され、\n"
+"501(c)(3)に基づく免税非営利団体です。<a href=\"%(supporters_url)s\">商業"
+"サポーター</a>の皆様にはご寄付をお願いしており、\n"
+"当財団プロジェクト群への資金援助と、健全なエコシステムを維持するための地域社"
+"会への還元に分配されます。\n"
+"データの非商用利用は引き続き無料であり、今後も無料で利用できるよう努めてまい"
+"ります。\n"
+"また、当財団は寄付や資金を提供してくださる数多くの<a href=\"%(sponsors_url)"
+"s\">スポンサー</a>の皆様からも支援を受けており、\n"
+"様々なプロジェクトの目標達成にご協力いただいています。\n"
+"MetaBrainz財団は<a href=\"%(financial_reports_url)s\">財務の透明性</a>を重視"
+"しており、財務情報は四半期ごとに公開されています。"
 
 #: metabrainz/templates/index/about.html:49
 msgid "Board of Directors"
-msgstr ""
+msgstr "取締役会"
 
 #: metabrainz/templates/index/about.html:50
 msgid "Our board of directors consists of:"
-msgstr ""
+msgstr "弊財団取締役会は以下のように構成されています:"
 
 #: metabrainz/templates/index/about.html:52
 #, python-format
@@ -662,11 +733,13 @@ msgid ""
 "href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
 "Alliance</a>"
 msgstr ""
+"<a href=\"%(internet_ecosys_url)s\">インターネット&デジタル・エコシステム・"
+"アライアンス</a>専務取締役、ニック・アシュトン＝ハート事務局長"
 
 #: metabrainz/templates/index/about.html:53
 #, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
+msgstr "fuchsia, LLC取締役 <a href=\"%(paul_url)s\">ポール・ベヌン</a>"
 
 #: metabrainz/templates/index/about.html:54
 #, python-format
@@ -674,6 +747,8 @@ msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
 msgstr ""
+"<a href=\"%(compass_url)s\">Compass, Map & Key</a>理事、<a href=\"%"
+"(matthew_url)s\">マシュー・ホーン</a>"
 
 #: metabrainz/templates/index/about.html:55
 #, python-format
@@ -681,6 +756,8 @@ msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
 msgstr ""
+"<a href=\"%(rassami_com)s\">rassami.com</a>取締役、<a href=\"%(rassami_url)"
+"s\">Rassami Hok Ljungberg</a>財務責任者"
 
 #: metabrainz/templates/index/about.html:56
 #, python-format
@@ -698,11 +775,11 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
-msgstr ""
+msgstr "顧問"
 
 #: metabrainz/templates/index/about.html:62
 msgid "Our board of directors is advised by:"
-msgstr ""
+msgstr "当社の取締役会には、以下の組織が助言を行っています:"
 
 #: metabrainz/templates/index/about.html:64
 #, python-format
@@ -710,40 +787,44 @@ msgid ""
 "<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
 "journalist"
 msgstr ""
+"<a href=\"%(cory_url)s\">コーリー・ドクトロウ</a>、作家、活動家、"
+"ジャーナリスト"
 
 #: metabrainz/templates/index/about.html:66
 msgid "Officers"
-msgstr ""
+msgstr "役員"
 
 #: metabrainz/templates/index/about.html:67
 msgid "The officers of this company are:"
-msgstr ""
+msgstr "当社の役員は以下の通りです:"
 
 #: metabrainz/templates/index/about.html:69
 msgid "President Nicolás Tamargo"
-msgstr ""
+msgstr "ニコラス・タマルゴ会長"
 
 #: metabrainz/templates/index/about.html:70
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr ""
+msgstr "会計担当 ラサミ・ホック・リュングベリ"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"
-msgstr ""
+msgstr "ニック・アシュトン＝ハート事務次官"
 
 #: metabrainz/templates/index/bad-customers.html:3
 msgid "Bad customers"
-msgstr ""
+msgstr "バッドな顧客"
 
 #: metabrainz/templates/index/bad-customers.html:8
 msgid "Our not-so-favorite commercial data supporters"
-msgstr ""
+msgstr "あまり好ましくない商業データサポーター"
 
 #: metabrainz/templates/index/bad-customers.html:11
 msgid ""
 "The following companies use our data, but have declined to support us on "
 "an ongoing basis."
 msgstr ""
+"以下の企業は当社のデータを利用していますが、継続的な支援については辞退してい"
+"ます。"
 
 #: metabrainz/templates/index/bad-customers.html:14
 msgid ""
@@ -756,6 +837,13 @@ msgid ""
 "      support so that we may continue to cover our expenses and pay our "
 "staff."
 msgstr ""
+"当団体のすべてのプロジェクトは、エンドユーザーからの寄付や企業からの支援によ"
+"って支えられています。\n"
+"当団体が提供する無料のデータセットは、これらの企業に多大な価値をもたらし、"
+"ビジネス上の優位性をもたらしています。\n"
+"当団体のデータを活用して事業を展開する企業には、\n"
+"当団体の経費を賄い、スタッフへの給与を支払うことができるよう、財政的な支援を"
+"お願いしたいと考えています。"
 
 #: metabrainz/templates/index/bad-customers.html:20
 #, python-format
@@ -768,6 +856,12 @@ msgid ""
 "href=\"%(account_type_url)s\">signing up\n"
 "      for support</a>."
 msgstr ""
+"もし、このリストにあなたが支持する企業が掲載されている場合は、その企業に連絡"
+"を取り、\n"
+"なぜ私たちの支援を断ったのか尋ねてみてください。また、以下のリストに掲載され"
+"ている企業に所属しており、このリストから削除を希望される場合は、\n"
+"<a href=\"%(account_type_url)s\">支援への登録</a>\n"
+"を行うことで削除が可能です。"
 
 #: metabrainz/templates/index/bad-customers.html:26
 #, python-format
@@ -776,14 +870,17 @@ msgid ""
 "them for support!\n"
 "      Please <a href=\"%(contact_url)s\">let us know</a>!"
 msgstr ""
+"当財団のデータを利用している他の企業をご存じですか？ぜひ教えていただき、その"
+"企業にも協力を依頼したいと考えています！\n"
+"<a href=\"%(contact_url)s\">ぜひお知らせください</a>！"
 
 #: metabrainz/templates/index/bad-customers.html:53
 msgid "Nice!!"
-msgstr ""
+msgstr "ナイス！！"
 
 #: metabrainz/templates/index/bad-customers.html:54
 msgid "There are currently no not-so-favorite commercial data supporters!"
-msgstr ""
+msgstr "現在、あまり好ましくない商用データサポーターはいません！"
 
 #: metabrainz/templates/index/bad-customers.html:56
 msgid ""
@@ -791,24 +888,26 @@ msgid ""
 "the\n"
 "          \"right thing\"... :)"
 msgstr ""
+"……それか、あるいは、いくつかの企業に説得しようとしているのかもしれませんね\n"
+"「正しいこと」を、ね…… :)"
 
 #: metabrainz/templates/index/conflict-policy.html:14
 #: metabrainz/templates/index/gdpr.html:8
 msgid "Introduction"
-msgstr ""
+msgstr "イントロダクション"
 
 #: metabrainz/templates/index/conflict-policy.html:55
 msgid "Reporting and Response"
-msgstr ""
+msgstr "報告と返答"
 
 #: metabrainz/templates/index/contact.html:3
 #: metabrainz/templates/index/contact.html:6
 msgid "Contact"
-msgstr ""
+msgstr "コンタクト"
 
 #: metabrainz/templates/index/contact.html:8
 msgid "Found a bug in one of our projects?"
-msgstr ""
+msgstr "弊プロジェクト内にバグを見つけた？"
 
 #: metabrainz/templates/index/contact.html:10
 #, python-format
@@ -821,10 +920,16 @@ msgid ""
 "such as what happened, what you expected\n"
 "    to happen, and the URLs of any pages involved."
 msgstr ""
+"リンク切れや、期待通りに動作しない箇所などを見つけましたか？\n"
+" 問題については、当社の <a href=\"%(bug_tracker_url)s\">バグトラッカー</a> に"
+"て報告いただくか、チャットまたはメールでお知らせください。\n"
+"連絡先情報は以下に記載されています。報告の際は、発生した現象、期待していた動"
+"作、\n"
+"および関連するページのURLなどの詳細を明記してください。"
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
-msgstr ""
+msgstr "MusicBrainzについて何か聞きたいことがある？"
 
 #: metabrainz/templates/index/contact.html:18
 #, python-format
@@ -837,10 +942,16 @@ msgid ""
 "    Picard</a>, check its <a "
 "href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
 msgstr ""
+"<a href=\"%(general_faq_url)s\">一般的なFAQ</a>、または\n"
+"<a href=\"%(faq_url)s\">よくある質問</a>の他のページをチェックして、\n"
+"ご質問に対する回答がすでに掲載されていないかご確認ください。<a href=\"%"
+"(picard_homepage)s\">MusicBrainz Picard</a>をご利用の場合は、\n"
+"その<a href=\"%(picard_troubleshooting)s\">トラブルシューティングページ</a>を"
+"ご確認ください。"
 
 #: metabrainz/templates/index/contact.html:25
 msgid "Data removal requests"
-msgstr ""
+msgstr "データ消去のリクエスト"
 
 #: metabrainz/templates/index/contact.html:27
 #, python-format
@@ -850,10 +961,14 @@ msgid ""
 "    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more "
 "information."
 msgstr ""
+"MusicBrainzでは、要請があった場合でも事実に関するデータを編集または削除するこ"
+"とはありません。\n"
+"詳細については、<a href=\"%(dr_policy_url)s\">データ削除ポリシー</a>をご覧く"
+"ださい。"
 
 #: metabrainz/templates/index/contact.html:30
 msgid "Copyright issues"
-msgstr ""
+msgstr "著作権問題"
 
 #: metabrainz/templates/index/contact.html:32
 #, python-format
@@ -870,10 +985,21 @@ msgid ""
 "    the infringing material from our website. If you cannot provide us a "
 "link, we cannot help you."
 msgstr ""
+"MusicBrainz があなたの著作権を侵害していると思われる場合は、\n"
+"<a href=\"%(cr_violation_url)s\">著作権侵害を報告</a>することができます。\n"
+"MusicBrainzは録音物に関するデータを提供しており、<i>音楽そのものを提供してい"
+"るわけではありません</i>。MusicBrainzにあなたの音楽が掲載されているのを発見し"
+"た場合でも<b>、\n"
+"それが当サイトが音楽ファイル自体にアクセスしている、あるいはアクセスを提供し"
+"ていることを意味するものではありません</b>。\n"
+"それでもなお、当サイトがあなたの著作権を侵害しているとお考えの場合は、当"
+"サイトから侵害対象の素材をダウンロードできる場所へのリンクを\n"
+"当サイトに提供していただく必要があります。リンクを提供いただけない場合、当"
+"サイトでは対応できません。"
 
 #: metabrainz/templates/index/contact.html:40
 msgid "Advertising requests"
-msgstr ""
+msgstr "広告リクエスト"
 
 #: metabrainz/templates/index/contact.html:42
 msgid ""
@@ -887,19 +1013,28 @@ msgid ""
 " disregard the entirety of your submissions if you contact us any other "
 "way!</em>"
 msgstr ""
+"現在、当社はオンライン広告戦略全体の見直しを行っています。広告、トラフィック"
+"最適化、検索エンジン最適化（SEO）、\n"
+"およびソフトウェアの収益化技術について評価を進めています。\n"
+"これらの専門サービスを提供されている場合は、包括的なサービス内容の詳細な資料"
+"を以下のメールアドレスまでお送りください。<em>当社のメディア部門以外のチーム"
+"への配慮をお願いいたします。\n"
+"これらのサービスに関して、当社の他のメールアドレスへご連絡いただくことはご遠"
+"慮ください。他の方法でご連絡いただいた場合、お送りいただいた資料はすべて無視"
+"させていただきます！</em>"
 
 #: metabrainz/templates/index/contact.html:52
 #, python-format
 msgid "Please submit your proposals before 17:00 PST on %(ad_deadline)s."
-msgstr ""
+msgstr "提案は、%(ad_deadline)sの17:00（PST）までにご提出ください。"
 
 #: metabrainz/templates/index/contact.html:54
 msgid "Contact details"
-msgstr ""
+msgstr "連絡先"
 
 #: metabrainz/templates/index/contact.html:56
 msgid "Please do not contact us with the following topics:"
-msgstr ""
+msgstr "以下の内容については、お問い合わせをお控えください："
 
 #: metabrainz/templates/index/contact.html:58
 msgid ""
@@ -907,44 +1042,55 @@ msgid ""
 "neither the music itself nor the\n"
 "        rights to license the music."
 msgstr ""
+"MusicBrainzに掲載されている楽曲については、当方では楽曲そのものも、その楽曲を"
+"ライセンス供与する権利も保有していないため、\n"
+"いかなる楽曲についてもライセンス供与を行うことはできません。"
 
 #: metabrainz/templates/index/contact.html:60
 msgid "We are not distributing any of the music listed in MusicBrainz."
-msgstr ""
+msgstr "当社は、MusicBrainzに掲載されている楽曲を一切配布しておりません。"
 
 #: metabrainz/templates/index/contact.html:61
 msgid ""
 "For inquiries about advertising, SEO optimization, or software "
 "monetization services, please see above!"
 msgstr ""
+"広告、SEO対策、またはソフトウェアの収益化サービスに関するお問い合わせは、上記"
+"をご覧ください！"
 
 #: metabrainz/templates/index/contact.html:62
 msgid "Please do not offer us <b>any</b> other services! We are not interested."
 msgstr ""
+"<b>いかなる</b>その他のサービスも、弊社にご提案なさらないでください！弊社は興"
+"味がありません。"
 
 #: metabrainz/templates/index/contact.html:63
 msgid ""
 "Please do not contact us about any job openings, we do not hire people "
 "who are not part of our community."
 msgstr ""
+"求人に関するお問い合わせはご遠慮ください。当コミュニティに所属していない方の"
+"採用は行っておりません。"
 
 #: metabrainz/templates/index/contact.html:68
 msgid ""
 "If you disregard this agreement and contact us about one of the\n"
 "      disallowed topics, we reserve the right to make fun of you."
 msgstr ""
+"本規約を無視し、禁止されているトピックについて当財団に連絡した場合、\n"
+"当財団はあなたをからかう権利を留保します。"
 
 #: metabrainz/templates/index/contact.html:73
 msgid "E-mail us"
-msgstr ""
+msgstr "メール送信"
 
 #: metabrainz/templates/index/contact.html:75
 msgid "I agree with the rules above, show me the email address"
-msgstr ""
+msgstr "上記のルールを把握したので、Eメールアドレスを表示します"
 
 #: metabrainz/templates/index/contact.html:78
 msgid "You can reach the MetaBrainz staff directly at the following address:"
-msgstr ""
+msgstr "MetaBrainzのスタッフには、以下のアドレスから直接ご連絡いただけます："
 
 #: metabrainz/templates/index/contact.html:84
 msgid "Forums"
@@ -957,6 +1103,9 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
+"ぜひ、当サイトの <a href=\"%(forums_url)s\">フォーラム</a> までご質問をお寄せ"
+"ください！\n"
+"皆様からのご質問には、喜んでお答えいたします。"
 
 #: metabrainz/templates/index/contact.html:92
 #, python-format
@@ -967,57 +1116,62 @@ msgid ""
 "    page and join the chat. You can also browse the\n"
 "    <a href=\"%(chatlogs_url)s\">chat log archives</a>."
 msgstr ""
+"MetaBrainz/MusicBrainz/ListenBrainzのチームとコミュニティのメンバーは、\n"
+"Matrix、IRC、Discordの各チャンネルで交流しています。\n"
+"<a href=\"%(chatbrainz_url)s\">ChatBrainz</a>\n"
+"にアクセスして、チャットに参加してください。\n"
+"また、<a href=\"%(chatlogs_url)s\">チャットログのアーカイブ</a>を閲覧すること"
+"もできます。"
 
 #: metabrainz/templates/index/contact.html:101
 msgid "Social media"
-msgstr ""
+msgstr "ソーシャルメディア"
 
 #: metabrainz/templates/index/contact.html:103
 msgid "You can follow us on these social channels:"
-msgstr ""
+msgstr "以下のソーシャルメディアで当アカウントをフォローいただけます："
 
 #: metabrainz/templates/index/contact.html:113
 msgid "Mailing address"
-msgstr ""
+msgstr "郵送先住所"
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "MetaBrainzチーム"
+msgstr "MetaBrainzデータセット"
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
 msgid "GDPR Compliance Statement"
-msgstr ""
+msgstr "GDPR準拠に関する声明"
 
 #: metabrainz/templates/index/gdpr.html:37
 msgid "Right to be forgotten"
-msgstr ""
+msgstr "忘れられる権利"
 
 #: metabrainz/templates/index/gdpr.html:77
 msgid "Restriction of processing"
-msgstr ""
+msgstr "処理の制限"
 
 #: metabrainz/templates/index/gdpr.html:110
 msgid "Right to data portability / exporting your data"
-msgstr ""
+msgstr "データのポータビリティに関する権利 / データのエクスポート"
 
 #: metabrainz/templates/index/gdpr.html:150
 msgid "Right to rectification"
-msgstr ""
+msgstr "訂正権"
 
 #: metabrainz/templates/index/gdpr.html:165
 msgid "Right to be informed"
-msgstr ""
+msgstr "情報提供を受ける権利"
 
 #: metabrainz/templates/index/gdpr.html:188
 msgid "Right to access"
-msgstr ""
+msgstr "アクセスする権利"
 
 #: metabrainz/templates/index/gdpr.html:198
 #: metabrainz/templates/index/privacy.html:166
 msgid "Privacy/GDPR Representative"
-msgstr ""
+msgstr "プライバシー/GDPR担当責任者"
 
 #: metabrainz/templates/index/index.html:6
 msgid "Welcome to MetaBrainz!"
@@ -1031,6 +1185,11 @@ msgid ""
 "Creative\n"
 "        Commons licenses."
 msgstr ""
+"MetaBrainz財団は、データの自由でオープンな利用を信条とする非営利団体です。\n"
+"同財団は、コミュニティによって維持管理されるデータベースを構築し、\n"
+"それらをパブリックドメイン、またはクリエイティブ・コモンズ・ライセンスの下"
+"で\n"
+"公開することを目的として設立されました。"
 
 #: metabrainz/templates/index/index.html:16
 #, python-format
@@ -1047,12 +1206,24 @@ msgid ""
 "data gathering process so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
+"当サイトのデータは、その一貫性と正確性を確保するため、\n"
+"主にボランティアによって収集され、ピアレビューによって検証されています。\n"
+"このデータの<a href=\"%(account_type_url)s\">非商用利用</a>はすべて無料ですが"
+"、\n"
+"<a href=\"%(account_type_url)s\">商用サポーター</a>の皆様には、プロジェクトの"
+"資金調達にご協力いただくため、\n"
+"<a href=\"%(account_type_url)s\">当プロジェクトへのご支援</a>をお願いしており"
+"ます。\n"
+"当データの網羅性を可能な限り高めるため、すべてのデータサポーターの皆様に、\n"
+"データ収集プロセスへのご協力をお願いいたします。"
 
 #: metabrainz/templates/index/index.html:38
 msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
+"MusicBrainzは、誰でも利用可能な音楽のメタデータを収集する\n"
+"オープンな音楽百科事典です"
 
 #: metabrainz/templates/index/index.html:40
 #, python-format
@@ -1060,26 +1231,30 @@ msgid ""
 "Sign up to use the <a href=\"%(account_type_url)s\">Live Data "
 "Feed</a></em>"
 msgstr ""
+"<a href=\"%(account_type_url)s\">運用データフィード</a></em>をご利用になるに"
+"は、登録してください"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
-msgstr ""
+msgstr "クロスプラットフォーム対応の音楽タグ付けツール"
 
 #: metabrainz/templates/index/index.html:57
 msgid "An open encyclopedia which contains information about published literature"
-msgstr ""
+msgstr "出版された文学作品に関する情報を収録したオープンな百科事典"
 
 #: metabrainz/templates/index/index.html:65
 msgid "An open record of user listening habits"
-msgstr ""
+msgstr "ユーザーのリスニング習慣に関する公開データ"
 
 #: metabrainz/templates/index/index.html:73
 msgid "A repository for Creative Commons licensed music and book reviews"
 msgstr ""
+"クリエイティブ・コモンズ・ライセンスの音楽や書籍のレビューを収録した"
+"リポジトリ"
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
-msgstr ""
+msgstr "音楽カバーアートを自由に、かつ手軽に閲覧できるレポジトリ"
 
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
@@ -1105,6 +1280,14 @@ msgid ""
 "supporters</a>\n"
 "        who make use of our data sets."
 msgstr ""
+"MetaBrainz財団は、<a href=\"%(financial_reports_url)s\">財務の透明性</a>を重"
+"視しており、\n"
+"財団の目標達成のために、\n"
+"<a href=\"%(donations_url)s\">エンドユーザーからの寄付</a>や、資金を提供して"
+"くださる\n"
+"数多くの<a href=\"%(sponsors_url)s\">スポンサー</a>の支援を受けています。\n"
+"また、数社の<a href=\"%(supporters_url)s\">商業サポーター</a>の方々には\n"
+"当財団のデータセットを活用いただいています。"
 
 #: metabrainz/templates/index/index.html:133
 #, python-format
@@ -1115,6 +1298,10 @@ msgid ""
 "\n"
 "        <a href=\"%(account_type_url)s\">sign up</a>!"
 msgstr ""
+"残念ながら、以下に掲載されている企業の中には、当社が提供するデータを利用しな"
+"がら、見返りとして何も提供していないところもあります。\n"
+"<a href=\"%(bad_customers_url)s\">詳細はこちら</a>、\n"
+"または<a href=\"%(account_type_url)s\">登録</a>！"
 
 #: metabrainz/templates/index/index.html:156
 #, python-format
@@ -1122,6 +1309,8 @@ msgid ""
 "To get more information about the foundation, go to the\n"
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
+"この財団に関する詳細については、\n"
+"<a href=\"%(about_url)s\">about</a>のページをご覧ください。"
 
 #: metabrainz/templates/index/privacy.html:3
 msgid "Privacy"
@@ -1133,46 +1322,43 @@ msgstr ""
 
 #: metabrainz/templates/index/privacy.html:33
 msgid "Applicable to all supporters"
-msgstr ""
+msgstr "すべてのサポーターに適用されます"
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
-msgstr ""
+msgstr "クッキー"
 
 #: metabrainz/templates/index/privacy.html:54
-#, fuzzy
 msgid "Web and FTP access logs"
-msgstr "WebとFTPのアクセスログ(すべてのユーザー)"
+msgstr "WebとFTPのアクセスログ"
 
 #: metabrainz/templates/index/privacy.html:62
 msgid "Third-Party content"
-msgstr ""
+msgstr "第三者によるコンテンツ"
 
 #: metabrainz/templates/index/privacy.html:92
 msgid "Applicable to account holders"
-msgstr ""
+msgstr "アカウント保有者が対象となります"
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "アカウントタイプ"
+msgstr "アカウント作成"
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
-msgstr ""
+msgstr "編集と議論"
 
 #: metabrainz/templates/index/privacy.html:114
-#, fuzzy
 msgid "Subscriptions on MusicBrainz"
-msgstr "MusicBrainzでサインアップ"
+msgstr "MusicBrainzの購読"
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
-msgstr ""
+msgstr "サードパーティ・サイト"
 
 #: metabrainz/templates/index/privacy.html:145
 msgid "MetaBrainz donors"
-msgstr ""
+msgstr "MetaBrainzの寄付者"
 
 #: metabrainz/templates/index/privacy.html:147
 msgid ""
@@ -1183,6 +1369,11 @@ msgid ""
 "personal\n"
 "    information to anyone else, ever."
 msgstr ""
+"MetaBrainz財団への寄付が行われる際、\n"
+"当財団はIRS（米国国税庁）による監査を受けた場合に備え、\n"
+"法律に基づき、寄付者の個人情報を収集し、記録として保管する義務があります。\n"
+"当財団は、いかなる場合においても、寄付者の個人情報を第三者に開示することはあ"
+"りません。"
 
 #: metabrainz/templates/index/privacy.html:153
 msgid ""
@@ -1193,10 +1384,14 @@ msgid ""
 "    donation, unless you chose to be anonymous during the donation "
 "process."
 msgstr ""
+"私たちは財務の透明性を重視しており、当サイトでは寄せられたすべての寄付を掲載"
+"しています。\n"
+"寄付手続きの際に匿名を選択された場合を除き、\n"
+"掲載されるのはお名前と寄付金額のみとなります。"
 
 #: metabrainz/templates/index/privacy.html:158
 msgid "Exceptions"
-msgstr ""
+msgstr "例外"
 
 #: metabrainz/templates/index/profile-delete.html:3
 msgid "Delete Account"
@@ -1226,6 +1421,9 @@ msgid ""
 "source music encyclopedia that\n"
 "            collects music metadata and makes it available to the public."
 msgstr ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a> は、コミュニティ運営のオープンソース音"
+"楽百科事典であり、\n"
+"音楽メタデータの収集と、その一般公開を行っています。"
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
@@ -1238,6 +1436,9 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> は、"
+"オープンソースソフトウェア・アプリケーションであり、\n"
+"デジタルオーディオ録音の識別、タグ付け、整理を行うために用いられます。"
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
@@ -1251,6 +1452,10 @@ msgid ""
 "            releases in MusicBrainz. It is a joint project with the <a "
 "href=\"%(archive_org_url)s\">Internet Archive</a>."
 msgstr ""
+"<a href=\"%(caa_url)s\">Cover Art Archive</a> は、カバーアートのデータベース"
+"であり、\n"
+"MusicBrainzに登録されているリリースに対応しています。これは、<a href=\"%"
+"(archive_org_url)s\">Internet Archive</a> との共同プロジェクトです。"
 
 #: metabrainz/templates/index/projects.html:63
 msgid "CritiqueBrainz"
@@ -1264,6 +1469,10 @@ msgid ""
 "            providing a platform created for the sole purpose of Creative"
 " Commons licensed reviews."
 msgstr ""
+"<a href=\"%(cb_url)s\">CritiqueBrainz</a>は、音楽や書籍の批評家と生データとの"
+"間のギャップを埋めるためのプロジェクトであり、\n"
+"クリエイティブ・コモンズ・ライセンスに基づくレビューのみを目的として構築され"
+"たプラットフォームを提供しています。"
 
 #: metabrainz/templates/index/projects.html:78
 msgid "BookBrainz"
@@ -1277,6 +1486,10 @@ msgid ""
 "            literature. Its aim is to collect and store data about every "
 "publication ever written."
 msgstr ""
+"<a href=\"%(bb_url)s\">BookBrainz</a>は、出版済書籍に関する情報を収録した"
+"オンライン百科事典であり、\n"
+"特に文学作品がその対象となっています。当プロジェクトはこれまでに書かれたすべ"
+"ての出版物に関するデータを収集・保存することを目的としています。"
 
 #: metabrainz/templates/index/projects.html:93
 msgid "ListenBrainz"
@@ -1290,11 +1503,14 @@ msgid ""
 "            their listen history. One of the goals is for this data to be"
 " used for building open music recommendation systems."
 msgstr ""
+"<a href=\"%(lb_url)s\">ListenBrainz</a>は、ユーザーが自身の再生履歴を取り込め"
+"るオープンソースの音楽ウェブサイトです。\n"
+"その目的の一つは、このデータを活用してオープンな音楽推薦システムを構築するこ"
+"とです。"
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "プロジェクト"
+msgstr "完了プロジェクト"
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -1311,6 +1527,11 @@ msgid ""
 "href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
 "            in Barcelona."
 msgstr ""
+"<a href=\"%(ab_url)s\">AcousticBrainz</a>は、世界中のあらゆる音楽に関する"
+"アコースティック情報をクラウドソーシングで収集し、\n"
+"それらを一般に公開するプロジェクトです。\n"
+"バルセロナの<a href=\"%(upf_url)s\">ポンペウ・ファブラ大学</a>にある<a "
+"href=\"%(mtg_url)s\">Music Technology Group</a>との共同プロジェクトでした。"
 
 #: metabrainz/templates/index/projects.html:132
 msgid "MessyBrainz"
@@ -1325,12 +1546,16 @@ msgid ""
 "used for AcousticBrainz and is still being\n"
 "            used in ListenBrainz."
 msgstr ""
+"<a href=\"%(messybrainz_url)s\">MessyBrainz</a>は、不正確なメタデータを特定し"
+"、可能な場合は、\n"
+"それを安定したMusicBrainz識別子に紐付けます。MessyBrainzはAcousticBrainzで使"
+"用され、\n"
+"現在もListenBrainzで使用されています。"
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "MetaBrainz API"
+msgstr "MetaBrainzショップ"
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -1338,6 +1563,8 @@ msgid ""
 "    sponsors and partners for their support in helping MusicBrainz "
 "operate."
 msgstr ""
+"MetaBrainz財団は、MusicBrainzの運営を支えてくださった\n"
+"すべてのスポンサーおよびパートナーの皆様に、心より感謝申し上げます。"
 
 #: metabrainz/templates/index/sponsors.html:13
 msgid ""
@@ -1349,10 +1576,14 @@ msgid ""
 " the\n"
 "    success and growth of MusicBrainz."
 msgstr ""
+"以下の団体や個人は、資金を提供してくださった方々や、\n"
+"私たちの成長に役立ったツールや技術へのアクセスを提供し、\n"
+"支援してくださった方々です。いずれの場合も、\n"
+"彼らはMusicBrainzの成功と成長に重要な役割を果たしました。"
 
 #: metabrainz/templates/index/sponsors.html:18
 msgid "We would not exist without you — <b>Thank You!</b>"
-msgstr ""
+msgstr "皆様がいなければ、私たちはここまで来れませんでした — <b>ありがとう！</b>"
 
 #: metabrainz/templates/index/sponsors.html:26
 #, python-format
@@ -1361,6 +1592,9 @@ msgid ""
 "Bronze\n"
 "        account for hosting our sysadmin repositories."
 msgstr ""
+"<b><a href=\"%(github_url)s\">GitHub</a></b>は、無料のブロンズアカウントを提"
+"供してくださっており、\n"
+"システム管理用リポジトリのホストに使用しています。"
 
 #: metabrainz/templates/index/sponsors.html:34
 msgid "Special thanks"
@@ -1376,6 +1610,12 @@ msgid ""
 "a few individuals\n"
 "    and companies who have made a big difference for us."
 msgstr ""
+"これまで、私たちは多くの方々から、さまざまな形で支援をいただいてきました。\n"
+"カンファレンスへの参加機会の提供、旅費の負担、多額の個人寄付、そして数え切れ"
+"ないほどの食事の提供などです。\n"
+"その数は多すぎてすべてを挙げきれませんが、\n"
+"私たちにとって大きな支えとなってくださった個人や企業をいくつか紹介したいと思"
+"います。"
 
 #: metabrainz/templates/index/sponsors.html:42
 #, python-format
@@ -1401,12 +1641,33 @@ msgid ""
 "    hosting provider between 2006 and 2016 and gave us a discount because"
 " of our non-profit status."
 msgstr ""
+"<a href=\"%(google_url)s\">Google</a></b>は、非常に多大な支援をしてくれた"
+"スポンサーであり、\n"
+"長年にわたり<b>50万ドル</b>以上を寄付していただきました。\n"
+"<a href=\"%(last_fm_url)s\">Last.fm</a>で知られるリチャード・ジョーンズ氏は、"
+"2010年に<b>50,000ドル</b>を寄付し、\n"
+"<a href=\"%(oracle_url)s\">Sun Microsystems</a>およびポール・ラメール氏は"
+"データベースサーバーを寄贈し、\n"
+"<a href=\"%(oreilly_url)s\">O'Reilly Media</a>は、MetaBrainz財団が設立される"
+"前に、\n"
+"プロジェクトの銀行口座開設資金としてMusicBrainzに500ドルを提供しました。\n"
+"<a href=\"%(ed_url)s\">Ed Cavazos</a>は、MetaBrainzが時折直面する\n"
+"知的財産に関する質問に対して、定期的に無償の法的アドバイスを提供しています"
+"。\n"
+"<a href=\"%(dan_url)s\">Dan Appleman</a>は、データのライセンス契約書の作成に"
+"ついて\n"
+"定期的に支援を行っています。\n"
+"<a href=\"%(dw_url)s\">デジタル・ウェスト・ネットワークス社</a>は、2006年から"
+"2016年にかけて当プロジェクトの主要なホスティングプロバイダーであり、\n"
+"当プロジェクトが非営利団体であることから割引を提供してくれました。"
 
 #: metabrainz/templates/index/sponsors.html:61
 msgid ""
 "Thanks to everyone who has helped make the MetaBrainz Foundation what it "
 "is today!"
 msgstr ""
+"MetaBrainz財団が今日のような姿になるまで、ご協力いただいた皆様に心より感謝申"
+"し上げます！"
 
 #: metabrainz/templates/index/team.html:6
 msgid "The MetaBrainz Team"
@@ -1414,7 +1675,7 @@ msgstr "MetaBrainzチーム"
 
 #: metabrainz/templates/index/team.html:12
 msgid "<span class=\"name\">Robert Kaye</span> &mdash; Founder"
-msgstr ""
+msgstr "<span class=\"name\">Robert Kaye</span> &mdash; 創設者"
 
 #: metabrainz/templates/index/team.html:14
 #, python-format
@@ -1728,7 +1989,7 @@ msgstr ""
 
 #: metabrainz/templates/index/datasets/download.html:3
 msgid "Download Datasets"
-msgstr ""
+msgstr "データセットのダウンロード"
 
 #: metabrainz/templates/index/datasets/signup.html:3
 #, fuzzy
@@ -1743,16 +2004,16 @@ msgstr "新しいトークンを生成"
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
 msgid "Delete application %(name)s"
-msgstr ""
+msgstr "アプリケーション\"%(name)s\"を削除"
 
 #: metabrainz/templates/oauth/edit.html:3
 #, python-format
 msgid "Edit application %(name)s"
-msgstr ""
+msgstr "アプリケーション\"%(name)s\"を編集"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
-msgstr ""
+msgstr "OAuthエラー"
 
 #: metabrainz/templates/oauth/index.html:3
 msgid "Applications"
@@ -1765,11 +2026,11 @@ msgstr "OAuth 認証"
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
 msgid "Cancelling recurring payments"
-msgstr ""
+msgstr "定期支払いのキャンセル"
 
 #: metabrainz/templates/payments/cancel_recurring.html:9
 msgid "If you want to cancel a recurring donation (payment) that you have set up:"
-msgstr ""
+msgstr "設定済みの定期寄付（支払い）をキャンセルしたい場合は:"
 
 #: metabrainz/templates/payments/cancel_recurring.html:14
 #, python-format
@@ -2610,7 +2871,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:522
 #: metabrainz/templates/reports/financial_reports/index.html:544
 msgid "balance sheet"
-msgstr ""
+msgstr "貸借対照表"
 
 #: metabrainz/templates/reports/financial_reports/index.html:44
 #: metabrainz/templates/reports/financial_reports/index.html:64
@@ -2634,7 +2895,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:520
 #: metabrainz/templates/reports/financial_reports/index.html:542
 msgid "Year end reports"
-msgstr ""
+msgstr "年末レポート"
 
 #: metabrainz/templates/reports/financial_reports/index.html:242
 #: metabrainz/templates/reports/financial_reports/index.html:271
@@ -2647,7 +2908,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:474
 #: metabrainz/templates/reports/financial_reports/index.html:503
 msgid "Monthly reports"
-msgstr ""
+msgstr "月例レポート"
 
 #: metabrainz/templates/reports/financial_reports/index.html:244
 #: metabrainz/templates/reports/financial_reports/index.html:273
@@ -2833,15 +3094,14 @@ msgstr "1月"
 #: metabrainz/templates/reports/financial_reports/index.html:525
 #: metabrainz/templates/reports/financial_reports/index.html:547
 msgid "Monthly balance sheets"
-msgstr ""
+msgstr "月次貸借対照表"
 
 #: metabrainz/templates/supporters/account-type.html:3
 #: metabrainz/templates/supporters/account-type.html:6
 #: metabrainz/templates/supporters/signup-commercial.html:3
 #: metabrainz/templates/supporters/signup-non-commercial.html:3
-#, fuzzy
 msgid "Become a Supporter"
-msgstr "サポーター"
+msgstr "サポーターになるには"
 
 #: metabrainz/templates/supporters/account-type.html:3
 msgid "Support"
@@ -2871,7 +3131,7 @@ msgstr ""
 #: metabrainz/templates/supporters/account-type.html:90
 #: metabrainz/templates/supporters/account-type.html:141
 msgid "Upgrade"
-msgstr ""
+msgstr "アップグレード"
 
 #: metabrainz/templates/supporters/account-type.html:51
 #: metabrainz/templates/supporters/account-type.html:93
@@ -2975,19 +3235,19 @@ msgstr ""
 
 #: metabrainz/templates/users/lost-password.html:3
 msgid "Forgot password"
-msgstr ""
+msgstr "パスワードを忘れてしまいました"
 
 #: metabrainz/templates/users/lost-username.html:3
 msgid "Forgot username"
-msgstr ""
+msgstr "ユーザー名を忘れてしまいました"
 
 #: metabrainz/templates/users/reset-password.html:3
 msgid "Reset your password"
-msgstr ""
+msgstr "パスワードをリセット"
 
 #: metabrainz/user/forms.py:15
 msgid "Registration from this email domain is not allowed."
-msgstr ""
+msgstr "このメールアドレスのドメインからの登録は許可されていません。"
 
 #: metabrainz/user/forms.py:20 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
@@ -2998,45 +3258,44 @@ msgstr "名前"
 #: metabrainz/user/forms.py:21 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
 msgid "Username is required!"
-msgstr ""
+msgstr "ユーザー名が必要です！"
 
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:43
 #: metabrainz/user/forms.py:61
 msgid "Password is required!"
-msgstr ""
+msgstr "パスワードが必要です！"
 
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:65
 msgid "Confirm Password is required!"
-msgstr ""
+msgstr "「パスワードの確認」が必要です！"
 
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:67
 msgid "Confirm Password should match password!"
-msgstr ""
+msgstr "「パスワードの確認」とパスワード欄は一致している必要があります！"
 
 #: metabrainz/user/forms.py:43
 msgid "Password"
 msgstr ""
 
 #: metabrainz/user/forms.py:44
-#, fuzzy
 msgid "Remember me"
-msgstr "12月"
+msgstr ""
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
-msgstr ""
+msgstr "不正なユーザー名です。"
 
 #: metabrainz/user/username.py:183
 msgid "Username contains invalid or invisible characters."
-msgstr ""
+msgstr "ユーザー名に、不正または不可視な文字が使われています。"
 
 #: frontend/js/src/ApplicationRow.tsx:22
 msgid "Hide password"
-msgstr ""
+msgstr "パスワードを隠す"
 
 #: frontend/js/src/ApplicationRow.tsx:22
 msgid "Show password"
-msgstr ""
+msgstr "パスワードを表示"
 
 #: frontend/js/src/ApplicationRow.tsx:54
 msgid "Modify"
@@ -3049,11 +3308,11 @@ msgstr "日時"
 
 #: frontend/js/src/Applications.tsx:32
 msgid "Your applications"
-msgstr ""
+msgstr "あなたのアプリケーション"
 
 #: frontend/js/src/Applications.tsx:45
 msgid "No applications found"
-msgstr ""
+msgstr "該当アプリケーションは見つかりませんでした"
 
 #: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
 #, fuzzy
@@ -3062,11 +3321,11 @@ msgstr "ウェブサイトURL"
 
 #: frontend/js/src/Applications.tsx:53
 msgid "Client ID"
-msgstr ""
+msgstr "クライアントID"
 
 #: frontend/js/src/Applications.tsx:54
 msgid "Client secret"
-msgstr ""
+msgstr "クライアントシークレット"
 
 #: frontend/js/src/Applications.tsx:55 frontend/js/src/Applications.tsx:82
 #, fuzzy
@@ -3080,7 +3339,7 @@ msgstr "OAuth 認証"
 
 #: frontend/js/src/Applications.tsx:73
 msgid "No tokens found"
-msgstr ""
+msgstr "該当トークンは見つかりませんでした"
 
 #: frontend/js/src/Applications.tsx:81
 #, fuzzy
