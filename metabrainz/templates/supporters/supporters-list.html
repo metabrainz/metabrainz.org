@@ -3,7 +3,10 @@
 {% block title %}{{ _('Supporters') }} - MetaBrainz Foundation{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">{{ _('Supporters') }}</h1>
+  <h1 class="page-title">
+    {{ _('Supporters') }}
+    <a class="btn btn-success" href="{{ url_for('supporters.account_type') }}">{{ _('Become a Supporter') }}</a>
+  </h1>
 
   <p>
     {{ _('The following organizations make use of the data-sets published by MetaBrainz and
