@@ -14,7 +14,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
 "PO-Revision-Date: 2026-07-06 17:58+0000\n"
-"Last-Translator: zatto13 <zatto0524@gmail.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Japanese <https://translations.metabrainz.org/projects/"
 "metabrainz/website/ja/>\n"
 "Language: ja\n"
@@ -86,7 +87,7 @@ msgstr "アプリケーション名は、最大64文字までです。"
 
 #: metabrainz/oauth/forms.py:63
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
@@ -134,7 +135,7 @@ msgstr "認証コールバックURLには、http または https を使用する
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "確認"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -363,7 +364,7 @@ msgstr "チーム"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr ""
+msgstr "ショップ"
 
 #: metabrainz/templates/base.html:53
 msgid "Policies"
@@ -374,14 +375,14 @@ msgstr "ポリシー"
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
 msgid "Social Contract"
-msgstr ""
+msgstr "社会契約"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
 #: metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
-msgstr ""
+msgstr "行動規範"
 
 #: metabrainz/templates/base.html:57 metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
@@ -446,7 +447,7 @@ msgstr "ブログ"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "チャット"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
@@ -456,12 +457,12 @@ msgstr "Twitter/X"
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
 msgid "Mastodon"
-msgstr ""
+msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
 msgid "Bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: metabrainz/templates/base.html:90
 #: metabrainz/templates/index/contact.html:109
@@ -475,7 +476,7 @@ msgstr "<a href=\"%(github_url)s\">GitHub</a>の提供"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
-msgstr ""
+msgstr "ナビゲーションを切り替える"
 
 #: metabrainz/templates/navbar.html:21
 msgid "About "
@@ -497,7 +498,7 @@ msgstr "議論解決方針"
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
-msgstr ""
+msgstr "GDPRコンプライアンス"
 
 #: metabrainz/templates/navbar.html:45
 msgid "Reports "
@@ -513,7 +514,7 @@ msgstr "寄付"
 
 #: metabrainz/templates/navbar.html:59
 msgid "Register"
-msgstr ""
+msgstr "登録"
 
 #: metabrainz/templates/navbar.html:67
 msgid "Your profile"
@@ -525,7 +526,7 @@ msgstr "OAuthアプリケーション"
 
 #: metabrainz/templates/navbar.html:74 metabrainz/templates/navbar.html:76
 msgid "Language"
-msgstr ""
+msgstr "言語"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
@@ -1318,7 +1319,7 @@ msgstr "プライバシー"
 
 #: metabrainz/templates/index/privacy.html:8
 msgid "Summary"
-msgstr ""
+msgstr "概要"
 
 #: metabrainz/templates/index/privacy.html:33
 msgid "Applicable to all supporters"
@@ -1395,7 +1396,7 @@ msgstr "例外"
 
 #: metabrainz/templates/index/profile-delete.html:3
 msgid "Delete Account"
-msgstr ""
+msgstr "アカウント削除"
 
 #: metabrainz/templates/index/profile-edit.html:3
 msgid "Edit"
@@ -2017,7 +2018,7 @@ msgstr "OAuthエラー"
 
 #: metabrainz/templates/oauth/index.html:3
 msgid "Applications"
-msgstr ""
+msgstr "アプリケーション"
 
 #: metabrainz/templates/oauth/prompt.html:3
 msgid "OAuth Authorization"
@@ -3251,9 +3252,8 @@ msgstr "このメールアドレスのドメインからの登録は許可され
 
 #: metabrainz/user/forms.py:20 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
-#, fuzzy
 msgid "Username"
-msgstr "名前"
+msgstr "ユーザー名"
 
 #: metabrainz/user/forms.py:21 metabrainz/user/forms.py:42
 #: metabrainz/user/forms.py:54
@@ -3275,7 +3275,7 @@ msgstr "「パスワードの確認」とパスワード欄は一致している
 
 #: metabrainz/user/forms.py:43
 msgid "Password"
-msgstr ""
+msgstr "パスワード"
 
 #: metabrainz/user/forms.py:44
 msgid "Remember me"
@@ -3315,9 +3315,8 @@ msgid "No applications found"
 msgstr "該当アプリケーションは見つかりませんでした"
 
 #: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
-#, fuzzy
 msgid "Website"
-msgstr "ウェブサイトURL"
+msgstr "ウェブサイト"
 
 #: frontend/js/src/Applications.tsx:53
 msgid "Client ID"
@@ -3328,23 +3327,20 @@ msgid "Client secret"
 msgstr "クライアントシークレット"
 
 #: frontend/js/src/Applications.tsx:55 frontend/js/src/Applications.tsx:82
-#, fuzzy
 msgid "Actions"
-msgstr "寄付者"
+msgstr "アクション"
 
 #: frontend/js/src/Applications.tsx:70
-#, fuzzy
 msgid "Authorized applications"
-msgstr "OAuth 認証"
+msgstr "許可されたアプリケーション"
 
 #: frontend/js/src/Applications.tsx:73
 msgid "No tokens found"
 msgstr "該当トークンは見つかりませんでした"
 
 #: frontend/js/src/Applications.tsx:81
-#, fuzzy
 msgid "Access"
-msgstr "アクセス許可"
+msgstr "アクセス"
 
 #: frontend/js/src/Applications.tsx:104
 #, fuzzy
