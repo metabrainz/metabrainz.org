@@ -39,8 +39,14 @@
           </ul>
         </li>
 
-        <li><a href="{{ url_for('supporters.supporters_list') }}">{{ _('Supporters') }}</a></li>
-        <li><a href="{{ url_for('index.sponsors') }}">{{ _('Sponsors') }}</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Supporters') }}<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="support-link"><a href="{{ url_for('supporters.account_type') }}">{{ _('Supporter Sign Up') }}</a></li>
+            <li><a href="{{ url_for('supporters.supporters_list') }}">{{ _('Our Supporters') }}</a></li>
+            <li><a href="{{ url_for('index.sponsors') }}">{{ _('Our Sponsors') }}</a></li>
+          </ul>
+        </li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Reports ') }}<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -56,7 +62,7 @@
       {% if not error %}
         <ul class="nav navbar-nav navbar-right">
           {% if not current_user or current_user.is_anonymous %}
-            <li class="support-link"><a href="{{ url_for('supporters.account_type') }}">{{ _('Register') }}</a></li>
+            <li class="support-link"><a href="{{ url_for('users.signup') }}">{{ _('Sign up') }}</a></li>
             <li><a href="{{ url_for('users.login') }}">{{ _('Sign in') }}</a></li>
           {% else %}
             <li class="dropdown">
