@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-07-06 17:58+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2026-07-07 18:12+0000\n"
+"Last-Translator: zatto13 <zatto0524@gmail.com>\n"
 "Language-Team: Japanese <https://translations.metabrainz.org/projects/"
 "metabrainz/website/ja/>\n"
 "Language: ja\n"
@@ -538,7 +538,7 @@ msgid ""
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
 "すべてのエンドポイントにはアクセストークンが必要ですが、これは\n"
-"    <a href=\"%(profile_url)s\">プロフィールページ</a>から取得できます。"
+"<a href=\"%(profile_url)s\">プロフィールページ</a>から取得できます。"
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
@@ -635,12 +635,14 @@ msgid ""
 "        collaborating together to build and maintain the MetaBrainz "
 "comprehensive datasets."
 msgstr ""
-"MetaBrainz財団は、音楽および芸術のメタデータに関するオープンな百科事典を作成"
-"・維持しているグローバルなコミュニティです。当初は音楽コレクター向けの"
-"リソースとして始まりましたが、現在はボランティア、アーティスト、業界の"
-"リーダーたちとの連携を築いています。設立以来、当財団は<a href=\"%"
-"(editors_url)s\">数十万人の編集者</a>からなるグローバルなコミュニティへと成長"
-"し、MetaBrainzの包括的なデータセットの構築と維持に協力し合っています。"
+"MetaBrainz財団は、音楽および芸術のメタデータに関する\n"
+"オープンな百科事典を作成・維持しているグローバルなコミュニティです。\n"
+"当初は音楽コレクター向けのリソースとして始まりましたが、\n"
+"現在はボランティア、アーティスト、業界のリーダーたちとの連携を築いています"
+"。\n"
+"設立以来、当財団は<a href=\"%(editors_url)s\">数十万人の編集者</a>からなる\n"
+"グローバルなコミュニティへと成長し、MetaBrainzの包括的なデータセットの構築と"
+"維持に協力し合っています。"
 
 #: metabrainz/templates/index/about.html:22
 #, python-format
@@ -764,7 +766,7 @@ msgstr ""
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
-msgstr ""
+msgstr "MetaBrainz財団暫定事務局長<a href=\"%(reo_url)s\">Nicolás Tamargo</a>"
 
 #: metabrainz/templates/index/about.html:57
 #, python-format
@@ -772,6 +774,8 @@ msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
 msgstr ""
+"<a href=\"%(leeds_url)s\">Leeds Angels</a>理事<a href=\"%(hazel_url)s\">"
+"Hazel Savage</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
@@ -1301,7 +1305,7 @@ msgstr ""
 "残念ながら、以下に掲載されている企業の中には、当社が提供するデータを利用しな"
 "がら、見返りとして何も提供していないところもあります。\n"
 "<a href=\"%(bad_customers_url)s\">詳細はこちら</a>、\n"
-"または<a href=\"%(account_type_url)s\">登録</a>！"
+"または<a href=\"%(account_type_url)s\">登録</a>を！"
 
 #: metabrainz/templates/index/index.html:156
 #, python-format
@@ -1310,7 +1314,7 @@ msgid ""
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
 "この財団に関する詳細については、\n"
-"<a href=\"%(about_url)s\">about</a>のページをご覧ください。"
+"<a href=\"%(about_url)s\">概要</a>ページをご覧ください。"
 
 #: metabrainz/templates/index/privacy.html:3
 msgid "Privacy"
@@ -1530,8 +1534,9 @@ msgstr ""
 "<a href=\"%(ab_url)s\">AcousticBrainz</a>は、世界中のあらゆる音楽に関する"
 "アコースティック情報をクラウドソーシングで収集し、\n"
 "それらを一般に公開するプロジェクトです。\n"
-"バルセロナの<a href=\"%(upf_url)s\">ポンペウ・ファブラ大学</a>にある<a "
-"href=\"%(mtg_url)s\">Music Technology Group</a>との共同プロジェクトでした。"
+"バルセロナの<a href=\"%(upf_url)s\">ポンペウ・ファブラ大学</a>にある\n"
+"<a href=\"%(mtg_url)s\">Music Technology Group</a>との共同プロジェクトでした"
+"。"
 
 #: metabrainz/templates/index/projects.html:132
 msgid "MessyBrainz"
@@ -1690,6 +1695,15 @@ msgid ""
 "working on MusicBrainz, the open music encyclopedia,\n"
 "          and fell in love with Open Source software."
 msgstr ""
+"ロバートは、<a href=\"%(mb_url)s\">MusicBrainz</a>および、MusicBrainzの保護と"
+"支援を目的として設立された非営利団体「MetaBrainz財団」の創設者であり、中心的"
+"な技術担当者でした。\n"
+"カリフォルニア州立ポリテクニック大学サンルイスオビスポ校でコンピュータ工学を"
+"学んだ後、Xing Technologyに入社し、MP3関連の取り組みを主導しました。\n"
+"その後、ドットコム・ブームの最中にEMusicのFreeAmpチームで活動しました。\n"
+"EMusic在籍中に、オープンな音楽百科事典であるMusicBrainzの開発に取り組み始め"
+"、\n"
+"オープンソースソフトウェアの魅力に惹きつけられました。"
 
 #: metabrainz/templates/index/team.html:21
 #, python-format
@@ -1699,16 +1713,22 @@ msgid ""
 "          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created "
 "Bartendro the open source cocktail robot."
 msgstr ""
+"ロバートは精力的なハードウェアハッカーであり、バーニングマンやノーウェア向け"
+"のアートプロジェクトを手掛けていました。\n"
+"彼は<a href=\"%(pr_url)s\">Party Robotics</a>の共同創設者であり、そこで"
+"オープンソースのカクテルロボット「Bartendro」を共同開発しました。"
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives on in our hearts and in open source."
-msgstr ""
+msgstr "彼は私たちの心の中、そしてオープンソースの中で、今も生き続けています。"
 
 #: metabrainz/templates/index/team.html:39
 msgid ""
 "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Software "
 "Engineer"
 msgstr ""
+"<span class=\"name\">Michael Wiencek</span> &mdash; "
+"シニアソフトウェアエンジニア"
 
 #: metabrainz/templates/index/team.html:41
 msgid ""
@@ -1721,12 +1741,21 @@ msgid ""
 "          ever hear, binge-watching old TV shows, and being the best "
 "drummer in the world on Rock Band 4."
 msgstr ""
+"マイケルはMusicBrainzのシニア開発者で、故郷のシカゴに住んでいます。彼はまだ小"
+"学校の頃にMusicBrainzの存在を知り、\n"
+"高校時代に音楽コレクションが膨大になり始めたのをきっかけに編集を始め、\n"
+"大学時代には3つのGSoCプロジェクトに参加しました。豊富な自由時間には、"
+"コンサートに行ったり、誰にも聴かれることのない音楽を作ったり、\n"
+"昔のテレビ番組を一気見したり、『Rock Band 4』で世界一のドラマーになったりして"
+"楽しんでいます。"
 
 #: metabrainz/templates/index/team.html:57
 msgid ""
 "<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer"
 " Support/Community Manager/Software Engineer"
 msgstr ""
+"<span class=\"name\">Nicolás Tamargo</span> &mdash; スタイルリーダー/"
+"カスタマーサポート/コミュニティマネージャー/ソフトウェアエンジニア"
 
 #: metabrainz/templates/index/team.html:59
 #, python-format
@@ -1745,14 +1774,25 @@ msgid ""
 "href=\"%(mb_editors_url)s\">editing MusicBrainz</a>\n"
 "          or traveling around trying to watch some wildlife."
 msgstr ""
+"ニコラスは、データを整理することがただ単に大好きだったため、\n"
+"ハードコアなエディターとして活動を始めました（現在も副業として続けている）。"
+"やがてスタイルリーダーの役職に任命され、\n"
+"コミュニティがデータをどのように整理すべきかを決定する手助けをしている。\n"
+"その後、彼はサポートに関するあらゆる問い合わせへの対応を担当するようになり"
+"、\n"
+"最終的にはそれらの問題を解決するために実際にコードを書き始めました（正直なと"
+"ころ、時には新たな問題を引き起こすこともありました！）。\n"
+"MetaBrainzでの業務に忙しくない時は、<a href=\"%(mb_editors_url)s\">"
+"MusicBrainz</a>の編集に没頭したり、\n"
+"野生動物を観察するために各地を旅したりして過ごしています。"
 
 #: metabrainz/templates/index/team.html:68
 msgid "Originally from Spain, he now lives in Tartu, Estonia."
-msgstr ""
+msgstr "スペイン出身で、現在はエストニアのタルトゥに住んでいる。"
 
 #: metabrainz/templates/index/team.html:81
 msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
-msgstr ""
+msgstr "<span class=\"name\">Laurent Monin</span> &mdash; システム管理者"
 
 #: metabrainz/templates/index/team.html:83
 msgid ""
@@ -1763,6 +1803,11 @@ msgid ""
 "          more than 1 bit since 1982 and has been an esteemed Linux "
 "system administrator since 1998."
 msgstr ""
+"熱心な音楽愛好家であるローラン・モニンは、1500枚を超える膨大なCDコレクション"
+"を体系化しようとした際、MusicBrainzとPicardを偶然発見しました。\n"
+"音楽マニアであるだけでなく、ローランは1982年から1ビット以上の処理能力を持つあ"
+"らゆる機器でプログラミングを行っており、\n"
+"1998年からは高く評価されているLinuxシステム管理者としても活躍しています。"
 
 #: metabrainz/templates/index/team.html:88
 #, python-format
@@ -1777,10 +1822,18 @@ msgid ""
 "          sustains the MetaBrainz servers while residing near Besançon, "
 "France."
 msgstr ""
+"幅広いスキルと情熱を武器に、ローランは数多くのオープンソースプロジェクト、\n"
+"特に<a href=\"%(elinks_url)s\">ELinks</a>や<a href=\"%(geeqie_url)s\">"
+"Geeqie</a>に積極的に貢献しており、\n"
+"アンプやスピーカーなど、さまざまなオーディオ機器のハードウェアをいじくり回す"
+"ことも大好きです。\n"
+"しかし、ローランの貢献はそれだけにとどまりません。\n"
+"彼は現在、フランスのブザンソン近郊に在住しながら、MetaBrainzのサーバーの維持"
+"管理を行っています。"
 
 #: metabrainz/templates/index/team.html:105
 msgid "<span class=\"name\">Yvan Rivierre</span> &mdash; Software Engineer"
-msgstr ""
+msgstr "<span class=\"name\">Yvan Rivierre</span> &mdash; ソフトウェアエンジニア"
 
 #: metabrainz/templates/index/team.html:107
 msgid ""
@@ -1791,12 +1844,20 @@ msgid ""
 "          in the end. Besides that, he casually plays music, listens to "
 "music, eats music, … music, for an healthy way of life."
 msgstr ""
+"イヴァンはMusicBrainzのソフトウェアエンジニアで、フランスのナンシー出身です。"
+"当初は単なるユーザーとしてMusicBrainzを知り、\n"
+"その後編集を始め、不具合を報告し、他の人から報告された不具合を修正するように"
+"なり、最終的には採用されました。\n"
+"そのほか、健康的な生活を送るために、気ままに音楽を演奏したり、聴いたり、音楽"
+"を「食べたり」……とにかく音楽を楽しんでいます。"
 
 #: metabrainz/templates/index/team.html:120
 msgid ""
 "<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  "
 "Software Engineer & Graphic Designer"
 msgstr ""
+"<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainzリーダー, "
+"ソフトウェアエンジニア&グラフィックデザイナー"
 
 #: metabrainz/templates/index/team.html:122
 msgid ""
@@ -1807,18 +1868,28 @@ msgid ""
 "          and books, and enjoyed working on MetaBrainz projects so much "
 "he eventually joined the team."
 msgstr ""
+"ニコラスはグラフィックデザインのバックグラウンドを持っていますが、心の底では"
+"常にコンピュータや電子機器をいじることが好きでした。\n"
+"彼は好奇心に駆られて開発の世界へと足を踏み入れ、それ以来、二度と元の世界に戻"
+"ることはありませんでした。\n"
+"彼は昔から音楽や本に情熱を注いでおり、MetaBrainzのプロジェクトに携わることを"
+"とても楽しんだため、やがてチームに加わることになりました。"
 
 #: metabrainz/templates/index/team.html:127
 msgid ""
 "In his free time, Nicolas likes to go rock climbing, hence the nickname, "
 "and designing and building structures."
 msgstr ""
+"ニコラスは余暇に、ニックネームの由来にもなったロッククライミングを楽しんだり"
+"、構造物の設計・製作に勤しんでいる。"
 
 #: metabrainz/templates/index/team.html:130
 msgid ""
 "Born in Canada and raised in France, Nicolas now lives in Barcelona, "
 "Spain."
 msgstr ""
+"カナダで生まれ、フランスで育ったニコラスは、現在スペインのバルセロナに住んで"
+"いる。"
 
 #: metabrainz/templates/index/team.html:146
 msgid ""
@@ -1826,6 +1897,8 @@ msgid ""
 "ListenBrainz/CritiqueBrainz/Android App Lead &amp; Junior Software "
 "Engineer"
 msgstr ""
+"<span class=\"name\">Kartik Ohri</span> &mdash; ListenBrainz/CritiqueBrainz/"
+"Androidアプリ リード&ジュニアソフトウェアエンジニア"
 
 #: metabrainz/templates/index/team.html:148
 msgid ""
@@ -1836,10 +1909,16 @@ msgid ""
 "          CritiqueBrainz projects. He also spends a lot of time on the "
 "AcousticBrainz and ListenBrainz projects."
 msgstr ""
+"カルティクはGoogle Code-In 2018の際にMetaBrainzコミュニティに参加し、それ以来"
+"、その道を突き進んできました。\n"
+"現在はMetaBrainzの契約社員として、MusicBrainz Androidアプリおよび"
+"CritiqueBrainzプロジェクトの開発を主導しています。\n"
+"また、AcousticBrainzやListenBrainzプロジェクトにも多くの時間を費やしています"
+"。"
 
 #: metabrainz/templates/index/team.html:166
 msgid "<span class=\"name\">Adam James</span> &mdash; System Administrator"
-msgstr ""
+msgstr "<span class=\"name\">Adam James</span> &mdash; システム管理者"
 
 #: metabrainz/templates/index/team.html:168
 msgid ""
@@ -1852,10 +1931,18 @@ msgid ""
 "href=\"https://www.transitiv.co.uk\">Transitiv Technologies</a>,\n"
 "\t  where he is a consultant and technical director."
 msgstr ""
+"アダムは、Linuxおよびオープンソースソフトウェアの分野で15年以上の経験を持つ"
+"システム管理者であり、時折開発も行っています。\n"
+"大の音楽愛好家である彼は、自身のデジタル音楽コレクションを整理する過程で"
+"MusicBrainzの編集者として積極的に活動するようになり、\n"
+"それがきっかけでMetaBrainzコミュニティへの関与へとつながりました。\n"
+"アダムは、コンサルタント兼テクニカルディレクターを務める\n"
+"<a href=\"https://www.transitiv.co.uk\">Transitiv Technologies</a>から、無償"
+"で時間を提供されています。"
 
 #: metabrainz/templates/index/team.html:189
 msgid "<span class=\"name\">Julian Anderson</span> &mdash; System Administrator"
-msgstr ""
+msgstr "<span class=\"name\">Julian Anderson</span> &mdash; システム管理者"
 
 #: metabrainz/templates/index/team.html:191
 msgid ""
@@ -1874,12 +1961,27 @@ msgid ""
 "\t  variety of music (& contributing to MusicBrainz accordingly), taking "
 "in natural scenery, reading, and traveling."
 msgstr ""
+"ジュリアンは、ターミナルを手にしたその瞬間からその魅力に惹かれ、\n"
+"高校時代には、その仕組みを理解しようと、仮想マシンの構築、分解、再構築を繰り"
+"返していました。\n"
+"その後10年間にわたり、彼はスキルを磨き、やがてIT業界でのキャリアをスタートさ"
+"せ、組織がデジタルインフラを最大限に活用できるよう支援することに注力しました"
+"。\n"
+"その過程で、彼は膨大な音楽ライブラリを築き上げると同時に、\n"
+"そのライブラリを管理する必要性も高まっていき、この必要性が彼をMetaBrainz"
+"コミュニティへと導いたのです。\n"
+"\n"
+"MetaBrainzチームのシステム管理業務を支援するほか、\n"
+"ジュリアンは多種多様な音楽を聴くこと（そしてそれに応じてMusicBrainzへの貢献）"
+"、自然の風景を楽しむこと、読書、そして旅行を好んでいます。"
 
 #: metabrainz/templates/index/team.html:215
 msgid ""
 "<span class=\"name\">Simon Hartman</span> &mdash; Design, UX Consultant &"
 " Social Media Jockey"
 msgstr ""
+"<span class=\"name\">Simon Hartman</span> &mdash; デザイン・UXコンサルタント "
+"& ソーシャルメディア担当者"
 
 #: metabrainz/templates/index/team.html:217
 msgid ""
@@ -1890,10 +1992,16 @@ msgid ""
 "          and has 15 years experience across various graphic "
 "design/comms/marketing roles."
 msgstr ""
+"サイモンは2009年から、MusicBrainzに対してデータやUX・デザインに関する指摘を提"
+"供してきました。\n"
+"2022年には、公式な立場からUXやデザインについて指摘を行うようになりました。彼"
+"はニュージーランド在住で、\n"
+"グラフィックデザイン、コミュニケーション、マーケティングなどの分野で15年の実"
+"務経験を持っています。"
 
 #: metabrainz/templates/index/team.html:236
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
-msgstr ""
+msgstr "<span class=\"name\">Ansh Goyal</span> &mdash; ジュニアソフトウェアエンジニア"
 
 #: metabrainz/templates/index/team.html:238
 msgid ""
@@ -1905,14 +2013,22 @@ msgid ""
 "          In his leisure moments, Ansh enjoys binge-watching movies and "
 "listening to music."
 msgstr ""
+"アンシュはソフトウェアエンジニアで、インドのニューデリーを拠点としています。"
+"2022年にGoogle Summer of Codeの学生としてMetaBrainzに参加して以来、"
+"コミュニティの一員として活動しています。\n"
+"当初はCritiqueBrainzやBookBrainzへの貢献から始め、現在はListenBrainzの"
+"プロジェクトにも取り組んでいます。\n"
+"余暇には、映画を一気見したり、音楽を聴いたりして楽しんでいます。"
 
 #: metabrainz/templates/index/team.html:250
 msgid "Voluntary Project Leaders"
-msgstr ""
+msgstr "ボランティア・プロジェクトリーダー"
 
 #: metabrainz/templates/index/team.html:259
 msgid "<span class=\"name\">Akshat Tiwari</span> &mdash; Junior Software Engineer"
 msgstr ""
+"<span class=\"name\">Akshat Tiwari</span> &mdash; "
+"ジュニアソフトウェアエンジニア"
 
 #: metabrainz/templates/index/team.html:261
 msgid ""
@@ -1928,12 +2044,23 @@ msgid ""
 "          Akshat has always been fascinated by the creativity of people. "
 "He resides in New Delhi, India."
 msgstr ""
+"アクシャットは、このプロジェクトへの愛情からMusicBrainzのAndroidアプリへの貢"
+"献を始め、\n"
+"MetaBrainzが運営するさまざまなプロジェクトについて熟考した末、MusicBrainz"
+"プロジェクトに注力することを決めました。\n"
+"彼はGoogle Summer of Codeの学生として採用され、現在はMetaBrainzの契約社員とし"
+"て、\n"
+"MusicBrainzのユーザーインターフェースとユーザーエクスペリエンスの改善に取り組"
+"んでいます。\n"
+"\n"
+"アクシャットは、人々の創造性に常に魅了されてきました。彼はインドの"
+"ニューデリーに在住しています。"
 
 #: metabrainz/templates/index/team.html:278
 msgid ""
 "<span class=\"name\">Param Singh</span> &mdash; Former ListenBrainz team "
 "leader"
-msgstr ""
+msgstr "<span class=\"name\">Param Singh</span> &mdash; 元ListenBrainzチームリーダー"
 
 #: metabrainz/templates/index/team.html:280
 msgid ""
@@ -1946,12 +2073,22 @@ msgid ""
 "          When not staring at a screen, Param plays some chess and tries "
 "to listen to new music."
 msgstr ""
+"パラムはソフトウェアエンジニアであり、ListenBrainzプロジェクトの元リーダーで"
+"す。\n"
+"パラムは2017年にGoogle Summer of Codeの学生としてMetaBrainzに参加し、それ以来"
+"MetaBrainzの一員として活動しています。\n"
+"パラムはプログラミングも音楽も大いに愛しているため、MetaBrainzは彼にとって一"
+"目惚れのような存在でした。\n"
+"画面を見つめていないときは、チェスを楽しんだり、新しい音楽を聴いたりしていま"
+"す。"
 
 #: metabrainz/templates/index/team.html:301
 msgid ""
 "<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
 "MusicBrainz Areas"
 msgstr ""
+"<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
+"MusicBrainz\"地域\"担当"
 
 #: metabrainz/templates/index/team.html:303
 #, python-format
@@ -1968,10 +2105,19 @@ msgid ""
 "href=\"%(gnt_url)s\">GnT's</a>,\n"
 "          as well as cheering for the Toronto Raptors."
 msgstr ""
+"デビッドは、コミュニティからの要望に応じて、MusicBrainzに新しいカテゴリを追加"
+"する業務を担当していました。\n"
+"彼は10年以上にわたりMusicBrainzで活躍し、編集回数が100万回を突破した数少ない"
+"エディターの一人でした。\n"
+"カナダ人としての誇りを持ち、MusicBrainz以外の時間には、\n"
+"<a href=\"%(thc_url)s\">THC</a>, <a href=\"%(tfc_url)s\">TFC</a>,\n"
+"<a href=\"%(cts_url)s\">CTS</a> & <a href=\"%(gnt_url)s\">GnT's</a>といったお"
+"気に入りのものを楽しみ、\n"
+"トロント・ラプターズを応援することも好んでいました。"
 
 #: metabrainz/templates/index/team.html:328
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
-msgstr ""
+msgstr "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz\"楽器\"担当"
 
 #: metabrainz/templates/index/team.html:330
 msgid ""
@@ -1986,20 +2132,28 @@ msgid ""
 "          III, colouring, and collecting all sorts of things, from "
 "stickers and stamps to bottlecaps."
 msgstr ""
+"ApeKattQuest（別名MonkeyPython）は2004年からMusicBrainzのエディターを務めてお"
+"り、\n"
+"MusicBrainzにおける楽器情報の追加や改善を担当しています（その役職名は「"
+"Instrument Inserter」と、あまり真面目ではない響きですが、実は非常に重要な役割"
+"です）。\n"
+"インターネット（そして図書館！）の隅々まで楽器データを検索し、\n"
+"仕事外ではゲームをしたり、様々なジャンルの音楽を聴いたり、『ルパン三世』を観"
+"たり、塗り絵をしたり、\n"
+"ステッカーや切手から瓶のキャップに至るまで、ありとあらゆるものを収集したりす"
+"るのが趣味です。"
 
 #: metabrainz/templates/index/datasets/download.html:3
 msgid "Download Datasets"
 msgstr "データセットのダウンロード"
 
 #: metabrainz/templates/index/datasets/signup.html:3
-#, fuzzy
 msgid "Please sign up"
-msgstr "サインアップ"
+msgstr "サインアップしてください"
 
 #: frontend/js/src/Applications.tsx:38 metabrainz/templates/oauth/create.html:3
-#, fuzzy
 msgid "Create new application"
-msgstr "新しいトークンを生成"
+msgstr "新しいアプリケーションを生成"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -2040,6 +2194,9 @@ msgid ""
 "name\n"
 "      on the card used to set up the payment."
 msgstr ""
+"Stripeをご利用の場合、寄付は手動でキャンセルさせていただきます。\n"
+"お支払い設定に使用したカードの名義を明記の上、\n"
+"<a href=\"%(contact_url)s\">こちら</a>までご連絡ください。"
 
 #: metabrainz/templates/payments/cancel_recurring.html:20
 #, python-format
@@ -2047,11 +2204,13 @@ msgid ""
 "For PayPal, you will need to cancel from their site.\n"
 "      See <a href=\"%(paypal_cancel_url)s\">their documentation</a>."
 msgstr ""
+"PayPalの場合は、PayPalのサイトからキャンセルを行う必要があります。\n"
+"<a href=\"%(paypal_cancel_url)s\">PayPalのドキュメント</a>をご参照ください。"
 
 #: metabrainz/templates/payments/donate.html:3
 #: metabrainz/templates/payments/donate.html:7
 msgid "Make a Donation"
-msgstr ""
+msgstr "寄付を行う"
 
 #: metabrainz/templates/payments/donate.html:10
 #, python-format
@@ -2066,6 +2225,12 @@ msgid ""
 "donation off your taxes if you are a\n"
 "      US taxpayer."
 msgstr ""
+"私たちのプロジェクトが価値ある取り組みであるとお考えでしたら、\n"
+"カリフォルニア州に拠点を置く、<a href=\"%(wikipedia_non_profit_url)s\"> 501"
+"(c)(3) 免税非営利団体</a>である\n"
+"MetaBrainz Foundationへの寄付をご検討ください。\n"
+"ご寄付の全額は税額控除の対象となり、米国納税者の方には、\n"
+"税額控除に利用できる領収書をお送りいたします。"
 
 #: metabrainz/templates/payments/donate.html:18
 msgid ""
@@ -2075,6 +2240,11 @@ msgid ""
 "office, and paying a minimal\n"
 "      salary for MetaBrainz employees."
 msgstr ""
+"皆様からの寄付金は、MetaBrainz財団のプロジェクト運営に充てられます。これには"
+"、\n"
+"継続的な経費が含まれ、ホスティングやハードウェア費用、小規模なオフィスの維持"
+"費、\n"
+"およびMetaBrainzの従業員への最低限の給与の支払いが該当します。"
 
 #: metabrainz/templates/payments/donate.html:23
 #, python-format
@@ -2082,6 +2252,8 @@ msgid ""
 "Where has my contribution gone? See our <a "
 "href=\"%(finance_reports_url)s\">transparent finances</a>."
 msgstr ""
+"私の寄付金はどこへ行ったのでしょうか？当財団の<a href=\"%"
+"(finance_reports_url)s\">透明性の高い財務状況</a>をご覧ください。"
 
 #: metabrainz/templates/payments/donate.html:24
 #, python-format
@@ -2089,6 +2261,8 @@ msgid ""
 "Who else is contributing? See our list of <a "
 "href=\"%(donors_url)s\">donors</a>."
 msgstr ""
+"他に誰が寄付していますか？<a href=\"%(donors_url)s\">寄付者一覧</a>をご覧くだ"
+"さい。"
 
 #: metabrainz/templates/payments/donate.html:28
 #, python-format
@@ -2098,11 +2272,15 @@ msgid ""
 "actual\n"
 "        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
+"<b>ご注意ください！</b> こちらはウェブサイトの開発版です。\n"
+"実際のクレジットカード情報を入力しないでください！実際に寄付を行いたい場合は"
+"、\n"
+"<a href=\"%(mb_url)s\">metabrainz.org</a>にアクセスしてください。"
 
 #: metabrainz/templates/payments/donate.html:39
 #: metabrainz/templates/payments/payment.html:31
 msgid "Amount"
-msgstr ""
+msgstr "金額"
 
 #: metabrainz/templates/payments/donate.html:54
 #, python-format
@@ -2111,10 +2289,13 @@ msgid ""
 "            <a href=\"%(mail_link)s\">donations@metabrainz.org</a>\n"
 "            before you do."
 msgstr ""
+"多額の寄付をご希望の場合は、\n"
+"寄付を行う前に、\n"
+"<a href=\"%(mail_link)s\">donations@metabrainz.org</a> までご連絡ください。"
 
 #: metabrainz/templates/payments/donate.html:65
 msgid "I want this to be a recurring monthly donation"
-msgstr ""
+msgstr "毎月の継続的な寄付に変更したい"
 
 #: metabrainz/templates/payments/donate.html:73
 msgid "MusicBrainz username"
@@ -2122,29 +2303,32 @@ msgstr "MusicBrainzユーザー名"
 
 #: metabrainz/templates/payments/donate.html:82
 msgid "Email me about future fundraising events"
-msgstr ""
+msgstr "今後の募金イベントについて、メールで知らせてほしい"
 
 #: metabrainz/templates/payments/donate.html:83
 msgid "This will be very seldom"
-msgstr ""
+msgstr "あまりメールは送らないで欲しい"
 
 #: metabrainz/templates/payments/donate.html:91
 msgid "I would like this donation to be anonymous"
-msgstr ""
+msgstr "匿名で寄付を行いたい"
 
 #: metabrainz/templates/payments/donate.html:92
 msgid "Your name and username won't appear in the donors list"
-msgstr ""
+msgstr "あなたの名前とユーザー名は寄付者リストには表示されません"
 
 #: metabrainz/templates/payments/donate.html:100
 msgid "Donate with Credit Card"
-msgstr ""
+msgstr "クレジットカードで寄付"
 
 #: metabrainz/templates/payments/donate.html:113
 msgid ""
 "Your billing name and (if provided) your username will be listed\n"
 "        in our donors list unless you make your donation anonymous."
 msgstr ""
+"匿名での寄付でない限り、ご登録のお名前および（ご提供いただいた場合）ユーザー"
+"名は、\n"
+"当団体の寄付者リストに掲載されます。"
 
 #: metabrainz/templates/payments/donate.html:120
 #, python-format
@@ -2156,6 +2340,10 @@ msgid ""
 "        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
 "        privacy policy</a>."
 msgstr ""
+"寄付手続きの際にMetaBrainz財団に提供された\n"
+"個人情報は、いかなる第三者にも開示されることはありません。\n"
+"詳細については、当財団の\n"
+"<a href=\"%(privacy_policy_url)s\">プライバシーポリシー</a>をご覧ください。"
 
 #: metabrainz/templates/payments/donate.html:129
 #, python-format
@@ -2163,27 +2351,31 @@ msgid ""
 "To find out how to cancel recurring donations take a look at\n"
 "        <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
+"定期寄付を解約する方法については、\n"
+"<a href=\"%(cancel_recurring_url)s\">こちらのページ</a>をご覧ください。"
 
 #: metabrainz/templates/payments/donate.html:134
 msgid "Other ways to donate"
-msgstr ""
+msgstr "その他の寄付方法"
 
 #: metabrainz/templates/payments/donate.html:137
 msgid ""
 "If you use GitHub to sponsor your favourite projects, you can click below"
 " to Sponsor @metabrainz on GitHub Sponsors:"
 msgstr ""
+"GitHubを使ってお気に入りのプロジェクトを支援したい場合は、以下のリンクから、"
+"GitHub Sponsorsで@metabrainzを支援してください:"
 
 #: metabrainz/templates/payments/donate.html:140
 #: metabrainz/templates/payments/payment_base.html:29
 msgid "Non-US Bank transfer"
-msgstr ""
+msgstr "米国以外の銀行振込"
 
 #: metabrainz/templates/payments/donate.html:141
 msgid ""
 "You can make a donation, or recurring donations, via bank transfer to the"
 " following IBAN:"
-msgstr ""
+msgstr "以下のIBAN宛ての銀行振込にて、寄付または定期寄付を行うことができます:"
 
 #: metabrainz/templates/payments/donate.html:143
 #, python-format
@@ -2191,38 +2383,44 @@ msgid ""
 "Please indicate your name and use the word "
 "<em>%(donation_fixed_string)s</em> in the description field."
 msgstr ""
+"お名前をご記入の上、説明欄には<em>%(donation_fixed_string)s</em>という文言を"
+"ご使用ください。"
 
 #: metabrainz/templates/payments/donate.html:145
 msgid "US Check"
-msgstr ""
+msgstr "米国小切手"
 
 #: metabrainz/templates/payments/donate.html:146
 msgid ""
 "Due to the increased unreliability of the US Postal Service we have "
 "stopped accepting paper checks. Sorry!"
 msgstr ""
+"米国郵政公社のサービスがますます不安定になっているため、紙の小切手の受け付け"
+"を中止いたしました。ゴメンね！"
 
 #: metabrainz/templates/payments/donate.html:241
 msgid ""
 "Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging "
 "you"
 msgstr ""
+"Picard/MusicBrainzからのしつこい通知を止めるには、MusicBrainzのユーザー名を入"
+"力してください"
 
 #: metabrainz/templates/payments/donate.html:256
 msgid "MusicBrainz is currently unavailable."
-msgstr ""
+msgstr "MusicBrainzは現在利用できません。"
 
 #: metabrainz/templates/payments/donate.html:257
 msgid "Please, make sure that your username is correct."
-msgstr ""
+msgstr "ユーザー名が正しいことをご確認ください。"
 
 #: metabrainz/templates/payments/donate.html:259
 msgid "Your donation will be associated with this account."
-msgstr ""
+msgstr "ご寄付は、このアカウントに関連付けられます。"
 
 #: metabrainz/templates/payments/donate.html:261
 msgid "We can't find this account. Please, make sure it's correct"
-msgstr ""
+msgstr "このアカウントが見つかりません。入力内容に間違いがないかご確認ください"
 
 #: metabrainz/templates/payments/donors.html:3
 #: metabrainz/templates/reports/financial_reports/index.html:23
@@ -2239,7 +2437,7 @@ msgstr "総額"
 
 #: metabrainz/templates/payments/donors.html:20
 msgid "No donations. :("
-msgstr ""
+msgstr "寄付ないよ。 :("
 
 #: metabrainz/templates/payments/donors.html:25
 msgid "Date"
@@ -2259,7 +2457,7 @@ msgstr "手数料"
 
 #: metabrainz/templates/payments/donors.html:61
 msgid "First"
-msgstr ""
+msgstr "先頭へ"
 
 #: metabrainz/templates/payments/payment.html:7
 #, python-format
@@ -2269,16 +2467,18 @@ msgid ""
 "actual\n"
 "      payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
+"<b>ご注意ください！</b> こちらはウェブサイトの開発版です。\n"
+"実際のクレジットカード情報を入力しないでください！\n"
+"実際に支払いを行う場合は、<a href=\"%(mb_url)s\">metabrainz.org</a>にアクセス"
+"してください。"
 
 #: metabrainz/templates/payments/payment.html:17
-#, fuzzy
 msgid "Organization:"
-msgstr "寄付額"
+msgstr "団体:"
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "サポーター"
+msgstr "サポーター・レベル:"
 
 #: metabrainz/templates/payments/payment.html:44
 #, python-format
@@ -2287,19 +2487,22 @@ msgid ""
 "          <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
 "          before you do."
 msgstr ""
+"多額のお支払いをご希望の場合は、\n"
+"お支払いを行う前に、\n"
+"<a href=\"%(mail_link)s\">payments@metabrainz.org</a> までご連絡ください。"
 
 #: metabrainz/templates/payments/payment.html:52
 #: metabrainz/templates/payments/payment.html:159
 msgid "Invoice number"
-msgstr ""
+msgstr "請求書番号"
 
 #: metabrainz/templates/payments/payment.html:61
 msgid "Make this a recurring monthly payment"
-msgstr ""
+msgstr "毎月の定期支払いに変更する"
 
 #: metabrainz/templates/payments/payment.html:70
 msgid "Pay with Credit Card"
-msgstr ""
+msgstr "クレジットカードでの支払い"
 
 #: metabrainz/templates/payments/payment.html:84
 #, python-format
@@ -2311,6 +2514,10 @@ msgid ""
 "      please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
 "      privacy policy</a>."
 msgstr ""
+"お支払い手続きの際にMetaBrainz Foundationに提供された個人情報は、\n"
+"いかなる第三者にも開示されることはありません。\n"
+"詳細については、当財団の\n"
+"<a href=\"%(privacy_policy_url)s\">プライバシーポリシー</a>をご覧ください。"
 
 #: metabrainz/templates/payments/payment.html:93
 #, python-format
@@ -2318,15 +2525,17 @@ msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
+"定期支払いをキャンセルする方法については、\n"
+"<a href=\"%(cancel_recurring_url)s\">こちらのページ</a>をご覧ください。"
 
 #: metabrainz/templates/payments/payment.html:157
 msgid "Invoice number (optional)"
-msgstr ""
+msgstr "請求書番号（任意）"
 
 #: metabrainz/templates/payments/payment_base.html:3
 #: metabrainz/templates/payments/payment_base.html:7
 msgid "Make a Payment"
-msgstr ""
+msgstr "支払う"
 
 #: metabrainz/templates/payments/payment_base.html:10
 #, python-format
@@ -2337,6 +2546,11 @@ msgid ""
 "If you want to make a donation\n"
 "      instead, go to <a href=\"%(donate_url)s\">donation page</a>."
 msgstr ""
+"<b>このページは、MetaBrainz財団を支援する団体が当財団へ支払いを行うためのもの"
+"です！</b> \n"
+"ここで行われる支払いは、寄付とはみなされません。\n"
+"寄付をご希望の場合は、<a href=\"%(donate_url)s\">寄付ページ</a>をご覧ください"
+"。"
 
 #: metabrainz/templates/payments/payment_base.html:16
 msgid ""
@@ -2346,6 +2560,10 @@ msgid ""
 "office, and paying a minimal\n"
 "      salary for MetaBrainz employees."
 msgstr ""
+"皆様からのご寄付は、MetaBrainz財団のプロジェクト運営に充てられます。\n"
+"これには継続的な経費が含まれ、ホスティング費用、ハードウェア費用、小規模な"
+"オフィスの維持費、\n"
+"およびMetaBrainzの従業員への最低限の給与の支払いが該当します。"
 
 #: metabrainz/templates/payments/payment_base.html:21
 #, python-format
@@ -2353,56 +2571,58 @@ msgid ""
 "<p>Where has your contribution gone? See our <a "
 "href=\"%(financial_reports_url)s\">transparent finances</a>.</p>"
 msgstr ""
+"<p>寄付はどうやって使われているの？当財団の<a href=\"%(financial_reports_url)"
+"s\">透明性の高い財務状況</a>をご覧ください。</p>"
 
 #: metabrainz/templates/payments/payment_base.html:27
 msgid "Other ways to pay"
-msgstr ""
+msgstr "その他の支払い方法"
 
 #: metabrainz/templates/payments/payment_base.html:30
 msgid ""
 "You can make a payment, or recurring payments, via bank transfer to the "
 "following IBAN:"
-msgstr ""
+msgstr "以下のIBAN宛てに銀行振込にて、お支払いまたは定期振込を行うことができます:"
 
 #: metabrainz/templates/payments/payment_base.html:32
 msgid ""
 "Please specify the invoice number(s) you are paying in the description "
 "field of the transfer."
-msgstr ""
+msgstr "お振込みの際、振込明細欄に、お支払いになる請求書番号を明記してください。"
 
 #: metabrainz/templates/payments/payment_selector.html:7
 msgid "Please, select a currency that you want to use for payment:"
-msgstr ""
+msgstr "お支払いにご利用になりたい通貨をお選びください:"
 
 #: metabrainz/templates/payments/payment_selector.html:8
 msgid "United States dollar"
-msgstr ""
+msgstr "米ドル"
 
 #: metabrainz/templates/payments/payment_selector.html:9
 msgid "USD"
-msgstr ""
+msgstr "USD"
 
 #: metabrainz/templates/payments/payment_selector.html:10
 msgid "Euro"
-msgstr ""
+msgstr "ユーロ"
 
 #: metabrainz/templates/payments/payment_selector.html:11
 msgid "EUR"
-msgstr ""
+msgstr "EUR"
 
 #: metabrainz/templates/quickbooks/index.html:3
 #: metabrainz/templates/quickbooks/index.html:7
 msgid "Create Invoices"
-msgstr ""
+msgstr "請求書の作成"
 
 #: metabrainz/templates/quickbooks/login.html:3
 #: metabrainz/templates/quickbooks/login.html:7
 msgid "Login to Quickbooks"
-msgstr ""
+msgstr "QuickBooksにログイン"
 
 #: metabrainz/templates/reports/annual_reports/view.html:2
 msgid "Annual Report"
-msgstr ""
+msgstr "年次レポート"
 
 #: metabrainz/templates/reports/financial_reports/index.html:9
 msgid ""
@@ -2417,6 +2637,16 @@ msgid ""
 "    donations, we believe that our contributors have the right to see how"
 " the non-profit manages its finances."
 msgstr ""
+"MetaBrainz財団は、<i>財務の透明性</i>という方針を実践しており、この非営利団体"
+"の財務状況は当ウェブサイト上で自由に閲覧可能です。\n"
+"この財務方針により、MetaBrainzへの金銭的寄付者やMusicBrainzへの情報提供者は"
+"、\n"
+"当非営利団体が収集した寄付金やライセンス料をどのように使用しているかを確認す"
+"ることができます。\n"
+"MusicBrainzはボランティアの尽力によって構築され、MetaBrainzも一部は"
+"ボランティアからの寄付によって支えられているため、\n"
+"私たちは、貢献者の方々が当団体がどのように財務を管理しているかを確認する権利"
+"を有すると考えています。"
 
 #: metabrainz/templates/reports/financial_reports/index.html:17
 msgid ""
@@ -2429,6 +2659,12 @@ msgid ""
 "    program. In these cases we will anonymize these payments before "
 "publishing on this site."
 msgstr ""
+"当非営利団体は、可能な限り財務状況のあらゆる側面を公開しています。\n"
+"ただし、当団体への支払いを行う第三者から、各種活動に対する支払額の開示を控え"
+"るよう求められている場合があります。\n"
+"例えば、MetaBrainzのある提携先からは、アフィリエイトプログラムによる収益の詳"
+"細を公開しないよう求められています。\n"
+"このような場合、当サイトでの公開に先立ち、当該支払いの情報を匿名化します。"
 
 #: metabrainz/templates/reports/financial_reports/index.html:25
 #, python-format
@@ -2437,6 +2673,8 @@ msgid ""
 "a list of all the\n"
 "    donations that we have received."
 msgstr ""
+"当財団が受け取ったすべての寄付の一覧をご覧になるには、\n"
+"<a href=\"%(donors_url)s\">寄付トラッカー</a>をご覧ください。"
 
 #: metabrainz/templates/reports/financial_reports/index.html:29
 msgid "Reports"
@@ -2447,6 +2685,8 @@ msgid ""
 "We attempt to publish our balance sheets within the first week of the "
 "succeeding quarter, or as close to that as possible."
 msgstr ""
+"当財団は、貸借対照表を、翌四半期の第1週以内、あるいはそれにできるだけ近い時期"
+"に公表するよう努めています。"
 
 #: metabrainz/templates/reports/financial_reports/index.html:36
 #: metabrainz/templates/reports/financial_reports/index.html:50
@@ -2469,7 +2709,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:467
 #: metabrainz/templates/reports/financial_reports/index.html:496
 msgid "Quarterly reports"
-msgstr ""
+msgstr "四半期レポート"
 
 #: metabrainz/templates/reports/financial_reports/index.html:38
 #: metabrainz/templates/reports/financial_reports/index.html:47
@@ -2690,7 +2930,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:523
 #: metabrainz/templates/reports/financial_reports/index.html:545
 msgid "profit &amp; loss"
-msgstr ""
+msgstr "損益"
 
 #: metabrainz/templates/reports/financial_reports/index.html:39
 #: metabrainz/templates/reports/financial_reports/index.html:46
@@ -3121,11 +3361,11 @@ msgstr "非営利"
 
 #: metabrainz/templates/supporters/account-type.html:43
 msgid "$0.00/month and up"
-msgstr ""
+msgstr "$0.00/月～"
 
 #: metabrainz/templates/supporters/account-type.html:44
 msgid "Personal or university assignment user."
-msgstr ""
+msgstr "個人または大学ユーザー。"
 
 #: metabrainz/templates/supporters/account-type.html:48
 #: metabrainz/templates/supporters/account-type.html:90
@@ -3148,7 +3388,7 @@ msgstr "営利"
 #: metabrainz/templates/supporters/account-type.html:135
 #, python-format
 msgid "$%(tier_price)s/month and up"
-msgstr ""
+msgstr "$%(tier_price)s/月～"
 
 #: metabrainz/templates/supporters/account-type.html:87
 #: metabrainz/templates/supporters/account-type.html:138
@@ -3157,19 +3397,19 @@ msgstr "もっと見る"
 
 #: metabrainz/templates/supporters/account-type.html:104
 msgid "View all tiers"
-msgstr ""
+msgstr "全プランを見る"
 
 #: metabrainz/templates/supporters/account-type.html:112
 msgid "Some of our Unicorn members"
-msgstr ""
+msgstr "物珍しいメンバーの一部"
 
 #: metabrainz/templates/supporters/account-type.html:123
 msgid "See all our supporters"
-msgstr ""
+msgstr "すべての支援者を見る"
 
 #: metabrainz/templates/supporters/account-type.html:151
 msgid "View featured tiers"
-msgstr ""
+msgstr "注目のプランを見る"
 
 #: metabrainz/templates/supporters/account-type.html:158
 #, python-format
@@ -3177,16 +3417,17 @@ msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
 msgstr ""
+"どのプランを選べばよいか迷っている場合は、\n"
+"<a href=\"%(contact_url)s\">お問い合わせ</a>ください。"
 
 #: metabrainz/templates/supporters/account-type.html:166
-#, fuzzy
 msgid "Back to Profile"
-msgstr "プロフィール"
+msgstr "プロフィールに戻る"
 
 #: metabrainz/templates/supporters/bad-standing.html:3
 #: metabrainz/templates/supporters/bad-standing.html:6
 msgid "Bad standing"
-msgstr ""
+msgstr "信用状態不良"
 
 #: metabrainz/templates/supporters/bad-standing.html:8
 msgid ""
@@ -3195,6 +3436,10 @@ msgid ""
 "  MetaBrainz and are using one of our data-sets, but are behind in their\n"
 "  payments by more than 60 days."
 msgstr ""
+"<i>信用状態不良</i>とされている企業は、\n"
+"過去にMetaBrainzへの支援に合意し、当社のデータセットのいずれかを利用していま"
+"すが、\n"
+"支払いが60日以上遅れています。"
 
 #: metabrainz/templates/supporters/supporters-list.html:9
 #, python-format
@@ -3212,26 +3457,36 @@ msgid ""
 "    to sign your company up as a supporter, go to our <a "
 "href=\"%(signup_form)s\">sign up page</a>."
 msgstr ""
+"以下の組織は、MetaBrainzが公開しているデータセットを利用しており、\n"
+"資金面やその他の相互協定を通じて当プロジェクトを支援しています。\n"
+"また、当プロジェクトのデータを利用しているものの、支援を明確に断っている組織"
+"もあります。\n"
+"また、当財団のデータを活用しているものの、まだ把握できていない組織が存在する"
+"可能性もあります。\n"
+"当財団のデータを利用している企業をご存知の場合は、<a href=\"%(contact_url)"
+"s\">当方までご連絡ください</a>。\n"
+"貴社をサポーターとして登録したい場合は、<a href=\"%(signup_form)s\">登録"
+"ページ</a>にアクセスしてください。"
 
 #: metabrainz/templates/supporters/supporters-list.html:23
 #: metabrainz/templates/supporters/tier.html:3
 #: metabrainz/templates/supporters/tier.html:6
 #, python-format
 msgid "%(tier_name)s tier"
-msgstr ""
+msgstr "%(tier_name)sプラン"
 
 #: metabrainz/templates/supporters/supporters-list.html:32
 #: metabrainz/templates/supporters/tier.html:25
 msgid "This supporter is behind on their payments."
-msgstr ""
+msgstr "このサポーターは支払いが滞っています。"
 
 #: metabrainz/templates/supporters/tier.html:13
 msgid "Sign up for this tier"
-msgstr ""
+msgstr "このプランでサインアップ"
 
 #: metabrainz/templates/supporters/tier.html:19
 msgid "Supporters on this tier"
-msgstr ""
+msgstr "このプランのサポーター"
 
 #: metabrainz/templates/users/lost-password.html:3
 msgid "Forgot password"
@@ -3278,7 +3533,7 @@ msgstr "パスワード"
 
 #: metabrainz/user/forms.py:44
 msgid "Remember me"
-msgstr ""
+msgstr "ログイン情報を記憶"
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
@@ -3298,7 +3553,7 @@ msgstr "パスワードを表示"
 
 #: frontend/js/src/ApplicationRow.tsx:54
 msgid "Modify"
-msgstr ""
+msgstr "変更"
 
 #: frontend/js/src/ApplicationRow.tsx:60
 #, fuzzy
