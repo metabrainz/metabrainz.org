@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: metabrainz.org VERSION\n"
 "Report-Msgid-Bugs-To: support@metabrainz.org\n"
 "POT-Creation-Date: 2026-06-12 18:42+0200\n"
-"PO-Revision-Date: 2026-07-06 17:58+0000\n"
+"PO-Revision-Date: 2026-07-09 10:12+0000\n"
 "Last-Translator: Marc Riera <marc@marcriera.cat>\n"
 "Language-Team: Catalan <https://translations.metabrainz.org/projects/"
 "metabrainz/website/ca/>\n"
@@ -101,6 +101,7 @@ msgstr ""
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
 msgstr ""
+"La descripció del client pot tenir 512 caràcters de longitud com a màxim."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
@@ -108,35 +109,36 @@ msgstr "Pàgina d'inici"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr ""
+msgstr "El camp de pàgina d'inici és buit."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr ""
+msgstr "La pàgina d'inici no és un URI vàlid."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
-msgstr ""
+msgstr "L'URL de la pàgina d'inici ha de fer servir HTTP o HTTPS."
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "URL de resposta de trucada d'autorització"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
-msgstr ""
+msgstr "El camp d'URL de resposta de trucada d'autorització és buit."
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
-msgstr ""
+msgstr "L'URL de resposta de trucada d'autorització no és vàlid."
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
 msgstr ""
+"L'URL de resposta de trucada d'autorització ha de fer servir HTTP o HTTPS."
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "Confirma"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -144,47 +146,56 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
+"Gràcies per fer una donació a la MetaBrainz Foundation. Valorem molt el "
+"vostre suport! És possible que passi un temps fins que la donació aparegui a "
+"la llista a causa de retards en el processament."
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
+"Gràcies per fer una donació a la MetaBrainz Foundation. Valorem molt el "
+"vostre suport!"
 
 #: metabrainz/payments/views.py:182
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
 msgstr ""
+"Ens sap greu veure que avui no fareu una donació. Esperem que canvieu "
+"d'opinió!"
 
 #: metabrainz/payments/views.py:188
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
 msgstr ""
+"Ens sap greu veure que avui no fareu un pagament. Esperem que canvieu "
+"d'opinió!"
 
 #: metabrainz/payments/views.py:202
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
-msgstr ""
+msgstr "Sembla que hi ha un error i no podem processar la vostra donació."
 
 #: metabrainz/payments/views.py:208
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your payment."
-msgstr ""
+msgstr "Sembla que hi ha un error i no podem processar el vostre pagament."
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
-msgstr ""
+msgstr "No s'ha trobat l'informe anual sol·licitat."
 
 #: frontend/js/src/forms/ProfileEdit.tsx:30
 #: frontend/js/src/forms/SignupCommercial.tsx:139
 #: frontend/js/src/forms/SignupNonCommercial.tsx:70
 #: metabrainz/supporter/forms.py:13
 msgid "Contact name is required!"
-msgstr ""
+msgstr "El nom del contacte és obligatori!"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:420
 #: frontend/js/src/forms/SignupNonCommercial.tsx:264
@@ -193,18 +204,21 @@ msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
+"Podeu donar-nos més detalls sobre el projecte on voleu fer servir les "
+"nostres dades? Teniu pensat allotjar les dades pel vostre compte o fer "
+"servir les nostres API?"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:137
 #: frontend/js/src/forms/SignupNonCommercial.tsx:68
 #: metabrainz/supporter/forms.py:17
 msgid "Please, tell us how you (will) use our data."
-msgstr ""
+msgstr "Indiqueu-nos com feu o fareu servir les nostres dades."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:138
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
 #: metabrainz/supporter/forms.py:18
 msgid "Please, limit usage description to 500 characters."
-msgstr ""
+msgstr "Limiteu la descripció d'ús a 500 caràcters."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:141
 #: frontend/js/src/forms/SignupCommercial.tsx:142
@@ -212,98 +226,98 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:73
 #: metabrainz/supporter/forms.py:21
 msgid "You need to accept the agreement!"
-msgstr ""
+msgstr "Cal que accepteu l'acord!"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:340
 #: metabrainz/supporter/forms.py:27
 msgid "Organization name"
-msgstr ""
+msgstr "Nom de l'organització"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:113
 #: metabrainz/supporter/forms.py:28
 msgid "You need to specify the name of your organization."
-msgstr ""
+msgstr "Heu d'especificar el nom de l'organització."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:357
 #: metabrainz/supporter/forms.py:30
 msgid "Organization description"
-msgstr ""
+msgstr "Descripció de l'organització"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:116
 #: metabrainz/supporter/forms.py:31
 msgid "You need to provide description of your organization."
-msgstr ""
+msgstr "Heu de proporcionar una descripció de la vostra organització."
 
 #: frontend/js/src/Profile.tsx:271
 #: frontend/js/src/forms/SignupCommercial.tsx:379
 #: metabrainz/supporter/forms.py:34
 msgid "Website URL"
-msgstr ""
+msgstr "URL del lloc web"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:119
 #: metabrainz/supporter/forms.py:35
 msgid "You need to specify website of the organization."
-msgstr ""
+msgstr "Heu d'especificar el lloc web de l'organització."
 
 #: metabrainz/supporter/forms.py:37
 msgid "Logo image URL"
-msgstr ""
+msgstr "URL de la imatge del logotip"
 
 #: frontend/js/src/Profile.tsx:277
 #: frontend/js/src/forms/SignupCommercial.tsx:401
 #: metabrainz/supporter/forms.py:38
 msgid "API URL"
-msgstr ""
+msgstr "URL de l'API"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:440
 #: metabrainz/supporter/forms.py:40
 msgid "Street"
-msgstr ""
+msgstr "Carrer"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:123
 #: metabrainz/supporter/forms.py:41
 msgid "You need to specify street."
-msgstr ""
+msgstr "Heu d'especificar el carrer."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:448
 #: metabrainz/supporter/forms.py:43
 msgid "City"
-msgstr ""
+msgstr "Ciutat"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:124
 #: metabrainz/supporter/forms.py:44
 msgid "You need to specify city."
-msgstr ""
+msgstr "Heu d'especificar la ciutat."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:456
 #: metabrainz/supporter/forms.py:46
 msgid "State / Province"
-msgstr ""
+msgstr "Estat/província"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:126
 #: metabrainz/supporter/forms.py:47
 msgid "You need to specify state/province."
-msgstr ""
+msgstr "Heu d'especificar l'estat/província."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:464
 #: metabrainz/supporter/forms.py:49
 msgid "Postcode"
-msgstr ""
+msgstr "Codi postal"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:128
 #: metabrainz/supporter/forms.py:50
 msgid "You need to specify postcode."
-msgstr ""
+msgstr "Heu d'especificar el codi postal."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:472
 #: metabrainz/supporter/forms.py:52
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:129
 #: metabrainz/supporter/forms.py:53
 msgid "You need to specify country."
-msgstr ""
+msgstr "Heu d'especificar el país."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:132
 #: metabrainz/supporter/forms.py:64
@@ -311,56 +325,64 @@ msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
 msgstr ""
+"L'import personalitzat ha de ser igual o superior a l'import límit per al "
+"nivell seleccionat!"
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
 msgid "You are already a supporter."
-msgstr ""
+msgstr "Ja ens doneu suport."
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
-msgstr ""
+msgstr "No s'ha trobat el nivell amb l'ID especificat."
 
 #: metabrainz/supporter/views.py:127
 msgid "You need to choose support tier before signing up!"
-msgstr ""
+msgstr "Heu de triar un nivell de suport abans de registrar-vos!"
 
 #: metabrainz/supporter/views.py:137
 msgid "You need to choose existing tier before signing up!"
-msgstr ""
+msgstr "Heu de triar un nivell existent abans de registrar-vos!"
 
 #: metabrainz/supporter/views.py:164
 msgid ""
 "Thanks for becoming a supporter! Your application will be reviewed soon. "
 "We will send you updates via email."
 msgstr ""
+"Gràcies per començar a donar-nos suport! La vostra sol·licitud es revisarà "
+"aviat. Us enviarem actualitzacions per correu electrònic."
 
 #: metabrainz/supporter/views.py:187
 msgid ""
 "Thanks for signing up! Your application will be reviewed soon. We will "
 "send you updates via email."
 msgstr ""
+"Gràcies per registrar-vos! La vostra sol·licitud es revisarà aviat. Us "
+"enviarem actualitzacions per correu electrònic."
 
 #: metabrainz/supporter/views.py:248
 msgid "Thanks for becoming a supporter!"
-msgstr ""
+msgstr "Gràcies per començar a donar-nos suport!"
 
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr ""
+"Gràcies per registrar-vos! Comproveu la safata d'entrada del vostre correu "
+"electrònic per a completar la verificació."
 
 #: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
-msgstr ""
+msgstr "No es pot generar un testimoni nou si el compte no és actiu."
 
 #: metabrainz/templates/base.html:44
 msgid "Foundation"
-msgstr ""
+msgstr "Fundació"
 
 #: metabrainz/templates/base.html:46 metabrainz/templates/index/projects.html:3
 #: metabrainz/templates/navbar.html:24
 msgid "Projects"
-msgstr ""
+msgstr "Projectes"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:87 metabrainz/templates/base.html:47
 #: metabrainz/templates/index/datasets.html:3
@@ -368,69 +390,69 @@ msgstr ""
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
 msgid "Datasets"
-msgstr ""
+msgstr "Conjunts de dades"
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
 msgid "Team"
-msgstr ""
+msgstr "Equip"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr ""
+msgstr "Botiga"
 
 #: metabrainz/templates/base.html:53
 msgid "Policies"
-msgstr ""
+msgstr "Polítiques"
 
 #: metabrainz/templates/base.html:55
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
 msgid "Social Contract"
-msgstr ""
+msgstr "Contracte social"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
 #: metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
-msgstr ""
+msgstr "Codi de conducta"
 
 #: metabrainz/templates/base.html:57 metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Política de privadesa"
 
 #: metabrainz/templates/base.html:61
 #: metabrainz/templates/reports/financial_reports/index.html:3
 #: metabrainz/templates/reports/financial_reports/index.html:6
 msgid "Finances"
-msgstr ""
+msgstr "Finances"
 
 #: metabrainz/templates/base.html:63 metabrainz/templates/navbar.html:47
 #: metabrainz/templates/reports/annual_reports/view.html:4
 msgid "Archived Annual Reports"
-msgstr ""
+msgstr "Informes anuals arxivats"
 
 #: metabrainz/templates/base.html:64 metabrainz/templates/navbar.html:49
 #: metabrainz/templates/payments/donors.html:6
 msgid "Donors"
-msgstr ""
+msgstr "Donants"
 
 #: metabrainz/templates/base.html:65 metabrainz/templates/index/sponsors.html:3
 #: metabrainz/templates/index/sponsors.html:6
 #: metabrainz/templates/index/sponsors.html:20
 #: metabrainz/templates/navbar.html:43
 msgid "Sponsors"
-msgstr ""
+msgstr "Patrocinadors"
 
 #: metabrainz/templates/base.html:66 metabrainz/templates/base.html:70
 #: metabrainz/templates/navbar.html:42
 #: metabrainz/templates/supporters/supporters-list.html:3
 #: metabrainz/templates/supporters/supporters-list.html:6
 msgid "Supporters"
-msgstr ""
+msgstr "Suport"
 
 #: frontend/js/src/forms/LoginUser.tsx:102
 #: frontend/js/src/forms/SignupCommercial.tsx:557
@@ -438,116 +460,116 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:186 metabrainz/templates/base.html:73
 #: metabrainz/templates/navbar.html:60 metabrainz/templates/users/login.html:3
 msgid "Sign in"
-msgstr ""
+msgstr "Inicia la sessió"
 
 #: metabrainz/templates/base.html:75 metabrainz/templates/navbar.html:69
 msgid "Sign out"
-msgstr ""
+msgstr "Tanca la sessió"
 
 #: metabrainz/templates/base.html:77
 msgid "Access your account"
-msgstr ""
+msgstr "Accedeix al compte"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:365
 #: metabrainz/templates/base.html:78
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: frontend/js/src/Profile.tsx:285 metabrainz/templates/base.html:83
 msgid "Contact us"
-msgstr ""
+msgstr "Contacte"
 
 #: metabrainz/templates/base.html:85
 #: metabrainz/templates/index/contact.html:105
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "Xat"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
 msgid "Twitter/X"
-msgstr ""
+msgstr "Twitter/X"
 
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
 msgid "Mastodon"
-msgstr ""
+msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
 msgid "Bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: metabrainz/templates/base.html:90
 #: metabrainz/templates/index/contact.html:109
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: metabrainz/templates/base.html:95
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
-msgstr ""
+msgstr "Patrocinat per <a href=\"%(github_url)s\">GitHub</a>"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Obre/tanca la navegació"
 
 #: metabrainz/templates/navbar.html:21
 msgid "About "
-msgstr ""
+msgstr "Quant a "
 
 #: metabrainz/templates/navbar.html:23
 msgid "The Foundation"
-msgstr ""
+msgstr "La fundació"
 
 #: metabrainz/templates/navbar.html:32
 msgid "Policies "
-msgstr ""
+msgstr "Polítiques "
 
 #: metabrainz/templates/index/conflict-policy.html:2
 #: metabrainz/templates/index/conflict-policy.html:12
 #: metabrainz/templates/navbar.html:37
 msgid "Conflict Resolution Policy"
-msgstr ""
+msgstr "Política de resolució de conflictes"
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
-msgstr ""
+msgstr "Conformitat amb l'RGPD"
 
 #: metabrainz/templates/navbar.html:45
 msgid "Reports "
-msgstr ""
+msgstr "Informes "
 
 #: metabrainz/templates/navbar.html:48
 msgid "Financial Reports"
-msgstr ""
+msgstr "Informes financers"
 
 #: metabrainz/templates/navbar.html:52
 msgid "Donate"
-msgstr ""
+msgstr "Fes una donació"
 
 #: metabrainz/templates/navbar.html:59
 msgid "Register"
-msgstr ""
+msgstr "Registra'm"
 
 #: metabrainz/templates/navbar.html:67
 msgid "Your profile"
-msgstr ""
+msgstr "El vostre perfil"
 
 #: metabrainz/templates/navbar.html:68
 msgid "OAuth applications"
-msgstr ""
+msgstr "Aplicacions OAuth"
 
 #: metabrainz/templates/navbar.html:74 metabrainz/templates/navbar.html:76
 msgid "Language"
-msgstr ""
+msgstr "Llengua"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
-msgstr ""
+msgstr "API de MetaBrainz"
 
 #: metabrainz/templates/api/info.html:11
 #, python-format
@@ -555,18 +577,20 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
+"Tots els extrems requereixen un testimoni d'accés que podeu obtenir a la\n"
+"    <a href=\"%(profile_url)s\">pàgina del perfil</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
-msgstr ""
+msgstr "Canal de dades en directe de MusicBrainz"
 
 #: metabrainz/templates/api/info.html:16
 msgid "There are two endpoints for fetching live data:"
-msgstr ""
+msgstr "Hi ha dos extrems per a recuperar dades en directe:"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
-msgstr ""
+msgstr "Paquets de replicació de cada hora"
 
 #: metabrainz/templates/api/info.html:30
 msgid ""
@@ -574,14 +598,18 @@ msgid ""
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
+"És possible obtenir una signatura per a cada paquet de replicació. Només cal "
+"que substituïu\n"
+"      <code>.tar.bz2</code> per <code>.tar.bz2.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 msgid "You can find the latest replication packet number from this endpoint:"
 msgstr ""
+"Podeu trobar el número de paquet de replicació més recent en aquest extrem:"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
-msgstr ""
+msgstr "Buidatges JSON incrementals de cada hora"
 
 #: metabrainz/templates/api/info.html:58
 msgid ""
@@ -590,12 +618,19 @@ msgid ""
 "instrument, label, place, recording, release, release-group, series, or "
 "work."
 msgstr ""
+"Els buidatges JSON estan particionats per tipus d'entitat. <code>"
+"&lt;ENTITY_NAME&gt;</code> pot ser un dels valors següents: area, artist, "
+"event, instrument, label, place, recording, release, release-group, series, "
+"work."
 
 #: metabrainz/templates/api/info.html:61
 msgid ""
 "It’s possible that a JSON dump for a particular entity type doesn’t exist"
 " if no entities of that type have changed in a given hour."
 msgstr ""
+"És possible que no hi hagi un buidatge JSON per a un tipus d'entitat "
+"determinat si no ha canviat cap entitat d'aquest tipus durant una hora en "
+"concret."
 
 #: metabrainz/templates/api/info.html:64
 msgid ""
@@ -603,6 +638,9 @@ msgid ""
 "This file must be read line-by-line; each line contains one changed "
 "entity in JSON format."
 msgstr ""
+"Cada buidatge conté un fitxer anomenat <code>mbdump/&lt;ENTITY_NAME&gt;</"
+"code>. Cal llegir aquest fitxer línia a línia; cada línia conté una entitat "
+"canviada en format JSON."
 
 #: metabrainz/templates/api/info.html:67
 msgid ""
@@ -2678,7 +2716,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:474
 #: metabrainz/templates/reports/financial_reports/index.html:503
 msgid "Monthly reports"
-msgstr ""
+msgstr "Informes mensuals"
 
 #: metabrainz/templates/reports/financial_reports/index.html:244
 #: metabrainz/templates/reports/financial_reports/index.html:273
@@ -2694,7 +2732,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:549
 #: metabrainz/templates/reports/financial_reports/index.html:565
 msgid "December"
-msgstr ""
+msgstr "Desembre"
 
 #: metabrainz/templates/reports/financial_reports/index.html:245
 #: metabrainz/templates/reports/financial_reports/index.html:274
@@ -2709,7 +2747,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:528
 #: metabrainz/templates/reports/financial_reports/index.html:550
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 #: metabrainz/templates/reports/financial_reports/index.html:246
 #: metabrainz/templates/reports/financial_reports/index.html:275
@@ -2724,7 +2762,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:529
 #: metabrainz/templates/reports/financial_reports/index.html:551
 msgid "October"
-msgstr ""
+msgstr "Octubre"
 
 #: metabrainz/templates/reports/financial_reports/index.html:247
 #: metabrainz/templates/reports/financial_reports/index.html:276
@@ -2739,7 +2777,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:530
 #: metabrainz/templates/reports/financial_reports/index.html:552
 msgid "September"
-msgstr ""
+msgstr "Setembre"
 
 #: metabrainz/templates/reports/financial_reports/index.html:248
 #: metabrainz/templates/reports/financial_reports/index.html:277
@@ -2754,7 +2792,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:531
 #: metabrainz/templates/reports/financial_reports/index.html:553
 msgid "August"
-msgstr ""
+msgstr "Agost"
 
 #: metabrainz/templates/reports/financial_reports/index.html:249
 #: metabrainz/templates/reports/financial_reports/index.html:278
@@ -2769,7 +2807,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:532
 #: metabrainz/templates/reports/financial_reports/index.html:554
 msgid "July"
-msgstr ""
+msgstr "Juliol"
 
 #: metabrainz/templates/reports/financial_reports/index.html:250
 #: metabrainz/templates/reports/financial_reports/index.html:279
@@ -2784,7 +2822,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:533
 #: metabrainz/templates/reports/financial_reports/index.html:555
 msgid "June"
-msgstr ""
+msgstr "Juny"
 
 #: metabrainz/templates/reports/financial_reports/index.html:251
 #: metabrainz/templates/reports/financial_reports/index.html:280
@@ -2799,7 +2837,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:534
 #: metabrainz/templates/reports/financial_reports/index.html:556
 msgid "May"
-msgstr ""
+msgstr "Maig"
 
 #: metabrainz/templates/reports/financial_reports/index.html:252
 #: metabrainz/templates/reports/financial_reports/index.html:281
@@ -2814,7 +2852,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:535
 #: metabrainz/templates/reports/financial_reports/index.html:557
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: metabrainz/templates/reports/financial_reports/index.html:253
 #: metabrainz/templates/reports/financial_reports/index.html:282
@@ -2829,7 +2867,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:536
 #: metabrainz/templates/reports/financial_reports/index.html:558
 msgid "March"
-msgstr ""
+msgstr "Març"
 
 #: metabrainz/templates/reports/financial_reports/index.html:254
 #: metabrainz/templates/reports/financial_reports/index.html:283
@@ -2844,7 +2882,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:537
 #: metabrainz/templates/reports/financial_reports/index.html:559
 msgid "February"
-msgstr ""
+msgstr "Febrer"
 
 #: metabrainz/templates/reports/financial_reports/index.html:255
 #: metabrainz/templates/reports/financial_reports/index.html:284
@@ -2859,7 +2897,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:538
 #: metabrainz/templates/reports/financial_reports/index.html:560
 msgid "January"
-msgstr ""
+msgstr "Gener"
 
 #: metabrainz/templates/reports/financial_reports/index.html:525
 #: metabrainz/templates/reports/financial_reports/index.html:547
@@ -3631,10 +3669,12 @@ msgstr ""
 #: frontend/js/src/forms/CreateApplication.tsx:70
 msgid "Application description needs to be at least 3 characters long."
 msgstr ""
+"La descripció de l'aplicació ha de tenir 3 caràcters de longitud com a mínim."
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
 msgid "Application description needs to be at most 64 characters long."
 msgstr ""
+"La descripció de l'aplicació pot tenir 64 caràcters de longitud com a màxim."
 
 #: frontend/js/src/forms/CreateApplication.tsx:78
 msgid "Homepage is required."
