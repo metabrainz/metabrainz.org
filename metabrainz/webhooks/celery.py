@@ -30,6 +30,7 @@ def init_celery(app: Flask) -> Celery:
         task_routes={
             "metabrainz.webhooks.tasks.deliver_webhook": {"queue": "webhooks"},
             "metabrainz.webhooks.tasks.retry_failed_webhooks": {"queue": "webhooks_maintenance"},
+            "metabrainz.oauth.tasks.cleanup_old_tokens": {"queue": "webhooks_maintenance"},
         },
 
         worker_prefetch_multiplier=4,
@@ -73,6 +74,14 @@ def init_celery(app: Flask) -> Celery:
             "task": "metabrainz.webhooks.tasks.cleanup_old_deliveries",
             "schedule": crontab(hour=2, minute=0),
             "args": (30,),
+            "options": {
+                "queue": "webhooks_maintenance",
+            }
+        },
+        "oauth-cleanup-old-tokens": {
+            "task": "metabrainz.oauth.tasks.cleanup_old_tokens",
+            "schedule": crontab(hour=2, minute=30),
+            "args": (7,),
             "options": {
                 "queue": "webhooks_maintenance",
             }
