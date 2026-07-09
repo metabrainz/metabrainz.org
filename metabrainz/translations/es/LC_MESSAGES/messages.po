@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-07-09 15:16+0000\n"
+"PO-Revision-Date: 2026-07-09 16:31+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Spanish <https://translations.metabrainz.org/projects/"
@@ -51,7 +51,7 @@ msgstr "Tu perfil ha sido actualizado."
 
 #: metabrainz/index/views.py:345
 msgid "You have updated an application!"
-msgstr "¡Has actualizado una aplicación!"
+msgstr "Has actualizado una aplicación."
 
 #: metabrainz/index/views.py:397
 msgid "You have deleted an application."
@@ -63,7 +63,7 @@ msgstr "No hemos podido eliminar la aplicación."
 
 #: metabrainz/index/views.py:422
 msgid "Revoked tokens successfully!"
-msgstr ""
+msgstr "Los tokens han sido anulados."
 
 #: metabrainz/index/views.py:451
 msgid "Your account has been deleted."
@@ -143,7 +143,7 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
-"Gracias por tu donación a la MetaBrainz Foundation, agradecemos mucho to "
+"Gracias por tu donación a la MetaBrainz Foundation, agradecemos mucho tu "
 "apoyo. Tu donación aparecerá en la lista una vez haya sido procesada, lo que "
 "puede llevar un tiempo."
 
@@ -152,7 +152,7 @@ msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
-"Gracias por tu pago a la MetaBrainz Foundation, agradecemos mucho to apoyo."
+"Gracias por tu pago a la MetaBrainz Foundation, agradecemos mucho tu apoyo."
 
 #: metabrainz/payments/views.py:182
 msgid ""
@@ -277,9 +277,8 @@ msgid "Country"
 msgstr "País"
 
 #: metabrainz/supporter/forms.py:53
-#, fuzzy
 msgid "You need to specify country."
-msgstr "Tiene que especificar el país."
+msgstr "Tienes que indicar el país."
 
 #: metabrainz/supporter/forms.py:64
 msgid ""
@@ -585,25 +584,22 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/api/info.html:67
-#, fuzzy
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"It is possible to get a signature for each replication packet. Just replace\n"
-"      <code>.tar.bz2</code> with <code>.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
-msgstr "Back to home page"
+msgstr "Volver a la página de inicio"
 
 #: metabrainz/templates/index/about.html:3
 msgid "About"
-msgstr "Acerca"
+msgstr "Nosotros"
 
 #: metabrainz/templates/index/about.html:8
 msgid "About the MetaBrainz Foundation"
-msgstr "About the MetaBrainz Foundation"
+msgstr "Acerca de la MetaBrainz Foundation"
 
 #: metabrainz/templates/index/about.html:13
 #, python-format
@@ -668,63 +664,70 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:49
 msgid "Board of Directors"
-msgstr "Board of Directors"
+msgstr "Junta directiva"
 
 #: metabrainz/templates/index/about.html:50
 msgid "Our board of directors consists of:"
-msgstr "Our board of directors consists of:"
+msgstr "Estos son los miembros de nuestra junta directiva:"
 
 #: metabrainz/templates/index/about.html:52
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Director &amp; Secretary Nick Ashton-Hart, Executive Director of the <a "
 "href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
 "Alliance</a>"
 msgstr ""
-"Director Nick Ashton-Hart, Executive Director of the <a href=\"%"
+"Director y secretario Nick Ashton-Hart, director ejecutivo de la <a href=\"%"
 "(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem Alliance</a>"
 
 #: metabrainz/templates/index/about.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
 msgstr "Director <a href=\"%(paul_url)s\">Paul Bennun</a> de fuchsia, LLC"
 
 #: metabrainz/templates/index/about.html:54
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
-msgstr "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> de <a href=\"%(compass_url)s\">Compass, Map & Key</a>"
+msgstr ""
+"Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> de <a href=\"%"
+"(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:55
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
-msgstr "Director y tesorero <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a> de <a href=\"%(rassami_com)s\">rassami.com</a>"
+msgstr ""
+"Directora y tesorera <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a> "
+"de <a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:56
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
-msgstr "Director ejecutivo interino <a href=\"%(reo_url)s\">Nicolás Tamargo</a> de la Fundación MetaBrainz"
+msgstr ""
+"Director ejecutivo interino <a href=\"%(reo_url)s\">Nicolás Tamargo</a> de "
+"la MetaBrainz Foundation"
 
 #: metabrainz/templates/index/about.html:57
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
-msgstr "Directora <a href=\"%(hazel_url)s\">Hazel Savage</a> de <a href=\"%(leeds_url)s\">Leeds Angels</a>"
+msgstr ""
+"Directora <a href=\"%(hazel_url)s\">Hazel Savage</a> de <a href=\"%"
+"(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:62
-#, fuzzy
 msgid "Our board of directors is advised by:"
-msgstr "Our board of directors consists of:"
+msgstr "Estos son los asesores de nuestra junta directiva:"
 
 #: metabrainz/templates/index/about.html:64
 #, python-format
@@ -735,20 +738,20 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:66
 msgid "Officers"
-msgstr "Officers"
+msgstr ""
 
 #: metabrainz/templates/index/about.html:67
 msgid "The officers of this company are:"
-msgstr "The officers of this company are:"
+msgstr ""
 
 #: metabrainz/templates/index/about.html:69
 msgid "President Nicolás Tamargo"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:70
-#, fuzzy, python-format
+#, python-format
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr "Tesorero Rassami Hok Ljungberg"
+msgstr "Tesorera Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"
@@ -756,7 +759,7 @@ msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:3
 msgid "Bad customers"
-msgstr "Bad customers"
+msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:8
 msgid "Our not-so-favorite commercial data supporters"
@@ -767,8 +770,6 @@ msgid ""
 "The following companies use our data, but have declined to support us on "
 "an ongoing basis."
 msgstr ""
-"The following companies use our data, but have declined to support us on an "
-"ongoing basis."
 
 #: metabrainz/templates/index/bad-customers.html:14
 msgid ""
@@ -781,14 +782,6 @@ msgid ""
 "      support so that we may continue to cover our expenses and pay our "
 "staff."
 msgstr ""
-"All of our projects require support from end-user donations and commercial "
-"support. Our free\n"
-"      data-sets provide incredible value to these companies giving them a "
-"business advantage.\n"
-"      We believe that companies that use our data to conduct their business "
-"should provide financial\n"
-"      support so that we may continue to cover our expenses and pay our "
-"staff."
 
 #: metabrainz/templates/index/bad-customers.html:20
 #, python-format
@@ -801,13 +794,6 @@ msgid ""
 "href=\"%(account_type_url)s\">signing up\n"
 "      for support</a>."
 msgstr ""
-"If a company you like appears on this list, please contact that company and "
-"ask them why\n"
-"      they have declined to support us. If you are with a company listed "
-"below and would like to\n"
-"      get off this list, you can do so by <a href=\"%(account_type_url)s\">"
-"signing up\n"
-"      for support</a>."
 
 #: metabrainz/templates/index/bad-customers.html:26
 #, python-format
@@ -816,9 +802,6 @@ msgid ""
 "them for support!\n"
 "      Please <a href=\"%(contact_url)s\">let us know</a>!"
 msgstr ""
-"Do you know of other companies using our data? We'd love to know and ask "
-"them for support!\n"
-"      Please <a href=\"%(contact_url)s\">let us know</a>!"
 
 #: metabrainz/templates/index/bad-customers.html:53
 msgid "Nice!!"
@@ -834,9 +817,6 @@ msgid ""
 "the\n"
 "          \"right thing\"... :)"
 msgstr ""
-"... either that, or maybe we're working to convince some companies to do "
-"the\n"
-"          \"right thing\"... :)"
 
 #: metabrainz/templates/index/conflict-policy.html:14
 #: metabrainz/templates/index/gdpr.html:8
@@ -857,7 +837,7 @@ msgid "Found a bug in one of our projects?"
 msgstr "¿Encontraste un bug en uno de nuestros proyectos?"
 
 #: metabrainz/templates/index/contact.html:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Found a broken link or something that doesn't work as you expect it to? "
 "You can report issues in our\n"
@@ -867,13 +847,6 @@ msgid ""
 "such as what happened, what you expected\n"
 "    to happen, and the URLs of any pages involved."
 msgstr ""
-"Found a broken link or something that doesn't work as you expect it to? You "
-"can report issues in our\n"
-"    <a href=\"%(bug_tracker_url)s\">bug tracker</a>, or let us know on IRC "
-"or\n"
-"    by email. Contact details are provided below. Please include details "
-"such as what happened, what you expected\n"
-"    to happen, and the URLs of any pages involved."
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
@@ -890,17 +863,10 @@ msgid ""
 "    Picard</a>, check its <a "
 "href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
 msgstr ""
-"Please check the <a href=\"%(general_faq_url)s\">General FAQ</a>, or one of "
-"the other pages\n"
-"    of <a href=\"%(faq_url)s\">frequently asked questions</a>, to see if\n"
-"    your question has already been answered. If you're using <a href=\"%"
-"(picard_homepage)s\">MusicBrainz\n"
-"    Picard</a>, check its <a href=\"%(picard_troubleshooting)s\">"
-"troubleshooting page</a>."
 
 #: metabrainz/templates/index/contact.html:25
 msgid "Data removal requests"
-msgstr "Data removal requests"
+msgstr ""
 
 #: metabrainz/templates/index/contact.html:27
 #, python-format
@@ -910,14 +876,10 @@ msgid ""
 "    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more "
 "information."
 msgstr ""
-"MusicBrainz does not edit or remove factual data upon request. Please read "
-"our\n"
-"    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more "
-"information."
 
 #: metabrainz/templates/index/contact.html:30
 msgid "Copyright issues"
-msgstr "Copyright issues"
+msgstr ""
 
 #: metabrainz/templates/index/contact.html:32
 #, python-format
@@ -934,17 +896,6 @@ msgid ""
 "    the infringing material from our website. If you cannot provide us a "
 "link, we cannot help you."
 msgstr ""
-"If you believe that MusicBrainz violates your copyright, you may\n"
-"    <a href=\"%(cr_violation_url)s\">report a copyright violation</a>. "
-"Please note\n"
-"    that MusicBrainz provides data about recordings, <i>not the music "
-"itself</i>. If you find your music listed in\n"
-"    MusicBrainz <b>it does not mean that we have access to or provide access "
-"to the music files themselves</b>. If\n"
-"    you still think that we're infringing your copyright, you must provide "
-"us with a link to where you can download\n"
-"    the infringing material from our website. If you cannot provide us a "
-"link, we cannot help you."
 
 #: metabrainz/templates/index/contact.html:40
 msgid "Advertising requests"
@@ -974,7 +925,7 @@ msgstr "Detalles de contacto"
 
 #: metabrainz/templates/index/contact.html:56
 msgid "Please do not contact us with the following topics:"
-msgstr "Please do not contact us with the following topics:"
+msgstr "No te pongas en contacto con nosotros para tratar los siguientes temas:"
 
 #: metabrainz/templates/index/contact.html:58
 msgid ""
@@ -982,23 +933,19 @@ msgid ""
 "neither the music itself nor the\n"
 "        rights to license the music."
 msgstr ""
-"We cannot license any of the music listed in MusicBrainz, since we have "
-"neither the music itself nor the\n"
-"        rights to license the music."
+"No podemos ofrecer bajo licencia la música descrita en MusicBrainz, ya que "
+"no tenemos ni los archivos de música ni los derechos necesarios para ofrecer "
+"licencias."
 
 #: metabrainz/templates/index/contact.html:60
 msgid "We are not distributing any of the music listed in MusicBrainz."
-msgstr "We are not distributing any of the music listed in MusicBrainz."
+msgstr "No distribuimos la música descrita en MusicBrainz."
 
 #: metabrainz/templates/index/contact.html:61
-#, fuzzy
 msgid ""
 "For inquiries about advertising, SEO optimization, or software "
 "monetization services, please see above!"
 msgstr ""
-"We are not interested in your advertising, SEO optimization, or software "
-"monetization services. Please\n"
-"        do not offer us <b>any</b> services!"
 
 #: metabrainz/templates/index/contact.html:62
 msgid "Please do not offer us <b>any</b> other services! We are not interested."
@@ -1068,9 +1015,8 @@ msgid "Mailing address"
 msgstr "Mailing address"
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "El grupo MetaBrainz"
+msgstr "Conjuntos de datos de MetaBrainz"
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1125,7 +1071,7 @@ msgstr ""
 "        Commons licenses."
 
 #: metabrainz/templates/index/index.html:16
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our data is mostly gathered by volunteers and verified\n"
 "        by peer review to ensure it is consistent and correct. All\n"
@@ -1139,17 +1085,6 @@ msgid ""
 "data gathering process so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
-"Our data is mostly gathered by volunteers and verified\n"
-"        by peer review to ensure it is consistent and correct. All\n"
-"        <a href=\"%(account_type_url)s\">non-commercial use</a> of this data "
-"is free,\n"
-"        but <a href=\"%(account_type_url)s\">commercial users</a> are asked "
-"to\n"
-"        <a href=\"%(account_type_url)s\">support us</a> in order to help "
-"fund the\n"
-"        project. We encourage all data users to contribute to the data "
-"gathering process so\n"
-"        that our data can be as comprehensive as possible."
 
 #: metabrainz/templates/index/index.html:38
 msgid ""
@@ -1181,9 +1116,9 @@ msgid "An open record of user listening habits"
 msgstr "An open record of user listening habits"
 
 #: metabrainz/templates/index/index.html:73
-#, fuzzy
 msgid "A repository for Creative Commons licensed music and book reviews"
-msgstr "A repository for Creative Commons licensed music reviews"
+msgstr ""
+"Un repositorio de reseñas de música y libros con licencias Creative Commons"
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
@@ -1257,18 +1192,16 @@ msgid "Summary"
 msgstr "Summary"
 
 #: metabrainz/templates/index/privacy.html:33
-#, fuzzy
 msgid "Applicable to all supporters"
-msgstr "See all our supporters"
+msgstr "Para todos nuestros usuarios"
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:54
-#, fuzzy
 msgid "Web and FTP access logs"
-msgstr "Web and FTP access logs (all users)"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:62
 msgid "Third-Party content"
@@ -1276,21 +1209,19 @@ msgstr ""
 
 #: metabrainz/templates/index/privacy.html:92
 msgid "Applicable to account holders"
-msgstr ""
+msgstr "Para los usuarios con una cuenta"
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "Tipo de cuenta"
+msgstr "Creación de cuenta"
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:114
-#, fuzzy
 msgid "Subscriptions on MusicBrainz"
-msgstr "¿Tiene una pregunta acerca de MetaBrainz?"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
@@ -1362,9 +1293,6 @@ msgid ""
 "source music encyclopedia that\n"
 "            collects music metadata and makes it available to the public."
 msgstr ""
-"<a href=\"%(mb_url)s\">MusicBrainz</a> is a community-maintained open source "
-"music encyclopedia that\n"
-"            collects music metadata and makes it available to the public."
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
@@ -1377,9 +1305,6 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
-"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> is an open-source software "
-"application for\n"
-"            identifying, tagging, and organizing digital audio recordings."
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
@@ -1403,17 +1328,13 @@ msgid "CritiqueBrainz"
 msgstr "CritiqueBrainz"
 
 #: metabrainz/templates/index/projects.html:65
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<a href=\"%(cb_url)s\">CritiqueBrainz</a> fills the gap between music and"
 " book critics and raw data by\n"
 "            providing a platform created for the sole purpose of Creative"
 " Commons licensed reviews."
 msgstr ""
-"<a href=\"%(cb_url)s\">CritiqueBrainz</a> fills the gap between music "
-"critics and raw data by\n"
-"            providing a platform created for the sole purpose of Creative "
-"Commons licensed reviews."
 
 #: metabrainz/templates/index/projects.html:78
 msgid "BookBrainz"
@@ -1427,10 +1348,6 @@ msgid ""
 "            literature. Its aim is to collect and store data about every "
 "publication ever written."
 msgstr ""
-"<a href=\"%(bb_url)s\">BookBrainz</a> is an online encyclopedia containing "
-"information about published\n"
-"            literature. Its aim is to collect and store data about every "
-"publication ever written."
 
 #: metabrainz/templates/index/projects.html:93
 msgid "ListenBrainz"
@@ -1450,16 +1367,15 @@ msgstr ""
 "used for building open music recommendation systems."
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "Proyectos"
+msgstr "Proyectos anteriores"
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
 msgstr "AcousticBrainz"
 
 #: metabrainz/templates/index/projects.html:117
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<a href=\"%(ab_url)s\">AcousticBrainz</a> crowd sourced acoustic "
 "information for all music in\n"
@@ -1469,20 +1385,13 @@ msgid ""
 "href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
 "            in Barcelona."
 msgstr ""
-"<a href=\"%(ab_url)s\">AcousticBrainz</a> crowd sources acoustic information "
-"for all music in\n"
-"            the world and makes it available to the public. It is a joint "
-"effort with\n"
-"            <a href=\"%(mtg_url)s\">Music Technology Group</a> at <a href=\"%"
-"(upf_url)s\">Universitat Pompeu Fabra</a>\n"
-"            in Barcelona."
 
 #: metabrainz/templates/index/projects.html:132
 msgid "MessyBrainz"
 msgstr "MessyBrainz"
 
 #: metabrainz/templates/index/projects.html:134
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifies unclean "
 "metadata, and where possible,\n"
@@ -1490,16 +1399,11 @@ msgid ""
 "used for AcousticBrainz and is still being\n"
 "            used in ListenBrainz."
 msgstr ""
-"<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifies unclean metadata, "
-"and where possible,\n"
-"            links it to stable MusicBrainz identifiers. MessyBrainz is "
-"currently being used for AcousticBrainz and ListenBrainz."
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "API de MetaBrainz"
+msgstr "Tienda de MetaBrainz"
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -1529,7 +1433,7 @@ msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:18
 msgid "We would not exist without you — <b>Thank You!</b>"
-msgstr "No existiríamos sin usted — <b>¡Gracias!</b>"
+msgstr "No existiríamos sin vosotros — <b>¡Gracias!</b>"
 
 #: metabrainz/templates/index/sponsors.html:26
 #, python-format
@@ -1538,15 +1442,12 @@ msgid ""
 "Bronze\n"
 "        account for hosting our sysadmin repositories."
 msgstr ""
-"<b><a href=\"%(github_url)s\">GitHub</a></b> provides us with a free Bronze\n"
-"        account for hosting our sysadmin repositories."
 
 #: metabrainz/templates/index/sponsors.html:34
 msgid "Special thanks"
 msgstr "Especiales gracias"
 
 #: metabrainz/templates/index/sponsors.html:36
-#, fuzzy
 msgid ""
 "In our past, we've had a lot of people support us with many different "
 "levels of support:\n"
@@ -1556,16 +1457,9 @@ msgid ""
 "a few individuals\n"
 "    and companies who have made a big difference for us."
 msgstr ""
-"In our past, we've had a lot of people support us with many different levels "
-"of support:\n"
-"    Access to conferences, covering travel expenses, large personal "
-"donations and countless\n"
-"    meals. These have become too numerous to list, but we wanted to note a "
-"few individuals\n"
-"    who have made a big difference for us."
 
 #: metabrainz/templates/index/sponsors.html:42
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<a href=\"%(google_url)s\">Google</a></b> has been an extremely "
 "supportive\n"
@@ -1588,22 +1482,6 @@ msgid ""
 "    hosting provider between 2006 and 2016 and gave us a discount because"
 " of our non-profit status."
 msgstr ""
-"Richard Jones of <a href=\"%(last_fm_url)s\">Last.fm fame</a> donated <b>"
-"$50,000</b> in 2010,\n"
-"    <a href=\"%(oracle_url)s\">Sun Microsystems</a> &amp; Paul Lamere "
-"donated a database\n"
-"    server and <a href=\"%(oreilly_url)s\">O'Reilly Media</a> gave "
-"MusicBrainz $500 to\n"
-"    start off a bank account for the project before the MetaBrainz "
-"Foundation existed.\n"
-"    <a href=\"%(ed_url)s\">Ed Cavazos</a> periodically provides pro-bono\n"
-"    legal advice for the occasional Intellectual Property questions that "
-"MetaBrainz faces.\n"
-"    <a href=\"%(dan_url)s\">Dan Appleman</a> provides\n"
-"    periodic help crafting contracts for licensing our data.\n"
-"    <a href=\"%(dw_url)s\">Digital West Networks Inc.</a> was our main\n"
-"    hosting provider between 2006 and 2016 and gave us a discount because of "
-"our non-profit status."
 
 #: metabrainz/templates/index/sponsors.html:61
 msgid ""
@@ -1618,12 +1496,11 @@ msgid "The MetaBrainz Team"
 msgstr "El grupo MetaBrainz"
 
 #: metabrainz/templates/index/team.html:12
-#, fuzzy
 msgid "<span class=\"name\">Robert Kaye</span> &mdash; Founder"
-msgstr "<span class=\"name\">Robert Kaye</span> &mdash; Director Ejecutivo"
+msgstr "<span class=\"name\">Robert Kaye</span> &mdash; Fundador"
 
 #: metabrainz/templates/index/team.html:14
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Robert was the founder and lead geek for <a "
 "href=\"%(mb_url)s\">MusicBrainz</a> and the MetaBrainz Foundation,\n"
@@ -1635,39 +1512,27 @@ msgid ""
 "working on MusicBrainz, the open music encyclopedia,\n"
 "          and fell in love with Open Source software."
 msgstr ""
-"Robert is the founder and lead geek for <a href=\"%(mb_url)s\">MusicBrainz</"
-"a>, and Executive Director of\n"
-"          the MetaBrainz Foundation, the non-profit organization that pays "
-"the bills for MusicBrainz. After studying Computer\n"
-"          Engineering at Cal Poly, San Luis Obispo, he joined Xing "
-"Technology where he shaped the MP3 efforts and then spent\n"
-"          time for the dot com boom on EMusic’s FreeAmp team. While at "
-"EMusic he started working on MusicBrainz, the open music\n"
-"          encyclopedia, and fell in love with Open Source software."
 
 #: metabrainz/templates/index/team.html:21
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Robert was an active hardware hacker, creating art projects for Burning "
 "Man and Nowhere. He was the co-founder of\n"
 "          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created "
 "Bartendro the open source cocktail robot."
 msgstr ""
-"Robert is also an active hardware hacker, creating art projects for Burning "
-"Man and Nowhere. He is the co-founder of\n"
-"          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created "
-"Bartendro the open source cocktail robot."
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives on in our hearts and in open source."
 msgstr ""
 
 #: metabrainz/templates/index/team.html:39
-#, fuzzy
 msgid ""
 "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Software "
 "Engineer"
-msgstr "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr ""
+"<span class=\"name\">Michael Wiencek</span> &mdash; Ingeniero de software "
+"senior"
 
 #: metabrainz/templates/index/team.html:41
 msgid ""
@@ -1680,23 +1545,14 @@ msgid ""
 "          ever hear, binge-watching old TV shows, and being the best "
 "drummer in the world on Rock Band 4."
 msgstr ""
-"Michael is the senior developer for MusicBrainz, residing in his hometown of "
-"Chicago. He heard about MusicBrainz when\n"
-"          he was still in grammar school, started editing in high school as "
-"his music collection got unwieldy, and participated\n"
-"          in three GSoC projects during college. In his copious free time he "
-"enjoys going to concerts, making music no one will\n"
-"          ever hear, binge-watching old TV shows, and being the best drummer "
-"in the world on Rock Band 4."
 
 #: metabrainz/templates/index/team.html:57
-#, fuzzy
 msgid ""
 "<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer"
 " Support/Community Manager/Software Engineer"
 msgstr ""
-"<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer "
-"Support"
+"<span class=\"name\">Nicolás Tamargo</span> &mdash; Líder de estilo / "
+"Atención al cliente / Responsable de la comunidad / Ingeniero de software"
 
 #: metabrainz/templates/index/team.html:59
 #, python-format
@@ -1717,9 +1573,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:68
-#, fuzzy
 msgid "Originally from Spain, he now lives in Tartu, Estonia."
-msgstr "He lives in Tartu, Estonia."
+msgstr ""
 
 #: metabrainz/templates/index/team.html:81
 msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
@@ -1735,12 +1590,6 @@ msgid ""
 "          more than 1 bit since 1982 and has been an esteemed Linux "
 "system administrator since 1998."
 msgstr ""
-"A zealous music devotee, Laurent Monin first stumbled upon MusicBrainz and "
-"Picard in attempts to codify his vast\n"
-"          collection of over 1500 CDs. In addition to being a music fanatic, "
-"Laurent has been programming on anything with\n"
-"          more than 1 bit since 1982 and has been an esteemed Linux system "
-"administrator since 1998."
 
 #: metabrainz/templates/index/team.html:88
 #, python-format
@@ -1755,20 +1604,10 @@ msgid ""
 "          sustains the MetaBrainz servers while residing near Besançon, "
 "France."
 msgstr ""
-"With his extensive repertoire of skills and passions, Laurent has actively "
-"contributed to a myriad of open source\n"
-"          projects, notably <a href=\"%(elinks_url)s\">ELinks</a> and\n"
-"          <a href=\"%(geeqie_url)s\">Geeqie</a>, and loves to tinker with "
-"the hardware of various audio\n"
-"          gadgets, including amplifiers and loudspeakers. However, Laurent's "
-"contributions do not end there. He currently\n"
-"          sustains the MetaBrainz servers while residing near Besançon, "
-"France."
 
 #: metabrainz/templates/index/team.html:105
-#, fuzzy
 msgid "<span class=\"name\">Yvan Rivierre</span> &mdash; Software Engineer"
-msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; Software Engineer"
+msgstr "<span class=\"name\">Yvan Rivierre</span> &mdash; Ingeniero de software"
 
 #: metabrainz/templates/index/team.html:107
 msgid ""
@@ -1781,11 +1620,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:120
-#, fuzzy
 msgid ""
 "<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  "
 "Software Engineer & Graphic Designer"
-msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; Software Engineer"
+msgstr ""
+"<span class=\"name\">Nicolas Pelletier</span> &mdash; Líder de BookBrainz / "
+"Ingeniero de software y diseñador gráfico"
 
 #: metabrainz/templates/index/team.html:122
 msgid ""
@@ -1827,10 +1667,9 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:166
-#, fuzzy
 msgid "<span class=\"name\">Adam James</span> &mdash; System Administrator"
 msgstr ""
-"<span class=\"name\">Laurent Monin</span> &mdash; Administrador de Sistema"
+"<span class=\"name\">Adam James</span> &mdash; Administrador de sistemas"
 
 #: metabrainz/templates/index/team.html:168
 msgid ""
@@ -1845,10 +1684,9 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:189
-#, fuzzy
 msgid "<span class=\"name\">Julian Anderson</span> &mdash; System Administrator"
 msgstr ""
-"<span class=\"name\">Laurent Monin</span> &mdash; Administrador de Sistema"
+"<span class=\"name\">Julian Anderson</span> &mdash; Administrador de sistemas"
 
 #: metabrainz/templates/index/team.html:191
 msgid ""
@@ -1885,9 +1723,9 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:236
-#, fuzzy
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
-msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; Software Engineer"
+msgstr ""
+"<span class=\"name\">Ansh Goyal</span> &mdash; Ingeniero de software junior"
 
 #: metabrainz/templates/index/team.html:238
 msgid ""
@@ -1902,12 +1740,13 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:250
 msgid "Voluntary Project Leaders"
-msgstr "Voluntary Project Leaders"
+msgstr "Líderes de proyecto voluntarios"
 
 #: metabrainz/templates/index/team.html:259
-#, fuzzy
 msgid "<span class=\"name\">Akshat Tiwari</span> &mdash; Junior Software Engineer"
-msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; Software Engineer"
+msgstr ""
+"<span class=\"name\">Akshat Tiwari</span> &mdash; Ingeniero de software "
+"junior"
 
 #: metabrainz/templates/index/team.html:261
 msgid ""
@@ -1925,11 +1764,11 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:278
-#, fuzzy
 msgid ""
 "<span class=\"name\">Param Singh</span> &mdash; Former ListenBrainz team "
 "leader"
-msgstr "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr ""
+"<span class=\"name\">Param Singh</span> &mdash; Antiguo líder de ListenBrainz"
 
 #: metabrainz/templates/index/team.html:280
 msgid ""
@@ -1944,11 +1783,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:301
-#, fuzzy
 msgid ""
 "<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
 "MusicBrainz Areas"
-msgstr "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr ""
+"<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; Soporte de "
+"áreas en MusicBrainz"
 
 #: metabrainz/templates/index/team.html:303
 #, python-format
@@ -1967,9 +1807,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:328
-#, fuzzy
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
-msgstr "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr ""
+"<span class=\"name\">Akira Holm</span> &mdash; Soporte de instrumentos en "
+"MusicBrainz"
 
 #: metabrainz/templates/index/team.html:330
 msgid ""
@@ -1990,14 +1831,12 @@ msgid "Download Datasets"
 msgstr ""
 
 #: metabrainz/templates/index/datasets/signup.html:3
-#, fuzzy
 msgid "Please sign up"
-msgstr "Registrarse"
+msgstr "Regístrate"
 
 #: frontend/js/src/Applications.tsx:38 metabrainz/templates/oauth/create.html:3
-#, fuzzy
 msgid "Create new application"
-msgstr "Generate new token"
+msgstr "Crear nueva aplicación"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -2019,20 +1858,16 @@ msgstr ""
 
 #: metabrainz/templates/oauth/prompt.html:3
 msgid "OAuth Authorization"
-msgstr "OAuth Authorization"
+msgstr ""
 
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
 msgid "Cancelling recurring payments"
-msgstr "Cancelling recurring payments"
+msgstr "Cancelar pagos periódicos"
 
 #: metabrainz/templates/payments/cancel_recurring.html:9
-#, fuzzy
 msgid "If you want to cancel a recurring donation (payment) that you have set up:"
-msgstr ""
-"In case you want to cancel recurring donation (payment) that you set up "
-"before,\n"
-"    you'll need to go to a service which you used to pay."
+msgstr "Si quieres cancelar una donación o pago periódicos:"
 
 #: metabrainz/templates/payments/cancel_recurring.html:14
 #, python-format
@@ -2068,15 +1903,6 @@ msgid ""
 "donation off your taxes if you are a\n"
 "      US taxpayer."
 msgstr ""
-"If you feel that our projects are a worthwhile effort, please consider "
-"contributing money to the\n"
-"      MetaBrainz Foundation, which is a <a href=\"%(wikipedia_non_profit_url)"
-"s\">\n"
-"      501(c)(3) tax-exempt non-profit</a> based in California. All of your "
-"donations will be tax-deductible\n"
-"      and you will receive a receipt that you can use to deduct your "
-"donation off your taxes if you are a\n"
-"      US taxpayer."
 
 #: metabrainz/templates/payments/donate.html:18
 msgid ""
@@ -2086,11 +1912,6 @@ msgid ""
 "office, and paying a minimal\n"
 "      salary for MetaBrainz employees."
 msgstr ""
-"Your donations will be used to operate projects of the MetaBrainz "
-"Foundation. This includes paying\n"
-"      for ongoing expenses like hosting, hardware, maintaining a modest "
-"office, and paying a minimal\n"
-"      salary for MetaBrainz employees."
 
 #: metabrainz/templates/payments/donate.html:23
 #, python-format
@@ -2098,8 +1919,6 @@ msgid ""
 "Where has my contribution gone? See our <a "
 "href=\"%(finance_reports_url)s\">transparent finances</a>."
 msgstr ""
-"Where has my contribution gone? See our <a href=\"%(finance_reports_url)s\">"
-"transparent finances</a>."
 
 #: metabrainz/templates/payments/donate.html:24
 #, python-format
@@ -2107,8 +1926,6 @@ msgid ""
 "Who else is contributing? See our list of <a "
 "href=\"%(donors_url)s\">donors</a>."
 msgstr ""
-"Who else is contributing? See our list of <a href=\"%(donors_url)s\">donors</"
-"a>."
 
 #: metabrainz/templates/payments/donate.html:28
 #, python-format
@@ -2118,15 +1935,11 @@ msgid ""
 "actual\n"
 "        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
-"<b>Be careful!</b> This is a development version of the website. Do NOT\n"
-"        use your real credit card credentials! If you want to send an "
-"actual\n"
-"        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 
 #: metabrainz/templates/payments/donate.html:39
 #: metabrainz/templates/payments/payment.html:31
 msgid "Amount"
-msgstr "Amount"
+msgstr "Importe"
 
 #: metabrainz/templates/payments/donate.html:54
 #, python-format
@@ -2135,13 +1948,10 @@ msgid ""
 "            <a href=\"%(mail_link)s\">donations@metabrainz.org</a>\n"
 "            before you do."
 msgstr ""
-"If you would like to make a large donation, please contact us at\n"
-"            <a href=\"%(mail_link)s\">donations@metabrainz.org</a>\n"
-"            before you do."
 
 #: metabrainz/templates/payments/donate.html:65
 msgid "I want this to be a recurring monthly donation"
-msgstr "I want this to be a recurring monthly donation"
+msgstr "Quiero hacer una donación periódica mensual"
 
 #: metabrainz/templates/payments/donate.html:73
 msgid "MusicBrainz username"
@@ -2149,20 +1959,19 @@ msgstr "MusicBrainz nombre de usuario"
 
 #: metabrainz/templates/payments/donate.html:82
 msgid "Email me about future fundraising events"
-msgstr "Email me about future fundraising events"
+msgstr ""
 
 #: metabrainz/templates/payments/donate.html:83
 msgid "This will be very seldom"
-msgstr "This will be very seldom"
+msgstr ""
 
 #: metabrainz/templates/payments/donate.html:91
 msgid "I would like this donation to be anonymous"
-msgstr "I would like this donation to be anonymous"
+msgstr "Quiero que esta donación sea anónima"
 
 #: metabrainz/templates/payments/donate.html:92
-#, fuzzy
 msgid "Your name and username won't appear in the donors list"
-msgstr "Your name won't appear in the donors list"
+msgstr "Tu nombre y nombre de usuario no aparecerán en la lista de donantes"
 
 #: metabrainz/templates/payments/donate.html:100
 msgid "Donate with Credit Card"
@@ -2184,11 +1993,6 @@ msgid ""
 "        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
 "        privacy policy</a>."
 msgstr ""
-"The personal information provided to the MetaBrainz Foundation during the\n"
-"        donation process will not be shared with anyone. For more "
-"information,\n"
-"        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
-"        privacy policy</a>."
 
 #: metabrainz/templates/payments/donate.html:129
 #, python-format
@@ -2196,21 +2000,18 @@ msgid ""
 "To find out how to cancel recurring donations take a look at\n"
 "        <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
-"To find out how to cancel recurring donations take a look at\n"
-"        <a href=\"%(cancel_recurring_url)s\">this page</a>."
 
 #: metabrainz/templates/payments/donate.html:134
 msgid "Other ways to donate"
 msgstr "Otras formas de donar"
 
 #: metabrainz/templates/payments/donate.html:137
-#, fuzzy
 msgid ""
 "If you use GitHub to sponsor your favourite projects, you can click below"
 " to Sponsor @metabrainz on GitHub Sponsors:"
 msgstr ""
-"If you use Flattr to donate to your favourite projects, you can click below "
-"to Flattr MetaBrainz:"
+"Si usas GitHub para patrocinar a tus proyectos favoritos, puedes hacer click "
+"aquí para patrocinar a @metabrainz en GitHub Sponsors:"
 
 #: metabrainz/templates/payments/donate.html:140
 #: metabrainz/templates/payments/payment_base.html:29
@@ -2222,8 +2023,6 @@ msgid ""
 "You can make a donation, or recurring donations, via bank transfer to the"
 " following IBAN:"
 msgstr ""
-"You can make a donation, or recurring donations, via bank transfer to the "
-"following IBAN:"
 
 #: metabrainz/templates/payments/donate.html:143
 #, python-format
@@ -2236,7 +2035,7 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:145
 msgid "US Check"
-msgstr "US Check"
+msgstr ""
 
 #: metabrainz/templates/payments/donate.html:146
 msgid ""
@@ -2249,23 +2048,22 @@ msgid ""
 "Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging "
 "you"
 msgstr ""
-"Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging you"
 
 #: metabrainz/templates/payments/donate.html:256
 msgid "MusicBrainz is currently unavailable."
-msgstr "MusicBrainz is currently unavailable."
+msgstr "MusicBrainz no está disponible en este momento."
 
 #: metabrainz/templates/payments/donate.html:257
 msgid "Please, make sure that your username is correct."
-msgstr "Please, make sure that your username is correct."
+msgstr "Comprueba que has introducido el nombre de usuario correcto."
 
 #: metabrainz/templates/payments/donate.html:259
 msgid "Your donation will be associated with this account."
-msgstr "Your donation will be associated with this account."
+msgstr "Tu donación estará asociada a esta cuenta."
 
 #: metabrainz/templates/payments/donate.html:261
 msgid "We can't find this account. Please, make sure it's correct"
-msgstr "We can't find this account. Please, make sure it's correct"
+msgstr "No podemos encontrar la cuenta. Asegúrate de que es la correcta."
 
 #: metabrainz/templates/payments/donors.html:3
 #: metabrainz/templates/reports/financial_reports/index.html:23
@@ -2274,11 +2072,11 @@ msgstr "Donaciones"
 
 #: metabrainz/templates/payments/donors.html:11
 msgid "by date"
-msgstr "by date"
+msgstr "por fecha"
 
 #: metabrainz/templates/payments/donors.html:14
 msgid "by amount"
-msgstr "by amount"
+msgstr "por importe"
 
 #: metabrainz/templates/payments/donors.html:20
 msgid "No donations. :("
@@ -2305,38 +2103,29 @@ msgid "First"
 msgstr "Primero"
 
 #: metabrainz/templates/payments/payment.html:7
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>Be careful!</b> This is a development version of the website. Do NOT\n"
 "      use your real credit card credentials! If you want to send an "
 "actual\n"
 "      payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
-"<b>Be careful!</b> This is a development version of the website. Do NOT\n"
-"        use your real credit card credentials! If you want to send an "
-"actual\n"
-"        payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 
 #: metabrainz/templates/payments/payment.html:17
-#, fuzzy
 msgid "Organization:"
-msgstr "Nombre de la organización"
+msgstr "Organización:"
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "Supporters"
+msgstr "Nivel de apoyo:"
 
 #: metabrainz/templates/payments/payment.html:44
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "If you would like to make a large payment, please contact us at\n"
 "          <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
 "          before you do."
 msgstr ""
-"If you would like to make a large payment, please contact us at\n"
-"            <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
-"            before you do."
 
 #: metabrainz/templates/payments/payment.html:52
 #: metabrainz/templates/payments/payment.html:159
@@ -2352,7 +2141,7 @@ msgid "Pay with Credit Card"
 msgstr "Pagar con Tarjeta de Crédito"
 
 #: metabrainz/templates/payments/payment.html:84
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The personal information provided to the MetaBrainz Foundation during the"
 "\n"
@@ -2361,25 +2150,17 @@ msgid ""
 "      please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
 "      privacy policy</a>."
 msgstr ""
-"The personal information provided to the MetaBrainz Foundation during the\n"
-"        payment process will not be shared with anyone. For more "
-"information,\n"
-"        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
-"        privacy policy</a>."
 
 #: metabrainz/templates/payments/payment.html:93
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
-"To find out how to cancel recurring payments take a look at\n"
-"        <a href=\"%(cancel_recurring_url)s\">this page</a>."
 
 #: metabrainz/templates/payments/payment.html:157
-#, fuzzy
 msgid "Invoice number (optional)"
-msgstr "Invoice number"
+msgstr "Número de factura (opcional)"
 
 #: metabrainz/templates/payments/payment_base.html:3
 #: metabrainz/templates/payments/payment_base.html:7
@@ -2387,7 +2168,7 @@ msgid "Make a Payment"
 msgstr "Make a Payment"
 
 #: metabrainz/templates/payments/payment_base.html:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>This page is for organizations that are supporters of the MetaBrainz "
 "Foundation to make payments\n"
@@ -2395,10 +2176,6 @@ msgid ""
 "If you want to make a donation\n"
 "      instead, go to <a href=\"%(donate_url)s\">donation page</a>."
 msgstr ""
-"<b>This page is for organizations!</b> Payments made here will not show up\n"
-"      in the list of donations. If you want to make a donation instead, go "
-"to\n"
-"      <a href=\"%(donate_url)s\">donation page</a>."
 
 #: metabrainz/templates/payments/payment_base.html:16
 msgid ""
@@ -2537,13 +2314,10 @@ msgid "Reports"
 msgstr "Reportes"
 
 #: metabrainz/templates/reports/financial_reports/index.html:31
-#, fuzzy
 msgid ""
 "We attempt to publish our balance sheets within the first week of the "
 "succeeding quarter, or as close to that as possible."
 msgstr ""
-"We attempt to publish our balance sheets within the first week of the "
-"succeeding month, or as close to that as possible."
 
 #: metabrainz/templates/reports/financial_reports/index.html:36
 #: metabrainz/templates/reports/financial_reports/index.html:50
@@ -3197,9 +2971,8 @@ msgstr "Monthly balance sheets"
 #: metabrainz/templates/supporters/account-type.html:6
 #: metabrainz/templates/supporters/signup-commercial.html:3
 #: metabrainz/templates/supporters/signup-non-commercial.html:3
-#, fuzzy
 msgid "Become a Supporter"
-msgstr "See all our supporters"
+msgstr "Hazte simpatizante"
 
 #: metabrainz/templates/supporters/account-type.html:3
 msgid "Support"
@@ -3218,9 +2991,9 @@ msgid "Non-commercial"
 msgstr "No comercial"
 
 #: metabrainz/templates/supporters/account-type.html:43
-#, fuzzy, python-format
+#, python-format
 msgid "$0.00/month and up"
-msgstr "$%(tier_price)s/month and up"
+msgstr "$0.00 al mes o más"
 
 #: metabrainz/templates/supporters/account-type.html:44
 msgid "Personal or university assignment user."
@@ -3229,9 +3002,8 @@ msgstr ""
 #: metabrainz/templates/supporters/account-type.html:48
 #: metabrainz/templates/supporters/account-type.html:90
 #: metabrainz/templates/supporters/account-type.html:141
-#, fuzzy
 msgid "Upgrade"
-msgstr "Update"
+msgstr ""
 
 #: metabrainz/templates/supporters/account-type.html:51
 #: metabrainz/templates/supporters/account-type.html:93
@@ -3277,18 +3049,15 @@ msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
 msgstr ""
-"If you are not sure which tier to pick, please\n"
-"      <a href=\"%(contact_url)s\">contact us</a>."
 
 #: metabrainz/templates/supporters/account-type.html:166
-#, fuzzy
 msgid "Back to Profile"
-msgstr "Tu Perfil"
+msgstr "Volver al perfil"
 
 #: metabrainz/templates/supporters/bad-standing.html:3
 #: metabrainz/templates/supporters/bad-standing.html:6
 msgid "Bad standing"
-msgstr "Bad standing"
+msgstr ""
 
 #: metabrainz/templates/supporters/bad-standing.html:8
 msgid ""
@@ -3297,12 +3066,9 @@ msgid ""
 "  MetaBrainz and are using one of our data-sets, but are behind in their\n"
 "  payments by more than 60 days."
 msgstr ""
-"Companies that are in <i>bad standing</i> have previously agreed to support\n"
-"  MetaBrainz and are using one of our data-sets, but are behind in their\n"
-"  payments by more than 60 days."
 
 #: metabrainz/templates/supporters/supporters-list.html:9
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The following organizations make use of the data-sets published by "
 "MetaBrainz and\n"
@@ -3317,23 +3083,13 @@ msgid ""
 "    to sign your company up as a supporter, go to our <a "
 "href=\"%(signup_form)s\">sign up page</a>."
 msgstr ""
-"The following organizations make use of the data-sets published by "
-"MetaBrainz and\n"
-"    are supporting us financially or through some other reciprocal "
-"agreement. There are also\n"
-"    organizations that make use of our data that have explicitly declined to "
-"support us. There\n"
-"    may also be other organizations making use of our data that we don't "
-"know about yet. If you\n"
-"    know of a company using our data, please <a href=\"%(contact_url)s\">"
-"contact us</a>."
 
 #: metabrainz/templates/supporters/supporters-list.html:23
 #: metabrainz/templates/supporters/tier.html:3
 #: metabrainz/templates/supporters/tier.html:6
 #, python-format
 msgid "%(tier_name)s tier"
-msgstr "%(tier_name)s tier"
+msgstr ""
 
 #: metabrainz/templates/supporters/supporters-list.html:32
 #: metabrainz/templates/supporters/tier.html:25
@@ -3342,11 +3098,11 @@ msgstr ""
 
 #: metabrainz/templates/supporters/tier.html:13
 msgid "Sign up for this tier"
-msgstr "Sign up for this tier"
+msgstr ""
 
 #: metabrainz/templates/supporters/tier.html:19
 msgid "Supporters on this tier"
-msgstr "Supporters on this tier"
+msgstr "Simpatizantes en este nivel"
 
 #: metabrainz/templates/users/lost-password.html:3
 msgid "Forgot password"
