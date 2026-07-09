@@ -296,7 +296,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
             </div>
             <div className="panel-body">
               <dl style={{ marginBottom: 0 }}>
-                <dt>{t("Contact Name")}</dt>
+                <dt>{t("Contact name")}</dt>
                 <dd style={{ marginBottom: "1rem" }}>{contact_name}</dd>
                 <dt>{t("Contact Email")}</dt>
                 <dd style={{ marginBottom: !is_commercial ? "1rem" : 0 }}>
