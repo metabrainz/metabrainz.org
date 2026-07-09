@@ -12,9 +12,9 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-06-26 16:54+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2026-07-09 14:18+0000\n"
+"Last-Translator: reosarevok "
+"<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Spanish <https://translations.metabrainz.org/projects/"
 "metabrainz/website/es/>\n"
 "Language: es\n"
@@ -23,18 +23,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
 "0) ? 1 : 2);\n"
-"X-Generator: Weblate 2026.6.1\n"
+"X-Generator: Weblate 2026.7\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: metabrainz/index/forms.py:45
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "«%(value)s» no es una opción válida para este campo"
 
 #: metabrainz/index/forms.py:56 metabrainz/user/forms.py:25
 #: metabrainz/user/forms.py:49 metabrainz/user/forms.py:55
 msgid "Email address is required!"
-msgstr "Email address is required!"
+msgstr "Debes añadir una dirección de correo."
 
 #: frontend/js/src/Applications.tsx:51 frontend/js/src/Applications.tsx:79
 #: metabrainz/index/forms.py:61
@@ -43,24 +43,23 @@ msgstr "Nombre"
 
 #: metabrainz/index/forms.py:62
 msgid "Contact name field is empty."
-msgstr "El campo del nombre de contacto está vacío."
+msgstr "El campo «Nombre del contacto» está vacío."
 
 #: metabrainz/index/views.py:228
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "Tu perfil ha sido actualizado."
 
 #: metabrainz/index/views.py:345
 msgid "You have updated an application!"
-msgstr ""
+msgstr "¡Has actualizado una aplicación!"
 
 #: metabrainz/index/views.py:397
 msgid "You have deleted an application."
-msgstr ""
+msgstr "Has eliminado una aplicación."
 
 #: metabrainz/index/views.py:399
-#, fuzzy
 msgid "Failed to delete an application."
-msgstr "Failed to generate new access token!"
+msgstr "No hemos podido eliminar la aplicación."
 
 #: metabrainz/index/views.py:422
 msgid "Revoked tokens successfully!"
@@ -68,76 +67,67 @@ msgstr ""
 
 #: metabrainz/index/views.py:451
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Tu cuenta ha sido eliminada."
 
 #: metabrainz/oauth/forms.py:58
-#, fuzzy
 msgid "Application Name"
-msgstr "Nombre de la organización"
+msgstr "Nombre de la aplicación"
 
 #: metabrainz/oauth/forms.py:59
-#, fuzzy
 msgid "Application name field is empty."
-msgstr "El campo del nombre de contacto está vacío."
+msgstr "El campo «Nombre de la aplicación» está vacío."
 
 #: metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "El nombre de la aplicación debe contener al menos tres caracteres."
 
 #: metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
-msgstr ""
+msgstr "El nombre de la aplicación debe contener un máximo de 64 caracteres."
 
 #: metabrainz/oauth/forms.py:63
-#, fuzzy
 msgid "Description"
-msgstr "Descripción de la organización"
+msgstr "Descripción"
 
 #: metabrainz/oauth/forms.py:64
-#, fuzzy
 msgid "Client description field is empty."
-msgstr "El campo del nombre de contacto está vacío."
+msgstr "El campo «Descripción» está vacío."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr ""
+msgstr "La descripción debe contener al menos tres caracteres."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr ""
+msgstr "La descripción debe contener un máximo de 512 caracteres."
 
 #: metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "Back to home page"
+msgstr "Sitio web"
 
 #: metabrainz/oauth/forms.py:69
-#, fuzzy
 msgid "Homepage field is empty."
-msgstr "El campo del nombre de contacto está vacío."
+msgstr "El campo «Sitio web» está vacío."
 
 #: metabrainz/oauth/forms.py:70
-#, fuzzy
 msgid "Homepage is not a valid URI."
-msgstr "Email field is not a valid email address."
+msgstr "El sitio web indicado no es una URI válida."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
-msgstr ""
+msgstr "La URL del sitio web tiene que usar http o https."
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
 msgstr ""
 
 #: metabrainz/oauth/forms.py:74
-#, fuzzy
 msgid "Authorization callback URL field is empty."
-msgstr "Contact email field is empty."
+msgstr ""
 
 #: metabrainz/oauth/forms.py:75
-#, fuzzy
 msgid "Authorization callback URL is invalid."
-msgstr "Authorization code is missing!"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
@@ -145,7 +135,7 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -153,82 +143,77 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
-"Thank you for making a donation to the MetaBrainz Foundation. Your support "
-"is greatly appreciated! It may take some time before your donation appears "
-"in the list due to processing delays."
+"Gracias por tu donación a la MetaBrainz Foundation, agradecemos mucho to "
+"apoyo. Tu donación aparecerá en la lista una vez haya sido procesada, lo que "
+"puede llevar un tiempo."
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
-"Thank you for making a payment to the MetaBrainz Foundation. Your support is "
-"greatly appreciated!"
+"Gracias por tu pago a la MetaBrainz Foundation, agradecemos mucho to apoyo."
 
 #: metabrainz/payments/views.py:182
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
 msgstr ""
-"We're sorry to see that you won't be donating today. We hope that you'll "
-"change your mind!"
 
 #: metabrainz/payments/views.py:188
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
 msgstr ""
-"We're sorry to see that you won't be paying today. We hope that you'll "
-"change your mind!"
 
 #: metabrainz/payments/views.py:202
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
-msgstr ""
-"We're sorry, but it appears we've run into an error and can't process your "
-"donation."
+msgstr "Lo sentimos, pero ha habido un error y no podemos procesar tu donación."
 
 #: metabrainz/payments/views.py:208
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your payment."
-msgstr ""
-"We're sorry, but it appears we've run into an error and can't process your "
-"payment."
+msgstr "Lo sentimos, pero ha habido un error y no podemos procesar tu pago."
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
-msgstr "Requested annual report was not found."
+msgstr "No hemos encontrado el informe anual solicitado."
 
 #: metabrainz/supporter/forms.py:13
 msgid "Contact name is required!"
-msgstr "Contact name is required!"
+msgstr "¡Necesitamos el nombre de una persona de contacto!"
 
 #: metabrainz/supporter/forms.py:15
 msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
+"¿Puedes contarmos más sobre el proyecto en el que quieres utilizar nuestros "
+"datos? ¿Quieres alojar los datos en tus propios servidores o usar nuestras "
+"APIs?"
 
 #: metabrainz/supporter/forms.py:17
 msgid "Please, tell us how you (will) use our data."
-msgstr "Please, tell us how you (will) use our data."
+msgstr "Por favor, cuéntanos como usas o planeas usar nuestros datos."
 
 #: metabrainz/supporter/forms.py:18
-#, fuzzy
 msgid "Please, limit usage description to 500 characters."
-msgstr "Please, limit usage description to 150 characters."
+msgstr ""
+"Por favor, no uses más de 500 caracteres para describir el uso de los datos."
 
 #: metabrainz/supporter/forms.py:21
 msgid "You need to accept the agreement!"
-msgstr "You need to accept the agreement!"
+msgstr "¡Debes aceptar el acuerdo!"
 
 #: metabrainz/supporter/forms.py:27
 msgid "Organization name"
 msgstr "Nombre de la organización"
 
 #: metabrainz/supporter/forms.py:28
+#, fuzzy
 msgid "You need to specify the name of your organization."
 msgstr "Tiene que especificar el nombre de su organización."
 
@@ -237,30 +222,32 @@ msgid "Organization description"
 msgstr "Descripción de la organización"
 
 #: metabrainz/supporter/forms.py:31
+#, fuzzy
 msgid "You need to provide description of your organization."
 msgstr "Tiene que proporcionar una descripción de su organización."
 
 #: metabrainz/supporter/forms.py:34
 msgid "Website URL"
-msgstr "Website URL"
+msgstr "URL del sitio web"
 
 #: metabrainz/supporter/forms.py:35
 msgid "You need to specify website of the organization."
-msgstr "You need to specify website of the organization."
+msgstr "Tienes que indicar el sitio web de la organización."
 
 #: metabrainz/supporter/forms.py:37
 msgid "Logo image URL"
-msgstr "Logo image URL"
+msgstr "URL de la imagen del logo"
 
 #: metabrainz/supporter/forms.py:38
 msgid "API URL"
-msgstr "API URL"
+msgstr "URL de la API"
 
 #: metabrainz/supporter/forms.py:40
 msgid "Street"
 msgstr "Calle"
 
 #: metabrainz/supporter/forms.py:41
+#, fuzzy
 msgid "You need to specify street."
 msgstr "Tiene que especificar la calle."
 
@@ -269,6 +256,7 @@ msgid "City"
 msgstr "Ciudad"
 
 #: metabrainz/supporter/forms.py:44
+#, fuzzy
 msgid "You need to specify city."
 msgstr "Tiene que especificar la ciudad."
 
@@ -277,6 +265,7 @@ msgid "State / Province"
 msgstr "Estado / provincia"
 
 #: metabrainz/supporter/forms.py:47
+#, fuzzy
 msgid "You need to specify state/province."
 msgstr "Tiene que especificar el estado / la provincia."
 
@@ -285,73 +274,75 @@ msgid "Postcode"
 msgstr "Código postal"
 
 #: metabrainz/supporter/forms.py:50
+#, fuzzy
 msgid "You need to specify postcode."
-msgstr "Tiene que especificar el código posta."
+msgstr "Tiene que especificar el código postal."
 
 #: metabrainz/supporter/forms.py:52
 msgid "Country"
 msgstr "País"
 
 #: metabrainz/supporter/forms.py:53
+#, fuzzy
 msgid "You need to specify country."
 msgstr "Tiene que especificar el país."
 
 #: metabrainz/supporter/forms.py:64
-#, fuzzy
 msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
 msgstr ""
-"Custom amount must be more than threshold amountfor selected tier or equal "
-"to it!"
+"¡El importe indicado debe ser igual o superior al importe mínimo del nivel "
+"seleccionado!"
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
-#, fuzzy
 msgid "You are already a supporter."
-msgstr "See all our supporters"
+msgstr "Ya eres un simpatizante."
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
-msgstr "Can't find tier with a specified ID."
+msgstr "No hemos encontrado un nivel con la ID indicada."
 
 #: metabrainz/supporter/views.py:127
 msgid "You need to choose support tier before signing up!"
-msgstr "You need to choose support tier before signing up!"
+msgstr "¡Tienes que elegir un nivel de apoyo para poder registrarte!"
 
 #: metabrainz/supporter/views.py:137
 msgid "You need to choose existing tier before signing up!"
-msgstr "You need to choose existing tier before signing up!"
+msgstr ""
+"¡Tienes que elegir uno de los niveles de apoyo disponibles para poder "
+"registrarte!"
 
 #: metabrainz/supporter/views.py:164
-#, fuzzy
 msgid ""
 "Thanks for becoming a supporter! Your application will be reviewed soon. "
 "We will send you updates via email."
 msgstr ""
-"Thanks for signing up! Your application will be reviewed soon. We will send "
-"you updates via email."
+"¡Gracias por convertirte en nuestro simpatizante! Revisaremos tu aplicación "
+"lo antes posible y te contactaremos por correo electrónico."
 
 #: metabrainz/supporter/views.py:187
 msgid ""
 "Thanks for signing up! Your application will be reviewed soon. We will "
 "send you updates via email."
 msgstr ""
-"Thanks for signing up! Your application will be reviewed soon. We will send "
-"you updates via email."
+"¡Gracias por registrarte! Revisaremos tu aplicación lo antes posible y te "
+"contactaremos por correo electrónico."
 
 #: metabrainz/supporter/views.py:248
-#, fuzzy
 msgid "Thanks for becoming a supporter!"
-msgstr "Thanks for signing up!"
+msgstr "¡Gracias por convertirte en simpatizante!"
 
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr ""
+"¡Gracias por registrarte! Por favor, comprueba tu bandeja de entrada para "
+"verificar tu dirección de correo electrónico."
 
 #: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
-msgstr "Can't generate new token unless account is active."
+msgstr "Solo las cuentas marcadas como «activas» pueden generar un nuevo token."
 
 #: metabrainz/templates/base.html:44
 msgid "Foundation"
@@ -366,9 +357,8 @@ msgstr "Proyectos"
 #: metabrainz/templates/index/datasets/derived-dumps.html:3
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
-#, fuzzy
 msgid "Datasets"
-msgstr "Fecha"
+msgstr "Conjuntos de datos"
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
@@ -377,27 +367,25 @@ msgstr "Equipo"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr ""
+msgstr "Tienda"
 
 #: metabrainz/templates/base.html:53
-#, fuzzy
 msgid "Policies"
-msgstr "Officers"
+msgstr "Políticas"
 
 #: metabrainz/templates/base.html:55
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
-#, fuzzy
 msgid "Social Contract"
-msgstr "Contacto"
+msgstr "Contrato social"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
 #: metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
-msgstr ""
+msgstr "Código de conducta"
 
 #: metabrainz/templates/base.html:57 metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
@@ -408,13 +396,12 @@ msgstr "Política de privacidad"
 #: metabrainz/templates/reports/financial_reports/index.html:3
 #: metabrainz/templates/reports/financial_reports/index.html:6
 msgid "Finances"
-msgstr "Finances"
+msgstr "Finanzas"
 
 #: metabrainz/templates/base.html:63 metabrainz/templates/navbar.html:47
 #: metabrainz/templates/reports/annual_reports/view.html:4
-#, fuzzy
 msgid "Archived Annual Reports"
-msgstr "Informes anuales"
+msgstr "Archivo de informes anuales"
 
 #: metabrainz/templates/base.html:64 metabrainz/templates/navbar.html:49
 #: metabrainz/templates/payments/donors.html:6
@@ -433,16 +420,16 @@ msgstr "Patrocinadores"
 #: metabrainz/templates/supporters/supporters-list.html:3
 #: metabrainz/templates/supporters/supporters-list.html:6
 msgid "Supporters"
-msgstr "Supporters"
+msgstr "Simpatizantes"
 
 #: metabrainz/templates/base.html:73 metabrainz/templates/navbar.html:60
 #: metabrainz/templates/users/login.html:3
 msgid "Sign in"
-msgstr "Iniciar Sesión"
+msgstr "Iniciar sesión"
 
 #: metabrainz/templates/base.html:75 metabrainz/templates/navbar.html:69
 msgid "Sign out"
-msgstr "Cerrar Sesión"
+msgstr "Cerrar sesión"
 
 #: metabrainz/templates/base.html:77
 msgid "Access your account"
@@ -454,7 +441,7 @@ msgstr "API"
 
 #: metabrainz/templates/base.html:83
 msgid "Contact us"
-msgstr "Contáctenos"
+msgstr "Contacta con nosotros"
 
 #: metabrainz/templates/base.html:85
 #: metabrainz/templates/index/contact.html:105
@@ -463,7 +450,7 @@ msgstr "Blog"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "Chat"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
@@ -788,9 +775,8 @@ msgid "Bad customers"
 msgstr "Bad customers"
 
 #: metabrainz/templates/index/bad-customers.html:8
-#, fuzzy
 msgid "Our not-so-favorite commercial data supporters"
-msgstr "Our not-so-favorite commercial data users"
+msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:11
 msgid ""
@@ -855,9 +841,8 @@ msgid "Nice!!"
 msgstr "Genial!!"
 
 #: metabrainz/templates/index/bad-customers.html:54
-#, fuzzy
 msgid "There are currently no not-so-favorite commercial data supporters!"
-msgstr "There are currently no not-so-favorite commercial data users!"
+msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:56
 msgid ""
@@ -2257,13 +2242,13 @@ msgstr ""
 "following IBAN:"
 
 #: metabrainz/templates/payments/donate.html:143
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Please indicate your name and use the word "
 "<em>%(donation_fixed_string)s</em> in the description field."
 msgstr ""
-"Please indicate your name and use the word %(donation_fixed_string)s in the "
-"description field."
+"Por favor, indica tu nombre y usa la palabra <em>%(donation_fixed_string)s</"
+"em> en el campo «descripción»."
 
 #: metabrainz/templates/payments/donate.html:145
 msgid "US Check"
@@ -2471,8 +2456,8 @@ msgid ""
 "Please specify the invoice number(s) you are paying in the description "
 "field of the transfer."
 msgstr ""
-"Please specify the invoice number(s) you are paying in the description field "
-"of the transfer."
+"Por favor, indica el número de la factura que quieres pagar en el campo «"
+"Descripción» de la transferencia."
 
 #: metabrainz/templates/payments/payment_selector.html:7
 msgid "Please, select a currency that you want to use for payment:"
@@ -3460,7 +3445,7 @@ msgstr "Ninguna aplicación encontrada"
 
 #: frontend/js/src/Applications.tsx:52 frontend/js/src/Applications.tsx:80
 msgid "Website"
-msgstr "Página web"
+msgstr "Sitio web"
 
 #: frontend/js/src/Applications.tsx:53
 msgid "Client ID"
