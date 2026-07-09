@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-07-09 14:18+0000\n"
+"PO-Revision-Date: 2026-07-09 15:16+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Spanish <https://translations.metabrainz.org/projects/"
@@ -213,18 +213,16 @@ msgid "Organization name"
 msgstr "Nombre de la organización"
 
 #: metabrainz/supporter/forms.py:28
-#, fuzzy
 msgid "You need to specify the name of your organization."
-msgstr "Tiene que especificar el nombre de su organización."
+msgstr "Tienes que indicar el nombre de tu organización."
 
 #: metabrainz/supporter/forms.py:30
 msgid "Organization description"
 msgstr "Descripción de la organización"
 
 #: metabrainz/supporter/forms.py:31
-#, fuzzy
 msgid "You need to provide description of your organization."
-msgstr "Tiene que proporcionar una descripción de su organización."
+msgstr "Tienes que suministrar una descripción de tu organización."
 
 #: metabrainz/supporter/forms.py:34
 msgid "Website URL"
@@ -247,36 +245,32 @@ msgid "Street"
 msgstr "Calle"
 
 #: metabrainz/supporter/forms.py:41
-#, fuzzy
 msgid "You need to specify street."
-msgstr "Tiene que especificar la calle."
+msgstr "Tienes que indicar la calle."
 
 #: metabrainz/supporter/forms.py:43
 msgid "City"
 msgstr "Ciudad"
 
 #: metabrainz/supporter/forms.py:44
-#, fuzzy
 msgid "You need to specify city."
-msgstr "Tiene que especificar la ciudad."
+msgstr "Tienes que indicar la ciudad."
 
 #: metabrainz/supporter/forms.py:46
 msgid "State / Province"
 msgstr "Estado / provincia"
 
 #: metabrainz/supporter/forms.py:47
-#, fuzzy
 msgid "You need to specify state/province."
-msgstr "Tiene que especificar el estado / la provincia."
+msgstr "Tienes que indicar el estado o la provincia."
 
 #: metabrainz/supporter/forms.py:49
 msgid "Postcode"
 msgstr "Código postal"
 
 #: metabrainz/supporter/forms.py:50
-#, fuzzy
 msgid "You need to specify postcode."
-msgstr "Tiene que especificar el código postal."
+msgstr "Tienes que indicar el código postal."
 
 #: metabrainz/supporter/forms.py:52
 msgid "Country"
@@ -454,56 +448,54 @@ msgstr "Chat"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
-#, fuzzy
 msgid "Twitter/X"
-msgstr "Twitter"
+msgstr "Twitter/X"
 
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
 msgid "Mastodon"
-msgstr ""
+msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
 msgid "Bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: metabrainz/templates/base.html:90
 #: metabrainz/templates/index/contact.html:109
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: metabrainz/templates/base.html:95
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
-msgstr ""
+msgstr "Patrocinado por <a href=\"%(github_url)s\">GitHub</a>"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
-msgstr "Toggle navigation"
+msgstr "Abrir/cerrar menú"
 
 #: metabrainz/templates/navbar.html:21
 msgid "About "
-msgstr "Acerca"
+msgstr "Nosotros"
 
 #: metabrainz/templates/navbar.html:23
 msgid "The Foundation"
 msgstr "La fundación"
 
 #: metabrainz/templates/navbar.html:32
-#, fuzzy
 msgid "Policies "
-msgstr "Officers"
+msgstr "Políticas "
 
 #: metabrainz/templates/index/conflict-policy.html:2
 #: metabrainz/templates/index/conflict-policy.html:12
 #: metabrainz/templates/navbar.html:37
 msgid "Conflict Resolution Policy"
-msgstr ""
+msgstr "Política de resolución de conflictos"
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
-msgstr ""
+msgstr "Cumplimiento del RGPD"
 
 #: metabrainz/templates/navbar.html:45
 msgid "Reports "
@@ -511,28 +503,27 @@ msgstr "Informes"
 
 #: metabrainz/templates/navbar.html:48
 msgid "Financial Reports"
-msgstr "Financial Reports"
+msgstr "Informes financieros"
 
 #: metabrainz/templates/navbar.html:52
 msgid "Donate"
-msgstr "Donar"
+msgstr "Haz una donación"
 
 #: metabrainz/templates/navbar.html:59
 msgid "Register"
-msgstr ""
+msgstr "Registrarse"
 
 #: metabrainz/templates/navbar.html:67
 msgid "Your profile"
 msgstr "Tu perfil"
 
 #: metabrainz/templates/navbar.html:68
-#, fuzzy
 msgid "OAuth applications"
-msgstr "OAuth Authorization"
+msgstr "Aplicaciones OAuth"
 
 #: metabrainz/templates/navbar.html:74 metabrainz/templates/navbar.html:76
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
@@ -544,36 +535,29 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
-"All endpoints require an access token which you can get from your\n"
-"    <a href=\"%(profile_url)s\">profile page</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
-msgstr "MusicBrainz Live Data Feed"
+msgstr "Flujo de datos en tiempo real de MusicBrainz"
 
 #: metabrainz/templates/api/info.html:16
-#, fuzzy
 msgid "There are two endpoints for fetching live data:"
-msgstr "There are three endpoints for fetching replication packets:"
+msgstr ""
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
 msgstr ""
 
 #: metabrainz/templates/api/info.html:30
-#, fuzzy
 msgid ""
 "It is possible to get a signature for each replication packet. Just "
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"It is possible to get a signature for each replication packet. Just replace\n"
-"      <code>.tar.bz2</code> with <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
-#, fuzzy
 msgid "You can find the latest replication packet number from this endpoint:"
-msgstr "You can find the latest replication packet numbers from this endpoint:"
+msgstr ""
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
