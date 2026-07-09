@@ -279,7 +279,7 @@ function SignupCommercial({
                       type="text"
                       id="contact_name"
                       name="contact_name"
-                      label={t("Contact Name")}
+                      label={t("Contact name")}
                       required
                     />
 
@@ -328,7 +328,7 @@ function SignupCommercial({
                     type="text"
                     id="contact_name"
                     name="contact_name"
-                    label={t("Contact Name")}
+                    label={t("Contact name")}
                     required
                   />
                 )}

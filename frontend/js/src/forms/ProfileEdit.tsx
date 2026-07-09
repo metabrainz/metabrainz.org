@@ -67,7 +67,7 @@ function ProfileEdit({
                 type="text"
                 id="contact_name"
                 name="contact_name"
-                label={t("Contact Name")}
+                label={t("Contact name")}
                 required
               />
             )}

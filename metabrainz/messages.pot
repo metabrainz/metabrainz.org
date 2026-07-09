@@ -3309,7 +3309,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:331
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-msgid "Contact Name"
+msgid "Contact name"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:301 frontend/js/src/forms/ProfileEdit.tsx:79
