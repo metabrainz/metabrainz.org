@@ -13,7 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
 "PO-Revision-Date: 2026-07-11 15:12+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Last-Translator: mr_monkey "
+"<mr_monkey@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: French <https://translations.metabrainz.org/projects/"
 "metabrainz/website/fr/>\n"
 "Language: fr\n"
@@ -287,13 +288,10 @@ msgid "You need to specify country."
 msgstr "Vous devez spécifier un pays."
 
 #: metabrainz/supporter/forms.py:64
-#, fuzzy
 msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
-msgstr ""
-"Le montant personnalisé doit être supérieur ou égal au seuil du tiers "
-"sélectionné !"
+msgstr "Le montant doit être supérieur ou égal au seuil du palier sélectionné !"
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
@@ -329,9 +327,8 @@ msgstr ""
 "vous tiendrons informés par email."
 
 #: metabrainz/supporter/views.py:248
-#, fuzzy
 msgid "Thanks for becoming a supporter!"
-msgstr "Merci pour votre inscription !"
+msgstr "Merci de votre soutien !"
 
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
@@ -747,12 +744,11 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:61
 msgid "Advisor"
-msgstr ""
+msgstr "Conseil de direction"
 
 #: metabrainz/templates/index/about.html:62
-#, fuzzy
 msgid "Our board of directors is advised by:"
-msgstr "Notre comité de direction est composé par :"
+msgstr "Notre comité de direction est conseillé par :"
 
 #: metabrainz/templates/index/about.html:64
 #, python-format
