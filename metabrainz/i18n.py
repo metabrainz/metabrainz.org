@@ -6,6 +6,7 @@ DEFAULT_LOCALE = "en"
 i18n_bp = Blueprint("i18n", __name__)
 SUPPORTED_LANGUAGES = (
     {"code": "en", "name": "English"},
+    {"code": "es", "name": "Español"},
     {"code": "fr", "name": "Français"},
     {"code": "de", "name": "Deutsch"},
 )
