@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-07-10 13:58+0000\n"
+"PO-Revision-Date: 2026-07-10 14:13+0000\n"
 "Last-Translator: rez00 <sylvain.mengue@gmail.com>\n"
 "Language-Team: French <https://translations.metabrainz.org/projects/"
 "metabrainz/website/fr/>\n"
@@ -627,7 +627,7 @@ msgid "About the MetaBrainz Foundation"
 msgstr "À propos de la Fondation MetaBrainz"
 
 #: metabrainz/templates/index/about.html:13
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The MetaBrainz Foundation is a global community creating and maintaining"
 " \n"
@@ -641,6 +641,16 @@ msgid ""
 "        collaborating together to build and maintain the MetaBrainz "
 "comprehensive datasets."
 msgstr ""
+"La Fondation MetaBrainz est une communauté globale créant et maintenant \n"
+"        une encyclopédie ouverte de métadonnée de musique et d'arts. "
+"Commençant comme une ressource pour les collectionneurs \n"
+"        de musique, nous sommes en train d'établir une collaboration entres "
+"les volontaires, artistes et \n"
+"        les leaders de l'industrie. Depuis sa fondation, elle a grandit en "
+"une communauté globale de \n"
+"        <a href=\"%(editors_url)s\"> centaines de milliers d'éditeurs</a> \n"
+"        collaborant ensembles pour construire et maintenir l'entièrté de la "
+"base de donnée de MetaBrainz."
 
 #: metabrainz/templates/index/about.html:22
 #, python-format
