@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-06-26 16:54+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2026-07-10 13:58+0000\n"
+"Last-Translator: rez00 <sylvain.mengue@gmail.com>\n"
 "Language-Team: French <https://translations.metabrainz.org/projects/"
 "metabrainz/website/fr/>\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
 "1000000 == 0) ? 1 : 2);\n"
-"X-Generator: Weblate 2026.6.1\n"
+"X-Generator: Weblate 2026.7\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: metabrainz/index/forms.py:45
@@ -288,10 +288,13 @@ msgid "You need to specify country."
 msgstr "Vous devez spécifier un pays."
 
 #: metabrainz/supporter/forms.py:64
+#, fuzzy
 msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
 msgstr ""
+"Le montant personnalisé doit être supérieur ou égal au seuil du tiers "
+"sélectionné !"
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
