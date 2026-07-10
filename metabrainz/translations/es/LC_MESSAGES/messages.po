@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-07-10 14:30+0000\n"
+"PO-Revision-Date: 2026-07-11 15:12+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Spanish <https://translations.metabrainz.org/projects/"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
 "0) ? 1 : 2);\n"
-"X-Generator: Weblate 2026.7\n"
+"X-Generator: Weblate 2026.7.1\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: metabrainz/index/forms.py:45
@@ -535,8 +535,8 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
-"Todos los endpoints necesitan un token de acceso que puedes generar en <a "
-"href=\"%(profile_url)s\">tu perfil</a>."
+"Todos los puntos de acceso necesitan un token de acceso que puedes generar "
+"en <a href=\"%(profile_url)s\">tu perfil</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
@@ -544,7 +544,7 @@ msgstr "Live Data Feed de MusicBrainz"
 
 #: metabrainz/templates/api/info.html:16
 msgid "There are two endpoints for fetching live data:"
-msgstr "Tenemos dos endpoints para obtener datos actualizados:"
+msgstr "Tenemos dos puntos de acceso para obtener datos actualizados:"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
@@ -562,7 +562,8 @@ msgstr ""
 #: metabrainz/templates/api/info.html:34
 msgid "You can find the latest replication packet number from this endpoint:"
 msgstr ""
-"Puedes obtener el número del último paquete de replicación en este endpoint:"
+"Puedes obtener el número del último paquete de replicación en este punto de "
+"acceso:"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
@@ -1457,7 +1458,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:6
 msgid "The MetaBrainz Team"
-msgstr "El grupo MetaBrainz"
+msgstr "El equipo de MetaBrainz"
 
 #: metabrainz/templates/index/team.html:12
 msgid "<span class=\"name\">Robert Kaye</span> &mdash; Founder"
@@ -1543,7 +1544,7 @@ msgstr ""
 #: metabrainz/templates/index/team.html:81
 msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
 msgstr ""
-"<span class=\"name\">Laurent Monin</span> &mdash; Administrador de Sistema"
+"<span class=\"name\">Laurent Monin</span> &mdash; Administrador de sistemas"
 
 #: metabrainz/templates/index/team.html:83
 msgid ""
@@ -1927,7 +1928,7 @@ msgstr "Quiero hacer una donación periódica mensual"
 
 #: metabrainz/templates/payments/donate.html:73
 msgid "MusicBrainz username"
-msgstr "MusicBrainz nombre de usuario"
+msgstr "Nombre de usuario de MusicBrainz"
 
 #: metabrainz/templates/payments/donate.html:82
 msgid "Email me about future fundraising events"
@@ -2932,7 +2933,7 @@ msgstr "Soporte"
 
 #: metabrainz/templates/supporters/account-type.html:6
 msgid "Support us"
-msgstr "Apóyenos"
+msgstr "Apóyanos"
 
 #: metabrainz/templates/supporters/account-type.html:24
 msgid "Non-commercial / Personal"
@@ -3089,11 +3090,11 @@ msgstr "Se requiere contraseña!"
 
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:65
 msgid "Confirm Password is required!"
-msgstr "Se requiere confirmar la contraseña!"
+msgstr "¡Tienes que confirmar la contraseña!"
 
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:67
 msgid "Confirm Password should match password!"
-msgstr "La confirmación de contraseña debe coincidir!"
+msgstr "¡La confirmación de contraseña debe coincidir con la contraseña!"
 
 #: metabrainz/user/forms.py:43
 msgid "Password"
