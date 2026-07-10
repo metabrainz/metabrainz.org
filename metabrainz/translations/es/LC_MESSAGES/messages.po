@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-07-09 16:31+0000\n"
+"PO-Revision-Date: 2026-07-10 13:56+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Spanish <https://translations.metabrainz.org/projects/"
@@ -119,19 +119,20 @@ msgstr "La URL del sitio web tiene que usar http o https."
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "URL de devolución de llamada de autorización"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
-msgstr ""
+msgstr "El campo «URL de devolución de llamada de autorización» está vacío."
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
-msgstr ""
+msgstr "La URL de devolución de llamada de autorización no es válida."
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
 msgstr ""
+"La URL de devolución de llamada de autorización tiene que usar http o https."
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
@@ -534,18 +535,20 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
+"Todos los endpoints necesitan un token de acceso que puedes generar en <a "
+"href=\"%(profile_url)s\">tu perfil</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
-msgstr "Flujo de datos en tiempo real de MusicBrainz"
+msgstr "Live Data Feed de MusicBrainz"
 
 #: metabrainz/templates/api/info.html:16
 msgid "There are two endpoints for fetching live data:"
-msgstr ""
+msgstr "Tenemos dos endpoints para obtener datos actualizados:"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
-msgstr ""
+msgstr "Paquetes de replicación de cada hora"
 
 #: metabrainz/templates/api/info.html:30
 msgid ""
@@ -557,10 +560,11 @@ msgstr ""
 #: metabrainz/templates/api/info.html:34
 msgid "You can find the latest replication packet number from this endpoint:"
 msgstr ""
+"Puedes obtener el número del último paquete de replicación en este endpoint:"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
-msgstr ""
+msgstr "Archivos JSON de volcado incremental de cada hora"
 
 #: metabrainz/templates/api/info.html:58
 msgid ""
@@ -575,6 +579,9 @@ msgid ""
 "It’s possible that a JSON dump for a particular entity type doesn’t exist"
 " if no entities of that type have changed in a given hour."
 msgstr ""
+"Es posible que no hayamos generado un archivo JSON de volcado para uno de "
+"nuestros tipo de entidad si ninguna entidad de ese tipo ha sufrido cambios "
+"durante la hora en cuestión."
 
 #: metabrainz/templates/api/info.html:64
 msgid ""
@@ -582,12 +589,17 @@ msgid ""
 "This file must be read line-by-line; each line contains one changed "
 "entity in JSON format."
 msgstr ""
+"Cada archivo de volcado contiene un archivo con el nombre <code>mbdump/"
+"&lt;TIPO_DE_ENTIDAD&gt;</code>. Debes leer el archivo línea por línea. Cada "
+"línea contiene una entidad con cambios, en el formato JSON."
 
 #: metabrainz/templates/api/info.html:67
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
+"Como con los paquetes de replicación, puedes obtener la firma de archivo si "
+"cambias <code>.tar.xz</code> por <code>.tar.xz.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -738,15 +750,15 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:66
 msgid "Officers"
-msgstr ""
+msgstr "Directores"
 
 #: metabrainz/templates/index/about.html:67
 msgid "The officers of this company are:"
-msgstr ""
+msgstr "Los directores de la compañía son:"
 
 #: metabrainz/templates/index/about.html:69
 msgid "President Nicolás Tamargo"
-msgstr ""
+msgstr "Presidente Nicolás Tamargo"
 
 #: metabrainz/templates/index/about.html:70
 #, python-format
@@ -755,7 +767,7 @@ msgstr "Tesorera Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Secretary Nick Ashton-Hart"
-msgstr ""
+msgstr "Secretario Nick Ashton-Hart"
 
 #: metabrainz/templates/index/bad-customers.html:3
 msgid "Bad customers"
@@ -962,8 +974,6 @@ msgid ""
 "If you disregard this agreement and contact us about one of the\n"
 "      disallowed topics, we reserve the right to make fun of you."
 msgstr ""
-"If you disregard this agreement and contact us about one of the\n"
-"      disallowed topics, we reserve the right to make fun of you."
 
 #: metabrainz/templates/index/contact.html:73
 msgid "E-mail us"
@@ -971,11 +981,14 @@ msgstr "Envíanos un E-mail"
 
 #: metabrainz/templates/index/contact.html:75
 msgid "I agree with the rules above, show me the email address"
-msgstr "I agree with the rules above, show me the email address"
+msgstr ""
+"Estoy de acuerdo con las reglas precedentes, mostradme la dirección de correo"
 
 #: metabrainz/templates/index/contact.html:78
 msgid "You can reach the MetaBrainz staff directly at the following address:"
-msgstr "You can reach the MetaBrainz staff directly at the following address:"
+msgstr ""
+"Puedes ponerte en contacto con el equipo de MetaBrainz con la siguiente "
+"dirección:"
 
 #: metabrainz/templates/index/contact.html:84
 msgid "Forums"
@@ -988,9 +1001,6 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
-"Please come ask your questions at our <a href=\"%(forums_url)s\">forums</a>! "
-"We would love to\n"
-"    answer any questions you may have."
 
 #: metabrainz/templates/index/contact.html:92
 #, python-format
@@ -1064,11 +1074,6 @@ msgid ""
 "Creative\n"
 "        Commons licenses."
 msgstr ""
-"The MetaBrainz Foundation is a non-profit that believes in free, open\n"
-"        access to data. It has been set up to build community maintained\n"
-"        databases and make them available in the public domain or under "
-"Creative\n"
-"        Commons licenses."
 
 #: metabrainz/templates/index/index.html:16
 #, python-format
@@ -1091,8 +1096,6 @@ msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
-"An open music encyclopedia that collects music metadata and makes it\n"
-"              available to the public"
 
 #: metabrainz/templates/index/index.html:40
 #, python-format
@@ -1100,20 +1103,20 @@ msgid ""
 "Sign up to use the <a href=\"%(account_type_url)s\">Live Data "
 "Feed</a></em>"
 msgstr ""
-"Sign up to use the <a href=\"%(account_type_url)s\">Live Data Feed</a></em>"
+"Regístrate para utilizar el <a href=\"%(account_type_url)s\">Live Data Feed</"
+"a></em>"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
-msgstr "A cross-platform music tagger"
+msgstr "Un etiquetador de música multiplataforma"
 
 #: metabrainz/templates/index/index.html:57
 msgid "An open encyclopedia which contains information about published literature"
-msgstr ""
-"An open encyclopedia which contains information about published literature"
+msgstr "Una enciclopedia abierta con información sobre textos y literatura"
 
 #: metabrainz/templates/index/index.html:65
 msgid "An open record of user listening habits"
-msgstr "An open record of user listening habits"
+msgstr "Un repositorio abierto de datos sobre las escuchas de nuestros usuarios"
 
 #: metabrainz/templates/index/index.html:73
 msgid "A repository for Creative Commons licensed music and book reviews"
@@ -1122,7 +1125,9 @@ msgstr ""
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
-msgstr "A repository of music cover art that is freely and easily accessible"
+msgstr ""
+"Un repositorio de portadas e imágenes de música accesible de forma simple y "
+"gratuita"
 
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
@@ -1148,17 +1153,6 @@ msgid ""
 "supporters</a>\n"
 "        who make use of our data sets."
 msgstr ""
-"The MetaBrainz Foundation believes in <a href=\"%(financial_reports_url)s\">"
-"\n"
-"        transparent finances</a> and is supported by <a href=\"%"
-"(donations_url)s\">end user\n"
-"        donations</a> and a number of <a href=\"%(sponsors_url)s\">sponsors</"
-"a>\n"
-"        who provide funds in order for the foundation to accomplish its "
-"goals. The foundation also\n"
-"        has several <a href=\"%(supporters_url)s\"> commercial supporters</a>"
-"\n"
-"        who make use of our data sets."
 
 #: metabrainz/templates/index/index.html:133
 #, python-format
@@ -1169,10 +1163,6 @@ msgid ""
 "\n"
 "        <a href=\"%(account_type_url)s\">sign up</a>!"
 msgstr ""
-"Unfortunately, some companies listed below use data we provide without "
-"contributing back.\n"
-"        <a href=\"%(bad_customers_url)s\">Find out more</a> about them or\n"
-"        <a href=\"%(account_type_url)s\">sign up</a>!"
 
 #: metabrainz/templates/index/index.html:156
 #, python-format
@@ -1180,8 +1170,6 @@ msgid ""
 "To get more information about the foundation, go to the\n"
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
-"To get more information about the foundation, go to the\n"
-"      <a href=\"%(about_url)s\">about</a> page."
 
 #: metabrainz/templates/index/privacy.html:3
 msgid "Privacy"
@@ -1189,7 +1177,7 @@ msgstr "Privacidad"
 
 #: metabrainz/templates/index/privacy.html:8
 msgid "Summary"
-msgstr "Summary"
+msgstr "Resumen"
 
 #: metabrainz/templates/index/privacy.html:33
 msgid "Applicable to all supporters"
@@ -1229,7 +1217,7 @@ msgstr ""
 
 #: metabrainz/templates/index/privacy.html:145
 msgid "MetaBrainz donors"
-msgstr "MetaBrainz donors"
+msgstr "Donantes"
 
 #: metabrainz/templates/index/privacy.html:147
 msgid ""
@@ -1240,12 +1228,6 @@ msgid ""
 "personal\n"
 "    information to anyone else, ever."
 msgstr ""
-"When you make a donation to the MetaBrainz Foundation, we are legally\n"
-"    required to collect your personal information and keep it in our "
-"records\n"
-"    in case we ever get audited by the IRS. We will not disclose your "
-"personal\n"
-"    information to anyone else, ever."
 
 #: metabrainz/templates/index/privacy.html:153
 msgid ""
@@ -1256,10 +1238,6 @@ msgid ""
 "    donation, unless you chose to be anonymous during the donation "
 "process."
 msgstr ""
-"We believe in transparent finances, which means that we list all donations\n"
-"    made to us on this site. We will only list your name and the amount of "
-"the\n"
-"    donation, unless you chose to be anonymous during the donation process."
 
 #: metabrainz/templates/index/privacy.html:158
 msgid "Exceptions"
@@ -1318,10 +1296,6 @@ msgid ""
 "            releases in MusicBrainz. It is a joint project with the <a "
 "href=\"%(archive_org_url)s\">Internet Archive</a>."
 msgstr ""
-"<a href=\"%(caa_url)s\">Cover Art Archive</a> is a database of cover art "
-"corresponding with the\n"
-"            releases in MusicBrainz. It is a joint project with the <a "
-"href=\"%(archive_org_url)s\">Internet Archive</a>."
 
 #: metabrainz/templates/index/projects.html:63
 msgid "CritiqueBrainz"
@@ -1361,10 +1335,6 @@ msgid ""
 "            their listen history. One of the goals is for this data to be"
 " used for building open music recommendation systems."
 msgstr ""
-"<a href=\"%(lb_url)s\">ListenBrainz</a> is an open source music website that "
-"allows users to import\n"
-"            their listen history. One of the goals is for this data to be "
-"used for building open music recommendation systems."
 
 #: metabrainz/templates/index/projects.html:104
 msgid "Past Projects"
@@ -1411,8 +1381,6 @@ msgid ""
 "    sponsors and partners for their support in helping MusicBrainz "
 "operate."
 msgstr ""
-"The MetaBrainz Foundation wishes to offer a huge thank you to all of our\n"
-"    sponsors and partners for their support in helping MusicBrainz operate."
 
 #: metabrainz/templates/index/sponsors.html:13
 msgid ""
@@ -1424,12 +1392,6 @@ msgid ""
 " the\n"
 "    success and growth of MusicBrainz."
 msgstr ""
-"Some of the following organizations and individuals have provided funding,\n"
-"    others have supported us by providing access to tools and technologies "
-"that\n"
-"    have helped us grow. In either case they played a significant role in "
-"the\n"
-"    success and growth of MusicBrainz."
 
 #: metabrainz/templates/index/sponsors.html:18
 msgid "We would not exist without you — <b>Thank You!</b>"
@@ -1488,8 +1450,8 @@ msgid ""
 "Thanks to everyone who has helped make the MetaBrainz Foundation what it "
 "is today!"
 msgstr ""
-"Thanks to everyone who has helped make the MetaBrainz Foundation what it is "
-"today!"
+"¡Gracias a todos los que nos han ayudado a hacer de la MetaBrainz Foundation "
+"lo que es hoy en día!"
 
 #: metabrainz/templates/index/team.html:6
 msgid "The MetaBrainz Team"
@@ -1655,6 +1617,8 @@ msgid ""
 "ListenBrainz/CritiqueBrainz/Android App Lead &amp; Junior Software "
 "Engineer"
 msgstr ""
+"<span class=\"name\">Kartik Ohri</span> &mdash; Líder de ListenBrainz, "
+"CritiqueBrainz y Android / Ingeniero de software junior"
 
 #: metabrainz/templates/index/team.html:148
 msgid ""
@@ -1711,6 +1675,8 @@ msgid ""
 "<span class=\"name\">Simon Hartman</span> &mdash; Design, UX Consultant &"
 " Social Media Jockey"
 msgstr ""
+"<span class=\"name\">Simon Hartman</span> &mdash; Diseñador / Consultor de "
+"UX / Tejedor de las redes sociales"
 
 #: metabrainz/templates/index/team.html:217
 msgid ""
@@ -1828,7 +1794,7 @@ msgstr ""
 
 #: metabrainz/templates/index/datasets/download.html:3
 msgid "Download Datasets"
-msgstr ""
+msgstr "Descargar conjuntos de datos"
 
 #: metabrainz/templates/index/datasets/signup.html:3
 msgid "Please sign up"
@@ -1841,24 +1807,24 @@ msgstr "Crear nueva aplicación"
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
 msgid "Delete application %(name)s"
-msgstr ""
+msgstr "Eliminar la aplicación %(name)s"
 
 #: metabrainz/templates/oauth/edit.html:3
 #, python-format
 msgid "Edit application %(name)s"
-msgstr ""
+msgstr "Editar la aplicación %(name)s"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
-msgstr ""
+msgstr "Error de OAuth"
 
 #: metabrainz/templates/oauth/index.html:3
 msgid "Applications"
-msgstr ""
+msgstr "Aplicaciones"
 
 #: metabrainz/templates/oauth/prompt.html:3
 msgid "OAuth Authorization"
-msgstr ""
+msgstr "Autorización de OAuth"
 
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
@@ -1867,7 +1833,7 @@ msgstr "Cancelar pagos periódicos"
 
 #: metabrainz/templates/payments/cancel_recurring.html:9
 msgid "If you want to cancel a recurring donation (payment) that you have set up:"
-msgstr "Si quieres cancelar una donación o pago periódicos:"
+msgstr "Si quieres cancelar una donación o un pago periódicos:"
 
 #: metabrainz/templates/payments/cancel_recurring.html:14
 #, python-format
@@ -1919,6 +1885,8 @@ msgid ""
 "Where has my contribution gone? See our <a "
 "href=\"%(finance_reports_url)s\">transparent finances</a>."
 msgstr ""
+"¿Quieres saber qué hacemos con tu aportación? Echa un vistazo a nuestras <a "
+"href=\"%(finance_reports_url)s\">finanzas transparentes</a>."
 
 #: metabrainz/templates/payments/donate.html:24
 #, python-format
@@ -1926,6 +1894,8 @@ msgid ""
 "Who else is contributing? See our list of <a "
 "href=\"%(donors_url)s\">donors</a>."
 msgstr ""
+"¿Quieres saber quién más ha contribuido? Puedes ver nuestra lista de <a "
+"href=\"%(donors_url)s\">donantes</a>."
 
 #: metabrainz/templates/payments/donate.html:28
 #, python-format
@@ -1959,11 +1929,11 @@ msgstr "MusicBrainz nombre de usuario"
 
 #: metabrainz/templates/payments/donate.html:82
 msgid "Email me about future fundraising events"
-msgstr ""
+msgstr "Mandadme un correo sobre futuras campañas de recaudación de fondos"
 
 #: metabrainz/templates/payments/donate.html:83
 msgid "This will be very seldom"
-msgstr ""
+msgstr "Organizamos campañas con muy poca frecuencia"
 
 #: metabrainz/templates/payments/donate.html:91
 msgid "I would like this donation to be anonymous"
@@ -2023,6 +1993,8 @@ msgid ""
 "You can make a donation, or recurring donations, via bank transfer to the"
 " following IBAN:"
 msgstr ""
+"Puedes hacer una donación única o periódica mediante transferencias "
+"bancarias al siguiente IBAN:"
 
 #: metabrainz/templates/payments/donate.html:143
 #, python-format
@@ -2048,6 +2020,8 @@ msgid ""
 "Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging "
 "you"
 msgstr ""
+"Introduce tu nombre de usuario para que MusicBrainz y Picard no te pidan más "
+"donaciones"
 
 #: metabrainz/templates/payments/donate.html:256
 msgid "MusicBrainz is currently unavailable."
@@ -2080,7 +2054,7 @@ msgstr "por importe"
 
 #: metabrainz/templates/payments/donors.html:20
 msgid "No donations. :("
-msgstr "No donations. :("
+msgstr "No hay donaciones. :("
 
 #: metabrainz/templates/payments/donors.html:25
 msgid "Date"
@@ -2088,15 +2062,15 @@ msgstr "Fecha"
 
 #: metabrainz/templates/payments/donors.html:26
 msgid "Donor"
-msgstr "Donor"
+msgstr "Donante"
 
 #: metabrainz/templates/payments/donors.html:27
 msgid "Donation"
-msgstr "Donation"
+msgstr "Donación"
 
 #: metabrainz/templates/payments/donors.html:28
 msgid "Fee"
-msgstr "Fee"
+msgstr "Comisión"
 
 #: metabrainz/templates/payments/donors.html:61
 msgid "First"
@@ -2130,11 +2104,11 @@ msgstr ""
 #: metabrainz/templates/payments/payment.html:52
 #: metabrainz/templates/payments/payment.html:159
 msgid "Invoice number"
-msgstr "Invoice number"
+msgstr "Número de factura"
 
 #: metabrainz/templates/payments/payment.html:61
 msgid "Make this a recurring monthly payment"
-msgstr "Make this a recurring monthly payment"
+msgstr "Quiero hacer un pago periódico mensual"
 
 #: metabrainz/templates/payments/payment.html:70
 msgid "Pay with Credit Card"
@@ -2165,7 +2139,7 @@ msgstr "Número de factura (opcional)"
 #: metabrainz/templates/payments/payment_base.html:3
 #: metabrainz/templates/payments/payment_base.html:7
 msgid "Make a Payment"
-msgstr "Make a Payment"
+msgstr "Realizar un pago"
 
 #: metabrainz/templates/payments/payment_base.html:10
 #, python-format
@@ -2185,11 +2159,6 @@ msgid ""
 "office, and paying a minimal\n"
 "      salary for MetaBrainz employees."
 msgstr ""
-"Your payments will be used to operate projects of the MetaBrainz Foundation. "
-"This includes paying\n"
-"      for ongoing expenses like hosting, hardware, maintaining a modest "
-"office, and paying a minimal\n"
-"      salary for MetaBrainz employees."
 
 #: metabrainz/templates/payments/payment_base.html:21
 #, python-format
@@ -2197,20 +2166,20 @@ msgid ""
 "<p>Where has your contribution gone? See our <a "
 "href=\"%(financial_reports_url)s\">transparent finances</a>.</p>"
 msgstr ""
-"<p>Where has your contribution gone? See our <a href=\"%"
-"(financial_reports_url)s\">transparent finances</a>.</p>"
+"<p>¿Quieres saber qué hacemos con tu aportación? Echa un vistazo a nuestras "
+"<a href=\"%(financial_reports_url)s\">finanzas transparentes</a>.</p>"
 
 #: metabrainz/templates/payments/payment_base.html:27
 msgid "Other ways to pay"
-msgstr "Other ways to pay"
+msgstr "Otros modos de pago"
 
 #: metabrainz/templates/payments/payment_base.html:30
 msgid ""
 "You can make a payment, or recurring payments, via bank transfer to the "
 "following IBAN:"
 msgstr ""
-"You can make a payment, or recurring payments, via bank transfer to the "
-"following IBAN:"
+"Puedes hacer un pago único o periódico mediante transferencias bancarias al "
+"siguiente IBAN:"
 
 #: metabrainz/templates/payments/payment_base.html:32
 msgid ""
@@ -2222,23 +2191,23 @@ msgstr ""
 
 #: metabrainz/templates/payments/payment_selector.html:7
 msgid "Please, select a currency that you want to use for payment:"
-msgstr ""
+msgstr "Selecciona la divisa que quieres usar para el pago:"
 
 #: metabrainz/templates/payments/payment_selector.html:8
 msgid "United States dollar"
-msgstr ""
+msgstr "Dólares estadounidenses"
 
 #: metabrainz/templates/payments/payment_selector.html:9
 msgid "USD"
-msgstr ""
+msgstr "USD"
 
 #: metabrainz/templates/payments/payment_selector.html:10
 msgid "Euro"
-msgstr ""
+msgstr "Euros"
 
 #: metabrainz/templates/payments/payment_selector.html:11
 msgid "EUR"
-msgstr ""
+msgstr "EUR"
 
 #: metabrainz/templates/quickbooks/index.html:3
 #: metabrainz/templates/quickbooks/index.html:7
@@ -2248,7 +2217,7 @@ msgstr ""
 #: metabrainz/templates/quickbooks/login.html:3
 #: metabrainz/templates/quickbooks/login.html:7
 msgid "Login to Quickbooks"
-msgstr ""
+msgstr "Iniciar sesión en Quickbooks"
 
 #: metabrainz/templates/reports/annual_reports/view.html:2
 msgid "Annual Report"
@@ -2267,16 +2236,6 @@ msgid ""
 "    donations, we believe that our contributors have the right to see how"
 " the non-profit manages its finances."
 msgstr ""
-"The MetaBrainz Foundation practices a policy of <i>transparent finances</i> "
-"where the finances of the non-profit\n"
-"    are freely available on this web site. This financial philosophy allows "
-"the monetary contributors to MetaBrainz\n"
-"    and information contributors to MusicBrainz to see how the non-profit "
-"spends the donations and license fees it\n"
-"    collects. Since MusicBrainz was built with volunteer effort and "
-"MetaBrainz is supported in part by volunteer\n"
-"    donations, we believe that our contributors have the right to see how "
-"the non-profit manages its finances."
 
 #: metabrainz/templates/reports/financial_reports/index.html:17
 msgid ""
@@ -2289,14 +2248,6 @@ msgid ""
 "    program. In these cases we will anonymize these payments before "
 "publishing on this site."
 msgstr ""
-"The non-profit publishes all aspects of its finances, as far as that is "
-"possible. In some cases, third parties\n"
-"    making payments to the non-profit require us to not disclose the sums "
-"paid to us for various activities. For\n"
-"    instance, one affiliate of MetaBrainz prevents us from publishing the "
-"details of earnings from an affiliate\n"
-"    program. In these cases we will anonymize these payments before "
-"publishing on this site."
 
 #: metabrainz/templates/reports/financial_reports/index.html:25
 #, python-format
@@ -2305,9 +2256,6 @@ msgid ""
 "a list of all the\n"
 "    donations that we have received."
 msgstr ""
-"Please visit our <a href=\"%(donors_url)s\">donation tracker</a> to view a "
-"list of all the\n"
-"    donations that we have received."
 
 #: metabrainz/templates/reports/financial_reports/index.html:29
 msgid "Reports"
@@ -2318,6 +2266,8 @@ msgid ""
 "We attempt to publish our balance sheets within the first week of the "
 "succeeding quarter, or as close to that as possible."
 msgstr ""
+"Generalmente publicamos nuestros informes durante la primera semana del "
+"trimestre siguiente, y siempre lo antes posible si necesitamos más tiempo."
 
 #: metabrainz/templates/reports/financial_reports/index.html:36
 #: metabrainz/templates/reports/financial_reports/index.html:50
@@ -2340,7 +2290,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:467
 #: metabrainz/templates/reports/financial_reports/index.html:496
 msgid "Quarterly reports"
-msgstr "Quarterly reports"
+msgstr "Informes trimestrales"
 
 #: metabrainz/templates/reports/financial_reports/index.html:38
 #: metabrainz/templates/reports/financial_reports/index.html:47
@@ -2561,7 +2511,7 @@ msgstr "Quarterly reports"
 #: metabrainz/templates/reports/financial_reports/index.html:523
 #: metabrainz/templates/reports/financial_reports/index.html:545
 msgid "profit &amp; loss"
-msgstr "profit &amp; loss"
+msgstr "pérdidas y ganancias"
 
 #: metabrainz/templates/reports/financial_reports/index.html:39
 #: metabrainz/templates/reports/financial_reports/index.html:46
@@ -2742,7 +2692,7 @@ msgstr "profit &amp; loss"
 #: metabrainz/templates/reports/financial_reports/index.html:522
 #: metabrainz/templates/reports/financial_reports/index.html:544
 msgid "balance sheet"
-msgstr "balance sheet"
+msgstr "balance de situación"
 
 #: metabrainz/templates/reports/financial_reports/index.html:44
 #: metabrainz/templates/reports/financial_reports/index.html:64
@@ -2766,7 +2716,7 @@ msgstr "balance sheet"
 #: metabrainz/templates/reports/financial_reports/index.html:520
 #: metabrainz/templates/reports/financial_reports/index.html:542
 msgid "Year end reports"
-msgstr "Year end reports"
+msgstr "Informes de fin de año"
 
 #: metabrainz/templates/reports/financial_reports/index.html:242
 #: metabrainz/templates/reports/financial_reports/index.html:271
@@ -2779,7 +2729,7 @@ msgstr "Year end reports"
 #: metabrainz/templates/reports/financial_reports/index.html:474
 #: metabrainz/templates/reports/financial_reports/index.html:503
 msgid "Monthly reports"
-msgstr "Monthly reports"
+msgstr "Informes mensuales"
 
 #: metabrainz/templates/reports/financial_reports/index.html:244
 #: metabrainz/templates/reports/financial_reports/index.html:273
@@ -2965,7 +2915,7 @@ msgstr "Enero"
 #: metabrainz/templates/reports/financial_reports/index.html:525
 #: metabrainz/templates/reports/financial_reports/index.html:547
 msgid "Monthly balance sheets"
-msgstr "Monthly balance sheets"
+msgstr "Balances de situación mensuales"
 
 #: metabrainz/templates/supporters/account-type.html:3
 #: metabrainz/templates/supporters/account-type.html:6
@@ -2997,7 +2947,7 @@ msgstr "$0.00 al mes o más"
 
 #: metabrainz/templates/supporters/account-type.html:44
 msgid "Personal or university assignment user."
-msgstr ""
+msgstr "Uso personal o para una tarea universitaria."
 
 #: metabrainz/templates/supporters/account-type.html:48
 #: metabrainz/templates/supporters/account-type.html:90
@@ -3020,7 +2970,7 @@ msgstr "Comercial"
 #: metabrainz/templates/supporters/account-type.html:135
 #, python-format
 msgid "$%(tier_price)s/month and up"
-msgstr "$%(tier_price)s/month and up"
+msgstr "$%(tier_price)s al mes o más"
 
 #: metabrainz/templates/supporters/account-type.html:87
 #: metabrainz/templates/supporters/account-type.html:138
@@ -3029,19 +2979,19 @@ msgstr "Más información"
 
 #: metabrainz/templates/supporters/account-type.html:104
 msgid "View all tiers"
-msgstr "View all tiers"
+msgstr "Ver todos los niveles"
 
 #: metabrainz/templates/supporters/account-type.html:112
 msgid "Some of our Unicorn members"
-msgstr "Some of our Unicorn members"
+msgstr "Algunos de nuestros simpatizantes de nivel Unicornio"
 
 #: metabrainz/templates/supporters/account-type.html:123
 msgid "See all our supporters"
-msgstr "See all our supporters"
+msgstr "Ver todos nuestros simpatizantes"
 
 #: metabrainz/templates/supporters/account-type.html:151
 msgid "View featured tiers"
-msgstr "View featured tiers"
+msgstr ""
 
 #: metabrainz/templates/supporters/account-type.html:158
 #, python-format
@@ -3089,16 +3039,16 @@ msgstr ""
 #: metabrainz/templates/supporters/tier.html:6
 #, python-format
 msgid "%(tier_name)s tier"
-msgstr ""
+msgstr "Nivel %(tier_name)s"
 
 #: metabrainz/templates/supporters/supporters-list.html:32
 #: metabrainz/templates/supporters/tier.html:25
 msgid "This supporter is behind on their payments."
-msgstr ""
+msgstr "Este simpatizante tiene pagos atrasados."
 
 #: metabrainz/templates/supporters/tier.html:13
 msgid "Sign up for this tier"
-msgstr ""
+msgstr "Regístrate a este nivel"
 
 #: metabrainz/templates/supporters/tier.html:19
 msgid "Supporters on this tier"
