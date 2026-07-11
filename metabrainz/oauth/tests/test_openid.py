@@ -18,8 +18,8 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         self.assertIn("jwks_uri", data)
         self.assertIn("scopes_supported", data)
         self.assertTrue({
-            "musicbrainz:profile",
-            "musicbrainz:email",
+            "profile",
+            "email",
             "musicbrainz:tag",
             "musicbrainz:rating",
             "musicbrainz:collection",
@@ -88,7 +88,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "id_token",
-            "scope": "openid musicbrainz:profile",
+            "scope": "openid profile",
             "state": "random-state",
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
@@ -118,7 +118,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "openid musicbrainz:profile",
+            "scope": "openid profile",
             "state": "random-state",
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
@@ -161,7 +161,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "id_token token",
-            "scope": "openid musicbrainz:profile",
+            "scope": "openid profile",
             "state": "random-state",
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,
@@ -230,7 +230,7 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "id_token",
-            "scope": "musicbrainz:profile",
+            "scope": "profile",
             "state": "random-state",
             "nonce": "test-nonce",
             "redirect_uri": redirect_uri,

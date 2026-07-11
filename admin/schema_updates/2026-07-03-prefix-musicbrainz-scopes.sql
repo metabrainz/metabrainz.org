@@ -1,6 +1,5 @@
 BEGIN;
 
--- Rename in place so existing tokens and authorization codes keep their scope links.
 UPDATE oauth.scope
    SET name = 'musicbrainz:tag'
  WHERE name = 'tag';
@@ -10,7 +9,7 @@ UPDATE oauth.scope
  WHERE name = 'rating';
 
 INSERT INTO oauth.scope (name, description)
-    VALUES ('musicbrainz:email', 'View your email address'),
+    VALUES ('email', 'View your email address'),
            ('musicbrainz:collection', 'View and modify your private collections'),
            ('musicbrainz:submit_isrc', 'Submit new ISRCs to the database'),
            ('musicbrainz:submit_barcode', 'Submit new barcodes to the database');
