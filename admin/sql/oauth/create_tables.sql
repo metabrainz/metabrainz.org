@@ -10,7 +10,7 @@ CREATE TABLE oauth.scope (
 
 INSERT INTO oauth.scope (name, description)
      VALUES ('profile', 'View your public account information')
-          , ('musicbrainz:email', 'View your email address')
+          , ('email', 'View your email address')
           , ('musicbrainz:tag', 'View and modify your private tags')
           , ('musicbrainz:rating', 'View and modify your private ratings')
           , ('musicbrainz:collection', 'View and modify your private collections')

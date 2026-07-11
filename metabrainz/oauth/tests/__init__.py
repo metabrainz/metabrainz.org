@@ -81,7 +81,7 @@ class OAuthTestCase(FlaskTestCase):
         props = json.loads(self.get_context_variable("props"))
         self.assertEqual(props["client_name"], "test-client")
         expected_scopes = [
-            {"name": "musicbrainz:profile", "description": "View your public account information"}
+            {"name": "profile", "description": "View your public account information"}
         ]
         if openid:
             expected_scopes.append({
@@ -140,7 +140,7 @@ class OAuthTestCase(FlaskTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "token",
-            "scope": "musicbrainz:profile",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
@@ -155,7 +155,7 @@ class OAuthTestCase(FlaskTestCase):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "musicbrainz:profile",
+            "scope": "profile",
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }

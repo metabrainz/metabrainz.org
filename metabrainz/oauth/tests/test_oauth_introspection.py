@@ -339,7 +339,7 @@ class IntrospectionTestCase(OAuthTestCase):
             "client_id": application["client_id"],
             "client_secret": application["client_secret"],
             "grant_type": "client_credentials",
-            "scope": "musicbrainz:profile",
+            "scope": "profile",
         }
         response = self.client.post("/oauth2/token", data=data)
         self.assertEqual(response.status_code, 200)
