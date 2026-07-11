@@ -1,0 +1,6 @@
+# Sphinx stuff
+_build
+build
+# virtualenv for doc stuff
+ve
+_templates
