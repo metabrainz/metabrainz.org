@@ -39,3 +39,4 @@ config.py
 
 .DS_Store
 *.csv
+.idea/
