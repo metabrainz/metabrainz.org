@@ -31,7 +31,11 @@ Authorization request
    :query state: **Recommended.** Opaque anti-CSRF value, returned unchanged.
    :query nonce: **Required with the** ``openid`` **scope.** Random value bound
       to the ID token.
-   :query response_mode: Optional. ``fragment`` (default) or ``form_post``.
+   :query response_mode: Optional. When omitted, the token is returned in the
+      URL ``fragment``. The only accepted explicit value is ``form_post``,
+      which returns an auto-submitting HTML form that ``POST``\ s the response
+      to your ``redirect_uri``; any other value is rejected with
+      ``invalid_request``.
 
 Example:
 

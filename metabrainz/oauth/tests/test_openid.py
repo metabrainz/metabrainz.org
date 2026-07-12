@@ -23,6 +23,9 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         self.assertIn("token_endpoint", data)
         self.assertIn("userinfo_endpoint", data)
         self.assertIn("jwks_uri", data)
+        # the JWKS route is mounted at the site root, not under the OAuth2 prefix
+        self.assertTrue(data["jwks_uri"].endswith("/.well-known/jwks.json"))
+        self.assertNotIn("/oauth2/.well-known", data["jwks_uri"])
         self.assertIn("scopes_supported", data)
         self.assertTrue({
             "profile",
@@ -35,6 +38,10 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
             "openid",
         }.issubset(data["scopes_supported"]))
         self.assertIn("response_types_supported", data)
+        self.assertIn("response_modes_supported", data)
+        # form_post is accepted by the authorization/implicit grants, so it must
+        # be advertised alongside the default query/fragment modes
+        self.assertIn("form_post", data["response_modes_supported"])
         self.assertIn("grant_types_supported", data)
         self.assertIn("id_token_signing_alg_values_supported", data)
 

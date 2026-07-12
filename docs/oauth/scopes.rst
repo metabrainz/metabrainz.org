@@ -113,6 +113,3 @@ Notes
 * The access token issued to your application carries exactly the scopes the
   user approved. You can confirm the scopes on a token using the
   :ref:`introspection endpoint <oauth/token-endpoints:token introspection>`.
-* The access token issued to your application carries exactly the scopes the
-  user approved. You can confirm the scopes on a token using the
-  :ref:`introspection endpoint <oauth/token-endpoints:token introspection>`.

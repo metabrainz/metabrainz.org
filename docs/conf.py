@@ -87,13 +87,17 @@ html_theme_options = {
 # A shorter title for the navigation bar.  Default is the same as html_title.
 html_short_title = "MetaBrainz docs"
 
+# Paths that contain custom static files (such as the logo and favicon),
+# relative to this directory. They are copied into the output ``_static`` dir.
+html_static_path = ['_static']
+
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = "../frontend/img/logo.svg"
+html_logo = "_static/metabrainz_logo.svg"
 
 # The name of an image file (relative to this directory) to use as favicon of
 # the docs.
-html_favicon = "../frontend/img/favicon-32.png"
+html_favicon = "_static/favicon.ico"
 
 # Language to be used for generating the HTML full-text search index.
 html_search_language = 'en'

@@ -37,6 +37,9 @@ truth. As of writing they are:
    * - Authorization
      - ``GET``
      - ``https://metabrainz.org/oauth2/authorize``
+   * - Client-initiated registration request
+     - ``POST``
+     - ``https://metabrainz.org/oauth2/registration-requests``
    * - Token
      - ``POST``
      - ``https://metabrainz.org/oauth2/token``
