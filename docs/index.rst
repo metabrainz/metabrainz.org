@@ -26,6 +26,7 @@ Contents
 
    oauth/index
    oauth/registration
+   oauth/registration-requests
    oauth/scopes
    oauth/authorization-code-grant
    oauth/implicit-grant
