@@ -319,9 +319,10 @@ class OAuthTestCase(FlaskTestCase):
         self.assertEqual(response.json["client_id"], data["client_id"])
         self.assertEqual(response.json["issued_by"], "https://metabrainz.org/")
         self.assertEqual(response.json["scope"], ["profile"])
-        self.assertEqual(response.json["sub"],  self.user2.name)
+        self.assertEqual(response.json["sub"], str(self.user2.id))
+        self.assertEqual(response.json["username"], self.user2.name)
         self.assertEqual(response.json["token_type"],  "Bearer")
-        self.assertEqual(response.json["metabrainz_user_id"], self.user2.id)
+        self.assertNotIn("metabrainz_user_id", response.json)
         self.assertIsNotNone(response.json["issued_at"])
         self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)
 

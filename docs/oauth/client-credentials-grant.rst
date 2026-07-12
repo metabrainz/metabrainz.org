@@ -50,5 +50,4 @@ Response
 The access token is **not associated with any user**. No refresh token is
 issued — request a new token when the current one expires. When you
 :ref:`introspect <oauth/token-endpoints:token introspection>` such a token, its
-``sub`` is the application's name rather than a username, and no
-``metabrainz_user_id`` is present.
+``sub`` is ``"-1"`` and no ``username`` is present.

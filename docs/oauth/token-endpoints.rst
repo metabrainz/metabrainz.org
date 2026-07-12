@@ -30,13 +30,13 @@ Example response:
 .. code-block:: json
 
    {
-     "sub": "alice",
-     "metabrainz_user_id": 12345,
+     "sub": "12345",
+     "username": "alice",
      "member_since": "2016-03-01T00:00:00+00:00"
    }
 
-* ``sub`` — the user's MetaBrainz username.
-* ``metabrainz_user_id`` — the user's numeric MetaBrainz identifier.
+* ``sub`` — the user's stable MetaBrainz user id, encoded as a string.
+* ``username`` — the user's MetaBrainz username.
 * ``member_since`` — ISO 8601 timestamp of when the account was created, or
   ``null``.
 
@@ -91,15 +91,15 @@ Example response for an active token:
      "client_id": "SOME_CLIENT_ID",
      "token_type": "Bearer",
      "scope": ["openid", "profile", "musicbrainz:collection"],
-     "sub": "alice",
-     "metabrainz_user_id": 12345,
+     "sub": "12345",
+     "username": "alice",
      "issued_by": "https://metabrainz.org/",
      "issued_at": 1700000000,
      "expires_at": 1700003600
    }
 
 For a token issued via the Client Credentials grant there is no user, so
-``sub`` is the application's name and ``metabrainz_user_id`` is omitted.
+``sub`` is ``"-1"`` and ``username`` is omitted.
 
 If the token is unknown, expired or revoked, the response is simply:
 

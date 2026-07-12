@@ -1,9 +1,16 @@
 from urllib.parse import urlparse, parse_qs
 
-from flask import g
+from flask import current_app, g
+from joserfc import jwt
+from joserfc.jwk import import_key
 
 from metabrainz.oauth.tests import OAuthTestCase
 from metabrainz.model import db, OAuth2AccessToken
+
+
+def _decode_id_token_claims(token):
+    key = import_key(current_app.config["OIDC_JWT_PUBLIC_KEY"])
+    return jwt.decode(token, key, algorithms=["ES256"]).claims
 
 
 class OpenIdIntegrationTestCase(OAuthTestCase):
@@ -56,8 +63,9 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         )
         self.assert200(response)
         data = response.json
-        self.assertEqual(data["sub"], self.user2.name)
-        self.assertEqual(data["metabrainz_user_id"], self.user2.id)
+        self.assertEqual(data["sub"], str(self.user2.id))
+        self.assertEqual(data["username"], self.user2.name)
+        self.assertNotIn("metabrainz_user_id", data)
         self.assertEqual(data["member_since"], self.user2.member_since.isoformat())
         self.assert_security_headers(response)
 
@@ -112,6 +120,10 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         self.assertIn("nonce", query_string)
         self.assert_security_headers(response)
 
+        claims = _decode_id_token_claims(fragment_args["id_token"][0])
+        self.assertEqual(claims["sub"], str(self.user2.id))
+        self.assertEqual(claims["username"], self.user2.name)
+
     def test_openid_code_flow_success(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
@@ -153,6 +165,9 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         data = token_response.json
         self.assertIn("id_token", data)
         self.assertIn("access_token", data)
+        claims = _decode_id_token_claims(data["id_token"])
+        self.assertEqual(claims["sub"], str(self.user2.id))
+        self.assertEqual(claims["username"], self.user2.name)
         self.assert_security_headers(token_response)
 
     def test_openid_implicit_flow_id_token_token(self):
@@ -184,6 +199,9 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         self.assertIn("access_token", fragment_args)
         self.assertIn("state", fragment_args)
         self.assertEqual(fragment_args["state"][0], "random-state")
+        claims = _decode_id_token_claims(fragment_args["id_token"][0])
+        self.assertEqual(claims["sub"], str(self.user2.id))
+        self.assertEqual(claims["username"], self.user2.name)
         self.assert_security_headers(response)
 
     def test_openid_userinfo_post_success(self):
@@ -203,8 +221,9 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         # Accept 200 or 405 (if not supported)
         if response.status_code == 200:
             data = response.json
-            self.assertEqual(data["sub"], self.user2.name)
-            self.assertEqual(data["metabrainz_user_id"], self.user2.id)
+            self.assertEqual(data["sub"], str(self.user2.id))
+            self.assertEqual(data["username"], self.user2.name)
+            self.assertNotIn("metabrainz_user_id", data)
             self.assertEqual(data["member_since"], self.user2.member_since.isoformat())
             self.assert_security_headers(response)
         else:

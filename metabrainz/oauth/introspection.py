@@ -5,6 +5,9 @@ from metabrainz.model.user import User
 from metabrainz.model import db, OAuth2AccessToken, OAuth2RefreshToken
 
 
+CLIENT_CREDENTIALS_SUBJECT = "-1"
+
+
 class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
 
     CLIENT_AUTH_METHODS = ["client_secret_basic", "client_secret_post"]
@@ -31,13 +34,12 @@ class OAuth2IntrospectionEndpoint(IntrospectionEndpoint):
         }
 
         if token.user_id is not None:
-            data["metabrainz_user_id"] = token.user_id
             user = User.get(id=token.user_id)
-            sub = user.name
+            data["sub"] = str(user.id)
+            data["username"] = user.name
         else:
             # user_id is None for client credentials grant
-            sub = token.client.name
-        data["sub"] = sub
+            data["sub"] = CLIENT_CREDENTIALS_SUBJECT
 
         return data
 
