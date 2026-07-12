@@ -136,6 +136,9 @@ OAUTH2_TOKEN_EXPIRES_IN = {
     "client_credentials": 3600,
 }
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
+OAUTH2_REGISTRATION_REQUEST_EXPIRES_IN = 300
+# OAuth2 client ids that are allowed to create client-initiated registration requests.
+OAUTH2_REGISTRATION_REQUEST_CLIENTS = []
 OAUTH2_WHITELISTED_CCG_CLIENTS = []
 # OAuth2 client ids that are allowed to see the user's "remember me" status in the token response.
 OAUTH2_REMEMBER_ME_CLIENTS = []

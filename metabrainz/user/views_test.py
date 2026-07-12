@@ -95,6 +95,12 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertIsNotNone(user.last_updated)
         self.assertEqual(current_user, user)
 
+    def test_user_signup_regular_flow_is_not_registration_request_signup(self):
+        self.client.get("/signup")
+        props = json.loads(self.get_context_variable("props"))
+        self.assertFalse(props["is_registration_request_signup"])
+        self.assertIsNone(props["registration_request_client_name"])
+
     def test_user_signup_missing_csrf_token(self):
         self._test_user_signup_missing_fields_helper({
             "username": "test_user_1",
