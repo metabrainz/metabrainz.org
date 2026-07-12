@@ -66,7 +66,10 @@ P-256 and SHA-256). It contains claims such as:
    * - ``iss``
      - Issuer — always ``https://metabrainz.org``.
    * - ``sub``
-     - Subject — the user's stable MetaBrainz user identifier.
+     - Subject — the user's stable MetaBrainz user id, encoded as a string.
+       This is the same value returned as ``sub`` by the
+       :ref:`UserInfo endpoint <oauth/token-endpoints:userinfo>`, so the two can
+       be compared safely.
    * - ``aud``
      - Audience — your ``client_id``.
    * - ``exp``
@@ -75,7 +78,7 @@ P-256 and SHA-256). It contains claims such as:
      - Time the token was issued.
    * - ``nonce``
      - The ``nonce`` value from your authorization request, echoed back.
-   * - ``name``
+   * - ``username``
      - The user's MetaBrainz username.
 
 Validating the ID token

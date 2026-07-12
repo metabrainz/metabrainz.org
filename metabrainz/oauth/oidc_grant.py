@@ -25,7 +25,10 @@ class OpenIDCodeMixin:
         }
 
     def generate_user_info(self, user, scope):
-        user_info = UserInfo(sub=user.id, name=user.name)
+        user_info = UserInfo(
+            sub=str(user.id),
+            username=user.name,
+        )
         return user_info
 
 
