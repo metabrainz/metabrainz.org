@@ -20,6 +20,8 @@ type SignupUserProps = {
   csrf_token: string;
   initial_form_data: any;
   initial_errors: any;
+  is_registration_request_signup: boolean;
+  registration_request_client_name: string | null;
 };
 
 function SignupUser({
@@ -27,6 +29,8 @@ function SignupUser({
   mtcaptcha_site_key,
   initial_form_data,
   initial_errors,
+  is_registration_request_signup,
+  registration_request_client_name,
 }: SignupUserProps): JSX.Element {
   const { t } = useTranslation();
   const { isValidatingEmail, validateEmailAsync } = useEmailValidation();
@@ -41,6 +45,12 @@ function SignupUser({
           <div className="h4 text-center">
             {t("access all MetaBrainz projects")}
           </div>
+          {is_registration_request_signup && registration_request_client_name && (
+            <p className="text-center text-muted">
+              {t("Registration started by")}{" "}
+              <strong>{registration_request_client_name}</strong>
+            </p>
+          )}
           <Formik
             initialValues={{
               username: initial_form_data.username ?? "",
@@ -55,6 +65,9 @@ function SignupUser({
             initialTouched={initial_errors}
             validationSchema={Yup.object({
               username: Yup.string().required(t("Username is required!")),
+              email: Yup.string()
+                .email(t("Invalid email address."))
+                .required(t("Email address is required!")),
               password: Yup.string()
                 .required(t("Password is required!"))
                 .min(8)
@@ -76,7 +89,7 @@ function SignupUser({
             })}
             onSubmit={() => {}}
           >
-            {({ errors, isValid, dirty }) => (
+            {({ errors, isValid }) => (
               <form method="POST">
                 <FormLevelAlert errors={initial_errors} />
                 <div className="form-group">
@@ -105,13 +118,14 @@ function SignupUser({
                   name="username"
                   id="username"
                   required
+                  readOnly={is_registration_request_signup}
                 />
 
                 <AuthCardTextInput
                   label={
                     <>
                       {t("E-mail address")}
-                      {isValidatingEmail && (
+                      {!is_registration_request_signup && isValidatingEmail && (
                         <span className="small text-muted">
                           {" "}
                           {t("(checking...)")}
@@ -123,8 +137,21 @@ function SignupUser({
                   name="email"
                   id="email"
                   required
-                  validate={validateEmailAsync}
+                  readOnly={is_registration_request_signup}
+                  validate={
+                    is_registration_request_signup
+                      ? undefined
+                      : validateEmailAsync
+                  }
                 />
+
+                {is_registration_request_signup && (
+                  <p className="small text-muted">
+                    {t(
+                      "This username and email were provided by the app that started registration. You can change them later from MetaBrainz settings."
+                    )}
+                  </p>
+                )}
 
                 <AuthCardPasswordInput
                   label={t("Password")}
@@ -192,7 +219,7 @@ function SignupUser({
                 <button
                   className="btn btn-primary btn-block main-action-button"
                   type="submit"
-                  disabled={!isValid || !dirty || isValidatingEmail}
+                  disabled={!isValid || isValidatingEmail}
                 >
                   {isValidatingEmail ? t("Validating...") : t("Create account")}
                 </button>
@@ -217,6 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
     csrf_token,
     initial_form_data,
     initial_errors,
+    is_registration_request_signup = false,
+    registration_request_client_name = null,
   } = reactProps;
 
   renderRoot(
@@ -226,6 +255,8 @@ document.addEventListener("DOMContentLoaded", () => {
       csrf_token={csrf_token}
       initial_form_data={initial_form_data}
       initial_errors={initial_errors}
+      is_registration_request_signup={is_registration_request_signup}
+      registration_request_client_name={registration_request_client_name}
     />
   );
 });

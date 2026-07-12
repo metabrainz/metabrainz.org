@@ -10,13 +10,14 @@ from metabrainz.index.forms import MeBFlaskForm
 from metabrainz.model import db
 from metabrainz.model.user import User, UsernameNotAllowedException
 from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_UPDATED
-from metabrainz.model.domain_blacklist import DomainBlacklist
+from metabrainz.oauth.registration_request import get_registration_request
 from metabrainz.user import login_forbidden
 from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
     VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
 from metabrainz.user.forms import UserLoginForm, UserReauthenticationForm, UserSignupForm, ForgotPasswordForm, \
     ForgotUsernameForm, ResetPasswordForm
 from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup_count
+from metabrainz.user.registration import validate_registration_email
 
 users_bp = Blueprint("users", __name__)
 
@@ -25,7 +26,12 @@ users_bp = Blueprint("users", __name__)
 @login_forbidden
 def signup():
     """ User signup endpoint. """
+    registration_request = get_registration_request(request.args.get("registration_request"))
     form = UserSignupForm()
+    if request.method == "POST" and registration_request is not None:
+        form.username.data = registration_request["username"]
+        form.email.data = registration_request["email"]
+
     if form.validate_on_submit() and not check_signup_rate_limit(form):
         user = User.get(name=form.username.data)
         if user is not None:
@@ -64,12 +70,18 @@ def signup():
 
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
+    if request.method == "GET" and registration_request is not None:
+        form_data["username"] = registration_request["username"]
+        form_data["email"] = registration_request["email"]
 
     return render_template("users/signup.html", props=json.dumps({
         "mtcaptcha_site_key": current_app.config.get("MTCAPTCHA_PUBLIC_KEY"),
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
         "initial_errors": form.props_errors,
+        "is_registration_request_signup": registration_request is not None,
+        "registration_request_client_name": registration_request["client_name"]
+        if registration_request is not None else None,
     }))
 
 
@@ -106,6 +118,9 @@ def login():
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
+    registration_request = get_registration_request(request.args.get("registration_request"))
+    if request.method == "GET" and registration_request is not None:
+        form_data["username"] = registration_request["username"]
 
     return render_template("users/login.html", props=json.dumps({
         "mtcaptcha_site_key": current_app.config.get("MTCAPTCHA_PUBLIC_KEY"),
@@ -206,19 +221,17 @@ def check_email():
     if not data or "email" not in data:
         return jsonify({"error": "Email is required"}), 400
 
-    email = data["email"].strip().lower()
-
-    if not email or '@' not in email:
+    email, email_error = validate_registration_email(data["email"])
+    if email_error in {"missing_email", "invalid_email"}:
         return jsonify({"error": "Invalid email format"}), 400
 
-    if DomainBlacklist.is_email_blacklisted(email):
+    if email_error == "domain_blacklisted":
         return jsonify({
             "valid": False,
             "reason": "domain_blacklisted"
         })
 
-    existing_user = User.get(email=email)
-    if existing_user is not None:
+    if email_error == "email_taken":
         return jsonify({
             "valid": False,
             "reason": "email_taken"

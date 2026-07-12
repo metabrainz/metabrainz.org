@@ -34,6 +34,7 @@ services:
     command: flask run --debug -h 0.0.0.0 -p 8100
     environment:
       FLASK_APP: "metabrainz:create_oauth_app()"
+      AUTHLIB_INSECURE_TRANSPORT: 1
     volumes:
       - ..:/code/metabrainz
       - ../frontend:/static
