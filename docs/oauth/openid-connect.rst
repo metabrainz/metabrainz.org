@@ -42,7 +42,7 @@ Example response:
      "jwks_uri": "https://metabrainz.org/.well-known/jwks.json",
      "scopes_supported": ["openid", "profile", "email", "musicbrainz:tag", "..."],
      "response_types_supported": ["code", "id_token token", "id_token"],
-     "response_modes_supported": ["query", "fragment"],
+     "response_modes_supported": ["query", "fragment", "form_post"],
      "grant_types_supported": ["authorization_code", "refresh_token", "implicit"],
      "id_token_signing_alg_values_supported": ["ES256", "none"],
      "subject_types_supported": ["public"]

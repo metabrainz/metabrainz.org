@@ -339,16 +339,20 @@ def well_known_oauth_authorization_server():
     scopes = [
         s[0] for s in db.session.query(OAuth2Scope.name).all()
     ]
-    url_prefix = urljoin(current_app.config["MUSICBRAINZ_SERVER"], current_app.config["OAUTH2_BLUEPRINT_PREFIX"])
+    server = current_app.config["MUSICBRAINZ_SERVER"]
+    url_prefix = urljoin(server, current_app.config["OAUTH2_BLUEPRINT_PREFIX"])
+    # The JWKS and discovery routes live on the well-known blueprint, which is
+    # mounted at the site root ("/.well-known"), not under the OAuth2 prefix.
+    jwks_uri = urljoin(server, "/.well-known/jwks.json")
     return {
         "issuer": "https://metabrainz.org",
         "authorization_endpoint": f"{url_prefix}/authorize",
         "token_endpoint": f"{url_prefix}/token",
         "userinfo_endpoint": f"{url_prefix}/userinfo",
-        "jwks_uri": f"{url_prefix}/.well-known/jwks.json",
+        "jwks_uri": jwks_uri,
         "scopes_supported": scopes,
         "response_types_supported": ["code", "id_token token", "id_token"],
-        "response_modes_supported": ["query", "fragment"],
+        "response_modes_supported": ["query", "fragment", "form_post"],
         "grant_types_supported": ["authorization_code", "refresh_token", "implicit"],
         "id_token_signing_alg_values_supported": ["ES256", "none"],
         "subject_types_supported": ["public"],

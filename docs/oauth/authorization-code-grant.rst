@@ -51,7 +51,11 @@ Redirect the user's browser to the authorization endpoint.
    :query nonce: **Required when requesting the** ``openid`` **scope.** A
       random string bound to the ID token to mitigate replay. See
       :doc:`openid-connect`.
-   :query response_mode: Optional. ``query`` (default) or ``form_post``.
+   :query response_mode: Optional. When omitted, the code is returned in the
+      ``query`` string. The only accepted explicit value is ``form_post``,
+      which returns an auto-submitting HTML form that ``POST``\ s the response
+      to your ``redirect_uri``; any other value is rejected with
+      ``invalid_request``.
    :query approval_prompt: Optional. ``auto`` (default) or ``force``. With
       ``auto``, if the user has already granted the requested scopes to your
       client, consent is skipped and a code is returned immediately. With
