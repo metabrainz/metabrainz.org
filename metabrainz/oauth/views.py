@@ -339,7 +339,7 @@ def well_known_oauth_authorization_server():
     scopes = [
         s[0] for s in db.session.query(OAuth2Scope.name).all()
     ]
-    server = current_app.config["MUSICBRAINZ_SERVER"]
+    server = current_app.config["SERVER_BASE_URL"]
     url_prefix = urljoin(server, current_app.config["OAUTH2_BLUEPRINT_PREFIX"])
     # The JWKS and discovery routes live on the well-known blueprint, which is
     # mounted at the site root ("/.well-known"), not under the OAuth2 prefix.
