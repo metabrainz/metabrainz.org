@@ -345,7 +345,7 @@ function SignupCommercial({
                     {existing_user ? t("become a supporter") : t("sign up")}{" "}
                     {t("as a")}{" "}
                     <a href={nonCommercialUrl}>
-                      {t("non-commercial / personal")}
+                      {t("Non-commercial / Personal")}
                     </a>{" "}
                     {existing_user ? t("supporter") : t("user")}.
                   </p>
