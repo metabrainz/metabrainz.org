@@ -12,18 +12,19 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 13:19+0000\n"
-"PO-Revision-Date: 2026-07-13 12:00+0000\n"
+"PO-Revision-Date: 2026-07-13 13:27+0000\n"
 "Last-Translator: mr_monkey "
 "<mr_monkey@users.noreply.translations.metabrainz.org>\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://translations.metabrainz.org/projects/metabrainz/website/fr/>\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n %"
-" 1000000 == 0) ? 1 : 2);\n"
+"Language-Team: French <https://translations.metabrainz.org/projects/"
+"metabrainz/website/fr/>\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
@@ -42,9 +43,8 @@ msgstr "Une adresse email est requise !"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
-#, fuzzy
 msgid "Current password is required!"
-msgstr "Un mot de passe est requis !"
+msgstr "Le mot de passe actuel est requis !"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -5390,4 +5390,3 @@ msgstr ""
 #~ "href=\"%(financial_reports_url)s\">transparent finances,</a> "
 #~ "which are published quarterly."
 #~ msgstr ""
-
