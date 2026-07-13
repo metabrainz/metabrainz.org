@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-13 13:19+0000\n"
+"POT-Creation-Date: 2026-07-13 16:10+0000\n"
 "PO-Revision-Date: 2026-06-12 00:52+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: et\n"
@@ -69,7 +69,7 @@ msgid "Confirm Password should match password!"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
-#: frontend/js/src/Profile.tsx:265 frontend/js/src/Profile.tsx:466
+#: frontend/js/src/Profile.tsx:271 frontend/js/src/Profile.tsx:480
 #: metabrainz/index/forms.py:78
 msgid "Name"
 msgstr ""
@@ -226,7 +226,7 @@ msgstr ""
 msgid "Contact name is required!"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:420
+#: frontend/js/src/forms/SignupCommercial.tsx:437
 #: frontend/js/src/forms/SignupNonCommercial.tsx:264
 #: metabrainz/supporter/forms.py:15
 msgid ""
@@ -256,7 +256,7 @@ msgstr ""
 msgid "You need to accept the agreement!"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:340
+#: frontend/js/src/forms/SignupCommercial.tsx:342
 #: metabrainz/supporter/forms.py:27
 msgid "Organization name"
 msgstr ""
@@ -266,7 +266,7 @@ msgstr ""
 msgid "You need to specify the name of your organization."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:357
+#: frontend/js/src/forms/SignupCommercial.tsx:373
 #: metabrainz/supporter/forms.py:30
 msgid "Organization description"
 msgstr ""
@@ -276,8 +276,8 @@ msgstr ""
 msgid "You need to provide description of your organization."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:271
-#: frontend/js/src/forms/SignupCommercial.tsx:379
+#: frontend/js/src/Profile.tsx:277
+#: frontend/js/src/forms/SignupCommercial.tsx:396
 #: metabrainz/supporter/forms.py:34
 msgid "Website URL"
 msgstr ""
@@ -291,13 +291,13 @@ msgstr ""
 msgid "Logo image URL"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:277
-#: frontend/js/src/forms/SignupCommercial.tsx:401
+#: frontend/js/src/Profile.tsx:283
+#: frontend/js/src/forms/SignupCommercial.tsx:418
 #: metabrainz/supporter/forms.py:38
 msgid "API URL"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:440
+#: frontend/js/src/forms/SignupCommercial.tsx:457
 #: metabrainz/supporter/forms.py:40
 msgid "Street"
 msgstr ""
@@ -307,7 +307,7 @@ msgstr ""
 msgid "You need to specify street."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:448
+#: frontend/js/src/forms/SignupCommercial.tsx:465
 #: metabrainz/supporter/forms.py:43
 msgid "City"
 msgstr ""
@@ -317,7 +317,7 @@ msgstr ""
 msgid "You need to specify city."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:456
+#: frontend/js/src/forms/SignupCommercial.tsx:473
 #: metabrainz/supporter/forms.py:46
 msgid "State / Province"
 msgstr ""
@@ -327,7 +327,7 @@ msgstr ""
 msgid "You need to specify state/province."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:464
+#: frontend/js/src/forms/SignupCommercial.tsx:481
 #: metabrainz/supporter/forms.py:49
 msgid "Postcode"
 msgstr ""
@@ -337,7 +337,7 @@ msgstr ""
 msgid "You need to specify postcode."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:472
+#: frontend/js/src/forms/SignupCommercial.tsx:489
 #: metabrainz/supporter/forms.py:52
 msgid "Country"
 msgstr ""
@@ -474,7 +474,7 @@ msgid "Supporters"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:103
-#: frontend/js/src/forms/SignupCommercial.tsx:557
+#: frontend/js/src/forms/SignupCommercial.tsx:574
 #: frontend/js/src/forms/SignupNonCommercial.tsx:339
 #: frontend/js/src/forms/SignupUser.tsx:232 metabrainz/templates/base.html:73
 #: metabrainz/templates/navbar.html:66 metabrainz/templates/users/login.html:3
@@ -489,12 +489,11 @@ msgstr ""
 msgid "Access your account"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:365
 #: metabrainz/templates/base.html:78
 msgid "API"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:285 metabrainz/templates/base.html:83
+#: metabrainz/templates/base.html:83
 msgid "Contact us"
 msgstr ""
 
@@ -581,7 +580,7 @@ msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:110
 #: frontend/js/src/forms/SignupCommercial.tsx:175
-#: frontend/js/src/forms/SignupCommercial.tsx:538
+#: frontend/js/src/forms/SignupCommercial.tsx:555
 #: frontend/js/src/forms/SignupNonCommercial.tsx:106
 #: frontend/js/src/forms/SignupNonCommercial.tsx:319
 #: metabrainz/templates/navbar.html:65
@@ -592,8 +591,13 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
+#: frontend/js/src/forms/ProfileChangePassword.tsx:21
+#: frontend/js/src/forms/ProfileEdit.tsx:34
+#: metabrainz/templates/index/profile-change-password.html:3
+#: metabrainz/templates/index/profile-edit.html:3
+#: metabrainz/templates/index/profile.html:3
 #: metabrainz/templates/navbar.html:73
-msgid "Your profile"
+msgid "Your Profile"
 msgstr ""
 
 #: metabrainz/templates/navbar.html:74
@@ -1214,7 +1218,7 @@ msgid ""
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:39
+#: frontend/js/src/forms/ConditionsModal.tsx:43
 #: metabrainz/templates/index/privacy.html:3
 msgid "Privacy"
 msgstr ""
@@ -1287,23 +1291,16 @@ msgstr ""
 msgid "Exceptions"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:582
+#: frontend/js/src/Profile.tsx:596
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
 msgid "Change Password"
 msgstr ""
 
-#: frontend/js/src/forms/ProfileChangePassword.tsx:21
-#: frontend/js/src/forms/ProfileEdit.tsx:34
-#: metabrainz/templates/index/profile-change-password.html:3
-#: metabrainz/templates/index/profile-edit.html:3
-#: metabrainz/templates/index/profile.html:3
-msgid "Your Profile"
-msgstr ""
-
+#: frontend/js/src/Profile.tsx:540 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
-msgid "Delete Account"
+msgid "Delete your account"
 msgstr ""
 
 #: metabrainz/templates/index/profile-edit.html:3
@@ -1823,7 +1820,7 @@ msgid ""
 "stickers and stamps to bottlecaps."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:398
+#: frontend/js/src/Profile.tsx:408
 #: metabrainz/templates/index/datasets/download.html:3
 msgid "Download Datasets"
 msgstr ""
@@ -2917,9 +2914,9 @@ msgstr ""
 msgid "Monthly balance sheets"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:504
+#: frontend/js/src/Profile.tsx:518
 #: frontend/js/src/forms/SignupCommercial.tsx:175
-#: frontend/js/src/forms/SignupCommercial.tsx:537
+#: frontend/js/src/forms/SignupCommercial.tsx:554
 #: frontend/js/src/forms/SignupNonCommercial.tsx:106
 #: frontend/js/src/forms/SignupNonCommercial.tsx:318
 #: metabrainz/templates/supporters/account-type.html:3
@@ -2935,12 +2932,11 @@ msgstr ""
 msgid "Support us"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:348
 #: metabrainz/templates/supporters/account-type.html:24
 msgid "Non-commercial / Personal"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:230
+#: frontend/js/src/Profile.tsx:234
 #: frontend/js/src/forms/SignupNonCommercial.tsx:151
 #: metabrainz/templates/supporters/account-type.html:42
 msgid "Non-commercial"
@@ -2960,9 +2956,9 @@ msgstr ""
 msgid "Upgrade"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:230
+#: frontend/js/src/Profile.tsx:234
 #: frontend/js/src/forms/SignupCommercial.tsx:176
-#: frontend/js/src/forms/SignupCommercial.tsx:226
+#: frontend/js/src/forms/SignupCommercial.tsx:228
 #: metabrainz/templates/supporters/account-type.html:61
 msgid "Commercial"
 msgstr ""
@@ -3056,15 +3052,15 @@ msgid "Supporters on this tier"
 msgstr ""
 
 #: metabrainz/templates/users/lost-password.html:3
-msgid "Forgot password"
+msgid "Forgot your password"
 msgstr ""
 
 #: metabrainz/templates/users/lost-username.html:3
-msgid "Forgot username"
+msgid "Forgot your username"
 msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
-#: frontend/js/src/forms/SignupCommercial.tsx:318
+#: frontend/js/src/forms/SignupCommercial.tsx:320
 #: frontend/js/src/forms/SignupNonCommercial.tsx:227
 #: frontend/js/src/forms/SignupUser.tsx:169
 #: metabrainz/templates/users/reauthenticate.html:3
@@ -3076,7 +3072,7 @@ msgstr ""
 msgid "Please re-enter your password to continue."
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:104
+#: frontend/js/src/ProfileDelete.tsx:108
 #: frontend/js/src/forms/DeleteApplication.tsx:53
 #: frontend/js/src/forms/OAuthPrompt.tsx:54
 #: frontend/js/src/forms/ProfileChangePassword.tsx:104
@@ -3100,7 +3096,7 @@ msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:50
 #: frontend/js/src/forms/LostPassword.tsx:45
-#: frontend/js/src/forms/SignupCommercial.tsx:268
+#: frontend/js/src/forms/SignupCommercial.tsx:270
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
@@ -3118,7 +3114,7 @@ msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:63
 #: frontend/js/src/forms/ResetPassword.tsx:72
-#: frontend/js/src/forms/SignupCommercial.tsx:306
+#: frontend/js/src/forms/SignupCommercial.tsx:308
 #: frontend/js/src/forms/SignupNonCommercial.tsx:214
 #: frontend/js/src/forms/SignupUser.tsx:157 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52
@@ -3230,303 +3226,285 @@ msgstr ""
 msgid "Your current email will be replaced once the new email is verified."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:107
+#: frontend/js/src/Profile.tsx:108
 msgid ""
 "Are you sure you want to generate new access token? Current token will be"
 " revoked!"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:116
+#: frontend/js/src/Profile.tsx:117
 msgid "Failed to generate new access token!"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:130
+#: frontend/js/src/Profile.tsx:131
 msgid "Your application for using the Live Data Feed has been rejected."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:136
+#: frontend/js/src/Profile.tsx:137
 msgid "You do not have permission to use our data in a public commercial product."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:147
+#: frontend/js/src/Profile.tsx:148
 msgid "Your application for using the Live Data Feed is still pending."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:153
+#: frontend/js/src/Profile.tsx:154
 msgid ""
 "You may use our data and APIs for evaluation/development purposes while "
 "your application is pending."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:164
+#: frontend/js/src/Profile.tsx:165
 msgid ""
 "Your application for using the Live Data Feed is waiting to finalize our "
 "support agreement."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:170
+#: frontend/js/src/Profile.tsx:172
 msgid ""
 "You may use our data and APIs for evaluation and development purposes, "
 "but you may not use the data in a public commercial product. Once you are"
-" nearing the public release of a product that contains our data, please"
+" nearing the public release of a product that contains our data, please "
+"<contactLink>contact us</contactLink> again to finalize our support "
+"agreement."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:173 frontend/js/src/Profile.tsx:188
-#: frontend/js/src/Profile.tsx:248
-msgid "contact us"
-msgstr ""
-
-#: frontend/js/src/Profile.tsx:174
-msgid "again to finalize our support agreement."
-msgstr ""
-
-#: frontend/js/src/Profile.tsx:182
+#: frontend/js/src/Profile.tsx:184
 msgid "Your use of the Live Data Feed is pending suspension."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:185
+#: frontend/js/src/Profile.tsx:188
 msgid ""
 "Your account is in bad standing, which means that you are more than 60 "
-"days behind in support payments. If you think this is a mistake, please"
+"days behind in support payments. If you think this is a mistake, please "
+"<contactLink>contact us</contactLink>."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:193
+#: frontend/js/src/Profile.tsx:197
 msgid "Unknown. :("
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:209
+#: frontend/js/src/Profile.tsx:213
 msgid "Active"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:211
+#: frontend/js/src/Profile.tsx:215
 msgid "Rejected"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:213
+#: frontend/js/src/Profile.tsx:217
 msgid "Pending"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:215
+#: frontend/js/src/Profile.tsx:219
 msgid "Waiting"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:217
+#: frontend/js/src/Profile.tsx:221
 msgid "Limited"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:219
+#: frontend/js/src/Profile.tsx:223
 msgid "Unknown"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:229
+#: frontend/js/src/Profile.tsx:233
 msgid "Type:"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:234
+#: frontend/js/src/Profile.tsx:238
 msgid "Tier:"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:238
+#: frontend/js/src/Profile.tsx:242
 msgid "State:"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:245
+#: frontend/js/src/Profile.tsx:250
 msgid ""
 "If you would like to change your account from non-commercial to "
-"commercial, please"
+"commercial, please <contactLink>contact us</contactLink>."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:260
+#: frontend/js/src/Profile.tsx:266
 msgid "Organization Information"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:268 frontend/js/src/Profile.tsx:274
-#: frontend/js/src/Profile.tsx:280
+#: frontend/js/src/Profile.tsx:274 frontend/js/src/Profile.tsx:280
+#: frontend/js/src/Profile.tsx:286
 msgid "Unspecified"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:286
-msgid "to update this information."
+#: frontend/js/src/Profile.tsx:292
+msgid "<contactLink>Contact us</contactLink> to update this information."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:295 frontend/js/src/Profile.tsx:462
+#: frontend/js/src/Profile.tsx:305 frontend/js/src/Profile.tsx:476
 msgid "Contact Information"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:299 frontend/js/src/forms/ProfileEdit.tsx:70
-#: frontend/js/src/forms/SignupCommercial.tsx:282
-#: frontend/js/src/forms/SignupCommercial.tsx:331
+#: frontend/js/src/Profile.tsx:309 frontend/js/src/forms/ProfileEdit.tsx:70
+#: frontend/js/src/forms/SignupCommercial.tsx:284
+#: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
 msgid "Contact name"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:301 frontend/js/src/forms/ProfileEdit.tsx:79
+#: frontend/js/src/Profile.tsx:311 frontend/js/src/forms/ProfileEdit.tsx:79
 msgid "Contact Email"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:311
+#: frontend/js/src/Profile.tsx:321
 msgid "Datasets Used"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:322
+#: frontend/js/src/Profile.tsx:332
 msgid "Edit Contact Information"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:323
+#: frontend/js/src/Profile.tsx:333
 msgid "Edit Datasets / Contact Information"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:337
+#: frontend/js/src/Profile.tsx:347
 msgid "Data Use Permission Granted"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:343
+#: frontend/js/src/Profile.tsx:353
 msgid "Your support agreement has been completed -- thank you!"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:349
+#: frontend/js/src/Profile.tsx:359
 msgid ""
 "You have permission to use any of the data published by the MetaBrainz "
 "Foundation. This includes data dumps released under a Creative Commons "
 "non-commercial license."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:355
+#: frontend/js/src/Profile.tsx:365
 msgid ""
 "If your support falls behind by more than 60 days, this permission may be"
 " withdrawn."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:360
+#: frontend/js/src/Profile.tsx:370
 msgid "IP addresses from which replication packets are downloaded are logged."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:371
+#: frontend/js/src/Profile.tsx:381
 msgid "Limited/No Data Use Permission"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:386
+#: frontend/js/src/Profile.tsx:396
 msgid "Data Download"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:391
+#: frontend/js/src/Profile.tsx:401
 msgid "Thank you for registering with us -- we really appreciate it!"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:396
+#: frontend/js/src/Profile.tsx:406
 msgid "Proceed to our download page to download datasets:"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:412
+#: frontend/js/src/Profile.tsx:422
 msgid "Live Data Feed Access Token"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:417
+#: frontend/js/src/Profile.tsx:427
 msgid ""
 "This access token should be considered private. Don't check it into "
 "publicly visible version control systems. If exposed, generate a new one "
 "immediately."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:431
+#: frontend/js/src/Profile.tsx:441
 msgid "[ no valid token currently ]"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:438
+#: frontend/js/src/Profile.tsx:448
 msgid "Generate New Token"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:441
-msgid "See the"
+#: frontend/js/src/Profile.tsx:452
+msgid "See the <apiLink>API documentation</apiLink> for more information."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:441
-msgid "API documentation"
-msgstr ""
-
-#: frontend/js/src/Profile.tsx:442
-msgid "for more information."
-msgstr ""
-
-#: frontend/js/src/Profile.tsx:468 frontend/js/src/forms/LostPassword.tsx:53
+#: frontend/js/src/Profile.tsx:482 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
 msgid "Email"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:482
+#: frontend/js/src/Profile.tsx:496
 msgid "Edit Information"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:494
+#: frontend/js/src/Profile.tsx:508
 msgid "Want access to MetaBrainz datasets?"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:499
+#: frontend/js/src/Profile.tsx:513
 msgid ""
 "Upgrade your account to a supporter account to access our datasets and "
 "the Live Data Feed. Choose between non-commercial (free) and commercial "
 "options."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:522
+#: frontend/js/src/Profile.tsx:536
 msgid "Danger Zone"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:526
-msgid "Delete your account"
-msgstr ""
-
-#: frontend/js/src/Profile.tsx:529
+#: frontend/js/src/Profile.tsx:543
 msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:534 frontend/js/src/ProfileDelete.tsx:101
+#: frontend/js/src/Profile.tsx:548 frontend/js/src/ProfileDelete.tsx:105
 msgid "Delete My Account"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:551
+#: frontend/js/src/Profile.tsx:565
 msgid "Account Deletion"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:555
+#: frontend/js/src/Profile.tsx:569
 msgid "Need to delete your account?"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:558
+#: frontend/js/src/Profile.tsx:572
 msgid ""
 "Deletion of supporter accounts requires manual review. Please contact us "
 "at"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:578
+#: frontend/js/src/Profile.tsx:592
 msgid "Security"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:610
+#: frontend/js/src/Profile.tsx:624
 msgid "MetaBrainz Applications"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:614
+#: frontend/js/src/Profile.tsx:628
 msgid ""
 "With your MetaBrainz account, you can access every project in the "
 "MetaBrainz family:"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:627
+#: frontend/js/src/Profile.tsx:641
 msgid "The open-source music encyclopedia"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:639
+#: frontend/js/src/Profile.tsx:653
 msgid "Track, visualise and share the music you listen to"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:651
+#: frontend/js/src/Profile.tsx:665
 msgid "The open-source book database"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:663
+#: frontend/js/src/Profile.tsx:677
 msgid "Creative Commons licensed reviews"
 msgstr ""
 
@@ -3534,10 +3512,6 @@ msgstr ""
 msgid ""
 "Are you sure you want to delete your account? This action cannot be "
 "undone."
-msgstr ""
-
-#: frontend/js/src/ProfileDelete.tsx:46
-msgid "Delete Your Account"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:57
@@ -3568,15 +3542,11 @@ msgstr ""
 msgid "Your username will be reserved and cannot be reused."
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:81
-msgid "To confirm, type your username"
-msgstr ""
-
 #: frontend/js/src/ProfileDelete.tsx:82
-msgid "below:"
+msgid "To confirm, type your username '<username />' below:"
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:101
+#: frontend/js/src/ProfileDelete.tsx:105
 msgid "Deleting..."
 msgstr ""
 
@@ -3604,60 +3574,52 @@ msgid ""
 "license this data for commercial use."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:29
+#: frontend/js/src/forms/ConditionsModal.tsx:30
+msgid "Please read our <licenseLink>license page</licenseLink> for more details."
+msgstr ""
+
 #: frontend/js/src/forms/ConditionsModal.tsx:45
-#: frontend/js/src/forms/ConditionsModal.tsx:57
-msgid "Please read our"
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:35
-msgid "license page"
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:37
-#: frontend/js/src/forms/ConditionsModal.tsx:49
-#: frontend/js/src/forms/ConditionsModal.tsx:61
-msgid "for more details."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:41
 msgid ""
 "MetaBrainz strongly believes in the privacy of its users. Any personal "
 "information you choose to provide will not be sold or shared with anyone "
 "else."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:47
-msgid "privacy policy"
+#: frontend/js/src/forms/ConditionsModal.tsx:50
+msgid ""
+"Please read our <privacyLink>privacy policy</privacyLink> for more "
+"details."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:51
+#: frontend/js/src/forms/ConditionsModal.tsx:59
 msgid "GDPR compliance"
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:53
+#: frontend/js/src/forms/ConditionsModal.tsx:61
 msgid ""
 "You may remove your personal information from our services anytime by "
 "deleting your account."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:59
-msgid "GDPR compliance statement"
+#: frontend/js/src/forms/ConditionsModal.tsx:66
+msgid ""
+"Please read our <gdprLink>GDPR compliance statement</gdprLink> for more "
+"details."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:66
+#: frontend/js/src/forms/ConditionsModal.tsx:78
 msgid ""
 "Creating an account on MetaBrainz will give you access to all of our "
 "projects, such as MusicBrainz, ListenBrainz, BookBrainz, and more."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:70
+#: frontend/js/src/forms/ConditionsModal.tsx:82
 msgid ""
 "We create a placeholder account for all the MetaBrainz projects when you "
 "sign up, and you are one log-in away from activating them."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:79
+#: frontend/js/src/forms/ConditionsModal.tsx:91
 msgid "Sounds good"
 msgstr ""
 
@@ -3674,7 +3636,7 @@ msgid "Application description needs to be at least 3 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
-msgid "Application description needs to be at most 64 characters long."
+msgid "Application description needs to be at most 512 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:78
@@ -3734,19 +3696,17 @@ msgid "Welcome back!"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:53
-msgid "Forgot username?"
+#: frontend/js/src/forms/LostUsername.tsx:26
+msgid "Forgot your username?"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:66
-msgid "Forgot password?"
+#: frontend/js/src/forms/LostPassword.tsx:26
+msgid "Forgot your password?"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:109
 msgid "Don't have an account?"
-msgstr ""
-
-#: frontend/js/src/forms/LostPassword.tsx:26
-msgid "Forgot your password?"
 msgstr ""
 
 #: frontend/js/src/forms/LostPassword.tsx:38
@@ -3757,10 +3717,6 @@ msgstr ""
 #: frontend/js/src/forms/LostPassword.tsx:79
 #: frontend/js/src/forms/LostUsername.tsx:70
 msgid "Send Email"
-msgstr ""
-
-#: frontend/js/src/forms/LostUsername.tsx:26
-msgid "Forgot your username?"
 msgstr ""
 
 #: frontend/js/src/forms/OAuthPrompt.tsx:27
@@ -3820,193 +3776,166 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:179
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
 #: frontend/js/src/forms/SignupUser.tsx:46
-msgid "access all MetaBrainz projects"
+msgid "Access all MetaBrainz projects"
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:182
 msgid "Note:"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:183
-msgid "Signing up for any tier other than the"
-msgstr ""
-
 #: frontend/js/src/forms/SignupCommercial.tsx:184
-msgid "Stealth startup"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:185
 msgid ""
+"Signing up for any tier other than the <italic>Stealth startup</italic> "
 "tier will publicly list your company on this web site. However, we will "
 "not publish any of your private details."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:219
+#: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
 msgid "Account type"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:232
+#: frontend/js/src/forms/SignupCommercial.tsx:234
 msgid "Selected tier"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:240
+#: frontend/js/src/forms/SignupCommercial.tsx:242
 msgid "month and up"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:248
+#: frontend/js/src/forms/SignupCommercial.tsx:250
 msgid "Change account type or tier"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:259
+#: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
 msgid "Your account:"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:269
+#: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
 #: frontend/js/src/forms/SignupUser.tsx:114
 msgid "(public)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:289
+#: frontend/js/src/forms/SignupCommercial.tsx:291
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
 #: frontend/js/src/forms/SignupUser.tsx:127
 msgid "E-mail address"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:293
+#: frontend/js/src/forms/SignupCommercial.tsx:295
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
 #: frontend/js/src/forms/SignupUser.tsx:131
 msgid "(checking...)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:312
+#: frontend/js/src/forms/SignupCommercial.tsx:314
 #: frontend/js/src/forms/SignupNonCommercial.tsx:220
 #: frontend/js/src/forms/SignupUser.tsx:163
 msgid "Must be at least 8 characters"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:344
-msgid "If you don't have an organization name, you probably want to"
+#: frontend/js/src/forms/SignupCommercial.tsx:348
+msgid ""
+"If you don't have an organization name, you probably want to become a "
+"supporter as a <nonCommercialLink>Non-commercial / "
+"Personal</nonCommercialLink> supporter."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:345
-msgid "become a supporter"
+#: frontend/js/src/forms/SignupCommercial.tsx:358
+msgid ""
+"If you don't have an organization name, you probably want to sign up as a"
+" <nonCommercialLink>Non-commercial / Personal</nonCommercialLink> user."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:345
-msgid "sign up"
+#: frontend/js/src/forms/SignupCommercial.tsx:378
+msgid ""
+"Please tell us a little about your company and whether you plan to use "
+"our <apiLink>API</apiLink> or to <hostLink>host your own copy</hostLink> "
+"of the data."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:346
-msgid "as a"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:350
-msgid "supporter"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:350
-msgid "user"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:361
-msgid "Please tell us a little about your company and whether you plan to use our"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:367
-msgid "or to"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:369
-msgid "host your own copy"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:371
-msgid "of the data."
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:387
+#: frontend/js/src/forms/SignupCommercial.tsx:404
 msgid "Logo URL"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:388
+#: frontend/js/src/forms/SignupCommercial.tsx:405
 msgid "(preferably in SVG format)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:391
+#: frontend/js/src/forms/SignupCommercial.tsx:408
 msgid ""
 "Image should be about 250 pixels wide on a white or transparent "
 "background. We will host it on our site."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:404
+#: frontend/js/src/forms/SignupCommercial.tsx:421
 msgid ""
 "URL to where developers can use your APIs using MusicBrainz IDs, if "
 "available.."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:413
+#: frontend/js/src/forms/SignupCommercial.tsx:430
 msgid "Your project"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:417
+#: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
 msgid "(max 150 characters)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:434
+#: frontend/js/src/forms/SignupCommercial.tsx:451
 msgid "Billing address"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:485
+#: frontend/js/src/forms/SignupCommercial.tsx:502
 msgid ""
 "I agree to support the MetaBrainz Foundation when my organization is able"
 " to do so."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:490
+#: frontend/js/src/forms/SignupCommercial.tsx:507
 msgid ""
 "I also agree that if I generate a Live Data Feed access token, that I "
 "treat my access token as a secret and will not share this token publicly "
 "or commit it to a source code repository."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:498
+#: frontend/js/src/forms/SignupCommercial.tsx:515
 msgid ""
 "The following information will be shown publicly: organization name, "
 "logo, website and API URLs, data usage description."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:503
+#: frontend/js/src/forms/SignupCommercial.tsx:520
 msgid ""
 "We'll send you more details about payment process once your application "
 "is approved."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:535
+#: frontend/js/src/forms/SignupCommercial.tsx:552
 #: frontend/js/src/forms/SignupNonCommercial.tsx:316
 #: frontend/js/src/forms/SignupUser.tsx:224
 msgid "Validating..."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:547
+#: frontend/js/src/forms/SignupCommercial.tsx:564
 #: frontend/js/src/forms/SignupNonCommercial.tsx:329
 msgid "Back to profile"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:552
+#: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
 msgid "Not a supporter?"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:553
+#: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
 msgid "Create a user account"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:556
+#: frontend/js/src/forms/SignupCommercial.tsx:573
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
 #: frontend/js/src/forms/SignupUser.tsx:231
 msgid "Already have an account?"
@@ -5248,5 +5177,144 @@ msgstr ""
 #~ "        Foundation believes in <a "
 #~ "href=\"%(financial_reports_url)s\">transparent finances,</a> "
 #~ "which are published quarterly."
+#~ msgstr ""
+
+#~ msgid "Delete Account"
+#~ msgstr ""
+
+#~ msgid "Forgot password"
+#~ msgstr ""
+
+#~ msgid "Forgot username"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You may use our data and APIs "
+#~ "for evaluation and development purposes, "
+#~ "but you may not use the data "
+#~ "in a public commercial product. Once "
+#~ "you are nearing the public release "
+#~ "of a product that contains our "
+#~ "data, please"
+#~ msgstr ""
+
+#~ msgid "contact us"
+#~ msgstr ""
+
+#~ msgid "again to finalize our support agreement."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Your account is in bad standing, "
+#~ "which means that you are more than"
+#~ " 60 days behind in support payments."
+#~ " If you think this is a "
+#~ "mistake, please"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you would like to change your"
+#~ " account from non-commercial to "
+#~ "commercial, please"
+#~ msgstr ""
+
+#~ msgid "to update this information."
+#~ msgstr ""
+
+#~ msgid "Delete Your Account"
+#~ msgstr ""
+
+#~ msgid "Application description needs to be at most 64 characters long."
+#~ msgstr ""
+
+#~ msgid "Forgot username?"
+#~ msgstr ""
+
+#~ msgid "Forgot password?"
+#~ msgstr ""
+
+#~ msgid "access all MetaBrainz projects"
+#~ msgstr ""
+
+#~ msgid "Your profile"
+#~ msgstr ""
+
+#~ msgid "See the"
+#~ msgstr ""
+
+#~ msgid "API documentation"
+#~ msgstr ""
+
+#~ msgid "for more information."
+#~ msgstr ""
+
+#~ msgid "To confirm, type your username"
+#~ msgstr ""
+
+#~ msgid "below:"
+#~ msgstr ""
+
+#~ msgid "To confirm, type your username <username /> below:"
+#~ msgstr ""
+
+#~ msgid "Please read our"
+#~ msgstr ""
+
+#~ msgid "license page"
+#~ msgstr ""
+
+#~ msgid "for more details."
+#~ msgstr ""
+
+#~ msgid "privacy policy"
+#~ msgstr ""
+
+#~ msgid "GDPR compliance statement"
+#~ msgstr ""
+
+#~ msgid "Signing up for any tier other than the"
+#~ msgstr ""
+
+#~ msgid "Stealth startup"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "tier will publicly list your company "
+#~ "on this web site. However, we will"
+#~ " not publish any of your private "
+#~ "details."
+#~ msgstr ""
+
+#~ msgid "If you don't have an organization name, you probably want to"
+#~ msgstr ""
+
+#~ msgid "become a supporter"
+#~ msgstr ""
+
+#~ msgid "sign up"
+#~ msgstr ""
+
+#~ msgid "as a"
+#~ msgstr ""
+
+#~ msgid "supporter"
+#~ msgstr ""
+
+#~ msgid "user"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Please tell us a little about your"
+#~ " company and whether you plan to "
+#~ "use our"
+#~ msgstr ""
+
+#~ msgid "or to"
+#~ msgstr ""
+
+#~ msgid "host your own copy"
+#~ msgstr ""
+
+#~ msgid "of the data."
 #~ msgstr ""
 
