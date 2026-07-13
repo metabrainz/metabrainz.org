@@ -107,7 +107,7 @@ function SignupNonCommercial({
             <small>{t("non-commercial")}</small>
           </h1>
           <div className="h4 text-center">
-            {t("access all MetaBrainz projects")}
+            {t("Access all MetaBrainz projects")}
           </div>
           <p>
             {t(

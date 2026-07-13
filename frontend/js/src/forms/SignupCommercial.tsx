@@ -176,7 +176,7 @@ function SignupCommercial({
             <small>{t("Commercial")}</small>
           </h1>
           <div className="h4 text-center">
-            {t("access all MetaBrainz projects")}
+            {t("Access all MetaBrainz projects")}
           </div>
           <p>
             <strong>{t("Note:")}</strong>{" "}
