@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 13:19+0000\n"
-"PO-Revision-Date: 2026-07-13 13:28+0000\n"
+"PO-Revision-Date: 2026-07-13 14:55+0000\n"
 "Last-Translator: mr_monkey "
 "<mr_monkey@users.noreply.translations.metabrainz.org>\n"
 "Language: fr\n"
@@ -93,9 +93,8 @@ msgid "Current password is incorrect."
 msgstr "Le mot de passe actuel est incorrect."
 
 #: metabrainz/index/views.py:266
-#, fuzzy
 msgid "Password changed successfully."
-msgstr "Profil mis à jour avec succès."
+msgstr "Mot de passe mis à jour avec succès."
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
@@ -135,19 +134,19 @@ msgstr "Le nom de l'application doit contenir un maximum de 64 caractères."
 
 #: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
 msgid "Description"
-msgstr "**Description:**"
+msgstr "Description"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr "Le champ \"Description du client\" est vide."
+msgstr "Le champ \"Description\" est vide."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr "La description du client doit contenir au moins 3 caractères."
+msgstr "La description doit contenir au moins 3 caractères."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr "La description du client doit contenir un maximum de 512 caractères."
+msgstr "La description doit contenir un maximum de 512 caractères."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
@@ -447,7 +446,7 @@ msgstr "Équipe"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr "Magasin"
+msgstr "Boutique"
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
 msgid "Policies"
@@ -583,24 +582,21 @@ msgid "GDPR Compliance"
 msgstr "Conformité au RGPD"
 
 #: metabrainz/templates/navbar.html:45
-#, fuzzy
 msgid "Supporter Sign Up"
-msgstr "Supporters"
+msgstr "S'inscrire comme supporter"
 
 #: metabrainz/templates/navbar.html:46
-#, fuzzy
 msgid "Our Supporters"
-msgstr "Supporters"
+msgstr "Nos Supporters"
 
 #: metabrainz/templates/navbar.html:47
-#, fuzzy
 msgid "Our Sponsors"
-msgstr "Parrains"
+msgstr "Nos Parrains"
 
 #: metabrainz/templates/navbar.html:51
 #: metabrainz/templates/reports/financial_reports/index.html:29
 msgid "Reports"
-msgstr ""
+msgstr "Rapports"
 
 #: metabrainz/templates/navbar.html:54
 msgid "Financial Reports"
@@ -817,11 +813,13 @@ msgid ""
 "href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
 "Alliance</a>"
 msgstr ""
+"Directeur et Secrétaire Nick Ashton-Hart, Directeur Exécutif de l'<a href=\"%"
+"(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem Alliance</a>"
 
 #: metabrainz/templates/index/about.html:54
 #, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
+msgstr "Directeur <a href=\"%(paul_url)s\">Paul Bennun</a> de fuchsia, LLC"
 
 #: metabrainz/templates/index/about.html:55
 #, python-format
@@ -829,6 +827,8 @@ msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
 msgstr ""
+"Directeur <a href=\"%(matthew_url)s\">Matthew Hawn</a> de <a href=\"%"
+"(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, python-format
@@ -836,6 +836,8 @@ msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
 msgstr ""
+"Directrice et Trésorière <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</"
+"a> de <a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:57
 #, python-format
@@ -872,19 +874,19 @@ msgstr "Dirigeants"
 
 #: metabrainz/templates/index/about.html:68
 msgid "The officers of this company are:"
-msgstr ""
+msgstr "Les dirigeants de la compagnie sont :"
 
 #: metabrainz/templates/index/about.html:70
 msgid "President Nicolás Tamargo"
-msgstr ""
+msgstr "Président Nicolás Tamargo"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr ""
+msgstr "Trésorière Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:72
 msgid "Secretary Nick Ashton-Hart"
-msgstr ""
+msgstr "Secrétaire Nick Ashton-Hart"
 
 #: metabrainz/templates/index/bad-customers.html:3
 msgid "Bad customers"
@@ -1136,15 +1138,18 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:73
 msgid "E-mail us"
-msgstr ""
+msgstr "Envoyez-nous un e-mail"
 
 #: metabrainz/templates/index/contact.html:75
 msgid "I agree with the rules above, show me the email address"
 msgstr ""
+"Je suis d'accord avec les règles ci-dessus, montrez-moi l'adresse e-mail"
 
 #: metabrainz/templates/index/contact.html:78
 msgid "You can reach the MetaBrainz staff directly at the following address:"
 msgstr ""
+"Vous pouvez contacter directement l'équipe de MetaBrainz à l'adresse suivante"
+" :"
 
 #: metabrainz/templates/index/contact.html:84
 msgid "Forums"
@@ -1157,6 +1162,9 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
+"N'hésitez pas à poser vos questions sur nos <a href=\"%(forums_url)s\">"
+"forums</a> !\n"
+"    Nous serons ravis de répondre à toutes vos questions."
 
 #: metabrainz/templates/index/contact.html:92
 #, python-format
@@ -1167,60 +1175,65 @@ msgid ""
 "    page and join the chat. You can also browse the\n"
 "    <a href=\"%(chatlogs_url)s\">chat log archives</a>."
 msgstr ""
+"L'équipe et la communauté MetaBrainz/MusicBrainz/ListenBrainz se retrouvent\n"
+"    sur nos serveurs Matrix, IRC et Discord. Visitez la page\n"
+"    <a href=\"%(chatbrainz_url)s\">ChatBrainz</a>\n"
+"    et rejoignez la conversation. Vous pouvez également consulter\n"
+"    les <a href=\"%(chatlogs_url)s\">archives des discussions</a>."
 
 #: metabrainz/templates/index/contact.html:101
 msgid "Social media"
-msgstr ""
+msgstr "Réseaux sociaux"
 
 #: metabrainz/templates/index/contact.html:103
 msgid "You can follow us on these social channels:"
-msgstr ""
+msgstr "Vous pouvez nous suivre sur ces réseaux sociaux :"
 
 #: metabrainz/templates/index/contact.html:113
 msgid "Mailing address"
-msgstr ""
+msgstr "Adresse postale"
 
 #: metabrainz/templates/index/datasets.html:9
 msgid "The MetaBrainz Datasets"
-msgstr "Les données de MetaBrainz"
+msgstr "Les ensembles de données de MetaBrainz"
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
 msgid "GDPR Compliance Statement"
-msgstr ""
+msgstr "Déclaration de conformité au RGPD"
 
 #: metabrainz/templates/index/gdpr.html:37
 msgid "Right to be forgotten"
-msgstr ""
+msgstr "Droit à l'oubli"
 
 #: metabrainz/templates/index/gdpr.html:77
 msgid "Restriction of processing"
-msgstr ""
+msgstr "Restriction du traitement"
 
 #: metabrainz/templates/index/gdpr.html:110
 msgid "Right to data portability / exporting your data"
-msgstr ""
+msgstr "Droit à la portabilité des données / exportation de vos données"
 
 #: metabrainz/templates/index/gdpr.html:150
 msgid "Right to rectification"
-msgstr ""
+msgstr "Droit à la rectification"
 
 #: metabrainz/templates/index/gdpr.html:165
 msgid "Right to be informed"
-msgstr ""
+msgstr "Droit à l'information"
 
 #: metabrainz/templates/index/gdpr.html:188
 msgid "Right to access"
-msgstr ""
+msgstr "Droit à l'accès"
 
 #: metabrainz/templates/index/gdpr.html:198
 #: metabrainz/templates/index/privacy.html:166
 msgid "Privacy/GDPR Representative"
-msgstr ""
+msgstr "Représentant(e) protection des données/RGPD"
 
 #: metabrainz/templates/index/index.html:6
 msgid "Welcome to MetaBrainz!"
-msgstr "Bienvenue sur MetaBrainz !"
+msgstr "Bienvenue sur MetaBrainz !"
 
 #: metabrainz/templates/index/index.html:10
 msgid ""
@@ -1230,9 +1243,15 @@ msgid ""
 "Creative\n"
 "        Commons licenses."
 msgstr ""
+"La Fondation MetaBrainz est une organisation à but non lucratif\n"
+"        qui défend l'accès libre et ouvert aux données. Elle a été créée "
+"pour développer\n"
+"        des bases de données gérées par la communauté et les mettre à "
+"disposition\n"
+"        dans le domaine public ou sous licences Creative Commons."
 
 #: metabrainz/templates/index/index.html:16
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our data is mostly gathered by volunteers and verified\n"
 "        by peer review to ensure it is consistent and correct. All\n"
@@ -1246,21 +1265,26 @@ msgid ""
 "gathering process so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
-"La fondation MetaBrainz a été montée pour constituer des bases de données"
-" maintenues par la communauté et les inscrire dans le domaine public ou "
-"sous une licence Creative Commons. Nos données sont en grande part "
-"collectées par des bénévoles, et vérifiées par un système de vote pour "
-"assurer leur cohérence et leur correction. Tout utilisation non "
-"commerciale est permise, mais les utilisateurs commerciaux doivent payer "
-"pour des mises à jour régulières afin d’aider le financement du projet. "
-"Nous encourageons tous nos utilisateurs à contribuer au processus de "
-"collecte de données pour qu’elles soient aussi exhaustives que possible."
+"Nos données sont principalement collectées par des bénévoles et vérifiées\n"
+"        par évaluation par les pairs afin de garantir leur cohérence et leur "
+"exactitude. Toute\n"
+"        utilisation <a href=\"%(account_type_url)s\">non commerciale</a> de "
+"ces données est gratuite,\n"
+"        mais les <a href=\"%(account_type_url)s\">partenaires commerciaux</"
+"a> sont invités à\n"
+"        <a href=\"%(account_type_url)s\">nous soutenir</a> afin de "
+"contribuer au financement du projet.\n"
+"        Nous encourageons tous les utilisateurs de données à participer au "
+"processus de collecte\n"
+"        afin que nos données soient aussi complètes que possible."
 
 #: metabrainz/templates/index/index.html:38
 msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
+"Une encyclopédie musicale libre qui collecte des métadonnées musicales\n"
+"              et les met à la disposition du public"
 
 #: metabrainz/templates/index/index.html:40
 #, python-format
