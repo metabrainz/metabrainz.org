@@ -2567,16 +2567,6 @@ msgstr "ユーロ"
 msgid "EUR"
 msgstr "EUR"
 
-#: metabrainz/templates/quickbooks/index.html:3
-#: metabrainz/templates/quickbooks/index.html:7
-msgid "Create Invoices"
-msgstr "請求書の作成"
-
-#: metabrainz/templates/quickbooks/login.html:3
-#: metabrainz/templates/quickbooks/login.html:7
-msgid "Login to Quickbooks"
-msgstr "QuickBooksにログイン"
-
 #: metabrainz/templates/reports/annual_reports/view.html:2
 msgid "Annual Report"
 msgstr "年次レポート"

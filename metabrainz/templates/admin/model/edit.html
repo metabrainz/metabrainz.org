@@ -18,16 +18,16 @@
   <div class="admin-card" style="margin-bottom: 25px;">
     <div class="btn-group" role="group">
       <a href="{{ return_url }}" class="btn btn-secondary">
-        <i class="fa fa-list"></i> {{ _gettext('List') }}
+        <i class="fa fa-list"></i> List
       </a>
       {%- if admin_view.can_create -%}
       <a href="{{ get_url('.create_view', url=return_url) }}" class="btn btn-secondary">
-        <i class="fa fa-plus"></i> {{ _gettext('Create') }}
+        <i class="fa fa-plus"></i> Create
       </a>
       {%- endif -%}
       {%- if admin_view.can_view_details -%}
       <a class="btn btn-secondary" href="{{ get_url('.details_view', id=request.args.get('id'), url=return_url) }}">
-        <i class="fa fa-eye"></i> {{ _gettext('Details') }}
+        <i class="fa fa-eye"></i> Details
       </a>
       {%- endif -%}
     </div>

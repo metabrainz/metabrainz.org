@@ -18,11 +18,11 @@
     <div class="admin-card oauth-client-nav">
       <div class="btn-group" role="group">
         <a href="{{ return_url }}" class="btn btn-secondary">
-          <i class="fa fa-list"></i> {{ _gettext('List') }}
+          <i class="fa fa-list"></i> List
         </a>
         {%- if admin_view.can_view_details -%}
         <a class="btn btn-secondary" href="{{ get_url('.details_view', id=request.args.get('id'), url=return_url) }}">
-          <i class="fa fa-eye"></i> {{ _gettext('Details') }}
+          <i class="fa fa-eye"></i> Details
         </a>
         {%- endif -%}
       </div>
@@ -138,9 +138,9 @@
             <button type="submit" class="btn btn-primary">
               <i class="fa fa-save"></i> Save privileges
             </button>
-            <input name="_continue_editing" type="submit" class="btn btn-secondary" value="{{ _gettext('Save and Continue Editing') }}">
+            <input name="_continue_editing" type="submit" class="btn btn-secondary" value="Save and Continue Editing">
             <a href="{{ return_url }}" class="btn btn-secondary">
-              {{ _gettext('Cancel') }}
+              Cancel
             </a>
           </div>
         </form>
