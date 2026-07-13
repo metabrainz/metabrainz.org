@@ -1,5 +1,5 @@
 import React, { JSX, useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { getPageProps, renderRoot } from "./utils";
 import ProfileTabs from "./ProfileTabs";
 
@@ -99,6 +99,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     token,
   } = supporter!;
   const [currentToken, setCurrentToken] = useState(token);
+  const contactLink = <a href="/contact" />;
 
   const regenerateToken = useCallback(async () => {
     if (
@@ -167,11 +168,12 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
           </b>
         </p>
         <p>
-          {t(
-            "You may use our data and APIs for evaluation and development purposes, but you may not use the data in a public commercial product. Once you are nearing the public release of a product that contains our data, please"
-          )}{" "}
-          <a href="/contact">{t("contact us")}</a>{" "}
-          {t("again to finalize our support agreement.")}
+          <Trans
+            defaults={t(
+              "You may use our data and APIs for evaluation and development purposes, but you may not use the data in a public commercial product. Once you are nearing the public release of a product that contains our data, please <contactLink>contact us</contactLink> again to finalize our support agreement."
+            )}
+            components={{contactLink}}
+          />
         </p>
       </>
     );
@@ -182,10 +184,12 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
           <b>{t("Your use of the Live Data Feed is pending suspension.")}</b>
         </p>
         <p>
-          {t(
-            "Your account is in bad standing, which means that you are more than 60 days behind in support payments. If you think this is a mistake, please"
-          )}{" "}
-          <a href="/contact">{t("contact us")}</a>.
+          <Trans
+            defaults={t(
+              "Your account is in bad standing, which means that you are more than 60 days behind in support payments. If you think this is a mistake, please <contactLink>contact us</contactLink>."
+            )}
+            components={{contactLink}}
+          />
         </p>
       </>
     );
@@ -242,10 +246,12 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
           </div>
           {!is_commercial && (
             <p className="text-muted" style={{ marginTop: "0.5rem" }}>
-              {t(
-                "If you would like to change your account from non-commercial to commercial, please"
-              )}{" "}
-              <a href="/contact">{t("contact us")}</a>.
+              <Trans
+                defaults={t(
+                  "If you would like to change your account from non-commercial to commercial, please <contactLink>contact us</contactLink>."
+                )}
+                components={{contactLink}}
+              />
             </p>
           )}
         </div>
@@ -282,8 +288,12 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                   </dd>
                 </dl>
                 <p className="text-muted" style={{ marginTop: "1rem", marginBottom: 0 }}>
-                  <a href="/contact">{t("Contact us")}</a>{" "}
-                  {t("to update this information.")}
+                  <Trans
+                    defaults={t(
+                      "<contactLink>Contact us</contactLink> to update this information."
+                    )}
+                    components={{contactLink}}
+                  />
                 </p>
               </div>
             </div>
