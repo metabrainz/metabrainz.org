@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-13 15:06+0200\n"
+"POT-Creation-Date: 2026-07-13 13:19+0000\n"
 "PO-Revision-Date: 2026-06-12 00:53+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: it\n"
@@ -786,7 +786,8 @@ msgid ""
 "give back to our community to keep our \n"
 "        ecosystem healthy. Non-commercial use of our data remains free, "
 "and we are committed to keeping it free to utilize. \n"
-"        We are also supported by donations and a number of <a "
+"        We are also supported by <a "
+"href=\"%(donations_url)s\">donations</a> and a number of <a "
 "href=\"%(sponsors_url)s\">sponsors</a> who provide \n"
 "        funds in order for the foundation to continue to accomplish "
 "various project goals. The MetaBrainz \n"
@@ -795,15 +796,15 @@ msgid ""
 "published quarterly."
 msgstr ""
 
-#: metabrainz/templates/index/about.html:49
+#: metabrainz/templates/index/about.html:50
 msgid "Board of Directors"
 msgstr "Consiglio dei Direttori"
 
-#: metabrainz/templates/index/about.html:50
+#: metabrainz/templates/index/about.html:51
 msgid "Our board of directors consists of:"
 msgstr "Il nostro consiglio dei direttori è composto da:"
 
-#: metabrainz/templates/index/about.html:52
+#: metabrainz/templates/index/about.html:53
 #, fuzzy, python-format
 msgid ""
 "Director &amp; Secretary Nick Ashton-Hart, Executive Director of the <a "
@@ -814,12 +815,12 @@ msgstr ""
 "href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
 "Alliance</a>"
 
-#: metabrainz/templates/index/about.html:53
+#: metabrainz/templates/index/about.html:54
 #, fuzzy, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
 msgstr "Direttore <a href=\"%(paul_url)s\">Paul Bennun</a> di fuchsia, LLC"
 
-#: metabrainz/templates/index/about.html:54
+#: metabrainz/templates/index/about.html:55
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
@@ -828,7 +829,7 @@ msgstr ""
 "Direttore <a href=\"%(matthew_url)s\">Matthew Hawn</a> di <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
-#: metabrainz/templates/index/about.html:55
+#: metabrainz/templates/index/about.html:56
 #, fuzzy, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
@@ -837,7 +838,7 @@ msgstr ""
 "Direttrice &amp; tesoriera <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> di <a href=\"%(rassami_com)s\">rassami.com</a>"
 
-#: metabrainz/templates/index/about.html:56
+#: metabrainz/templates/index/about.html:57
 #, fuzzy, python-format
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
@@ -846,7 +847,7 @@ msgstr ""
 "Direttore esecutivo ad interim <a href=\"%(reo_url)s\">Nicolás "
 "Tamargo</a> della Fondazione MetaBrainz"
 
-#: metabrainz/templates/index/about.html:57
+#: metabrainz/templates/index/about.html:58
 #, fuzzy, python-format
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
@@ -855,40 +856,40 @@ msgstr ""
 "Direttrice <a href=\"%(hazel_url)s\">Hazel Savage</a> di <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
 
-#: metabrainz/templates/index/about.html:61
+#: metabrainz/templates/index/about.html:62
 msgid "Advisor"
 msgstr ""
 
-#: metabrainz/templates/index/about.html:62
+#: metabrainz/templates/index/about.html:63
 #, fuzzy
 msgid "Our board of directors is advised by:"
 msgstr "Il nostro consiglio dei direttori è composto da:"
 
-#: metabrainz/templates/index/about.html:64
+#: metabrainz/templates/index/about.html:65
 #, python-format
 msgid ""
 "<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
 "journalist"
 msgstr ""
 
-#: metabrainz/templates/index/about.html:66
+#: metabrainz/templates/index/about.html:67
 msgid "Officers"
 msgstr "Funzionari"
 
-#: metabrainz/templates/index/about.html:67
+#: metabrainz/templates/index/about.html:68
 msgid "The officers of this company are:"
 msgstr "I funzionari della società sono:"
 
-#: metabrainz/templates/index/about.html:69
+#: metabrainz/templates/index/about.html:70
 msgid "President Nicolás Tamargo"
 msgstr ""
 
-#: metabrainz/templates/index/about.html:70
+#: metabrainz/templates/index/about.html:71
 #, fuzzy
 msgid "Treasurer Rassami Hok Ljungberg"
 msgstr "Rassami Hok Ljungberg, tesoriera"
 
-#: metabrainz/templates/index/about.html:71
+#: metabrainz/templates/index/about.html:72
 msgid "Secretary Nick Ashton-Hart"
 msgstr ""
 
@@ -5733,3 +5734,31 @@ msgstr "Indirizzo postale"
 
 #~ msgid "non-commercial / personal"
 #~ msgstr "Non commerciale / Personale"
+
+#~ msgid ""
+#~ "The foundation was founded in 2004 "
+#~ "by Robert Kaye, in San Luis "
+#~ "Obispo, California and is a \n"
+#~ "        501(c)(3) tax-exempt non-profit."
+#~ " <a href=\"%(supporters_url)s\">Commercial "
+#~ "supporters</a> are asked to contribute\n"
+#~ "        financially in order to help "
+#~ "fund our family of projects, and "
+#~ "give back to our community to keep"
+#~ " our \n"
+#~ "        ecosystem healthy. Non-commercial "
+#~ "use of our data remains free, and"
+#~ " we are committed to keeping it "
+#~ "free to utilize. \n"
+#~ "        We are also supported by "
+#~ "donations and a number of <a "
+#~ "href=\"%(sponsors_url)s\">sponsors</a> who provide \n"
+#~ ""
+#~ "        funds in order for the "
+#~ "foundation to continue to accomplish "
+#~ "various project goals. The MetaBrainz \n"
+#~ "        Foundation believes in <a "
+#~ "href=\"%(financial_reports_url)s\">transparent finances,</a> "
+#~ "which are published quarterly."
+#~ msgstr ""
+

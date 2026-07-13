@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-13 15:06+0200\n"
+"POT-Creation-Date: 2026-07-13 13:19+0000\n"
 "PO-Revision-Date: 2026-07-07 18:12+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-"
 "translation-memory@weblate.org>\n"
@@ -755,7 +755,7 @@ msgstr ""
 "また、データの収集にあたっては一切の差別を行いません。"
 
 #: metabrainz/templates/index/about.html:36
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The foundation was founded in 2004 by Robert Kaye, in San Luis Obispo, "
 "California and is a \n"
@@ -766,7 +766,8 @@ msgid ""
 "give back to our community to keep our \n"
 "        ecosystem healthy. Non-commercial use of our data remains free, "
 "and we are committed to keeping it free to utilize. \n"
-"        We are also supported by donations and a number of <a "
+"        We are also supported by <a "
+"href=\"%(donations_url)s\">donations</a> and a number of <a "
 "href=\"%(sponsors_url)s\">sponsors</a> who provide \n"
 "        funds in order for the foundation to continue to accomplish "
 "various project goals. The MetaBrainz \n"
@@ -785,15 +786,15 @@ msgstr ""
 "MetaBrainz財団は<a "
 "href=\"%(financial_reports_url)s\">財務の透明性</a>を重視しており、財務情報は四半期ごとに公開されています。"
 
-#: metabrainz/templates/index/about.html:49
+#: metabrainz/templates/index/about.html:50
 msgid "Board of Directors"
 msgstr "取締役会"
 
-#: metabrainz/templates/index/about.html:50
+#: metabrainz/templates/index/about.html:51
 msgid "Our board of directors consists of:"
 msgstr "弊財団取締役会は以下のように構成されています:"
 
-#: metabrainz/templates/index/about.html:52
+#: metabrainz/templates/index/about.html:53
 #, python-format
 msgid ""
 "Director &amp; Secretary Nick Ashton-Hart, Executive Director of the <a "
@@ -803,12 +804,12 @@ msgstr ""
 "<a "
 "href=\"%(internet_ecosys_url)s\">インターネット&デジタル・エコシステム・アライアンス</a>専務取締役、ニック・アシュトン＝ハート事務局長"
 
-#: metabrainz/templates/index/about.html:53
+#: metabrainz/templates/index/about.html:54
 #, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
 msgstr "fuchsia, LLC取締役 <a href=\"%(paul_url)s\">ポール・ベヌン</a>"
 
-#: metabrainz/templates/index/about.html:54
+#: metabrainz/templates/index/about.html:55
 #, python-format
 msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
@@ -817,7 +818,7 @@ msgstr ""
 "<a href=\"%(compass_url)s\">Compass, Map & Key</a>理事、<a "
 "href=\"%(matthew_url)s\">マシュー・ホーン</a>"
 
-#: metabrainz/templates/index/about.html:55
+#: metabrainz/templates/index/about.html:56
 #, python-format
 msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
@@ -826,14 +827,14 @@ msgstr ""
 "<a href=\"%(rassami_com)s\">rassami.com</a>取締役、<a "
 "href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a>財務責任者"
 
-#: metabrainz/templates/index/about.html:56
+#: metabrainz/templates/index/about.html:57
 #, python-format
 msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
 msgstr "MetaBrainz財団暫定事務局長<a href=\"%(reo_url)s\">Nicolás Tamargo</a>"
 
-#: metabrainz/templates/index/about.html:57
+#: metabrainz/templates/index/about.html:58
 #, python-format
 msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
@@ -842,38 +843,38 @@ msgstr ""
 "<a href=\"%(leeds_url)s\">Leeds Angels</a>理事<a "
 "href=\"%(hazel_url)s\">Hazel Savage</a>"
 
-#: metabrainz/templates/index/about.html:61
+#: metabrainz/templates/index/about.html:62
 msgid "Advisor"
 msgstr "顧問"
 
-#: metabrainz/templates/index/about.html:62
+#: metabrainz/templates/index/about.html:63
 msgid "Our board of directors is advised by:"
 msgstr "当社の取締役会には、以下の組織が助言を行っています:"
 
-#: metabrainz/templates/index/about.html:64
+#: metabrainz/templates/index/about.html:65
 #, python-format
 msgid ""
 "<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
 "journalist"
 msgstr "<a href=\"%(cory_url)s\">コーリー・ドクトロウ</a>、作家、活動家、ジャーナリスト"
 
-#: metabrainz/templates/index/about.html:66
+#: metabrainz/templates/index/about.html:67
 msgid "Officers"
 msgstr "役員"
 
-#: metabrainz/templates/index/about.html:67
+#: metabrainz/templates/index/about.html:68
 msgid "The officers of this company are:"
 msgstr "当社の役員は以下の通りです:"
 
-#: metabrainz/templates/index/about.html:69
+#: metabrainz/templates/index/about.html:70
 msgid "President Nicolás Tamargo"
 msgstr "ニコラス・タマルゴ会長"
 
-#: metabrainz/templates/index/about.html:70
+#: metabrainz/templates/index/about.html:71
 msgid "Treasurer Rassami Hok Ljungberg"
 msgstr "会計担当 ラサミ・ホック・リュングベリ"
 
-#: metabrainz/templates/index/about.html:71
+#: metabrainz/templates/index/about.html:72
 msgid "Secretary Nick Ashton-Hart"
 msgstr "ニック・アシュトン＝ハート事務次官"
 
@@ -5609,3 +5610,4 @@ msgstr "郵送先住所"
 
 #~ msgid "non-commercial / personal"
 #~ msgstr "非営利/個人"
+
