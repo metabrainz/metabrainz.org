@@ -43,7 +43,7 @@ function SignupUser({
             {t("Create your account")}
           </h2>
           <div className="h4 text-center">
-            {t("access all MetaBrainz projects")}
+            {t("Access all MetaBrainz projects")}
           </div>
           {is_registration_request_signup && registration_request_client_name && (
             <p className="text-center text-muted">
