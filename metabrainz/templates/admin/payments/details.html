@@ -11,11 +11,11 @@
   <div class="admin-card" style="margin-bottom: 25px;">
     <div class="btn-group" role="group">
       <a href="{{ get_url('paymentsview.list') }}" class="btn btn-secondary">
-        <i class="fa fa-list"></i> {{ _gettext('Back to List') }}
+        <i class="fa fa-list"></i> Back to List
       </a>
       {% if admin_view.can_edit %}
       <a href="{{ get_url('.edit_view', id=model.id, url=return_url) }}" class="btn btn-primary">
-        <i class="fa fa-edit"></i> {{ _gettext('Edit') }}
+        <i class="fa fa-edit"></i> Edit
       </a>
       {% endif %}
     </div>

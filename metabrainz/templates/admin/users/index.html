@@ -12,7 +12,7 @@
 {% block list_row scoped %}
   {% if actions %}
   <td>
-    <input type="checkbox" name="rowid" class="action-checkbox" value="{{ get_pk_value(row) }}" title="{{ _gettext('Select record') }}" />
+    <input type="checkbox" name="rowid" class="action-checkbox" value="{{ get_pk_value(row) }}" title="Select record" />
   </td>
   {% endif %}
   {% block list_row_actions_column scoped %}
