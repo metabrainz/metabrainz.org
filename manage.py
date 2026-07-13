@@ -100,7 +100,7 @@ def init_db(force=False, create_db=False):
 
 @cli.command()
 def extract_strings():
-    """Extract all strings into messages.pot.
+    """Extract all strings into messages.pot and update the per-locale catalogs.
     This command should be run after any translatable strings are updated.
     Otherwise updates are not going to be available on Weblate.
     """
@@ -111,6 +111,10 @@ def extract_strings():
                  "-o metabrainz/messages.pot "
                  "metabrainz/ frontend/js/src/")
     click.echo("Strings have been successfully extracted into messages.pot file.")
+
+    _run_command("pybabel update -i metabrainz/messages.pot "
+                 "-d metabrainz/translations")
+    click.echo("Per-locale translation catalogs have been updated.")
 
 
 @cli.command()
