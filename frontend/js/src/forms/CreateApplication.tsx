@@ -73,7 +73,7 @@ function CreateApplication({
             )
             .max(
               512,
-              t("Application description needs to be at most 64 characters long.")
+              t("Application description needs to be at most 512 characters long.")
             ),
           website: Yup.string().required(t("Homepage is required.")),
           redirect_uris: Yup.array()
