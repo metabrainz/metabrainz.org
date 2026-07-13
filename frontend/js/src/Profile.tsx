@@ -448,8 +448,12 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                   {t("Generate New Token")}
                 </button>
                 <p style={{ marginTop: "1rem", marginBottom: 0 }}>
-                  {t("See the")} <a href="/api">{t("API documentation")}</a>{" "}
-                  {t("for more information.")}
+                  <Trans
+                    defaults={t(
+                      "See the <apiLink>API documentation</apiLink> for more information."
+                    )}
+                    components={{apiLink: <a href="/api" />}}
+                  />
                 </p>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { getPageProps, renderRoot } from "./utils";
 
 type ProfileDeleteProps = {
@@ -78,8 +78,12 @@ function ProfileDelete({ csrf_token, username }: ProfileDeleteProps) {
 
               <div className="form-group">
                 <label htmlFor="confirm-username">
-                  {t("To confirm, type your username")}{" "}
-                  <strong>{username}</strong> {t("below:")}
+                  <Trans
+                    defaults={t(
+                      "To confirm, type your username '<username />' below:"
+                    )}
+                    components={{username: <strong>{username}</strong>}}
+                  />
                 </label>
                 <input
                   type="text"

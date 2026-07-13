@@ -1,6 +1,6 @@
 import { Formik, useField, FieldConfig } from "formik";
 import React, { JSX } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
 import { getPageProps, renderRoot } from "../utils";
@@ -180,11 +180,13 @@ function SignupCommercial({
           </div>
           <p>
             <strong>{t("Note:")}</strong>{" "}
-            {t("Signing up for any tier other than the")}{" "}
-            <i>{t("Stealth startup")}</i>{" "}
-            {t(
-              "tier will publicly list your company on this web site. However, we will not publish any of your private details."
-            )}
+            <Trans
+              defaults={t(
+                "Signing up for any tier other than the <italic>Stealth startup</italic> tier will publicly list your company on this web site. However, we will not publish any of your private details."
+              )}
+               
+              components={{italic: <i />}}
+            />
           </p>
 
           <Formik
@@ -341,13 +343,27 @@ function SignupCommercial({
                   required
                 >
                   <p className="text-muted">
-                    {t("If you don't have an organization name, you probably want to")}{" "}
-                    {existing_user ? t("become a supporter") : t("sign up")}{" "}
-                    {t("as a")}{" "}
-                    <a href={nonCommercialUrl}>
-                      {t("Non-commercial / Personal")}
-                    </a>{" "}
-                    {existing_user ? t("supporter") : t("user")}.
+                    {existing_user ? (
+                      <Trans
+                        defaults={t(
+                          "If you don't have an organization name, you probably want to become a supporter as a <nonCommercialLink>Non-commercial / Personal</nonCommercialLink> supporter."
+                        )}
+                        components={{nonCommercialLink: (
+                          // eslint-disable-next-line jsx-a11y/anchor-has-content
+                          <a href={nonCommercialUrl} />
+                        )}}
+                      />
+                    ) : (
+                      <Trans
+                        defaults={t(
+                          "If you don't have an organization name, you probably want to sign up as a <nonCommercialLink>Non-commercial / Personal</nonCommercialLink> user."
+                        )}
+                        components={{nonCommercialLink: (
+                          // eslint-disable-next-line jsx-a11y/anchor-has-content
+                          <a href={nonCommercialUrl} />
+                        )}}
+                      />
+                    )}
                   </p>
                 </AuthCardTextInput>
 
@@ -358,17 +374,18 @@ function SignupCommercial({
                   required
                 >
                   <p className="text-muted">
-                    {t(
-                      "Please tell us a little about your company and whether you plan to use our"
-                    )}{" "}
-                    <a href="https://musicbrainz.org/doc/Development/XML_Web_Service/Version_2">
-                      {t("API")}
-                    </a>{" "}
-                    {t("or to")}{" "}
-                    <a href="https://musicbrainz.org/doc/MusicBrainz_Server/Setup">
-                      {t("host your own copy")}
-                    </a>{" "}
-                    {t("of the data.")}
+                    <Trans
+                      defaults={t(
+                        "Please tell us a little about your company and whether you plan to use our <apiLink>API</apiLink> or to <hostLink>host your own copy</hostLink> of the data."
+                      )}
+                      components={{apiLink: (
+                        // eslint-disable-next-line jsx-a11y/anchor-has-content
+                        <a href="https://musicbrainz.org/doc/Development/XML_Web_Service/Version_2" />
+                      ), hostLink: (
+                        // eslint-disable-next-line jsx-a11y/anchor-has-content
+                        <a href="https://musicbrainz.org/doc/MusicBrainz_Server/Setup" />
+                      )}}
+                    />
                   </p>
                 </TextAreaInput>
 
