@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-13 16:10+0000\n"
-"PO-Revision-Date: 2026-07-13 14:55+0000\n"
+"POT-Creation-Date: 2026-07-13 13:19+0000\n"
+"PO-Revision-Date: 2026-07-13 16:11+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language: es\n"
@@ -38,7 +38,7 @@ msgstr "«%(value)s» no es una opción válida para este campo"
 #: metabrainz/user/forms.py:25 metabrainz/user/forms.py:57
 #: metabrainz/user/forms.py:63
 msgid "Email address is required!"
-msgstr "Debes añadir una dirección de correo."
+msgstr "Debes indicar una dirección de correo."
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
@@ -54,7 +54,7 @@ msgstr "Debes indicar la contraseña actual."
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
 msgid "Password is required!"
-msgstr "Se requiere contraseña!"
+msgstr "Debes indicar una contraseña."
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:160
@@ -62,7 +62,7 @@ msgstr "Se requiere contraseña!"
 #: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
 msgid "Confirm Password is required!"
-msgstr "¡Tienes que confirmar la contraseña!"
+msgstr "Debes confirmar la contraseña."
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
@@ -236,7 +236,7 @@ msgstr "No hemos encontrado el informe anual solicitado."
 #: frontend/js/src/forms/SignupNonCommercial.tsx:70
 #: metabrainz/supporter/forms.py:13
 msgid "Contact name is required!"
-msgstr "¡Necesitamos el nombre de una persona de contacto!"
+msgstr "Debes indicar el nombre de una persona de contacto."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:437
 #: frontend/js/src/forms/SignupNonCommercial.tsx:264
@@ -3196,7 +3196,7 @@ msgstr "Nombre de usuario olvidado"
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
 msgid "Confirm Password"
-msgstr "Confirma la contraseña"
+msgstr "Confirmación de la contraseña"
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
@@ -3218,7 +3218,7 @@ msgstr "Continuar"
 #: frontend/js/src/forms/ResetPassword.tsx:27
 #: metabrainz/templates/users/reset-password.html:3
 msgid "Reset your password"
-msgstr "Reiniciar contraseña"
+msgstr "Reemplaza tu contraseña"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:41 metabrainz/user/forms.py:15
 msgid "Registration from this email domain is not allowed."
@@ -3240,7 +3240,7 @@ msgstr "Nombre de usuario"
 #: frontend/js/src/forms/SignupUser.tsx:67 metabrainz/user/forms.py:21
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
 msgid "Username is required!"
-msgstr "Se requiere nombre de usuario!"
+msgstr "Debes indicar el nombre de usuario."
 
 #: frontend/js/src/forms/LoginUser.tsx:63
 #: frontend/js/src/forms/ResetPassword.tsx:72
@@ -3377,18 +3377,24 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:148
 msgid "Your application for using the Live Data Feed is still pending."
 msgstr ""
+"Aún no hemos tomado una decisión sobre tu solicitud para el uso del Live "
+"Data Feed."
 
 #: frontend/js/src/Profile.tsx:154
 msgid ""
 "You may use our data and APIs for evaluation/development purposes while "
 "your application is pending."
 msgstr ""
+"Puedes evaluar nuestros datos y APIs y usarlos durante la fase de desarrollo "
+"mientras revisamos tu aplicación."
 
 #: frontend/js/src/Profile.tsx:165
 msgid ""
 "Your application for using the Live Data Feed is waiting to finalize our "
 "support agreement."
 msgstr ""
+"Tenemos que terminar de llegar a un acuerdo de apoyo antes de aceptar tu "
+"solicitud para el uso del Live Data Feed."
 
 #: frontend/js/src/Profile.tsx:172
 msgid ""
@@ -3401,7 +3407,7 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:184
 msgid "Your use of the Live Data Feed is pending suspension."
-msgstr ""
+msgstr "Tu uso del Live Data Feed está pendiente de cancelación."
 
 #: frontend/js/src/Profile.tsx:188
 msgid ""
@@ -3424,15 +3430,15 @@ msgstr "Rechazado"
 
 #: frontend/js/src/Profile.tsx:217
 msgid "Pending"
-msgstr ""
+msgstr "Pendiente de revisión"
 
 #: frontend/js/src/Profile.tsx:219
 msgid "Waiting"
-msgstr ""
+msgstr "En espera"
 
 #: frontend/js/src/Profile.tsx:221
 msgid "Limited"
-msgstr ""
+msgstr "Uso limitado"
 
 #: frontend/js/src/Profile.tsx:223
 msgid "Unknown"
@@ -3524,7 +3530,7 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:381
 msgid "Limited/No Data Use Permission"
-msgstr ""
+msgstr "Uso limitado o no permitido"
 
 #: frontend/js/src/Profile.tsx:396
 msgid "Data Download"
@@ -3755,82 +3761,71 @@ msgid "Sounds good"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:57
-#, fuzzy
 msgid "Application name is required."
-msgstr "¡Necesitamos el nombre de una persona de contacto!"
+msgstr "Debes indicar el nombre de la aplicación."
 
 #: frontend/js/src/forms/CreateApplication.tsx:67
-#, fuzzy
 msgid "Application description is required."
-msgstr "Descripción de la organización"
+msgstr "Debes indicar la descripción de la aplicación."
 
 #: frontend/js/src/forms/CreateApplication.tsx:70
-#, fuzzy
 msgid "Application description needs to be at least 3 characters long."
-msgstr "La descripción debe contener al menos tres caracteres."
+msgstr "La descripción de la aplicación debe contener al menos tres caracteres."
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
 #, fuzzy
 msgid "Application description needs to be at most 512 characters long."
-msgstr "El nombre de la aplicación debe contener un máximo de 64 caracteres."
+msgstr ""
+"La descripción de la aplicación debe contener un máximo de 64 caracteres."
 
 #: frontend/js/src/forms/CreateApplication.tsx:78
-#, fuzzy
 msgid "Homepage is required."
-msgstr "Se requiere nombre de usuario!"
+msgstr "Debes indicar el sitio web."
 
 #: frontend/js/src/forms/CreateApplication.tsx:82
-#, fuzzy
 msgid "Authorization callback URL cannot be empty."
-msgstr "El campo «URL de devolución de llamada de autorización» está vacío."
+msgstr ""
+"El campo «URL de devolución de llamada de autorización» no puede estar vacío."
 
 #: frontend/js/src/forms/CreateApplication.tsx:85
-#, fuzzy
 msgid "Authorization callback URL is required."
-msgstr "La URL de devolución de llamada de autorización no es válida."
+msgstr "Debes indicar la URL de devolución de llamada de autorización."
 
 #: frontend/js/src/forms/CreateApplication.tsx:131
 msgid "Redirect URIs"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
-#, fuzzy
 msgid "Add a redirect URI"
-msgstr "Junta directiva"
+msgstr "Añadir una URI de redirección"
 
 #: frontend/js/src/forms/CreateApplication.tsx:190
 msgid "Save changes"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:191
-#, fuzzy
 msgid "Create application"
-msgstr "Crear nueva aplicación"
+msgstr "Crear aplicación"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:20
-#, fuzzy
 msgid "Delete application"
-msgstr "Eliminar la aplicación %(name)s"
+msgstr "Eliminar aplicación"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
-#, fuzzy
 msgid "Client Details"
-msgstr "Detalles de contacto"
+msgstr "Detalles del cliente"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
-#, fuzzy
 msgid "Name:"
-msgstr "Nombre"
+msgstr "Nombre:"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:30
-#, fuzzy
 msgid "Description:"
-msgstr "Descripción"
+msgstr "Descripción:"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:32
-#, fuzzy
 msgid "Website:"
-msgstr "Sitio web"
+msgstr "Sitio web:"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:37
 msgid "Are you sure you want to delete this client?"
@@ -3844,13 +3839,13 @@ msgstr ""
 #: frontend/js/src/forms/LostUsername.tsx:26
 #, fuzzy
 msgid "Forgot your username?"
-msgstr "Nombre de usuario olvidado"
+msgstr "¿Has olvidado tu nombre de usuario?"
 
 #: frontend/js/src/forms/LoginUser.tsx:66
 #: frontend/js/src/forms/LostPassword.tsx:26
 #, fuzzy
 msgid "Forgot your password?"
-msgstr "Contraseña olvidada"
+msgstr "¿Has olvidado tu contraseña?"
 
 #: frontend/js/src/forms/LoginUser.tsx:109
 msgid "Don't have an account?"
@@ -3858,9 +3853,8 @@ msgstr ""
 
 #: frontend/js/src/forms/LostPassword.tsx:38
 #: frontend/js/src/forms/LostUsername.tsx:36
-#, fuzzy
 msgid "Email is required!"
-msgstr "Debes añadir una dirección de correo."
+msgstr "Debes indicar una dirección de correo."
 
 #: frontend/js/src/forms/LostPassword.tsx:79
 #: frontend/js/src/forms/LostUsername.tsx:70
@@ -3880,38 +3874,32 @@ msgid "Your identity on MetaBrainz"
 msgstr ""
 
 #: frontend/js/src/forms/OAuthPrompt.tsx:61
-#, fuzzy
 msgid "Allow access"
-msgstr "Acceso"
+msgstr "Permitir el acceso"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:71
-#, fuzzy
 msgid "Current Password"
-msgstr "Contraseña olvidada"
+msgstr "Contraseña actual"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:80
-#, fuzzy
 msgid "New Password"
-msgstr "Mostrar contraseña"
+msgstr "Nueva contraseña"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:89
-#, fuzzy
 msgid "Confirm New Password"
-msgstr "Mostrar contraseña"
+msgstr "Confirmación de la nueva contraseña"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:35
 msgid "Edit contact information"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "Fecha"
+msgstr "Actualizar"
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
-#, fuzzy
 msgid "Reset Password"
-msgstr "Reiniciar contraseña"
+msgstr "Reemplazar la contraseña"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:38
 msgid "If you would like to support us with more than $"
@@ -3924,9 +3912,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
 #: frontend/js/src/forms/SignupUser.tsx:87
-#, fuzzy
 msgid "Captcha is required!"
-msgstr "Se requiere contraseña!"
+msgstr "Debes completar el captcha."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:179
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
@@ -3948,9 +3935,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
-#, fuzzy
 msgid "Account type"
-msgstr "Creación de cuenta"
+msgstr "Tipo de cuenta"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
 msgid "Selected tier"
@@ -4075,6 +4061,8 @@ msgid ""
 "We'll send you more details about payment process once your application "
 "is approved."
 msgstr ""
+"Te enviaremos más información sobre el proceso de pago una vez hayamos "
+"aceptado tu aplicación."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:552
 #: frontend/js/src/forms/SignupNonCommercial.tsx:316
