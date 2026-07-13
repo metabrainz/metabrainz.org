@@ -50,7 +50,7 @@ function LoginUser({
                   label={t("Username")}
                   labelLink={
                     <a className="form-label-link small" href="/lost-username">
-                      {t("Forgot username?")}
+                      {t("Forgot your username?")}
                     </a>
                   }
                   type="text"
@@ -63,7 +63,7 @@ function LoginUser({
                   label={t("Password")}
                   labelLink={
                     <a className="form-label-link small" href="/lost-password">
-                      {t("Forgot password?")}
+                      {t("Forgot your password?")}
                     </a>
                   }
                   name="password"
