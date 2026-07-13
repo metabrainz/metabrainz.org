@@ -8,6 +8,7 @@ from flask_wtf.csrf import generate_csrf
 
 from metabrainz.decorators import nocache, crossdomain
 from metabrainz.model import db, OAuth2Scope, get_scopes, OAuth2AccessToken
+from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.user import User
 from metabrainz.oauth.authorization_server import authorization_server
 from metabrainz.oauth.forms import AuthorizationForm
@@ -81,8 +82,7 @@ def _authenticate_registration_request_client():
     except OAuth2Error as error:
         return None, _authlib_oauth_error(error)
 
-    allowed_clients = current_app.config.get("OAUTH2_REGISTRATION_REQUEST_CLIENTS", [])
-    if client.client_id not in allowed_clients:
+    if not client.has_privilege(OAuth2ClientPrivilege.REGISTRATION_REQUEST):
         return None, _oauth_error(
             "unauthorized_client",
             "The client is not authorized to create registration requests.",

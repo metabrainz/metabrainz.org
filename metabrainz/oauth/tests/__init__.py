@@ -36,7 +36,7 @@ class OAuthTestCase(FlaskTestCase):
         db.session.commit()
         super().tearDown()
 
-    def create_oauth_app(self, owner=None, redirect_uris=None):
+    def create_oauth_app(self, owner=None, redirect_uris=None, privileges=None):
         if owner is None:
             owner = self.user1
 
@@ -65,7 +65,22 @@ class OAuthTestCase(FlaskTestCase):
 
         logout_user()
 
+        if privileges:
+            self.grant_privileges(result, *privileges)
+
         return result
+
+    def grant_privileges(self, application, *privileges):
+        """ Grant the given OAuth2ClientPrivilege flags to a client created via
+        create_oauth_app (accepts the returned dict or a raw client_id). """
+        client_id = application["client_id"]
+        client = db.session.query(OAuth2Client).filter_by(client_id=client_id).first()
+        bitmap = 0
+        for privilege in privileges:
+            bitmap |= privilege
+        client.privileges = bitmap
+        db.session.commit()
+        return client
 
     def assert_security_headers(self, response):
         headers = response.headers

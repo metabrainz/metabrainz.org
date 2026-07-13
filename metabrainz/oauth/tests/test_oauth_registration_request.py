@@ -8,6 +8,7 @@ from brainzutils import cache
 from flask import g
 
 from metabrainz.model import OAuth2AuthorizationCode, OAuth2Client, db
+from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.user import User
 from metabrainz.oauth.registration_request import REGISTRATION_REQUEST_NAMESPACE
@@ -20,7 +21,6 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self._authlib_insecure_transport = os.environ.get("AUTHLIB_INSECURE_TRANSPORT")
         os.environ["AUTHLIB_INSECURE_TRANSPORT"] = "1"
         super().setUp()
-        self.app.config["OAUTH2_REGISTRATION_REQUEST_CLIENTS"] = []
         cache._r.flushall()
 
     def tearDown(self):
@@ -59,7 +59,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         return self.client.post("/oauth2/registration-requests", data=data)
 
     def _allow_registration_request_client(self, application):
-        self.app.config["OAUTH2_REGISTRATION_REQUEST_CLIENTS"] = [application["client_id"]]
+        self.grant_privileges(application, OAuth2ClientPrivilege.REGISTRATION_REQUEST)
 
     def _assert_redirects_to_signup(self, redirect_to):
         response = self.client.get(redirect_to)

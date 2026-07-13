@@ -6,15 +6,20 @@ type Application = {
   website: string;
   client_id: string;
   client_secret: string;
+  privileges?: Array<string>;
 };
 
 type ApplicationRowProps = {
   application: Application;
+  showPrivileges?: boolean;
 };
 
-function ApplicationRow({ application }: ApplicationRowProps): React.JSX.Element {
+function ApplicationRow({
+  application,
+  showPrivileges = false,
+}: ApplicationRowProps): React.JSX.Element {
   const { t } = useTranslation();
-  const { name, website, client_id, client_secret } = application;
+  const { name, website, client_id, client_secret, privileges } = application;
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const glyphIcon = passwordVisible
     ? "glyphicon-eye-close"
@@ -46,6 +51,19 @@ function ApplicationRow({ application }: ApplicationRowProps): React.JSX.Element
       <td>
         {secret} {passwordShowButton}
       </td>
+      {showPrivileges && (
+        <td>
+          {privileges?.map((privilege) => (
+            <span
+              key={privilege}
+              className="label label-info"
+              style={{ marginRight: "4px", display: "inline-block" }}
+            >
+              {t(privilege)}
+            </span>
+          ))}
+        </td>
+      )}
       <td>
         <a
           className="btn btn-block btn-warning btn-xs"

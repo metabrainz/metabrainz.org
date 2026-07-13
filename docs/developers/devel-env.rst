@@ -76,13 +76,12 @@ relevant settings are:
 ``OAUTH2_TOKEN_EXPIRES_IN`` / ``OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN``
     Token and authorization-code lifetimes, in seconds.
 
-``OAUTH2_WHITELISTED_CCG_CLIENTS``
-    Client IDs allowed to use the Client Credentials grant. Empty by default,
-    which disables that grant for all clients.
-
-``OAUTH2_REMEMBER_ME_CLIENTS``
-    Client IDs allowed to see the user's "remember me" status in the token
-    response.
+Per-client privileges
+    The Client Credentials grant, the user's "remember me" status in the token
+    response, and client-initiated registration requests are gated by
+    per-client privileges. These are stored as a bitmap in the
+    ``oauth.client.privileges`` column and managed from the *OAuth
+    Applications* view in the user-management admin, not via configuration.
 
 Once the server is running you can register your own OAuth applications from
 the web UI at ``/profile/applications``, and inspect the provider's metadata at

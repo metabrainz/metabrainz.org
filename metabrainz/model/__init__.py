@@ -12,7 +12,7 @@ from .payment import Payment
 from .dataset import Dataset
 from .dataset_supporter import DatasetSupporter
 
-from .oauth.client import OAuth2Client
+from .oauth.client import OAuth2Client, OAuth2ClientPrivilege, OAUTH2_CLIENT_PRIVILEGE_LABELS
 from .oauth.relation_scope import OAuth2AccessTokenScope, OAuth2RefreshTokenScope, OAuth2CodeScope
 from .oauth.scope import OAuth2Scope, get_scopes
 from .oauth.code import OAuth2AuthorizationCode

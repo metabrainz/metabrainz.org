@@ -1,15 +1,11 @@
 from datetime import datetime, timezone, timedelta
 
 from metabrainz.model import db
+from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.oauth.tests import OAuthTestCase
 
 
 class RememberMeTokenTestCase(OAuthTestCase):
-
-    def tearDown(self):
-        # the app (and thus its config) is shared across the test class, reset the whitelist
-        self.app.config["OAUTH2_REMEMBER_ME_CLIENTS"] = []
-        super().tearDown()
 
     def _get_token(self, application, redirect_uri="https://example.com/callback"):
         self.temporary_login(self.user2)
@@ -25,8 +21,7 @@ class RememberMeTokenTestCase(OAuthTestCase):
         return response.json
 
     def test_remember_me_true_for_whitelisted_client(self):
-        application = self.create_oauth_app()
-        self.app.config["OAUTH2_REMEMBER_ME_CLIENTS"] = [application["client_id"]]
+        application = self.create_oauth_app(privileges=[OAuth2ClientPrivilege.REMEMBER_ME])
 
         self.user2.update_remember_me(True)
         db.session.commit()
@@ -36,8 +31,7 @@ class RememberMeTokenTestCase(OAuthTestCase):
         self.assertTrue(data["remember_me"])
 
     def test_remember_me_false_for_whitelisted_client(self):
-        application = self.create_oauth_app()
-        self.app.config["OAUTH2_REMEMBER_ME_CLIENTS"] = [application["client_id"]]
+        application = self.create_oauth_app(privileges=[OAuth2ClientPrivilege.REMEMBER_ME])
 
         self.user2.update_remember_me(False)
         db.session.commit()
@@ -47,8 +41,7 @@ class RememberMeTokenTestCase(OAuthTestCase):
         self.assertFalse(data["remember_me"])
 
     def test_remember_me_false_when_expired(self):
-        application = self.create_oauth_app()
-        self.app.config["OAUTH2_REMEMBER_ME_CLIENTS"] = [application["client_id"]]
+        application = self.create_oauth_app(privileges=[OAuth2ClientPrivilege.REMEMBER_ME])
 
         # remember-me cookie that has already expired should report False
         self.user2.remember_me_until = datetime.now(timezone.utc) - timedelta(days=1)
@@ -60,7 +53,6 @@ class RememberMeTokenTestCase(OAuthTestCase):
 
     def test_remember_me_absent_for_non_whitelisted_client(self):
         application = self.create_oauth_app()
-        self.app.config["OAUTH2_REMEMBER_ME_CLIENTS"] = []
 
         self.user2.update_remember_me(True)
         db.session.commit()
@@ -69,8 +61,7 @@ class RememberMeTokenTestCase(OAuthTestCase):
         self.assertNotIn("remember_me", data)
 
     def test_remember_me_present_on_refresh_token_grant(self):
-        application = self.create_oauth_app()
-        self.app.config["OAUTH2_REMEMBER_ME_CLIENTS"] = [application["client_id"]]
+        application = self.create_oauth_app(privileges=[OAuth2ClientPrivilege.REMEMBER_ME])
 
         self.user2.update_remember_me(True)
         db.session.commit()

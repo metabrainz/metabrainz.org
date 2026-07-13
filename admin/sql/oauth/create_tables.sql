@@ -31,7 +31,8 @@ CREATE TABLE oauth.client (
         description TEXT NOT NULL,
         website TEXT,
         redirect_uris TEXT[] NOT NULL,
-        client_id_issued_at TIMESTAMP WITH TIME ZONE NOT NULL
+        client_id_issued_at TIMESTAMP WITH TIME ZONE NOT NULL,
+        privileges INTEGER NOT NULL DEFAULT 0 CONSTRAINT client_privileges_non_negative CHECK (privileges >= 0)
 );
 
 CREATE TABLE oauth.code (

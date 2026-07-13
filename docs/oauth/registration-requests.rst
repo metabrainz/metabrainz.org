@@ -9,9 +9,9 @@ grant. This is intended for clients that have already collected or allocated a
 username and email address and want MetaBrainz to create the account, sign the
 user in, and return an OAuth authorization code for the same browser session.
 
-This endpoint is restricted. Your ``client_id`` must be listed in
-``OAUTH2_REGISTRATION_REQUEST_CLIENTS`` by the MetaBrainz OAuth provider before
-you can create registration requests.
+This endpoint is restricted. Your client must be granted the *Registration
+requests* privilege by the MetaBrainz OAuth provider before you can create
+registration requests.
 
 Overview
 --------
@@ -120,7 +120,7 @@ Common errors:
      - Client authentication failed.
    * - ``403``
      - ``unauthorized_client``
-     - The client is not whitelisted for registration requests.
+     - The client lacks the *Registration requests* privilege.
    * - ``400``
      - ``invalid_request``
      - A required field is missing, the username or email cannot be used, the

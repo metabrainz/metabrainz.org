@@ -8,10 +8,11 @@ than on behalf of an end user.
 
 .. important::
 
-   This grant is **restricted**. Only clients that MetaBrainz has explicitly
-   whitelisted may use it. A client that is not whitelisted receives an
-   ``unauthorized_client`` error even with valid credentials. If your
-   integration needs client-credentials access, contact MetaBrainz.
+   This grant is **restricted**. Only clients that MetaBrainz has granted the
+   *Client credentials grant* privilege may use it. A client without that
+   privilege receives an ``unauthorized_client`` error even with valid
+   credentials. If your integration needs client-credentials access, contact
+   MetaBrainz.
 
 Token request
 -------------

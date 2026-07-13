@@ -238,6 +238,7 @@ def _register_admin(app):
     from metabrainz.admin.views import UserModelView
     from metabrainz.admin.views import OldUsernameModelView
     from metabrainz.admin.views import DomainBlacklistModelView
+    from metabrainz.admin.views import OAuth2ClientModelView
     from metabrainz.admin.webhooks import WebhookModelView
     from metabrainz.admin.webhooks import WebhookDeliveryModelView
 
@@ -247,6 +248,9 @@ def _register_admin(app):
     ))
     user_admin.add_view(DomainBlacklistModelView(
         model.db.session, endpoint="domain-blacklist-admin", name="Domain Blacklist", category="Users"
+    ))
+    user_admin.add_view(OAuth2ClientModelView(
+        model.db.session, endpoint="oauth-clients-admin", name="OAuth Applications", category="OAuth"
     ))
     user_admin.add_view(
         WebhookModelView(model.db.session, endpoint="webhooks-admin", name="Webhooks", category="Webhooks")

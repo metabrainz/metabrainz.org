@@ -7,6 +7,7 @@ from flask import render_template, current_app
 from metabrainz.model.user import User
 
 from metabrainz.model import db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2AuthorizationCode, OAuth2Client
+from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.oauth.scope import get_scopes
 
 
@@ -120,8 +121,7 @@ class CustomBearerTokenGenerator(BearerTokenGenerator):
             include_refresh_token=include_refresh_token
         )
 
-        remember_me_clients = current_app.config.get("OAUTH2_REMEMBER_ME_CLIENTS", [])
-        if client.client_id in remember_me_clients and user is not None:
+        if client.has_privilege(OAuth2ClientPrivilege.REMEMBER_ME) and user is not None:
             user = User.get(id=user.id)
             response["remember_me"] = user.has_active_remember_me()
 
