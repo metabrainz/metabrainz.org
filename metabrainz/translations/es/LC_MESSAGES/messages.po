@@ -12,18 +12,19 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 13:19+0000\n"
-"PO-Revision-Date: 2026-07-13 13:15+0000\n"
+"PO-Revision-Date: 2026-07-13 14:55+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://translations.metabrainz.org/projects/metabrainz/website/es/>\n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 "
-"== 0) ? 1 : 2);\n"
+"Language-Team: Spanish <https://translations.metabrainz.org/projects/"
+"metabrainz/website/es/>\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
@@ -42,9 +43,8 @@ msgstr "Debes añadir una dirección de correo."
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
-#, fuzzy
 msgid "Current password is required!"
-msgstr "Se requiere contraseña!"
+msgstr "Debes indicar la contraseña actual."
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -90,12 +90,11 @@ msgstr "Tu perfil ha sido actualizado."
 
 #: metabrainz/index/views.py:261
 msgid "Current password is incorrect."
-msgstr ""
+msgstr "La contraseña actual no es correcta."
 
 #: metabrainz/index/views.py:266
-#, fuzzy
 msgid "Password changed successfully."
-msgstr "Tu perfil ha sido actualizado."
+msgstr "Has cambiado la contraseña."
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
@@ -584,19 +583,16 @@ msgid "GDPR Compliance"
 msgstr "Cumplimiento del RGPD"
 
 #: metabrainz/templates/navbar.html:45
-#, fuzzy
 msgid "Supporter Sign Up"
-msgstr "Simpatizantes"
+msgstr "Regístrate como simpatizante"
 
 #: metabrainz/templates/navbar.html:46
-#, fuzzy
 msgid "Our Supporters"
-msgstr "Simpatizantes"
+msgstr "Nuestros simpatizantes"
 
 #: metabrainz/templates/navbar.html:47
-#, fuzzy
 msgid "Our Sponsors"
-msgstr "Patrocinadores"
+msgstr "Nuestros patrocinadores"
 
 #: metabrainz/templates/navbar.html:51
 #: metabrainz/templates/reports/financial_reports/index.html:29
@@ -1308,7 +1304,6 @@ msgid "Summary"
 msgstr "Resumen"
 
 #: metabrainz/templates/index/privacy.html:33
-#, fuzzy
 msgid "Applicable to all users"
 msgstr "Para todos nuestros usuarios"
 
@@ -1376,9 +1371,8 @@ msgstr ""
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
-#, fuzzy
 msgid "Change Password"
-msgstr "Ocultar contraseña"
+msgstr "Cambiar contraseña"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:21
 #: frontend/js/src/forms/ProfileEdit.tsx:34
@@ -1386,7 +1380,7 @@ msgstr "Ocultar contraseña"
 #: metabrainz/templates/index/profile-edit.html:3
 #: metabrainz/templates/index/profile.html:3
 msgid "Your Profile"
-msgstr "Tu Perfil"
+msgstr "Tu perfil"
 
 #: metabrainz/templates/index/profile-delete.html:3
 msgid "Delete Account"
@@ -3203,9 +3197,8 @@ msgstr "Nombre de usuario olvidado"
 #: frontend/js/src/forms/SignupUser.tsx:169
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
-#, fuzzy
 msgid "Confirm Password"
-msgstr "¡Tienes que confirmar la contraseña!"
+msgstr "Confirma la contraseña"
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
@@ -3221,9 +3214,8 @@ msgid "Cancel"
 msgstr ""
 
 #: metabrainz/templates/users/reauthenticate.html:24
-#, fuzzy
 msgid "Continue"
-msgstr "Donación"
+msgstr "Continuar"
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
 #: metabrainz/templates/users/reset-password.html:3
@@ -3292,7 +3284,7 @@ msgstr "Borrar"
 
 #: frontend/js/src/Applications.tsx:37
 msgid "Your applications"
-msgstr "Sus aplicaciones"
+msgstr "Tus aplicaciones"
 
 #: frontend/js/src/Applications.tsx:50
 msgid "No applications found"
@@ -3335,9 +3327,8 @@ msgid "Revoke access"
 msgstr "Revocar el acceso"
 
 #: frontend/js/src/OAuthError.tsx:17
-#, fuzzy
 msgid "OAuth2 Error"
-msgstr "Error de OAuth"
+msgstr "Error de OAuth2"
 
 #: frontend/js/src/OAuthError.tsx:18
 msgid "An error occurred during OAuth authentication process."
@@ -3374,13 +3365,12 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:116
-#, fuzzy
 msgid "Failed to generate new access token!"
-msgstr "No hemos podido eliminar la aplicación."
+msgstr "No hemos podido generar un nuevo token de acceso."
 
 #: frontend/js/src/Profile.tsx:130
 msgid "Your application for using the Live Data Feed has been rejected."
-msgstr ""
+msgstr "Hemos rechazado tu solicitud para el uso del Live Data Feed."
 
 #: frontend/js/src/Profile.tsx:136
 msgid "You do not have permission to use our data in a public commercial product."
@@ -3411,9 +3401,8 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:173 frontend/js/src/Profile.tsx:188
 #: frontend/js/src/Profile.tsx:248
-#, fuzzy
 msgid "contact us"
-msgstr "Contacta con nosotros"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:174
 msgid "again to finalize our support agreement."
@@ -3434,14 +3423,12 @@ msgid "Unknown. :("
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:209
-#, fuzzy
 msgid "Active"
-msgstr "Acciones"
+msgstr "Activo"
 
 #: frontend/js/src/Profile.tsx:211
-#, fuzzy
 msgid "Rejected"
-msgstr "Proyectos"
+msgstr "Rechazado"
 
 #: frontend/js/src/Profile.tsx:213
 msgid "Pending"
@@ -3468,9 +3455,8 @@ msgid "Tier:"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:238
-#, fuzzy
 msgid "State:"
-msgstr "Fecha"
+msgstr "Estatus:"
 
 #: frontend/js/src/Profile.tsx:245
 msgid ""
@@ -3479,9 +3465,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:260
-#, fuzzy
 msgid "Organization Information"
-msgstr "Descripción de la organización"
+msgstr "Información sobre la organización"
 
 #: frontend/js/src/Profile.tsx:268 frontend/js/src/Profile.tsx:274
 #: frontend/js/src/Profile.tsx:280
@@ -3501,19 +3486,16 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:331
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-#, fuzzy
 msgid "Contact name"
-msgstr "Contacto"
+msgstr "Nombre del contacto"
 
 #: frontend/js/src/Profile.tsx:301 frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Contact Email"
-msgstr "Detalles de contacto"
+msgstr "Correo del contacto"
 
 #: frontend/js/src/Profile.tsx:311
-#, fuzzy
 msgid "Datasets Used"
-msgstr "Conjuntos de datos"
+msgstr "Conjuntos de datos a usar"
 
 #: frontend/js/src/Profile.tsx:322
 msgid "Edit Contact Information"
@@ -3580,41 +3562,34 @@ msgid "[ no valid token currently ]"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:438
-#, fuzzy
 msgid "Generate New Token"
-msgstr "Crear nueva aplicación"
+msgstr "Generar nuevo token"
 
 #: frontend/js/src/Profile.tsx:441
-#, fuzzy
 msgid "See the"
-msgstr "Calle"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:441
-#, fuzzy
 msgid "API documentation"
-msgstr "Donación"
+msgstr "Documentación de la API"
 
 #: frontend/js/src/Profile.tsx:442
-#, fuzzy
 msgid "for more information."
-msgstr "Más información"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:468 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Email"
-msgstr "Envíanos un E-mail"
+msgstr "Correo"
 
 #: frontend/js/src/Profile.tsx:482
-#, fuzzy
 msgid "Edit Information"
-msgstr "La fundación"
+msgstr "Editar información"
 
 #: frontend/js/src/Profile.tsx:494
-#, fuzzy
 msgid "Want access to MetaBrainz datasets?"
-msgstr "Conjuntos de datos de MetaBrainz"
+msgstr "¿Quieres tener acceso a los conjuntos de datos de MetaBrainz?"
 
 #: frontend/js/src/Profile.tsx:499
 msgid ""
@@ -3628,27 +3603,24 @@ msgid "Danger Zone"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:526
-#, fuzzy
 msgid "Delete your account"
-msgstr "Accede a tu cuenta"
+msgstr "Elimina tu cuenta"
 
 #: frontend/js/src/Profile.tsx:529
 msgid "Once you delete your account, there is no going back. Please be certain."
-msgstr ""
+msgstr "Si eliminas tu cuenta, no podemos recuperarla. Piénsatelo bien."
 
 #: frontend/js/src/Profile.tsx:534 frontend/js/src/ProfileDelete.tsx:101
-#, fuzzy
 msgid "Delete My Account"
-msgstr "Accede a tu cuenta"
+msgstr "Quiero eliminar mi cuenta"
 
 #: frontend/js/src/Profile.tsx:551
-#, fuzzy
 msgid "Account Deletion"
-msgstr "Creación de cuenta"
+msgstr "Eliminar mi cuenta"
 
 #: frontend/js/src/Profile.tsx:555
 msgid "Need to delete your account?"
-msgstr ""
+msgstr "¿Tienes que eliminar tu cuenta?"
 
 #: frontend/js/src/Profile.tsx:558
 msgid ""
@@ -3657,14 +3629,12 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:578
-#, fuzzy
 msgid "Security"
-msgstr "Ciudad"
+msgstr "Seguridad"
 
 #: frontend/js/src/Profile.tsx:610
-#, fuzzy
 msgid "MetaBrainz Applications"
-msgstr "API de MetaBrainz"
+msgstr "Aplicaciones de MetaBrainz"
 
 #: frontend/js/src/Profile.tsx:614
 msgid ""
@@ -3685,31 +3655,27 @@ msgid "The open-source book database"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:663
-#, fuzzy
 msgid "Creative Commons licensed reviews"
-msgstr ""
-"Un repositorio de reseñas de música y libros con licencias Creative "
-"Commons"
+msgstr "Reseñas con licencias Creative Commons"
 
 #: frontend/js/src/ProfileDelete.tsx:26
 msgid ""
 "Are you sure you want to delete your account? This action cannot be "
 "undone."
 msgstr ""
+"¿Seguro que quieres eliminar tu cuenta? No podremos recuperarla más tarde."
 
 #: frontend/js/src/ProfileDelete.tsx:46
-#, fuzzy
 msgid "Delete Your Account"
-msgstr "Accede a tu cuenta"
+msgstr "Elimina tu cuenta"
 
 #: frontend/js/src/ProfileDelete.tsx:57
 msgid "Warning: This action is irreversible"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:61
-#, fuzzy
 msgid "Deleting your account will:"
-msgstr "Accede a tu cuenta"
+msgstr "Si eliminas tu cuenta:"
 
 #: frontend/js/src/ProfileDelete.tsx:63
 msgid "Permanently remove all your account information"
@@ -3736,25 +3702,22 @@ msgid "To confirm, type your username"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:82
-#, fuzzy
 msgid "below:"
-msgstr "Blog"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:101
 msgid "Deleting..."
 msgstr ""
 
 #: frontend/js/src/ProfileTabs.tsx:17
-#, fuzzy
 msgid "Profile"
-msgstr "Tu Perfil"
+msgstr "Perfil"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:17
 msgid "Close"
 msgstr ""
 
 #: frontend/js/src/forms/ConditionsModal.tsx:21
-#, fuzzy
 msgid "Privacy policy"
 msgstr "Política de privacidad"
 
@@ -3773,9 +3736,8 @@ msgstr ""
 #: frontend/js/src/forms/ConditionsModal.tsx:29
 #: frontend/js/src/forms/ConditionsModal.tsx:45
 #: frontend/js/src/forms/ConditionsModal.tsx:57
-#, fuzzy
 msgid "Please read our"
-msgstr "Regístrate"
+msgstr ""
 
 #: frontend/js/src/forms/ConditionsModal.tsx:35
 msgid "license page"
@@ -4154,9 +4116,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:413
-#, fuzzy
 msgid "Your project"
-msgstr "Tu Perfil"
+msgstr "Tu proyecto"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:417
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
