@@ -99,6 +99,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     token,
   } = supporter!;
   const [currentToken, setCurrentToken] = useState(token);
+  // eslint-disable-next-line jsx-a11y/anchor-has-content
   const contactLink = <a href="/contact" />;
 
   const regenerateToken = useCallback(async () => {
@@ -452,6 +453,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                     defaults={t(
                       "See the <apiLink>API documentation</apiLink> for more information."
                     )}
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
                     components={{apiLink: <a href="/api" />}}
                   />
                 </p>
