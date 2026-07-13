@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-07-11 15:12+0000\n"
+"PO-Revision-Date: 2026-07-13 12:00+0000\n"
 "Last-Translator: mr_monkey "
 "<mr_monkey@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: French <https://translations.metabrainz.org/projects/"
@@ -29,12 +29,12 @@ msgstr ""
 #: metabrainz/index/forms.py:45
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr "'%(value)s' n'est pas un choix valide pour ce champ"
+msgstr "«%(value)s» n'est pas un choix valide pour ce champ"
 
 #: metabrainz/index/forms.py:56 metabrainz/user/forms.py:25
 #: metabrainz/user/forms.py:49 metabrainz/user/forms.py:55
 msgid "Email address is required!"
-msgstr "Une adresse email est requise !"
+msgstr "Une adresse email est requise !"
 
 #: frontend/js/src/Applications.tsx:51 frontend/js/src/Applications.tsx:79
 #: metabrainz/index/forms.py:61
@@ -699,7 +699,7 @@ msgstr "Comité de direction"
 
 #: metabrainz/templates/index/about.html:50
 msgid "Our board of directors consists of:"
-msgstr "Notre comité de direction est composé par :"
+msgstr "Notre comité de direction est composé de :"
 
 #: metabrainz/templates/index/about.html:52
 #, python-format
@@ -759,7 +759,7 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:66
 msgid "Officers"
-msgstr ""
+msgstr "Dirigeants"
 
 #: metabrainz/templates/index/about.html:67
 msgid "The officers of this company are:"
@@ -782,10 +782,8 @@ msgid "Bad customers"
 msgstr "Mauvais clients"
 
 #: metabrainz/templates/index/bad-customers.html:8
-#, fuzzy
 msgid "Our not-so-favorite commercial data supporters"
-msgstr ""
-"Ceux des utilisateurs commerciaux de nos données qui n’ont pas notre faveur"
+msgstr "Les utilisateurs commerciaux qui n’ont pas notre faveur"
 
 #: metabrainz/templates/index/bad-customers.html:11
 msgid ""
@@ -807,11 +805,13 @@ msgid ""
 "staff."
 msgstr ""
 "Tous nos projets ont besoin des dons utilisateurs et des soutiens "
-"commerciaux. Nos données apportent à ces entreprises une valeur inestimable "
-"et leur donne un avantage commercial.\n"
-"Nous pensons que les entreprises qui utilisent nos données pour leurs "
-"opérations devraient nous soutenir financièrement afin que nous puissions "
-"continuer à couvrir nos frais et payer notre personnel."
+"commerciaux. Nos données\n"
+"      apportent à ces entreprises une valeur inestimable et leur donne un "
+"avantage commercial.\n"
+"      Nous pensons que les entreprises qui utilisent nos données pour leurs "
+"opérations devraient\n"
+"      nous soutenir financièrement afin que nous puissions continuer à "
+"couvrir nos frais et payer notre personnel."
 
 #: metabrainz/templates/index/bad-customers.html:20
 #, python-format
@@ -825,10 +825,11 @@ msgid ""
 "      for support</a>."
 msgstr ""
 "Si une entreprise que vous appréciez apparait sur cette liste, veuillez les "
-"contacter et leur demander pourquoi ils ont refusé de nous soutenir. Si vous "
-"êtes avec une entreprise dans la liste ci-dessous et aimeriez en sortir, "
-"vous pouvez le faire en<a href=\"%(account_type_url)s\">vous inscrivant "
-"comme soutien</a>."
+"contacter et leur demander\n"
+"      pourquoi ils ont refusé de nous soutenir. Si vous êtes avec une "
+"entreprise dans la liste ci-dessous et aimeriez en sortir,\n"
+"      vous pouvez le faire en <a href=\"%(account_type_url)s\">vous "
+"inscrivant comme soutien</a>."
 
 #: metabrainz/templates/index/bad-customers.html:26
 #, python-format
@@ -858,8 +859,9 @@ msgid ""
 "the\n"
 "          \"right thing\"... :)"
 msgstr ""
-"… ou ça, ou peut-être travaillons nous à convaincre certaines entreprises de "
-"faire ce qui « convient »… :)"
+"… ou bien peut-être travaillons-nous à convaincre certaines entreprises de "
+"faire\n"
+"      « ce qui convient »… :)"
 
 #: metabrainz/templates/index/conflict-policy.html:14
 #: metabrainz/templates/index/gdpr.html:8
@@ -1303,7 +1305,7 @@ msgstr "Modifier"
 #: metabrainz/templates/index/profile-edit.html:3
 #: metabrainz/templates/index/profile.html:3
 msgid "Your Profile"
-msgstr "Votre profil"
+msgstr "Votre Profil"
 
 #: metabrainz/templates/index/projects.html:6
 msgid "MetaBrainz Projects"
@@ -1386,9 +1388,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "Projets"
+msgstr "Projets antérieurs"
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -1422,9 +1423,8 @@ msgstr ""
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "MetaBrainz API"
+msgstr "Boutique MetaBrainz"
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -1825,14 +1825,12 @@ msgid "Download Datasets"
 msgstr ""
 
 #: metabrainz/templates/index/datasets/signup.html:3
-#, fuzzy
 msgid "Please sign up"
-msgstr "S'inscrire"
+msgstr "Veuillez vous inscrire"
 
 #: frontend/js/src/Applications.tsx:38 metabrainz/templates/oauth/create.html:3
-#, fuzzy
 msgid "Create new application"
-msgstr "Générer une nouvelle clé"
+msgstr "Générer une nouvelle application"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -2106,14 +2104,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/payments/payment.html:17
-#, fuzzy
 msgid "Organization:"
-msgstr "Nom de l'organisation"
+msgstr "Nom de l'organisation :"
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "Supporters"
+msgstr "Palier de soutien :"
 
 #: metabrainz/templates/payments/payment.html:44
 #, python-format
@@ -2155,9 +2151,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/payments/payment.html:157
-#, fuzzy
 msgid "Invoice number (optional)"
-msgstr "Numéro de facture"
+msgstr "Numéro de facture (optionnel)"
 
 #: metabrainz/templates/payments/payment_base.html:3
 #: metabrainz/templates/payments/payment_base.html:7
@@ -2938,9 +2933,8 @@ msgstr ""
 #: metabrainz/templates/supporters/account-type.html:6
 #: metabrainz/templates/supporters/signup-commercial.html:3
 #: metabrainz/templates/supporters/signup-non-commercial.html:3
-#, fuzzy
 msgid "Become a Supporter"
-msgstr "Voir tous nos supporters"
+msgstr "Rejoindre nos soutiens"
 
 #: metabrainz/templates/supporters/account-type.html:3
 msgid "Support"
@@ -2948,28 +2942,27 @@ msgstr "Aide"
 
 #: metabrainz/templates/supporters/account-type.html:6
 msgid "Support us"
-msgstr "Aidez-nous"
+msgstr "Nous soutenir"
 
 #: metabrainz/templates/supporters/account-type.html:24
 msgid "Non-commercial / Personal"
-msgstr ""
+msgstr "Non commercial / Personnel"
 
 #: metabrainz/templates/supporters/account-type.html:42
 msgid "Non-commercial"
-msgstr ""
+msgstr "Non commercial"
 
 #: metabrainz/templates/supporters/account-type.html:43
 msgid "$0.00/month and up"
-msgstr ""
+msgstr "$0.00 par mois ou plus"
 
 #: metabrainz/templates/supporters/account-type.html:44
 msgid "Personal or university assignment user."
-msgstr ""
+msgstr "Usage personnel ou projet universitaire."
 
 #: metabrainz/templates/supporters/account-type.html:48
 #: metabrainz/templates/supporters/account-type.html:90
 #: metabrainz/templates/supporters/account-type.html:141
-#, fuzzy
 msgid "Upgrade"
 msgstr "Mettre à jour"
 
@@ -2982,34 +2975,34 @@ msgstr "S'inscrire"
 
 #: metabrainz/templates/supporters/account-type.html:61
 msgid "Commercial"
-msgstr ""
+msgstr "Commercial"
 
 #: metabrainz/templates/supporters/account-type.html:83
 #: metabrainz/templates/supporters/account-type.html:135
 #, python-format
 msgid "$%(tier_price)s/month and up"
-msgstr ""
+msgstr "$%(tier_price)s par mois ou plus"
 
 #: metabrainz/templates/supporters/account-type.html:87
 #: metabrainz/templates/supporters/account-type.html:138
 msgid "More info"
-msgstr "Plus d'informations"
+msgstr "Plus d'information"
 
 #: metabrainz/templates/supporters/account-type.html:104
 msgid "View all tiers"
-msgstr ""
+msgstr "Voir tous les paliers"
 
 #: metabrainz/templates/supporters/account-type.html:112
 msgid "Some of our Unicorn members"
-msgstr ""
+msgstr "Quelques-uns de nos soutiens Licorne"
 
 #: metabrainz/templates/supporters/account-type.html:123
 msgid "See all our supporters"
-msgstr "Voir tous nos supporters"
+msgstr "Voir tous nos soutiens"
 
 #: metabrainz/templates/supporters/account-type.html:151
 msgid "View featured tiers"
-msgstr ""
+msgstr "Voir les paliers en vedette"
 
 #: metabrainz/templates/supporters/account-type.html:158
 #, python-format
@@ -3017,16 +3010,17 @@ msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
 msgstr ""
+"Si vous ne savez pas quel palier choisir,\n"
+"      veuillez <a href=\"%(contact_url)s\">nous contacter</a>."
 
 #: metabrainz/templates/supporters/account-type.html:166
-#, fuzzy
 msgid "Back to Profile"
-msgstr "Votre profil"
+msgstr "Retour au profil"
 
 #: metabrainz/templates/supporters/bad-standing.html:3
 #: metabrainz/templates/supporters/bad-standing.html:6
 msgid "Bad standing"
-msgstr ""
+msgstr "En situation irrégulière"
 
 #: metabrainz/templates/supporters/bad-standing.html:8
 msgid ""
@@ -3035,6 +3029,9 @@ msgid ""
 "  MetaBrainz and are using one of our data-sets, but are behind in their\n"
 "  payments by more than 60 days."
 msgstr ""
+"Les compagnies en <i>situation irrégulière</i> ont accepté de soutenir\n"
+"  MetaBrainz dans le passé et utilisent nos ensembles de données,\n"
+"  mais sont en retard de plus de 60 jours dans leurs paiements."
 
 #: metabrainz/templates/supporters/supporters-list.html:9
 #, python-format
@@ -3063,15 +3060,15 @@ msgstr ""
 #: metabrainz/templates/supporters/supporters-list.html:32
 #: metabrainz/templates/supporters/tier.html:25
 msgid "This supporter is behind on their payments."
-msgstr ""
+msgstr "Ce soutien est en retard de paiements."
 
 #: metabrainz/templates/supporters/tier.html:13
 msgid "Sign up for this tier"
-msgstr ""
+msgstr "S'inscrire à ce palier"
 
 #: metabrainz/templates/supporters/tier.html:19
 msgid "Supporters on this tier"
-msgstr ""
+msgstr "Soutiens à ce palier"
 
 #: metabrainz/templates/users/lost-password.html:3
 msgid "Forgot password"
