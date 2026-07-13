@@ -11,6 +11,7 @@ type ApplicationProps = {
     website: string;
     client_id: string;
     client_secret: string;
+    privileges?: Array<string>;
   }>;
   tokens: Array<{
     name: string;
@@ -22,6 +23,10 @@ type ApplicationProps = {
 
 function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
   const { t } = useTranslation();
+
+  const showPrivileges = applications.some(
+    (application) => (application.privileges?.length ?? 0) > 0
+  );
 
   return (
     <>
@@ -52,6 +57,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
               <th>{t("Website")}</th>
               <th>{t("Client ID")}</th>
               <th style={{ width: "400px" }}>{t("Client secret")}</th>
+              {showPrivileges && <th>{t("Privileges")}</th>}
               <th>{t("Actions")}</th>
             </tr>
           </thead>
@@ -60,6 +66,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
               <ApplicationRow
                 key={application.client_id}
                 application={application}
+                showPrivileges={showPrivileges}
               />
             ))}
           </tbody>

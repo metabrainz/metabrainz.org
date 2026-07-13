@@ -1,0 +1,155 @@
+{% extends 'admin/master.html' %}
+{% import 'admin/lib.html' as lib with context %}
+
+{% block head %}
+  {{ super() }}
+  {{ lib.form_css() }}
+{% endblock %}
+
+{% block body %}
+  <div class="oauth-client-edit">
+    <div class="page-title">
+      <i class="fa fa-key"></i> Edit OAuth Application
+    </div>
+    <p class="page-subtitle">
+      Review application details and manage privileged OAuth capabilities.
+    </p>
+
+    <div class="admin-card oauth-client-nav">
+      <div class="btn-group" role="group">
+        <a href="{{ return_url }}" class="btn btn-secondary">
+          <i class="fa fa-list"></i> {{ _gettext('List') }}
+        </a>
+        {%- if admin_view.can_view_details -%}
+        <a class="btn btn-secondary" href="{{ get_url('.details_view', id=request.args.get('id'), url=return_url) }}">
+          <i class="fa fa-eye"></i> {{ _gettext('Details') }}
+        </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="oauth-client-layout">
+      <section class="admin-card oauth-client-panel oauth-client-summary">
+        <div class="oauth-client-panel-header">
+          <div>
+            <h2>{{ model.name }}</h2>
+            <p>Registered OAuth client</p>
+          </div>
+          {% set privilege_labels = model.privilege_labels() %}
+          <span class="oauth-client-count">{{ privilege_labels|length }} privilege{{ '' if privilege_labels|length == 1 else 's' }}</span>
+        </div>
+
+        <dl class="oauth-client-details">
+          <div>
+            <dt>Client ID</dt>
+            <dd><code>{{ model.client_id }}</code></dd>
+          </div>
+          <div>
+            <dt>Owner ID</dt>
+            <dd>{{ model.owner_id }}</dd>
+          </div>
+          <div>
+            <dt>Issued At</dt>
+            <dd>{% if model.client_id_issued_at %}{{ model.client_id_issued_at }}{% else %}&mdash;{% endif %}</dd>
+          </div>
+          <div>
+            <dt>Client Secret</dt>
+            <dd>{{ 'Set' if model.client_secret else 'Not set' }}</dd>
+          </div>
+          <div class="oauth-client-detail-wide">
+            <dt>Website</dt>
+            <dd>
+              {% if model.website %}
+                <a href="{{ model.website }}" rel="noopener noreferrer">{{ model.website }}</a>
+              {% else %}
+                &mdash;
+              {% endif %}
+            </dd>
+          </div>
+        </dl>
+
+        <div class="oauth-client-section">
+          <h3>Description</h3>
+          <p>{{ model.description or 'No description provided.' }}</p>
+        </div>
+
+        <div class="oauth-client-section">
+          <h3>Redirect URIs</h3>
+          {% if model.redirect_uris %}
+            <ul class="oauth-client-uri-list">
+              {% for redirect_uri in model.redirect_uris %}
+                <li><code>{{ redirect_uri }}</code></li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No redirect URIs configured.</p>
+          {% endif %}
+        </div>
+
+        <div class="oauth-client-section">
+          <h3>Current Privileges</h3>
+          {% if privilege_labels %}
+            <div class="oauth-client-badges">
+              {% for label in privilege_labels %}
+                <span>{{ label }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p>No privileged capabilities are enabled.</p>
+          {% endif %}
+        </div>
+      </section>
+
+      <section class="admin-card oauth-client-panel oauth-privileges-panel">
+        <h2>Privileges</h2>
+        <p class="oauth-client-help">
+          Enable only the elevated capabilities this application is allowed to use.
+        </p>
+
+        {% if form.errors %}
+          <div class="alert alert-danger" role="alert">
+            <strong>Unable to save privileges.</strong>
+            <ul>
+              {% for field_name, errors in form.errors.items() %}
+                {% if field_name != 'csrf_token' %}
+                  {% for error in errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <form method="POST" class="admin-form oauth-client-form" role="form">
+          {% if form.hidden_tag is defined %}
+            {{ form.hidden_tag() }}
+          {% endif %}
+
+          <div class="oauth-privileges-field{% if form.privileges.errors %} has-error{% endif %}">
+            <div class="oauth-field-header">
+              <label for="{{ form.privileges.id }}">{{ form.privileges.label.text }}</label>
+              <span>Select one or more capabilities.</span>
+            </div>
+            {{ form.privileges()|safe }}
+          </div>
+
+          <div class="oauth-form-actions">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa fa-save"></i> Save privileges
+            </button>
+            <input name="_continue_editing" type="submit" class="btn btn-secondary" value="{{ _gettext('Save and Continue Editing') }}">
+            <a href="{{ return_url }}" class="btn btn-secondary">
+              {{ _gettext('Cancel') }}
+            </a>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+{% endblock %}
+
+{% block tail %}
+  {{ super() }}
+  {{ lib.form_js() }}
+{% endblock %}

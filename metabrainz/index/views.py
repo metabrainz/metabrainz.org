@@ -300,6 +300,7 @@ def profile_applications():
             "client_secret": application.client_secret,
             "website": application.website,
             "redirect_uris": application.redirect_uris,
+            "privileges": application.privilege_labels(),
         } for application in applications],
         "tokens": [{
             "name": token.client.name,

@@ -9,7 +9,15 @@ from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelVie
 from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm, DeleteUserForm, \
     DeleteSupporterForm
 from metabrainz.admin.forms import get_logo_storage_dir
+from wtforms import SelectMultipleField
+from wtforms.widgets import CheckboxInput, ListWidget
+
 from metabrainz.model import db
+from metabrainz.model.oauth.client import (
+    OAuth2Client,
+    OAuth2ClientPrivilege,
+    OAUTH2_CLIENT_PRIVILEGE_LABELS,
+)
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
@@ -768,6 +776,74 @@ class OldUsernameModelView(AdminModelView):
 
     def __init__(self, session, **kwargs):
         super().__init__(OldUsername, session, **kwargs)
+
+
+class PrivilegeBitmapField(SelectMultipleField):
+    """ A checkbox group that maps the OAuth2 client privileges bitmap column
+    to/from a list of selected privilege flags. """
+
+    widget = ListWidget(prefix_label=False)
+    option_widget = CheckboxInput()
+
+    def __init__(self, *args, **kwargs):
+        # the choices are fixed to the known privilege flags, ignore anything
+        # flask-admin tries to infer for the underlying Integer column
+        kwargs.pop("choices", None)
+        kwargs["coerce"] = int
+        super().__init__(*args, **kwargs)
+        self.choices = [
+            (privilege.value, OAUTH2_CLIENT_PRIVILEGE_LABELS[privilege])
+            for privilege in OAuth2ClientPrivilege
+        ]
+
+    def process_data(self, value):
+        # value is the integer bitmap coming from the model instance
+        granted = OAuth2ClientPrivilege(value or 0)
+        self.data = [privilege.value for privilege in OAuth2ClientPrivilege if privilege in granted]
+
+    def populate_obj(self, obj, name):
+        bitmap = 0
+        for value in self.data or []:
+            bitmap |= value
+        setattr(obj, name, bitmap)
+
+
+class OAuth2ClientModelView(AdminModelView):
+    """Admin view for managing OAuth2 applications and their privileges."""
+    edit_template = "admin/oauth_client/edit.html"
+
+    column_list = ("client_id", "name", "owner_id", "privileges", "client_id_issued_at")
+    column_labels = {
+        "client_id": "Client ID",
+        "name": "Name",
+        "owner_id": "Owner ID",
+        "privileges": "Privileges",
+        "client_id_issued_at": "Issued At",
+    }
+    column_searchable_list = ("client_id", "name")
+    column_default_sort = ("client_id_issued_at", True)
+
+    can_create = False
+    can_delete = False
+    can_edit = True
+    can_view_details = True
+
+    form_columns = ("privileges",)
+    form_overrides = {"privileges": PrivilegeBitmapField}
+    # the column is NOT NULL, but an empty selection (no privileges) is valid, so
+    # drop the InputRequired validator flask-admin would otherwise add.
+    form_args = {"privileges": {"label": "Privileges", "validators": []}}
+
+    @staticmethod
+    def _format_privileges(view, context, model, name):
+        labels = model.privilege_labels()
+        return ", ".join(labels) if labels else "—"
+
+    column_formatters = {"privileges": _format_privileges}
+    column_formatters_detail = {"privileges": _format_privileges}
+
+    def __init__(self, session, **kwargs):
+        super().__init__(OAuth2Client, session, **kwargs)
 
 
 class DomainBlacklistModelView(AdminModelView):

@@ -3,6 +3,7 @@ from datetime import timedelta
 
 from freezegun import freeze_time
 
+from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.oauth.tests import OAuthTestCase
 
 
@@ -332,10 +333,7 @@ class IntrospectionTestCase(OAuthTestCase):
         self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)
 
     def test_oauth_introspection_client_credentials(self):
-        application = self.create_oauth_app()
-        self.app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"] = [
-            application["client_id"],
-        ]
+        application = self.create_oauth_app(privileges=[OAuth2ClientPrivilege.CLIENT_CREDENTIALS])
         self.temporary_login(self.user2)
         data = {
             "client_id": application["client_id"],

@@ -1,13 +1,11 @@
+from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.oauth.tests import OAuthTestCase
 
 
 class ClientCredentialsGrantTestCase(OAuthTestCase):
 
     def test_oauth_client_credentials(self):
-        application = self.create_oauth_app()
-        self.app.config["OAUTH2_WHITELISTED_CCG_CLIENTS"] = [
-            application["client_id"],
-        ]
+        application = self.create_oauth_app(privileges=[OAuth2ClientPrivilege.CLIENT_CREDENTIALS])
 
         self.temporary_login(self.user2)
         data = {

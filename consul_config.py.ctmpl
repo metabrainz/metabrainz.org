@@ -150,13 +150,6 @@ OAUTH2_TOKEN_EXPIRES_IN = {
     "client_credentials": 3600,
 }
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
-OAUTH2_WHITELISTED_CCG_CLIENTS = [
-    {{template "KEY_ARRAY" "oauth2/whitelisted_ccg_clients"}}
-]
-# OAuth2 client ids that are allowed to see the user's "remember me" status in the token response.
-OAUTH2_REMEMBER_ME_CLIENTS = [
-    {{template "KEY_ARRAY" "oauth2/remember_me_clients"}}
-]
 
 OIDC_ID_TOKEN_EXPIRATION = 3600
 OIDC_JWT_PRIVATE_KEY = {{template "KEY" "oidc/jwt_private_key"}}

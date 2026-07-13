@@ -1,16 +1,40 @@
+from enum import IntFlag
+
 from authlib.oauth2.rfc6749 import ClientMixin
-from flask import current_app
-from sqlalchemy import Column, Text, Integer, ARRAY, Identity, DateTime, func
+from sqlalchemy import Column, Text, Integer, ARRAY, Identity, DateTime, func, CheckConstraint
 
 from metabrainz.model import db
+
+
+class OAuth2ClientPrivilege(IntFlag):
+    """ Privileges an OAuth2 client may be granted.
+
+    Stored as a bitmap in the ``privileges`` column and tested with bitwise
+    operations. Values are powers of two and must never be reused/renumbered
+    once assigned, as existing rows encode them positionally.
+    """
+    REMEMBER_ME = 1 << 0
+    CLIENT_CREDENTIALS = 1 << 1
+    REGISTRATION_REQUEST = 1 << 2
+
+
+# Human-readable labels shown in the admin UI and to application owners.
+OAUTH2_CLIENT_PRIVILEGE_LABELS = {
+    OAuth2ClientPrivilege.REMEMBER_ME: "Remember me",
+    OAuth2ClientPrivilege.CLIENT_CREDENTIALS: "Client credentials grant",
+    OAuth2ClientPrivilege.REGISTRATION_REQUEST: "Registration requests",
+}
 
 
 class OAuth2Client(db.Model, ClientMixin):
 
     __tablename__ = "client"
-    __table_args__ = {
-        "schema": "oauth"
-    }
+    __table_args__ = (
+        # a privilege bitmap is unsigned; guard against negative values that
+        # would otherwise satisfy every bitwise privilege check
+        CheckConstraint("privileges >= 0", name="client_privileges_non_negative"),
+        {"schema": "oauth"},
+    )
 
     id = Column(Integer, Identity(), primary_key=True)
     client_id = Column(Text, nullable=False)
@@ -22,6 +46,21 @@ class OAuth2Client(db.Model, ClientMixin):
     website = Column(Text)
     redirect_uris = Column(ARRAY(Text), nullable=False)
     client_id_issued_at = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    # bitmap of OAuth2ClientPrivilege flags granted to this client
+    privileges = Column(Integer, nullable=False, server_default="0")
+
+    def has_privilege(self, privilege: OAuth2ClientPrivilege) -> bool:
+        """ Check whether this client has been granted the given privilege. """
+        return bool(self.privileges & privilege)
+
+    def privilege_labels(self) -> list[str]:
+        """ Human-readable labels for the privileges granted to this client. """
+        granted = OAuth2ClientPrivilege(self.privileges)
+        return [
+            label
+            for privilege, label in OAUTH2_CLIENT_PRIVILEGE_LABELS.items()
+            if privilege in granted
+        ]
 
     def get_client_id(self):
         return self.client_id
@@ -49,7 +88,7 @@ class OAuth2Client(db.Model, ClientMixin):
 
     def check_grant_type(self, grant_type):
         if grant_type == "client_credentials":
-            return self.client_id in current_app.config.get("OAUTH2_WHITELISTED_CCG_CLIENTS", [])
+            return self.has_privilege(OAuth2ClientPrivilege.CLIENT_CREDENTIALS)
         return True
 
     def check_already_approved(self, user_id, requested_scopes):

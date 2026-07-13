@@ -81,7 +81,7 @@ Which grant should I use?
        exchange proxied through your backend (see note below)
    * - Machine-to-machine, no user involved
      - :doc:`Client Credentials grant <client-credentials-grant>`
-       (must be whitelisted)
+       (requires the *Client credentials grant* privilege)
    * - Legacy in-browser client
      - :doc:`Implicit grant <implicit-grant>` (discouraged)
 
