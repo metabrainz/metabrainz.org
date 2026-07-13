@@ -43,7 +43,7 @@ function ProfileDelete({ csrf_token, username }: ProfileDeleteProps) {
   return (
     <div className="row">
       <div className="col-md-8 col-md-offset-2">
-        <h2 className="page-title">{t("Delete Your Account")}</h2>
+        <h2 className="page-title">{t("Delete your account")}</h2>
 
         <div
           className="panel panel-danger"
