@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-06-12 02:36+0200\n"
-"PO-Revision-Date: 2026-07-11 15:12+0000\n"
+"PO-Revision-Date: 2026-07-13 12:00+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language-Team: Spanish <https://translations.metabrainz.org/projects/"
@@ -2929,7 +2929,7 @@ msgstr "Hazte simpatizante"
 
 #: metabrainz/templates/supporters/account-type.html:3
 msgid "Support"
-msgstr "Soporte"
+msgstr "Apóyanos"
 
 #: metabrainz/templates/supporters/account-type.html:6
 msgid "Support us"
