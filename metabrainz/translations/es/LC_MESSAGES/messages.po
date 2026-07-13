@@ -3727,8 +3727,12 @@ msgid ""
 "details."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:59
+#: frontend/js/src/forms/ConditionsModal.tsx:47
 #, fuzzy
+msgid "privacy policy"
+msgstr "Política de privacidad"
+
+#: frontend/js/src/forms/ConditionsModal.tsx:51
 msgid "GDPR compliance"
 msgstr "Cumplimiento del RGPD"
 
@@ -3773,7 +3777,6 @@ msgid "Application description needs to be at least 3 characters long."
 msgstr "La descripción de la aplicación debe contener al menos tres caracteres."
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
-#, fuzzy
 msgid "Application description needs to be at most 512 characters long."
 msgstr ""
 "La descripción de la aplicación debe contener un máximo de 64 caracteres."
