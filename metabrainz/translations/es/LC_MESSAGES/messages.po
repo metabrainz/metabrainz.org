@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 13:19+0000\n"
-"PO-Revision-Date: 2026-07-14 17:12+0000\n"
+"PO-Revision-Date: 2026-07-16 09:12+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language: es\n"
@@ -799,6 +799,17 @@ msgid ""
 "href=\"%(financial_reports_url)s\">transparent finances,</a> which are "
 "published quarterly."
 msgstr ""
+"La fundación fue creada en 2004 por Robert Kaye en San Luis Obispo "
+"(California), y es una entidad sin ánimo de lucro exenta de impuestos 501(c)"
+"(3). Pedimos a nuestros <a href=\"%(supporters_url)s\">simpatizantes "
+"comerciales</a> que nos apoyen económicamente para financiar nuestros "
+"proyectos y mantenerlos activos y disponibles para nuestra comunidad. El uso "
+"no comercial de nuestros datos es gratuito, y nos comprometemos a mantenerlo "
+"así. También contamos con el apoyo de <a href=\"%(donations_url)s\">"
+"donantes</a> y varios <a href=\"%(sponsors_url)s\">patrocinadores</a> que "
+"nos ayudan a alcanzar nuestros objetivos. En la MetaBrainz Foundation "
+"creemos en las finanzas transparentes, y publicamos <a href=\"%"
+"(financial_reports_url)s\">informes trimestrales</a>."
 
 #: metabrainz/templates/index/about.html:50
 msgid "Board of Directors"
@@ -1158,7 +1169,7 @@ msgstr "Conjuntos de datos de MetaBrainz"
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
 msgid "GDPR Compliance Statement"
-msgstr ""
+msgstr "Declaración de cumplimiento del RGPD"
 
 #: metabrainz/templates/index/gdpr.html:37
 msgid "Right to be forgotten"
@@ -1187,7 +1198,7 @@ msgstr ""
 #: metabrainz/templates/index/gdpr.html:198
 #: metabrainz/templates/index/privacy.html:166
 msgid "Privacy/GDPR Representative"
-msgstr ""
+msgstr "Representante de privacidad / RGPD"
 
 #: metabrainz/templates/index/index.html:6
 msgid "Welcome to MetaBrainz!"
@@ -1318,11 +1329,11 @@ msgstr ""
 
 #: metabrainz/templates/index/privacy.html:54
 msgid "Web and FTP access logs"
-msgstr ""
+msgstr "Registros de acceso al sitio web y FTP"
 
 #: metabrainz/templates/index/privacy.html:62
 msgid "Third-Party content"
-msgstr ""
+msgstr "Contenido de terceros"
 
 #: metabrainz/templates/index/privacy.html:92
 msgid "Applicable to account holders"
@@ -1334,15 +1345,15 @@ msgstr "Creación de cuenta"
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
-msgstr ""
+msgstr "Ediciones y notas"
 
 #: metabrainz/templates/index/privacy.html:114
 msgid "Subscriptions on MusicBrainz"
-msgstr ""
+msgstr "Subscripciones en MusicBrainz"
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
-msgstr ""
+msgstr "Sitios de terceros"
 
 #: metabrainz/templates/index/privacy.html:145
 msgid "MetaBrainz donors"
@@ -1357,6 +1368,9 @@ msgid ""
 "personal\n"
 "    information to anyone else, ever."
 msgstr ""
+"Si haces una donación a la MetaBrainz Foundation tenemos la obligación legal "
+"de almacenar tus datos personales por si somos auditados por el IRS. Nunca "
+"facilitaremos tu información personal a nadie más."
 
 #: metabrainz/templates/index/privacy.html:153
 msgid ""
@@ -1367,10 +1381,14 @@ msgid ""
 "    donation, unless you chose to be anonymous during the donation "
 "process."
 msgstr ""
+"Creemos en las finanzas transparentes, así que indicamos todas las "
+"donaciones que recibimos en nuestro sitio web. Tu nombre real aparecerá "
+"junto al importe donado, salvo que indiques durante el proceso de donación "
+"que quieres hacer una donación anónima."
 
 #: metabrainz/templates/index/privacy.html:158
 msgid "Exceptions"
-msgstr ""
+msgstr "Excepciones"
 
 #: frontend/js/src/Profile.tsx:596
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
@@ -1403,6 +1421,9 @@ msgid ""
 "source music encyclopedia that\n"
 "            collects music metadata and makes it available to the public."
 msgstr ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a> es una enciclopedia abierta sobre "
+"música mantenida por nuestra comunidad que almacena metadatos musicales y "
+"los pone a disposición de la gente."
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
@@ -1415,6 +1436,8 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> es un programa de código "
+"abierto para identificar, etiquetar y organizar archivos digitales de audio."
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
@@ -1428,6 +1451,10 @@ msgid ""
 "            releases in MusicBrainz. It is a joint project with the <a "
 "href=\"%(archive_org_url)s\">Internet Archive</a>."
 msgstr ""
+"<a href=\"%(caa_url)s\">Cover Art Archive</a> es una base de datos de "
+"portadas e imágenes de música asociadas a las publicaciones documentadas en "
+"MusicBrainz. Es un proyecto conjunto con el <a href=\"%(archive_org_url)s\">"
+"Internet Archive</a>."
 
 #: metabrainz/templates/index/projects.html:63
 msgid "CritiqueBrainz"
@@ -1441,6 +1468,9 @@ msgid ""
 "            providing a platform created for the sole purpose of Creative"
 " Commons licensed reviews."
 msgstr ""
+"<a href=\"%(cb_url)s\">CritiqueBrainz</a> permite escribir reseñas con "
+"licencias Creative Commons tanto de música como de libros, y las asocia a "
+"los datos de nuestros otros proyectos."
 
 #: metabrainz/templates/index/projects.html:78
 msgid "BookBrainz"
@@ -1454,6 +1484,9 @@ msgid ""
 "            literature. Its aim is to collect and store data about every "
 "publication ever written."
 msgstr ""
+"<a href=\"%(bb_url)s\">BookBrainz</a> es una enciclopedia online de "
+"información sobre literatura, con el objetivo de publicar datos sobre todas "
+"las publicaciones escritas de la historia."
 
 #: metabrainz/templates/index/projects.html:93
 msgid "ListenBrainz"
@@ -1467,6 +1500,10 @@ msgid ""
 "            their listen history. One of the goals is for this data to be"
 " used for building open music recommendation systems."
 msgstr ""
+"<a href=\"%(lb_url)s\">ListenBrainz</a> es un sitio web de código abierto "
+"sobre música que permite a los usuarios documentar sus escuchas. Uno de "
+"nuestros objetivos es que estos datos sean utilizados para crear sistemas "
+"abiertos de recomendación de música."
 
 #: metabrainz/templates/index/projects.html:104
 msgid "Past Projects"
@@ -1487,6 +1524,11 @@ msgid ""
 "href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
 "            in Barcelona."
 msgstr ""
+"<a href=\"%(ab_url)s\">AcousticBrainz</a> fue un projecto que hizo uso de "
+"crowdsourcing para obtener información acústica sobre todo tipo de archivos "
+"de música y la puso a disponibilidad del público. Fue un proyecto conjunto "
+"con el <a href=\"%(mtg_url)s\">Music Technology Group</a> de la <a href=\"%"
+"(upf_url)s\">Universitat Pompeu Fabra</a> de Barcelona."
 
 #: metabrainz/templates/index/projects.html:132
 msgid "MessyBrainz"
@@ -1501,6 +1543,10 @@ msgid ""
 "used for AcousticBrainz and is still being\n"
 "            used in ListenBrainz."
 msgstr ""
+"<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifica metadatos sin "
+"procesar e intenta asociarlos con identificadores estables de MusicBrainz. "
+"Usamos MessyBrainz en ListenBrainz, y en su momento también en "
+"AcousticBrainz."
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
@@ -1513,6 +1559,8 @@ msgid ""
 "    sponsors and partners for their support in helping MusicBrainz "
 "operate."
 msgstr ""
+"Desde MetaBrainz Foundation queremos dar las gracias a todos nuestros "
+"patrocinadores y simpatizantes que apoyan nuestro trabajo en MusicBrainz."
 
 #: metabrainz/templates/index/sponsors.html:13
 msgid ""
@@ -1524,6 +1572,10 @@ msgid ""
 " the\n"
 "    success and growth of MusicBrainz."
 msgstr ""
+"Algunas de estas personas y organizaciones nos apoyaron económicamente, y "
+"otras nos dieron acceso a herramientas y tecnología que necesitamos para "
+"llegar a donde estamos. En cualquier caso, han tenido un papel importante en "
+"el crecimiento y el éxito de MusicBrainz."
 
 #: metabrainz/templates/index/sponsors.html:18
 msgid "We would not exist without you — <b>Thank You!</b>"
@@ -1536,10 +1588,13 @@ msgid ""
 "Bronze\n"
 "        account for hosting our sysadmin repositories."
 msgstr ""
+"<b><a href=\"%(github_url)s\">GitHub</a></b> nos proporciona una cuenta de "
+"nivel Bronce gratuita para alojar nuestros repositorios de administración de "
+"sistemas."
 
 #: metabrainz/templates/index/sponsors.html:34
 msgid "Special thanks"
-msgstr "Especiales gracias"
+msgstr "Agradecimientos especiales"
 
 #: metabrainz/templates/index/sponsors.html:36
 msgid ""
@@ -1551,6 +1606,11 @@ msgid ""
 "a few individuals\n"
 "    and companies who have made a big difference for us."
 msgstr ""
+"Durante todos nuestros años de existencia hemos recibido todo tipo de apoyo, "
+"como entradas para conferencias, gastos de viaje, un montón de comidas y "
+"cenas, y también unas cuantas donaciones personales muy grandes. La lista "
+"completa sería demasiado larga, pero aquí hay algunas personas y empresas "
+"que han marcado la diferencia en nuestra historia."
 
 #: metabrainz/templates/index/sponsors.html:42
 #, python-format
@@ -1576,6 +1636,19 @@ msgid ""
 "    hosting provider between 2006 and 2016 and gave us a discount because"
 " of our non-profit status."
 msgstr ""
+"<a href=\"%(google_url)s\">Google</a></b> ha sido un patrocinador muy "
+"importante, con más de <b>$500,000</b> en donaciones en total. Richard "
+"Jones, de <a href=\"%(last_fm_url)s\">Last.fm</a>, donó <b>$50,000</b> in "
+"2010. Antes de que hubiéramos siquiera creado la MetaBrainz Foundation, <a "
+"href=\"%(oracle_url)s\">Sun Microsystems</a> y Paul Lamere donaron un "
+"servidor para nuestra base de datos y <a href=\"%(oreilly_url)s\">O'Reilly "
+"Media</a> nos dio $500 para abrir una cuenta de banco para MusicBrainz. "
+"Cuando hemos tenido dudas sobre propiedad intelectual, <a href=\"%(ed_url)"
+"s\">Ed Cavazos</a> nos ha proporcionado su apoyo legal pro bono. <a href=\"%"
+"(dan_url)s\">Dan Appleman</a> nos ayuda de vez en cuando a preparar "
+"contratos para licenciar nuestros datos. <a href=\"%(dw_url)s\">Digital West "
+"Networks Inc.</a> fue nuestro proveedor de alojamiento principal entre 2006 "
+"y 2016, y nos ofreció un descuento por ser una entidad sin ánimo de lucro."
 
 #: metabrainz/templates/index/sponsors.html:61
 msgid ""
@@ -1981,6 +2054,9 @@ msgid ""
 "name\n"
 "      on the card used to set up the payment."
 msgstr ""
+"Si usas Stripe, cancelaremos la donación nosotros mismos. <a href=\"%"
+"(contact_url)s\">Ponte en contacto con nosotros</a>, y comunícanos el nombre "
+"que aparece en la tarjeta con la que activaste el pago periódico."
 
 #: metabrainz/templates/payments/cancel_recurring.html:20
 #, python-format
@@ -1988,6 +2064,8 @@ msgid ""
 "For PayPal, you will need to cancel from their site.\n"
 "      See <a href=\"%(paypal_cancel_url)s\">their documentation</a>."
 msgstr ""
+"Si usas PayPal, tendrás que cancelar el pago desde su página. Consulta <a "
+"href=\"%(paypal_cancel_url)s\">su documentación</a>."
 
 #: metabrainz/templates/payments/donate.html:3
 #: metabrainz/templates/payments/donate.html:7
@@ -2007,6 +2085,12 @@ msgid ""
 "donation off your taxes if you are a\n"
 "      US taxpayer."
 msgstr ""
+"Si consideras que nuestros proyectos son útiles, plantéate hacer una "
+"donación a la MetaBrainz Foundation, que es una <a href=\"%"
+"(wikipedia_non_profit_url)s\">entidad sin ánimo de lucro exenta de impuestos "
+"501(c)(3)</a> con base en California. Si pagas impuestos en los Estados "
+"Unidos, todas tus donaciones serán deducibles de tus impuestos, y recibirás "
+"un recibo que puedes utilizar para dicha deducción."
 
 #: metabrainz/templates/payments/donate.html:18
 msgid ""
@@ -2016,6 +2100,9 @@ msgid ""
 "office, and paying a minimal\n"
 "      salary for MetaBrainz employees."
 msgstr ""
+"Tus donaciones ayudarán a financiar los proyectos de la MetaBrainz "
+"Foundation, cubriendo los gastos de alojamiento, servidores, nuestra pequeña "
+"oficina, y un salario modesto para los empleados de MetaBrainz."
 
 #: metabrainz/templates/payments/donate.html:23
 #, python-format
@@ -2043,6 +2130,9 @@ msgid ""
 "actual\n"
 "        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
+"<b>¡Cuidado!</b> Esta es una versión para desarrollo del sitio web. ¡NO "
+"introduzcas información real sobre tu tarjeta de crédito! Si quieres hacer "
+"una donación, visita <a href=\"%(mb_url)s\">metabrainz.org</a>."
 
 #: metabrainz/templates/payments/donate.html:39
 #: metabrainz/templates/payments/payment.html:31
@@ -2056,6 +2146,9 @@ msgid ""
 "            <a href=\"%(mail_link)s\">donations@metabrainz.org</a>\n"
 "            before you do."
 msgstr ""
+"Si quieres hacer una donación de gran importe, ponte en contacto con "
+"nosotros en nuestra dirección <a href=\"%(mail_link)s\">"
+"donations@metabrainz.org</a> antes de pagar."
 
 #: metabrainz/templates/payments/donate.html:65
 msgid "I want this to be a recurring monthly donation"
@@ -2090,6 +2183,9 @@ msgid ""
 "Your billing name and (if provided) your username will be listed\n"
 "        in our donors list unless you make your donation anonymous."
 msgstr ""
+"Tu nombre real indicado en la facturación y tu nombre de usuario (si lo "
+"indicas) aparecerán en nuestra lista de donantes salvo que indiques que "
+"quieres realizar una donación anónima."
 
 #: metabrainz/templates/payments/donate.html:120
 #, python-format
@@ -2101,6 +2197,10 @@ msgid ""
 "        please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
 "        privacy policy</a>."
 msgstr ""
+"No compartiremos la información personal que suministres a la MetaBrainz "
+"Foundation durante el proceso de donación con nadie más. Para saber más, "
+"consulta nuestra <a href=\"%(privacy_policy_url)s\">política de privacidad</"
+"a>."
 
 #: metabrainz/templates/payments/donate.html:129
 #, python-format
@@ -2108,6 +2208,8 @@ msgid ""
 "To find out how to cancel recurring donations take a look at\n"
 "        <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
+"Si quieres cancelar una donación periódica, visita <a href=\"%"
+"(cancel_recurring_url)s\">esta página</a>."
 
 #: metabrainz/templates/payments/donate.html:134
 msgid "Other ways to donate"
@@ -2145,7 +2247,7 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:145
 msgid "US Check"
-msgstr ""
+msgstr "Cheques estadounidenses"
 
 #: metabrainz/templates/payments/donate.html:146
 msgid ""
@@ -2222,6 +2324,9 @@ msgid ""
 "actual\n"
 "      payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
+"<b>¡Cuidado!</b> Esta es una versión para desarrollo del sitio web. ¡NO "
+"introduzcas información real sobre tu tarjeta de crédito! Si quieres "
+"pagarnos, visita <a href=\"%(mb_url)s\">metabrainz.org</a>."
 
 #: metabrainz/templates/payments/payment.html:17
 msgid "Organization:"
@@ -2238,6 +2343,9 @@ msgid ""
 "          <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
 "          before you do."
 msgstr ""
+"Si quieres hacer un pago de gran importe, ponte en contacto con nosotros en "
+"nuestra dirección <a href=\"%(mail_link)s\">payments@metabrainz.org</a> "
+"antes de pagar."
 
 #: metabrainz/templates/payments/payment.html:52
 #: metabrainz/templates/payments/payment.html:159
@@ -2262,6 +2370,10 @@ msgid ""
 "      please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
 "      privacy policy</a>."
 msgstr ""
+"No compartiremos la información personal que suministres a la MetaBrainz "
+"Foundation durante el proceso de pago con nadie más. Para saber más, "
+"consulta nuestra <a href=\"%(privacy_policy_url)s\">política de privacidad</"
+"a>."
 
 #: metabrainz/templates/payments/payment.html:93
 #, python-format
@@ -2269,6 +2381,8 @@ msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
+"Si quieres cancelar un pago periódico, visita <a href=\"%"
+"(cancel_recurring_url)s\">esta página</a>."
 
 #: metabrainz/templates/payments/payment.html:157
 msgid "Invoice number (optional)"
@@ -2288,6 +2402,10 @@ msgid ""
 "If you want to make a donation\n"
 "      instead, go to <a href=\"%(donate_url)s\">donation page</a>."
 msgstr ""
+"<b>Esta página es donde las organizaciones registradas como simpatizantes de "
+"la MetaBrainz Foundation pueden realizar sus pagos.</b> Los pagos iniciados "
+"desde esta página no serán considerados donaciones; si quieres donar, visita "
+"nuestra <a href=\"%(donate_url)s\">página de donaciones</a>."
 
 #: metabrainz/templates/payments/payment_base.html:16
 msgid ""
@@ -2297,6 +2415,9 @@ msgid ""
 "office, and paying a minimal\n"
 "      salary for MetaBrainz employees."
 msgstr ""
+"Tus pagos ayudarán a financiar los proyectos de la MetaBrainz Foundation, "
+"cubriendo los gastos de alojamiento, servidores, nuestra pequeña oficina, y "
+"un salario modesto para los empleados de MetaBrainz."
 
 #: metabrainz/templates/payments/payment_base.html:21
 #, python-format
@@ -2365,6 +2486,15 @@ msgid ""
 "    donations, we believe that our contributors have the right to see how"
 " the non-profit manages its finances."
 msgstr ""
+"En MetaBrainz Foundation tenemos una política de <i>finanzas transparentes</"
+"i>, y los informes financieros de nuestra entidad sin ánimo de lucro están "
+"disponibles en este sitio web. La forma en la que publicamos esta "
+"información permite a nuestros contribuidores, tanto los que nos apoyan "
+"económicamente como los que nos suministran datos, saber cómo usamos las "
+"donaciones y las tarifas de licencia que recibimos. Como nuestros proyectos "
+"están basados en el esfuerzo de nuestros voluntarios y parte de nuestros "
+"ingresos viene también de sus donaciones, creemos que tienen derecho a saber "
+"cómo hacemos las cosas."
 
 #: metabrainz/templates/reports/financial_reports/index.html:17
 msgid ""
@@ -2377,6 +2507,12 @@ msgid ""
 "    program. In these cases we will anonymize these payments before "
 "publishing on this site."
 msgstr ""
+"En la fundación publicamos todos los datos sobre nuestras finanzas que "
+"podemos. Algunas empresas que nos pagan no nos permiten publicar las "
+"cantidades que recibimos por nuestras actividades. Por ejemplo, uno de "
+"nuestros afiliados no nos permite publicar los detalles de sus "
+"contribuciones a nuestro programa de afiliados. En casos como este, hacemos "
+"los pagos anónimos antes de publicarlos en nuestra página."
 
 #: metabrainz/templates/reports/financial_reports/index.html:25
 #, python-format
@@ -2385,6 +2521,8 @@ msgid ""
 "a list of all the\n"
 "    donations that we have received."
 msgstr ""
+"Puedes ver todas las donaciones que hemos recibido en nuestra <a href=\"%"
+"(donors_url)s\">lista de donaciones</a>."
 
 #: metabrainz/templates/reports/financial_reports/index.html:31
 msgid ""
@@ -3105,7 +3243,7 @@ msgstr "Más información"
 
 #: metabrainz/templates/supporters/account-type.html:104
 msgid "View all tiers"
-msgstr "Ver todos los niveles"
+msgstr "Mostrar todos los niveles"
 
 #: metabrainz/templates/supporters/account-type.html:112
 msgid "Some of our Unicorn members"
@@ -3117,7 +3255,7 @@ msgstr "Ver todos nuestros simpatizantes"
 
 #: metabrainz/templates/supporters/account-type.html:151
 msgid "View featured tiers"
-msgstr ""
+msgstr "Mostrar niveles principales"
 
 #: metabrainz/templates/supporters/account-type.html:158
 #, python-format
@@ -3125,6 +3263,8 @@ msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
 msgstr ""
+"Si no sabes qué nivel elegir, <a href=\"%(contact_url)s\">ponte en contacto "
+"con nosotros</a>."
 
 #: metabrainz/templates/supporters/account-type.html:166
 msgid "Back to Profile"
@@ -3133,7 +3273,7 @@ msgstr "Volver al perfil"
 #: metabrainz/templates/supporters/bad-standing.html:3
 #: metabrainz/templates/supporters/bad-standing.html:6
 msgid "Bad standing"
-msgstr ""
+msgstr "En situación deudora"
 
 #: metabrainz/templates/supporters/bad-standing.html:8
 msgid ""
@@ -3142,6 +3282,9 @@ msgid ""
 "  MetaBrainz and are using one of our data-sets, but are behind in their\n"
 "  payments by more than 60 days."
 msgstr ""
+"Las empresas <i>en situación deudora</i> han llegado a un acuerdo para "
+"apoyar a MetaBrainz y usan nuestros conjuntos de datos, pero tienen un "
+"retraso de al menos 60 días en sus contribuciones."
 
 #: metabrainz/templates/supporters/supporters-list.html:12
 #, python-format
@@ -3199,7 +3342,7 @@ msgstr "Confirmación de la contraseña"
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
-msgstr ""
+msgstr "Reintroduce tu contraseña para continuar."
 
 #: frontend/js/src/ProfileDelete.tsx:108
 #: frontend/js/src/forms/DeleteApplication.tsx:53
@@ -3208,7 +3351,7 @@ msgstr ""
 #: frontend/js/src/forms/ProfileEdit.tsx:105
 #: metabrainz/templates/users/reauthenticate.html:23
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: metabrainz/templates/users/reauthenticate.html:24
 msgid "Continue"
@@ -3301,7 +3444,7 @@ msgstr "Secreto del cliente"
 
 #: frontend/js/src/Applications.tsx:60
 msgid "Privileges"
-msgstr ""
+msgstr "Privilegios"
 
 #: frontend/js/src/Applications.tsx:61 frontend/js/src/Applications.tsx:89
 msgid "Actions"
@@ -3329,37 +3472,41 @@ msgstr "Error de OAuth2"
 
 #: frontend/js/src/OAuthError.tsx:18
 msgid "An error occurred during OAuth authentication process."
-msgstr ""
+msgstr "Ha habido un error durante el proceso de autorización de OAuth."
 
 #: frontend/js/src/Profile.tsx:38
 msgid "(Resend Verification Email)"
-msgstr ""
+msgstr "(reenviar correo de verificación)"
 
 #: frontend/js/src/Profile.tsx:47
 msgid "Current:"
-msgstr ""
+msgstr "Actual:"
 
 #: frontend/js/src/Profile.tsx:50 frontend/js/src/Profile.tsx:70
 msgid "Verified"
-msgstr ""
+msgstr "Verificada"
 
 #: frontend/js/src/Profile.tsx:53
 msgid "New:"
-msgstr ""
+msgstr "Nueva:"
 
 #: frontend/js/src/Profile.tsx:56 frontend/js/src/Profile.tsx:77
 msgid "Unverified"
-msgstr ""
+msgstr "Sin verificar"
 
 #: frontend/js/src/Profile.tsx:61
 msgid "Your current email will be replaced once the new email is verified."
 msgstr ""
+"Tu dirección de correo actual será reemplazada una vez hayas verificado la "
+"dirección nueva."
 
 #: frontend/js/src/Profile.tsx:108
 msgid ""
 "Are you sure you want to generate new access token? Current token will be"
 " revoked!"
 msgstr ""
+"¿Seguro que quieres generar un nuevo token de acceso? ¡El token actual será "
+"anulado!"
 
 #: frontend/js/src/Profile.tsx:117
 msgid "Failed to generate new access token!"
@@ -3372,6 +3519,8 @@ msgstr "Hemos rechazado tu solicitud para el uso del Live Data Feed."
 #: frontend/js/src/Profile.tsx:137
 msgid "You do not have permission to use our data in a public commercial product."
 msgstr ""
+"No tienes permiso para utilizar nuestros datos en un producto comercial "
+"público."
 
 #: frontend/js/src/Profile.tsx:148
 msgid "Your application for using the Live Data Feed is still pending."
@@ -3392,8 +3541,8 @@ msgid ""
 "Your application for using the Live Data Feed is waiting to finalize our "
 "support agreement."
 msgstr ""
-"Tenemos que terminar de llegar a un acuerdo de apoyo antes de aceptar tu "
-"solicitud para el uso del Live Data Feed."
+"Tenemos que ultimar nuestro acuerdo de apoyo antes de aceptar tu solicitud "
+"para el uso del Live Data Feed."
 
 #: frontend/js/src/Profile.tsx:172
 msgid ""
@@ -3403,6 +3552,11 @@ msgid ""
 "<contactLink>contact us</contactLink> again to finalize our support "
 "agreement."
 msgstr ""
+"Puedes evaluar nuestros datos y APIs y usarlos durante la fase de "
+"desarrollo, pero no en un producto comercial público. Cuando se acerque el "
+"momento de lanzar públicamente un producto que use nuestros datos, "
+"<contactLink>ponte en contacto con nosotros</contactLink> de nuevo para "
+"ultimar nuestro acuerdo de apoyo."
 
 #: frontend/js/src/Profile.tsx:184
 msgid "Your use of the Live Data Feed is pending suspension."
@@ -3414,6 +3568,9 @@ msgid ""
 "days behind in support payments. If you think this is a mistake, please "
 "<contactLink>contact us</contactLink>."
 msgstr ""
+"Tu cuenta está en situación deudora (tienes al menos 60 días de retraso en "
+"tus contribuciones). Si crees que ha habido un error, <contactLink>ponte en "
+"contacto con nosotros</contactLink>."
 
 #: frontend/js/src/Profile.tsx:197
 msgid "Unknown. :("
@@ -3441,19 +3598,19 @@ msgstr "Uso limitado"
 
 #: frontend/js/src/Profile.tsx:223
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocida"
 
 #: frontend/js/src/Profile.tsx:233
 msgid "Type:"
-msgstr ""
+msgstr "Tipo:"
 
 #: frontend/js/src/Profile.tsx:238
 msgid "Tier:"
-msgstr ""
+msgstr "Nivel:"
 
 #: frontend/js/src/Profile.tsx:242
 msgid "State:"
-msgstr "Estatus:"
+msgstr "Situación:"
 
 #: frontend/js/src/Profile.tsx:250
 msgid ""
@@ -3470,15 +3627,17 @@ msgstr "Información sobre la organización"
 #: frontend/js/src/Profile.tsx:274 frontend/js/src/Profile.tsx:280
 #: frontend/js/src/Profile.tsx:286
 msgid "Unspecified"
-msgstr ""
+msgstr "No disponible"
 
 #: frontend/js/src/Profile.tsx:292
 msgid "<contactLink>Contact us</contactLink> to update this information."
 msgstr ""
+"<contactLink>Ponte en contacto con nosotros</contactLink> para actualizar "
+"esta información."
 
 #: frontend/js/src/Profile.tsx:305 frontend/js/src/Profile.tsx:476
 msgid "Contact Information"
-msgstr ""
+msgstr "Información de contacto"
 
 #: frontend/js/src/Profile.tsx:309 frontend/js/src/forms/ProfileEdit.tsx:70
 #: frontend/js/src/forms/SignupCommercial.tsx:284
@@ -3498,19 +3657,19 @@ msgstr "Conjuntos de datos a usar"
 
 #: frontend/js/src/Profile.tsx:332
 msgid "Edit Contact Information"
-msgstr ""
+msgstr "Editar información de contacto"
 
 #: frontend/js/src/Profile.tsx:333
 msgid "Edit Datasets / Contact Information"
-msgstr ""
+msgstr "Editar información de contacto y conjuntos de datos"
 
 #: frontend/js/src/Profile.tsx:347
 msgid "Data Use Permission Granted"
-msgstr ""
+msgstr "Uso de los datos aceptado"
 
 #: frontend/js/src/Profile.tsx:353
 msgid "Your support agreement has been completed -- thank you!"
-msgstr ""
+msgstr "Tu acuerdo de apoyo está listo, ¡gracias!"
 
 #: frontend/js/src/Profile.tsx:359
 msgid ""
@@ -3527,10 +3686,14 @@ msgid ""
 "If your support falls behind by more than 60 days, this permission may be"
 " withdrawn."
 msgstr ""
+"Si te retrasas más de 60 días en tus contribuciones, podemos revocar este "
+"permiso."
 
 #: frontend/js/src/Profile.tsx:370
 msgid "IP addresses from which replication packets are downloaded are logged."
 msgstr ""
+"Las direcciones IP desde las que se descargan nuestros paquetes de "
+"replicación quedan registradas."
 
 #: frontend/js/src/Profile.tsx:381
 msgid "Limited/No Data Use Permission"
@@ -3538,19 +3701,19 @@ msgstr "Uso limitado o no permitido"
 
 #: frontend/js/src/Profile.tsx:396
 msgid "Data Download"
-msgstr ""
+msgstr "Descargar datos"
 
 #: frontend/js/src/Profile.tsx:401
 msgid "Thank you for registering with us -- we really appreciate it!"
-msgstr ""
+msgstr "Te agradecemos que te hayas registrado con nosotros."
 
 #: frontend/js/src/Profile.tsx:406
 msgid "Proceed to our download page to download datasets:"
-msgstr ""
+msgstr "Para descargar conjuntos de datos, visita nuestra página de descargas:"
 
 #: frontend/js/src/Profile.tsx:422
 msgid "Live Data Feed Access Token"
-msgstr ""
+msgstr "Token de acceso al Live Data Feed"
 
 #: frontend/js/src/Profile.tsx:427
 msgid ""
@@ -3558,10 +3721,12 @@ msgid ""
 "publicly visible version control systems. If exposed, generate a new one "
 "immediately."
 msgstr ""
+"Este token de acceso es privado. No debes incluirlo en repositorios abiertos "
+"al público, y si se filtra debes generar uno nuevo lo antes posible."
 
 #: frontend/js/src/Profile.tsx:441
 msgid "[ no valid token currently ]"
-msgstr ""
+msgstr "[ sin token válido ]"
 
 #: frontend/js/src/Profile.tsx:448
 msgid "Generate New Token"
@@ -3569,13 +3734,13 @@ msgstr "Generar nuevo token"
 
 #: frontend/js/src/Profile.tsx:452
 msgid "See the <apiLink>API documentation</apiLink> for more information."
-msgstr ""
+msgstr "Para saber más, consulta la <apiLink>documentación de la API</apiLink>."
 
 #: frontend/js/src/Profile.tsx:482 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
 msgid "Email"
-msgstr "Correo"
+msgstr "Dirección de correo"
 
 #: frontend/js/src/Profile.tsx:496
 msgid "Edit Information"
@@ -3597,7 +3762,7 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:536
 msgid "Danger Zone"
-msgstr ""
+msgstr "Zona de riesgo"
 
 #: frontend/js/src/Profile.tsx:543
 msgid "Once you delete your account, there is no going back. Please be certain."
@@ -3633,19 +3798,19 @@ msgstr "Aplicaciones de MetaBrainz"
 msgid ""
 "With your MetaBrainz account, you can access every project in the "
 "MetaBrainz family:"
-msgstr ""
+msgstr "Con tu cuenta de MetaBrainz podrás acceder a todos nuestros proyectos:"
 
 #: frontend/js/src/Profile.tsx:641
 msgid "The open-source music encyclopedia"
-msgstr ""
+msgstr "La enciclopedia de código abierto sobre música"
 
 #: frontend/js/src/Profile.tsx:653
 msgid "Track, visualise and share the music you listen to"
-msgstr ""
+msgstr "Documenta, visualiza y comparte la música que escuchas"
 
 #: frontend/js/src/Profile.tsx:665
 msgid "The open-source book database"
-msgstr ""
+msgstr "La base de datos de código abierto sobre libros"
 
 #: frontend/js/src/Profile.tsx:677
 msgid "Creative Commons licensed reviews"
@@ -3659,7 +3824,7 @@ msgstr "¿Seguro que quieres eliminar tu cuenta? No podremos recuperarla más ta
 
 #: frontend/js/src/ProfileDelete.tsx:57
 msgid "Warning: This action is irreversible"
-msgstr ""
+msgstr "Alerta: Esta acción es irreversible"
 
 #: frontend/js/src/ProfileDelete.tsx:61
 msgid "Deleting your account will:"
@@ -3667,31 +3832,33 @@ msgstr "Si eliminas tu cuenta:"
 
 #: frontend/js/src/ProfileDelete.tsx:63
 msgid "Permanently remove all your account information"
-msgstr ""
+msgstr "Eliminaremos toda la información de tu cuenta de forma irreversible"
 
 #: frontend/js/src/ProfileDelete.tsx:64
 msgid "Revoke all your API tokens and access"
-msgstr ""
+msgstr "Anulará todos tus tokens y el acceso a la API de replicación"
 
 #: frontend/js/src/ProfileDelete.tsx:65
 msgid "Remove your supporter status (if applicable)"
-msgstr ""
+msgstr "Perderás tu condición de simpatizante (si lo eres)"
 
 #: frontend/js/src/ProfileDelete.tsx:66
 msgid "Log you out of all MetaBrainz services"
-msgstr ""
+msgstr "Te desconectaremos de todos los servicios de MetaBrainz"
 
 #: frontend/js/src/ProfileDelete.tsx:70
 msgid "Your username will be reserved and cannot be reused."
-msgstr ""
+msgstr "Tu nombre de usuario quedará bloqueado y no podrá ser reutilizado."
 
 #: frontend/js/src/ProfileDelete.tsx:82
 msgid "To confirm, type your username '<username />' below:"
 msgstr ""
+"Para confirmar que quieres eliminar tu cuenta, introduce tu nombre de "
+"usuario «<username />»:"
 
 #: frontend/js/src/ProfileDelete.tsx:105
 msgid "Deleting..."
-msgstr ""
+msgstr "Eliminando..."
 
 #: frontend/js/src/ProfileTabs.tsx:17
 msgid "Profile"
@@ -3699,7 +3866,7 @@ msgstr "Perfil"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:17
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:21
 msgid "Privacy policy"
@@ -3707,7 +3874,7 @@ msgstr "Política de privacidad"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:23
 msgid "Licensing"
-msgstr ""
+msgstr "Licencias"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:25
 msgid ""
@@ -3716,10 +3883,16 @@ msgid ""
 "license. Furthermore, you give the MetaBrainz Foundation the right to "
 "license this data for commercial use."
 msgstr ""
+"Todas tus contribuciones a un servicio de MetaBrainz serán liberadas al "
+"dominio público y/o publicadas bajo una licencia Creative Commons by-nc-sa. "
+"También das permiso a la MetaBrainz Foundation para licenciar estos datos "
+"para uso comercial."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:30
 msgid "Please read our <licenseLink>license page</licenseLink> for more details."
 msgstr ""
+"Para saber más, consulta nuestra <licenseLink>página de información de "
+"licencias</licenseLink>."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:45
 msgid ""
@@ -3727,12 +3900,17 @@ msgid ""
 "information you choose to provide will not be sold or shared with anyone "
 "else."
 msgstr ""
+"En MetaBrainz damos gran importancia a la privacidad de nuestros usuarios. "
+"Nunca compartiremos ni venderemos ninguna información personal que nos "
+"suministres."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:50
 msgid ""
 "Please read our <privacyLink>privacy policy</privacyLink> for more "
 "details."
 msgstr ""
+"Para saber más, consulta nuestra <privacyLink>política de privacidad</"
+"privacyLink>."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:47
 #, fuzzy
@@ -3748,12 +3926,16 @@ msgid ""
 "You may remove your personal information from our services anytime by "
 "deleting your account."
 msgstr ""
+"Puedes eliminar tu cuenta en cualquier momento para eliminar tu información "
+"personal almacenada por nuestros servicios."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:66
 msgid ""
 "Please read our <gdprLink>GDPR compliance statement</gdprLink> for more "
 "details."
 msgstr ""
+"Para saber más, consulta nuestra <gdprLink>declaración de cumplimiento del "
+"RGPD</gdprLink>."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:78
 msgid ""
