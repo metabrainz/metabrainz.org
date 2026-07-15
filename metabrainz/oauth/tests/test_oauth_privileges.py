@@ -1,5 +1,7 @@
 import json
 
+from flask import url_for
+
 from metabrainz.admin.views import OAuth2ClientModelView, PrivilegeBitmapField
 from metabrainz.model import OAuth2Client, db
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
@@ -67,6 +69,30 @@ class OAuthPrivilegesTestCase(OAuthTestCase):
         form.privileges.data = []
         form.populate_obj(client)
         self.assertEqual(client.privileges, 0)
+
+    def test_admin_privilege_form_saves(self):
+        application = self.create_oauth_app()
+        client = self._get_client(application)
+
+        self.app.config["ADMINS"] = [self.user1.name]
+        self.temporary_login(self.user1)
+        url = url_for("oauth-clients-admin.edit_view", id=client.id)
+        response = self.client.get(url)
+        self.assert200(response)
+        form = self.get_context_variable("form")
+
+        response = self.client.post(url, data={
+            "csrf_token": form.csrf_token.current_token,
+            "privileges": [
+                str(OAuth2ClientPrivilege.REMEMBER_ME.value),
+                str(OAuth2ClientPrivilege.CLIENT_CREDENTIALS.value),
+                str(OAuth2ClientPrivilege.REGISTRATION_REQUEST.value),
+            ],
+        })
+
+        self.assertStatus(response, 302)
+        db.session.refresh(client)
+        self.assertEqual(client.privileges, 7)
 
     def test_privileges_non_negative_constraint(self):
         from sqlalchemy.exc import IntegrityError
