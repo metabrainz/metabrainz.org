@@ -10,18 +10,18 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 16:10+0000\n"
-"PO-Revision-Date: 2026-06-30 10:17+0000\n"
+"PO-Revision-Date: 2026-07-16 09:12+0000\n"
 "Last-Translator: \"ApeKattQuest, MonkeyPython\" "
 "<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
 "Language: nb\n"
-"Language-Team: Norwegian Bokmål "
-"<https://translations.metabrainz.org/projects/metabrainz/website/nb_NO/>"
-"\n"
+"Language-Team: Norwegian Bokmål <https://translations.metabrainz.org/"
+"projects/metabrainz/website/nb_NO/>\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
@@ -36,13 +36,12 @@ msgstr "%(value)s er ikke et gyldig valg for dette feltet"
 #: metabrainz/user/forms.py:25 metabrainz/user/forms.py:57
 #: metabrainz/user/forms.py:63
 msgid "Email address is required!"
-msgstr "E-postadresse kreves!"
+msgstr "E-postadresse er påkrevd!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
-#, fuzzy
 msgid "Current password is required!"
-msgstr "E-postadresse kreves!"
+msgstr "Nåværende e-postadresse er påkrevd!"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -52,18 +51,16 @@ msgstr "E-postadresse kreves!"
 #: frontend/js/src/forms/SignupUser.tsx:72 metabrainz/index/forms.py:66
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
-#, fuzzy
 msgid "Password is required!"
-msgstr "E-postadresse kreves!"
+msgstr "Passord er påkrevd!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:160
 #: frontend/js/src/forms/SignupNonCommercial.tsx:91
 #: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
-#, fuzzy
 msgid "Confirm Password is required!"
-msgstr "Kontaktnavn kreves!"
+msgstr "Bekreftelsespassord er påkrevd!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
@@ -82,20 +79,19 @@ msgstr "Navn"
 
 #: metabrainz/index/forms.py:79
 msgid "Contact name field is empty."
-msgstr "Feltet for kontaktnavn er tomt."
+msgstr "Kontaktnavnsfeltet er tomt."
 
 #: metabrainz/index/views.py:234
 msgid "Profile updated successfully."
-msgstr "Profil oppdatert!"
+msgstr "Profilen er oppdatert!"
 
 #: metabrainz/index/views.py:261
 msgid "Current password is incorrect."
-msgstr ""
+msgstr "Nåværende passord er ikke gyldig."
 
 #: metabrainz/index/views.py:266
-#, fuzzy
 msgid "Password changed successfully."
-msgstr "Profil oppdatert!"
+msgstr "Passord endret."
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
@@ -115,7 +111,7 @@ msgstr ""
 
 #: metabrainz/index/views.py:478
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Brukerprofilen er slettet."
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
 #, fuzzy
@@ -154,14 +150,12 @@ msgid "Client description needs to be at most 512 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "Tilbake til hjemmesiden"
+msgstr "Hjemmeside"
 
 #: metabrainz/oauth/forms.py:69
-#, fuzzy
 msgid "Homepage field is empty."
-msgstr "Feltet for kontaktnavn er tomt."
+msgstr "Hjemmesidefeltet er tomt."
 
 #: metabrainz/oauth/forms.py:70
 #, fuzzy
@@ -182,9 +176,8 @@ msgid "Authorization callback URL field is empty."
 msgstr "Kontakt-e-postfeltet er tomt"
 
 #: metabrainz/oauth/forms.py:75
-#, fuzzy
 msgid "Authorization callback URL is invalid."
-msgstr "Autorisasjonskode mangler!"
+msgstr "Autorisasjonstilbakekallingsadressen er ugyldig."
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
@@ -5418,4 +5411,3 @@ msgstr ""
 
 #~ msgid "of the data."
 #~ msgstr ""
-
