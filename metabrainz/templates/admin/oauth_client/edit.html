@@ -125,6 +125,9 @@
           {% if form.hidden_tag is defined %}
             {{ form.hidden_tag() }}
           {% endif %}
+          {% if form.csrf_token %}
+            {{ form.csrf_token }}
+          {% endif %}
 
           <div class="oauth-privileges-field{% if form.privileges.errors %} has-error{% endif %}">
             <div class="oauth-field-header">
