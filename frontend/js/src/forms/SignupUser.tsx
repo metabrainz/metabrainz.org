@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
 import { getPageProps, renderRoot } from "../utils";
@@ -47,8 +47,14 @@ function SignupUser({
           </div>
           {is_registration_request_signup && registration_request_client_name && (
             <p className="text-center text-muted">
-              {t("Registration started by")}{" "}
-              <strong>{registration_request_client_name}</strong>
+              <Trans
+                defaults={t(
+                  "Registration started by <client />"
+                )}
+                components={{
+                  client: <strong>{registration_request_client_name}</strong>
+                }}
+              />
             </p>
           )}
           <Formik
