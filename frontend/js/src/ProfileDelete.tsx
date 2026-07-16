@@ -61,7 +61,7 @@ function ProfileDelete({ csrf_token, username }: ProfileDeleteProps) {
             <p>{t("Deleting your account will:")}</p>
             <ul>
               <li>{t("Permanently remove all your account information")}</li>
-              <li>{t("Revoke all your API tokens and access")}</li>
+              <li>{t("Revoke all your tokens and access to the replication API")}</li>
               <li>{t("Remove your supporter status (if applicable)")}</li>
               <li>{t("Log you out of all MetaBrainz services")}</li>
             </ul>
