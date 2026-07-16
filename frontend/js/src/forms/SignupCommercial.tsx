@@ -505,7 +505,7 @@ function SignupCommercial({
                   </p>
                   <p>
                     {t(
-                      "I also agree that if I generate a Live Data Feed access token, that I treat my access token as a secret and will not share this token publicly or commit it to a source code repository."
+                      "I also agree that if I generate a Live Data Feed access token, then I will treat my access token as a secret and will not share this token publicly or commit it to a source code repository."
                     )}
                   </p>
                 </CheckboxInput>
