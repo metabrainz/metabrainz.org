@@ -419,7 +419,7 @@ function SignupCommercial({
                 >
                   <p className="text-muted">
                     {t(
-                      "URL to where developers can use your APIs using MusicBrainz IDs, if available.."
+                      "URL to where developers can use your APIs using MusicBrainz IDs, if available."
                     )}
                   </p>
                 </AuthCardTextInput>
