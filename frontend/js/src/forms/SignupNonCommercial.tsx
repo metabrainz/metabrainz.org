@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import MTCaptcha from "./MTCaptcha";
 import { getPageProps, renderRoot } from "../utils";
@@ -331,12 +331,22 @@ function SignupNonCommercial({
             ) : (
               <>
                 <div className="small">
-                  {t("Not a supporter?")}{" "}
-                  <a href="/signup">{t("Create a user account")}</a>
+                  <Trans
+                    defaults={t(
+                      "Not a supporter? <signupLink>Create a user account</signupLink>"
+                    )}
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    components={{signupLink: <a href="/signup" />}}
+                  />
                 </div>
                 <div className="small">
-                  {t("Already have an account?")}{" "}
-                  <a href="/login">{t("Sign in")}</a>
+                  <Trans
+                    defaults={t(
+                      "Already have an account? <loginLink>Sign in</loginLink>"
+                    )}
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    components={{loginLink: <a href="/login" />}}
+                  />
                 </div>
               </>
             )}

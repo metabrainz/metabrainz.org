@@ -234,8 +234,13 @@ function SignupUser({
           </Formik>
           <ConditionsModal />
           <div className="auth-card-footer text-center">
-            {t("Already have an account?")}{" "}
-            <a href={getAuthPageUrl("/login")}>{t("Sign in")}</a>
+            <Trans
+              defaults={t(
+                "Already have an account? <loginLink>Sign in</loginLink>"
+              )}
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
+              components={{loginLink: <a href={getAuthPageUrl("/login")} />}}
+            />
           </div>
         </div>
       </div>
