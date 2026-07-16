@@ -67,7 +67,9 @@ function ProfileDelete({ csrf_token, username }: ProfileDeleteProps) {
             </ul>
             <p>
               <strong>
-                {t("Your username will be reserved and cannot be reused.")}
+                {t(
+                  "Your username will be reserved and cannot be reused without the intervention of an administrator."
+                )}
               </strong>
             </p>
 
