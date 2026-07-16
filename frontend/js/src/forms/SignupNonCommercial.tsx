@@ -104,7 +104,7 @@ function SignupNonCommercial({
         <div className="auth-card">
           <h1 className="page-title text-center">
             {existing_user ? t("Become a Supporter") : t("Sign up")}{" "}
-            <small>{t("non-commercial")}</small>
+            <small>{t("Non-commercial")}</small>
           </h1>
           <div className="h4 text-center">
             {t("Access all MetaBrainz projects")}
