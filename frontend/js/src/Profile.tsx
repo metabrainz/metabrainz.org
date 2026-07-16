@@ -107,7 +107,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
       !currentToken ||
       window.confirm(
         t(
-          "Are you sure you want to generate new access token? Current token will be revoked!"
+          "Are you sure you want to generate a new access token? The current token will be revoked!"
         )
       )
     ) {
