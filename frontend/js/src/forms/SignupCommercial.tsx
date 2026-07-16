@@ -35,8 +35,10 @@ function AmountPledgedField({ tier, ...props }: AmountPledgedFieldProps) {
   return (
     <div className="form-group">
       <label htmlFor="amount_pledged">
-        {t("If you would like to support us with more than $")} {tier.price}
-        {t(", please enter the actual amount here:")}
+        {t(
+          "If you would like to support us with more than ${{minPledge}}, please enter the actual amount here:",
+          {minPledge: tier.price.toString()},
+        )}
       </label>
       <div>
         <input
@@ -239,7 +241,7 @@ function SignupCommercial({
                     >
                       <b>{tier.name}</b>
                       <p className="text-muted">
-                        ${tier.price}/{t("month and up")}
+                        {t("${{tierPrice}}/month and up", {tierPrice: tier.price.toString()})}
                       </p>
                     </div>
                     <div
