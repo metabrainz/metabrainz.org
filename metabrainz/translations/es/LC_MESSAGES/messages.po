@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 13:19+0000\n"
-"PO-Revision-Date: 2026-07-16 09:12+0000\n"
+"PO-Revision-Date: 2026-07-17 10:12+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language: es\n"
@@ -777,6 +777,20 @@ msgid ""
 "of arts and music as possible \n"
 "        and do not discriminate when compiling data."
 msgstr ""
+"Trabajamos para mantener un equilibrio entre las contribuciones a nuestros "
+"conjuntos de datos y nuestra comunidad y el uso de dichos conjuntos. "
+"Animamos a todos los usuarios de los datos a ayudarnos a introducirlos, "
+"mejorarlos y revisarlos para que sean tan completos como sea posible. Cada "
+"entidad recibe un <a href=\"%(mbid_url)s\">identificador de MusicBrainz "
+"(MBID)</a> permanente, para facilitar la creación de una lengua vehicular "
+"que nos permita hablar sobre música de forma clara e inequívoca. Gracias a "
+"las MBIDs es posible buscar datos sobre música de muchas más formas de lo "
+"que permiten los siete identificadores tradiconales, lo que hace que la "
+"información sea mucho más útil y fácil de encontrar. Nuestra comunidad no "
+"solo crea los conjuntos de datos sino que los mejora y controla gracias a un "
+"sistema global de votaciones que asegura que los datos sean lo más correctos "
+"y coherentes posible. Recopilamos información sobre tantos estilos y formas "
+"artísticas y musicales como podemos, sin discriminar durante la recolección."
 
 #: metabrainz/templates/index/about.html:36
 #, python-format
@@ -873,7 +887,7 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:62
 msgid "Advisor"
-msgstr ""
+msgstr "Asesor"
 
 #: metabrainz/templates/index/about.html:63
 msgid "Our board of directors is advised by:"
@@ -885,6 +899,7 @@ msgid ""
 "<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
 "journalist"
 msgstr ""
+"<a href=\"%(cory_url)s\">Cory Doctorow</a>, escritor, activista y periodista"
 
 #: metabrainz/templates/index/about.html:67
 msgid "Officers"
@@ -892,7 +907,7 @@ msgstr "Directores"
 
 #: metabrainz/templates/index/about.html:68
 msgid "The officers of this company are:"
-msgstr "Los directores de la compañía son:"
+msgstr "Los directores de la organización son:"
 
 #: metabrainz/templates/index/about.html:70
 msgid "President Nicolás Tamargo"
@@ -908,17 +923,17 @@ msgstr "Secretario Nick Ashton-Hart"
 
 #: metabrainz/templates/index/bad-customers.html:3
 msgid "Bad customers"
-msgstr ""
+msgstr "Malos clientes"
 
 #: metabrainz/templates/index/bad-customers.html:8
 msgid "Our not-so-favorite commercial data supporters"
-msgstr ""
+msgstr "Nuestros usuarios comerciales menos favoritos"
 
 #: metabrainz/templates/index/bad-customers.html:11
 msgid ""
 "The following companies use our data, but have declined to support us on "
 "an ongoing basis."
-msgstr ""
+msgstr "Estas empresas usan nuestros datos, pero se han negado a apoyarnos."
 
 #: metabrainz/templates/index/bad-customers.html:14
 msgid ""
@@ -931,6 +946,13 @@ msgid ""
 "      support so that we may continue to cover our expenses and pay our "
 "staff."
 msgstr ""
+"Todos nuestros proyectos necesitan apoyo financiero, y no solo el de "
+"nuestros usuarios con sus donaciones sino también el de aquellos que usan "
+"los datos de forma comercial. El uso de nuestros conjuntos de datos "
+"gratuitos es muy ventajoso para estas empresas, y creemos firmemente que "
+"todas las empresas que usan nuestros datos para hacer negocio deberían "
+"apoyarnos económicamente para que podamos seguir cubriendo nuestros gastos y "
+"pagando a nuestros empleados."
 
 #: metabrainz/templates/index/bad-customers.html:20
 #, python-format
@@ -943,6 +965,10 @@ msgid ""
 "href=\"%(account_type_url)s\">signing up\n"
 "      for support</a>."
 msgstr ""
+"Si una empresa que te gusta aparece en esta lista, puedes escribir a sus "
+"representantes y preguntarles por qué se han negado a apoyarnos. Si trabajas "
+"en una de estas empresas y quieres dejar de estar en la lista, puedes <a "
+"href=\"%(account_type_url)s\">registrarte como simpatizante</a>."
 
 #: metabrainz/templates/index/bad-customers.html:26
 #, python-format
@@ -951,6 +977,9 @@ msgid ""
 "them for support!\n"
 "      Please <a href=\"%(contact_url)s\">let us know</a>!"
 msgstr ""
+"¿Tienes información sobre una empresa que usa nuestros datos? Nos encantaría "
+"saberlo para pedirles que nos apoyen, ¡<a href=\"%(contact_url)s\">"
+"escríbenos</a>!"
 
 #: metabrainz/templates/index/bad-customers.html:53
 msgid "Nice!!"
@@ -958,7 +987,7 @@ msgstr "Genial!!"
 
 #: metabrainz/templates/index/bad-customers.html:54
 msgid "There are currently no not-so-favorite commercial data supporters!"
-msgstr ""
+msgstr "¡La lista de nuestros usuarios comerciales menos favoritos está vacía!"
 
 #: metabrainz/templates/index/bad-customers.html:56
 msgid ""
@@ -966,15 +995,17 @@ msgid ""
 "the\n"
 "          \"right thing\"... :)"
 msgstr ""
+"... o al menos aún estamos intentando convencer a alguna empresa que otra de "
+"que tome la decisión apropiada :)"
 
 #: metabrainz/templates/index/conflict-policy.html:14
 #: metabrainz/templates/index/gdpr.html:8
 msgid "Introduction"
-msgstr ""
+msgstr "Introducción"
 
 #: metabrainz/templates/index/conflict-policy.html:55
 msgid "Reporting and Response"
-msgstr ""
+msgstr "Denuncias y respuestas"
 
 #: metabrainz/templates/index/contact.html:3
 #: metabrainz/templates/index/contact.html:6
@@ -996,6 +1027,12 @@ msgid ""
 "such as what happened, what you expected\n"
 "    to happen, and the URLs of any pages involved."
 msgstr ""
+"¿Has encontrado un enlace roto, o algo que no funciona como esperabas? "
+"Puedes avisarnos en nuestro <a href=\"%(bug_tracker_url)s\">sistema de "
+"seguimiento de errores</a>, o decírnoslo en nuestro chat o por correo "
+"electrónico con la información de contacto que encontrarás más adelante en "
+"esta página. Incluye todos los detalles que puedas: qué pasó, qué habrías "
+"esperado que pasara, y los enlaces de la(s) página(s) en cuestión."
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
@@ -1012,10 +1049,15 @@ msgid ""
 "    Picard</a>, check its <a "
 "href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
 msgstr ""
+"Para empezar, mira a ver si la respuesta está en nuestras <a href=\"%"
+"(general_faq_url)s\">preguntas frecuentes generales</a>, o en alguna otra <a "
+"href=\"%(faq_url)s\">página de preguntas frecuentes</a>. Si estás utilizando "
+"<a href=\"%(picard_homepage)s\">MusicBrainz Picard</a>, comprueba su <a "
+"href=\"%(picard_troubleshooting)s\">página de resolución de problemas</a>."
 
 #: metabrainz/templates/index/contact.html:25
 msgid "Data removal requests"
-msgstr ""
+msgstr "Peticiones de eliminación de datos"
 
 #: metabrainz/templates/index/contact.html:27
 #, python-format
@@ -1025,10 +1067,13 @@ msgid ""
 "    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more "
 "information."
 msgstr ""
+"En MusicBrainz no eliminamos ni cambiamos datos fácticos a petición de "
+"nadie. Para saber más, consulta nuestra <a href=\"%(dr_policy_url)s\">"
+"política de eliminación de datos</a>."
 
 #: metabrainz/templates/index/contact.html:30
 msgid "Copyright issues"
-msgstr ""
+msgstr "Problemas de derechos de autor"
 
 #: metabrainz/templates/index/contact.html:32
 #, python-format
@@ -1045,10 +1090,18 @@ msgid ""
 "    the infringing material from our website. If you cannot provide us a "
 "link, we cannot help you."
 msgstr ""
+"Si piensas que MusicBrainz vulnera tus derechos de autor, puedes <a href=\"%"
+"(cr_violation_url)s\">dar parte de una vulneración</a>. Ten en cuenta que "
+"MusicBrainz contiene datos sobre la música, <i>pero nunca la música en sí "
+"misma</i>. Que tu música aparezca en la base de datos de MusicBrainz <b>no "
+"quiere decir que tengamos o distribuyamos los archivos de música</b>. Si "
+"sigues pensando que vulneramos tus derechos de autor, por favor envíanos un "
+"enlace indicando dónde puedes descargarte el material en cuestión desde "
+"nuestra página web. Si no nos envías dicho enlace, no podremos ayudarte."
 
 #: metabrainz/templates/index/contact.html:40
 msgid "Advertising requests"
-msgstr ""
+msgstr "Propuestas de márketing"
 
 #: metabrainz/templates/index/contact.html:42
 msgid ""
@@ -1062,11 +1115,19 @@ msgid ""
 " disregard the entirety of your submissions if you contact us any other "
 "way!</em>"
 msgstr ""
+"Estamos reevaluando nuestras estrategias de márketing, incluyendo anuncios, "
+"optimización de tráfico, SEO y monetización de software. Si quieres "
+"ofrecernos estos servicios, envía un correo con toda la información sobre tu "
+"oferta a la dirección de correo indicada. <em>Por favor, por respeto a los "
+"esfuerzos del resto de nuestro equipo que no se encarga del márketing, no "
+"nos escribas sobre estos temas usando nuestras otras direcciones de correo. ¡"
+"No haremos caso a ningún correo sobre este tema que sea enviado a cualquier "
+"otra dirección!</em>"
 
 #: metabrainz/templates/index/contact.html:52
 #, python-format
 msgid "Please submit your proposals before 17:00 PST on %(ad_deadline)s."
-msgstr ""
+msgstr "Envía tu propuesta antes del %(ad_deadline)s a las 17 horas PST."
 
 #: metabrainz/templates/index/contact.html:54
 msgid "Contact details"
@@ -1095,22 +1156,30 @@ msgid ""
 "For inquiries about advertising, SEO optimization, or software "
 "monetization services, please see above!"
 msgstr ""
+"Si quieres ofrecer servicios de marketing, SEO o monetización de software, "
+"lee la sección anterior."
 
 #: metabrainz/templates/index/contact.html:62
 msgid "Please do not offer us <b>any</b> other services! We are not interested."
 msgstr ""
+"¡No nos escribas para ofrecernos <b>ningún</b> otro servicio! No nos "
+"interesan."
 
 #: metabrainz/templates/index/contact.html:63
 msgid ""
 "Please do not contact us about any job openings, we do not hire people "
 "who are not part of our community."
 msgstr ""
+"No nos escribas preguntando por ofertas de trabajo, porque no contratamos a "
+"nadie que no sea ya parte de nuestra comunidad."
 
 #: metabrainz/templates/index/contact.html:68
 msgid ""
 "If you disregard this agreement and contact us about one of the\n"
 "      disallowed topics, we reserve the right to make fun of you."
 msgstr ""
+"Si no haces caso a esta advertencia y nos escribes sobre uno de los temas "
+"que hemos indicado, nos reservamos el derecho de burlarnos de ti."
 
 #: metabrainz/templates/index/contact.html:73
 msgid "E-mail us"
@@ -1130,7 +1199,7 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:84
 msgid "Forums"
-msgstr "Foros"
+msgstr "Foro"
 
 #: metabrainz/templates/index/contact.html:86
 #, python-format
@@ -1139,6 +1208,8 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
+"¡Puedes publicar tus preguntas en nuestro <a href=\"%(forums_url)s\">foro</a>"
+"! Tanto la comunidad como nuestro equipo estaremos encantados de ayudarte."
 
 #: metabrainz/templates/index/contact.html:92
 #, python-format
@@ -1149,14 +1220,19 @@ msgid ""
 "    page and join the chat. You can also browse the\n"
 "    <a href=\"%(chatlogs_url)s\">chat log archives</a>."
 msgstr ""
+"El equipo y la comunidad de MetaBrainz/MusicBrainz/ListenBrainz charlamos en "
+"nuestros canales de Matrix, IRC and Discord. Puedes visitar la <a href=\"%"
+"(chatbrainz_url)s\">página sobre ChatBrainz</a> para saber cómo unirte a los "
+"chats. También puedes echar un vistazo a <a href=\"%(chatlogs_url)s\">"
+"nuestras conversaciones archivadas</a>."
 
 #: metabrainz/templates/index/contact.html:101
 msgid "Social media"
-msgstr ""
+msgstr "Redes sociales"
 
 #: metabrainz/templates/index/contact.html:103
 msgid "You can follow us on these social channels:"
-msgstr ""
+msgstr "Puedes seguirnos en estos canales:"
 
 #: metabrainz/templates/index/contact.html:113
 msgid "Mailing address"
@@ -1173,27 +1249,27 @@ msgstr "Declaración de cumplimiento del RGPD"
 
 #: metabrainz/templates/index/gdpr.html:37
 msgid "Right to be forgotten"
-msgstr ""
+msgstr "Derecho de supresión"
 
 #: metabrainz/templates/index/gdpr.html:77
 msgid "Restriction of processing"
-msgstr ""
+msgstr "Derecho a la limitación del tratamiento"
 
 #: metabrainz/templates/index/gdpr.html:110
 msgid "Right to data portability / exporting your data"
-msgstr ""
+msgstr "Derecho a la portabilidad de los datos"
 
 #: metabrainz/templates/index/gdpr.html:150
 msgid "Right to rectification"
-msgstr ""
+msgstr "Derecho a la rectificación de datos"
 
 #: metabrainz/templates/index/gdpr.html:165
 msgid "Right to be informed"
-msgstr ""
+msgstr "Derecho a la información"
 
 #: metabrainz/templates/index/gdpr.html:188
 msgid "Right to access"
-msgstr ""
+msgstr "Derecho de acceso"
 
 #: metabrainz/templates/index/gdpr.html:198
 #: metabrainz/templates/index/privacy.html:166
@@ -1212,6 +1288,10 @@ msgid ""
 "Creative\n"
 "        Commons licenses."
 msgstr ""
+"La MetaBrainz Foundation es una entidad sin ánimo de lucro que cree en el "
+"acceso abierto y gratuito a los datos. Nuestro objetivo es crear bases de "
+"datos mantenidas por la comunidad, y publicarlas en el dominio público o "
+"bajo licencias Creative Commons."
 
 #: metabrainz/templates/index/index.html:16
 #, python-format
@@ -1228,12 +1308,21 @@ msgid ""
 "gathering process so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
+"Nuestros datos son recopilados por voluntarios y revisados por pares para "
+"que sean lo más correctos y coherentes posible. Todo <a href=\"%"
+"(account_type_url)s\">uso no comercial</a> de los datos es gratuito, pero "
+"pedimos que los <a href=\"%(account_type_url)s\">usuarios comerciales nos "
+"apoyen</a> para poder financiar el proyecto. Animamos a todos los usuarios "
+"de los datos a ayudarnos a recopilarlos para que sean tan completos como sea "
+"posible."
 
 #: metabrainz/templates/index/index.html:38
 msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
+"Una enciclopedia abierta sobre música que almacena metadatos musicales y los "
+"pone a disposición de la gente."
 
 #: metabrainz/templates/index/index.html:40
 #, python-format
@@ -1292,6 +1381,13 @@ msgid ""
 "supporters</a>\n"
 "        who make use of our data sets."
 msgstr ""
+"En la MetaBrainz Foundation creemos en las <a href=\"%(financial_reports_url)"
+"s\">finanzas transparentes</a> y tenemos el apoyo de las <a href=\"%"
+"(donations_url)s\">donaciones de nuestros usuarios</a> y varios <a href=\"%"
+"(sponsors_url)s\">patrocinadores</a> que ayudan a financiar los objetivos de "
+"la organización. También contamos con todo tipo de <a href=\"%"
+"(supporters_url)s\">simpatizantes comerciales</a> que utilizan nuestros "
+"conjuntos de datos."
 
 #: metabrainz/templates/index/index.html:133
 #, python-format
@@ -1302,6 +1398,9 @@ msgid ""
 "\n"
 "        <a href=\"%(account_type_url)s\">sign up</a>!"
 msgstr ""
+"Por desgracia, las empresas mostradas más abajo usan nuestros datos sin "
+"apoyarnos. Puedes <a href=\"%(bad_customers_url)s\">leer más sobre el "
+"problema</a>, ¡o <a href=\"%(account_type_url)s\">registrarte</a>!"
 
 #: metabrainz/templates/index/index.html:156
 #, python-format
@@ -1309,6 +1408,8 @@ msgid ""
 "To get more information about the foundation, go to the\n"
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
+"Para saber más sobre la fundación, visita nuestra página <a href=\"%"
+"(about_url)s\">sobre nosotros</a>."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:43
 #: metabrainz/templates/index/privacy.html:3
@@ -1325,7 +1426,7 @@ msgstr "Para todos nuestros usuarios"
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: metabrainz/templates/index/privacy.html:54
 msgid "Web and FTP access logs"
@@ -1679,6 +1780,14 @@ msgid ""
 "working on MusicBrainz, the open music encyclopedia,\n"
 "          and fell in love with Open Source software."
 msgstr ""
+"Robert fue el fundador y lead geek de <a href=\"%(mb_url)s\">MusicBrainz</a> "
+"y la MetaBrainz Foundation, la organización sin ánimo de lucro creada para "
+"proteger y respaldar a MusicBrainz. Tras sus estudios de ingenería "
+"informática en Cal Poly (San Luis Obispo) trabajó en el equipo de MP3 en "
+"Xing Technology, y luego (durante el auge de las puntocom) en el equipo de "
+"FreeAmp en EMusic. En esta época empezó a desarrollar MusicBrainz, la "
+"enciclopedia abierta de música, y se enamoró de la filosofía del software de "
+"código abierto."
 
 #: metabrainz/templates/index/team.html:21
 #, python-format
@@ -1688,10 +1797,13 @@ msgid ""
 "          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created "
 "Bartendro the open source cocktail robot."
 msgstr ""
+"Robert fue también un hacker de hardware: creó proyectos artísticos para el "
+"Burning Man y Nowhere, y co-fundó <a href=\"%(pr_url)s\">Party Robotics</a>, "
+"creadores de Bartendro, el robot de cócteles de código abierto."
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives on in our hearts and in open source."
-msgstr ""
+msgstr "Sigue vivo en nuestros corazones, y en la comunidad de código abierto."
 
 #: metabrainz/templates/index/team.html:39
 msgid ""
@@ -1712,6 +1824,13 @@ msgid ""
 "          ever hear, binge-watching old TV shows, and being the best "
 "drummer in the world on Rock Band 4."
 msgstr ""
+"Michael es el desarrollador sénior de MusicBrainz, y vive en Chicago, su "
+"ciudad natal. Descubrió MusicBrainz cuando aún iba a la escuela primaria, "
+"empezó a editar datos en el instituto para mantener su colección de música "
+"bajo control, y participó en tres rondas del programa Google Summer of Code "
+"en la universidad. En su tiempo libre le gusta ir a conciertos, hacer música "
+"que nunca escuchará nadie, revisitar series de televisión antiguas, y ser el "
+"mejor baterista del mundo en Rock Band 4."
 
 #: metabrainz/templates/index/team.html:57
 msgid ""
@@ -1738,10 +1857,20 @@ msgid ""
 "href=\"%(mb_editors_url)s\">editing MusicBrainz</a>\n"
 "          or traveling around trying to watch some wildlife."
 msgstr ""
+"Nicolás empezó a contribuir en MusicBrainz como un editor empedernido (y "
+"sigue haciéndolo bastante a menudo), porque le encanta pasar el tiempo "
+"organizando datos. Con el tiempo Robert le ofreció la posición de líder de "
+"estilo, en la que ayuda a la comunidad a decidir la mejor forma de organizar "
+"los datos. Luego se hizo cargo de contestar los correos de atención al "
+"usuario, y empezó a escribir código para solucionar algunos de los problemas "
+"de los que se quejaban los usuarios (no sin causar más de un problema nuevo "
+"al mismo tiempo, a decir verdad). Cuando no está trabajando para MetaBrainz, "
+"se divierte <a href=\"%(mb_editors_url)s\">editando MusicBrainz</a> o "
+"viajando por ahí en busca de animales salvajes."
 
 #: metabrainz/templates/index/team.html:68
 msgid "Originally from Spain, he now lives in Tartu, Estonia."
-msgstr ""
+msgstr "Es español, pero vive en Tartu, Estonia."
 
 #: metabrainz/templates/index/team.html:81
 msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
@@ -1758,6 +1887,11 @@ msgid ""
 "          more than 1 bit since 1982 and has been an esteemed Linux "
 "system administrator since 1998."
 msgstr ""
+"Un verdadero obseso de la música, Laurent Monin descubrió MusicBrainz y "
+"Picard cuando intentó documentar su gran colección de más de 1500 CDs. "
+"Además de su afición a la música, Laurent lleva programando en cualquier "
+"plataforma con más de 1 bit desde 1982, y ha sido un administrador de "
+"sistemas de Linux desde 1998."
 
 #: metabrainz/templates/index/team.html:88
 #, python-format
@@ -1772,6 +1906,13 @@ msgid ""
 "          sustains the MetaBrainz servers while residing near Besançon, "
 "France."
 msgstr ""
+"Laurent ha hecho uso de sus variadas pasiones y habilidades para contribuir "
+"a muchos proyectos de código abierto, entre ellos <a href=\"%(elinks_url)s\">"
+"ELinks</a> y <a href=\"%(geeqie_url)s\">Geeqie</a>, y le encanta jugar con "
+"el hardware the todo tipo de dispositivos de audio, como amplificadores y "
+"altavoces. Pero sus contribuciones van más alla. Ahora se ocupa de mantener "
+"los servidores de MetaBrainz funcionando desde su residencia cerca de "
+"Besançon en Francia."
 
 #: metabrainz/templates/index/team.html:105
 msgid "<span class=\"name\">Yvan Rivierre</span> &mdash; Software Engineer"
@@ -1786,6 +1927,13 @@ msgid ""
 "          in the end. Besides that, he casually plays music, listens to "
 "music, eats music, … music, for an healthy way of life."
 msgstr ""
+"Yvan es un ingeniero de software que trabaja principalmente en MusicBrainz y "
+"viene de Nancy en Francia. Cuando descubrió MusicBrainz empezó a usar los "
+"datos, luego a editarlos, después a documentar los problemas que encontraba, "
+"y finalmente a solucionar los problemas encontrados por otros, tras lo que "
+"recibió una oferta de empleo. El resto del tiempo hace música, escucha "
+"música, come música... vamos, que considera que la música es claramente "
+"buena para la salud."
 
 #: metabrainz/templates/index/team.html:120
 msgid ""
@@ -1804,18 +1952,26 @@ msgid ""
 "          and books, and enjoyed working on MetaBrainz projects so much "
 "he eventually joined the team."
 msgstr ""
+"Nicolas se formó como diseñador gráfico, pero siempre le ha gustado jugar "
+"con los ordenadores y los aparatos electrónicos, y su curiosidad le llevó al "
+"mundo del desarrolo de software, que se ha convertido en la parte más "
+"importante de su trabajo. Siempre le han encantado la música y los libros, y "
+"le gustó tanto ayudar con los proyectos de MetaBrainz que acabó uniéndose al "
+"equipo."
 
 #: metabrainz/templates/index/team.html:127
 msgid ""
 "In his free time, Nicolas likes to go rock climbing, hence the nickname, "
 "and designing and building structures."
 msgstr ""
+"En su tiempo libre a Nicolas le gusta la escalada en roca (lo que le dio su "
+"apodo), y diseñar y construir todo tipo de estructuras."
 
 #: metabrainz/templates/index/team.html:130
 msgid ""
 "Born in Canada and raised in France, Nicolas now lives in Barcelona, "
 "Spain."
-msgstr ""
+msgstr "Nació en Canadá, creció en Francia, y ahora vive en Barcelona, España."
 
 #: metabrainz/templates/index/team.html:146
 msgid ""
@@ -1893,6 +2049,10 @@ msgid ""
 "          and has 15 years experience across various graphic "
 "design/comms/marketing roles."
 msgstr ""
+"Simon lleva contribuyendo datos y quejas sobre la interfaz y el diseño de "
+"MusicBrainz desde 2009. En 2022 empezó a contribuir sus quejas de manera "
+"oficial. Vive en Nueva Zelanda y tiene 15 años de experiencia en todo tipo "
+"de tareas de diseño gráfico, márketing y comunicación."
 
 #: metabrainz/templates/index/team.html:236
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
@@ -1910,6 +2070,11 @@ msgid ""
 "          In his leisure moments, Ansh enjoys binge-watching movies and "
 "listening to music."
 msgstr ""
+"Ansh es un ingeniero de software que vive en Nueva Delhi, India. Llegó a "
+"MetaBrainz en 2022 con una beca del proyecto Google Summer of Code y ha sido "
+"parte de nuestra comunidad desde entonces. Empezó contribuyendo a "
+"CritiqueBrainz y BookBrainz, y ahora trabaja también en ListenBrainz. En su "
+"tiempo libre le gusta hacer maratones de películas y escuchar música."
 
 #: metabrainz/templates/index/team.html:250
 msgid "Voluntary Project Leaders"
@@ -1979,6 +2144,13 @@ msgid ""
 "href=\"%(gnt_url)s\">GnT's</a>,\n"
 "          as well as cheering for the Toronto Raptors."
 msgstr ""
+"David se encargó durante años de añadir áreas a MusicBrainz cuando la "
+"comunidad las solicitaba. Había estado activo en MusicBrainz durante más de "
+"una década, siendo uno de los pocos editores con más de un millón de "
+"ediciones. Canadiense y orgulloso de serlo, fuera de MusicBrainz algunas de "
+"sus cosas favoritas eran el <a href=\"%(thc_url)s\">THC</a>, <a href=\"%"
+"(tfc_url)s\">TFC</a>, <a href=\"%(cts_url)s\">CTS</a> y los <a href=\"%"
+"(gnt_url)s\">GnT's</a>, además de ser fan de los Toronto Raptors."
 
 #: metabrainz/templates/index/team.html:328
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
@@ -4125,6 +4297,9 @@ msgid ""
 "tier will publicly list your company on this web site. However, we will "
 "not publish any of your private details."
 msgstr ""
+"Si te registras en cualquier otro nivel que no sea <italic>«startup en modo "
+"sigilo»</italic>, tu empresa aparecerá en nuestro sitio web (pero no "
+"publicaremos tu información privada)."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
@@ -4350,7 +4525,7 @@ msgstr "Crea tu cuenta"
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
-msgstr ""
+msgstr "Creación de cuenta iniciada por"
 
 #: frontend/js/src/forms/SignupUser.tsx:69
 msgid "Invalid email address."
