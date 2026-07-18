@@ -11,8 +11,31 @@ existing user is only updated when the MusicBrainz ``editor.last_updated`` is ne
 the stored ``user.last_updated`` or when an earlier run stored a source-format password
 that must be normalized. Updates only touch MusicBrainz-owned columns and preserve
 MetaBrainz-owned state (``login_id`` and ``is_blocked``).
+
+Editors and users are matched by row id throughout: ``user.id`` holds the MusicBrainz
+``editor.id``, so a MusicBrainz name change is just another column to copy across and never
+affects which rows are matched.
+
+Re-runs only read the editors that changed since the previous run. Each completed run
+records in ``mb_import_state`` the MusicBrainz time at which it *started* reading, and the
+next run resumes from that watermark minus an overlap window. Both adjustments exist to
+avoid missing rows, and cover the two ways a change can escape a run:
+
+* An editor changed while the copy was running, at an id the scan had already passed. Its
+  ``last_updated`` is at or after the run's start time, so starting the next run there
+  re-reads it. This is why the watermark is the start time rather than the newest
+  ``last_updated`` actually seen, which would sit past such a change and skip it.
+* An editor stamped before the run started but only committed after the scan read that id.
+  Its ``last_updated`` can be arbitrarily far behind the watermark, so the overlap window
+  is what brings it back into range.
+
+Re-reading is cheap in both cases: unchanged editors are filtered out before any write. The
+first run has no watermark and therefore reads the whole ``editor`` table. Pass
+``full=True`` to force a complete re-read, which is also how editors with a NULL
+``editor.last_updated`` are picked up, since an incremental run cannot place them relative
+to the watermark.
 """
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
 import psycopg2
@@ -24,11 +47,27 @@ from metabrainz import bcrypt, db
 # Number of editors to read from MusicBrainz and write to MetaBrainz per batch.
 DEFAULT_BATCH_SIZE = 1000
 DEFAULT_MEMBER_SINCE = datetime(1970, 1, 1, tzinfo=timezone.utc)
+# How far back before the watermark an incremental run starts reading. An editor row can
+# become visible to us with a last_updated older than a watermark we already stored (a
+# long-running MusicBrainz transaction that set last_updated before it committed, or clock
+# skew between the two servers), so re-reading a window of overlap keeps those rows from
+# being missed forever. Re-read rows are cheap: unchanged ones are filtered out before any
+# write.
+DEFAULT_OVERLAP = timedelta(hours=1)
 # test.mb stores passwords as "{CLEARTEXT}..." and can have many users. Use a low
 # migration-only bcrypt cost so local/test imports do not spend minutes hashing.
 DEFAULT_CLEARTEXT_PASSWORD_LOG_ROUNDS = 4
 CRYPT_PASSWORD_PREFIX = "{CRYPT}"
 CLEARTEXT_PASSWORD_PREFIX = "{CLEARTEXT}"
+
+# The next run's watermark, read before any editor is. now() is the transaction start time,
+# so every change committed while this run is copying is stamped at or after it and gets
+# re-read next time. Taking the newest last_updated actually seen instead would skip any
+# editor changed during the run at an id the scan had already passed.
+#
+# It must come from the MusicBrainz clock, not ours: it is compared against
+# editor.last_updated values, which that server stamped.
+FETCH_SOURCE_TIME_QUERY = "SELECT now()"
 
 FETCH_EDITORS_QUERY = """
     SELECT id,
@@ -42,8 +81,26 @@ FETCH_EDITORS_QUERY = """
            deleted
       FROM editor
      WHERE id > %(after_id)s
+       AND (%(since)s::timestamptz IS NULL OR last_updated >= %(since)s)
   ORDER BY id
      LIMIT %(batch_size)s
+"""
+
+# Identifies this importer's row in mb_import_state; not a MusicBrainz editor name. The
+# watermark is kept in that table rather than derived from MAX(user.last_updated), because
+# MetaBrainz writes user.last_updated itself (email confirmation, admin edits) and that
+# would push the watermark past editors that were never imported.
+IMPORTER_NAME = "user"
+
+FETCH_WATERMARK_QUERY = "SELECT last_updated FROM mb_import_state WHERE importer = %(importer)s"
+
+# Only ever move the watermark forward, so a --full or narrowed re-run cannot rewind it.
+STORE_WATERMARK_QUERY = """
+    INSERT INTO mb_import_state (importer, last_updated)
+         VALUES (%(importer)s, %(last_updated)s)
+    ON CONFLICT (importer) DO UPDATE
+       SET last_updated = EXCLUDED.last_updated
+     WHERE EXCLUDED.last_updated > mb_import_state.last_updated
 """
 
 # Fetch users already imported, so we can decide which editors in a batch are new,
@@ -198,8 +255,32 @@ def _reset_user_id_sequence(meb_cursor):
     """)
 
 
+def _fetch_since(meb_cursor, full, overlap):
+    """Return the ``editor.last_updated`` an incremental run should start reading from.
+
+    ``None`` means "read every editor": either a full run was requested or nothing has been
+    imported yet.
+    """
+    if full:
+        return None
+
+    meb_cursor.execute(FETCH_WATERMARK_QUERY, {"importer": IMPORTER_NAME})
+    row = meb_cursor.fetchone()
+    if row is None:
+        return None
+    return row[0] - overlap
+
+
+def _store_watermark(meb_cursor, watermark):
+    """Record where this run started reading, for the next run to start from."""
+    meb_cursor.execute(STORE_WATERMARK_QUERY,
+                       {"importer": IMPORTER_NAME, "last_updated": watermark})
+
+
 def migrate_mb_users(batch_size=DEFAULT_BATCH_SIZE,
-                     cleartext_password_log_rounds=DEFAULT_CLEARTEXT_PASSWORD_LOG_ROUNDS):
+                     cleartext_password_log_rounds=DEFAULT_CLEARTEXT_PASSWORD_LOG_ROUNDS,
+                     full=False,
+                     overlap=DEFAULT_OVERLAP):
     """Stream MusicBrainz editors and import them into the MetaBrainz user table."""
     mb_uri = current_app.config["SQLALCHEMY_MUSICBRAINZ_URI"]
     if not mb_uri:
@@ -214,8 +295,20 @@ def migrate_mb_users(batch_size=DEFAULT_BATCH_SIZE,
 
         with meb_connection.cursor() as meb_cursor, \
                 mb_connection.cursor(cursor_factory=RealDictCursor) as mb_cursor:
+            # Read before the first batch: this becomes the next run's starting point, so it
+            # has to predate everything this run reads.
+            mb_cursor.execute(FETCH_SOURCE_TIME_QUERY)
+            watermark = mb_cursor.fetchone()["now"]
+
+            since = _fetch_since(meb_cursor, full, overlap)
+            if since is None:
+                current_app.logger.info("Migrating all MusicBrainz editors.")
+            else:
+                current_app.logger.info("Migrating MusicBrainz editors changed since %s.", since)
+
             while True:
-                mb_cursor.execute(FETCH_EDITORS_QUERY, {"after_id": after_id, "batch_size": batch_size})
+                mb_cursor.execute(FETCH_EDITORS_QUERY,
+                                  {"after_id": after_id, "batch_size": batch_size, "since": since})
                 editors = mb_cursor.fetchall()
                 if not editors:
                     break
@@ -246,11 +339,14 @@ def migrate_mb_users(batch_size=DEFAULT_BATCH_SIZE,
                 )
 
             _reset_user_id_sequence(meb_cursor)
+            # Only advance the watermark once the whole range has been read: an interrupted
+            # run leaves the old watermark in place and is simply re-read next time.
+            _store_watermark(meb_cursor, watermark)
             meb_connection.commit()
 
         current_app.logger.info(
-            "Finished migrating MusicBrainz editors: %s written, %s skipped.",
-            total_written, total_skipped,
+            "Finished migrating MusicBrainz editors: %s written, %s skipped, watermark %s.",
+            total_written, total_skipped, watermark,
         )
         return total_written, total_skipped
     except Exception:

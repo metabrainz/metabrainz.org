@@ -4,6 +4,8 @@ import os
 import click
 import logging
 
+from datetime import timedelta
+
 from werkzeug.serving import run_simple
 
 from metabrainz import db
@@ -16,6 +18,7 @@ from metabrainz.supporter.copy_mb_row_ids import copy_row_ids
 from metabrainz.user.migrate_mb_users import (
     DEFAULT_BATCH_SIZE,
     DEFAULT_CLEARTEXT_PASSWORD_LOG_ROUNDS,
+    DEFAULT_OVERLAP,
     migrate_mb_users,
 )
 
@@ -163,7 +166,12 @@ def import_musicbrainz_row_ids():
               type=click.IntRange(4, 31),
               show_default=True,
               help="Bcrypt log rounds for MusicBrainz {CLEARTEXT} passwords.")
-def migrate_musicbrainz_users(batch_size, cleartext_password_log_rounds):
+@click.option("--full", is_flag=True,
+              help="Read every editor instead of only those changed since the last run.")
+@click.option("--overlap-hours", default=DEFAULT_OVERLAP.total_seconds() / 3600,
+              type=click.FloatRange(0), show_default=True,
+              help="How far back before the stored watermark an incremental run starts reading.")
+def migrate_musicbrainz_users(batch_size, cleartext_password_log_rounds, full, overlap_hours):
     """ Migrate users from the MusicBrainz editor table into the MetaBrainz user table. """
     app = create_app()
     _configure_cli_logging(app)
@@ -171,6 +179,8 @@ def migrate_musicbrainz_users(batch_size, cleartext_password_log_rounds):
         migrate_mb_users(
             batch_size=batch_size,
             cleartext_password_log_rounds=cleartext_password_log_rounds,
+            full=full,
+            overlap=timedelta(hours=overlap_hours),
         )
 
 
