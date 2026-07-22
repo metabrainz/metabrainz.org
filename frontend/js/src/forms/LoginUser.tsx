@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import React, { JSX } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { getPageProps, renderRoot } from "../utils";
 import {
@@ -106,8 +106,13 @@ function LoginUser({
             )}
           </Formik>
           <div className="auth-card-footer text-center">
-            {t("Don't have an account?")}{" "}
-            <a href={getAuthPageUrl("/signup")}>{t("Sign up")}</a>
+            <Trans
+              defaults={t(
+                "Don't have an account? <signupLink>Sign up</signupLink>"
+              )}
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
+              components={{signupLink: <a href={getAuthPageUrl("/signup")} />}}
+            />
           </div>
         </div>
       </div>

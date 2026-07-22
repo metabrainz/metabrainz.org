@@ -9,137 +9,139 @@
   <p>
   <ol>
     <li>
-      You do not have to provide any personal data to be able to browse the contents of the databases published by MetaBrainz.
+      {{ _('You do not have to provide any personal data to be able to browse the contents of the databases published by MetaBrainz.') }}
     </li>
     <li>
-      You do not have to provide any personally-identifying information if you choose not to.
+      {{ _('You do not have to provide any personally-identifying information if you choose not to.') }}
     </li>
     <li>
-      We will never reveal your email address on MetaBrainz controlled web sites.
+      {{ _('We will never reveal your email address on MetaBrainz controlled web sites.') }}
     </li>
   </ol>
   <p>
-    In order to get maximum value out of the MetaBrainz projects, you may want to create an account and log in. 
+    {{ _('In order to get maximum value out of the MetaBrainz projects, you may want to create an account and log in. 
     Doing so grants you the ability to: edit the databases, contribute your own data, communicate with other users, and keep track 
     of recently released music from artists in your MusicBrainz collection. If you choose to create an account then the minimum we 
     ask is that you: choose a unique username and password, use a web browser that accepts "session" cookies, and provide a verified 
-    email address.
+    email address.') }}
   </p>
   <p>
-    If you do not create an account (or are not logged in) you will not have access to the above listed features, however, you will 
-    still have full access to browse and examine the databases.
+    {{ _('If you do not create an account (or are not logged in) you will not have access to the above listed features, however, you will 
+    still have full access to browse and examine the databases.') }}
   </p>
 
   <h2>{{ _('Applicable to all users') }}</h2>
 
   <h3>{{ _('Cookies') }}</h3>
   <p>
-    We use two cookies that contain sensitive information:
+    {{ _('We use two cookies that contain sensitive information:') }}
   </p>
 
   <ol>
     <li>
-      <b>remember_login</b>: If you choose the "Log in permanently" option when logging in to one of our sites; the cookie will be used to 
-      remember your login details.
+      {{ _('<b>remember_login</b>: If you choose the "Log in permanently" option when logging in to one of our sites; the cookie will be used to 
+      remember your login details.') }}
     </li>
     <li>
-      <b>musicbrainz_server_session, session, or connect.sid</b>: If you are logged into one of our sites, your current session ID is stored in this cookie.
+      {{ _('<b>musicbrainz_server_session, session, or connect.sid</b>: If you are logged into one of our sites, your current session ID is stored in this cookie.') }}
     </li>
   </ol>
 
   <p>
-    We may store dynamic preference information in other cookies, but these do not contain any sensitive information.
+    {{ _('We may store dynamic preference information in other cookies, but these do not contain any sensitive information.') }}
   </p>
 
   <h3>{{ _('Web and FTP access logs') }}</h3>
 
   <p>
-    In a practice similar to other web sites (and APIs) we keep logs of all web requests made against our servers. These logs include: your IP
-    address, your browser's (or API client's) "User-Agent" string, and which page (or API endpoint) you requested with which parameters. Aggregate information about web and FTP traffic is
-    made available to the public via our site usage pages.
+    {{ _('In a practice similar to other web sites (and APIs) we keep logs of all web requests made against our servers. These logs include: your IP
+    address, your browser\'s (or API client\'s) "User-Agent" string, and which page (or API endpoint) you requested with which parameters. Aggregate information about web and FTP traffic is
+    made available to the public via our site usage pages.') }}
   </p>
 
   <h3>{{ _('Third-Party content') }}</h3>
   <p>
-    Our projects' web pages may load some third-party content. Some, but possibly not all sites are listed below:
+    {{ _('Our projects\' web pages may load some third-party content. Some, but possibly not all sites are listed below:') }}
   </p>
 
   <ol>
     <li>
-      Cover art and other images: These are provided by the various cover art sites that have given MusicBrainz permission to do so and our own 
-      <a href="https://coverartarchive.org">Cover Art Archive</a>. This means that the relevant site will know (if they want to) your IP 
-      address, User-Agent string, etc., and which MusicBrainz web page you were visiting (the one which included the cover art image).
+      {{ _('Cover art and other images: These are provided by the various cover art sites that have given MusicBrainz permission to do so and our own 
+      <a href="%(caa_url)s">Cover Art Archive</a>. This means that the relevant site will know (if they want to) your IP 
+      address, User-Agent string, etc., and which MusicBrainz web page you were visiting (the one which included the cover art image).',
+      caa_url='https://coverartarchive.org/') }}
     </li>
     <li>
-      AcoustID: Our fingerprints tab loads fingerprint information from acoustid.org.
+      {{ _('AcoustID: Our fingerprints tab loads fingerprint information from acoustid.org.') }}
     </li>
     <li>
-      MTCaptcha: Our account creation page loads third party content in order to prevent spammers from creating accounts.
+      {{ _('MTCaptcha: Our account creation page loads third party content in order to prevent spammers from creating accounts.') }}
     </li>
   </ol>
 
   <p>
-    <i>The above information assumes that you are using "normal" web browser settings, whereby images are always loaded and HTTP referrer 
-    information is always sent.</i>
+    {{ _('<i>The above information assumes that you are using "normal" web browser settings, whereby images are always loaded and HTTP referrer 
+    information is always sent.</i>') }}
   </p>
 
   <p>
-    It is impractical to constantly modify this privacy policy when MusicBrainz changes which third party content it utilizes. We will 
+    {{ _('It is impractical to constantly modify this privacy policy when MusicBrainz changes which third party content it utilizes. We will 
     aim to use common sense, respect to our community and community review when adding more content from third party sites. We will also 
-    periodically review our policy to ensure that it remains current.
+    periodically review our policy to ensure that it remains current.') }}
   </p>
 
   <h2>{{ _('Applicable to account holders') }}</h2>
 
   <h3>{{ _('Account creation') }}</h3>
   <p>
-    When creating an account with a MetaBrainz project you need to pick a unique username and choose a password, the username you pick is the 
+    {{ _('When creating an account with a MetaBrainz project you need to pick a unique username and choose a password, the username you pick is the 
     only name associated with your account and will be what other MetaBrainz users know you as. You may optionally also tell us other 
-    information about yourself that will be displayed to other MetaBrainz users and the public.
+    information about yourself that will be displayed to other MetaBrainz users and the public.') }}
   </p>
 
   <p>
-    Additionally, in order to edit the databases you will need to provide a confirmed email address. This email address will be held in 
+    {{ _('Additionally, in order to edit the databases you will need to provide a confirmed email address. This email address will be held in 
     confidence, the only method of revealing your email address to another user is if you choose to send a message to another 
     user and enable the option to "reveal my email address". Changing the email address stored with your account will require you to 
-    verify the new address.
+    verify the new address.') }}
   </p>
 
   <h3>{{ _('Edits and Notes') }}</h3>
   <p>
-    If you make any changes to a MetaBrainz project database, such as adding any data, the details of those changes will be visible to 
-    other logged-in users and the change will be associated with your username.
+    {{ _('If you make any changes to a MetaBrainz project database, such as adding any data, the details of those changes will be visible to 
+    other logged-in users and the change will be associated with your username.') }}
   </p>
 
   <h3>{{ _('Subscriptions on MusicBrainz') }}</h3>
   <p>
-    As a logged-in user you can subscribe to one or more artists, labels, collections or other editors. The act of subscribing causes 
+    {{ _('As a logged-in user you can subscribe to one or more artists, labels, collections or other editors. The act of subscribing causes 
     any edits made to (or by in the case of another editor) those entities to be emailed to you. By default, other users can see your 
-    list of subscriptions, however, you can opt out of this by editing the appropriate preference.
+    list of subscriptions, however, you can opt out of this by editing the appropriate preference.') }}
   </p>
 
   <p>
-    This does not provide "perfect" privacy though, in some cases it will be possible to infer information about the contents of your 
+    {{ _('This does not provide "perfect" privacy though, in some cases it will be possible to infer information about the contents of your 
     subscription list even though you have disallowed others from viewing that list directly. This imperfection arises because various 
     parts of the system behave differently depending on whether or not an entity has any subscribers; also, the number of users 
     subscribed to each artist is available via the artist pages. In the most extreme (possibly contrived) example, imagine that all 
     users have their subscriptions set to "public", except for exactly one user whose list is "private". In that case, any discrepancy 
     for a given artist between the shown list of subscribers and the total number of subscribers must be down to that one user. Thus, 
-    you can infer what artists are on that user's list.
+    you can infer what artists are on that user\'s list.') }}
   </p>
 
   <h2>{{ _('Third-party sites') }}</h2>
   <p>
-    Our code reviews are done on GitHub, which is not under the control of MetaBrainz. Participating in code reviews or other
-    tasks carried out on GitHub are subject to <a href="https://help.github.com/articles/github-privacy-statement/">GitHub's privacy 
-    policy</a>.
+    {{ _('Our code reviews are done on GitHub, which is not under the control of MetaBrainz. Participating in code reviews or other
+    tasks carried out on GitHub are subject to <a href="%(github_url)s">GitHub\'s privacy policy</a>.',
+    github_url='https://help.github.com/articles/github-privacy-statement/') }}
   </p>
 
   <p>
-    Our translations platform is provided and hosted by Weblate, which has a data processing agreement with MetaBrainz.
-    Participating in translations is subject to <a href="https://translations.metabrainz.org/legal/">dedicated legal terms</a>.
+    {{ _('Our translations platform is provided and hosted by Weblate, which has a data processing agreement with MetaBrainz.
+    Participating in translations is subject to <a href="%(weblate_url)s">dedicated legal terms</a>.
     Any translations you make will be submitted to our Git repositories and publicly associated with your username;
-    if you so choose, you can also publicly associate them with your own verified email address.
+    if you so choose, you can also publicly associate them with your own verified email address.',
+    weblate_url='https://translations.metabrainz.org/legal/') }}
   </p>
 
   <h2>{{ _('MetaBrainz donors') }}</h2>
@@ -157,18 +159,19 @@
 
   <h2>{{ _('Exceptions') }}</h2>
   <p>
-    <i><b>Please note</b>: Reasonable exceptions may apply to the above policy, for example to comply with applicable laws.
+    {{ _('<i><b>Please note</b>: Reasonable exceptions may apply to the above policy, for example to comply with applicable laws.
     Also, members of the MetaBrainz team and other personnel contracted to provide services to MetaBrainz may have access to
     our infrastructure and could therefore view any information contained therein. However all personnel are contractually bound
-    by non-disclosure clauses which prevent them from making any such information available to others.
+    by non-disclosure clauses which prevent them from making any such information available to others.') }}
   </p>
 
   <h2>{{ _('Privacy/GDPR Representative') }}</h2>
 
   <p>
-   If you have any questions about our GDPR statement, please <a href="{{ url_for('index.contact') }}">contact us</a>. To report
+   {{ _('If you have any questions about our GDPR statement, please <a href="%(contact_url)s">contact us</a>. To report
    any privacy problems, violations or leaks, our GDPR representative is our Interim Executive Director Nicolás Tamargo and for
-   privacy issues contact him at <strong><a href="mailto:gdpr@metabrainz.org">gdpr@metabrainz.org</a></strong>.
+   privacy issues contact him at <strong><a href="mailto:gdpr@metabrainz.org">gdpr@metabrainz.org</a></strong>.',
+   contact_url=url_for('index.contact'))}}
   </p>
 
 {% endblock %}

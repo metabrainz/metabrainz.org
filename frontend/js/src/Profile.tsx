@@ -107,7 +107,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
       !currentToken ||
       window.confirm(
         t(
-          "Are you sure you want to generate new access token? Current token will be revoked!"
+          "Are you sure you want to generate a new access token? The current token will be revoked!"
         )
       )
     ) {
@@ -571,10 +571,15 @@ function SupporterAccountDeletionNotice() {
               <strong>{t("Need to delete your account?")}</strong>
             </p>
             <p className="text-muted" style={{ marginBottom: 0 }}>
-              {t(
-                "Deletion of supporter accounts requires manual review. Please contact us at"
-              )}{" "}
-              <a href="mailto:support@metabrainz.org">support@metabrainz.org</a>.
+              <Trans
+                defaults={t(
+                  "Deletion of supporter accounts requires manual review. Please contact us at <email />."
+                )}
+                // eslint-disable-next-line jsx-a11y/anchor-has-content
+                components={{
+                  email: <a href="mailto:support@metabrainz.org">support@metabrainz.org</a>
+                }}
+              />
             </p>
           </div>
         </div>

@@ -35,8 +35,10 @@ function AmountPledgedField({ tier, ...props }: AmountPledgedFieldProps) {
   return (
     <div className="form-group">
       <label htmlFor="amount_pledged">
-        {t("If you would like to support us with more than $")} {tier.price}
-        {t(", please enter the actual amount here:")}
+        {t(
+          "If you would like to support us with more than ${{minPledge}}, please enter the actual amount here:",
+          {minPledge: tier.price.toString()},
+        )}
       </label>
       <div>
         <input
@@ -239,7 +241,7 @@ function SignupCommercial({
                     >
                       <b>{tier.name}</b>
                       <p className="text-muted">
-                        ${tier.price}/{t("month and up")}
+                        {t("${{tierPrice}}/month and up", {tierPrice: tier.price.toString()})}
                       </p>
                     </div>
                     <div
@@ -419,7 +421,7 @@ function SignupCommercial({
                 >
                   <p className="text-muted">
                     {t(
-                      "URL to where developers can use your APIs using MusicBrainz IDs, if available.."
+                      "URL to where developers can use your APIs using MusicBrainz IDs, if available."
                     )}
                   </p>
                 </AuthCardTextInput>
@@ -505,7 +507,7 @@ function SignupCommercial({
                   </p>
                   <p>
                     {t(
-                      "I also agree that if I generate a Live Data Feed access token, that I treat my access token as a secret and will not share this token publicly or commit it to a source code repository."
+                      "I also agree that if I generate a Live Data Feed access token, then I will treat my access token as a secret and will not share this token publicly or commit it to a source code repository."
                     )}
                   </p>
                 </CheckboxInput>
@@ -566,12 +568,22 @@ function SignupCommercial({
             ) : (
               <>
                 <div className="small">
-                  {t("Not a supporter?")}{" "}
-                  <a href="/signup">{t("Create a user account")}</a>
+                  <Trans
+                    defaults={t(
+                      "Not a supporter? <signupLink>Create a user account</signupLink>"
+                    )}
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    components={{signupLink: <a href="/signup" />}}
+                  />
                 </div>
                 <div className="small">
-                  {t("Already have an account?")}{" "}
-                  <a href="/login">{t("Sign in")}</a>
+                  <Trans
+                    defaults={t(
+                      "Already have an account? <loginLink>Sign in</loginLink>"
+                    )}
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    components={{loginLink: <a href="/login" />}}
+                  />
                 </div>
               </>
             )}
