@@ -34,6 +34,12 @@ def after_oauth2_request(response):
     return response
 
 
+@oauth2_bp.route("/health")
+def health():
+    """Health check endpoint for HAProxy internal gateway."""
+    return "OK", 200
+
+
 @oauth2_bp.route("/client/list")
 @login_required
 def index():
