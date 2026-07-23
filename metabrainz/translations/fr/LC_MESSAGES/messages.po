@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 16:10+0000\n"
 "PO-Revision-Date: 2026-07-23 17:02+0000\n"
-"Last-Translator: mr_monkey "
-"<mr_monkey@users.noreply.translations.metabrainz.org>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language: fr\n"
 "Language-Team: French <https://translations.metabrainz.org/projects/"
 "metabrainz/website/fr/>\n"
@@ -122,15 +122,15 @@ msgstr "Nom de l’application"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr "Le champ \"Nom de l'application\" est vide."
+msgstr "Le champ du nom d’application est vide."
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr "Le nom de l'application doit contenir au moins 3 caractères."
+msgstr "Le nom de l’application doit comporter au moins 3 caractères."
 
 #: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
-msgstr "Le nom de l'application doit contenir un maximum de 64 caractères."
+msgstr "Le nom de l’application ne peut comporter plus de 64 caractères."
 
 #: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
 msgid "Description"
@@ -138,15 +138,15 @@ msgstr "Description"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr "Le champ \"Description\" est vide."
+msgstr "Le champ de description du client est vide."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr "La description doit contenir au moins 3 caractères."
+msgstr "La description du client doit comporter au moins 3 caractères."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr "La description doit contenir un maximum de 512 caractères."
+msgstr "La description du client ne peut comporter plus de 512 caractères."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
@@ -154,11 +154,11 @@ msgstr "Site web"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr "Le champ \"Site web\" est vide."
+msgstr "Le champ du site web est vide."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr "Le site web n'est pas un URL valide."
+msgstr "Le site web n’a pas une URI valide."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
@@ -166,15 +166,15 @@ msgstr "Le site web doit commencer par http ou https"
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr "URL de redirection d'autorisation"
+msgstr "URL de rappel d’autorisation"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
-msgstr "Le champ \"URL de redirection d'autorisation\" est vide."
+msgstr "Le champ d’URL de rappel d’autorisation est vide."
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
-msgstr "URL de redirection d'autorisation invalide."
+msgstr "L’URL de rappel d’autorisation est invalide."
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
@@ -2005,7 +2005,7 @@ msgstr "Veuillez vous inscrire"
 #: frontend/js/src/forms/CreateApplication.tsx:42
 #: metabrainz/templates/oauth/create.html:3
 msgid "Create new application"
-msgstr "Générer une nouvelle application"
+msgstr "Créer une nouvelle application"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -2015,7 +2015,7 @@ msgstr "Supprimer l'application %(name)s"
 #: metabrainz/templates/oauth/edit.html:3
 #, python-format
 msgid "Edit application %(name)s"
-msgstr "Modifier l'application %(name)s"
+msgstr "Modifier l’application %(name)s"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
@@ -3357,11 +3357,11 @@ msgstr "Site Web"
 
 #: frontend/js/src/Applications.tsx:58
 msgid "Client ID"
-msgstr "Identifiant client"
+msgstr "ID client"
 
 #: frontend/js/src/Applications.tsx:59
 msgid "Client secret"
-msgstr "Code secret client"
+msgstr "Secret du client"
 
 #: frontend/js/src/Applications.tsx:60
 msgid "Privileges"
@@ -3381,11 +3381,11 @@ msgstr "Aucune clé trouvée"
 
 #: frontend/js/src/Applications.tsx:88
 msgid "Access"
-msgstr "Autorisations"
+msgstr "Accès"
 
 #: frontend/js/src/Applications.tsx:111
 msgid "Revoke access"
-msgstr "Révoquer l'autorisation"
+msgstr "Révoquer l’accès"
 
 #: frontend/js/src/OAuthError.tsx:17
 msgid "OAuth2 Error"
