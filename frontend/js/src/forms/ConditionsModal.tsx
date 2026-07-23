@@ -18,7 +18,7 @@ export default function ConditionsModal() {
             >
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 className="modal-title">{t("Privacy policy")}</h4>
+            <h4 className="modal-title">{t("Privacy Policy")}</h4>
           </div>
           <h5>{t("Licensing")}</h5>
           <p>

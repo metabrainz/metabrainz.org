@@ -11,20 +11,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-13 13:19+0000\n"
+"POT-Creation-Date: 2026-07-23 17:08+0000\n"
 "PO-Revision-Date: 2026-07-18 11:12+0000\n"
 "Last-Translator: reosarevok "
 "<reosarevok@users.noreply.translations.metabrainz.org>\n"
 "Language: es\n"
-"Language-Team: Spanish <https://translations.metabrainz.org/projects/"
-"metabrainz/website/es/>\n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Language-Team: Spanish "
+"<https://translations.metabrainz.org/projects/metabrainz/website/es/>\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 "
+"== 0) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
@@ -75,7 +74,7 @@ msgid "Confirm Password should match password!"
 msgstr "¡La confirmación de contraseña debe coincidir con la contraseña!"
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
-#: frontend/js/src/Profile.tsx:271 frontend/js/src/Profile.tsx:480
+#: frontend/js/src/Profile.tsx:272 frontend/js/src/Profile.tsx:482
 #: metabrainz/index/forms.py:78
 msgid "Name"
 msgstr "Nombre"
@@ -294,7 +293,7 @@ msgstr "Descripción de la organización"
 msgid "You need to provide description of your organization."
 msgstr "Tienes que suministrar una descripción de tu organización."
 
-#: frontend/js/src/Profile.tsx:277
+#: frontend/js/src/Profile.tsx:278
 #: frontend/js/src/forms/SignupCommercial.tsx:396
 #: metabrainz/supporter/forms.py:34
 msgid "Website URL"
@@ -309,7 +308,7 @@ msgstr "Tienes que indicar el sitio web de la organización."
 msgid "Logo image URL"
 msgstr "URL de la imagen del logo"
 
-#: frontend/js/src/Profile.tsx:283
+#: frontend/js/src/Profile.tsx:284
 #: frontend/js/src/forms/SignupCommercial.tsx:418
 #: metabrainz/supporter/forms.py:38
 msgid "API URL"
@@ -453,7 +452,7 @@ msgstr "Tienda"
 msgid "Policies"
 msgstr "Políticas"
 
-#: metabrainz/templates/base.html:55
+#: metabrainz/templates/base.html:55 metabrainz/templates/index/gdpr.html:178
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
@@ -463,11 +462,13 @@ msgstr "Contrato social"
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
-#: metabrainz/templates/navbar.html:35
+#: metabrainz/templates/index/gdpr.html:181 metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
 msgstr "Código de conducta"
 
-#: metabrainz/templates/base.html:57 metabrainz/templates/index/privacy.html:6
+#: frontend/js/src/forms/ConditionsModal.tsx:21
+#: metabrainz/templates/base.html:57 metabrainz/templates/index/gdpr.html:184
+#: metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
 msgid "Privacy Policy"
 msgstr "Política de privacidad"
@@ -536,25 +537,20 @@ msgstr "Chat"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
-msgid "Twitter/X"
-msgstr "Twitter/X"
-
-#: metabrainz/templates/base.html:88
-#: metabrainz/templates/index/contact.html:107
 msgid "Mastodon"
 msgstr "Mastodon"
 
-#: metabrainz/templates/base.html:89
-#: metabrainz/templates/index/contact.html:108
+#: metabrainz/templates/base.html:88
+#: metabrainz/templates/index/contact.html:107
 msgid "Bluesky"
 msgstr "Bluesky"
 
-#: metabrainz/templates/base.html:90
-#: metabrainz/templates/index/contact.html:109
+#: metabrainz/templates/base.html:89
+#: metabrainz/templates/index/contact.html:108
 msgid "Instagram"
 msgstr "Instagram"
 
-#: metabrainz/templates/base.html:95
+#: metabrainz/templates/base.html:94
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
 msgstr "Patrocinado por <a href=\"%(github_url)s\">GitHub</a>"
@@ -777,20 +773,22 @@ msgid ""
 "of arts and music as possible \n"
 "        and do not discriminate when compiling data."
 msgstr ""
-"Trabajamos para mantener un equilibrio entre las contribuciones a nuestros "
-"conjuntos de datos y nuestra comunidad y el uso de dichos conjuntos. "
-"Animamos a todos los usuarios de los datos a ayudarnos a introducirlos, "
-"mejorarlos y revisarlos para que sean tan completos como sea posible. Cada "
-"entidad recibe un <a href=\"%(mbid_url)s\">identificador de MusicBrainz "
-"(MBID)</a> permanente, para facilitar la creación de una lengua vehicular "
-"que nos permita hablar sobre música de forma clara e inequívoca. Gracias a "
-"las MBIDs es posible buscar datos sobre música de muchas más formas de lo "
-"que permiten los siete identificadores tradiconales, lo que hace que la "
-"información sea mucho más útil y fácil de encontrar. Nuestra comunidad no "
-"solo crea los conjuntos de datos sino que los mejora y controla gracias a un "
-"sistema global de votaciones que asegura que los datos sean lo más correctos "
-"y coherentes posible. Recopilamos información sobre tantos estilos y formas "
-"artísticas y musicales como podemos, sin discriminar durante la recolección."
+"Trabajamos para mantener un equilibrio entre las contribuciones a "
+"nuestros conjuntos de datos y nuestra comunidad y el uso de dichos "
+"conjuntos. Animamos a todos los usuarios de los datos a ayudarnos a "
+"introducirlos, mejorarlos y revisarlos para que sean tan completos como "
+"sea posible. Cada entidad recibe un <a "
+"href=\"%(mbid_url)s\">identificador de MusicBrainz (MBID)</a> permanente,"
+" para facilitar la creación de una lengua vehicular que nos permita "
+"hablar sobre música de forma clara e inequívoca. Gracias a las MBIDs es "
+"posible buscar datos sobre música de muchas más formas de lo que permiten"
+" los siete identificadores tradiconales, lo que hace que la información "
+"sea mucho más útil y fácil de encontrar. Nuestra comunidad no solo crea "
+"los conjuntos de datos sino que los mejora y controla gracias a un "
+"sistema global de votaciones que asegura que los datos sean lo más "
+"correctos y coherentes posible. Recopilamos información sobre tantos "
+"estilos y formas artísticas y musicales como podemos, sin discriminar "
+"durante la recolección."
 
 #: metabrainz/templates/index/about.html:36
 #, python-format
@@ -814,16 +812,17 @@ msgid ""
 "published quarterly."
 msgstr ""
 "La fundación fue creada en 2004 por Robert Kaye en San Luis Obispo "
-"(California), y es una entidad sin ánimo de lucro exenta de impuestos 501(c)"
-"(3). Pedimos a nuestros <a href=\"%(supporters_url)s\">simpatizantes "
-"comerciales</a> que nos apoyen económicamente para financiar nuestros "
-"proyectos y mantenerlos activos y disponibles para nuestra comunidad. El uso "
-"no comercial de nuestros datos es gratuito, y nos comprometemos a mantenerlo "
-"así. También contamos con el apoyo de <a href=\"%(donations_url)s\">"
-"donantes</a> y varios <a href=\"%(sponsors_url)s\">patrocinadores</a> que "
-"nos ayudan a alcanzar nuestros objetivos. En la MetaBrainz Foundation "
-"creemos en las finanzas transparentes, y publicamos <a href=\"%"
-"(financial_reports_url)s\">informes trimestrales</a>."
+"(California), y es una entidad sin ánimo de lucro exenta de impuestos "
+"501(c)(3). Pedimos a nuestros <a "
+"href=\"%(supporters_url)s\">simpatizantes comerciales</a> que nos apoyen "
+"económicamente para financiar nuestros proyectos y mantenerlos activos y "
+"disponibles para nuestra comunidad. El uso no comercial de nuestros datos"
+" es gratuito, y nos comprometemos a mantenerlo así. También contamos con "
+"el apoyo de <a href=\"%(donations_url)s\">donantes</a> y varios <a "
+"href=\"%(sponsors_url)s\">patrocinadores</a> que nos ayudan a alcanzar "
+"nuestros objetivos. En la MetaBrainz Foundation creemos en las finanzas "
+"transparentes, y publicamos <a "
+"href=\"%(financial_reports_url)s\">informes trimestrales</a>."
 
 #: metabrainz/templates/index/about.html:50
 msgid "Board of Directors"
@@ -899,7 +898,8 @@ msgid ""
 "<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
 "journalist"
 msgstr ""
-"<a href=\"%(cory_url)s\">Cory Doctorow</a>, escritor, activista y periodista"
+"<a href=\"%(cory_url)s\">Cory Doctorow</a>, escritor, activista y "
+"periodista"
 
 #: metabrainz/templates/index/about.html:67
 msgid "Officers"
@@ -947,12 +947,12 @@ msgid ""
 "staff."
 msgstr ""
 "Todos nuestros proyectos necesitan apoyo financiero, y no solo el de "
-"nuestros usuarios con sus donaciones sino también el de aquellos que usan "
-"los datos de forma comercial. El uso de nuestros conjuntos de datos "
+"nuestros usuarios con sus donaciones sino también el de aquellos que usan"
+" los datos de forma comercial. El uso de nuestros conjuntos de datos "
 "gratuitos es muy ventajoso para estas empresas, y creemos firmemente que "
 "todas las empresas que usan nuestros datos para hacer negocio deberían "
-"apoyarnos económicamente para que podamos seguir cubriendo nuestros gastos y "
-"pagando a nuestros empleados."
+"apoyarnos económicamente para que podamos seguir cubriendo nuestros "
+"gastos y pagando a nuestros empleados."
 
 #: metabrainz/templates/index/bad-customers.html:20
 #, python-format
@@ -966,9 +966,10 @@ msgid ""
 "      for support</a>."
 msgstr ""
 "Si una empresa que te gusta aparece en esta lista, puedes escribir a sus "
-"representantes y preguntarles por qué se han negado a apoyarnos. Si trabajas "
-"en una de estas empresas y quieres dejar de estar en la lista, puedes <a "
-"href=\"%(account_type_url)s\">registrarte como simpatizante</a>."
+"representantes y preguntarles por qué se han negado a apoyarnos. Si "
+"trabajas en una de estas empresas y quieres dejar de estar en la lista, "
+"puedes <a href=\"%(account_type_url)s\">registrarte como "
+"simpatizante</a>."
 
 #: metabrainz/templates/index/bad-customers.html:26
 #, python-format
@@ -977,9 +978,9 @@ msgid ""
 "them for support!\n"
 "      Please <a href=\"%(contact_url)s\">let us know</a>!"
 msgstr ""
-"¿Tienes información sobre una empresa que usa nuestros datos? Nos encantaría "
-"saberlo para pedirles que nos apoyen, ¡<a href=\"%(contact_url)s\">"
-"escríbenos</a>!"
+"¿Tienes información sobre una empresa que usa nuestros datos? Nos "
+"encantaría saberlo para pedirles que nos apoyen, ¡<a "
+"href=\"%(contact_url)s\">escríbenos</a>!"
 
 #: metabrainz/templates/index/bad-customers.html:53
 msgid "Nice!!"
@@ -995,8 +996,8 @@ msgid ""
 "the\n"
 "          \"right thing\"... :)"
 msgstr ""
-"... o al menos aún estamos intentando convencer a alguna empresa que otra de "
-"que tome la decisión apropiada :)"
+"... o al menos aún estamos intentando convencer a alguna empresa que otra"
+" de que tome la decisión apropiada :)"
 
 #: metabrainz/templates/index/conflict-policy.html:14
 #: metabrainz/templates/index/gdpr.html:8
@@ -1030,9 +1031,10 @@ msgstr ""
 "¿Has encontrado un enlace roto, o algo que no funciona como esperabas? "
 "Puedes avisarnos en nuestro <a href=\"%(bug_tracker_url)s\">sistema de "
 "seguimiento de errores</a>, o decírnoslo en nuestro chat o por correo "
-"electrónico con la información de contacto que encontrarás más adelante en "
-"esta página. Incluye todos los detalles que puedas: qué pasó, qué habrías "
-"esperado que pasara, y los enlaces de la(s) página(s) en cuestión."
+"electrónico con la información de contacto que encontrarás más adelante "
+"en esta página. Incluye todos los detalles que puedas: qué pasó, qué "
+"habrías esperado que pasara, y los enlaces de la(s) página(s) en "
+"cuestión."
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
@@ -1049,11 +1051,12 @@ msgid ""
 "    Picard</a>, check its <a "
 "href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
 msgstr ""
-"Para empezar, mira a ver si la respuesta está en nuestras <a href=\"%"
-"(general_faq_url)s\">preguntas frecuentes generales</a>, o en alguna otra <a "
-"href=\"%(faq_url)s\">página de preguntas frecuentes</a>. Si estás utilizando "
-"<a href=\"%(picard_homepage)s\">MusicBrainz Picard</a>, comprueba su <a "
-"href=\"%(picard_troubleshooting)s\">página de resolución de problemas</a>."
+"Para empezar, mira a ver si la respuesta está en nuestras <a "
+"href=\"%(general_faq_url)s\">preguntas frecuentes generales</a>, o en "
+"alguna otra <a href=\"%(faq_url)s\">página de preguntas frecuentes</a>. "
+"Si estás utilizando <a href=\"%(picard_homepage)s\">MusicBrainz "
+"Picard</a>, comprueba su <a href=\"%(picard_troubleshooting)s\">página de"
+" resolución de problemas</a>."
 
 #: metabrainz/templates/index/contact.html:25
 msgid "Data removal requests"
@@ -1068,8 +1071,8 @@ msgid ""
 "information."
 msgstr ""
 "En MusicBrainz no eliminamos ni cambiamos datos fácticos a petición de "
-"nadie. Para saber más, consulta nuestra <a href=\"%(dr_policy_url)s\">"
-"política de eliminación de datos</a>."
+"nadie. Para saber más, consulta nuestra <a "
+"href=\"%(dr_policy_url)s\">política de eliminación de datos</a>."
 
 #: metabrainz/templates/index/contact.html:30
 msgid "Copyright issues"
@@ -1090,14 +1093,15 @@ msgid ""
 "    the infringing material from our website. If you cannot provide us a "
 "link, we cannot help you."
 msgstr ""
-"Si piensas que MusicBrainz vulnera tus derechos de autor, puedes <a href=\"%"
-"(cr_violation_url)s\">dar parte de una vulneración</a>. Ten en cuenta que "
-"MusicBrainz contiene datos sobre la música, <i>pero nunca la música en sí "
-"misma</i>. Que tu música aparezca en la base de datos de MusicBrainz <b>no "
-"quiere decir que tengamos o distribuyamos los archivos de música</b>. Si "
-"sigues pensando que vulneramos tus derechos de autor, por favor envíanos un "
-"enlace indicando dónde puedes descargarte el material en cuestión desde "
-"nuestra página web. Si no nos envías dicho enlace, no podremos ayudarte."
+"Si piensas que MusicBrainz vulnera tus derechos de autor, puedes <a "
+"href=\"%(cr_violation_url)s\">dar parte de una vulneración</a>. Ten en "
+"cuenta que MusicBrainz contiene datos sobre la música, <i>pero nunca la "
+"música en sí misma</i>. Que tu música aparezca en la base de datos de "
+"MusicBrainz <b>no quiere decir que tengamos o distribuyamos los archivos "
+"de música</b>. Si sigues pensando que vulneramos tus derechos de autor, "
+"por favor envíanos un enlace indicando dónde puedes descargarte el "
+"material en cuestión desde nuestra página web. Si no nos envías dicho "
+"enlace, no podremos ayudarte."
 
 #: metabrainz/templates/index/contact.html:40
 msgid "Advertising requests"
@@ -1115,14 +1119,14 @@ msgid ""
 " disregard the entirety of your submissions if you contact us any other "
 "way!</em>"
 msgstr ""
-"Estamos reevaluando nuestras estrategias de márketing, incluyendo anuncios, "
-"optimización de tráfico, SEO y monetización de software. Si quieres "
-"ofrecernos estos servicios, envía un correo con toda la información sobre tu "
-"oferta a la dirección de correo indicada. <em>Por favor, por respeto a los "
-"esfuerzos del resto de nuestro equipo que no se encarga del márketing, no "
-"nos escribas sobre estos temas usando nuestras otras direcciones de correo. ¡"
-"No haremos caso a ningún correo sobre este tema que sea enviado a cualquier "
-"otra dirección!</em>"
+"Estamos reevaluando nuestras estrategias de márketing, incluyendo "
+"anuncios, optimización de tráfico, SEO y monetización de software. Si "
+"quieres ofrecernos estos servicios, envía un correo con toda la "
+"información sobre tu oferta a la dirección de correo indicada. <em>Por "
+"favor, por respeto a los esfuerzos del resto de nuestro equipo que no se "
+"encarga del márketing, no nos escribas sobre estos temas usando nuestras "
+"otras direcciones de correo. ¡No haremos caso a ningún correo sobre este "
+"tema que sea enviado a cualquier otra dirección!</em>"
 
 #: metabrainz/templates/index/contact.html:52
 #, python-format
@@ -1156,8 +1160,8 @@ msgid ""
 "For inquiries about advertising, SEO optimization, or software "
 "monetization services, please see above!"
 msgstr ""
-"Si quieres ofrecer servicios de marketing, SEO o monetización de software, "
-"lee la sección anterior."
+"Si quieres ofrecer servicios de marketing, SEO o monetización de "
+"software, lee la sección anterior."
 
 #: metabrainz/templates/index/contact.html:62
 msgid "Please do not offer us <b>any</b> other services! We are not interested."
@@ -1170,16 +1174,16 @@ msgid ""
 "Please do not contact us about any job openings, we do not hire people "
 "who are not part of our community."
 msgstr ""
-"No nos escribas preguntando por ofertas de trabajo, porque no contratamos a "
-"nadie que no sea ya parte de nuestra comunidad."
+"No nos escribas preguntando por ofertas de trabajo, porque no contratamos"
+" a nadie que no sea ya parte de nuestra comunidad."
 
 #: metabrainz/templates/index/contact.html:68
 msgid ""
 "If you disregard this agreement and contact us about one of the\n"
 "      disallowed topics, we reserve the right to make fun of you."
 msgstr ""
-"Si no haces caso a esta advertencia y nos escribes sobre uno de los temas "
-"que hemos indicado, nos reservamos el derecho de burlarnos de ti."
+"Si no haces caso a esta advertencia y nos escribes sobre uno de los temas"
+" que hemos indicado, nos reservamos el derecho de burlarnos de ti."
 
 #: metabrainz/templates/index/contact.html:73
 msgid "E-mail us"
@@ -1208,8 +1212,9 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
-"¡Puedes publicar tus preguntas en nuestro <a href=\"%(forums_url)s\">foro</a>"
-"! Tanto la comunidad como nuestro equipo estaremos encantados de ayudarte."
+"¡Puedes publicar tus preguntas en nuestro <a "
+"href=\"%(forums_url)s\">foro</a>! Tanto la comunidad como nuestro equipo "
+"estaremos encantados de ayudarte."
 
 #: metabrainz/templates/index/contact.html:92
 #, python-format
@@ -1220,11 +1225,11 @@ msgid ""
 "    page and join the chat. You can also browse the\n"
 "    <a href=\"%(chatlogs_url)s\">chat log archives</a>."
 msgstr ""
-"El equipo y la comunidad de MetaBrainz/MusicBrainz/ListenBrainz charlamos en "
-"nuestros canales de Matrix, IRC and Discord. Puedes visitar la <a href=\"%"
-"(chatbrainz_url)s\">página sobre ChatBrainz</a> para saber cómo unirte a los "
-"chats. También puedes echar un vistazo a <a href=\"%(chatlogs_url)s\">"
-"nuestras conversaciones archivadas</a>."
+"El equipo y la comunidad de MetaBrainz/MusicBrainz/ListenBrainz charlamos"
+" en nuestros canales de Matrix, IRC and Discord. Puedes visitar la <a "
+"href=\"%(chatbrainz_url)s\">página sobre ChatBrainz</a> para saber cómo "
+"unirte a los chats. También puedes echar un vistazo a <a "
+"href=\"%(chatlogs_url)s\">nuestras conversaciones archivadas</a>."
 
 #: metabrainz/templates/index/contact.html:101
 msgid "Social media"
@@ -1234,7 +1239,7 @@ msgstr "Redes sociales"
 msgid "You can follow us on these social channels:"
 msgstr "Puedes seguirnos en estos canales:"
 
-#: metabrainz/templates/index/contact.html:113
+#: metabrainz/templates/index/contact.html:112
 msgid "Mailing address"
 msgstr "Mailing address"
 
@@ -1288,10 +1293,10 @@ msgid ""
 "Creative\n"
 "        Commons licenses."
 msgstr ""
-"La MetaBrainz Foundation es una entidad sin ánimo de lucro que cree en el "
-"acceso abierto y gratuito a los datos. Nuestro objetivo es crear bases de "
-"datos mantenidas por la comunidad, y publicarlas en el dominio público o "
-"bajo licencias Creative Commons."
+"La MetaBrainz Foundation es una entidad sin ánimo de lucro que cree en el"
+" acceso abierto y gratuito a los datos. Nuestro objetivo es crear bases "
+"de datos mantenidas por la comunidad, y publicarlas en el dominio público"
+" o bajo licencias Creative Commons."
 
 #: metabrainz/templates/index/index.html:16
 #, python-format
@@ -1308,27 +1313,25 @@ msgid ""
 "gathering process so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
-"Nuestros datos son recopilados por voluntarios y revisados por pares para "
-"que sean lo más correctos y coherentes posible. Todo <a href=\"%"
-"(account_type_url)s\">uso no comercial</a> de los datos es gratuito, pero "
-"pedimos que los <a href=\"%(account_type_url)s\">usuarios comerciales nos "
-"apoyen</a> para poder financiar el proyecto. Animamos a todos los usuarios "
-"de los datos a ayudarnos a recopilarlos para que sean tan completos como sea "
-"posible."
+"Nuestros datos son recopilados por voluntarios y revisados por pares para"
+" que sean lo más correctos y coherentes posible. Todo <a "
+"href=\"%(account_type_url)s\">uso no comercial</a> de los datos es "
+"gratuito, pero pedimos que los <a href=\"%(account_type_url)s\">usuarios "
+"comerciales nos apoyen</a> para poder financiar el proyecto. Animamos a "
+"todos los usuarios de los datos a ayudarnos a recopilarlos para que sean "
+"tan completos como sea posible."
 
 #: metabrainz/templates/index/index.html:38
 msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
-"Una enciclopedia abierta sobre música que almacena metadatos musicales y los "
-"pone a disposición de la gente."
+"Una enciclopedia abierta sobre música que almacena metadatos musicales y "
+"los pone a disposición de la gente."
 
 #: metabrainz/templates/index/index.html:40
-#, python-format
-msgid ""
-"Sign up to use the <a href=\"%(account_type_url)s\">Live Data "
-"Feed</a></em>"
+#, fuzzy, python-format
+msgid "Sign up to use the <a href=\"%(account_type_url)s\">Live Data Feed</a>"
 msgstr ""
 "Regístrate para utilizar el <a href=\"%(account_type_url)s\">Live Data "
 "Feed</a></em>"
@@ -1381,13 +1384,13 @@ msgid ""
 "supporters</a>\n"
 "        who make use of our data sets."
 msgstr ""
-"En la MetaBrainz Foundation creemos en las <a href=\"%(financial_reports_url)"
-"s\">finanzas transparentes</a> y tenemos el apoyo de las <a href=\"%"
-"(donations_url)s\">donaciones de nuestros usuarios</a> y varios <a href=\"%"
-"(sponsors_url)s\">patrocinadores</a> que ayudan a financiar los objetivos de "
-"la organización. También contamos con todo tipo de <a href=\"%"
-"(supporters_url)s\">simpatizantes comerciales</a> que utilizan nuestros "
-"conjuntos de datos."
+"En la MetaBrainz Foundation creemos en las <a "
+"href=\"%(financial_reports_url)s\">finanzas transparentes</a> y tenemos "
+"el apoyo de las <a href=\"%(donations_url)s\">donaciones de nuestros "
+"usuarios</a> y varios <a href=\"%(sponsors_url)s\">patrocinadores</a> que"
+" ayudan a financiar los objetivos de la organización. También contamos "
+"con todo tipo de <a href=\"%(supporters_url)s\">simpatizantes "
+"comerciales</a> que utilizan nuestros conjuntos de datos."
 
 #: metabrainz/templates/index/index.html:133
 #, python-format
@@ -1408,8 +1411,8 @@ msgid ""
 "To get more information about the foundation, go to the\n"
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
-"Para saber más sobre la fundación, visita nuestra página <a href=\"%"
-"(about_url)s\">sobre nosotros</a>."
+"Para saber más sobre la fundación, visita nuestra página <a "
+"href=\"%(about_url)s\">sobre nosotros</a>."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:43
 #: metabrainz/templates/index/privacy.html:3
@@ -1469,9 +1472,9 @@ msgid ""
 "personal\n"
 "    information to anyone else, ever."
 msgstr ""
-"Si haces una donación a la MetaBrainz Foundation tenemos la obligación legal "
-"de almacenar tus datos personales por si somos auditados por el IRS. Nunca "
-"facilitaremos tu información personal a nadie más."
+"Si haces una donación a la MetaBrainz Foundation tenemos la obligación "
+"legal de almacenar tus datos personales por si somos auditados por el "
+"IRS. Nunca facilitaremos tu información personal a nadie más."
 
 #: metabrainz/templates/index/privacy.html:153
 msgid ""
@@ -1484,21 +1487,21 @@ msgid ""
 msgstr ""
 "Creemos en las finanzas transparentes, así que indicamos todas las "
 "donaciones que recibimos en nuestro sitio web. Tu nombre real aparecerá "
-"junto al importe donado, salvo que indiques durante el proceso de donación "
-"que quieres hacer una donación anónima."
+"junto al importe donado, salvo que indiques durante el proceso de "
+"donación que quieres hacer una donación anónima."
 
 #: metabrainz/templates/index/privacy.html:158
 msgid "Exceptions"
 msgstr "Excepciones"
 
-#: frontend/js/src/Profile.tsx:596
+#: frontend/js/src/Profile.tsx:598
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
 msgid "Change Password"
 msgstr "Cambiar contraseña"
 
-#: frontend/js/src/Profile.tsx:540 frontend/js/src/ProfileDelete.tsx:46
+#: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
 msgid "Delete your account"
 msgstr "Elimina tu cuenta"
@@ -1523,8 +1526,8 @@ msgid ""
 "            collects music metadata and makes it available to the public."
 msgstr ""
 "<a href=\"%(mb_url)s\">MusicBrainz</a> es una enciclopedia abierta sobre "
-"música mantenida por nuestra comunidad que almacena metadatos musicales y "
-"los pone a disposición de la gente."
+"música mantenida por nuestra comunidad que almacena metadatos musicales y"
+" los pone a disposición de la gente."
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
@@ -1537,8 +1540,9 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
-"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> es un programa de código "
-"abierto para identificar, etiquetar y organizar archivos digitales de audio."
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> es un programa de "
+"código abierto para identificar, etiquetar y organizar archivos digitales"
+" de audio."
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
@@ -1553,9 +1557,9 @@ msgid ""
 "href=\"%(archive_org_url)s\">Internet Archive</a>."
 msgstr ""
 "<a href=\"%(caa_url)s\">Cover Art Archive</a> es una base de datos de "
-"portadas e imágenes de música asociadas a las publicaciones documentadas en "
-"MusicBrainz. Es un proyecto conjunto con el <a href=\"%(archive_org_url)s\">"
-"Internet Archive</a>."
+"portadas e imágenes de música asociadas a las publicaciones documentadas "
+"en MusicBrainz. Es un proyecto conjunto con el <a "
+"href=\"%(archive_org_url)s\">Internet Archive</a>."
 
 #: metabrainz/templates/index/projects.html:63
 msgid "CritiqueBrainz"
@@ -1570,8 +1574,8 @@ msgid ""
 " Commons licensed reviews."
 msgstr ""
 "<a href=\"%(cb_url)s\">CritiqueBrainz</a> permite escribir reseñas con "
-"licencias Creative Commons tanto de música como de libros, y las asocia a "
-"los datos de nuestros otros proyectos."
+"licencias Creative Commons tanto de música como de libros, y las asocia a"
+" los datos de nuestros otros proyectos."
 
 #: metabrainz/templates/index/projects.html:78
 msgid "BookBrainz"
@@ -1586,8 +1590,8 @@ msgid ""
 "publication ever written."
 msgstr ""
 "<a href=\"%(bb_url)s\">BookBrainz</a> es una enciclopedia online de "
-"información sobre literatura, con el objetivo de publicar datos sobre todas "
-"las publicaciones escritas de la historia."
+"información sobre literatura, con el objetivo de publicar datos sobre "
+"todas las publicaciones escritas de la historia."
 
 #: metabrainz/templates/index/projects.html:93
 msgid "ListenBrainz"
@@ -1601,10 +1605,10 @@ msgid ""
 "            their listen history. One of the goals is for this data to be"
 " used for building open music recommendation systems."
 msgstr ""
-"<a href=\"%(lb_url)s\">ListenBrainz</a> es un sitio web de código abierto "
-"sobre música que permite a los usuarios documentar sus escuchas. Uno de "
-"nuestros objetivos es que estos datos sean utilizados para crear sistemas "
-"abiertos de recomendación de música."
+"<a href=\"%(lb_url)s\">ListenBrainz</a> es un sitio web de código abierto"
+" sobre música que permite a los usuarios documentar sus escuchas. Uno de "
+"nuestros objetivos es que estos datos sean utilizados para crear sistemas"
+" abiertos de recomendación de música."
 
 #: metabrainz/templates/index/projects.html:104
 msgid "Past Projects"
@@ -1625,11 +1629,12 @@ msgid ""
 "href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
 "            in Barcelona."
 msgstr ""
-"<a href=\"%(ab_url)s\">AcousticBrainz</a> fue un projecto que hizo uso de "
-"crowdsourcing para obtener información acústica sobre todo tipo de archivos "
-"de música y la puso a disponibilidad del público. Fue un proyecto conjunto "
-"con el <a href=\"%(mtg_url)s\">Music Technology Group</a> de la <a href=\"%"
-"(upf_url)s\">Universitat Pompeu Fabra</a> de Barcelona."
+"<a href=\"%(ab_url)s\">AcousticBrainz</a> fue un projecto que hizo uso de"
+" crowdsourcing para obtener información acústica sobre todo tipo de "
+"archivos de música y la puso a disponibilidad del público. Fue un "
+"proyecto conjunto con el <a href=\"%(mtg_url)s\">Music Technology "
+"Group</a> de la <a href=\"%(upf_url)s\">Universitat Pompeu Fabra</a> de "
+"Barcelona."
 
 #: metabrainz/templates/index/projects.html:132
 msgid "MessyBrainz"
@@ -1645,9 +1650,9 @@ msgid ""
 "            used in ListenBrainz."
 msgstr ""
 "<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifica metadatos sin "
-"procesar e intenta asociarlos con identificadores estables de MusicBrainz. "
-"Usamos MessyBrainz en ListenBrainz, y en su momento también en "
-"AcousticBrainz."
+"procesar e intenta asociarlos con identificadores estables de "
+"MusicBrainz. Usamos MessyBrainz en ListenBrainz, y en su momento también "
+"en AcousticBrainz."
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
@@ -1673,10 +1678,10 @@ msgid ""
 " the\n"
 "    success and growth of MusicBrainz."
 msgstr ""
-"Algunas de estas personas y organizaciones nos apoyaron económicamente, y "
-"otras nos dieron acceso a herramientas y tecnología que necesitamos para "
-"llegar a donde estamos. En cualquier caso, han tenido un papel importante en "
-"el crecimiento y el éxito de MusicBrainz."
+"Algunas de estas personas y organizaciones nos apoyaron económicamente, y"
+" otras nos dieron acceso a herramientas y tecnología que necesitamos para"
+" llegar a donde estamos. En cualquier caso, han tenido un papel "
+"importante en el crecimiento y el éxito de MusicBrainz."
 
 #: metabrainz/templates/index/sponsors.html:18
 msgid "We would not exist without you — <b>Thank You!</b>"
@@ -1689,9 +1694,9 @@ msgid ""
 "Bronze\n"
 "        account for hosting our sysadmin repositories."
 msgstr ""
-"<b><a href=\"%(github_url)s\">GitHub</a></b> nos proporciona una cuenta de "
-"nivel Bronce gratuita para alojar nuestros repositorios de administración de "
-"sistemas."
+"<b><a href=\"%(github_url)s\">GitHub</a></b> nos proporciona una cuenta "
+"de nivel Bronce gratuita para alojar nuestros repositorios de "
+"administración de sistemas."
 
 #: metabrainz/templates/index/sponsors.html:34
 msgid "Special thanks"
@@ -1707,11 +1712,11 @@ msgid ""
 "a few individuals\n"
 "    and companies who have made a big difference for us."
 msgstr ""
-"Durante todos nuestros años de existencia hemos recibido todo tipo de apoyo, "
-"como entradas para conferencias, gastos de viaje, un montón de comidas y "
-"cenas, y también unas cuantas donaciones personales muy grandes. La lista "
-"completa sería demasiado larga, pero aquí hay algunas personas y empresas "
-"que han marcado la diferencia en nuestra historia."
+"Durante todos nuestros años de existencia hemos recibido todo tipo de "
+"apoyo, como entradas para conferencias, gastos de viaje, un montón de "
+"comidas y cenas, y también unas cuantas donaciones personales muy "
+"grandes. La lista completa sería demasiado larga, pero aquí hay algunas "
+"personas y empresas que han marcado la diferencia en nuestra historia."
 
 #: metabrainz/templates/index/sponsors.html:42
 #, python-format
@@ -1739,17 +1744,18 @@ msgid ""
 msgstr ""
 "<a href=\"%(google_url)s\">Google</a></b> ha sido un patrocinador muy "
 "importante, con más de <b>$500,000</b> en donaciones en total. Richard "
-"Jones, de <a href=\"%(last_fm_url)s\">Last.fm</a>, donó <b>$50,000</b> in "
-"2010. Antes de que hubiéramos siquiera creado la MetaBrainz Foundation, <a "
-"href=\"%(oracle_url)s\">Sun Microsystems</a> y Paul Lamere donaron un "
-"servidor para nuestra base de datos y <a href=\"%(oreilly_url)s\">O'Reilly "
-"Media</a> nos dio $500 para abrir una cuenta de banco para MusicBrainz. "
-"Cuando hemos tenido dudas sobre propiedad intelectual, <a href=\"%(ed_url)"
-"s\">Ed Cavazos</a> nos ha proporcionado su apoyo legal pro bono. <a href=\"%"
-"(dan_url)s\">Dan Appleman</a> nos ayuda de vez en cuando a preparar "
-"contratos para licenciar nuestros datos. <a href=\"%(dw_url)s\">Digital West "
-"Networks Inc.</a> fue nuestro proveedor de alojamiento principal entre 2006 "
-"y 2016, y nos ofreció un descuento por ser una entidad sin ánimo de lucro."
+"Jones, de <a href=\"%(last_fm_url)s\">Last.fm</a>, donó <b>$50,000</b> in"
+" 2010. Antes de que hubiéramos siquiera creado la MetaBrainz Foundation, "
+"<a href=\"%(oracle_url)s\">Sun Microsystems</a> y Paul Lamere donaron un "
+"servidor para nuestra base de datos y <a "
+"href=\"%(oreilly_url)s\">O'Reilly Media</a> nos dio $500 para abrir una "
+"cuenta de banco para MusicBrainz. Cuando hemos tenido dudas sobre "
+"propiedad intelectual, <a href=\"%(ed_url)s\">Ed Cavazos</a> nos ha "
+"proporcionado su apoyo legal pro bono. <a href=\"%(dan_url)s\">Dan "
+"Appleman</a> nos ayuda de vez en cuando a preparar contratos para "
+"licenciar nuestros datos. <a href=\"%(dw_url)s\">Digital West Networks "
+"Inc.</a> fue nuestro proveedor de alojamiento principal entre 2006 y "
+"2016, y nos ofreció un descuento por ser una entidad sin ánimo de lucro."
 
 #: metabrainz/templates/index/sponsors.html:61
 msgid ""
@@ -1780,14 +1786,14 @@ msgid ""
 "working on MusicBrainz, the open music encyclopedia,\n"
 "          and fell in love with Open Source software."
 msgstr ""
-"Robert fue el fundador y lead geek de <a href=\"%(mb_url)s\">MusicBrainz</a> "
-"y la MetaBrainz Foundation, la organización sin ánimo de lucro creada para "
-"proteger y respaldar a MusicBrainz. Tras sus estudios de ingenería "
-"informática en Cal Poly (San Luis Obispo) trabajó en el equipo de MP3 en "
-"Xing Technology, y luego (durante el auge de las puntocom) en el equipo de "
-"FreeAmp en EMusic. En esta época empezó a desarrollar MusicBrainz, la "
-"enciclopedia abierta de música, y se enamoró de la filosofía del software de "
-"código abierto."
+"Robert fue el fundador y lead geek de <a "
+"href=\"%(mb_url)s\">MusicBrainz</a> y la MetaBrainz Foundation, la "
+"organización sin ánimo de lucro creada para proteger y respaldar a "
+"MusicBrainz. Tras sus estudios de ingenería informática en Cal Poly (San "
+"Luis Obispo) trabajó en el equipo de MP3 en Xing Technology, y luego "
+"(durante el auge de las puntocom) en el equipo de FreeAmp en EMusic. En "
+"esta época empezó a desarrollar MusicBrainz, la enciclopedia abierta de "
+"música, y se enamoró de la filosofía del software de código abierto."
 
 #: metabrainz/templates/index/team.html:21
 #, python-format
@@ -1797,9 +1803,10 @@ msgid ""
 "          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created "
 "Bartendro the open source cocktail robot."
 msgstr ""
-"Robert fue también un hacker de hardware: creó proyectos artísticos para el "
-"Burning Man y Nowhere, y co-fundó <a href=\"%(pr_url)s\">Party Robotics</a>, "
-"creadores de Bartendro, el robot de cócteles de código abierto."
+"Robert fue también un hacker de hardware: creó proyectos artísticos para "
+"el Burning Man y Nowhere, y co-fundó <a href=\"%(pr_url)s\">Party "
+"Robotics</a>, creadores de Bartendro, el robot de cócteles de código "
+"abierto."
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives on in our hearts and in open source."
@@ -1825,12 +1832,12 @@ msgid ""
 "drummer in the world on Rock Band 4."
 msgstr ""
 "Michael es el desarrollador sénior de MusicBrainz, y vive en Chicago, su "
-"ciudad natal. Descubrió MusicBrainz cuando aún iba a la escuela primaria, "
-"empezó a editar datos en el instituto para mantener su colección de música "
-"bajo control, y participó en tres rondas del programa Google Summer of Code "
-"en la universidad. En su tiempo libre le gusta ir a conciertos, hacer música "
-"que nunca escuchará nadie, revisitar series de televisión antiguas, y ser el "
-"mejor baterista del mundo en Rock Band 4."
+"ciudad natal. Descubrió MusicBrainz cuando aún iba a la escuela primaria,"
+" empezó a editar datos en el instituto para mantener su colección de "
+"música bajo control, y participó en tres rondas del programa Google "
+"Summer of Code en la universidad. En su tiempo libre le gusta ir a "
+"conciertos, hacer música que nunca escuchará nadie, revisitar series de "
+"televisión antiguas, y ser el mejor baterista del mundo en Rock Band 4."
 
 #: metabrainz/templates/index/team.html:57
 msgid ""
@@ -1859,14 +1866,15 @@ msgid ""
 msgstr ""
 "Nicolás empezó a contribuir en MusicBrainz como un editor empedernido (y "
 "sigue haciéndolo bastante a menudo), porque le encanta pasar el tiempo "
-"organizando datos. Con el tiempo Robert le ofreció la posición de líder de "
-"estilo, en la que ayuda a la comunidad a decidir la mejor forma de organizar "
-"los datos. Luego se hizo cargo de contestar los correos de atención al "
-"usuario, y empezó a escribir código para solucionar algunos de los problemas "
-"de los que se quejaban los usuarios (no sin causar más de un problema nuevo "
-"al mismo tiempo, a decir verdad). Cuando no está trabajando para MetaBrainz, "
-"se divierte <a href=\"%(mb_editors_url)s\">editando MusicBrainz</a> o "
-"viajando por ahí en busca de animales salvajes."
+"organizando datos. Con el tiempo Robert le ofreció la posición de líder "
+"de estilo, en la que ayuda a la comunidad a decidir la mejor forma de "
+"organizar los datos. Luego se hizo cargo de contestar los correos de "
+"atención al usuario, y empezó a escribir código para solucionar algunos "
+"de los problemas de los que se quejaban los usuarios (no sin causar más "
+"de un problema nuevo al mismo tiempo, a decir verdad). Cuando no está "
+"trabajando para MetaBrainz, se divierte <a "
+"href=\"%(mb_editors_url)s\">editando MusicBrainz</a> o viajando por ahí "
+"en busca de animales salvajes."
 
 #: metabrainz/templates/index/team.html:68
 msgid "Originally from Spain, he now lives in Tartu, Estonia."
@@ -1906,12 +1914,13 @@ msgid ""
 "          sustains the MetaBrainz servers while residing near Besançon, "
 "France."
 msgstr ""
-"Laurent ha hecho uso de sus variadas pasiones y habilidades para contribuir "
-"a muchos proyectos de código abierto, entre ellos <a href=\"%(elinks_url)s\">"
-"ELinks</a> y <a href=\"%(geeqie_url)s\">Geeqie</a>, y le encanta jugar con "
-"el hardware the todo tipo de dispositivos de audio, como amplificadores y "
-"altavoces. Pero sus contribuciones van más alla. Ahora se ocupa de mantener "
-"los servidores de MetaBrainz funcionando desde su residencia cerca de "
+"Laurent ha hecho uso de sus variadas pasiones y habilidades para "
+"contribuir a muchos proyectos de código abierto, entre ellos <a "
+"href=\"%(elinks_url)s\">ELinks</a> y <a "
+"href=\"%(geeqie_url)s\">Geeqie</a>, y le encanta jugar con el hardware "
+"the todo tipo de dispositivos de audio, como amplificadores y altavoces. "
+"Pero sus contribuciones van más alla. Ahora se ocupa de mantener los "
+"servidores de MetaBrainz funcionando desde su residencia cerca de "
 "Besançon en Francia."
 
 #: metabrainz/templates/index/team.html:105
@@ -1927,13 +1936,13 @@ msgid ""
 "          in the end. Besides that, he casually plays music, listens to "
 "music, eats music, … music, for an healthy way of life."
 msgstr ""
-"Yvan es un ingeniero de software que trabaja principalmente en MusicBrainz y "
-"viene de Nancy en Francia. Cuando descubrió MusicBrainz empezó a usar los "
-"datos, luego a editarlos, después a documentar los problemas que encontraba, "
-"y finalmente a solucionar los problemas encontrados por otros, tras lo que "
-"recibió una oferta de empleo. El resto del tiempo hace música, escucha "
-"música, come música... vamos, que considera que la música es claramente "
-"buena para la salud."
+"Yvan es un ingeniero de software que trabaja principalmente en "
+"MusicBrainz y viene de Nancy en Francia. Cuando descubrió MusicBrainz "
+"empezó a usar los datos, luego a editarlos, después a documentar los "
+"problemas que encontraba, y finalmente a solucionar los problemas "
+"encontrados por otros, tras lo que recibió una oferta de empleo. El resto"
+" del tiempo hace música, escucha música, come música... vamos, que "
+"considera que la música es claramente buena para la salud."
 
 #: metabrainz/templates/index/team.html:120
 msgid ""
@@ -1952,20 +1961,20 @@ msgid ""
 "          and books, and enjoyed working on MetaBrainz projects so much "
 "he eventually joined the team."
 msgstr ""
-"Nicolas se formó como diseñador gráfico, pero siempre le ha gustado jugar "
-"con los ordenadores y los aparatos electrónicos, y su curiosidad le llevó al "
-"mundo del desarrolo de software, que se ha convertido en la parte más "
-"importante de su trabajo. Siempre le han encantado la música y los libros, y "
-"le gustó tanto ayudar con los proyectos de MetaBrainz que acabó uniéndose al "
-"equipo."
+"Nicolas se formó como diseñador gráfico, pero siempre le ha gustado jugar"
+" con los ordenadores y los aparatos electrónicos, y su curiosidad le "
+"llevó al mundo del desarrolo de software, que se ha convertido en la "
+"parte más importante de su trabajo. Siempre le han encantado la música y "
+"los libros, y le gustó tanto ayudar con los proyectos de MetaBrainz que "
+"acabó uniéndose al equipo."
 
 #: metabrainz/templates/index/team.html:127
 msgid ""
 "In his free time, Nicolas likes to go rock climbing, hence the nickname, "
 "and designing and building structures."
 msgstr ""
-"En su tiempo libre a Nicolas le gusta la escalada en roca (lo que le dio su "
-"apodo), y diseñar y construir todo tipo de estructuras."
+"En su tiempo libre a Nicolas le gusta la escalada en roca (lo que le dio "
+"su apodo), y diseñar y construir todo tipo de estructuras."
 
 #: metabrainz/templates/index/team.html:130
 msgid ""
@@ -2049,10 +2058,10 @@ msgid ""
 "          and has 15 years experience across various graphic "
 "design/comms/marketing roles."
 msgstr ""
-"Simon lleva contribuyendo datos y quejas sobre la interfaz y el diseño de "
-"MusicBrainz desde 2009. En 2022 empezó a contribuir sus quejas de manera "
-"oficial. Vive en Nueva Zelanda y tiene 15 años de experiencia en todo tipo "
-"de tareas de diseño gráfico, márketing y comunicación."
+"Simon lleva contribuyendo datos y quejas sobre la interfaz y el diseño de"
+" MusicBrainz desde 2009. En 2022 empezó a contribuir sus quejas de manera"
+" oficial. Vive en Nueva Zelanda y tiene 15 años de experiencia en todo "
+"tipo de tareas de diseño gráfico, márketing y comunicación."
 
 #: metabrainz/templates/index/team.html:236
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
@@ -2071,10 +2080,10 @@ msgid ""
 "listening to music."
 msgstr ""
 "Ansh es un ingeniero de software que vive en Nueva Delhi, India. Llegó a "
-"MetaBrainz en 2022 con una beca del proyecto Google Summer of Code y ha sido "
-"parte de nuestra comunidad desde entonces. Empezó contribuyendo a "
-"CritiqueBrainz y BookBrainz, y ahora trabaja también en ListenBrainz. En su "
-"tiempo libre le gusta hacer maratones de películas y escuchar música."
+"MetaBrainz en 2022 con una beca del proyecto Google Summer of Code y ha "
+"sido parte de nuestra comunidad desde entonces. Empezó contribuyendo a "
+"CritiqueBrainz y BookBrainz, y ahora trabaja también en ListenBrainz. En "
+"su tiempo libre le gusta hacer maratones de películas y escuchar música."
 
 #: metabrainz/templates/index/team.html:250
 msgid "Voluntary Project Leaders"
@@ -2145,12 +2154,12 @@ msgid ""
 "          as well as cheering for the Toronto Raptors."
 msgstr ""
 "David se encargó durante años de añadir áreas a MusicBrainz cuando la "
-"comunidad las solicitaba. Había estado activo en MusicBrainz durante más de "
-"una década, siendo uno de los pocos editores con más de un millón de "
-"ediciones. Canadiense y orgulloso de serlo, fuera de MusicBrainz algunas de "
-"sus cosas favoritas eran el <a href=\"%(thc_url)s\">THC</a>, <a href=\"%"
-"(tfc_url)s\">TFC</a>, <a href=\"%(cts_url)s\">CTS</a> y los <a href=\"%"
-"(gnt_url)s\">GnT's</a>, además de ser fan de los Toronto Raptors."
+"comunidad las solicitaba. Había estado activo en MusicBrainz durante más "
+"de una década, siendo uno de los pocos editores con más de un millón de "
+"ediciones. Canadiense y orgulloso de serlo, fuera de MusicBrainz algunas "
+"de sus cosas favoritas eran el <a href=\"%(thc_url)s\">THC</a>, <a "
+"href=\"%(tfc_url)s\">TFC</a>, <a href=\"%(cts_url)s\">CTS</a> y los <a "
+"href=\"%(gnt_url)s\">GnT's</a>, además de ser fan de los Toronto Raptors."
 
 #: metabrainz/templates/index/team.html:328
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
@@ -2171,15 +2180,16 @@ msgid ""
 "          III, colouring, and collecting all sorts of things, from "
 "stickers and stamps to bottlecaps."
 msgstr ""
-"ApeKattQuest (o MonkeyPython) ha sido un editor en MusicBrainz desde 2004, y "
-"se encarga de añadir y mejorar los datos sobre instrumentos de música de "
-"MusicBrainz (es nuestro «introductor de instrumentos», un trabajo de nombre "
-"poco serio pero considerable importancia). Cuando no está investigando "
-"instrumentos en línea o en la biblioteca, sus otras aficiones incluyen los "
-"videojuegos, la música de todo tipo, Lupin III, colorear, y coleccionar toda "
-"clase de cosas, de pegatinas a sellos o tapones de botellas."
+"ApeKattQuest (o MonkeyPython) ha sido un editor en MusicBrainz desde "
+"2004, y se encarga de añadir y mejorar los datos sobre instrumentos de "
+"música de MusicBrainz (es nuestro «introductor de instrumentos», un "
+"trabajo de nombre poco serio pero considerable importancia). Cuando no "
+"está investigando instrumentos en línea o en la biblioteca, sus otras "
+"aficiones incluyen los videojuegos, la música de todo tipo, Lupin III, "
+"colorear, y coleccionar toda clase de cosas, de pegatinas a sellos o "
+"tapones de botellas."
 
-#: frontend/js/src/Profile.tsx:408
+#: frontend/js/src/Profile.tsx:409
 #: metabrainz/templates/index/datasets/download.html:3
 msgid "Download Datasets"
 msgstr "Descargar conjuntos de datos"
@@ -2233,9 +2243,10 @@ msgid ""
 "name\n"
 "      on the card used to set up the payment."
 msgstr ""
-"Si usas Stripe, cancelaremos la donación nosotros mismos. <a href=\"%"
-"(contact_url)s\">Ponte en contacto con nosotros</a>, y comunícanos el nombre "
-"que aparece en la tarjeta con la que activaste el pago periódico."
+"Si usas Stripe, cancelaremos la donación nosotros mismos. <a "
+"href=\"%(contact_url)s\">Ponte en contacto con nosotros</a>, y "
+"comunícanos el nombre que aparece en la tarjeta con la que activaste el "
+"pago periódico."
 
 #: metabrainz/templates/payments/cancel_recurring.html:20
 #, python-format
@@ -2243,8 +2254,8 @@ msgid ""
 "For PayPal, you will need to cancel from their site.\n"
 "      See <a href=\"%(paypal_cancel_url)s\">their documentation</a>."
 msgstr ""
-"Si usas PayPal, tendrás que cancelar el pago desde su página. Consulta <a "
-"href=\"%(paypal_cancel_url)s\">su documentación</a>."
+"Si usas PayPal, tendrás que cancelar el pago desde su página. Consulta <a"
+" href=\"%(paypal_cancel_url)s\">su documentación</a>."
 
 #: metabrainz/templates/payments/donate.html:3
 #: metabrainz/templates/payments/donate.html:7
@@ -2265,11 +2276,12 @@ msgid ""
 "      US taxpayer."
 msgstr ""
 "Si consideras que nuestros proyectos son útiles, plantéate hacer una "
-"donación a la MetaBrainz Foundation, que es una <a href=\"%"
-"(wikipedia_non_profit_url)s\">entidad sin ánimo de lucro exenta de impuestos "
-"501(c)(3)</a> con base en California. Si pagas impuestos en los Estados "
-"Unidos, todas tus donaciones serán deducibles de tus impuestos, y recibirás "
-"un recibo que puedes utilizar para dicha deducción."
+"donación a la MetaBrainz Foundation, que es una <a "
+"href=\"%(wikipedia_non_profit_url)s\">entidad sin ánimo de lucro exenta "
+"de impuestos 501(c)(3)</a> con base en California. Si pagas impuestos en "
+"los Estados Unidos, todas tus donaciones serán deducibles de tus "
+"impuestos, y recibirás un recibo que puedes utilizar para dicha "
+"deducción."
 
 #: metabrainz/templates/payments/donate.html:18
 msgid ""
@@ -2280,8 +2292,8 @@ msgid ""
 "      salary for MetaBrainz employees."
 msgstr ""
 "Tus donaciones ayudarán a financiar los proyectos de la MetaBrainz "
-"Foundation, cubriendo los gastos de alojamiento, servidores, nuestra pequeña "
-"oficina, y un salario modesto para los empleados de MetaBrainz."
+"Foundation, cubriendo los gastos de alojamiento, servidores, nuestra "
+"pequeña oficina, y un salario modesto para los empleados de MetaBrainz."
 
 #: metabrainz/templates/payments/donate.html:23
 #, python-format
@@ -2310,8 +2322,8 @@ msgid ""
 "        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
 "<b>¡Cuidado!</b> Esta es una versión para desarrollo del sitio web. ¡NO "
-"introduzcas información real sobre tu tarjeta de crédito! Si quieres hacer "
-"una donación, visita <a href=\"%(mb_url)s\">metabrainz.org</a>."
+"introduzcas información real sobre tu tarjeta de crédito! Si quieres "
+"hacer una donación, visita <a href=\"%(mb_url)s\">metabrainz.org</a>."
 
 #: metabrainz/templates/payments/donate.html:39
 #: metabrainz/templates/payments/payment.html:31
@@ -2326,8 +2338,8 @@ msgid ""
 "            before you do."
 msgstr ""
 "Si quieres hacer una donación de gran importe, ponte en contacto con "
-"nosotros en nuestra dirección <a href=\"%(mail_link)s\">"
-"donations@metabrainz.org</a> antes de pagar."
+"nosotros en nuestra dirección <a "
+"href=\"%(mail_link)s\">donations@metabrainz.org</a> antes de pagar."
 
 #: metabrainz/templates/payments/donate.html:65
 msgid "I want this to be a recurring monthly donation"
@@ -2378,8 +2390,8 @@ msgid ""
 msgstr ""
 "No compartiremos la información personal que suministres a la MetaBrainz "
 "Foundation durante el proceso de donación con nadie más. Para saber más, "
-"consulta nuestra <a href=\"%(privacy_policy_url)s\">política de privacidad</"
-"a>."
+"consulta nuestra <a href=\"%(privacy_policy_url)s\">política de "
+"privacidad</a>."
 
 #: metabrainz/templates/payments/donate.html:129
 #, python-format
@@ -2387,8 +2399,8 @@ msgid ""
 "To find out how to cancel recurring donations take a look at\n"
 "        <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
-"Si quieres cancelar una donación periódica, visita <a href=\"%"
-"(cancel_recurring_url)s\">esta página</a>."
+"Si quieres cancelar una donación periódica, visita <a "
+"href=\"%(cancel_recurring_url)s\">esta página</a>."
 
 #: metabrainz/templates/payments/donate.html:134
 msgid "Other ways to donate"
@@ -2522,9 +2534,9 @@ msgid ""
 "          <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
 "          before you do."
 msgstr ""
-"Si quieres hacer un pago de gran importe, ponte en contacto con nosotros en "
-"nuestra dirección <a href=\"%(mail_link)s\">payments@metabrainz.org</a> "
-"antes de pagar."
+"Si quieres hacer un pago de gran importe, ponte en contacto con nosotros "
+"en nuestra dirección <a "
+"href=\"%(mail_link)s\">payments@metabrainz.org</a> antes de pagar."
 
 #: metabrainz/templates/payments/payment.html:52
 #: metabrainz/templates/payments/payment.html:159
@@ -2551,8 +2563,8 @@ msgid ""
 msgstr ""
 "No compartiremos la información personal que suministres a la MetaBrainz "
 "Foundation durante el proceso de pago con nadie más. Para saber más, "
-"consulta nuestra <a href=\"%(privacy_policy_url)s\">política de privacidad</"
-"a>."
+"consulta nuestra <a href=\"%(privacy_policy_url)s\">política de "
+"privacidad</a>."
 
 #: metabrainz/templates/payments/payment.html:93
 #, python-format
@@ -2560,8 +2572,8 @@ msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
-"Si quieres cancelar un pago periódico, visita <a href=\"%"
-"(cancel_recurring_url)s\">esta página</a>."
+"Si quieres cancelar un pago periódico, visita <a "
+"href=\"%(cancel_recurring_url)s\">esta página</a>."
 
 #: metabrainz/templates/payments/payment.html:157
 msgid "Invoice number (optional)"
@@ -2581,10 +2593,11 @@ msgid ""
 "If you want to make a donation\n"
 "      instead, go to <a href=\"%(donate_url)s\">donation page</a>."
 msgstr ""
-"<b>Esta página es donde las organizaciones registradas como simpatizantes de "
-"la MetaBrainz Foundation pueden realizar sus pagos.</b> Los pagos iniciados "
-"desde esta página no serán considerados donaciones; si quieres donar, visita "
-"nuestra <a href=\"%(donate_url)s\">página de donaciones</a>."
+"<b>Esta página es donde las organizaciones registradas como simpatizantes"
+" de la MetaBrainz Foundation pueden realizar sus pagos.</b> Los pagos "
+"iniciados desde esta página no serán considerados donaciones; si quieres "
+"donar, visita nuestra <a href=\"%(donate_url)s\">página de "
+"donaciones</a>."
 
 #: metabrainz/templates/payments/payment_base.html:16
 msgid ""
@@ -2594,9 +2607,9 @@ msgid ""
 "office, and paying a minimal\n"
 "      salary for MetaBrainz employees."
 msgstr ""
-"Tus pagos ayudarán a financiar los proyectos de la MetaBrainz Foundation, "
-"cubriendo los gastos de alojamiento, servidores, nuestra pequeña oficina, y "
-"un salario modesto para los empleados de MetaBrainz."
+"Tus pagos ayudarán a financiar los proyectos de la MetaBrainz Foundation,"
+" cubriendo los gastos de alojamiento, servidores, nuestra pequeña "
+"oficina, y un salario modesto para los empleados de MetaBrainz."
 
 #: metabrainz/templates/payments/payment_base.html:21
 #, python-format
@@ -2665,15 +2678,15 @@ msgid ""
 "    donations, we believe that our contributors have the right to see how"
 " the non-profit manages its finances."
 msgstr ""
-"En MetaBrainz Foundation tenemos una política de <i>finanzas transparentes</"
-"i>, y los informes financieros de nuestra entidad sin ánimo de lucro están "
-"disponibles en este sitio web. La forma en la que publicamos esta "
-"información permite a nuestros contribuidores, tanto los que nos apoyan "
-"económicamente como los que nos suministran datos, saber cómo usamos las "
-"donaciones y las tarifas de licencia que recibimos. Como nuestros proyectos "
-"están basados en el esfuerzo de nuestros voluntarios y parte de nuestros "
-"ingresos viene también de sus donaciones, creemos que tienen derecho a saber "
-"cómo hacemos las cosas."
+"En MetaBrainz Foundation tenemos una política de <i>finanzas "
+"transparentes</i>, y los informes financieros de nuestra entidad sin "
+"ánimo de lucro están disponibles en este sitio web. La forma en la que "
+"publicamos esta información permite a nuestros contribuidores, tanto los "
+"que nos apoyan económicamente como los que nos suministran datos, saber "
+"cómo usamos las donaciones y las tarifas de licencia que recibimos. Como "
+"nuestros proyectos están basados en el esfuerzo de nuestros voluntarios y"
+" parte de nuestros ingresos viene también de sus donaciones, creemos que "
+"tienen derecho a saber cómo hacemos las cosas."
 
 #: metabrainz/templates/reports/financial_reports/index.html:17
 msgid ""
@@ -2690,8 +2703,8 @@ msgstr ""
 "podemos. Algunas empresas que nos pagan no nos permiten publicar las "
 "cantidades que recibimos por nuestras actividades. Por ejemplo, uno de "
 "nuestros afiliados no nos permite publicar los detalles de sus "
-"contribuciones a nuestro programa de afiliados. En casos como este, hacemos "
-"los pagos anónimos antes de publicarlos en nuestra página."
+"contribuciones a nuestro programa de afiliados. En casos como este, "
+"hacemos los pagos anónimos antes de publicarlos en nuestra página."
 
 #: metabrainz/templates/reports/financial_reports/index.html:25
 #, python-format
@@ -2700,8 +2713,8 @@ msgid ""
 "a list of all the\n"
 "    donations that we have received."
 msgstr ""
-"Puedes ver todas las donaciones que hemos recibido en nuestra <a href=\"%"
-"(donors_url)s\">lista de donaciones</a>."
+"Puedes ver todas las donaciones que hemos recibido en nuestra <a "
+"href=\"%(donors_url)s\">lista de donaciones</a>."
 
 #: metabrainz/templates/reports/financial_reports/index.html:31
 msgid ""
@@ -2713,81 +2726,80 @@ msgstr ""
 "tiempo."
 
 #: metabrainz/templates/reports/financial_reports/index.html:36
-#: metabrainz/templates/reports/financial_reports/index.html:50
-#: metabrainz/templates/reports/financial_reports/index.html:70
-#: metabrainz/templates/reports/financial_reports/index.html:91
-#: metabrainz/templates/reports/financial_reports/index.html:112
-#: metabrainz/templates/reports/financial_reports/index.html:132
-#: metabrainz/templates/reports/financial_reports/index.html:152
-#: metabrainz/templates/reports/financial_reports/index.html:172
-#: metabrainz/templates/reports/financial_reports/index.html:193
-#: metabrainz/templates/reports/financial_reports/index.html:217
-#: metabrainz/templates/reports/financial_reports/index.html:235
-#: metabrainz/templates/reports/financial_reports/index.html:264
-#: metabrainz/templates/reports/financial_reports/index.html:293
-#: metabrainz/templates/reports/financial_reports/index.html:322
-#: metabrainz/templates/reports/financial_reports/index.html:351
-#: metabrainz/templates/reports/financial_reports/index.html:380
-#: metabrainz/templates/reports/financial_reports/index.html:409
-#: metabrainz/templates/reports/financial_reports/index.html:438
-#: metabrainz/templates/reports/financial_reports/index.html:467
-#: metabrainz/templates/reports/financial_reports/index.html:496
+#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:72
+#: metabrainz/templates/reports/financial_reports/index.html:93
+#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:134
+#: metabrainz/templates/reports/financial_reports/index.html:154
+#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:219
+#: metabrainz/templates/reports/financial_reports/index.html:237
+#: metabrainz/templates/reports/financial_reports/index.html:266
+#: metabrainz/templates/reports/financial_reports/index.html:295
+#: metabrainz/templates/reports/financial_reports/index.html:324
+#: metabrainz/templates/reports/financial_reports/index.html:353
+#: metabrainz/templates/reports/financial_reports/index.html:382
+#: metabrainz/templates/reports/financial_reports/index.html:411
+#: metabrainz/templates/reports/financial_reports/index.html:440
+#: metabrainz/templates/reports/financial_reports/index.html:469
+#: metabrainz/templates/reports/financial_reports/index.html:498
 msgid "Quarterly reports"
 msgstr "Informes trimestrales"
 
 #: metabrainz/templates/reports/financial_reports/index.html:38
-#: metabrainz/templates/reports/financial_reports/index.html:47
-#: metabrainz/templates/reports/financial_reports/index.html:52
+#: metabrainz/templates/reports/financial_reports/index.html:40
+#: metabrainz/templates/reports/financial_reports/index.html:49
 #: metabrainz/templates/reports/financial_reports/index.html:54
 #: metabrainz/templates/reports/financial_reports/index.html:56
 #: metabrainz/templates/reports/financial_reports/index.html:58
-#: metabrainz/templates/reports/financial_reports/index.html:67
-#: metabrainz/templates/reports/financial_reports/index.html:72
+#: metabrainz/templates/reports/financial_reports/index.html:60
+#: metabrainz/templates/reports/financial_reports/index.html:69
 #: metabrainz/templates/reports/financial_reports/index.html:74
 #: metabrainz/templates/reports/financial_reports/index.html:76
 #: metabrainz/templates/reports/financial_reports/index.html:78
-#: metabrainz/templates/reports/financial_reports/index.html:88
-#: metabrainz/templates/reports/financial_reports/index.html:93
+#: metabrainz/templates/reports/financial_reports/index.html:80
+#: metabrainz/templates/reports/financial_reports/index.html:90
 #: metabrainz/templates/reports/financial_reports/index.html:95
 #: metabrainz/templates/reports/financial_reports/index.html:97
 #: metabrainz/templates/reports/financial_reports/index.html:99
-#: metabrainz/templates/reports/financial_reports/index.html:109
-#: metabrainz/templates/reports/financial_reports/index.html:114
+#: metabrainz/templates/reports/financial_reports/index.html:101
+#: metabrainz/templates/reports/financial_reports/index.html:111
 #: metabrainz/templates/reports/financial_reports/index.html:116
 #: metabrainz/templates/reports/financial_reports/index.html:118
 #: metabrainz/templates/reports/financial_reports/index.html:120
-#: metabrainz/templates/reports/financial_reports/index.html:129
-#: metabrainz/templates/reports/financial_reports/index.html:134
+#: metabrainz/templates/reports/financial_reports/index.html:122
+#: metabrainz/templates/reports/financial_reports/index.html:131
 #: metabrainz/templates/reports/financial_reports/index.html:136
 #: metabrainz/templates/reports/financial_reports/index.html:138
 #: metabrainz/templates/reports/financial_reports/index.html:140
-#: metabrainz/templates/reports/financial_reports/index.html:149
-#: metabrainz/templates/reports/financial_reports/index.html:154
+#: metabrainz/templates/reports/financial_reports/index.html:142
+#: metabrainz/templates/reports/financial_reports/index.html:151
 #: metabrainz/templates/reports/financial_reports/index.html:156
 #: metabrainz/templates/reports/financial_reports/index.html:158
 #: metabrainz/templates/reports/financial_reports/index.html:160
-#: metabrainz/templates/reports/financial_reports/index.html:169
-#: metabrainz/templates/reports/financial_reports/index.html:174
+#: metabrainz/templates/reports/financial_reports/index.html:162
+#: metabrainz/templates/reports/financial_reports/index.html:171
 #: metabrainz/templates/reports/financial_reports/index.html:176
 #: metabrainz/templates/reports/financial_reports/index.html:178
 #: metabrainz/templates/reports/financial_reports/index.html:180
-#: metabrainz/templates/reports/financial_reports/index.html:190
-#: metabrainz/templates/reports/financial_reports/index.html:195
+#: metabrainz/templates/reports/financial_reports/index.html:182
+#: metabrainz/templates/reports/financial_reports/index.html:192
 #: metabrainz/templates/reports/financial_reports/index.html:197
 #: metabrainz/templates/reports/financial_reports/index.html:199
 #: metabrainz/templates/reports/financial_reports/index.html:201
-#: metabrainz/templates/reports/financial_reports/index.html:214
-#: metabrainz/templates/reports/financial_reports/index.html:219
+#: metabrainz/templates/reports/financial_reports/index.html:203
+#: metabrainz/templates/reports/financial_reports/index.html:216
 #: metabrainz/templates/reports/financial_reports/index.html:221
 #: metabrainz/templates/reports/financial_reports/index.html:223
 #: metabrainz/templates/reports/financial_reports/index.html:225
-#: metabrainz/templates/reports/financial_reports/index.html:233
-#: metabrainz/templates/reports/financial_reports/index.html:237
-#: metabrainz/templates/reports/financial_reports/index.html:238
+#: metabrainz/templates/reports/financial_reports/index.html:227
+#: metabrainz/templates/reports/financial_reports/index.html:235
 #: metabrainz/templates/reports/financial_reports/index.html:239
 #: metabrainz/templates/reports/financial_reports/index.html:240
-#: metabrainz/templates/reports/financial_reports/index.html:244
-#: metabrainz/templates/reports/financial_reports/index.html:245
+#: metabrainz/templates/reports/financial_reports/index.html:241
+#: metabrainz/templates/reports/financial_reports/index.html:242
 #: metabrainz/templates/reports/financial_reports/index.html:246
 #: metabrainz/templates/reports/financial_reports/index.html:247
 #: metabrainz/templates/reports/financial_reports/index.html:248
@@ -2798,13 +2810,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:253
 #: metabrainz/templates/reports/financial_reports/index.html:254
 #: metabrainz/templates/reports/financial_reports/index.html:255
-#: metabrainz/templates/reports/financial_reports/index.html:262
-#: metabrainz/templates/reports/financial_reports/index.html:266
-#: metabrainz/templates/reports/financial_reports/index.html:267
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:264
 #: metabrainz/templates/reports/financial_reports/index.html:268
 #: metabrainz/templates/reports/financial_reports/index.html:269
-#: metabrainz/templates/reports/financial_reports/index.html:273
-#: metabrainz/templates/reports/financial_reports/index.html:274
+#: metabrainz/templates/reports/financial_reports/index.html:270
+#: metabrainz/templates/reports/financial_reports/index.html:271
 #: metabrainz/templates/reports/financial_reports/index.html:275
 #: metabrainz/templates/reports/financial_reports/index.html:276
 #: metabrainz/templates/reports/financial_reports/index.html:277
@@ -2815,13 +2827,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:282
 #: metabrainz/templates/reports/financial_reports/index.html:283
 #: metabrainz/templates/reports/financial_reports/index.html:284
-#: metabrainz/templates/reports/financial_reports/index.html:291
-#: metabrainz/templates/reports/financial_reports/index.html:295
-#: metabrainz/templates/reports/financial_reports/index.html:296
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:293
 #: metabrainz/templates/reports/financial_reports/index.html:297
 #: metabrainz/templates/reports/financial_reports/index.html:298
-#: metabrainz/templates/reports/financial_reports/index.html:302
-#: metabrainz/templates/reports/financial_reports/index.html:303
+#: metabrainz/templates/reports/financial_reports/index.html:299
+#: metabrainz/templates/reports/financial_reports/index.html:300
 #: metabrainz/templates/reports/financial_reports/index.html:304
 #: metabrainz/templates/reports/financial_reports/index.html:305
 #: metabrainz/templates/reports/financial_reports/index.html:306
@@ -2832,13 +2844,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:311
 #: metabrainz/templates/reports/financial_reports/index.html:312
 #: metabrainz/templates/reports/financial_reports/index.html:313
-#: metabrainz/templates/reports/financial_reports/index.html:320
-#: metabrainz/templates/reports/financial_reports/index.html:324
-#: metabrainz/templates/reports/financial_reports/index.html:325
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:322
 #: metabrainz/templates/reports/financial_reports/index.html:326
 #: metabrainz/templates/reports/financial_reports/index.html:327
-#: metabrainz/templates/reports/financial_reports/index.html:331
-#: metabrainz/templates/reports/financial_reports/index.html:332
+#: metabrainz/templates/reports/financial_reports/index.html:328
+#: metabrainz/templates/reports/financial_reports/index.html:329
 #: metabrainz/templates/reports/financial_reports/index.html:333
 #: metabrainz/templates/reports/financial_reports/index.html:334
 #: metabrainz/templates/reports/financial_reports/index.html:335
@@ -2849,13 +2861,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:340
 #: metabrainz/templates/reports/financial_reports/index.html:341
 #: metabrainz/templates/reports/financial_reports/index.html:342
-#: metabrainz/templates/reports/financial_reports/index.html:349
-#: metabrainz/templates/reports/financial_reports/index.html:353
-#: metabrainz/templates/reports/financial_reports/index.html:354
+#: metabrainz/templates/reports/financial_reports/index.html:343
+#: metabrainz/templates/reports/financial_reports/index.html:344
+#: metabrainz/templates/reports/financial_reports/index.html:351
 #: metabrainz/templates/reports/financial_reports/index.html:355
 #: metabrainz/templates/reports/financial_reports/index.html:356
-#: metabrainz/templates/reports/financial_reports/index.html:360
-#: metabrainz/templates/reports/financial_reports/index.html:361
+#: metabrainz/templates/reports/financial_reports/index.html:357
+#: metabrainz/templates/reports/financial_reports/index.html:358
 #: metabrainz/templates/reports/financial_reports/index.html:362
 #: metabrainz/templates/reports/financial_reports/index.html:363
 #: metabrainz/templates/reports/financial_reports/index.html:364
@@ -2866,13 +2878,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:369
 #: metabrainz/templates/reports/financial_reports/index.html:370
 #: metabrainz/templates/reports/financial_reports/index.html:371
-#: metabrainz/templates/reports/financial_reports/index.html:378
-#: metabrainz/templates/reports/financial_reports/index.html:382
-#: metabrainz/templates/reports/financial_reports/index.html:383
+#: metabrainz/templates/reports/financial_reports/index.html:372
+#: metabrainz/templates/reports/financial_reports/index.html:373
+#: metabrainz/templates/reports/financial_reports/index.html:380
 #: metabrainz/templates/reports/financial_reports/index.html:384
 #: metabrainz/templates/reports/financial_reports/index.html:385
-#: metabrainz/templates/reports/financial_reports/index.html:389
-#: metabrainz/templates/reports/financial_reports/index.html:390
+#: metabrainz/templates/reports/financial_reports/index.html:386
+#: metabrainz/templates/reports/financial_reports/index.html:387
 #: metabrainz/templates/reports/financial_reports/index.html:391
 #: metabrainz/templates/reports/financial_reports/index.html:392
 #: metabrainz/templates/reports/financial_reports/index.html:393
@@ -2883,13 +2895,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:398
 #: metabrainz/templates/reports/financial_reports/index.html:399
 #: metabrainz/templates/reports/financial_reports/index.html:400
-#: metabrainz/templates/reports/financial_reports/index.html:407
-#: metabrainz/templates/reports/financial_reports/index.html:411
-#: metabrainz/templates/reports/financial_reports/index.html:412
+#: metabrainz/templates/reports/financial_reports/index.html:401
+#: metabrainz/templates/reports/financial_reports/index.html:402
+#: metabrainz/templates/reports/financial_reports/index.html:409
 #: metabrainz/templates/reports/financial_reports/index.html:413
 #: metabrainz/templates/reports/financial_reports/index.html:414
-#: metabrainz/templates/reports/financial_reports/index.html:418
-#: metabrainz/templates/reports/financial_reports/index.html:419
+#: metabrainz/templates/reports/financial_reports/index.html:415
+#: metabrainz/templates/reports/financial_reports/index.html:416
 #: metabrainz/templates/reports/financial_reports/index.html:420
 #: metabrainz/templates/reports/financial_reports/index.html:421
 #: metabrainz/templates/reports/financial_reports/index.html:422
@@ -2900,13 +2912,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:427
 #: metabrainz/templates/reports/financial_reports/index.html:428
 #: metabrainz/templates/reports/financial_reports/index.html:429
-#: metabrainz/templates/reports/financial_reports/index.html:436
-#: metabrainz/templates/reports/financial_reports/index.html:440
-#: metabrainz/templates/reports/financial_reports/index.html:441
+#: metabrainz/templates/reports/financial_reports/index.html:430
+#: metabrainz/templates/reports/financial_reports/index.html:431
+#: metabrainz/templates/reports/financial_reports/index.html:438
 #: metabrainz/templates/reports/financial_reports/index.html:442
 #: metabrainz/templates/reports/financial_reports/index.html:443
-#: metabrainz/templates/reports/financial_reports/index.html:447
-#: metabrainz/templates/reports/financial_reports/index.html:448
+#: metabrainz/templates/reports/financial_reports/index.html:444
+#: metabrainz/templates/reports/financial_reports/index.html:445
 #: metabrainz/templates/reports/financial_reports/index.html:449
 #: metabrainz/templates/reports/financial_reports/index.html:450
 #: metabrainz/templates/reports/financial_reports/index.html:451
@@ -2917,13 +2929,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:456
 #: metabrainz/templates/reports/financial_reports/index.html:457
 #: metabrainz/templates/reports/financial_reports/index.html:458
-#: metabrainz/templates/reports/financial_reports/index.html:465
-#: metabrainz/templates/reports/financial_reports/index.html:469
-#: metabrainz/templates/reports/financial_reports/index.html:470
+#: metabrainz/templates/reports/financial_reports/index.html:459
+#: metabrainz/templates/reports/financial_reports/index.html:460
+#: metabrainz/templates/reports/financial_reports/index.html:467
 #: metabrainz/templates/reports/financial_reports/index.html:471
 #: metabrainz/templates/reports/financial_reports/index.html:472
-#: metabrainz/templates/reports/financial_reports/index.html:476
-#: metabrainz/templates/reports/financial_reports/index.html:477
+#: metabrainz/templates/reports/financial_reports/index.html:473
+#: metabrainz/templates/reports/financial_reports/index.html:474
 #: metabrainz/templates/reports/financial_reports/index.html:478
 #: metabrainz/templates/reports/financial_reports/index.html:479
 #: metabrainz/templates/reports/financial_reports/index.html:480
@@ -2934,13 +2946,13 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:485
 #: metabrainz/templates/reports/financial_reports/index.html:486
 #: metabrainz/templates/reports/financial_reports/index.html:487
-#: metabrainz/templates/reports/financial_reports/index.html:494
-#: metabrainz/templates/reports/financial_reports/index.html:498
-#: metabrainz/templates/reports/financial_reports/index.html:499
+#: metabrainz/templates/reports/financial_reports/index.html:488
+#: metabrainz/templates/reports/financial_reports/index.html:489
+#: metabrainz/templates/reports/financial_reports/index.html:496
 #: metabrainz/templates/reports/financial_reports/index.html:500
 #: metabrainz/templates/reports/financial_reports/index.html:501
-#: metabrainz/templates/reports/financial_reports/index.html:505
-#: metabrainz/templates/reports/financial_reports/index.html:506
+#: metabrainz/templates/reports/financial_reports/index.html:502
+#: metabrainz/templates/reports/financial_reports/index.html:503
 #: metabrainz/templates/reports/financial_reports/index.html:507
 #: metabrainz/templates/reports/financial_reports/index.html:508
 #: metabrainz/templates/reports/financial_reports/index.html:509
@@ -2951,60 +2963,61 @@ msgstr "Informes trimestrales"
 #: metabrainz/templates/reports/financial_reports/index.html:514
 #: metabrainz/templates/reports/financial_reports/index.html:515
 #: metabrainz/templates/reports/financial_reports/index.html:516
-#: metabrainz/templates/reports/financial_reports/index.html:523
-#: metabrainz/templates/reports/financial_reports/index.html:545
+#: metabrainz/templates/reports/financial_reports/index.html:517
+#: metabrainz/templates/reports/financial_reports/index.html:518
+#: metabrainz/templates/reports/financial_reports/index.html:525
+#: metabrainz/templates/reports/financial_reports/index.html:547
 msgid "profit &amp; loss"
 msgstr "pérdidas y ganancias"
 
 #: metabrainz/templates/reports/financial_reports/index.html:39
-#: metabrainz/templates/reports/financial_reports/index.html:46
-#: metabrainz/templates/reports/financial_reports/index.html:53
+#: metabrainz/templates/reports/financial_reports/index.html:41
+#: metabrainz/templates/reports/financial_reports/index.html:48
 #: metabrainz/templates/reports/financial_reports/index.html:55
 #: metabrainz/templates/reports/financial_reports/index.html:57
 #: metabrainz/templates/reports/financial_reports/index.html:59
-#: metabrainz/templates/reports/financial_reports/index.html:66
-#: metabrainz/templates/reports/financial_reports/index.html:73
+#: metabrainz/templates/reports/financial_reports/index.html:61
+#: metabrainz/templates/reports/financial_reports/index.html:68
 #: metabrainz/templates/reports/financial_reports/index.html:75
 #: metabrainz/templates/reports/financial_reports/index.html:77
 #: metabrainz/templates/reports/financial_reports/index.html:79
-#: metabrainz/templates/reports/financial_reports/index.html:87
-#: metabrainz/templates/reports/financial_reports/index.html:94
+#: metabrainz/templates/reports/financial_reports/index.html:81
+#: metabrainz/templates/reports/financial_reports/index.html:89
 #: metabrainz/templates/reports/financial_reports/index.html:96
 #: metabrainz/templates/reports/financial_reports/index.html:98
 #: metabrainz/templates/reports/financial_reports/index.html:100
-#: metabrainz/templates/reports/financial_reports/index.html:108
-#: metabrainz/templates/reports/financial_reports/index.html:115
+#: metabrainz/templates/reports/financial_reports/index.html:102
+#: metabrainz/templates/reports/financial_reports/index.html:110
 #: metabrainz/templates/reports/financial_reports/index.html:117
 #: metabrainz/templates/reports/financial_reports/index.html:119
 #: metabrainz/templates/reports/financial_reports/index.html:121
-#: metabrainz/templates/reports/financial_reports/index.html:128
-#: metabrainz/templates/reports/financial_reports/index.html:135
+#: metabrainz/templates/reports/financial_reports/index.html:123
+#: metabrainz/templates/reports/financial_reports/index.html:130
 #: metabrainz/templates/reports/financial_reports/index.html:137
 #: metabrainz/templates/reports/financial_reports/index.html:139
 #: metabrainz/templates/reports/financial_reports/index.html:141
-#: metabrainz/templates/reports/financial_reports/index.html:148
-#: metabrainz/templates/reports/financial_reports/index.html:155
+#: metabrainz/templates/reports/financial_reports/index.html:143
+#: metabrainz/templates/reports/financial_reports/index.html:150
 #: metabrainz/templates/reports/financial_reports/index.html:157
 #: metabrainz/templates/reports/financial_reports/index.html:159
 #: metabrainz/templates/reports/financial_reports/index.html:161
-#: metabrainz/templates/reports/financial_reports/index.html:168
-#: metabrainz/templates/reports/financial_reports/index.html:175
+#: metabrainz/templates/reports/financial_reports/index.html:163
+#: metabrainz/templates/reports/financial_reports/index.html:170
 #: metabrainz/templates/reports/financial_reports/index.html:177
 #: metabrainz/templates/reports/financial_reports/index.html:179
 #: metabrainz/templates/reports/financial_reports/index.html:181
-#: metabrainz/templates/reports/financial_reports/index.html:189
-#: metabrainz/templates/reports/financial_reports/index.html:196
+#: metabrainz/templates/reports/financial_reports/index.html:183
+#: metabrainz/templates/reports/financial_reports/index.html:191
 #: metabrainz/templates/reports/financial_reports/index.html:198
 #: metabrainz/templates/reports/financial_reports/index.html:200
 #: metabrainz/templates/reports/financial_reports/index.html:202
-#: metabrainz/templates/reports/financial_reports/index.html:213
-#: metabrainz/templates/reports/financial_reports/index.html:220
+#: metabrainz/templates/reports/financial_reports/index.html:204
+#: metabrainz/templates/reports/financial_reports/index.html:215
 #: metabrainz/templates/reports/financial_reports/index.html:222
 #: metabrainz/templates/reports/financial_reports/index.html:224
 #: metabrainz/templates/reports/financial_reports/index.html:226
-#: metabrainz/templates/reports/financial_reports/index.html:232
-#: metabrainz/templates/reports/financial_reports/index.html:244
-#: metabrainz/templates/reports/financial_reports/index.html:245
+#: metabrainz/templates/reports/financial_reports/index.html:228
+#: metabrainz/templates/reports/financial_reports/index.html:234
 #: metabrainz/templates/reports/financial_reports/index.html:246
 #: metabrainz/templates/reports/financial_reports/index.html:247
 #: metabrainz/templates/reports/financial_reports/index.html:248
@@ -3015,9 +3028,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:253
 #: metabrainz/templates/reports/financial_reports/index.html:254
 #: metabrainz/templates/reports/financial_reports/index.html:255
-#: metabrainz/templates/reports/financial_reports/index.html:261
-#: metabrainz/templates/reports/financial_reports/index.html:273
-#: metabrainz/templates/reports/financial_reports/index.html:274
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:263
 #: metabrainz/templates/reports/financial_reports/index.html:275
 #: metabrainz/templates/reports/financial_reports/index.html:276
 #: metabrainz/templates/reports/financial_reports/index.html:277
@@ -3028,9 +3041,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:282
 #: metabrainz/templates/reports/financial_reports/index.html:283
 #: metabrainz/templates/reports/financial_reports/index.html:284
-#: metabrainz/templates/reports/financial_reports/index.html:290
-#: metabrainz/templates/reports/financial_reports/index.html:302
-#: metabrainz/templates/reports/financial_reports/index.html:303
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:292
 #: metabrainz/templates/reports/financial_reports/index.html:304
 #: metabrainz/templates/reports/financial_reports/index.html:305
 #: metabrainz/templates/reports/financial_reports/index.html:306
@@ -3041,9 +3054,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:311
 #: metabrainz/templates/reports/financial_reports/index.html:312
 #: metabrainz/templates/reports/financial_reports/index.html:313
-#: metabrainz/templates/reports/financial_reports/index.html:319
-#: metabrainz/templates/reports/financial_reports/index.html:331
-#: metabrainz/templates/reports/financial_reports/index.html:332
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:321
 #: metabrainz/templates/reports/financial_reports/index.html:333
 #: metabrainz/templates/reports/financial_reports/index.html:334
 #: metabrainz/templates/reports/financial_reports/index.html:335
@@ -3054,9 +3067,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:340
 #: metabrainz/templates/reports/financial_reports/index.html:341
 #: metabrainz/templates/reports/financial_reports/index.html:342
-#: metabrainz/templates/reports/financial_reports/index.html:348
-#: metabrainz/templates/reports/financial_reports/index.html:360
-#: metabrainz/templates/reports/financial_reports/index.html:361
+#: metabrainz/templates/reports/financial_reports/index.html:343
+#: metabrainz/templates/reports/financial_reports/index.html:344
+#: metabrainz/templates/reports/financial_reports/index.html:350
 #: metabrainz/templates/reports/financial_reports/index.html:362
 #: metabrainz/templates/reports/financial_reports/index.html:363
 #: metabrainz/templates/reports/financial_reports/index.html:364
@@ -3067,9 +3080,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:369
 #: metabrainz/templates/reports/financial_reports/index.html:370
 #: metabrainz/templates/reports/financial_reports/index.html:371
-#: metabrainz/templates/reports/financial_reports/index.html:377
-#: metabrainz/templates/reports/financial_reports/index.html:389
-#: metabrainz/templates/reports/financial_reports/index.html:390
+#: metabrainz/templates/reports/financial_reports/index.html:372
+#: metabrainz/templates/reports/financial_reports/index.html:373
+#: metabrainz/templates/reports/financial_reports/index.html:379
 #: metabrainz/templates/reports/financial_reports/index.html:391
 #: metabrainz/templates/reports/financial_reports/index.html:392
 #: metabrainz/templates/reports/financial_reports/index.html:393
@@ -3080,9 +3093,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:398
 #: metabrainz/templates/reports/financial_reports/index.html:399
 #: metabrainz/templates/reports/financial_reports/index.html:400
-#: metabrainz/templates/reports/financial_reports/index.html:406
-#: metabrainz/templates/reports/financial_reports/index.html:418
-#: metabrainz/templates/reports/financial_reports/index.html:419
+#: metabrainz/templates/reports/financial_reports/index.html:401
+#: metabrainz/templates/reports/financial_reports/index.html:402
+#: metabrainz/templates/reports/financial_reports/index.html:408
 #: metabrainz/templates/reports/financial_reports/index.html:420
 #: metabrainz/templates/reports/financial_reports/index.html:421
 #: metabrainz/templates/reports/financial_reports/index.html:422
@@ -3093,9 +3106,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:427
 #: metabrainz/templates/reports/financial_reports/index.html:428
 #: metabrainz/templates/reports/financial_reports/index.html:429
-#: metabrainz/templates/reports/financial_reports/index.html:435
-#: metabrainz/templates/reports/financial_reports/index.html:447
-#: metabrainz/templates/reports/financial_reports/index.html:448
+#: metabrainz/templates/reports/financial_reports/index.html:430
+#: metabrainz/templates/reports/financial_reports/index.html:431
+#: metabrainz/templates/reports/financial_reports/index.html:437
 #: metabrainz/templates/reports/financial_reports/index.html:449
 #: metabrainz/templates/reports/financial_reports/index.html:450
 #: metabrainz/templates/reports/financial_reports/index.html:451
@@ -3106,9 +3119,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:456
 #: metabrainz/templates/reports/financial_reports/index.html:457
 #: metabrainz/templates/reports/financial_reports/index.html:458
-#: metabrainz/templates/reports/financial_reports/index.html:464
-#: metabrainz/templates/reports/financial_reports/index.html:476
-#: metabrainz/templates/reports/financial_reports/index.html:477
+#: metabrainz/templates/reports/financial_reports/index.html:459
+#: metabrainz/templates/reports/financial_reports/index.html:460
+#: metabrainz/templates/reports/financial_reports/index.html:466
 #: metabrainz/templates/reports/financial_reports/index.html:478
 #: metabrainz/templates/reports/financial_reports/index.html:479
 #: metabrainz/templates/reports/financial_reports/index.html:480
@@ -3119,9 +3132,9 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:485
 #: metabrainz/templates/reports/financial_reports/index.html:486
 #: metabrainz/templates/reports/financial_reports/index.html:487
-#: metabrainz/templates/reports/financial_reports/index.html:493
-#: metabrainz/templates/reports/financial_reports/index.html:505
-#: metabrainz/templates/reports/financial_reports/index.html:506
+#: metabrainz/templates/reports/financial_reports/index.html:488
+#: metabrainz/templates/reports/financial_reports/index.html:489
+#: metabrainz/templates/reports/financial_reports/index.html:495
 #: metabrainz/templates/reports/financial_reports/index.html:507
 #: metabrainz/templates/reports/financial_reports/index.html:508
 #: metabrainz/templates/reports/financial_reports/index.html:509
@@ -3132,47 +3145,36 @@ msgstr "pérdidas y ganancias"
 #: metabrainz/templates/reports/financial_reports/index.html:514
 #: metabrainz/templates/reports/financial_reports/index.html:515
 #: metabrainz/templates/reports/financial_reports/index.html:516
-#: metabrainz/templates/reports/financial_reports/index.html:522
-#: metabrainz/templates/reports/financial_reports/index.html:544
+#: metabrainz/templates/reports/financial_reports/index.html:517
+#: metabrainz/templates/reports/financial_reports/index.html:518
+#: metabrainz/templates/reports/financial_reports/index.html:524
+#: metabrainz/templates/reports/financial_reports/index.html:546
 msgid "balance sheet"
 msgstr "balance de situación"
 
-#: metabrainz/templates/reports/financial_reports/index.html:44
-#: metabrainz/templates/reports/financial_reports/index.html:64
-#: metabrainz/templates/reports/financial_reports/index.html:85
-#: metabrainz/templates/reports/financial_reports/index.html:106
-#: metabrainz/templates/reports/financial_reports/index.html:126
-#: metabrainz/templates/reports/financial_reports/index.html:146
-#: metabrainz/templates/reports/financial_reports/index.html:166
-#: metabrainz/templates/reports/financial_reports/index.html:187
-#: metabrainz/templates/reports/financial_reports/index.html:211
-#: metabrainz/templates/reports/financial_reports/index.html:230
-#: metabrainz/templates/reports/financial_reports/index.html:259
-#: metabrainz/templates/reports/financial_reports/index.html:288
-#: metabrainz/templates/reports/financial_reports/index.html:317
-#: metabrainz/templates/reports/financial_reports/index.html:346
-#: metabrainz/templates/reports/financial_reports/index.html:375
-#: metabrainz/templates/reports/financial_reports/index.html:404
-#: metabrainz/templates/reports/financial_reports/index.html:433
-#: metabrainz/templates/reports/financial_reports/index.html:462
-#: metabrainz/templates/reports/financial_reports/index.html:491
-#: metabrainz/templates/reports/financial_reports/index.html:520
-#: metabrainz/templates/reports/financial_reports/index.html:542
+#: metabrainz/templates/reports/financial_reports/index.html:46
+#: metabrainz/templates/reports/financial_reports/index.html:66
+#: metabrainz/templates/reports/financial_reports/index.html:87
+#: metabrainz/templates/reports/financial_reports/index.html:108
+#: metabrainz/templates/reports/financial_reports/index.html:128
+#: metabrainz/templates/reports/financial_reports/index.html:148
+#: metabrainz/templates/reports/financial_reports/index.html:168
+#: metabrainz/templates/reports/financial_reports/index.html:189
+#: metabrainz/templates/reports/financial_reports/index.html:213
+#: metabrainz/templates/reports/financial_reports/index.html:232
+#: metabrainz/templates/reports/financial_reports/index.html:261
+#: metabrainz/templates/reports/financial_reports/index.html:290
+#: metabrainz/templates/reports/financial_reports/index.html:319
+#: metabrainz/templates/reports/financial_reports/index.html:348
+#: metabrainz/templates/reports/financial_reports/index.html:377
+#: metabrainz/templates/reports/financial_reports/index.html:406
+#: metabrainz/templates/reports/financial_reports/index.html:435
+#: metabrainz/templates/reports/financial_reports/index.html:464
+#: metabrainz/templates/reports/financial_reports/index.html:493
+#: metabrainz/templates/reports/financial_reports/index.html:522
+#: metabrainz/templates/reports/financial_reports/index.html:544
 msgid "Year end reports"
 msgstr "Informes de fin de año"
-
-#: metabrainz/templates/reports/financial_reports/index.html:242
-#: metabrainz/templates/reports/financial_reports/index.html:271
-#: metabrainz/templates/reports/financial_reports/index.html:300
-#: metabrainz/templates/reports/financial_reports/index.html:329
-#: metabrainz/templates/reports/financial_reports/index.html:358
-#: metabrainz/templates/reports/financial_reports/index.html:387
-#: metabrainz/templates/reports/financial_reports/index.html:416
-#: metabrainz/templates/reports/financial_reports/index.html:445
-#: metabrainz/templates/reports/financial_reports/index.html:474
-#: metabrainz/templates/reports/financial_reports/index.html:503
-msgid "Monthly reports"
-msgstr "Informes mensuales"
 
 #: metabrainz/templates/reports/financial_reports/index.html:244
 #: metabrainz/templates/reports/financial_reports/index.html:273
@@ -3184,26 +3186,8 @@ msgstr "Informes mensuales"
 #: metabrainz/templates/reports/financial_reports/index.html:447
 #: metabrainz/templates/reports/financial_reports/index.html:476
 #: metabrainz/templates/reports/financial_reports/index.html:505
-#: metabrainz/templates/reports/financial_reports/index.html:527
-#: metabrainz/templates/reports/financial_reports/index.html:549
-#: metabrainz/templates/reports/financial_reports/index.html:565
-msgid "December"
-msgstr "Diciembre"
-
-#: metabrainz/templates/reports/financial_reports/index.html:245
-#: metabrainz/templates/reports/financial_reports/index.html:274
-#: metabrainz/templates/reports/financial_reports/index.html:303
-#: metabrainz/templates/reports/financial_reports/index.html:332
-#: metabrainz/templates/reports/financial_reports/index.html:361
-#: metabrainz/templates/reports/financial_reports/index.html:390
-#: metabrainz/templates/reports/financial_reports/index.html:419
-#: metabrainz/templates/reports/financial_reports/index.html:448
-#: metabrainz/templates/reports/financial_reports/index.html:477
-#: metabrainz/templates/reports/financial_reports/index.html:506
-#: metabrainz/templates/reports/financial_reports/index.html:528
-#: metabrainz/templates/reports/financial_reports/index.html:550
-msgid "November"
-msgstr "Noviembre"
+msgid "Monthly reports"
+msgstr "Informes mensuales"
 
 #: metabrainz/templates/reports/financial_reports/index.html:246
 #: metabrainz/templates/reports/financial_reports/index.html:275
@@ -3217,8 +3201,9 @@ msgstr "Noviembre"
 #: metabrainz/templates/reports/financial_reports/index.html:507
 #: metabrainz/templates/reports/financial_reports/index.html:529
 #: metabrainz/templates/reports/financial_reports/index.html:551
-msgid "October"
-msgstr "Octubre"
+#: metabrainz/templates/reports/financial_reports/index.html:567
+msgid "December"
+msgstr "Diciembre"
 
 #: metabrainz/templates/reports/financial_reports/index.html:247
 #: metabrainz/templates/reports/financial_reports/index.html:276
@@ -3232,8 +3217,8 @@ msgstr "Octubre"
 #: metabrainz/templates/reports/financial_reports/index.html:508
 #: metabrainz/templates/reports/financial_reports/index.html:530
 #: metabrainz/templates/reports/financial_reports/index.html:552
-msgid "September"
-msgstr "Septiembre"
+msgid "November"
+msgstr "Noviembre"
 
 #: metabrainz/templates/reports/financial_reports/index.html:248
 #: metabrainz/templates/reports/financial_reports/index.html:277
@@ -3247,8 +3232,8 @@ msgstr "Septiembre"
 #: metabrainz/templates/reports/financial_reports/index.html:509
 #: metabrainz/templates/reports/financial_reports/index.html:531
 #: metabrainz/templates/reports/financial_reports/index.html:553
-msgid "August"
-msgstr "Agosto"
+msgid "October"
+msgstr "Octubre"
 
 #: metabrainz/templates/reports/financial_reports/index.html:249
 #: metabrainz/templates/reports/financial_reports/index.html:278
@@ -3262,8 +3247,8 @@ msgstr "Agosto"
 #: metabrainz/templates/reports/financial_reports/index.html:510
 #: metabrainz/templates/reports/financial_reports/index.html:532
 #: metabrainz/templates/reports/financial_reports/index.html:554
-msgid "July"
-msgstr "Julio"
+msgid "September"
+msgstr "Septiembre"
 
 #: metabrainz/templates/reports/financial_reports/index.html:250
 #: metabrainz/templates/reports/financial_reports/index.html:279
@@ -3277,8 +3262,8 @@ msgstr "Julio"
 #: metabrainz/templates/reports/financial_reports/index.html:511
 #: metabrainz/templates/reports/financial_reports/index.html:533
 #: metabrainz/templates/reports/financial_reports/index.html:555
-msgid "June"
-msgstr "Junio"
+msgid "August"
+msgstr "Agosto"
 
 #: metabrainz/templates/reports/financial_reports/index.html:251
 #: metabrainz/templates/reports/financial_reports/index.html:280
@@ -3292,8 +3277,8 @@ msgstr "Junio"
 #: metabrainz/templates/reports/financial_reports/index.html:512
 #: metabrainz/templates/reports/financial_reports/index.html:534
 #: metabrainz/templates/reports/financial_reports/index.html:556
-msgid "May"
-msgstr "Mayo"
+msgid "July"
+msgstr "Julio"
 
 #: metabrainz/templates/reports/financial_reports/index.html:252
 #: metabrainz/templates/reports/financial_reports/index.html:281
@@ -3307,8 +3292,8 @@ msgstr "Mayo"
 #: metabrainz/templates/reports/financial_reports/index.html:513
 #: metabrainz/templates/reports/financial_reports/index.html:535
 #: metabrainz/templates/reports/financial_reports/index.html:557
-msgid "April"
-msgstr "Abril"
+msgid "June"
+msgstr "Junio"
 
 #: metabrainz/templates/reports/financial_reports/index.html:253
 #: metabrainz/templates/reports/financial_reports/index.html:282
@@ -3322,8 +3307,8 @@ msgstr "Abril"
 #: metabrainz/templates/reports/financial_reports/index.html:514
 #: metabrainz/templates/reports/financial_reports/index.html:536
 #: metabrainz/templates/reports/financial_reports/index.html:558
-msgid "March"
-msgstr "Marzo"
+msgid "May"
+msgstr "Mayo"
 
 #: metabrainz/templates/reports/financial_reports/index.html:254
 #: metabrainz/templates/reports/financial_reports/index.html:283
@@ -3337,8 +3322,8 @@ msgstr "Marzo"
 #: metabrainz/templates/reports/financial_reports/index.html:515
 #: metabrainz/templates/reports/financial_reports/index.html:537
 #: metabrainz/templates/reports/financial_reports/index.html:559
-msgid "February"
-msgstr "Febrero"
+msgid "April"
+msgstr "Abril"
 
 #: metabrainz/templates/reports/financial_reports/index.html:255
 #: metabrainz/templates/reports/financial_reports/index.html:284
@@ -3352,15 +3337,45 @@ msgstr "Febrero"
 #: metabrainz/templates/reports/financial_reports/index.html:516
 #: metabrainz/templates/reports/financial_reports/index.html:538
 #: metabrainz/templates/reports/financial_reports/index.html:560
+msgid "March"
+msgstr "Marzo"
+
+#: metabrainz/templates/reports/financial_reports/index.html:256
+#: metabrainz/templates/reports/financial_reports/index.html:285
+#: metabrainz/templates/reports/financial_reports/index.html:314
+#: metabrainz/templates/reports/financial_reports/index.html:343
+#: metabrainz/templates/reports/financial_reports/index.html:372
+#: metabrainz/templates/reports/financial_reports/index.html:401
+#: metabrainz/templates/reports/financial_reports/index.html:430
+#: metabrainz/templates/reports/financial_reports/index.html:459
+#: metabrainz/templates/reports/financial_reports/index.html:488
+#: metabrainz/templates/reports/financial_reports/index.html:517
+#: metabrainz/templates/reports/financial_reports/index.html:539
+#: metabrainz/templates/reports/financial_reports/index.html:561
+msgid "February"
+msgstr "Febrero"
+
+#: metabrainz/templates/reports/financial_reports/index.html:257
+#: metabrainz/templates/reports/financial_reports/index.html:286
+#: metabrainz/templates/reports/financial_reports/index.html:315
+#: metabrainz/templates/reports/financial_reports/index.html:344
+#: metabrainz/templates/reports/financial_reports/index.html:373
+#: metabrainz/templates/reports/financial_reports/index.html:402
+#: metabrainz/templates/reports/financial_reports/index.html:431
+#: metabrainz/templates/reports/financial_reports/index.html:460
+#: metabrainz/templates/reports/financial_reports/index.html:489
+#: metabrainz/templates/reports/financial_reports/index.html:518
+#: metabrainz/templates/reports/financial_reports/index.html:540
+#: metabrainz/templates/reports/financial_reports/index.html:562
 msgid "January"
 msgstr "Enero"
 
-#: metabrainz/templates/reports/financial_reports/index.html:525
-#: metabrainz/templates/reports/financial_reports/index.html:547
+#: metabrainz/templates/reports/financial_reports/index.html:527
+#: metabrainz/templates/reports/financial_reports/index.html:549
 msgid "Monthly balance sheets"
 msgstr "Balances de situación mensuales"
 
-#: frontend/js/src/Profile.tsx:518
+#: frontend/js/src/Profile.tsx:520
 #: frontend/js/src/forms/SignupCommercial.tsx:175
 #: frontend/js/src/forms/SignupCommercial.tsx:554
 #: frontend/js/src/forms/SignupNonCommercial.tsx:106
@@ -3382,7 +3397,7 @@ msgstr "Apóyanos"
 msgid "Non-commercial / Personal"
 msgstr "Uso no comercial / personal"
 
-#: frontend/js/src/Profile.tsx:234
+#: frontend/js/src/Profile.tsx:235
 #: frontend/js/src/forms/SignupNonCommercial.tsx:151
 #: metabrainz/templates/supporters/account-type.html:42
 msgid "Non-commercial"
@@ -3402,7 +3417,7 @@ msgstr "Uso personal o para una tarea universitaria."
 msgid "Upgrade"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:234
+#: frontend/js/src/Profile.tsx:235
 #: frontend/js/src/forms/SignupCommercial.tsx:176
 #: frontend/js/src/forms/SignupCommercial.tsx:228
 #: metabrainz/templates/supporters/account-type.html:61
@@ -3442,8 +3457,8 @@ msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
 msgstr ""
-"Si no sabes qué nivel elegir, <a href=\"%(contact_url)s\">ponte en contacto "
-"con nosotros</a>."
+"Si no sabes qué nivel elegir, <a href=\"%(contact_url)s\">ponte en "
+"contacto con nosotros</a>."
 
 #: metabrainz/templates/supporters/account-type.html:166
 msgid "Back to Profile"
@@ -3676,54 +3691,54 @@ msgstr "Sin verificar"
 #: frontend/js/src/Profile.tsx:61
 msgid "Your current email will be replaced once the new email is verified."
 msgstr ""
-"Tu dirección de correo actual será reemplazada una vez hayas verificado la "
-"dirección nueva."
+"Tu dirección de correo actual será reemplazada una vez hayas verificado "
+"la dirección nueva."
 
-#: frontend/js/src/Profile.tsx:108
+#: frontend/js/src/Profile.tsx:109
 msgid ""
 "Are you sure you want to generate new access token? Current token will be"
 " revoked!"
 msgstr ""
-"¿Seguro que quieres generar un nuevo token de acceso? ¡El token actual será "
-"anulado!"
+"¿Seguro que quieres generar un nuevo token de acceso? ¡El token actual "
+"será anulado!"
 
-#: frontend/js/src/Profile.tsx:117
+#: frontend/js/src/Profile.tsx:118
 msgid "Failed to generate new access token!"
 msgstr "No hemos podido generar un nuevo token de acceso."
 
-#: frontend/js/src/Profile.tsx:131
+#: frontend/js/src/Profile.tsx:132
 msgid "Your application for using the Live Data Feed has been rejected."
 msgstr "Hemos rechazado tu solicitud para el uso del Live Data Feed."
 
-#: frontend/js/src/Profile.tsx:137
+#: frontend/js/src/Profile.tsx:138
 msgid "You do not have permission to use our data in a public commercial product."
 msgstr ""
 "No tienes permiso para utilizar nuestros datos en un producto comercial "
 "público."
 
-#: frontend/js/src/Profile.tsx:148
+#: frontend/js/src/Profile.tsx:149
 msgid "Your application for using the Live Data Feed is still pending."
 msgstr ""
 "Aún no hemos tomado una decisión sobre tu solicitud para el uso del Live "
 "Data Feed."
 
-#: frontend/js/src/Profile.tsx:154
+#: frontend/js/src/Profile.tsx:155
 msgid ""
 "You may use our data and APIs for evaluation/development purposes while "
 "your application is pending."
 msgstr ""
-"Puedes evaluar nuestros datos y APIs y usarlos durante la fase de desarrollo "
-"mientras revisamos tu aplicación."
+"Puedes evaluar nuestros datos y APIs y usarlos durante la fase de "
+"desarrollo mientras revisamos tu aplicación."
 
-#: frontend/js/src/Profile.tsx:165
+#: frontend/js/src/Profile.tsx:166
 msgid ""
 "Your application for using the Live Data Feed is waiting to finalize our "
 "support agreement."
 msgstr ""
-"Tenemos que ultimar nuestro acuerdo de apoyo antes de aceptar tu solicitud "
-"para el uso del Live Data Feed."
+"Tenemos que ultimar nuestro acuerdo de apoyo antes de aceptar tu "
+"solicitud para el uso del Live Data Feed."
 
-#: frontend/js/src/Profile.tsx:172
+#: frontend/js/src/Profile.tsx:173
 msgid ""
 "You may use our data and APIs for evaluation and development purposes, "
 "but you may not use the data in a public commercial product. Once you are"
@@ -3732,66 +3747,66 @@ msgid ""
 "agreement."
 msgstr ""
 "Puedes evaluar nuestros datos y APIs y usarlos durante la fase de "
-"desarrollo, pero no en un producto comercial público. Cuando se acerque el "
-"momento de lanzar públicamente un producto que use nuestros datos, "
+"desarrollo, pero no en un producto comercial público. Cuando se acerque "
+"el momento de lanzar públicamente un producto que use nuestros datos, "
 "<contactLink>ponte en contacto con nosotros</contactLink> de nuevo para "
 "ultimar nuestro acuerdo de apoyo."
 
-#: frontend/js/src/Profile.tsx:184
+#: frontend/js/src/Profile.tsx:185
 msgid "Your use of the Live Data Feed is pending suspension."
 msgstr "Tu uso del Live Data Feed está pendiente de cancelación."
 
-#: frontend/js/src/Profile.tsx:188
+#: frontend/js/src/Profile.tsx:189
 msgid ""
 "Your account is in bad standing, which means that you are more than 60 "
 "days behind in support payments. If you think this is a mistake, please "
 "<contactLink>contact us</contactLink>."
 msgstr ""
-"Tu cuenta está en situación deudora (tienes al menos 60 días de retraso en "
-"tus contribuciones). Si crees que ha habido un error, <contactLink>ponte en "
-"contacto con nosotros</contactLink>."
+"Tu cuenta está en situación deudora (tienes al menos 60 días de retraso "
+"en tus contribuciones). Si crees que ha habido un error, "
+"<contactLink>ponte en contacto con nosotros</contactLink>."
 
-#: frontend/js/src/Profile.tsx:197
+#: frontend/js/src/Profile.tsx:198
 msgid "Unknown. :("
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:213
+#: frontend/js/src/Profile.tsx:214
 msgid "Active"
 msgstr "Activo"
 
-#: frontend/js/src/Profile.tsx:215
+#: frontend/js/src/Profile.tsx:216
 msgid "Rejected"
 msgstr "Rechazado"
 
-#: frontend/js/src/Profile.tsx:217
+#: frontend/js/src/Profile.tsx:218
 msgid "Pending"
 msgstr "Pendiente de revisión"
 
-#: frontend/js/src/Profile.tsx:219
+#: frontend/js/src/Profile.tsx:220
 msgid "Waiting"
 msgstr "En espera"
 
-#: frontend/js/src/Profile.tsx:221
+#: frontend/js/src/Profile.tsx:222
 msgid "Limited"
 msgstr "Uso limitado"
 
-#: frontend/js/src/Profile.tsx:223
+#: frontend/js/src/Profile.tsx:224
 msgid "Unknown"
 msgstr "Desconocida"
 
-#: frontend/js/src/Profile.tsx:233
+#: frontend/js/src/Profile.tsx:234
 msgid "Type:"
 msgstr "Tipo:"
 
-#: frontend/js/src/Profile.tsx:238
+#: frontend/js/src/Profile.tsx:239
 msgid "Tier:"
 msgstr "Nivel:"
 
-#: frontend/js/src/Profile.tsx:242
+#: frontend/js/src/Profile.tsx:243
 msgid "State:"
 msgstr "Situación:"
 
-#: frontend/js/src/Profile.tsx:250
+#: frontend/js/src/Profile.tsx:251
 msgid ""
 "If you would like to change your account from non-commercial to "
 "commercial, please <contactLink>contact us</contactLink>."
@@ -3799,26 +3814,26 @@ msgstr ""
 "Si quieres modificar to cuenta para pasar de uso no comercial a uso "
 "comercial, <contactLink>ponte en contacto con nosotros</contactLink>."
 
-#: frontend/js/src/Profile.tsx:266
+#: frontend/js/src/Profile.tsx:267
 msgid "Organization Information"
 msgstr "Información sobre la organización"
 
-#: frontend/js/src/Profile.tsx:274 frontend/js/src/Profile.tsx:280
-#: frontend/js/src/Profile.tsx:286
+#: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
+#: frontend/js/src/Profile.tsx:287
 msgid "Unspecified"
 msgstr "No disponible"
 
-#: frontend/js/src/Profile.tsx:292
+#: frontend/js/src/Profile.tsx:293
 msgid "<contactLink>Contact us</contactLink> to update this information."
 msgstr ""
-"<contactLink>Ponte en contacto con nosotros</contactLink> para actualizar "
-"esta información."
+"<contactLink>Ponte en contacto con nosotros</contactLink> para actualizar"
+" esta información."
 
-#: frontend/js/src/Profile.tsx:305 frontend/js/src/Profile.tsx:476
+#: frontend/js/src/Profile.tsx:306 frontend/js/src/Profile.tsx:478
 msgid "Contact Information"
 msgstr "Información de contacto"
 
-#: frontend/js/src/Profile.tsx:309 frontend/js/src/forms/ProfileEdit.tsx:70
+#: frontend/js/src/Profile.tsx:310 frontend/js/src/forms/ProfileEdit.tsx:70
 #: frontend/js/src/forms/SignupCommercial.tsx:284
 #: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
@@ -3826,172 +3841,173 @@ msgstr "Información de contacto"
 msgid "Contact name"
 msgstr "Nombre del contacto"
 
-#: frontend/js/src/Profile.tsx:311 frontend/js/src/forms/ProfileEdit.tsx:79
+#: frontend/js/src/Profile.tsx:312 frontend/js/src/forms/ProfileEdit.tsx:79
 msgid "Contact Email"
 msgstr "Correo del contacto"
 
-#: frontend/js/src/Profile.tsx:321
+#: frontend/js/src/Profile.tsx:322
 msgid "Datasets Used"
 msgstr "Conjuntos de datos a usar"
 
-#: frontend/js/src/Profile.tsx:332
+#: frontend/js/src/Profile.tsx:333 frontend/js/src/forms/ProfileEdit.tsx:35
 msgid "Edit Contact Information"
 msgstr "Editar información de contacto"
 
-#: frontend/js/src/Profile.tsx:333
+#: frontend/js/src/Profile.tsx:334
 msgid "Edit Datasets / Contact Information"
 msgstr "Editar información de contacto y conjuntos de datos"
 
-#: frontend/js/src/Profile.tsx:347
+#: frontend/js/src/Profile.tsx:348
 msgid "Data Use Permission Granted"
 msgstr "Uso de los datos aceptado"
 
-#: frontend/js/src/Profile.tsx:353
+#: frontend/js/src/Profile.tsx:354
 msgid "Your support agreement has been completed -- thank you!"
 msgstr "Tu acuerdo de apoyo está listo, ¡gracias!"
 
-#: frontend/js/src/Profile.tsx:359
+#: frontend/js/src/Profile.tsx:360
 msgid ""
 "You have permission to use any of the data published by the MetaBrainz "
 "Foundation. This includes data dumps released under a Creative Commons "
 "non-commercial license."
 msgstr ""
 "Tienes permiso para usar todos los datos publicados por la MetaBrainz "
-"Foundation, incluidos los archivos de volcado publicados bajo una licencia "
-"Creative Commons NoComercial."
+"Foundation, incluidos los archivos de volcado publicados bajo una "
+"licencia Creative Commons NoComercial."
 
-#: frontend/js/src/Profile.tsx:365
+#: frontend/js/src/Profile.tsx:366
 msgid ""
 "If your support falls behind by more than 60 days, this permission may be"
 " withdrawn."
 msgstr ""
-"Si te retrasas más de 60 días en tus contribuciones, podemos revocar este "
-"permiso."
+"Si te retrasas más de 60 días en tus contribuciones, podemos revocar este"
+" permiso."
 
-#: frontend/js/src/Profile.tsx:370
+#: frontend/js/src/Profile.tsx:371
 msgid "IP addresses from which replication packets are downloaded are logged."
 msgstr ""
 "Las direcciones IP desde las que se descargan nuestros paquetes de "
 "replicación quedan registradas."
 
-#: frontend/js/src/Profile.tsx:381
+#: frontend/js/src/Profile.tsx:382
 msgid "Limited/No Data Use Permission"
 msgstr "Uso limitado o no permitido"
 
-#: frontend/js/src/Profile.tsx:396
+#: frontend/js/src/Profile.tsx:397
 msgid "Data Download"
 msgstr "Descargar datos"
 
-#: frontend/js/src/Profile.tsx:401
+#: frontend/js/src/Profile.tsx:402
 msgid "Thank you for registering with us -- we really appreciate it!"
 msgstr "Te agradecemos que te hayas registrado con nosotros."
 
-#: frontend/js/src/Profile.tsx:406
+#: frontend/js/src/Profile.tsx:407
 msgid "Proceed to our download page to download datasets:"
 msgstr "Para descargar conjuntos de datos, visita nuestra página de descargas:"
 
-#: frontend/js/src/Profile.tsx:422
+#: frontend/js/src/Profile.tsx:423
 msgid "Live Data Feed Access Token"
 msgstr "Token de acceso al Live Data Feed"
 
-#: frontend/js/src/Profile.tsx:427
+#: frontend/js/src/Profile.tsx:428
 msgid ""
 "This access token should be considered private. Don't check it into "
 "publicly visible version control systems. If exposed, generate a new one "
 "immediately."
 msgstr ""
-"Este token de acceso es privado. No debes incluirlo en repositorios abiertos "
-"al público, y si se filtra debes generar uno nuevo lo antes posible."
+"Este token de acceso es privado. No debes incluirlo en repositorios "
+"abiertos al público, y si se filtra debes generar uno nuevo lo antes "
+"posible."
 
-#: frontend/js/src/Profile.tsx:441
+#: frontend/js/src/Profile.tsx:442
 msgid "[ no valid token currently ]"
 msgstr "[ sin token válido ]"
 
-#: frontend/js/src/Profile.tsx:448
+#: frontend/js/src/Profile.tsx:449
 msgid "Generate New Token"
 msgstr "Generar nuevo token"
 
-#: frontend/js/src/Profile.tsx:452
+#: frontend/js/src/Profile.tsx:453
 msgid "See the <apiLink>API documentation</apiLink> for more information."
 msgstr "Para saber más, consulta la <apiLink>documentación de la API</apiLink>."
 
-#: frontend/js/src/Profile.tsx:482 frontend/js/src/forms/LostPassword.tsx:53
+#: frontend/js/src/Profile.tsx:484 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
 msgid "Email"
 msgstr "Dirección de correo"
 
-#: frontend/js/src/Profile.tsx:496
+#: frontend/js/src/Profile.tsx:498
 msgid "Edit Information"
 msgstr "Editar información"
 
-#: frontend/js/src/Profile.tsx:508
+#: frontend/js/src/Profile.tsx:510
 msgid "Want access to MetaBrainz datasets?"
 msgstr "¿Quieres tener acceso a los conjuntos de datos de MetaBrainz?"
 
-#: frontend/js/src/Profile.tsx:513
+#: frontend/js/src/Profile.tsx:515
 msgid ""
 "Upgrade your account to a supporter account to access our datasets and "
 "the Live Data Feed. Choose between non-commercial (free) and commercial "
 "options."
 msgstr ""
 "Registra una cuenta de simpatizante para acceder a nuestros conjuntos de "
-"datos y el Live Data Feed. Puedes elegir entre nuestras opciones de uso no "
-"comercial (gratuito) y uso comercial."
+"datos y el Live Data Feed. Puedes elegir entre nuestras opciones de uso "
+"no comercial (gratuito) y uso comercial."
 
-#: frontend/js/src/Profile.tsx:536
+#: frontend/js/src/Profile.tsx:538
 msgid "Danger Zone"
 msgstr "Zona de riesgo"
 
-#: frontend/js/src/Profile.tsx:543
+#: frontend/js/src/Profile.tsx:545
 msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr "Si eliminas tu cuenta, no podemos recuperarla. Piénsatelo bien."
 
-#: frontend/js/src/Profile.tsx:548 frontend/js/src/ProfileDelete.tsx:105
+#: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
 msgid "Delete My Account"
 msgstr "Quiero eliminar mi cuenta"
 
-#: frontend/js/src/Profile.tsx:565
+#: frontend/js/src/Profile.tsx:567
 msgid "Account Deletion"
 msgstr "Eliminar mi cuenta"
 
-#: frontend/js/src/Profile.tsx:569
+#: frontend/js/src/Profile.tsx:571
 msgid "Need to delete your account?"
 msgstr "¿Tienes que eliminar tu cuenta?"
 
-#: frontend/js/src/Profile.tsx:572
+#: frontend/js/src/Profile.tsx:574
 msgid ""
 "Deletion of supporter accounts requires manual review. Please contact us "
 "at"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:592
+#: frontend/js/src/Profile.tsx:594
 msgid "Security"
 msgstr "Seguridad"
 
-#: frontend/js/src/Profile.tsx:624
+#: frontend/js/src/Profile.tsx:626
 msgid "MetaBrainz Applications"
 msgstr "Aplicaciones de MetaBrainz"
 
-#: frontend/js/src/Profile.tsx:628
+#: frontend/js/src/Profile.tsx:630
 msgid ""
 "With your MetaBrainz account, you can access every project in the "
 "MetaBrainz family:"
 msgstr "Con tu cuenta de MetaBrainz podrás acceder a todos nuestros proyectos:"
 
-#: frontend/js/src/Profile.tsx:641
+#: frontend/js/src/Profile.tsx:643
 msgid "The open-source music encyclopedia"
 msgstr "La enciclopedia de código abierto sobre música"
 
-#: frontend/js/src/Profile.tsx:653
+#: frontend/js/src/Profile.tsx:655
 msgid "Track, visualise and share the music you listen to"
 msgstr "Documenta, visualiza y comparte la música que escuchas"
 
-#: frontend/js/src/Profile.tsx:665
+#: frontend/js/src/Profile.tsx:667
 msgid "The open-source book database"
 msgstr "La base de datos de código abierto sobre libros"
 
-#: frontend/js/src/Profile.tsx:677
+#: frontend/js/src/Profile.tsx:679
 msgid "Creative Commons licensed reviews"
 msgstr "Reseñas con licencias Creative Commons"
 
@@ -4047,10 +4063,6 @@ msgstr "Perfil"
 msgid "Close"
 msgstr "Cerrar"
 
-#: frontend/js/src/forms/ConditionsModal.tsx:21
-msgid "Privacy policy"
-msgstr "Política de privacidad"
-
 #: frontend/js/src/forms/ConditionsModal.tsx:23
 msgid "Licensing"
 msgstr "Licencias"
@@ -4063,9 +4075,9 @@ msgid ""
 "license this data for commercial use."
 msgstr ""
 "Todas tus contribuciones a un servicio de MetaBrainz serán liberadas al "
-"dominio público y/o publicadas bajo una licencia Creative Commons by-nc-sa. "
-"También das permiso a la MetaBrainz Foundation para licenciar estos datos "
-"para uso comercial."
+"dominio público y/o publicadas bajo una licencia Creative Commons by-nc-"
+"sa. También das permiso a la MetaBrainz Foundation para licenciar estos "
+"datos para uso comercial."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:30
 msgid "Please read our <licenseLink>license page</licenseLink> for more details."
@@ -4079,24 +4091,19 @@ msgid ""
 "information you choose to provide will not be sold or shared with anyone "
 "else."
 msgstr ""
-"En MetaBrainz damos gran importancia a la privacidad de nuestros usuarios. "
-"Nunca compartiremos ni venderemos ninguna información personal que nos "
-"suministres."
+"En MetaBrainz damos gran importancia a la privacidad de nuestros "
+"usuarios. Nunca compartiremos ni venderemos ninguna información personal "
+"que nos suministres."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:50
 msgid ""
 "Please read our <privacyLink>privacy policy</privacyLink> for more "
 "details."
 msgstr ""
-"Para saber más, consulta nuestra <privacyLink>política de privacidad</"
-"privacyLink>."
+"Para saber más, consulta nuestra <privacyLink>política de "
+"privacidad</privacyLink>."
 
-#: frontend/js/src/forms/ConditionsModal.tsx:47
-#, fuzzy
-msgid "privacy policy"
-msgstr "Política de privacidad"
-
-#: frontend/js/src/forms/ConditionsModal.tsx:51
+#: frontend/js/src/forms/ConditionsModal.tsx:59
 msgid "GDPR compliance"
 msgstr "Cumplimiento del RGPD"
 
@@ -4105,32 +4112,32 @@ msgid ""
 "You may remove your personal information from our services anytime by "
 "deleting your account."
 msgstr ""
-"Puedes eliminar tu cuenta en cualquier momento para eliminar tu información "
-"personal almacenada por nuestros servicios."
+"Puedes eliminar tu cuenta en cualquier momento para eliminar tu "
+"información personal almacenada por nuestros servicios."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:66
 msgid ""
 "Please read our <gdprLink>GDPR compliance statement</gdprLink> for more "
 "details."
 msgstr ""
-"Para saber más, consulta nuestra <gdprLink>declaración de cumplimiento del "
-"RGPD</gdprLink>."
+"Para saber más, consulta nuestra <gdprLink>declaración de cumplimiento "
+"del RGPD</gdprLink>."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:78
 msgid ""
 "Creating an account on MetaBrainz will give you access to all of our "
 "projects, such as MusicBrainz, ListenBrainz, BookBrainz, and more."
 msgstr ""
-"Creando una cuenta en MetaBrainz podrás acceder a todos nuestros proyectos, "
-"como MusicBrainz, ListenBrainz, BookBrainz, etc."
+"Creando una cuenta en MetaBrainz podrás acceder a todos nuestros "
+"proyectos, como MusicBrainz, ListenBrainz, BookBrainz, etc."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:82
 msgid ""
 "We create a placeholder account for all the MetaBrainz projects when you "
 "sign up, and you are one log-in away from activating them."
 msgstr ""
-"Crearemos una cuenta provisional en cada proyecto de MetaBrainz, que puedes "
-"activar iniciando sesión en cada uno de ellos."
+"Crearemos una cuenta provisional en cada proyecto de MetaBrainz, que "
+"puedes activar iniciando sesión en cada uno de ellos."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:91
 msgid "Sounds good"
@@ -4150,8 +4157,7 @@ msgstr "La descripción de la aplicación debe contener al menos tres caracteres
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
 msgid "Application description needs to be at most 512 characters long."
-msgstr ""
-"La descripción de la aplicación debe contener un máximo de 512 caracteres."
+msgstr "La descripción de la aplicación debe contener un máximo de 512 caracteres."
 
 #: frontend/js/src/forms/CreateApplication.tsx:78
 msgid "Homepage is required."
@@ -4160,7 +4166,8 @@ msgstr "Debes indicar el sitio web."
 #: frontend/js/src/forms/CreateApplication.tsx:82
 msgid "Authorization callback URL cannot be empty."
 msgstr ""
-"El campo «URL de devolución de llamada de autorización» no puede estar vacío."
+"El campo «URL de devolución de llamada de autorización» no puede estar "
+"vacío."
 
 #: frontend/js/src/forms/CreateApplication.tsx:85
 msgid "Authorization callback URL is required."
@@ -4262,10 +4269,6 @@ msgstr "Nueva contraseña"
 msgid "Confirm New Password"
 msgstr "Confirmación de la nueva contraseña"
 
-#: frontend/js/src/forms/ProfileEdit.tsx:35
-msgid "Edit contact information"
-msgstr "Editar información de contacto"
-
 #: frontend/js/src/forms/ProfileEdit.tsx:112
 msgid "Update"
 msgstr "Actualizar"
@@ -4304,9 +4307,9 @@ msgid ""
 "tier will publicly list your company on this web site. However, we will "
 "not publish any of your private details."
 msgstr ""
-"Si te registras en cualquier otro nivel que no sea <italic>«startup en modo "
-"sigilo»</italic>, tu empresa aparecerá en nuestro sitio web (pero no "
-"publicaremos tu información privada)."
+"Si te registras en cualquier otro nivel que no sea <italic>«startup en "
+"modo sigilo»</italic>, tu empresa aparecerá en nuestro sitio web (pero no"
+" publicaremos tu información privada)."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
@@ -4362,17 +4365,17 @@ msgid ""
 "Personal</nonCommercialLink> supporter."
 msgstr ""
 "Si no tienes un nombre de organización, lo más probable es que quieras "
-"registrarte como un simpatizante <nonCommercialLink>de uso no comercial / "
-"personal</nonCommercialLink>."
+"registrarte como un simpatizante <nonCommercialLink>de uso no comercial /"
+" personal</nonCommercialLink>."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:358
 msgid ""
 "If you don't have an organization name, you probably want to sign up as a"
 " <nonCommercialLink>Non-commercial / Personal</nonCommercialLink> user."
 msgstr ""
-"Si no tienes un nombre de organización, lo más probable es que quieras crear "
-"una cuenta de usuario <nonCommercialLink>de uso no comercial / personal</"
-"nonCommercialLink>."
+"Si no tienes un nombre de organización, lo más probable es que quieras "
+"crear una cuenta de usuario <nonCommercialLink>de uso no comercial / "
+"personal</nonCommercialLink>."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:378
 msgid ""
@@ -4380,9 +4383,9 @@ msgid ""
 "our <apiLink>API</apiLink> or to <hostLink>host your own copy</hostLink> "
 "of the data."
 msgstr ""
-"Cuéntanos algo sobre tu organización y si queréis utilizar nuestra <apiLink>"
-"API</apiLink> o <hostLink>alojar vuestra propia copia</hostLink> de los "
-"datos."
+"Cuéntanos algo sobre tu organización y si queréis utilizar nuestra "
+"<apiLink>API</apiLink> o <hostLink>alojar vuestra propia copia</hostLink>"
+" de los datos."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:404
 msgid "Logo URL"
@@ -4405,8 +4408,8 @@ msgid ""
 "URL to where developers can use your APIs using MusicBrainz IDs, if "
 "available.."
 msgstr ""
-"URL en la que otros desarrolladores pueden acceder a tu API usando IDs de "
-"MusicBrainz, si la tienes."
+"URL en la que otros desarrolladores pueden acceder a tu API usando IDs de"
+" MusicBrainz, si la tienes."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
 msgid "Your project"
@@ -4426,7 +4429,8 @@ msgid ""
 "I agree to support the MetaBrainz Foundation when my organization is able"
 " to do so."
 msgstr ""
-"Apoyaré a la MetaBrainz Foundation cuando mi organización pueda permitírselo."
+"Apoyaré a la MetaBrainz Foundation cuando mi organización pueda "
+"permitírselo."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:507
 msgid ""
@@ -4434,17 +4438,17 @@ msgid ""
 "treat my access token as a secret and will not share this token publicly "
 "or commit it to a source code repository."
 msgstr ""
-"Además, si genero un token de acceso al Live Data Feed, prometo considerar "
-"el token como un secreto y no compartirlo públicamente ni añadirlo a un "
-"repositorio de códigos fuente."
+"Además, si genero un token de acceso al Live Data Feed, prometo "
+"considerar el token como un secreto y no compartirlo públicamente ni "
+"añadirlo a un repositorio de códigos fuente."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:515
 msgid ""
 "The following information will be shown publicly: organization name, "
 "logo, website and API URLs, data usage description."
 msgstr ""
-"Mostraremos públicamente los siguientes datos: nombre de la organización, "
-"logo, URLs del sitio web y la API, y descripción del uso de los datos."
+"Mostraremos públicamente los siguientes datos: nombre de la organización,"
+" logo, URLs del sitio web y la API, y descripción del uso de los datos."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:520
 msgid ""
@@ -4492,9 +4496,9 @@ msgid ""
 "you for your commercial use of our datasets or the Live Data Feed."
 msgstr ""
 "Ten en cuenta que si descubrimos que has utilizado el servicio de uso no "
-"comercial con propósitos comerciales, cancelaremos tu token de acceso y te "
-"enviaremos una factura por tu uso comercial de nuestros conjuntos de datos y/"
-"o el Live Data Feed."
+"comercial con propósitos comerciales, cancelaremos tu token de acceso y "
+"te enviaremos una factura por tu uso comercial de nuestros conjuntos de "
+"datos y/o el Live Data Feed."
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:157
 msgid "Change account type"
@@ -4522,9 +4526,9 @@ msgid ""
 "will treat my access token as a secret and will not share this token "
 "publicly or commit it to a source code repository."
 msgstr ""
-"Además, si genero un token de acceso al Live Data Feed, prometo considerar "
-"el token como un secreto y no compartirlo públicamente ni añadirlo a un "
-"repositorio de códigos fuente."
+"Además, si genero un token de acceso al Live Data Feed, prometo "
+"considerar el token como un secreto y no compartirlo públicamente ni "
+"añadirlo a un repositorio de códigos fuente."
 
 #: frontend/js/src/forms/SignupUser.tsx:43
 msgid "Create your account"
@@ -4543,9 +4547,9 @@ msgid ""
 "This username and email were provided by the app that started "
 "registration. You can change them later from MetaBrainz settings."
 msgstr ""
-"El nombre de usuario y la dirección de correo nos han sido suministrados por "
-"la aplicación a través de la que iniciaste la creación de cuenta. Puedes "
-"cambiarlos más adelante desde las opciones de MetaBrainz."
+"El nombre de usuario y la dirección de correo nos han sido suministrados "
+"por la aplicación a través de la que iniciaste la creación de cuenta. "
+"Puedes cambiarlos más adelante desde las opciones de MetaBrainz."
 
 #: frontend/js/src/forms/SignupUser.tsx:182
 msgid ""
@@ -5345,7 +5349,7 @@ msgstr "La dirección de correo no es válida"
 #~ msgstr "Sign up with MusicBrainz"
 
 #~ msgid "Edit contact information"
-#~ msgstr "Edit contact information"
+#~ msgstr "Editar información de contacto"
 
 #~ msgid "Organization information"
 #~ msgstr "Organization information"
@@ -5883,3 +5887,10 @@ msgstr "La dirección de correo no es válida"
 
 #~ msgid "of the data."
 #~ msgstr ""
+
+#~ msgid "Twitter/X"
+#~ msgstr "Twitter/X"
+
+#~ msgid "Privacy policy"
+#~ msgstr "Política de privacidad"
+

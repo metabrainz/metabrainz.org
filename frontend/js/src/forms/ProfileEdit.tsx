@@ -32,7 +32,7 @@ function ProfileEdit({
   return (
     <>
       <h1 className="page-title">{t("Your Profile")}</h1>
-      <h2>{t("Edit contact information")}</h2>
+      <h2>{t("Edit Contact Information")}</h2>
       <Formik
         initialValues={{
           datasets:
