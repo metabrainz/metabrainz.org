@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 16:10+0000\n"
-"PO-Revision-Date: 2026-07-16 09:12+0000\n"
+"PO-Revision-Date: 2026-07-23 17:02+0000\n"
 "Last-Translator: \"ApeKattQuest, MonkeyPython\" "
 "<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
 "Language: nb\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: metabrainz/index/forms.py:46
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr "%(value)s er ikke et gyldig valg for dette feltet"
+msgstr "«%(value)s» er ikke et gyldig valg for dette feltet"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:27
 #: frontend/js/src/forms/SignupCommercial.tsx:154
@@ -41,7 +41,7 @@ msgstr "E-postadresse er påkrevd!"
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
 msgid "Current password is required!"
-msgstr "Nåværende e-postadresse er påkrevd!"
+msgstr "Forhenværende e-postadresse er påkrevd!"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -107,16 +107,15 @@ msgstr "Kunne ikke slette søknad."
 
 #: metabrainz/index/views.py:449
 msgid "Revoked tokens successfully!"
-msgstr ""
+msgstr "Pollettene ble annullert!"
 
 #: metabrainz/index/views.py:478
 msgid "Your account has been deleted."
 msgstr "Brukerprofilen er slettet."
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
-#, fuzzy
 msgid "Application Name"
-msgstr "Organisasjonsnavn"
+msgstr "Søknadsnavn"
 
 #: metabrainz/oauth/forms.py:59
 #, fuzzy
@@ -125,29 +124,27 @@ msgstr "Feltet for kontaktnavn er tomt."
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "Søknadens navn må ha minst 3 tegn."
 
 #: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
-msgstr ""
+msgstr "Søknadens navn kan bare ha maksimum 64 tegn."
 
 #: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
-#, fuzzy
 msgid "Description"
-msgstr "Beskrivelse av organisasjon"
+msgstr "Organisasjonsbeskrivelse"
 
 #: metabrainz/oauth/forms.py:64
-#, fuzzy
 msgid "Client description field is empty."
-msgstr "Feltet for kontaktnavn er tomt."
+msgstr "Feltet for klientbeskrivelsen er tomt."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr ""
+msgstr "Klientforklaringen må være på minst 3 tegn."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr ""
+msgstr "Klientforklaringen kan bare ha maksimum 512 tegn."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
@@ -158,17 +155,16 @@ msgid "Homepage field is empty."
 msgstr "Hjemmesidefeltet er tomt."
 
 #: metabrainz/oauth/forms.py:70
-#, fuzzy
 msgid "Homepage is not a valid URI."
-msgstr "E-postfeltet inneholder ikke en gyldig e-postadresse."
+msgstr "Hjemmesidefeltet har en ugyldig URI."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
-msgstr ""
+msgstr "Hjemmesideadressen kan bare bruke http eller https"
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "Adresse for tilbakekalling av autorisasjon"
 
 #: metabrainz/oauth/forms.py:74
 #, fuzzy
@@ -182,10 +178,11 @@ msgstr "Autorisasjonstilbakekallingsadressen er ugyldig."
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
 msgstr ""
+"Adresse for tilbakekalling av autorisasjon kan bare bruke http eller https."
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "Bekreft"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -251,6 +248,8 @@ msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
+"Fortell oss mer om prosjektet som skal bruke dataene våre. Skal det være på "
+"din egen server eller vil du bruke våre APIer?l"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:137
 #: frontend/js/src/forms/SignupNonCommercial.tsx:68
@@ -368,19 +367,16 @@ msgstr "Du må oppgi land"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:132
 #: metabrainz/supporter/forms.py:64
-#, fuzzy
 msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
 msgstr ""
-"Egendefinert beløp må være likt eller høyere en terskelen for valgt nivå "
-"eller."
+"Egendefinert beløp må være høyere enn terskelen for valgt nivå eller lik det!"
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
-#, fuzzy
 msgid "You are already a supporter."
-msgstr "Se alle våre støttespillere"
+msgstr "Du er allerede en støttespiller."
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
@@ -395,34 +391,32 @@ msgid "You need to choose existing tier before signing up!"
 msgstr "Du må velge et eksisterende nivå før du registrerer deg!"
 
 #: metabrainz/supporter/views.py:164
-#, fuzzy
 msgid ""
 "Thanks for becoming a supporter! Your application will be reviewed soon. "
 "We will send you updates via email."
 msgstr ""
-"Takk for at du registrerer deg! Din søknad vil bli vurdert snart. Vi vil "
-"sende deg oppdateringer per e-post."
+"Takk for din støtte! Din søknad vil bli vurdert snart. Vi vil sende deg "
+"oppdateringer per e-post."
 
 #: metabrainz/supporter/views.py:187
 msgid ""
 "Thanks for signing up! Your application will be reviewed soon. We will "
 "send you updates via email."
 msgstr ""
-"Takk for at du registrerer deg! Din søknad vil bli vurdert snart. Vi vil "
-"sende deg oppdateringer per e-post."
+"Takk for din registrering! Din søknad vil bli vurdert snart. Vi vil sende "
+"deg oppdateringer per e-post."
 
 #: metabrainz/supporter/views.py:248
-#, fuzzy
 msgid "Thanks for becoming a supporter!"
-msgstr "Takk for at du registrerer deg!"
+msgstr "Takk for din støtte!"
 
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
-msgstr ""
+msgstr "Takk for din registrering! Sjekk innboksen for å fullføre bekreftelsen."
 
 #: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
-msgstr "Kan ikke opprette nytt symbol med mindre konto er aktiv."
+msgstr "Kan ikke generere en ny polett med mindre kontoen er aktiv."
 
 #: metabrainz/templates/base.html:44
 msgid "Foundation"
@@ -438,9 +432,8 @@ msgstr "Prosjekter"
 #: metabrainz/templates/index/datasets/derived-dumps.html:3
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
-#, fuzzy
 msgid "Datasets"
-msgstr "Dato"
+msgstr "Datasett"
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
@@ -449,31 +442,30 @@ msgstr "Lag"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr ""
+msgstr "Butikk"
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
 msgid "Policies"
-msgstr ""
+msgstr "Retningslinjer"
 
 #: metabrainz/templates/base.html:55
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
-#, fuzzy
 msgid "Social Contract"
-msgstr "Kontakt"
+msgstr "Sosialkontakt"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
 #: metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
-msgstr ""
+msgstr "Retningslinjer for god oppførsel"
 
 #: metabrainz/templates/base.html:57 metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
 msgid "Privacy Policy"
-msgstr "Personvernspraksis"
+msgstr "Personvernerklæring"
 
 #: metabrainz/templates/base.html:61
 #: metabrainz/templates/reports/financial_reports/index.html:3
@@ -536,7 +528,7 @@ msgstr "Blogg"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "Chat"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
@@ -547,26 +539,26 @@ msgstr "Twitter"
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
 msgid "Mastodon"
-msgstr ""
+msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
 msgid "Bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: metabrainz/templates/base.html:90
 #: metabrainz/templates/index/contact.html:109
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: metabrainz/templates/base.html:95
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
-msgstr ""
+msgstr "Sponset av <a href=\"%(github_url)s\">GitHub</a>"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
-msgstr "Veksle navigasjon"
+msgstr "Slå på/av navigasjon"
 
 #: metabrainz/templates/index/about.html:3 metabrainz/templates/navbar.html:21
 msgid "About"
@@ -580,26 +572,23 @@ msgstr "Stiftelsen"
 #: metabrainz/templates/index/conflict-policy.html:12
 #: metabrainz/templates/navbar.html:37
 msgid "Conflict Resolution Policy"
-msgstr ""
+msgstr "Retningslinjer for konfliktløsning"
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
-msgstr ""
+msgstr "GDPR-krav"
 
 #: metabrainz/templates/navbar.html:45
-#, fuzzy
 msgid "Supporter Sign Up"
-msgstr "Støttespillere"
+msgstr "Registrering av støttespillere"
 
 #: metabrainz/templates/navbar.html:46
-#, fuzzy
 msgid "Our Supporters"
-msgstr "Støttespillere"
+msgstr "Våre støttespillere"
 
 #: metabrainz/templates/navbar.html:47
-#, fuzzy
 msgid "Our Sponsors"
-msgstr "Sponsorer"
+msgstr "Våre sponsorer"
 
 #: metabrainz/templates/navbar.html:51
 #: metabrainz/templates/reports/financial_reports/index.html:29
@@ -612,7 +601,7 @@ msgstr "Finansrapporter"
 
 #: metabrainz/templates/navbar.html:58
 msgid "Donate"
-msgstr "Doner"
+msgstr "Donére"
 
 #: frontend/js/src/forms/LoginUser.tsx:110
 #: frontend/js/src/forms/SignupCommercial.tsx:175
@@ -625,7 +614,7 @@ msgstr "Doner"
 #: metabrainz/templates/supporters/account-type.html:144
 #: metabrainz/templates/users/signup.html:3
 msgid "Sign up"
-msgstr "Registrer deg"
+msgstr "Registrering"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:21
 #: frontend/js/src/forms/ProfileEdit.tsx:34
@@ -638,11 +627,11 @@ msgstr "Din profil"
 
 #: metabrainz/templates/navbar.html:74
 msgid "OAuth applications"
-msgstr ""
+msgstr "OAuth søknader"
 
 #: metabrainz/templates/navbar.html:80 metabrainz/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Språk"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
@@ -654,7 +643,7 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
-"Alle endepunkter krever et tilgangssymbol som du kan få fra din\n"
+"Alle endepunkter krever en adgangskode, som du kan få på din \n"
 "    <a href=\"%(profile_url)s\">profilside</a>."
 
 #: metabrainz/templates/api/info.html:15
@@ -662,24 +651,21 @@ msgid "MusicBrainz Live Data Feed"
 msgstr "Sanntidsdatastrøm fra MusicBrainz"
 
 #: metabrainz/templates/api/info.html:16
-#, fuzzy
 msgid "There are two endpoints for fetching live data:"
-msgstr "Det er tre endepunkter for henting av repliseringspakker:"
+msgstr "Det finnes to endepunkter for å hente sanntidsdata:"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
 msgstr ""
 
 #: metabrainz/templates/api/info.html:30
-#, fuzzy
 msgid ""
 "It is possible to get a signature for each replication packet. Just "
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"Det er mulig å hente en signatur for hver repliseringspakke. Bare erstatt"
-"\n"
-"      <code>.tar.bz2</code> med <code>.asc</code>."
+"Det er mulig å hente en signatur for hver repliseringspakke. Bare erstatt\n"
+"      <code>.tar.bz2</code> med <code>.tar.bz2.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 #, fuzzy
@@ -1933,9 +1919,8 @@ msgstr "Registrer deg"
 #: frontend/js/src/Applications.tsx:43
 #: frontend/js/src/forms/CreateApplication.tsx:42
 #: metabrainz/templates/oauth/create.html:3
-#, fuzzy
 msgid "Create new application"
-msgstr "Opprett nytt symbol"
+msgstr "Opprett en ny søknad"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -1945,7 +1930,7 @@ msgstr ""
 #: metabrainz/templates/oauth/edit.html:3
 #, python-format
 msgid "Edit application %(name)s"
-msgstr ""
+msgstr "Rediger søknad %(name)s"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
@@ -1953,11 +1938,11 @@ msgstr ""
 
 #: frontend/js/src/ProfileTabs.tsx:22 metabrainz/templates/oauth/index.html:3
 msgid "Applications"
-msgstr ""
+msgstr "Søknader"
 
 #: metabrainz/templates/oauth/prompt.html:3
 msgid "OAuth Authorization"
-msgstr ""
+msgstr "OAuth-autorisasjon"
 
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
@@ -2100,6 +2085,8 @@ msgid ""
 "To find out how to cancel recurring donations take a look at\n"
 "        <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
+"For informasjon om å kansellere gjentakende donasjoner gå til\n"
+"        <a href=\"%(cancel_recurring_url)s\">denne siden</a>."
 
 #: metabrainz/templates/payments/donate.html:134
 msgid "Other ways to donate"
@@ -2252,13 +2239,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/payments/payment.html:93
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
-"For å finne ut hvordan du avbryter gjentagende betalingsavtaler, ta en "
-"titt på\n"
+"For informasjon om å kansellere gjentakende betalinger gå til\n"
 "        <a href=\"%(cancel_recurring_url)s\">denne siden</a>."
 
 #: metabrainz/templates/payments/payment.html:157
@@ -3220,9 +3206,8 @@ msgstr "Dette epostdomenet er ugyldig."
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username"
-msgstr "Navn"
+msgstr "Brukernavn"
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3270,9 +3255,8 @@ msgstr "Endre"
 
 #: frontend/js/src/ApplicationRow.tsx:78
 #: frontend/js/src/forms/DeleteApplication.tsx:60
-#, fuzzy
 msgid "Delete"
-msgstr "Dato"
+msgstr "Slett"
 
 #: frontend/js/src/Applications.tsx:37
 msgid "Your applications"
@@ -3300,9 +3284,8 @@ msgid "Privileges"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:61 frontend/js/src/Applications.tsx:89
-#, fuzzy
 msgid "Actions"
-msgstr "Donasjoner"
+msgstr "Handlinger"
 
 #: frontend/js/src/Applications.tsx:77
 msgid "Authorized applications"
@@ -3313,14 +3296,12 @@ msgid "No tokens found"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:88
-#, fuzzy
 msgid "Access"
-msgstr "Tillat tilgang"
+msgstr "Tilgang"
 
 #: frontend/js/src/Applications.tsx:111
-#, fuzzy
 msgid "Revoke access"
-msgstr "Tillat tilgang"
+msgstr "Oppheve tilgang"
 
 #: frontend/js/src/OAuthError.tsx:17
 msgid "OAuth2 Error"
