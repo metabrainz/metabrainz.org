@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 16:10+0000\n"
-"PO-Revision-Date: 2026-07-14 17:12+0000\n"
+"PO-Revision-Date: 2026-07-23 17:02+0000\n"
 "Last-Translator: mr_monkey "
 "<mr_monkey@users.noreply.translations.metabrainz.org>\n"
 "Language: fr\n"
@@ -730,7 +730,7 @@ msgid "About the MetaBrainz Foundation"
 msgstr "À propos de la Fondation MetaBrainz"
 
 #: metabrainz/templates/index/about.html:13
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The MetaBrainz Foundation is a global community creating and maintaining"
 " \n"
@@ -744,16 +744,16 @@ msgid ""
 "        collaborating together to build and maintain the MetaBrainz "
 "comprehensive datasets."
 msgstr ""
-"La Fondation MetaBrainz est une communauté globale créant et maintenant \n"
-"        une encyclopédie libre de métadonnée de musique et d'arts. "
-"Commençant comme une ressource pour les collectionneurs \n"
-"        de musique, nous sommes en train d'établir une collaboration entres "
-"les volontaires, artistes et \n"
+"La Fondation MetaBrainz est une communauté globale qui créé et maintient \n"
+"        une encyclopédie libre de métadonnée de musique et d'arts. À "
+"l'origine une ressource pour les collectionneurs \n"
+"        de musique, nous établissons une collaboration entres les bénévoles, "
+"les artistes et \n"
 "        les leaders de l'industrie. Depuis sa fondation, elle a grandit en "
 "une communauté globale de \n"
 "        <a href=\"%(editors_url)s\">centaines de milliers d'éditeurs</a> \n"
-"        collaborant ensembles pour construire et maintenir l'entièrté de la "
-"base de donnée de MetaBrainz."
+"        collaborant pour construire et maintenir les ensembles de données de "
+"MetaBrainz."
 
 #: metabrainz/templates/index/about.html:22
 #, python-format
@@ -849,6 +849,8 @@ msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
 msgstr ""
+"Directeur Exécutif en intérim <a href=\"%(reo_url)s\">Nicolás Tamargo</a> de "
+"la Fondation MetaBrainz"
 
 #: metabrainz/templates/index/about.html:58
 #, python-format
@@ -856,6 +858,8 @@ msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
 msgstr ""
+"Directrice <a href=\"%(hazel_url)s\">Hazel Savage</a> de <a href=\"%"
+"(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:62
 msgid "Advisor"
@@ -871,6 +875,7 @@ msgid ""
 "<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
 "journalist"
 msgstr ""
+"<a href=\"%(cory_url)s\">Cory Doctorow</a>, auteur, activiste et journaliste"
 
 #: metabrainz/templates/index/about.html:67
 msgid "Officers"
@@ -898,7 +903,7 @@ msgstr "Mauvais clients"
 
 #: metabrainz/templates/index/bad-customers.html:8
 msgid "Our not-so-favorite commercial data supporters"
-msgstr "Les utilisateurs commerciaux qui n’ont pas notre faveur"
+msgstr "Ceux des utilisateurs commerciaux qui n’ont pas notre faveur"
 
 #: metabrainz/templates/index/bad-customers.html:11
 msgid ""
@@ -1079,7 +1084,7 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:40
 msgid "Advertising requests"
-msgstr ""
+msgstr "Requêtes publicitaires"
 
 #: metabrainz/templates/index/contact.html:42
 msgid ""
@@ -1098,14 +1103,15 @@ msgstr ""
 #, python-format
 msgid "Please submit your proposals before 17:00 PST on %(ad_deadline)s."
 msgstr ""
+"Veuillez soumettre votre proposition avant le %(ad_deadline)s à 17h00 PST."
 
 #: metabrainz/templates/index/contact.html:54
 msgid "Contact details"
-msgstr ""
+msgstr "Détails du contact"
 
 #: metabrainz/templates/index/contact.html:56
 msgid "Please do not contact us with the following topics:"
-msgstr ""
+msgstr "Veuillez ne pas nous contacter sur les sujets suivants :"
 
 #: metabrainz/templates/index/contact.html:58
 msgid ""
@@ -1113,32 +1119,43 @@ msgid ""
 "neither the music itself nor the\n"
 "        rights to license the music."
 msgstr ""
+"Nous ne pouvons pas accorder de licence pour aucune des musiques "
+"répertoriées dans MusicBrainz, n'ayant ni la musique elle-même\n"
+"        ni les droits de licence sur la musique."
 
 #: metabrainz/templates/index/contact.html:60
 msgid "We are not distributing any of the music listed in MusicBrainz."
-msgstr ""
+msgstr "Nous ne distribuons aucune des musiques répertoriées dans MusicBrainz."
 
 #: metabrainz/templates/index/contact.html:61
 msgid ""
 "For inquiries about advertising, SEO optimization, or software "
 "monetization services, please see above!"
 msgstr ""
+"Pour toute question concernant les services de publicité, d’optimisation du "
+"référencement ou de monétisation de logiciels, veuillez voir ci-dessus !"
 
 #: metabrainz/templates/index/contact.html:62
 msgid "Please do not offer us <b>any</b> other services! We are not interested."
 msgstr ""
+"Veuillez ne nous proposer <b>aucun</b> autre service ! Nous ne sommes pas "
+"intéressés."
 
 #: metabrainz/templates/index/contact.html:63
 msgid ""
 "Please do not contact us about any job openings, we do not hire people "
 "who are not part of our community."
 msgstr ""
+"Veuillez ne pas nous contacter au sujet d'offres d'emploi, nous n'embauchons "
+"qu'au sein de notre communauté."
 
 #: metabrainz/templates/index/contact.html:68
 msgid ""
 "If you disregard this agreement and contact us about one of the\n"
 "      disallowed topics, we reserve the right to make fun of you."
 msgstr ""
+"Si vous ne respectez pas cet accord et nous contactez au sujet de l'un des "
+"sujets indiqués, nous nous réservons le droit de nous moquer de vous."
 
 #: metabrainz/templates/index/contact.html:73
 msgid "E-mail us"
@@ -1297,26 +1314,34 @@ msgid ""
 "Sign up to use the <a href=\"%(account_type_url)s\">Live Data "
 "Feed</a></em>"
 msgstr ""
+"Inscrivez-vous pour utiliser le <a href=\"%(account_type_url)s\">Live Data "
+"Feed</a>"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
-msgstr ""
+msgstr "Un marqueur de fichiers musicaux multi-plateforme"
 
 #: metabrainz/templates/index/index.html:57
 msgid "An open encyclopedia which contains information about published literature"
 msgstr ""
+"Une encyclopédie libre qui contient des informations sur la littérature et "
+"autres publications"
 
 #: metabrainz/templates/index/index.html:65
 msgid "An open record of user listening habits"
 msgstr ""
+"Un registre ouvert de données des habitudes d'écoute de nos utilisateurs"
 
 #: metabrainz/templates/index/index.html:73
 msgid "A repository for Creative Commons licensed music and book reviews"
 msgstr ""
+"Un registre de critiques de musique et de livres sous licence Creative "
+"Commons"
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
 msgstr ""
+"Un référentiel de pochettes musicales librement et facilement accessible"
 
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
@@ -1379,15 +1404,15 @@ msgstr "Cookies"
 
 #: metabrainz/templates/index/privacy.html:54
 msgid "Web and FTP access logs"
-msgstr ""
+msgstr "Journaux d'accès aux sites web et FTP"
 
 #: metabrainz/templates/index/privacy.html:62
 msgid "Third-Party content"
-msgstr ""
+msgstr "Contenu tiers"
 
 #: metabrainz/templates/index/privacy.html:92
 msgid "Applicable to account holders"
-msgstr ""
+msgstr "Applicable aux titulaires de compte"
 
 #: metabrainz/templates/index/privacy.html:94
 msgid "Account creation"
@@ -1395,7 +1420,7 @@ msgstr "Création de compte"
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
-msgstr ""
+msgstr "Modifications et notes"
 
 #: metabrainz/templates/index/privacy.html:114
 msgid "Subscriptions on MusicBrainz"
@@ -1403,11 +1428,11 @@ msgstr "Abonnements sur MusicBrainz"
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
-msgstr ""
+msgstr "Sites tiers"
 
 #: metabrainz/templates/index/privacy.html:145
 msgid "MetaBrainz donors"
-msgstr ""
+msgstr "Donateurs"
 
 #: metabrainz/templates/index/privacy.html:147
 msgid ""
@@ -1431,7 +1456,7 @@ msgstr ""
 
 #: metabrainz/templates/index/privacy.html:158
 msgid "Exceptions"
-msgstr ""
+msgstr "Exceptions"
 
 #: frontend/js/src/Profile.tsx:596
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
@@ -1464,6 +1489,9 @@ msgid ""
 "source music encyclopedia that\n"
 "            collects music metadata and makes it available to the public."
 msgstr ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a> est une encyclopédie musicale libre "
+"entretenue par la communauté, qui collecte des métadonnées musicales et les "
+"met à la disposition du public."
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
@@ -1476,6 +1504,8 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> est un logiciel libre pour "
+"identifier, marquer et organiser les fichiers audionumériques."
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
@@ -3716,9 +3746,8 @@ msgid "Deleting..."
 msgstr ""
 
 #: frontend/js/src/ProfileTabs.tsx:17
-#, fuzzy
 msgid "Profile"
-msgstr "Votre Profil"
+msgstr "Profil"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:17
 msgid "Close"
@@ -3869,9 +3898,8 @@ msgstr "Nom d’utilisateur oublié ?"
 
 #: frontend/js/src/forms/LoginUser.tsx:66
 #: frontend/js/src/forms/LostPassword.tsx:26
-#, fuzzy
 msgid "Forgot your password?"
-msgstr "Mot de passe oublié"
+msgstr "Mot de passe oublié?"
 
 #: frontend/js/src/forms/LoginUser.tsx:109
 msgid "Don't have an account?"
@@ -3906,31 +3934,26 @@ msgid "Allow access"
 msgstr "Autorisations"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:71
-#, fuzzy
 msgid "Current Password"
-msgstr "Mot de passe oublié"
+msgstr "Mot de passe actuel"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:80
-#, fuzzy
 msgid "New Password"
-msgstr "Afficher le mot de passe"
+msgstr "Nouveau mot de passe"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:89
-#, fuzzy
 msgid "Confirm New Password"
-msgstr "Afficher le mot de passe"
+msgstr "Confirmer le nouveau mot de passe"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:35
 msgid "Edit contact information"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "Date"
+msgstr "Actualiser"
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
-#, fuzzy
 msgid "Reset Password"
 msgstr "Réinitialiser le mot de passe"
 
@@ -3945,9 +3968,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
 #: frontend/js/src/forms/SignupUser.tsx:87
-#, fuzzy
 msgid "Captcha is required!"
-msgstr "Un mot de passe est requis !"
+msgstr "Veuillez saisir la captcha"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:179
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
@@ -3969,19 +3991,16 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
-#, fuzzy
 msgid "Account type"
-msgstr "Création de compte"
+msgstr "Type de compte"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
-#, fuzzy
 msgid "Selected tier"
-msgstr "Voir les paliers en vedette"
+msgstr "Palier sélectionné"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:242
-#, fuzzy
 msgid "month and up"
-msgstr "$0.00 par mois ou plus"
+msgstr "mois ou plus"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:250
 msgid "Change account type or tier"
@@ -3989,9 +4008,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
-#, fuzzy
 msgid "Your account:"
-msgstr "Accéder à votre compte"
+msgstr "Votre compte:"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
@@ -4002,9 +4020,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:291
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
 #: frontend/js/src/forms/SignupUser.tsx:127
-#, fuzzy
 msgid "E-mail address"
-msgstr "Une adresse email est requise !"
+msgstr "Adresse e-mail"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:295
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
@@ -4039,7 +4056,6 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:404
-#, fuzzy
 msgid "Logo URL"
 msgstr "URL du logo"
 
@@ -4060,9 +4076,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
-#, fuzzy
 msgid "Your project"
-msgstr "Votre Profil"
+msgstr "Votre projet"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
@@ -4106,7 +4121,6 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:564
 #: frontend/js/src/forms/SignupNonCommercial.tsx:329
-#, fuzzy
 msgid "Back to profile"
 msgstr "Retour au profil"
 
@@ -4118,9 +4132,8 @@ msgstr "Rejoindre nos soutiens"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-#, fuzzy
 msgid "Create a user account"
-msgstr "Accéder à votre compte"
+msgstr "Créer un compte utilisateur"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:573
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
@@ -4129,9 +4142,8 @@ msgid "Already have an account?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:107
-#, fuzzy
 msgid "non-commercial"
-msgstr "Non commercial"
+msgstr "non commercial"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:113
 msgid ""
@@ -4149,9 +4161,8 @@ msgid "Which datasets are you interested in?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
-#, fuzzy
 msgid "About your project"
-msgstr "Projets antérieurs"
+msgstr "À propos de votre projet"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
@@ -4167,9 +4178,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:43
-#, fuzzy
 msgid "Create your account"
-msgstr "Accéder à votre compte"
+msgstr "Créer votre compte"
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
@@ -4200,14 +4210,12 @@ msgid "Click here to read more"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:224
-#, fuzzy
 msgid "Create account"
-msgstr "Accéder à votre compte"
+msgstr "Créer un compte"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
-#, fuzzy
 msgid "This email address is already registered."
-msgstr "Une adresse email est requise !"
+msgstr "Cette adresse e-mail est déjà enregistrée"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
