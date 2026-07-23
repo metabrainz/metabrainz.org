@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-13 16:10+0000\n"
-"PO-Revision-Date: 2026-07-23 17:02+0000\n"
+"PO-Revision-Date: 2026-07-23 17:10+0000\n"
 "Last-Translator: \"ApeKattQuest, MonkeyPython\" "
 "<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
 "Language: nb\n"
@@ -656,7 +656,7 @@ msgstr "Det finnes to endepunkter for å hente sanntidsdata:"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
-msgstr ""
+msgstr "Timebaserte replikasjonspakker"
 
 #: metabrainz/templates/api/info.html:30
 msgid ""
@@ -664,13 +664,12 @@ msgid ""
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"Det er mulig å hente en signatur for hver repliseringspakke. Bare erstatt\n"
+"Det er mulig å hente en signatur for hver replikasjonspakke. Bare erstatt\n"
 "      <code>.tar.bz2</code> med <code>.tar.bz2.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
-#, fuzzy
 msgid "You can find the latest replication packet number from this endpoint:"
-msgstr "Du kan finne de siste repliseringspakkenummerne fra dette endepunktet:"
+msgstr "Du kan finne de siste replikasjonspakkenummerne ved dette endepunktet:"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
@@ -698,13 +697,11 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/api/info.html:67
-#, fuzzy
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"Det er mulig å hente en signatur for hver repliseringspakke. Bare erstatt"
-"\n"
+"Det er mulig å hente en signatur for hver replikasjonspakke. Bare erstatt\n"
 "      <code>.tar.bz2</code> med <code>.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
