@@ -10,18 +10,18 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-23 17:08+0000\n"
-"PO-Revision-Date: 2026-07-23 17:02+0000\n"
+"PO-Revision-Date: 2026-07-24 18:12+0000\n"
 "Last-Translator: \"ApeKattQuest, MonkeyPython\" "
 "<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
 "Language: nb\n"
-"Language-Team: Norwegian Bokmål "
-"<https://translations.metabrainz.org/projects/metabrainz/website/nb_NO/>"
-"\n"
+"Language-Team: Norwegian Bokmål <https://translations.metabrainz.org/"
+"projects/metabrainz/website/nb_NO/>\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
@@ -41,7 +41,7 @@ msgstr "E-postadresse er påkrevd!"
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
 msgid "Current password is required!"
-msgstr "Forhenværende e-postadresse er påkrevd!"
+msgstr "Forhenværende passord er påkrevd!"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -135,10 +135,12 @@ msgid "Description"
 msgstr "Organisasjonsbeskrivelse"
 
 #: metabrainz/oauth/forms.py:64
+#, fuzzy
 msgid "Client description field is empty."
 msgstr "Feltet for klientbeskrivelsen er tomt."
 
 #: metabrainz/oauth/forms.py:65
+#, fuzzy
 msgid "Client description needs to be at least 3 characters long."
 msgstr "Klientforklaringen må være på minst 3 tegn."
 
@@ -191,17 +193,17 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
-"Takk for at du donere til MetaBrainz-stiftelsen. Din støtte blir varmt "
-"mottatt. Det kan ta litt tid før din donasjon framtrer på listen som "
-"følge av behandlingsforsinkelser."
+"Takk for at du donerte til MetaBrainz-stiftelsen. Vi setter stor pris på din "
+"støtte! Det kan ta litt tid før donasjonen vises i listen på grunn av "
+"behandlingsforsinkelser."
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
-"Takk for at du overfører penger til MetaBrains-stiftelsen. Din støtte "
-"blir varmt mottatt."
+"Takk for at du betaler til MetaBrains-stiftelsen. Vi setter stor pris på din "
+"støtte!"
 
 #: metabrainz/payments/views.py:182
 msgid ""
@@ -220,27 +222,27 @@ msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
 msgstr ""
-"Det later til at vi har støtte på en feil, og kan ikke behandle din "
-"donasjon."
+"Beklager, det later til at vi har støtte på en feil, og kan ikke behandle "
+"din donasjon."
 
 #: metabrainz/payments/views.py:208
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your payment."
 msgstr ""
-"Det later til at vi har støtt på en feil, og kan ikke behandle din "
+"Beklager, det later til at vi har støtt på en feil, og kan ikke behandle din "
 "betaling."
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
-msgstr "Forespurt årsrapport ble ikke funnet."
+msgstr "Den forespurte årsrapporten ble ikke funnet."
 
 #: frontend/js/src/forms/ProfileEdit.tsx:30
 #: frontend/js/src/forms/SignupCommercial.tsx:139
 #: frontend/js/src/forms/SignupNonCommercial.tsx:70
 #: metabrainz/supporter/forms.py:13
 msgid "Contact name is required!"
-msgstr "Kontaktnavn kreves!"
+msgstr "Kontaktens navn er påkrevd!"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:437
 #: frontend/js/src/forms/SignupNonCommercial.tsx:264
@@ -249,8 +251,8 @@ msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
-"Fortell oss mer om prosjektet som skal bruke dataene våre. Skal det være "
-"på din egen server eller vil du bruke våre APIer?l"
+"Fortell oss mer om prosjektet som skal bruke dataene våre. Skal det lagres "
+"på din egen server eller vil du bruke våre APIer?"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:137
 #: frontend/js/src/forms/SignupNonCommercial.tsx:68
@@ -283,7 +285,7 @@ msgstr "Organisasjonsnavn"
 #: frontend/js/src/forms/SignupCommercial.tsx:113
 #: metabrainz/supporter/forms.py:28
 msgid "You need to specify the name of your organization."
-msgstr "Du må oppgi navnet på din organisasjon."
+msgstr "Du må oppgi navnet på organisasjonen."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:373
 #: metabrainz/supporter/forms.py:30
@@ -293,7 +295,7 @@ msgstr "Beskrivelse av organisasjon"
 #: frontend/js/src/forms/SignupCommercial.tsx:116
 #: metabrainz/supporter/forms.py:31
 msgid "You need to provide description of your organization."
-msgstr "Du må oppgi en beskrivelse av din organisasjon."
+msgstr "Du må oppgi en beskrivelse av organisasjonen."
 
 #: frontend/js/src/Profile.tsx:278
 #: frontend/js/src/forms/SignupCommercial.tsx:396
@@ -324,7 +326,7 @@ msgstr "Gate"
 #: frontend/js/src/forms/SignupCommercial.tsx:123
 #: metabrainz/supporter/forms.py:41
 msgid "You need to specify street."
-msgstr "Du må oppgi gate."
+msgstr "Du må oppgi gateadresse."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:465
 #: metabrainz/supporter/forms.py:43
@@ -344,7 +346,7 @@ msgstr "Fylke"
 #: frontend/js/src/forms/SignupCommercial.tsx:126
 #: metabrainz/supporter/forms.py:47
 msgid "You need to specify state/province."
-msgstr "Du må oppgi fylke."
+msgstr "Du må oppgi fylke/provins."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:481
 #: metabrainz/supporter/forms.py:49
@@ -455,7 +457,7 @@ msgstr "Retningslinjer"
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
 msgid "Social Contract"
-msgstr "Sosialkontakt"
+msgstr "Samfunnspakt"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
@@ -515,7 +517,7 @@ msgstr "Logg ut"
 
 #: metabrainz/templates/base.html:77
 msgid "Access your account"
-msgstr "Bruk kontoen din"
+msgstr "Brukerkontotillgang"
 
 #: metabrainz/templates/base.html:78
 msgid "API"
@@ -671,7 +673,7 @@ msgstr "Du kan finne de siste replikasjonspakkenummerne ved dette endepunktet:"
 
 #: metabrainz/templates/api/info.html:44
 msgid "Hourly Incremental JSON Dumps"
-msgstr ""
+msgstr "Trinnvise timebaserte JSON-dumper"
 
 #: metabrainz/templates/api/info.html:58
 msgid ""
@@ -680,12 +682,18 @@ msgid ""
 "instrument, label, place, recording, release, release-group, series, or "
 "work."
 msgstr ""
+"JSON-dumpene er partisjonert etter enhetstype. <code>&lt;ENTITY_NAME&gt;</"
+"code> kan være én av følgende: område, artist, arrangement, instrument, "
+"plateselskap, sted, innspilling, utgivelse, utgivelsesgruppe, serie eller "
+"verk."
 
 #: metabrainz/templates/api/info.html:61
 msgid ""
 "It’s possible that a JSON dump for a particular entity type doesn’t exist"
 " if no entities of that type have changed in a given hour."
 msgstr ""
+"Det er mulig at en JSON-dump for en bestemt enhetstype ikke finnes, hvis "
+"ingen enheter av den typen har endret seg i løpet av en gitt time."
 
 #: metabrainz/templates/api/info.html:64
 msgid ""
@@ -693,14 +701,17 @@ msgid ""
 "This file must be read line-by-line; each line contains one changed "
 "entity in JSON format."
 msgstr ""
+"Hver dump inneholder en fil med navnet <code>mbdump/&lt;ENTITY_NAME&gt;</"
+"code>. Denne filen må leses linje for linje; hver linje inneholder én endret "
+"enhet i JSON-format."
 
 #: metabrainz/templates/api/info.html:67
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"Det er mulig å hente en signatur for hver replikasjonspakke. Bare erstatt\n"
-"      <code>.tar.bz2</code> med <code>.asc</code>."
+"Som med replikasjonspakker, kan du få en filsignatur ved å erstatte <code>"
+".tar.xz</code> med <code>.tar.xz.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -778,7 +789,7 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:51
 msgid "Our board of directors consists of:"
-msgstr ""
+msgstr "Vårt styre består av:"
 
 #: metabrainz/templates/index/about.html:53
 #, python-format
@@ -787,11 +798,13 @@ msgid ""
 "href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
 "Alliance</a>"
 msgstr ""
+"Direktør og sekretær Nick Ashton-Hart, administrerende direktør i <a href=\"%"
+"(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem Alliance</a>"
 
 #: metabrainz/templates/index/about.html:54
 #, python-format
 msgid "Director <a href=\"%(paul_url)s\">Paul Bennun</a> of fuchsia, LLC"
-msgstr ""
+msgstr "Direktør <a href=\"%(paul_url)s\">Paul Bennun</a> i fuchsia, LLC"
 
 #: metabrainz/templates/index/about.html:55
 #, python-format
@@ -799,6 +812,8 @@ msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
 msgstr ""
+"Direktør <a href=\"%(matthew_url)s\">Matthew Hawn</a> av <a href=\"%"
+"(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, python-format
@@ -806,6 +821,8 @@ msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
 msgstr ""
+"Direktør og kasserer <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a> i "
+"<a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:57
 #, python-format
@@ -813,6 +830,8 @@ msgid ""
 "Interim Executive Director <a href=\"%(reo_url)s\">Nicolás Tamargo</a> of"
 " the MetaBrainz Foundation"
 msgstr ""
+"Midlertidig administrerende direktør <a href=\"%(reo_url)s\">Nicolás "
+"Tamargo</a> i MetaBrainz Foundation"
 
 #: metabrainz/templates/index/about.html:58
 #, python-format
@@ -820,14 +839,16 @@ msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
 msgstr ""
+"Direktør <a href=\"%(hazel_url)s\">Hazel Savage</a> av <a href=\"%(leeds_url)"
+"s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:62
 msgid "Advisor"
-msgstr ""
+msgstr "Rådgiver"
 
 #: metabrainz/templates/index/about.html:63
 msgid "Our board of directors is advised by:"
-msgstr ""
+msgstr "Vårt styre blir rådgitt av:"
 
 #: metabrainz/templates/index/about.html:65
 #, python-format
@@ -835,6 +856,7 @@ msgid ""
 "<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
 "journalist"
 msgstr ""
+"<a href=\"%(cory_url)s\">Cory Doctorow</a>, forfatter, aktivist og journalist"
 
 #: metabrainz/templates/index/about.html:67
 msgid "Officers"
@@ -846,15 +868,15 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:70
 msgid "President Nicolás Tamargo"
-msgstr ""
+msgstr "President Nicolás Tamargo"
 
 #: metabrainz/templates/index/about.html:71
 msgid "Treasurer Rassami Hok Ljungberg"
-msgstr ""
+msgstr "Kasserer Rassami Hok Ljungberg"
 
 #: metabrainz/templates/index/about.html:72
 msgid "Secretary Nick Ashton-Hart"
-msgstr ""
+msgstr "Sekretær Nick Ashton-Hart"
 
 #: metabrainz/templates/index/bad-customers.html:3
 msgid "Bad customers"
@@ -904,11 +926,13 @@ msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:53
 msgid "Nice!!"
-msgstr ""
+msgstr "Digg!!"
 
 #: metabrainz/templates/index/bad-customers.html:54
 msgid "There are currently no not-so-favorite commercial data supporters!"
 msgstr ""
+"Det finnes for øyeblikket ingen kommersielle data-støttespillere som ikke er "
+"fullt så populære!"
 
 #: metabrainz/templates/index/bad-customers.html:56
 msgid ""
@@ -916,15 +940,18 @@ msgid ""
 "the\n"
 "          \"right thing\"... :)"
 msgstr ""
+"... enten det, eller kanskje vi jobber med å overbevise noen selskaper om å "
+"gjøre de\n"
+"          \"riktige tingene\"... :)"
 
 #: metabrainz/templates/index/conflict-policy.html:14
 #: metabrainz/templates/index/gdpr.html:8
 msgid "Introduction"
-msgstr ""
+msgstr "Introduksjon"
 
 #: metabrainz/templates/index/conflict-policy.html:55
 msgid "Reporting and Response"
-msgstr ""
+msgstr "Rapportering og respons"
 
 #: metabrainz/templates/index/contact.html:3
 #: metabrainz/templates/index/contact.html:6
@@ -946,6 +973,13 @@ msgid ""
 "such as what happened, what you expected\n"
 "    to happen, and the URLs of any pages involved."
 msgstr ""
+"Funnet en brutt lenke eller noe som ikke fungerer som forventet? Du kan "
+"rapportere problemer i vårt\n"
+"    <a href=\"%(bug_tracker_url)s\">feilrapporteringssystem</a>, gi oss en "
+"beskjed på chatten vår, eller\n"
+"    via e-post. Kontaktinformasjon finner du nedenfor. Inkluder alle "
+"detaljer om hva som skjedde, hva du forventet\n"
+"    skulle skje, og nettadressene til eventuelle involverte sider."
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
@@ -1041,24 +1075,24 @@ msgid "We are not distributing any of the music listed in MusicBrainz."
 msgstr "Vi distribuerer ingen musikk som blir opplistet i MusicBrainz."
 
 #: metabrainz/templates/index/contact.html:61
-#, fuzzy
 msgid ""
 "For inquiries about advertising, SEO optimization, or software "
 "monetization services, please see above!"
 msgstr ""
-"Vi er ikke interessert i din reklamering, søkemotoroptimisering eller "
-"programvareprofittløsninger.\n"
-"        Ikke tilby oss <b>noen</b> tjenester!"
+"For henvendelser om annonsering, søkemotoroptimisering eller "
+"programvareprofittløsninger, se ovenfor!"
 
 #: metabrainz/templates/index/contact.html:62
 msgid "Please do not offer us <b>any</b> other services! We are not interested."
-msgstr ""
+msgstr "Ikke tilby oss <b>noen</b> slike tjenester! Vi er ikke interessert."
 
 #: metabrainz/templates/index/contact.html:63
 msgid ""
 "Please do not contact us about any job openings, we do not hire people "
 "who are not part of our community."
 msgstr ""
+"Vennligst ikke kontakt oss om ledige stillinger. Vi ansetter ikke folk som "
+"ikke er en del av vårt brukersamfunn."
 
 #: metabrainz/templates/index/contact.html:68
 msgid ""
@@ -1091,8 +1125,8 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
-"Kom å still spørsmål på vårt <a href=\"%(forums_url)s\">forum</a>! Vi ser"
-" fram til å svare\n"
+"Kom og still spørsmål på vårt <a href=\"%(forums_url)s\">forum</a>! Vi ser "
+"fram til å svare\n"
 "    på ethvert spørsmål du måtte ha."
 
 #: metabrainz/templates/index/contact.html:92
@@ -1115,12 +1149,11 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:112
 msgid "Mailing address"
-msgstr ""
+msgstr "Postadresse"
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "MetaBrainz-laget"
+msgstr "MetaBrainz-datasettene"
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1207,11 +1240,11 @@ msgstr ""
 "              og gjør den tilgjengelig for offentligheten"
 
 #: metabrainz/templates/index/index.html:40
-#, fuzzy, python-format
+#, python-format
 msgid "Sign up to use the <a href=\"%(account_type_url)s\">Live Data Feed</a>"
 msgstr ""
-"Registrer deg og bruk <a "
-"href=\"%(account_type_url)s\">sanntidsdatastrømmen</a></em>"
+"Registrer deg for å bruke <a href=\"%(account_type_url)s\">"
+"sanntidsdatastrømmen</a>"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
@@ -1294,7 +1327,7 @@ msgstr "Se alle våre støttespillere"
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
-msgstr ""
+msgstr "Informasjonskapsler"
 
 #: metabrainz/templates/index/privacy.html:54
 #, fuzzy
@@ -1365,9 +1398,8 @@ msgstr "Skjul passord"
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
-#, fuzzy
 msgid "Delete your account"
-msgstr "Bruk kontoen din"
+msgstr "Slett brukerkonto"
 
 #: metabrainz/templates/index/profile-edit.html:3
 msgid "Edit"
@@ -1497,9 +1529,8 @@ msgstr ""
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "MetaBrainz-API"
+msgstr "MetaBrainz merc-butikken"
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -1583,7 +1614,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:6
 msgid "The MetaBrainz Team"
-msgstr "MetaBrainz-laget"
+msgstr "MetaBrainz-staben"
 
 #: metabrainz/templates/index/team.html:12
 msgid "<span class=\"name\">Robert Kaye</span> &mdash; Founder"
@@ -1614,7 +1645,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives on in our hearts and in open source."
-msgstr ""
+msgstr "Han lever videre i våre hjerter og i åpen kildekode."
 
 #: metabrainz/templates/index/team.html:39
 msgid ""
@@ -1927,7 +1958,7 @@ msgstr "Rediger søknad %(name)s"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
-msgstr ""
+msgstr "OAuth feil"
 
 #: frontend/js/src/ProfileTabs.tsx:22 metabrainz/templates/oauth/index.html:3
 msgid "Applications"
@@ -2028,7 +2059,7 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:65
 msgid "I want this to be a recurring monthly donation"
-msgstr ""
+msgstr "Jeg ønsker at dette skal være en gjentakende månedlig donasjon"
 
 #: metabrainz/templates/payments/donate.html:73
 msgid "MusicBrainz username"
@@ -2190,14 +2221,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/payments/payment.html:17
-#, fuzzy
 msgid "Organization:"
-msgstr "Organisasjonsnavn"
+msgstr "Organisasjon:"
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "Støttespillere"
+msgstr "Støttespillernivå:"
 
 #: metabrainz/templates/payments/payment.html:44
 #, python-format
@@ -2241,9 +2270,8 @@ msgstr ""
 "        <a href=\"%(cancel_recurring_url)s\">denne siden</a>."
 
 #: metabrainz/templates/payments/payment.html:157
-#, fuzzy
 msgid "Invoice number (optional)"
-msgstr "Faktura"
+msgstr "Fakturanummer (valgfritt)"
 
 #: metabrainz/templates/payments/payment_base.html:3
 #: metabrainz/templates/payments/payment_base.html:7
@@ -2300,19 +2328,19 @@ msgstr ""
 
 #: metabrainz/templates/payments/payment_selector.html:8
 msgid "United States dollar"
-msgstr ""
+msgstr "Amerikanske dollar"
 
 #: metabrainz/templates/payments/payment_selector.html:9
 msgid "USD"
-msgstr ""
+msgstr "USD"
 
 #: metabrainz/templates/payments/payment_selector.html:10
 msgid "Euro"
-msgstr ""
+msgstr "Euro"
 
 #: metabrainz/templates/payments/payment_selector.html:11
 msgid "EUR"
-msgstr ""
+msgstr "EUR"
 
 #: metabrainz/templates/reports/annual_reports/view.html:2
 msgid "Annual Report"
@@ -3048,16 +3076,15 @@ msgstr ""
 #: metabrainz/templates/supporters/account-type.html:48
 #: metabrainz/templates/supporters/account-type.html:90
 #: metabrainz/templates/supporters/account-type.html:141
-#, fuzzy
 msgid "Upgrade"
-msgstr "Oppdater"
+msgstr "Oppgrader"
 
 #: frontend/js/src/Profile.tsx:235
 #: frontend/js/src/forms/SignupCommercial.tsx:176
 #: frontend/js/src/forms/SignupCommercial.tsx:228
 #: metabrainz/templates/supporters/account-type.html:61
 msgid "Commercial"
-msgstr ""
+msgstr "Kommersiell"
 
 #: metabrainz/templates/supporters/account-type.html:83
 #: metabrainz/templates/supporters/account-type.html:135
@@ -3094,14 +3121,13 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/supporters/account-type.html:166
-#, fuzzy
 msgid "Back to Profile"
-msgstr "Din profil"
+msgstr "Tilbake til profil"
 
 #: metabrainz/templates/supporters/bad-standing.html:3
 #: metabrainz/templates/supporters/bad-standing.html:6
 msgid "Bad standing"
-msgstr ""
+msgstr "Dårlig anseelse"
 
 #: metabrainz/templates/supporters/bad-standing.html:8
 msgid ""
@@ -3164,9 +3190,8 @@ msgstr "Glemt brukernavn"
 #: frontend/js/src/forms/SignupUser.tsx:169
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Kontaktnavn kreves!"
+msgstr "Bekreft passord"
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
@@ -3179,12 +3204,11 @@ msgstr ""
 #: frontend/js/src/forms/ProfileEdit.tsx:105
 #: metabrainz/templates/users/reauthenticate.html:23
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: metabrainz/templates/users/reauthenticate.html:24
-#, fuzzy
 msgid "Continue"
-msgstr "Donasjon"
+msgstr "Fortsett"
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
 #: metabrainz/templates/users/reset-password.html:3
@@ -3210,9 +3234,8 @@ msgstr "Brukernavn"
 #: frontend/js/src/forms/SignupNonCommercial.tsx:84
 #: frontend/js/src/forms/SignupUser.tsx:67 metabrainz/user/forms.py:21
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username is required!"
-msgstr "Kontaktnavn kreves!"
+msgstr "Brukernavn er påkrevd!"
 
 #: frontend/js/src/forms/LoginUser.tsx:63
 #: frontend/js/src/forms/ResetPassword.tsx:72
@@ -3224,9 +3247,8 @@ msgid "Password"
 msgstr "Passord"
 
 #: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
-#, fuzzy
 msgid "Remember me"
-msgstr "Desember"
+msgstr "Husk meg"
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
@@ -3276,7 +3298,7 @@ msgstr "Klienthemmelighet"
 
 #: frontend/js/src/Applications.tsx:60
 msgid "Privileges"
-msgstr ""
+msgstr "Privilegier"
 
 #: frontend/js/src/Applications.tsx:61 frontend/js/src/Applications.tsx:89
 msgid "Actions"
@@ -3288,7 +3310,7 @@ msgstr "Autoriserte søknader"
 
 #: frontend/js/src/Applications.tsx:80
 msgid "No tokens found"
-msgstr ""
+msgstr "Ingen polletter funnet"
 
 #: frontend/js/src/Applications.tsx:88
 msgid "Access"
@@ -3296,31 +3318,31 @@ msgstr "Tilgang"
 
 #: frontend/js/src/Applications.tsx:111
 msgid "Revoke access"
-msgstr "Oppheve tilgang"
+msgstr "Opphev tilgang"
 
 #: frontend/js/src/OAuthError.tsx:17
 msgid "OAuth2 Error"
-msgstr ""
+msgstr "OAuth2 feil"
 
 #: frontend/js/src/OAuthError.tsx:18
 msgid "An error occurred during OAuth authentication process."
-msgstr ""
+msgstr "Det oppsto en feil under OAuth-autentiseringsprosessen."
 
 #: frontend/js/src/Profile.tsx:38
 msgid "(Resend Verification Email)"
-msgstr ""
+msgstr "(Send bekreftelses-e-post på nytt)"
 
 #: frontend/js/src/Profile.tsx:47
 msgid "Current:"
-msgstr ""
+msgstr "Nåværende:"
 
 #: frontend/js/src/Profile.tsx:50 frontend/js/src/Profile.tsx:70
 msgid "Verified"
-msgstr ""
+msgstr "Verifisert"
 
 #: frontend/js/src/Profile.tsx:53
 msgid "New:"
-msgstr ""
+msgstr "Ny:"
 
 #: frontend/js/src/Profile.tsx:56 frontend/js/src/Profile.tsx:77
 msgid "Unverified"
@@ -3329,6 +3351,8 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:61
 msgid "Your current email will be replaced once the new email is verified."
 msgstr ""
+"Den nåværende e-postadressen vil bli erstattet når den nye e-postadressen er "
+"bekreftet."
 
 #: frontend/js/src/Profile.tsx:109
 msgid ""
@@ -3337,9 +3361,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:118
-#, fuzzy
 msgid "Failed to generate new access token!"
-msgstr "Kunne ikke slette søknad."
+msgstr "Kunne ikke generere ny tilgangspollett!"
 
 #: frontend/js/src/Profile.tsx:132
 msgid "Your application for using the Live Data Feed has been rejected."
@@ -3387,17 +3410,15 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:198
 msgid "Unknown. :("
-msgstr ""
+msgstr "Ukjent. :("
 
 #: frontend/js/src/Profile.tsx:214
-#, fuzzy
 msgid "Active"
-msgstr "Donasjoner"
+msgstr "Aktiv"
 
 #: frontend/js/src/Profile.tsx:216
-#, fuzzy
 msgid "Rejected"
-msgstr "Prosjekter"
+msgstr "Avvist"
 
 #: frontend/js/src/Profile.tsx:218
 msgid "Pending"
@@ -3405,28 +3426,27 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:220
 msgid "Waiting"
-msgstr ""
+msgstr "Venter"
 
 #: frontend/js/src/Profile.tsx:222
 msgid "Limited"
-msgstr ""
+msgstr "Begrenset"
 
 #: frontend/js/src/Profile.tsx:224
 msgid "Unknown"
-msgstr ""
+msgstr "Ukjent"
 
 #: frontend/js/src/Profile.tsx:234
 msgid "Type:"
-msgstr ""
+msgstr "Type:"
 
 #: frontend/js/src/Profile.tsx:239
 msgid "Tier:"
-msgstr ""
+msgstr "Nivå:"
 
 #: frontend/js/src/Profile.tsx:243
-#, fuzzy
 msgid "State:"
-msgstr "Dato"
+msgstr "Tilstand:"
 
 #: frontend/js/src/Profile.tsx:251
 msgid ""
@@ -3442,7 +3462,7 @@ msgstr "Beskrivelse av organisasjon"
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
 msgid "Unspecified"
-msgstr ""
+msgstr "Uspesifisert"
 
 #: frontend/js/src/Profile.tsx:293
 msgid "<contactLink>Contact us</contactLink> to update this information."
@@ -3450,34 +3470,31 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:306 frontend/js/src/Profile.tsx:478
 msgid "Contact Information"
-msgstr ""
+msgstr "Kontaktinformasjon"
 
 #: frontend/js/src/Profile.tsx:310 frontend/js/src/forms/ProfileEdit.tsx:70
 #: frontend/js/src/forms/SignupCommercial.tsx:284
 #: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-#, fuzzy
 msgid "Contact name"
-msgstr "Kontakt"
+msgstr "Kontaktnavn"
 
 #: frontend/js/src/Profile.tsx:312 frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Contact Email"
-msgstr "Kontaktdetaljer"
+msgstr "Kontakt e-post"
 
 #: frontend/js/src/Profile.tsx:322
-#, fuzzy
 msgid "Datasets Used"
-msgstr "Dato"
+msgstr "Brukte datasett"
 
 #: frontend/js/src/Profile.tsx:333 frontend/js/src/forms/ProfileEdit.tsx:35
 msgid "Edit Contact Information"
-msgstr ""
+msgstr "Rediger kontaktinformasjon"
 
 #: frontend/js/src/Profile.tsx:334
 msgid "Edit Datasets / Contact Information"
-msgstr ""
+msgstr "Rediger datasett / kontaktinformasjon"
 
 #: frontend/js/src/Profile.tsx:348
 msgid "Data Use Permission Granted"
@@ -3485,7 +3502,7 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:354
 msgid "Your support agreement has been completed -- thank you!"
-msgstr ""
+msgstr "Støtteavtalen din er fullført – takk!"
 
 #: frontend/js/src/Profile.tsx:360
 msgid ""
@@ -3506,11 +3523,11 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:382
 msgid "Limited/No Data Use Permission"
-msgstr ""
+msgstr "Begrenset/ingen tillatelse til databruk"
 
 #: frontend/js/src/Profile.tsx:397
 msgid "Data Download"
-msgstr ""
+msgstr "Datanedlasting"
 
 #: frontend/js/src/Profile.tsx:402
 msgid "Thank you for registering with us -- we really appreciate it!"
@@ -3533,33 +3550,29 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:442
 msgid "[ no valid token currently ]"
-msgstr ""
+msgstr "[ ingen gyldig pollett for øyeblikket ]"
 
 #: frontend/js/src/Profile.tsx:449
-#, fuzzy
 msgid "Generate New Token"
-msgstr "Opprett nytt symbol"
+msgstr "Opprett ny pollett"
 
 #: frontend/js/src/Profile.tsx:453
 msgid "See the <apiLink>API documentation</apiLink> for more information."
-msgstr ""
+msgstr "Se <apiLink>API-dokumentasjonen</apiLink> for mer informasjon."
 
 #: frontend/js/src/Profile.tsx:484 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Email"
-msgstr "Send oss e-post"
+msgstr "E-post"
 
 #: frontend/js/src/Profile.tsx:498
-#, fuzzy
 msgid "Edit Information"
-msgstr "Stiftelsen"
+msgstr "Rediger informasjon"
 
 #: frontend/js/src/Profile.tsx:510
-#, fuzzy
 msgid "Want access to MetaBrainz datasets?"
-msgstr "MetaBrainz-laget"
+msgstr "Ønsker du tilgang til MetaBrainz-datasett?"
 
 #: frontend/js/src/Profile.tsx:515
 msgid ""
@@ -3570,25 +3583,23 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:538
 msgid "Danger Zone"
-msgstr ""
+msgstr "Faresone"
 
 #: frontend/js/src/Profile.tsx:545
 msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
-#, fuzzy
 msgid "Delete My Account"
-msgstr "Bruk kontoen din"
+msgstr "Slett kontoen din"
 
 #: frontend/js/src/Profile.tsx:567
-#, fuzzy
 msgid "Account Deletion"
-msgstr "Kontotype"
+msgstr "Sletting av konto"
 
 #: frontend/js/src/Profile.tsx:571
 msgid "Need to delete your account?"
-msgstr ""
+msgstr "Trenger du å slette brukerkontoen?"
 
 #: frontend/js/src/Profile.tsx:574
 msgid ""
@@ -3597,14 +3608,12 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:594
-#, fuzzy
 msgid "Security"
-msgstr "By"
+msgstr "Sikkerhet"
 
 #: frontend/js/src/Profile.tsx:626
-#, fuzzy
 msgid "MetaBrainz Applications"
-msgstr "MetaBrainz-API"
+msgstr "MetaBrainz søknader"
 
 #: frontend/js/src/Profile.tsx:630
 msgid ""
@@ -3640,29 +3649,28 @@ msgid "Warning: This action is irreversible"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:61
-#, fuzzy
 msgid "Deleting your account will:"
-msgstr "Bruk kontoen din"
+msgstr "Ved sletting av brukerkonto vil det:"
 
 #: frontend/js/src/ProfileDelete.tsx:63
 msgid "Permanently remove all your account information"
-msgstr ""
+msgstr "Fjerne alt av informasjon i brukerkontoen permanent"
 
 #: frontend/js/src/ProfileDelete.tsx:64
 msgid "Revoke all your API tokens and access"
-msgstr ""
+msgstr "Oppheve alle API-polletter og tilgang"
 
 #: frontend/js/src/ProfileDelete.tsx:65
 msgid "Remove your supporter status (if applicable)"
-msgstr ""
+msgstr "Fjerne din supporterstatus (hvis aktuelt)"
 
 #: frontend/js/src/ProfileDelete.tsx:66
 msgid "Log you out of all MetaBrainz services"
-msgstr ""
+msgstr "Logge deg ut av alle MetaBrainz-tjenester"
 
 #: frontend/js/src/ProfileDelete.tsx:70
 msgid "Your username will be reserved and cannot be reused."
-msgstr ""
+msgstr "Brukernavnet ditt vil bli reservert og kan ikke brukes om igjen."
 
 #: frontend/js/src/ProfileDelete.tsx:82
 msgid "To confirm, type your username '<username />' below:"
@@ -3670,20 +3678,19 @@ msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:105
 msgid "Deleting..."
-msgstr ""
+msgstr "Sletter..."
 
 #: frontend/js/src/ProfileTabs.tsx:17
-#, fuzzy
 msgid "Profile"
-msgstr "Din profil"
+msgstr "Profil"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:17
 msgid "Close"
-msgstr ""
+msgstr "Lukk"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:23
 msgid "Licensing"
-msgstr ""
+msgstr "Lisensiering"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:25
 msgid ""
@@ -3712,7 +3719,7 @@ msgstr ""
 
 #: frontend/js/src/forms/ConditionsModal.tsx:59
 msgid "GDPR compliance"
-msgstr ""
+msgstr "GDPR krav"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:61
 msgid ""
@@ -3740,45 +3747,39 @@ msgstr ""
 
 #: frontend/js/src/forms/ConditionsModal.tsx:91
 msgid "Sounds good"
-msgstr ""
+msgstr "Høres bra ut"
 
 #: frontend/js/src/forms/CreateApplication.tsx:57
-#, fuzzy
 msgid "Application name is required."
-msgstr "Kontaktnavn kreves!"
+msgstr "Søknaden må ha et navn!"
 
 #: frontend/js/src/forms/CreateApplication.tsx:67
-#, fuzzy
 msgid "Application description is required."
-msgstr "Beskrivelse av organisasjon"
+msgstr "Søknaden må ha en beskrivelse."
 
 #: frontend/js/src/forms/CreateApplication.tsx:70
 msgid "Application description needs to be at least 3 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
-#, fuzzy
 msgid "Application description needs to be at most 512 characters long."
-msgstr "Beskrivelse av organisasjon"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:78
-#, fuzzy
 msgid "Homepage is required."
-msgstr "Kontaktnavn kreves!"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:82
-#, fuzzy
 msgid "Authorization callback URL cannot be empty."
-msgstr "Kontakt-e-postfeltet er tomt"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:85
-#, fuzzy
 msgid "Authorization callback URL is required."
-msgstr "Autorisasjonskode mangler!"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:131
 msgid "Redirect URIs"
-msgstr ""
+msgstr "Omdiriger URI-er"
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
 msgid "Add a redirect URI"
@@ -3786,17 +3787,15 @@ msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:190
 msgid "Save changes"
-msgstr ""
+msgstr "Lagre endringer"
 
 #: frontend/js/src/forms/CreateApplication.tsx:191
-#, fuzzy
 msgid "Create application"
-msgstr "Opprett nytt symbol"
+msgstr "Opprett ny søknad"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:20
-#, fuzzy
 msgid "Delete application"
-msgstr "Opprett nytt symbol"
+msgstr "Slett søknad"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
 #, fuzzy
@@ -3851,7 +3850,7 @@ msgstr "E-postadresse kreves!"
 #: frontend/js/src/forms/LostPassword.tsx:79
 #: frontend/js/src/forms/LostUsername.tsx:70
 msgid "Send Email"
-msgstr ""
+msgstr "Send epost"
 
 #: frontend/js/src/forms/OAuthPrompt.tsx:27
 msgid "This app requested permission to access:"
@@ -3859,7 +3858,7 @@ msgstr ""
 
 #: frontend/js/src/forms/OAuthPrompt.tsx:32
 msgid "Identity"
-msgstr ""
+msgstr "Identitet"
 
 #: frontend/js/src/forms/OAuthPrompt.tsx:34
 msgid "Your identity on MetaBrainz"
@@ -3871,24 +3870,20 @@ msgid "Allow access"
 msgstr "Tillat tilgang"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:71
-#, fuzzy
 msgid "Current Password"
-msgstr "Glemt passord"
+msgstr "Nåværende passord"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:80
-#, fuzzy
 msgid "New Password"
-msgstr "Vis passord"
+msgstr "Nytt passord"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:89
-#, fuzzy
 msgid "Confirm New Password"
-msgstr "Vis passord"
+msgstr "Bekreft nytt passord"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "Dato"
+msgstr "Oppdatering"
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
 #, fuzzy
@@ -3906,20 +3901,18 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
 #: frontend/js/src/forms/SignupUser.tsx:87
-#, fuzzy
 msgid "Captcha is required!"
-msgstr "E-postadresse kreves!"
+msgstr "Captcha er obligatorisk!"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:179
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
 #: frontend/js/src/forms/SignupUser.tsx:46
-#, fuzzy
 msgid "Access all MetaBrainz projects"
-msgstr "MetaBrainz-prosjekter"
+msgstr "Få tilgang til alle MetaBrainz-prosjekter"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:182
 msgid "Note:"
-msgstr ""
+msgstr "Bemerk:"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:184
 msgid ""
@@ -3936,7 +3929,7 @@ msgstr "Kontotype"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
 msgid "Selected tier"
-msgstr ""
+msgstr "Valgt nivå"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:242
 msgid "month and up"
@@ -3948,34 +3941,32 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
-#, fuzzy
 msgid "Your account:"
-msgstr "Bruk kontoen din"
+msgstr "Din brukerkonto:"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
 #: frontend/js/src/forms/SignupUser.tsx:114
 msgid "(public)"
-msgstr ""
+msgstr "(offentlig)"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:291
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
 #: frontend/js/src/forms/SignupUser.tsx:127
-#, fuzzy
 msgid "E-mail address"
-msgstr "Send oss e-post"
+msgstr "E-postadresse"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:295
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
 #: frontend/js/src/forms/SignupUser.tsx:131
 msgid "(checking...)"
-msgstr ""
+msgstr "(undersøker...)"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:314
 #: frontend/js/src/forms/SignupNonCommercial.tsx:220
 #: frontend/js/src/forms/SignupUser.tsx:163
 msgid "Must be at least 8 characters"
-msgstr ""
+msgstr "Må være minst 8 tegn"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:348
 msgid ""
@@ -3983,12 +3974,18 @@ msgid ""
 "supporter as a <nonCommercialLink>Non-commercial / "
 "Personal</nonCommercialLink> supporter."
 msgstr ""
+"Har du ikke et organisasjonsnavn, er støttespiller som <nonCommercialLink>"
+"Ikke-kommersiell / personlig</nonCommercialLink>, mest sannsynlig riktig "
+"løsning for deg."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:358
 msgid ""
 "If you don't have an organization name, you probably want to sign up as a"
 " <nonCommercialLink>Non-commercial / Personal</nonCommercialLink> user."
 msgstr ""
+"Har du ikke et organisasjonsnavn, er det å registrere seg som "
+"<nonCommercialLink>Ikke-kommersiell / personlig</nonCommercialLink> bruker "
+"sannsynligvis riktig løsning for deg."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:378
 msgid ""
@@ -3996,6 +3993,9 @@ msgid ""
 "our <apiLink>API</apiLink> or to <hostLink>host your own copy</hostLink> "
 "of the data."
 msgstr ""
+"Fortell oss litt om foretaket ditt og om du planlegger å bruke vår <apiLink>"
+"API</apiLink> eller lagre en kopi av datane på <hostLink>din egen server</"
+"hostLink>."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:404
 #, fuzzy
@@ -4004,39 +4004,44 @@ msgstr "Nettadresse for logo"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:405
 msgid "(preferably in SVG format)"
-msgstr ""
+msgstr "(fortrinnsvist i SVG format)"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:408
 msgid ""
 "Image should be about 250 pixels wide on a white or transparent "
 "background. We will host it on our site."
 msgstr ""
+"Bildet bør være omtrent 250 piksler bredt på en hvit eller gjennomsiktig "
+"bakgrunn. Vi vil lagre det på nettstedet vårt."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:421
 msgid ""
 "URL to where developers can use your APIs using MusicBrainz IDs, if "
 "available.."
 msgstr ""
+"Nettstedslenke til der utviklere kan få tilgang til dine MusicBrainz-ID "
+"integrerte API-er, hvis tilgjengelig.."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
-#, fuzzy
 msgid "Your project"
-msgstr "Din profil"
+msgstr "Ditt prosjekt"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
 msgid "(max 150 characters)"
-msgstr ""
+msgstr "(maks 150 tegn)"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:451
 msgid "Billing address"
-msgstr ""
+msgstr "Faktureringsadresse"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:502
 msgid ""
 "I agree to support the MetaBrainz Foundation when my organization is able"
 " to do so."
 msgstr ""
+"Jeg samtykker i å støtte MetaBrainz-stiftelsen når organisasjonen min blir i "
+"stand til det."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:507
 msgid ""
@@ -4044,52 +4049,56 @@ msgid ""
 "treat my access token as a secret and will not share this token publicly "
 "or commit it to a source code repository."
 msgstr ""
+"Jeg samtykker også i at hvis jeg genererer en sanntidsdatastrøms "
+"tilgangspollett, behandler jeg tilgangspolletten min som en hemmelighet og "
+"vil ikke dele denne polletten offentlig eller lagre den i et kildekodelager."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:515
 msgid ""
 "The following information will be shown publicly: organization name, "
 "logo, website and API URLs, data usage description."
 msgstr ""
+"Følgende informasjon vil bli vist offentlig: organisasjonsnavn, logo, "
+"nettsted og API-nettadresser, beskrivelse av databruk."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:520
 msgid ""
 "We'll send you more details about payment process once your application "
 "is approved."
 msgstr ""
+"Vi sender deg mer informasjon om betalingsprosessen når søknaden din er "
+"godkjent."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:552
 #: frontend/js/src/forms/SignupNonCommercial.tsx:316
 #: frontend/js/src/forms/SignupUser.tsx:224
 msgid "Validating..."
-msgstr ""
+msgstr "Bekrefter..."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:564
 #: frontend/js/src/forms/SignupNonCommercial.tsx:329
-#, fuzzy
 msgid "Back to profile"
-msgstr "Din profil"
+msgstr "Tilbake til profilen"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
-#, fuzzy
 msgid "Not a supporter?"
-msgstr "Se alle våre støttespillere"
+msgstr "Ikke en støttespiller?"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-#, fuzzy
 msgid "Create a user account"
-msgstr "Bruk kontoen din"
+msgstr "Opprett en brukerkonto"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:573
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
 #: frontend/js/src/forms/SignupUser.tsx:231
 msgid "Already have an account?"
-msgstr ""
+msgstr "Har du allerede en konto?"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:107
 msgid "non-commercial"
-msgstr ""
+msgstr "ikke-kommersiell"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:113
 msgid ""
@@ -4125,9 +4134,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:43
-#, fuzzy
 msgid "Create your account"
-msgstr "Bruk kontoen din"
+msgstr "Opprett brukerkonto"
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
@@ -5384,4 +5392,3 @@ msgstr ""
 
 #~ msgid "Privacy policy"
 #~ msgstr "Personvernspraksis"
-
