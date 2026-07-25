@@ -381,6 +381,29 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
                 "csrf_token": g.csrf_token
         })
         self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.location,
+            "https://example.com/callback?error=access_denied&state=random-state"
+        )
+
+    def test_oauth_authorize_decline_without_state(self):
+        """ state is optional, so it should be omitted entirely from the error response if absent. """
+        application = self.create_oauth_app()
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "code",
+            "scope": "profile",
+            "redirect_uri": "https://example.com/callback",
+        }
+
+        self.temporary_login(self.user2)
+        self.authorize_oauth_prompt_helper(query_string)
+
+        response = self.client.post("/oauth2/authorize/confirm", query_string=query_string, data={
+                "confirm": "no",
+                "csrf_token": g.csrf_token
+        })
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, "https://example.com/callback?error=access_denied")
 
     def test_oauth_authorize_missing_client_id(self):
@@ -512,7 +535,10 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             }
         )
         props = json.loads(self.get_context_variable("props"))
-        self.assertTrue(props["cancel_url"], "https://example.com/callback?error=access_denied")
+        self.assertEqual(
+            props["cancel_url"],
+            "https://example.com/callback?error=access_denied&state=random-state"
+        )
 
     def test_oauth_authorize_logged_out(self):
         application = self.create_oauth_app()
@@ -706,7 +732,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             {"name": "profile", "description": "View your public account information"},
             {"name": "musicbrainz:tag", "description": "View and modify your private tags"}
         ])
-        self.assertEqual(props["cancel_url"], redirect_uri2 + "?error=access_denied")
+        self.assertEqual(props["cancel_url"], redirect_uri2 + "?error=access_denied&state=random-state")
         self.assertEqual(props["csrf_token"], g.csrf_token)
 
         parsed = urlparse(props["submission_url"])

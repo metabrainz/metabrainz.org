@@ -40,7 +40,10 @@ class ImplicitGrantTestCase(OAuthTestCase):
             }
         )
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.location, "https://example.com/callback?error=access_denied")
+        self.assertEqual(
+            response.location,
+            "https://example.com/callback?error=access_denied&state=random-state"
+        )
 
     def test_oauth_authorize_missing_client_id(self):
         application = self.create_oauth_app()
@@ -177,7 +180,10 @@ class ImplicitGrantTestCase(OAuthTestCase):
             }
         )
         props = json.loads(self.get_context_variable("props"))
-        self.assertTrue(props["cancel_url"], "https://example.com/callback?error=access_denied")
+        self.assertEqual(
+            props["cancel_url"],
+            "https://example.com/callback?error=access_denied&state=random-state"
+        )
 
     def test_oauth_authorize_logged_out(self):
         application = self.create_oauth_app()
@@ -311,7 +317,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
             {"name": "profile", "description": "View your public account information"},
             {"name": "musicbrainz:tag", "description": "View and modify your private tags"},
         ])
-        self.assertEqual(props["cancel_url"], redirect_uri2 + "?error=access_denied")
+        self.assertEqual(props["cancel_url"], redirect_uri2 + "?error=access_denied&state=random-state")
         self.assertEqual(props["csrf_token"], g.csrf_token)
 
         parsed = urlparse(props["submission_url"])

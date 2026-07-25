@@ -224,6 +224,18 @@ def begin_registration_request(request_id):
     return redirect(authorize_url)
 
 
+def _access_denied_url(redirect_uri, state):
+    """ Build the redirect URI the user is sent to when they deny the authorization request.
+
+    The state parameter, if the client sent one, must be echoed back in the error response
+    (RFC 6749 section 4.1.2.1) so the client can correlate it with its original request.
+    """
+    params = {"error": "access_denied"}
+    if state:
+        params["state"] = state
+    return build_url(redirect_uri, params)
+
+
 @oauth2_bp.route("/authorize", methods=["GET"])
 @login_required
 def authorize():
@@ -243,7 +255,10 @@ def authorize():
         return authorization_server.create_authorization_response(grant_user=current_user)
 
     submission_url = build_url(url_for(".confirm_authorization", _external=False), grant.request.payload.data)
-    cancel_url = build_url(grant.request.payload.data.get("redirect_uri"), {"error": "access_denied"})
+    cancel_url = _access_denied_url(
+        grant.request.payload.data.get("redirect_uri"),
+        grant.request.payload.data.get("state"),
+    )
     return render_template("oauth/prompt.html", props=json.dumps({
         "client_name": grant.client.name,
         "scopes": [{
@@ -266,7 +281,7 @@ def confirm_authorization():
     redirect_uri = request.args.get("redirect_uri")
     if not redirect_uri:
         raise InvalidRequestError(description="Missing 'redirect_uri' in request.")
-    cancel_url = build_url(redirect_uri, {"error": "access_denied"})
+    cancel_url = _access_denied_url(redirect_uri, request.args.get("state"))
     return redirect(cancel_url)
 
 

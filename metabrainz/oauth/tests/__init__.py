@@ -104,7 +104,10 @@ class OAuthTestCase(FlaskTestCase):
                 "description": "Sign you in and view your unique user id"
             })
         self.assertCountEqual(props["scopes"], expected_scopes)
-        self.assertEqual(props["cancel_url"], query_string["redirect_uri"] + "?error=access_denied")
+        expected_cancel_url = query_string["redirect_uri"] + "?error=access_denied"
+        if query_string.get("state"):
+            expected_cancel_url += "&state=" + query_string["state"]
+        self.assertEqual(props["cancel_url"], expected_cancel_url)
         self.assertEqual(props["csrf_token"], g.csrf_token)
 
         parsed = urlparse(props["submission_url"])
