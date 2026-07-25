@@ -1,9 +1,11 @@
-"""Migrate users from the MusicBrainz ``editor`` table into the MetaBrainz ``user`` table.
+"""Migrate MusicBrainz users and reserved names into MetaBrainz.
 
 The two tables live in different databases, so this is done over the network with a
 plain Python script: MusicBrainz editors are streamed from the MusicBrainz database
 (``SQLALCHEMY_MUSICBRAINZ_URI``) and inserted into the MetaBrainz database
-(``SQLALCHEMY_DATABASE_URI``).
+(``SQLALCHEMY_DATABASE_URI``). Previously used names are copied from MusicBrainz
+``old_editor_name`` into MetaBrainz ``old_username`` so they remain unavailable for
+registration after user management moves to MetaBrainz.
 
 The script is idempotent, resumable and incremental. It can be re-run after an
 interruption or repeatedly to keep the tables in sync: editors are upserted, and an
@@ -34,6 +36,10 @@ first run has no watermark and therefore reads the whole ``editor`` table. Pass
 ``full=True`` to force a complete re-read, which is also how editors with a NULL
 ``editor.last_updated`` are picked up, since an incremental run cannot place them relative
 to the watermark.
+
+``old_editor_name`` has no id or update timestamp, so its comparatively small set of names
+is read in full on every run. Inserts into ``old_username`` skip names already present,
+making the repeated scan idempotent.
 """
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
@@ -84,6 +90,12 @@ FETCH_EDITORS_QUERY = """
        AND (%(since)s::timestamptz IS NULL OR last_updated >= %(since)s)
   ORDER BY id
      LIMIT %(batch_size)s
+"""
+
+FETCH_OLD_EDITOR_NAMES_QUERY = """
+    SELECT name
+      FROM old_editor_name
+  ORDER BY LOWER(name)
 """
 
 # Identifies this importer's row in mb_import_state; not a MusicBrainz editor name. The
@@ -138,6 +150,19 @@ UPSERT_USER_TEMPLATE = (
     "(%(id)s, %(login_id)s, %(name)s, %(password)s, %(email)s, %(unconfirmed_email)s, "
     "%(email_confirmed_at)s, %(member_since)s, %(last_login_at)s, %(last_updated)s, %(deleted)s)"
 )
+
+INSERT_OLD_USERNAMES_QUERY = """
+    INSERT INTO old_username (username)
+         SELECT candidate.username
+           FROM (VALUES %s) AS candidate (username)
+          WHERE NOT EXISTS (
+                    SELECT 1
+                      FROM old_username AS existing
+                     WHERE existing.username = candidate.username
+                )
+"""
+
+INSERT_OLD_USERNAME_TEMPLATE = "(%(name)s)"
 
 
 def _password_needs_normalization(password):
@@ -215,6 +240,34 @@ def _upsert_batch(meb_cursor, rows):
     return meb_cursor.rowcount
 
 
+def _insert_old_username_batch(meb_cursor, rows):
+    """Insert previously used MusicBrainz names that are not already reserved."""
+    if not rows:
+        return 0
+    execute_values(
+        meb_cursor,
+        INSERT_OLD_USERNAMES_QUERY,
+        rows,
+        template=INSERT_OLD_USERNAME_TEMPLATE,
+        page_size=len(rows),
+    )
+    return meb_cursor.rowcount
+
+
+def _migrate_old_editor_names(mb_cursor, meb_cursor, batch_size):
+    """Copy all MusicBrainz reserved names, returning written and skipped counts."""
+    total_written = 0
+    total_skipped = 0
+
+    mb_cursor.execute(FETCH_OLD_EDITOR_NAMES_QUERY)
+    while names := mb_cursor.fetchmany(batch_size):
+        written = _insert_old_username_batch(meb_cursor, names)
+        total_written += written
+        total_skipped += len(names) - written
+
+    return total_written, total_skipped
+
+
 def _needs_write(editor, existing_user):
     """Decide whether an editor must be (re-)written, to avoid unnecessary writes.
 
@@ -281,7 +334,7 @@ def migrate_mb_users(batch_size=DEFAULT_BATCH_SIZE,
                      cleartext_password_log_rounds=DEFAULT_CLEARTEXT_PASSWORD_LOG_ROUNDS,
                      full=False,
                      overlap=DEFAULT_OVERLAP):
-    """Stream MusicBrainz editors and import them into the MetaBrainz user table."""
+    """Import MusicBrainz editors and previously used names into MetaBrainz."""
     mb_uri = current_app.config["SQLALCHEMY_MUSICBRAINZ_URI"]
     if not mb_uri:
         raise RuntimeError("SQLALCHEMY_MUSICBRAINZ_URI is not configured.")
@@ -299,6 +352,17 @@ def migrate_mb_users(batch_size=DEFAULT_BATCH_SIZE,
             # has to predate everything this run reads.
             mb_cursor.execute(FETCH_SOURCE_TIME_QUERY)
             watermark = mb_cursor.fetchone()["now"]
+
+            reserved_names_written, reserved_names_skipped = _migrate_old_editor_names(
+                mb_cursor, meb_cursor, batch_size
+            )
+            meb_connection.commit()
+            current_app.logger.info(
+                "Migrated previously used MusicBrainz names "
+                "(written=%s, skipped=%s).",
+                reserved_names_written,
+                reserved_names_skipped,
+            )
 
             since = _fetch_since(meb_cursor, full, overlap)
             if since is None:

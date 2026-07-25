@@ -172,7 +172,7 @@ def import_musicbrainz_row_ids():
               type=click.FloatRange(0), show_default=True,
               help="How far back before the stored watermark an incremental run starts reading.")
 def migrate_musicbrainz_users(batch_size, cleartext_password_log_rounds, full, overlap_hours):
-    """ Migrate users from the MusicBrainz editor table into the MetaBrainz user table. """
+    """ Migrate MusicBrainz users and previously used names into MetaBrainz. """
     app = create_app()
     _configure_cli_logging(app)
     with app.app_context():
