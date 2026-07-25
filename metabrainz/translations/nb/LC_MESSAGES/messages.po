@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-07-24 18:12+0000\n"
+"PO-Revision-Date: 2026-07-25 15:49+0000\n"
 "Last-Translator: \"ApeKattQuest, MonkeyPython\" "
 "<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
 "Language: nb\n"
@@ -119,7 +119,7 @@ msgstr "Søknadsnavn"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr ""
+msgstr "Feltet for søknadsnavn tomt."
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
@@ -139,9 +139,8 @@ msgid "Client description field is empty."
 msgstr "Feltet for klientbeskrivelsen er tomt."
 
 #: metabrainz/oauth/forms.py:65
-#, fuzzy
 msgid "Client description needs to be at least 3 characters long."
-msgstr "Klientforklaringen må være på minst 3 tegn."
+msgstr "Klientfbeskrivelsen må være på minst 3 tegn."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
@@ -262,7 +261,7 @@ msgstr "Fortell oss hvordan du bruker eller ønsker å bruke vår data."
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
 #: metabrainz/supporter/forms.py:18
 msgid "Please, limit usage description to 500 characters."
-msgstr ""
+msgstr "Begrens bruksbeskrivelse til 500 tegn."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:141
 #: frontend/js/src/forms/SignupCommercial.tsx:142
@@ -363,7 +362,7 @@ msgstr "Land"
 #: frontend/js/src/forms/SignupCommercial.tsx:129
 #: metabrainz/supporter/forms.py:53
 msgid "You need to specify country."
-msgstr "Du må oppgi land"
+msgstr "Du må oppgi land."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:132
 #: metabrainz/supporter/forms.py:64
@@ -417,7 +416,7 @@ msgstr "Takk for din registrering! Sjekk innboksen for å fullføre bekreftelsen
 
 #: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
-msgstr "Kan ikke generere en ny polett med mindre kontoen er aktiv."
+msgstr "Kan ikke generere en ny pollett med mindre kontoen er aktiv."
 
 #: metabrainz/templates/base.html:44
 msgid "Foundation"
@@ -439,7 +438,7 @@ msgstr "Datasett"
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
 msgid "Team"
-msgstr "Lag"
+msgstr "Staben"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
@@ -478,9 +477,8 @@ msgstr "Finanser"
 
 #: metabrainz/templates/base.html:63 metabrainz/templates/navbar.html:53
 #: metabrainz/templates/reports/annual_reports/view.html:4
-#, fuzzy
 msgid "Archived Annual Reports"
-msgstr "Årsrapporter"
+msgstr "Arkiverte årsrapporter"
 
 #: metabrainz/templates/base.html:64 metabrainz/templates/navbar.html:55
 #: metabrainz/templates/payments/donors.html:6
@@ -783,7 +781,7 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:50
 msgid "Board of Directors"
-msgstr ""
+msgstr "Styret"
 
 #: metabrainz/templates/index/about.html:51
 msgid "Our board of directors consists of:"
@@ -811,8 +809,8 @@ msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
 msgstr ""
-"Direktør <a href=\"%(matthew_url)s\">Matthew Hawn</a> av <a "
-"href=\"%(compass_url)s\">Compass, Map & Key</a>"
+"Direktør <a href=\"%(matthew_url)s\">Matthew Hawn</a> i <a href=\"%"
+"(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, python-format
@@ -838,8 +836,8 @@ msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
 msgstr ""
-"Direktør <a href=\"%(hazel_url)s\">Hazel Savage</a> av <a "
-"href=\"%(leeds_url)s\">Leeds Angels</a>"
+"Direktør <a href=\"%(hazel_url)s\">Hazel Savage</a> i <a href=\"%(leeds_url)"
+"s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:62
 msgid "Advisor"
@@ -1009,6 +1007,10 @@ msgid ""
 "    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more "
 "information."
 msgstr ""
+"MusicBrainz verken redigerer eller fjerner faktaopplysninger på forespørsel. "
+"Vennligst les våre\n"
+"    <a href=\"%(dr_policy_url)s\">retningslinjer for fjerning av data</a> "
+"for mer informasjon."
 
 #: metabrainz/templates/index/contact.html:30
 msgid "Copyright issues"
@@ -1032,7 +1034,7 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:40
 msgid "Advertising requests"
-msgstr ""
+msgstr "Reklame forespørsler"
 
 #: metabrainz/templates/index/contact.html:42
 msgid ""
@@ -1051,6 +1053,7 @@ msgstr ""
 #, python-format
 msgid "Please submit your proposals before 17:00 PST on %(ad_deadline)s."
 msgstr ""
+"Vennligst send inn forslagene dine før kl. 17:00 PST den %(ad_deadline)s."
 
 #: metabrainz/templates/index/contact.html:54
 msgid "Contact details"
@@ -1066,8 +1069,8 @@ msgid ""
 "neither the music itself nor the\n"
 "        rights to license the music."
 msgstr ""
-"Vi kan ikke lisensiere musikken som finnes på MusicBrainz, siden vi "
-"hverken har musikken, ei heller\n"
+"Vi kan ikke lisensiere musikken som finnes på MusicBrainz, siden vi verken "
+"har musikken, ei heller\n"
 "        rettighetene til å lisensiere den."
 
 #: metabrainz/templates/index/contact.html:60
@@ -1138,14 +1141,20 @@ msgid ""
 "    page and join the chat. You can also browse the\n"
 "    <a href=\"%(chatlogs_url)s\">chat log archives</a>."
 msgstr ""
+"MetaBrainz/MusicBrainz/ListenBrainz-staben og fellesskapet vårt henger "
+"sammen\n"
+"    på Matrix-, IRC- og Discord-kanalene våre. Besøk\n"
+"    <a href=\"%(chatbrainz_url)s\">ChatBrainz</a>\n"
+"    siden og bli med i chatten. Du kan også bla gjennom\n"
+"    <a href=\"%(chatlogs_url)s\">chatloggarkivet</a>."
 
 #: metabrainz/templates/index/contact.html:101
 msgid "Social media"
-msgstr ""
+msgstr "Sosiale medier"
 
 #: metabrainz/templates/index/contact.html:103
 msgid "You can follow us on these social channels:"
-msgstr ""
+msgstr "Du kan følge oss på følgende sosiale medier:"
 
 #: metabrainz/templates/index/contact.html:112
 msgid "Mailing address"
@@ -1158,36 +1167,36 @@ msgstr "MetaBrainz-datasettene"
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
 msgid "GDPR Compliance Statement"
-msgstr ""
+msgstr "Erklæring av GDPR-krav"
 
 #: metabrainz/templates/index/gdpr.html:37
 msgid "Right to be forgotten"
-msgstr ""
+msgstr "Rett til å bli glemt"
 
 #: metabrainz/templates/index/gdpr.html:77
 msgid "Restriction of processing"
-msgstr ""
+msgstr "Behandlingsrestriksjon"
 
 #: metabrainz/templates/index/gdpr.html:110
 msgid "Right to data portability / exporting your data"
-msgstr ""
+msgstr "Rett til dataoverføring / eksport av dataene dine"
 
 #: metabrainz/templates/index/gdpr.html:150
 msgid "Right to rectification"
-msgstr ""
+msgstr "Rett til retting"
 
 #: metabrainz/templates/index/gdpr.html:165
 msgid "Right to be informed"
-msgstr ""
+msgstr "Retten til å bli informert"
 
 #: metabrainz/templates/index/gdpr.html:188
 msgid "Right to access"
-msgstr ""
+msgstr "Rett til tilgang"
 
 #: metabrainz/templates/index/gdpr.html:198
 #: metabrainz/templates/index/privacy.html:166
 msgid "Privacy/GDPR Representative"
-msgstr ""
+msgstr "Personvern-/GDPR-representant"
 
 #: metabrainz/templates/index/index.html:6
 msgid "Welcome to MetaBrainz!"
@@ -1259,13 +1268,14 @@ msgid "An open record of user listening habits"
 msgstr "En åpen loggførsel av folks lyttevaner"
 
 #: metabrainz/templates/index/index.html:73
-#, fuzzy
 msgid "A repository for Creative Commons licensed music and book reviews"
-msgstr "En pakkebrønn for Creative Commons-lisensierte musikkanmeldelser"
+msgstr ""
+"Et oppbevaringssted for Creative Commons-lisensierte musikk- og "
+"bokanmeldelser"
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
-msgstr "En pakkebrønn med musikkomslagskunst som er fritt og enkelt tilgjengelig"
+msgstr "Et arkiv med musikkomslagsbilder som er fritt og lett tilgjengelig"
 
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
@@ -1309,7 +1319,7 @@ msgid ""
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
 "For å få mer informasjon om stiftelsen, gå til\n"
-"      <a href=\"%(about_url)s\">Om</a>-siden."
+"      <a href=\"%(about_url)s\">Om oss</a> siden."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:43
 #: metabrainz/templates/index/privacy.html:3
@@ -1322,28 +1332,27 @@ msgstr "Sammendrag"
 
 #: metabrainz/templates/index/privacy.html:33
 msgid "Applicable to all users"
-msgstr ""
+msgstr "Gjelder for alle brukere"
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
 msgstr "Informasjonskapsler"
 
 #: metabrainz/templates/index/privacy.html:54
-#, fuzzy
 msgid "Web and FTP access logs"
-msgstr "Vev- og FTP -tilgangslogger (alle brukere)"
+msgstr "Nett- og FTP-tilgangslogger (alle brukere)"
 
 #: metabrainz/templates/index/privacy.html:62
 msgid "Third-Party content"
-msgstr ""
+msgstr "Tredjepartsinnhold"
 
 #: metabrainz/templates/index/privacy.html:92
 msgid "Applicable to account holders"
-msgstr ""
+msgstr "Gjelder for kontoinnehavere"
 
 #: metabrainz/templates/index/privacy.html:94
 msgid "Account creation"
-msgstr ""
+msgstr "Brukerkontooppretting"
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
@@ -1351,7 +1360,7 @@ msgstr ""
 
 #: metabrainz/templates/index/privacy.html:114
 msgid "Subscriptions on MusicBrainz"
-msgstr ""
+msgstr "Abonnementer på MusicBrainz"
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
@@ -1390,7 +1399,7 @@ msgstr ""
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
 msgid "Change Password"
-msgstr ""
+msgstr "Endre passord"
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
@@ -1428,13 +1437,13 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
-"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> er fri programvare for "
-"å identifisere, tagge og organisere\n"
-"            digitale mediaopptak."
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> er et åpen kildekode-"
+"program for å identifisere, tagge og organisere\n"
+"             digitale lydopptak.."
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
-msgstr "Omslagsarkiv"
+msgstr "Omslagsbildearkivet"
 
 #: metabrainz/templates/index/projects.html:49
 #, python-format
@@ -1444,10 +1453,10 @@ msgid ""
 "            releases in MusicBrainz. It is a joint project with the <a "
 "href=\"%(archive_org_url)s\">Internet Archive</a>."
 msgstr ""
-"<a href=\"%(caa_url)s\">Omslagskunstarkivet</a> er en database som "
-"omfatter omslagskunst som samsvarer\n"
-"            med utgivelsene i MusicBrainz. Det er et samarbeidsprosjekt "
-"med <a href=\"%(archive_org_url)s\">Internettarkivet</a>."
+"<a href=\"%(caa_url)s\">Omslagsbildearkivet</a> er en database med "
+"omslagsbilder for\n"
+"            utgivelsene i MusicBrainz. Det er et samarbeidsprosjekt med <a "
+"href=\"%(archive_org_url)s\">Internet Archive</a>et."
 
 #: metabrainz/templates/index/projects.html:63
 msgid "CritiqueBrainz"
@@ -1490,7 +1499,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:104
 msgid "Past Projects"
-msgstr ""
+msgstr "Tidligere prosjekter"
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -1534,7 +1543,7 @@ msgid ""
 "operate."
 msgstr ""
 "MetaBrainz-stiftelsen ønsker å rette en stor takk til alle \n"
-"    våre sponsorer og partnere for deres støtte i driften  avMusicBrainz."
+"    våre sponsorer og partnere for deres støtte med driften av MusicBrainz."
 
 #: metabrainz/templates/index/sponsors.html:13
 msgid ""
@@ -1549,7 +1558,7 @@ msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:18
 msgid "We would not exist without you — <b>Thank You!</b>"
-msgstr "Vi ville ikke eksistert uten deg — <b>Takk skal du ha.</b>"
+msgstr "Vi ville ikke eksistert uten dere — <b>Takk skal dere ha!</b>"
 
 #: metabrainz/templates/index/sponsors.html:26
 #, python-format
@@ -1604,8 +1613,8 @@ msgid ""
 "Thanks to everyone who has helped make the MetaBrainz Foundation what it "
 "is today!"
 msgstr ""
-"Takk til alle som har hjulpet til med å gjøre MetaBrainz-stiftelsen det "
-"den er i dag!"
+"Takk til alle som har bidratt til å gjøre MetaBrainz-stiftelsen til det den "
+"er i dag!"
 
 #: metabrainz/templates/index/team.html:6
 msgid "The MetaBrainz Team"
@@ -1665,6 +1674,8 @@ msgid ""
 "<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer"
 " Support/Community Manager/Software Engineer"
 msgstr ""
+"<span class=\"name\">Nicolás Tamargo</span> – Stilleder/Kundesupport/"
+"Fellesskapssjef/Programvareingeniør"
 
 #: metabrainz/templates/index/team.html:59
 #, python-format
@@ -1931,7 +1942,6 @@ msgid "Download Datasets"
 msgstr ""
 
 #: metabrainz/templates/index/datasets/signup.html:3
-#, fuzzy
 msgid "Please sign up"
 msgstr "Registrer deg"
 
@@ -1991,7 +2001,7 @@ msgstr ""
 #: metabrainz/templates/payments/donate.html:3
 #: metabrainz/templates/payments/donate.html:7
 msgid "Make a Donation"
-msgstr "Doner"
+msgstr "Donér"
 
 #: metabrainz/templates/payments/donate.html:10
 #, python-format
@@ -2066,16 +2076,16 @@ msgstr "Send meg e-post om fremtidige kronerullingsarrangement"
 
 #: metabrainz/templates/payments/donate.html:83
 msgid "This will be very seldom"
-msgstr "Dette skjer svært skjelden"
+msgstr "Dette skjer svært sjelden"
 
 #: metabrainz/templates/payments/donate.html:91
 msgid "I would like this donation to be anonymous"
 msgstr "Jeg ønsker å donere anonymt"
 
 #: metabrainz/templates/payments/donate.html:92
-#, fuzzy
 msgid "Your name and username won't appear in the donors list"
-msgstr "Ditt navn vil ikke framtre på donasjonslisten"
+msgstr ""
+"Navnet og brukernavnet ditt vil ikke vises på listen over støttespillere"
 
 #: metabrainz/templates/payments/donate.html:100
 msgid "Donate with Credit Card"
@@ -2109,7 +2119,7 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:134
 msgid "Other ways to donate"
-msgstr "Andre måtere å donere på"
+msgstr "Andre måter å donere på"
 
 #: metabrainz/templates/payments/donate.html:137
 msgid ""
@@ -2127,8 +2137,8 @@ msgid ""
 "You can make a donation, or recurring donations, via bank transfer to the"
 " following IBAN:"
 msgstr ""
-"Du kan utføre en donasjon, eller vedvarende sådan, via bankoverføring til"
-" følgende IBAN:"
+"Du kan gi én donasjon, eller regelmessige sådan, via bankoverføring til "
+"følgende IBAN:"
 
 #: metabrainz/templates/payments/donate.html:143
 #, python-format
@@ -2234,7 +2244,7 @@ msgstr ""
 #: metabrainz/templates/payments/payment.html:52
 #: metabrainz/templates/payments/payment.html:159
 msgid "Invoice number"
-msgstr "Faktura"
+msgstr "Fakturanummer"
 
 #: metabrainz/templates/payments/payment.html:61
 msgid "Make this a recurring monthly payment"
@@ -2261,7 +2271,7 @@ msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
 msgstr ""
-"For informasjon om å kansellere gjentakende betalinger gå til\n"
+"For informasjon om å avslutte gjentakende betalinger gå til\n"
 "        <a href=\"%(cancel_recurring_url)s\">denne siden</a>."
 
 #: metabrainz/templates/payments/payment.html:157
@@ -2271,7 +2281,7 @@ msgstr "Fakturanummer (valgfritt)"
 #: metabrainz/templates/payments/payment_base.html:3
 #: metabrainz/templates/payments/payment_base.html:7
 msgid "Make a Payment"
-msgstr "Utfør betaling"
+msgstr "Foreta en betaling"
 
 #: metabrainz/templates/payments/payment_base.html:10
 #, python-format
@@ -2830,7 +2840,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:522
 #: metabrainz/templates/reports/financial_reports/index.html:544
 msgid "Year end reports"
-msgstr "Årsrapporter"
+msgstr "Årssluttrapporter"
 
 #: metabrainz/templates/reports/financial_reports/index.html:244
 #: metabrainz/templates/reports/financial_reports/index.html:273
@@ -2934,7 +2944,7 @@ msgstr "August"
 #: metabrainz/templates/reports/financial_reports/index.html:534
 #: metabrainz/templates/reports/financial_reports/index.html:556
 msgid "July"
-msgstr "Juni"
+msgstr "Juli"
 
 #: metabrainz/templates/reports/financial_reports/index.html:252
 #: metabrainz/templates/reports/financial_reports/index.html:281
@@ -2949,7 +2959,7 @@ msgstr "Juni"
 #: metabrainz/templates/reports/financial_reports/index.html:535
 #: metabrainz/templates/reports/financial_reports/index.html:557
 msgid "June"
-msgstr "Juli"
+msgstr "Juni"
 
 #: metabrainz/templates/reports/financial_reports/index.html:253
 #: metabrainz/templates/reports/financial_reports/index.html:282
@@ -3042,7 +3052,7 @@ msgstr ""
 #: metabrainz/templates/supporters/signup-non-commercial.html:3
 #: metabrainz/templates/supporters/supporters-list.html:8
 msgid "Become a Supporter"
-msgstr ""
+msgstr "Bli en støttespiller"
 
 #: metabrainz/templates/supporters/account-type.html:3
 #: metabrainz/templates/supporters/account-type.html:6
@@ -3153,7 +3163,7 @@ msgstr ""
 #: metabrainz/templates/supporters/tier.html:6
 #, python-format
 msgid "%(tier_name)s tier"
-msgstr "%(tier_name)s-nivå"
+msgstr "%(tier_name)snivå"
 
 #: metabrainz/templates/supporters/supporters-list.html:35
 #: metabrainz/templates/supporters/tier.html:25
@@ -3169,12 +3179,10 @@ msgid "Supporters on this tier"
 msgstr "Støttespillere på dette nivået"
 
 #: metabrainz/templates/users/lost-password.html:3
-#, fuzzy
 msgid "Forgot your password"
 msgstr "Glemt passord"
 
 #: metabrainz/templates/users/lost-username.html:3
-#, fuzzy
 msgid "Forgot your username"
 msgstr "Glemt brukernavn"
 
@@ -3250,7 +3258,7 @@ msgstr "Brukernavn er ugyldig."
 
 #: metabrainz/user/username.py:183
 msgid "Username contains invalid or invisible characters."
-msgstr "Brukernavn innholder ugyldige tegn."
+msgstr "Brukernavnet innholder ugyldige tegn."
 
 #: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:181
 msgid "Hide password"
@@ -3278,9 +3286,8 @@ msgid "No applications found"
 msgstr "Ingen søknader funnet"
 
 #: frontend/js/src/Applications.tsx:57 frontend/js/src/Applications.tsx:87
-#, fuzzy
 msgid "Website"
-msgstr "Nettsideadresse"
+msgstr "Nettsted"
 
 #: frontend/js/src/Applications.tsx:58
 msgid "Client ID"
@@ -3324,7 +3331,7 @@ msgstr "Det oppsto en feil under OAuth-autentiseringsprosessen."
 
 #: frontend/js/src/Profile.tsx:38
 msgid "(Resend Verification Email)"
-msgstr "(Send bekreftelses-e-post på nytt)"
+msgstr "(Send bekreftelses-epost på nytt)"
 
 #: frontend/js/src/Profile.tsx:47
 msgid "Current:"
@@ -3439,6 +3446,7 @@ msgid "Tier:"
 msgstr "Nivå:"
 
 #: frontend/js/src/Profile.tsx:243
+#, fuzzy
 msgid "State:"
 msgstr "Tilstand:"
 
@@ -3584,11 +3592,11 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
 msgid "Delete My Account"
-msgstr "Slett kontoen din"
+msgstr "Slett brukerkontoen din"
 
 #: frontend/js/src/Profile.tsx:567
 msgid "Account Deletion"
-msgstr "Sletting av konto"
+msgstr "Sletting av brukerkonto"
 
 #: frontend/js/src/Profile.tsx:571
 msgid "Need to delete your account?"
@@ -3628,7 +3636,7 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:679
 msgid "Creative Commons licensed reviews"
-msgstr ""
+msgstr "Creative Commons-lisensierte anmeldelser"
 
 #: frontend/js/src/ProfileDelete.tsx:26
 msgid ""
@@ -3654,7 +3662,7 @@ msgstr "Oppheve alle API-polletter og tilgang"
 
 #: frontend/js/src/ProfileDelete.tsx:65
 msgid "Remove your supporter status (if applicable)"
-msgstr "Fjerne din supporterstatus (hvis aktuelt)"
+msgstr "Fjern din støttespillerstatus (hvis aktuelt)"
 
 #: frontend/js/src/ProfileDelete.tsx:66
 msgid "Log you out of all MetaBrainz services"
@@ -3723,7 +3731,7 @@ msgstr ""
 msgid ""
 "Please read our <gdprLink>GDPR compliance statement</gdprLink> for more "
 "details."
-msgstr ""
+msgstr "Les vår <gdprLink>GDPR-kravserklæring</gdprLink> for mer informasjon."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:78
 msgid ""
@@ -3771,7 +3779,7 @@ msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:131
 msgid "Redirect URIs"
-msgstr "Omdiriger URI-er"
+msgstr "Omdirigerings URI-er"
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
 msgid "Add a redirect URI"
@@ -3791,22 +3799,19 @@ msgstr "Slett søknad"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
 msgid "Client Details"
-msgstr ""
+msgstr "Klientdetaljer"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
-#, fuzzy
 msgid "Name:"
-msgstr "Navn"
+msgstr "Navn:"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:30
-#, fuzzy
 msgid "Description:"
-msgstr "Beskrivelse av organisasjon"
+msgstr "Beskrivelse av organisasjonen:"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:32
-#, fuzzy
 msgid "Website:"
-msgstr "Nettsideadresse"
+msgstr "Nettsted:"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:37
 msgid "Are you sure you want to delete this client?"
@@ -3818,15 +3823,13 @@ msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:26
-#, fuzzy
 msgid "Forgot your username?"
-msgstr "Glemt brukernavn"
+msgstr "Glemt brukernavnet?"
 
 #: frontend/js/src/forms/LoginUser.tsx:66
 #: frontend/js/src/forms/LostPassword.tsx:26
-#, fuzzy
 msgid "Forgot your password?"
-msgstr "Glemt passord"
+msgstr "Glemt passorded?"
 
 #: frontend/js/src/forms/LoginUser.tsx:109
 msgid "Don't have an account?"
@@ -3834,7 +3837,6 @@ msgstr ""
 
 #: frontend/js/src/forms/LostPassword.tsx:38
 #: frontend/js/src/forms/LostUsername.tsx:36
-#, fuzzy
 msgid "Email is required!"
 msgstr "E-postadresse kreves!"
 
@@ -3856,7 +3858,6 @@ msgid "Your identity on MetaBrainz"
 msgstr ""
 
 #: frontend/js/src/forms/OAuthPrompt.tsx:61
-#, fuzzy
 msgid "Allow access"
 msgstr "Tillat tilgang"
 
@@ -3877,7 +3878,6 @@ msgid "Update"
 msgstr "Oppdatering"
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
-#, fuzzy
 msgid "Reset Password"
 msgstr "Tilbakestill passord"
 
@@ -3914,7 +3914,6 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
-#, fuzzy
 msgid "Account type"
 msgstr "Kontotype"
 
@@ -3989,7 +3988,6 @@ msgstr ""
 "egen server</hostLink>."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:404
-#, fuzzy
 msgid "Logo URL"
 msgstr "Nettadresse for logo"
 
@@ -4086,7 +4084,7 @@ msgstr "Opprett en brukerkonto"
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
 #: frontend/js/src/forms/SignupUser.tsx:231
 msgid "Already have an account?"
-msgstr "Har du allerede en konto?"
+msgstr "Har du allerede en brukerkonto?"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:107
 msgid "non-commercial"
@@ -4098,24 +4096,30 @@ msgid ""
 "purposes will result in us revoking your access token and then billing "
 "you for your commercial use of our datasets or the Live Data Feed."
 msgstr ""
+"Vær oppmerksom på at misbruk av den ikke-kommersielle tjenesten til "
+"kommersielle formål vil føre til at vi tilbakekaller din tilgangspollett og "
+"deretter fakturerer deg for kommersiell bruk av sanntidsdatastrøm og/eller "
+"datasettene våre."
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:157
 msgid "Change account type"
-msgstr ""
+msgstr "Endre kontotype"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:249
 msgid "Which datasets are you interested in?"
-msgstr ""
+msgstr "Hvilke datasett er du interessert i?"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
 msgid "About your project"
-msgstr ""
+msgstr "Om prosjektet ditt"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
 "I agree to use the MetaBrainz data for non-commercial (less than $500 "
 "income per year) or personal uses only."
 msgstr ""
+"Jeg samtykker i å bruke MetaBrainz-dataene kun til personlig eller ikke-"
+"kommersiell (inntekt mindre enn 4 500 NOK ($500) per år) bruk."
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:284
 msgid ""
@@ -4123,6 +4127,9 @@ msgid ""
 "will treat my access token as a secret and will not share this token "
 "publicly or commit it to a source code repository."
 msgstr ""
+"Jeg samtykker også i at hvis jeg genererer en sanntidsdatastrøms "
+"tilgangspollett, behandler jeg denne tilgangspolletten som en hemmelighet og "
+"vil ikke dele denne polletten offentlig eller lagre den i et kildekodelager."
 
 #: frontend/js/src/forms/SignupUser.tsx:43
 msgid "Create your account"
@@ -4130,47 +4137,51 @@ msgstr "Opprett brukerkonto"
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
-msgstr ""
+msgstr "Registreringen startet av"
 
 #: frontend/js/src/forms/SignupUser.tsx:69
 msgid "Invalid email address."
-msgstr ""
+msgstr "Ugyldig e-postadresse."
 
 #: frontend/js/src/forms/SignupUser.tsx:150
 msgid ""
 "This username and email were provided by the app that started "
 "registration. You can change them later from MetaBrainz settings."
 msgstr ""
+"Dette brukernavnet og e-postadressen kommer fra programregistreringen. Du "
+"kan endre dem senere i MetaBrainz-innstillingene."
 
 #: frontend/js/src/forms/SignupUser.tsx:182
 msgid ""
 "I accept that my contributions will be released into the public domain or"
 " licensed for use."
 msgstr ""
+"Jeg godtar at mine bidrag puttes i det offentlige domene eller blir "
+"lisensiert for bruk."
 
 #: frontend/js/src/forms/SignupUser.tsx:191
 msgid "We will never share your personal information."
-msgstr ""
+msgstr "Vi vil aldri dele din personlige informasjon."
 
 #: frontend/js/src/forms/SignupUser.tsx:200
 msgid "Click here to read more"
-msgstr ""
+msgstr "Klikk her for mer informasjon"
 
 #: frontend/js/src/forms/SignupUser.tsx:224
 msgid "Create account"
-msgstr ""
+msgstr "Opprett brukerkonto"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
 msgid "This email address is already registered."
-msgstr ""
+msgstr "Denne e-postadressen er allerede i bruk."
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
-msgstr ""
+msgstr "E-postbekreftelsen mislyktes"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:82
 msgid "Invalid email address"
-msgstr ""
+msgstr "Ugyldig e-postadresse"
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "Du må oppgi mengde!"
