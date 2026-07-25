@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:08+0000\n"
+"POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-06-12 00:54+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: lt\n"
@@ -40,9 +40,8 @@ msgstr "El. pašto adresas – būtinas!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
-#, fuzzy
 msgid "Current password is required!"
-msgstr "El. pašto adresas – būtinas!"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -52,18 +51,16 @@ msgstr "El. pašto adresas – būtinas!"
 #: frontend/js/src/forms/SignupUser.tsx:72 metabrainz/index/forms.py:66
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
-#, fuzzy
 msgid "Password is required!"
-msgstr "El. pašto adresas – būtinas!"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:160
 #: frontend/js/src/forms/SignupNonCommercial.tsx:91
 #: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
-#, fuzzy
 msgid "Confirm Password is required!"
-msgstr "Būtinas kontaktinis vardas!"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
@@ -117,14 +114,12 @@ msgid "Your account has been deleted."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
-#, fuzzy
 msgid "Application Name"
-msgstr "Organizacijos pavadinimas"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:59
-#, fuzzy
 msgid "Application name field is empty."
-msgstr "Kontakto vardo laukas yra tuščias."
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
@@ -140,9 +135,8 @@ msgid "Description"
 msgstr "Organizacijos aprašymas"
 
 #: metabrainz/oauth/forms.py:64
-#, fuzzy
 msgid "Client description field is empty."
-msgstr "Kontakto vardo laukas yra tuščias."
+msgstr ""
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
@@ -153,19 +147,16 @@ msgid "Client description needs to be at most 512 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "Atgal į pagrindinį puslapį"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:69
-#, fuzzy
 msgid "Homepage field is empty."
-msgstr "Kontakto vardo laukas yra tuščias."
+msgstr ""
 
 #: metabrainz/oauth/forms.py:70
-#, fuzzy
 msgid "Homepage is not a valid URI."
-msgstr "El. pašto laukas nėra tinkamas el. pašto adresas."
+msgstr ""
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
@@ -176,14 +167,12 @@ msgid "Authorization callback URL"
 msgstr ""
 
 #: metabrainz/oauth/forms.py:74
-#, fuzzy
 msgid "Authorization callback URL field is empty."
-msgstr "Kontaktinio el. pašto laukas yra tuščias."
+msgstr ""
 
 #: metabrainz/oauth/forms.py:75
-#, fuzzy
 msgid "Authorization callback URL is invalid."
-msgstr "Trūksta patvirtinimo kodo."
+msgstr ""
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
@@ -267,9 +256,8 @@ msgstr "Prašome, papasakokite mums, kaip jūs (ketinate) naudosite mūsų duome
 #: frontend/js/src/forms/SignupCommercial.tsx:138
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
 #: metabrainz/supporter/forms.py:18
-#, fuzzy
 msgid "Please, limit usage description to 500 characters."
-msgstr "Apribokite naudojimo aprašymą iki 150 simbolių."
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:141
 #: frontend/js/src/forms/SignupCommercial.tsx:142
@@ -417,9 +405,8 @@ msgstr ""
 "Naujienas jums atsiųsime el. paštu."
 
 #: metabrainz/supporter/views.py:248
-#, fuzzy
 msgid "Thanks for becoming a supporter!"
-msgstr "Ačiū, kad užsiregistravote!"
+msgstr ""
 
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
@@ -443,9 +430,8 @@ msgstr "Projektai"
 #: metabrainz/templates/index/datasets/derived-dumps.html:3
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
-#, fuzzy
 msgid "Datasets"
-msgstr "Data"
+msgstr ""
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
@@ -457,17 +443,15 @@ msgid "Shop"
 msgstr ""
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
-#, fuzzy
 msgid "Policies"
-msgstr "Vadovai"
+msgstr ""
 
 #: metabrainz/templates/base.html:55 metabrainz/templates/index/gdpr.html:178
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
-#, fuzzy
 msgid "Social Contract"
-msgstr "Susisiekti"
+msgstr ""
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
@@ -666,23 +650,19 @@ msgid "MusicBrainz Live Data Feed"
 msgstr "„MusicBrainz“ tiesioginis duomenų srautas"
 
 #: metabrainz/templates/api/info.html:16
-#, fuzzy
 msgid "There are two endpoints for fetching live data:"
-msgstr "Yra trys galutiniai taškai, skirti kopijavimo paketams gauti:"
+msgstr ""
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
 msgstr ""
 
 #: metabrainz/templates/api/info.html:30
-#, fuzzy
 msgid ""
 "It is possible to get a signature for each replication packet. Just "
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"Galima gauti kiekvieno kopijavimo paketo parašą. Tiesiog pakeiskite\n"
-"      <code>.tar.bz2</code> į <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 #, fuzzy
@@ -717,13 +697,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/api/info.html:67
-#, fuzzy
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"Galima gauti kiekvieno kopijavimo paketo parašą. Tiesiog pakeiskite\n"
-"      <code>.tar.bz2</code> į <code>.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -860,9 +837,8 @@ msgid "Advisor"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:63
-#, fuzzy
 msgid "Our board of directors is advised by:"
-msgstr "Mūsų direktorių tarybą sudaro:"
+msgstr ""
 
 #: metabrainz/templates/index/about.html:65
 #, python-format
@@ -1131,14 +1107,10 @@ msgid "We are not distributing any of the music listed in MusicBrainz."
 msgstr "Mes neplatiname jokios muzikos, įtrauktos į „MusicBrainz“"
 
 #: metabrainz/templates/index/contact.html:61
-#, fuzzy
 msgid ""
 "For inquiries about advertising, SEO optimization, or software "
 "monetization services, please see above!"
 msgstr ""
-"Mūsų nedomina jūsų reklamos, SEO optimizavimo ar programinės įrangos "
-"monetizacijos paslaugos. Prašome\n"
-"        nesiūlykite mums <b>jokių</b> paslaugų!"
 
 #: metabrainz/templates/index/contact.html:62
 msgid "Please do not offer us <b>any</b> other services! We are not interested."
@@ -1208,9 +1180,8 @@ msgid "Mailing address"
 msgstr "Pašto adresas"
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "„MetaBrainz“ komanda"
+msgstr ""
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1400,9 +1371,8 @@ msgid "Summary"
 msgstr "Santrauka"
 
 #: metabrainz/templates/index/privacy.html:33
-#, fuzzy
 msgid "Applicable to all users"
-msgstr "Organizacijos pavadinimas"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
@@ -1422,18 +1392,16 @@ msgid "Applicable to account holders"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "Paskyros tipas"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:114
-#, fuzzy
 msgid "Subscriptions on MusicBrainz"
-msgstr "Turite klausimą apie „MusicBrainz“?"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
@@ -1482,9 +1450,8 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
-#, fuzzy
 msgid "Delete your account"
-msgstr "Prieiga prie paskyros"
+msgstr ""
 
 #: metabrainz/templates/index/profile-edit.html:3
 msgid "Edit"
@@ -1579,9 +1546,8 @@ msgstr ""
 "duomenis atviroms muzikos rekomendacijų sistemoms kurti."
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "Projektai"
+msgstr ""
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -1615,9 +1581,8 @@ msgstr ""
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "„MetaBrainz“ API"
+msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -2330,9 +2295,8 @@ msgid "Organization:"
 msgstr "Organizacijos pavadinimas"
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "Palaikytojai"
+msgstr ""
 
 #: metabrainz/templates/payments/payment.html:44
 #, python-format
@@ -2484,13 +2448,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:31
-#, fuzzy
 msgid ""
 "We attempt to publish our balance sheets within the first week of the "
 "succeeding quarter, or as close to that as possible."
 msgstr ""
-"Mes stengiamės skelbti savo balansus per pirmąją kito mėnesio savaitę, "
-"arba kuo arčiau tos, kiek galima."
 
 #: metabrainz/templates/reports/financial_reports/index.html:36
 #: metabrainz/templates/reports/financial_reports/index.html:52
@@ -3182,9 +3143,8 @@ msgstr ""
 #: metabrainz/templates/supporters/account-type.html:48
 #: metabrainz/templates/supporters/account-type.html:90
 #: metabrainz/templates/supporters/account-type.html:141
-#, fuzzy
 msgid "Upgrade"
-msgstr "Atnaujinti"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:235
 #: frontend/js/src/forms/SignupCommercial.tsx:176
@@ -3283,14 +3243,12 @@ msgid "Supporters on this tier"
 msgstr "Šio lygmens palaikytojai"
 
 #: metabrainz/templates/users/lost-password.html:3
-#, fuzzy
 msgid "Forgot your password"
-msgstr "Būtinas kontaktinis vardas!"
+msgstr ""
 
 #: metabrainz/templates/users/lost-username.html:3
-#, fuzzy
 msgid "Forgot your username"
-msgstr "Pavadinimas"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
 #: frontend/js/src/forms/SignupCommercial.tsx:320
@@ -3298,9 +3256,8 @@ msgstr "Pavadinimas"
 #: frontend/js/src/forms/SignupUser.tsx:169
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Būtinas kontaktinis vardas!"
+msgstr ""
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
@@ -3316,9 +3273,8 @@ msgid "Cancel"
 msgstr ""
 
 #: metabrainz/templates/users/reauthenticate.html:24
-#, fuzzy
 msgid "Continue"
-msgstr "Aukojimas"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
 #: metabrainz/templates/users/reset-password.html:3
@@ -3335,9 +3291,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username"
-msgstr "Pavadinimas"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3345,9 +3300,8 @@ msgstr "Pavadinimas"
 #: frontend/js/src/forms/SignupNonCommercial.tsx:84
 #: frontend/js/src/forms/SignupUser.tsx:67 metabrainz/user/forms.py:21
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username is required!"
-msgstr "Būtinas kontaktinis vardas!"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:63
 #: frontend/js/src/forms/ResetPassword.tsx:72
@@ -3359,9 +3313,8 @@ msgid "Password"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
-#, fuzzy
 msgid "Remember me"
-msgstr "Gruodis"
+msgstr ""
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
@@ -3385,9 +3338,8 @@ msgstr ""
 
 #: frontend/js/src/ApplicationRow.tsx:78
 #: frontend/js/src/forms/DeleteApplication.tsx:60
-#, fuzzy
 msgid "Delete"
-msgstr "Data"
+msgstr ""
 
 #: frontend/js/src/Applications.tsx:37
 msgid "Your applications"
@@ -3414,9 +3366,8 @@ msgid "Privileges"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:61 frontend/js/src/Applications.tsx:89
-#, fuzzy
 msgid "Actions"
-msgstr "Paaukojimai"
+msgstr ""
 
 #: frontend/js/src/Applications.tsx:77
 #, fuzzy
@@ -3428,14 +3379,12 @@ msgid "No tokens found"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:88
-#, fuzzy
 msgid "Access"
-msgstr "Leisti prieigą"
+msgstr ""
 
 #: frontend/js/src/Applications.tsx:111
-#, fuzzy
 msgid "Revoke access"
-msgstr "Leisti prieigą"
+msgstr ""
 
 #: frontend/js/src/OAuthError.tsx:17
 msgid "OAuth2 Error"
@@ -3528,14 +3477,12 @@ msgid "Unknown. :("
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:214
-#, fuzzy
 msgid "Active"
-msgstr "Paaukojimai"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:216
-#, fuzzy
 msgid "Rejected"
-msgstr "Projektai"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:218
 msgid "Pending"
@@ -3562,9 +3509,8 @@ msgid "Tier:"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:243
-#, fuzzy
 msgid "State:"
-msgstr "Data"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:251
 msgid ""
@@ -3573,9 +3519,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:267
-#, fuzzy
 msgid "Organization Information"
-msgstr "Organizacijos aprašymas"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
@@ -3595,19 +3540,16 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-#, fuzzy
 msgid "Contact name"
-msgstr "Susisiekti"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:312 frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Contact Email"
-msgstr "Kontaktiniai duomenys"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:322
-#, fuzzy
 msgid "Datasets Used"
-msgstr "Data"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:333 frontend/js/src/forms/ProfileEdit.tsx:35
 msgid "Edit Contact Information"
@@ -3684,19 +3626,16 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:484 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Email"
-msgstr "Rašykite mums el. paštu"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:498
-#, fuzzy
 msgid "Edit Information"
-msgstr "Fondas"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:510
-#, fuzzy
 msgid "Want access to MetaBrainz datasets?"
-msgstr "„MetaBrainz“ komanda"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:515
 msgid ""
@@ -3714,14 +3653,12 @@ msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
-#, fuzzy
 msgid "Delete My Account"
-msgstr "Prieiga prie paskyros"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:567
-#, fuzzy
 msgid "Account Deletion"
-msgstr "Paskyros tipas"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:571
 msgid "Need to delete your account?"
@@ -3734,14 +3671,12 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:594
-#, fuzzy
 msgid "Security"
-msgstr "Miestas"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:626
-#, fuzzy
 msgid "MetaBrainz Applications"
-msgstr "„MetaBrainz“ API"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:630
 msgid ""
@@ -3762,9 +3697,8 @@ msgid "The open-source book database"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:679
-#, fuzzy
 msgid "Creative Commons licensed reviews"
-msgstr "Kūrybinių „Creative Commons“ licencijuotų muzikos atsiliepimų"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:26
 msgid ""
@@ -3777,9 +3711,8 @@ msgid "Warning: This action is irreversible"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:61
-#, fuzzy
 msgid "Deleting your account will:"
-msgstr "Prieiga prie paskyros"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:63
 msgid "Permanently remove all your account information"
@@ -3880,66 +3813,56 @@ msgid "Sounds good"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:57
-#, fuzzy
 msgid "Application name is required."
-msgstr "Būtinas kontaktinis vardas!"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:67
-#, fuzzy
 msgid "Application description is required."
-msgstr "Organizacijos aprašymas"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:70
 msgid "Application description needs to be at least 3 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
-#, fuzzy
 msgid "Application description needs to be at most 512 characters long."
-msgstr "Organizacijos aprašymas"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:78
-#, fuzzy
 msgid "Homepage is required."
-msgstr "Būtinas kontaktinis vardas!"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:82
-#, fuzzy
 msgid "Authorization callback URL cannot be empty."
-msgstr "Kontaktinio el. pašto laukas yra tuščias."
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:85
-#, fuzzy
 msgid "Authorization callback URL is required."
-msgstr "Trūksta patvirtinimo kodo."
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:131
 msgid "Redirect URIs"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
-#, fuzzy
 msgid "Add a redirect URI"
-msgstr "Direktorių taryba"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:190
 msgid "Save changes"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:191
-#, fuzzy
 msgid "Create application"
-msgstr "„OAuth“ autorizavimas"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:20
-#, fuzzy
 msgid "Delete application"
-msgstr "„OAuth“ autorizavimas"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
-#, fuzzy
 msgid "Client Details"
-msgstr "Kontaktiniai duomenys"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
 #, fuzzy
@@ -4014,14 +3937,12 @@ msgid "New Password"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:89
-#, fuzzy
 msgid "Confirm New Password"
-msgstr "Būtinas kontaktinis vardas!"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "Data"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
 msgid "Reset Password"
@@ -4038,9 +3959,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
 #: frontend/js/src/forms/SignupUser.tsx:87
-#, fuzzy
 msgid "Captcha is required!"
-msgstr "El. pašto adresas – būtinas!"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:179
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
@@ -4067,9 +3987,8 @@ msgid "Account type"
 msgstr "Paskyros tipas"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
-#, fuzzy
 msgid "Selected tier"
-msgstr "Peržiūrėti rekomenduojamus lygius"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:242
 msgid "month and up"
@@ -4081,9 +4000,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
-#, fuzzy
 msgid "Your account:"
-msgstr "Prieiga prie paskyros"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
@@ -4094,9 +4012,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:291
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
 #: frontend/js/src/forms/SignupUser.tsx:127
-#, fuzzy
 msgid "E-mail address"
-msgstr "Pašto adresas"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:295
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
@@ -4151,9 +4068,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
-#, fuzzy
 msgid "Your project"
-msgstr "Jūsų profilis"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
@@ -4161,9 +4077,8 @@ msgid "(max 150 characters)"
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:451
-#, fuzzy
 msgid "Billing address"
-msgstr "Pašto adresas"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:502
 msgid ""
@@ -4204,15 +4119,13 @@ msgstr "Jūsų profilis"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
-#, fuzzy
 msgid "Not a supporter?"
-msgstr "Palaikytojai"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-#, fuzzy
 msgid "Create a user account"
-msgstr "Prieiga prie paskyros"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:573
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
@@ -4241,9 +4154,8 @@ msgid "Which datasets are you interested in?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
-#, fuzzy
 msgid "About your project"
-msgstr "Projektai"
+msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
@@ -4259,18 +4171,16 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:43
-#, fuzzy
 msgid "Create your account"
-msgstr "Prieiga prie paskyros"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:69
-#, fuzzy
 msgid "Invalid email address."
-msgstr "Pašto adresas"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:150
 msgid ""
@@ -4293,23 +4203,20 @@ msgid "Click here to read more"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:224
-#, fuzzy
 msgid "Create account"
-msgstr "Prieiga prie paskyros"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
-#, fuzzy
 msgid "This email address is already registered."
-msgstr "El. pašto adresas – būtinas!"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
 msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:82
-#, fuzzy
 msgid "Invalid email address"
-msgstr "Pašto adresas"
+msgstr ""
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "Reikia nurodyti sumą."

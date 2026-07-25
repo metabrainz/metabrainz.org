@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:08+0000\n"
+"POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-06-12 00:52+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: fi\n"
@@ -3054,9 +3054,8 @@ msgid "Forgot your password"
 msgstr ""
 
 #: metabrainz/templates/users/lost-username.html:3
-#, fuzzy
 msgid "Forgot your username"
-msgstr "Nimi"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
 #: frontend/js/src/forms/SignupCommercial.tsx:320
@@ -3099,9 +3098,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username"
-msgstr "Nimi"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3122,9 +3120,8 @@ msgid "Password"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
-#, fuzzy
 msgid "Remember me"
-msgstr "Joulukuu"
+msgstr ""
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
@@ -3435,9 +3432,8 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:484 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Email"
-msgstr "Huhtikuu"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:498
 msgid "Edit Information"
@@ -3553,9 +3549,8 @@ msgid "Deleting..."
 msgstr ""
 
 #: frontend/js/src/ProfileTabs.tsx:17
-#, fuzzy
 msgid "Profile"
-msgstr "Huhtikuu"
+msgstr ""
 
 #: frontend/js/src/forms/ConditionsModal.tsx:17
 msgid "Close"

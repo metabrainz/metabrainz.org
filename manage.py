@@ -115,8 +115,12 @@ def extract_strings():
                  "metabrainz/ frontend/js/src/")
     click.echo("Strings have been successfully extracted into messages.pot file.")
 
+    # Fuzzy matching can associate an old translation with the wrong source
+    # string, which then appears as a misleading unit in Weblate. Only carry
+    # translations forward when their message IDs match exactly.
     _run_command("pybabel update -i metabrainz/messages.pot "
-                 "-d metabrainz/translations")
+                 "-d metabrainz/translations "
+                 "--no-fuzzy-matching")
     click.echo("Per-locale translation catalogs have been updated.")
 
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:08+0000\n"
+"POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-06-12 00:51+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: cs\n"
@@ -145,9 +145,8 @@ msgid "Client description needs to be at most 512 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "Zpět na domovskou stránku"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
@@ -170,9 +169,8 @@ msgid "Authorization callback URL field is empty."
 msgstr ""
 
 #: metabrainz/oauth/forms.py:75
-#, fuzzy
 msgid "Authorization callback URL is invalid."
-msgstr "Chybí autorizační kód!"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
@@ -402,9 +400,8 @@ msgstr ""
 "Aktualizace Vám zašleme e-mailem."
 
 #: metabrainz/supporter/views.py:248
-#, fuzzy
 msgid "Thanks for becoming a supporter!"
-msgstr "Děkujeme za přihlášení!"
+msgstr ""
 
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
@@ -441,17 +438,15 @@ msgid "Shop"
 msgstr ""
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
-#, fuzzy
 msgid "Policies"
-msgstr "Vedení"
+msgstr ""
 
 #: metabrainz/templates/base.html:55 metabrainz/templates/index/gdpr.html:178
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
-#, fuzzy
 msgid "Social Contract"
-msgstr "Kontakt"
+msgstr ""
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
@@ -649,23 +644,19 @@ msgid "MusicBrainz Live Data Feed"
 msgstr "Živý datový kanál - data feed obsahu MusicBrainz"
 
 #: metabrainz/templates/api/info.html:16
-#, fuzzy
 msgid "There are two endpoints for fetching live data:"
-msgstr "Existují tři koncové body pro vyvolání replikačních paketů:"
+msgstr ""
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
 msgstr ""
 
 #: metabrainz/templates/api/info.html:30
-#, fuzzy
 msgid ""
 "It is possible to get a signature for each replication packet. Just "
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"Je možné získat podpis pro každý replikační paket. Stačí jen zaměnit\n"
-"      <code>.tar.bz2</code> za<code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 #, fuzzy
@@ -700,13 +691,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/api/info.html:67
-#, fuzzy
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"Je možné získat podpis pro každý replikační paket. Stačí jen zaměnit\n"
-"      <code>.tar.bz2</code> za<code>.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -842,9 +830,8 @@ msgid "Advisor"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:63
-#, fuzzy
 msgid "Our board of directors is advised by:"
-msgstr "Naše správní rada je složena z:"
+msgstr ""
 
 #: metabrainz/templates/index/about.html:65
 #, python-format
@@ -945,9 +932,8 @@ msgid "Nice!!"
 msgstr "Hezké!!"
 
 #: metabrainz/templates/index/bad-customers.html:54
-#, fuzzy
 msgid "There are currently no not-so-favorite commercial data supporters!"
-msgstr "Zde jsou aktuálně nepříliš oblíbení komerční uživatelé dat!"
+msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:56
 msgid ""
@@ -1166,9 +1152,8 @@ msgid "Mailing address"
 msgstr "Poštovní adresa"
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "Projekty MetaBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1351,18 +1336,16 @@ msgid "Applicable to account holders"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "Zřízení"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:114
-#, fuzzy
 msgid "Subscriptions on MusicBrainz"
-msgstr "Máte dotaz ohledně MusicBrainz?"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
@@ -1405,9 +1388,8 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
-#, fuzzy
 msgid "Delete your account"
-msgstr "Přístup k Vašemu účtu"
+msgstr ""
 
 #: metabrainz/templates/index/profile-edit.html:3
 msgid "Edit"
@@ -1498,9 +1480,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "Projekty"
+msgstr ""
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -1534,9 +1515,8 @@ msgstr ""
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "MetaBrainz API"
+msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -2218,14 +2198,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/payments/payment.html:17
-#, fuzzy
 msgid "Organization:"
-msgstr "Zřízení"
+msgstr ""
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "Podporovatelé"
+msgstr ""
 
 #: metabrainz/templates/payments/payment.html:44
 #, python-format
@@ -3175,9 +3153,8 @@ msgid "Forgot your password"
 msgstr ""
 
 #: metabrainz/templates/users/lost-username.html:3
-#, fuzzy
 msgid "Forgot your username"
-msgstr "Uživatelé"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
 #: frontend/js/src/forms/SignupCommercial.tsx:320
@@ -3220,9 +3197,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username"
-msgstr "Uživatelé"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3410,9 +3386,8 @@ msgid "Active"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:216
-#, fuzzy
 msgid "Rejected"
-msgstr "Projekty"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:218
 msgid "Pending"
@@ -3449,9 +3424,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:267
-#, fuzzy
 msgid "Organization Information"
-msgstr "Zřízení"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
@@ -3471,14 +3445,12 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-#, fuzzy
 msgid "Contact name"
-msgstr "Kontakt"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:312 frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Contact Email"
-msgstr "Kontaktní údaje"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:322
 msgid "Datasets Used"
@@ -3559,19 +3531,16 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:484 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Email"
-msgstr "Napište nám e-mail"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:498
-#, fuzzy
 msgid "Edit Information"
-msgstr "Nadace"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:510
-#, fuzzy
 msgid "Want access to MetaBrainz datasets?"
-msgstr "Projekty MetaBrainz"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:515
 msgid ""
@@ -3589,14 +3558,12 @@ msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
-#, fuzzy
 msgid "Delete My Account"
-msgstr "Přístup k Vašemu účtu"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:567
-#, fuzzy
 msgid "Account Deletion"
-msgstr "Zřízení"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:571
 msgid "Need to delete your account?"
@@ -3613,9 +3580,8 @@ msgid "Security"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:626
-#, fuzzy
 msgid "MetaBrainz Applications"
-msgstr "MetaBrainz API"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:630
 msgid ""
@@ -3650,9 +3616,8 @@ msgid "Warning: This action is irreversible"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:61
-#, fuzzy
 msgid "Deleting your account will:"
-msgstr "Přístup k Vašemu účtu"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:63
 msgid "Permanently remove all your account information"
@@ -3773,23 +3738,20 @@ msgid "Homepage is required."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:82
-#, fuzzy
 msgid "Authorization callback URL cannot be empty."
-msgstr "Chybí autorizační kód!"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:85
-#, fuzzy
 msgid "Authorization callback URL is required."
-msgstr "Chybí autorizační kód!"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:131
 msgid "Redirect URIs"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
-#, fuzzy
 msgid "Add a redirect URI"
-msgstr "Správní rada"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:190
 msgid "Save changes"
@@ -3804,14 +3766,12 @@ msgid "Delete application"
 msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
-#, fuzzy
 msgid "Client Details"
-msgstr "Kontaktní údaje"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
-#, fuzzy
 msgid "Name:"
-msgstr "Uživatelé"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:30
 msgid "Description:"
@@ -3882,9 +3842,8 @@ msgid "Confirm New Password"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "Přispět"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
 msgid "Reset Password"
@@ -3924,9 +3883,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
-#, fuzzy
 msgid "Account type"
-msgstr "Zřízení"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
 msgid "Selected tier"
@@ -3942,9 +3900,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
-#, fuzzy
 msgid "Your account:"
-msgstr "Přístup k Vašemu účtu"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
@@ -3955,9 +3912,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:291
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
 #: frontend/js/src/forms/SignupUser.tsx:127
-#, fuzzy
 msgid "E-mail address"
-msgstr "Poštovní adresa"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:295
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
@@ -4012,9 +3968,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
-#, fuzzy
 msgid "Your project"
-msgstr "Váš profil"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
@@ -4022,9 +3977,8 @@ msgid "(max 150 characters)"
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:451
-#, fuzzy
 msgid "Billing address"
-msgstr "Poštovní adresa"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:502
 msgid ""
@@ -4065,15 +4019,13 @@ msgstr "Váš profil"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
-#, fuzzy
 msgid "Not a supporter?"
-msgstr "Podporovatelé"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-#, fuzzy
 msgid "Create a user account"
-msgstr "Přístup k Vašemu účtu"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:573
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
@@ -4101,9 +4053,8 @@ msgid "Which datasets are you interested in?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
-#, fuzzy
 msgid "About your project"
-msgstr "Projekty"
+msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
@@ -4119,18 +4070,16 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:43
-#, fuzzy
 msgid "Create your account"
-msgstr "Přístup k Vašemu účtu"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:69
-#, fuzzy
 msgid "Invalid email address."
-msgstr "Poštovní adresa"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:150
 msgid ""
@@ -4153,9 +4102,8 @@ msgid "Click here to read more"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:224
-#, fuzzy
 msgid "Create account"
-msgstr "Přístup k Vašemu účtu"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
 msgid "This email address is already registered."
@@ -4166,9 +4114,8 @@ msgid "Email validation failed"
 msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:82
-#, fuzzy
 msgid "Invalid email address"
-msgstr "Poštovní adresa"
+msgstr ""
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "Je potřeba určit množství!"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:08+0000\n"
+"POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-06-12 00:51+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: bg\n"
@@ -144,9 +144,8 @@ msgid "Client description needs to be at most 512 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "Обратно към начална страница"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
@@ -437,9 +436,8 @@ msgid "Shop"
 msgstr ""
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
-#, fuzzy
 msgid "Policies"
-msgstr "Служители"
+msgstr ""
 
 #: metabrainz/templates/base.html:55 metabrainz/templates/index/gdpr.html:178
 #: metabrainz/templates/index/social-contract.html:3
@@ -644,24 +642,19 @@ msgid "MusicBrainz Live Data Feed"
 msgstr "MusicBrainz емисия с данни на живо"
 
 #: metabrainz/templates/api/info.html:16
-#, fuzzy
 msgid "There are two endpoints for fetching live data:"
-msgstr "Има три крайни точки за извличане на репликационни пакети:"
+msgstr ""
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
 msgstr ""
 
 #: metabrainz/templates/api/info.html:30
-#, fuzzy
 msgid ""
 "It is possible to get a signature for each replication packet. Just "
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"Възможно е да вземете подпис за всеки репликационен пакет. Просто "
-"заменете\n"
-"      <code>.tar.bz2</code> с <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 #, fuzzy
@@ -694,14 +687,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/api/info.html:67
-#, fuzzy
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"Възможно е да вземете подпис за всеки репликационен пакет. Просто "
-"заменете\n"
-"      <code>.tar.bz2</code> с <code>.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -838,9 +827,8 @@ msgid "Advisor"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:63
-#, fuzzy
 msgid "Our board of directors is advised by:"
-msgstr "Нашия борд на директорите се състои от:"
+msgstr ""
 
 #: metabrainz/templates/index/about.html:65
 #, python-format
@@ -875,9 +863,8 @@ msgid "Bad customers"
 msgstr "Лоши клиенти"
 
 #: metabrainz/templates/index/bad-customers.html:8
-#, fuzzy
 msgid "Our not-so-favorite commercial data supporters"
-msgstr "Нашите не толкова любими комерсиални потребители на данни"
+msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:11
 msgid ""
@@ -922,9 +909,8 @@ msgid "Nice!!"
 msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:54
-#, fuzzy
 msgid "There are currently no not-so-favorite commercial data supporters!"
-msgstr "Нашите не толкова любими комерсиални потребители на данни"
+msgstr ""
 
 #: metabrainz/templates/index/bad-customers.html:56
 msgid ""
@@ -1122,9 +1108,8 @@ msgid "Mailing address"
 msgstr ""
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "Относно фондацията MetaBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1306,9 +1291,8 @@ msgid "Applicable to account holders"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "Фондация"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
@@ -1359,9 +1343,8 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
-#, fuzzy
 msgid "Delete your account"
-msgstr "Достъп до вашия акаунт"
+msgstr ""
 
 #: metabrainz/templates/index/profile-edit.html:3
 msgid "Edit"
@@ -1448,9 +1431,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "Проекти"
+msgstr ""
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -1484,9 +1466,8 @@ msgstr ""
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "MetaBrainz ППИ"
+msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -2168,14 +2149,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/payments/payment.html:17
-#, fuzzy
 msgid "Organization:"
-msgstr "Фондация"
+msgstr ""
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "Поддръжници"
+msgstr ""
 
 #: metabrainz/templates/payments/payment.html:44
 #, python-format
@@ -3125,9 +3104,8 @@ msgid "Forgot your password"
 msgstr ""
 
 #: metabrainz/templates/users/lost-username.html:3
-#, fuzzy
 msgid "Forgot your username"
-msgstr "Потребители"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
 #: frontend/js/src/forms/SignupCommercial.tsx:320
@@ -3170,9 +3148,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username"
-msgstr "Потребители"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3360,9 +3337,8 @@ msgid "Active"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:216
-#, fuzzy
 msgid "Rejected"
-msgstr "Проекти"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:218
 msgid "Pending"
@@ -3399,9 +3375,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:267
-#, fuzzy
 msgid "Organization Information"
-msgstr "Фондация"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
@@ -3421,14 +3396,12 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-#, fuzzy
 msgid "Contact name"
-msgstr "Свържете се с нас"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:312 frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Contact Email"
-msgstr "Свържете се с нас"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:322
 msgid "Datasets Used"
@@ -3513,14 +3486,12 @@ msgid "Email"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:498
-#, fuzzy
 msgid "Edit Information"
-msgstr "Фондацията"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:510
-#, fuzzy
 msgid "Want access to MetaBrainz datasets?"
-msgstr "Относно фондацията MetaBrainz"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:515
 msgid ""
@@ -3538,14 +3509,12 @@ msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
-#, fuzzy
 msgid "Delete My Account"
-msgstr "Достъп до вашия акаунт"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:567
-#, fuzzy
 msgid "Account Deletion"
-msgstr "Фондация"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:571
 msgid "Need to delete your account?"
@@ -3562,9 +3531,8 @@ msgid "Security"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:626
-#, fuzzy
 msgid "MetaBrainz Applications"
-msgstr "MetaBrainz ППИ"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:630
 msgid ""
@@ -3599,9 +3567,8 @@ msgid "Warning: This action is irreversible"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:61
-#, fuzzy
 msgid "Deleting your account will:"
-msgstr "Достъп до вашия акаунт"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:63
 msgid "Permanently remove all your account information"
@@ -3734,9 +3701,8 @@ msgid "Redirect URIs"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
-#, fuzzy
 msgid "Add a redirect URI"
-msgstr "Борд на директорите"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:190
 msgid "Save changes"
@@ -3755,9 +3721,8 @@ msgid "Client Details"
 msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
-#, fuzzy
 msgid "Name:"
-msgstr "Потребители"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:30
 msgid "Description:"
@@ -3828,9 +3793,8 @@ msgid "Confirm New Password"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "Дари"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
 msgid "Reset Password"
@@ -3853,9 +3817,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:179
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
 #: frontend/js/src/forms/SignupUser.tsx:46
-#, fuzzy
 msgid "Access all MetaBrainz projects"
-msgstr "Относно фондацията MetaBrainz"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:182
 msgid "Note:"
@@ -3870,9 +3833,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
-#, fuzzy
 msgid "Account type"
-msgstr "Фондация"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
 msgid "Selected tier"
@@ -3888,9 +3850,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
-#, fuzzy
 msgid "Your account:"
-msgstr "Достъп до вашия акаунт"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
@@ -3957,9 +3918,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
-#, fuzzy
 msgid "Your project"
-msgstr "Вашия профил"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
@@ -4009,15 +3969,13 @@ msgstr "Вашия профил"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
-#, fuzzy
 msgid "Not a supporter?"
-msgstr "Поддръжници"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-#, fuzzy
 msgid "Create a user account"
-msgstr "Достъп до вашия акаунт"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:573
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
@@ -4045,9 +4003,8 @@ msgid "Which datasets are you interested in?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
-#, fuzzy
 msgid "About your project"
-msgstr "Проекти"
+msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
@@ -4063,9 +4020,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:43
-#, fuzzy
 msgid "Create your account"
-msgstr "Достъп до вашия акаунт"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
@@ -4096,9 +4052,8 @@ msgid "Click here to read more"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:224
-#, fuzzy
 msgid "Create account"
-msgstr "Достъп до вашия акаунт"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
 msgid "This email address is already registered."

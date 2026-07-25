@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:08+0000\n"
+"POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-07-07 18:12+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-"
 "translation-memory@weblate.org>\n"
@@ -42,9 +42,8 @@ msgstr "メールアドレスの入力は必須です！"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
-#, fuzzy
 msgid "Current password is required!"
-msgstr "パスワードが必要です！"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -93,9 +92,8 @@ msgid "Current password is incorrect."
 msgstr ""
 
 #: metabrainz/index/views.py:266
-#, fuzzy
 msgid "Password changed successfully."
-msgstr "プロフィールの更新に成功しました。"
+msgstr ""
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
@@ -558,9 +556,8 @@ msgid "GDPR Compliance"
 msgstr "GDPRコンプライアンス"
 
 #: metabrainz/templates/navbar.html:45
-#, fuzzy
 msgid "Supporter Sign Up"
-msgstr "サポーター"
+msgstr ""
 
 #: metabrainz/templates/navbar.html:46
 #, fuzzy
@@ -1349,9 +1346,8 @@ msgid "Summary"
 msgstr "概要"
 
 #: metabrainz/templates/index/privacy.html:33
-#, fuzzy
 msgid "Applicable to all users"
-msgstr "すべてのサポーターに適用されます"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
@@ -1424,9 +1420,8 @@ msgstr "例外"
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
-#, fuzzy
 msgid "Change Password"
-msgstr "パスワードを隠す"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
@@ -3429,9 +3424,8 @@ msgstr "ユーザー名を忘れてしまいました"
 #: frontend/js/src/forms/SignupUser.tsx:169
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
-#, fuzzy
 msgid "Confirm Password"
-msgstr "「パスワードの確認」が必要です！"
+msgstr ""
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
@@ -3447,9 +3441,8 @@ msgid "Cancel"
 msgstr ""
 
 #: metabrainz/templates/users/reauthenticate.html:24
-#, fuzzy
 msgid "Continue"
-msgstr "寄付額"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
 #: metabrainz/templates/users/reset-password.html:3
@@ -3600,9 +3593,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:118
-#, fuzzy
 msgid "Failed to generate new access token!"
-msgstr "アプリケーションの削除に失敗しました。"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:132
 msgid "Your application for using the Live Data Feed has been rejected."
@@ -3653,14 +3645,12 @@ msgid "Unknown. :("
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:214
-#, fuzzy
 msgid "Active"
-msgstr "アクション"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:216
-#, fuzzy
 msgid "Rejected"
-msgstr "プロジェクト"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:218
 msgid "Pending"
@@ -3687,9 +3677,8 @@ msgid "Tier:"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:243
-#, fuzzy
 msgid "State:"
-msgstr "日時"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:251
 msgid ""
@@ -3698,9 +3687,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:267
-#, fuzzy
 msgid "Organization Information"
-msgstr "組織概要"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
@@ -3720,19 +3708,16 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-#, fuzzy
 msgid "Contact name"
-msgstr "コンタクト"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:312 frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Contact Email"
-msgstr "連絡先"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:322
-#, fuzzy
 msgid "Datasets Used"
-msgstr "データセット"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:333 frontend/js/src/forms/ProfileEdit.tsx:35
 msgid "Edit Contact Information"
@@ -3799,9 +3784,8 @@ msgid "[ no valid token currently ]"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:449
-#, fuzzy
 msgid "Generate New Token"
-msgstr "新しいアプリケーションを生成"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:453
 msgid "See the <apiLink>API documentation</apiLink> for more information."
@@ -3810,19 +3794,16 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:484 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Email"
-msgstr "メール送信"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:498
-#, fuzzy
 msgid "Edit Information"
-msgstr "財団"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:510
-#, fuzzy
 msgid "Want access to MetaBrainz datasets?"
-msgstr "MetaBrainzデータセット"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:515
 msgid ""
@@ -3845,9 +3826,8 @@ msgid "Delete My Account"
 msgstr "アカウント削除"
 
 #: frontend/js/src/Profile.tsx:567
-#, fuzzy
 msgid "Account Deletion"
-msgstr "アカウント作成"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:571
 #, fuzzy
@@ -3861,14 +3841,12 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:594
-#, fuzzy
 msgid "Security"
-msgstr "市"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:626
-#, fuzzy
 msgid "MetaBrainz Applications"
-msgstr "MetaBrainz API"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:630
 msgid ""
@@ -3889,9 +3867,8 @@ msgid "The open-source book database"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:679
-#, fuzzy
 msgid "Creative Commons licensed reviews"
-msgstr "クリエイティブ・コモンズ・ライセンスの音楽や書籍のレビューを収録したリポジトリ"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:26
 msgid ""
@@ -3904,9 +3881,8 @@ msgid "Warning: This action is irreversible"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:61
-#, fuzzy
 msgid "Deleting your account will:"
-msgstr "アカウント削除"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:63
 msgid "Permanently remove all your account information"
@@ -4008,14 +3984,12 @@ msgid "Sounds good"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:57
-#, fuzzy
 msgid "Application name is required."
-msgstr "連絡先の入力は必須です！"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:67
-#, fuzzy
 msgid "Application description is required."
-msgstr "組織概要"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:70
 #, fuzzy
@@ -4023,14 +3997,12 @@ msgid "Application description needs to be at least 3 characters long."
 msgstr "クライアントの説明は、3文字以上である必要があります。"
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
-#, fuzzy
 msgid "Application description needs to be at most 512 characters long."
-msgstr "アプリケーション名は、最大64文字までです。"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:78
-#, fuzzy
 msgid "Homepage is required."
-msgstr "ユーザー名が必要です！"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:82
 #, fuzzy
@@ -4038,18 +4010,16 @@ msgid "Authorization callback URL cannot be empty."
 msgstr "「認証コールバックURL」欄が空欄です。"
 
 #: frontend/js/src/forms/CreateApplication.tsx:85
-#, fuzzy
 msgid "Authorization callback URL is required."
-msgstr "認証コールバックURLが無効です。"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:131
 msgid "Redirect URIs"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
-#, fuzzy
 msgid "Add a redirect URI"
-msgstr "取締役会"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:190
 msgid "Save changes"
@@ -4061,14 +4031,12 @@ msgid "Create application"
 msgstr "新しいアプリケーションを生成"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:20
-#, fuzzy
 msgid "Delete application"
-msgstr "アプリケーション\"%(name)s\"を削除"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
-#, fuzzy
 msgid "Client Details"
-msgstr "連絡先"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
 #, fuzzy
@@ -4138,24 +4106,20 @@ msgid "Allow access"
 msgstr "アクセス"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:71
-#, fuzzy
 msgid "Current Password"
-msgstr "パスワードを忘れてしまいました"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:80
-#, fuzzy
 msgid "New Password"
-msgstr "パスワードを表示"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:89
-#, fuzzy
 msgid "Confirm New Password"
-msgstr "パスワードを表示"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "日時"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
 #, fuzzy
@@ -4173,9 +4137,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
 #: frontend/js/src/forms/SignupUser.tsx:87
-#, fuzzy
 msgid "Captcha is required!"
-msgstr "パスワードが必要です！"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:179
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
@@ -4197,19 +4160,16 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
-#, fuzzy
 msgid "Account type"
-msgstr "アカウント作成"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
-#, fuzzy
 msgid "Selected tier"
-msgstr "注目のプランを見る"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:242
-#, fuzzy
 msgid "month and up"
-msgstr "$0.00/月～"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:250
 msgid "Change account type or tier"
@@ -4217,9 +4177,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
-#, fuzzy
 msgid "Your account:"
-msgstr "アカウントにアクセス"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
@@ -4230,9 +4189,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:291
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
 #: frontend/js/src/forms/SignupUser.tsx:127
-#, fuzzy
 msgid "E-mail address"
-msgstr "郵送先住所"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:295
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
@@ -4288,9 +4246,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
-#, fuzzy
 msgid "Your project"
-msgstr "プロフィール"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
@@ -4298,9 +4255,8 @@ msgid "(max 150 characters)"
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:451
-#, fuzzy
 msgid "Billing address"
-msgstr "郵送先住所"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:502
 msgid ""
@@ -4341,15 +4297,13 @@ msgstr "プロフィールに戻る"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
-#, fuzzy
 msgid "Not a supporter?"
-msgstr "サポーターになるには"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-#, fuzzy
 msgid "Create a user account"
-msgstr "アカウント削除"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:573
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
@@ -4378,9 +4332,8 @@ msgid "Which datasets are you interested in?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
-#, fuzzy
 msgid "About your project"
-msgstr "完了プロジェクト"
+msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
@@ -4396,18 +4349,16 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:43
-#, fuzzy
 msgid "Create your account"
-msgstr "アカウントにアクセス"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:69
-#, fuzzy
 msgid "Invalid email address."
-msgstr "郵送先住所"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:150
 msgid ""
@@ -4430,23 +4381,20 @@ msgid "Click here to read more"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:224
-#, fuzzy
 msgid "Create account"
-msgstr "アカウント削除"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
-#, fuzzy
 msgid "This email address is already registered."
-msgstr "メールアドレスの入力は必須です！"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
 msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:82
-#, fuzzy
 msgid "Invalid email address"
-msgstr "郵送先住所"
+msgstr ""
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "こんにちは you"

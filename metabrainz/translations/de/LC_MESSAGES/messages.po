@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:08+0000\n"
+"POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-06-12 00:52+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: de\n"
@@ -145,9 +145,8 @@ msgid "Client description needs to be at most 512 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "Zurück zur Startseite"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
@@ -170,9 +169,8 @@ msgid "Authorization callback URL field is empty."
 msgstr ""
 
 #: metabrainz/oauth/forms.py:75
-#, fuzzy
 msgid "Authorization callback URL is invalid."
-msgstr "Authorisierungscode fehlt!"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
@@ -417,9 +415,8 @@ msgstr "Projekte"
 #: metabrainz/templates/index/datasets/derived-dumps.html:3
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
-#, fuzzy
 msgid "Datasets"
-msgstr "Datum"
+msgstr ""
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
@@ -438,9 +435,8 @@ msgstr ""
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
-#, fuzzy
 msgid "Social Contract"
-msgstr "Kontakt"
+msgstr ""
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
@@ -810,9 +806,8 @@ msgid "Advisor"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:63
-#, fuzzy
 msgid "Our board of directors is advised by:"
-msgstr "Unser Vorstand besteht aus:"
+msgstr ""
 
 #: metabrainz/templates/index/about.html:65
 #, python-format
@@ -1096,9 +1091,8 @@ msgid "Mailing address"
 msgstr "Mail-Adresse"
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "Das MetaBrainz Team"
+msgstr ""
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1270,18 +1264,16 @@ msgid "Applicable to account holders"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "Kontaktinformationen"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:114
-#, fuzzy
 msgid "Subscriptions on MusicBrainz"
-msgstr "Hast du eine Frage über MusicBrainz?"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
@@ -1412,9 +1404,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "Projekte"
+msgstr ""
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -1448,9 +1439,8 @@ msgstr ""
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "MetaBrainz API"
+msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -1640,9 +1630,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:105
-#, fuzzy
 msgid "<span class=\"name\">Yvan Rivierre</span> &mdash; Software Engineer"
-msgstr "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:107
 msgid ""
@@ -1655,11 +1644,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:120
-#, fuzzy
 msgid ""
 "<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  "
 "Software Engineer & Graphic Designer"
-msgstr "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:122
 msgid ""
@@ -1701,9 +1689,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:166
-#, fuzzy
 msgid "<span class=\"name\">Adam James</span> &mdash; System Administrator"
-msgstr "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:168
 msgid ""
@@ -1718,9 +1705,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:189
-#, fuzzy
 msgid "<span class=\"name\">Julian Anderson</span> &mdash; System Administrator"
-msgstr "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:191
 msgid ""
@@ -1757,9 +1743,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:236
-#, fuzzy
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
-msgstr "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:238
 msgid ""
@@ -1777,9 +1762,8 @@ msgid "Voluntary Project Leaders"
 msgstr ""
 
 #: metabrainz/templates/index/team.html:259
-#, fuzzy
 msgid "<span class=\"name\">Akshat Tiwari</span> &mdash; Junior Software Engineer"
-msgstr "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Developer"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:261
 msgid ""
@@ -1797,11 +1781,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:278
-#, fuzzy
 msgid ""
 "<span class=\"name\">Param Singh</span> &mdash; Former ListenBrainz team "
 "leader"
-msgstr "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:280
 msgid ""
@@ -1816,11 +1799,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:301
-#, fuzzy
 msgid ""
 "<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
 "MusicBrainz Areas"
-msgstr "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:303
 #, python-format
@@ -1839,9 +1821,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:328
-#, fuzzy
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
-msgstr "<span class=\"name\">Ben Ockmore</span> &mdash; BookBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:330
 msgid ""
@@ -2144,14 +2125,12 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/payments/payment.html:17
-#, fuzzy
 msgid "Organization:"
-msgstr "Spende"
+msgstr ""
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "Unterstützer"
+msgstr ""
 
 #: metabrainz/templates/payments/payment.html:44
 #, python-format
@@ -3101,9 +3080,8 @@ msgid "Forgot your password"
 msgstr ""
 
 #: metabrainz/templates/users/lost-username.html:3
-#, fuzzy
 msgid "Forgot your username"
-msgstr "Name"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
 #: frontend/js/src/forms/SignupCommercial.tsx:320
@@ -3128,9 +3106,8 @@ msgid "Cancel"
 msgstr ""
 
 #: metabrainz/templates/users/reauthenticate.html:24
-#, fuzzy
 msgid "Continue"
-msgstr "Spende"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
 #: metabrainz/templates/users/reset-password.html:3
@@ -3147,9 +3124,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username"
-msgstr "Name"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3170,9 +3146,8 @@ msgid "Password"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
-#, fuzzy
 msgid "Remember me"
-msgstr "Dezember"
+msgstr ""
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
@@ -3196,9 +3171,8 @@ msgstr ""
 
 #: frontend/js/src/ApplicationRow.tsx:78
 #: frontend/js/src/forms/DeleteApplication.tsx:60
-#, fuzzy
 msgid "Delete"
-msgstr "Datum"
+msgstr ""
 
 #: frontend/js/src/Applications.tsx:37
 msgid "Your applications"
@@ -3225,9 +3199,8 @@ msgid "Privileges"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:61 frontend/js/src/Applications.tsx:89
-#, fuzzy
 msgid "Actions"
-msgstr "Spenden"
+msgstr ""
 
 #: frontend/js/src/Applications.tsx:77
 msgid "Authorized applications"
@@ -3336,14 +3309,12 @@ msgid "Unknown. :("
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:214
-#, fuzzy
 msgid "Active"
-msgstr "Spenden"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:216
-#, fuzzy
 msgid "Rejected"
-msgstr "Projekte"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:218
 msgid "Pending"
@@ -3370,9 +3341,8 @@ msgid "Tier:"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:243
-#, fuzzy
 msgid "State:"
-msgstr "Datum"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:251
 msgid ""
@@ -3381,9 +3351,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:267
-#, fuzzy
 msgid "Organization Information"
-msgstr "Spende"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
@@ -3403,19 +3372,16 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-#, fuzzy
 msgid "Contact name"
-msgstr "Kontakt"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:312 frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Contact Email"
-msgstr "Kontaktinformationen"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:322
-#, fuzzy
 msgid "Datasets Used"
-msgstr "Datum"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:333 frontend/js/src/forms/ProfileEdit.tsx:35
 msgid "Edit Contact Information"
@@ -3492,19 +3458,16 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:484 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Email"
-msgstr "Schicke uns eine E-Mail"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:498
-#, fuzzy
 msgid "Edit Information"
-msgstr "Die Stiftung"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:510
-#, fuzzy
 msgid "Want access to MetaBrainz datasets?"
-msgstr "Das MetaBrainz Team"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:515
 msgid ""
@@ -3526,9 +3489,8 @@ msgid "Delete My Account"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:567
-#, fuzzy
 msgid "Account Deletion"
-msgstr "Kontaktinformationen"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:571
 msgid "Need to delete your account?"
@@ -3541,14 +3503,12 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:594
-#, fuzzy
 msgid "Security"
-msgstr "Stadt"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:626
-#, fuzzy
 msgid "MetaBrainz Applications"
-msgstr "MetaBrainz API"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:630
 msgid ""
@@ -3705,23 +3665,20 @@ msgid "Homepage is required."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:82
-#, fuzzy
 msgid "Authorization callback URL cannot be empty."
-msgstr "Authorisierungscode fehlt!"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:85
-#, fuzzy
 msgid "Authorization callback URL is required."
-msgstr "Authorisierungscode fehlt!"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:131
 msgid "Redirect URIs"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
-#, fuzzy
 msgid "Add a redirect URI"
-msgstr "Vorstand"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:190
 msgid "Save changes"
@@ -3736,9 +3693,8 @@ msgid "Delete application"
 msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
-#, fuzzy
 msgid "Client Details"
-msgstr "Kontaktinformationen"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
 #, fuzzy
@@ -3814,9 +3770,8 @@ msgid "Confirm New Password"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "Datum"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
 msgid "Reset Password"
@@ -3856,9 +3811,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:221
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
-#, fuzzy
 msgid "Account type"
-msgstr "Kontaktinformationen"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
 msgid "Selected tier"
@@ -3874,9 +3828,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
-#, fuzzy
 msgid "Your account:"
-msgstr "nach Menge"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
@@ -3887,9 +3840,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:291
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
 #: frontend/js/src/forms/SignupUser.tsx:127
-#, fuzzy
 msgid "E-mail address"
-msgstr "Mail-Adresse"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:295
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
@@ -3944,9 +3896,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
-#, fuzzy
 msgid "Your project"
-msgstr "Dein Profil"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
@@ -3954,9 +3905,8 @@ msgid "(max 150 characters)"
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:451
-#, fuzzy
 msgid "Billing address"
-msgstr "Mail-Adresse"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:502
 msgid ""
@@ -3997,9 +3947,8 @@ msgstr "Dein Profil"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
-#, fuzzy
 msgid "Not a supporter?"
-msgstr "Unterstützer"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
@@ -4033,9 +3982,8 @@ msgid "Which datasets are you interested in?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
-#, fuzzy
 msgid "About your project"
-msgstr "Projekte"
+msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
@@ -4059,9 +4007,8 @@ msgid "Registration started by"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:69
-#, fuzzy
 msgid "Invalid email address."
-msgstr "Mail-Adresse"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:150
 msgid ""
@@ -4096,9 +4043,8 @@ msgid "Email validation failed"
 msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:82
-#, fuzzy
 msgid "Invalid email address"
-msgstr "Mail-Adresse"
+msgstr ""
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "Du musst eine Menge angeben!"

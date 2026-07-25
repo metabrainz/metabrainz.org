@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:08+0000\n"
+"POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-06-12 00:55+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: zh_TW\n"
@@ -40,9 +40,8 @@ msgstr "請提供電郵地址！"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
-#, fuzzy
 msgid "Current password is required!"
-msgstr "請提供電郵地址！"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -52,18 +51,16 @@ msgstr "請提供電郵地址！"
 #: frontend/js/src/forms/SignupUser.tsx:72 metabrainz/index/forms.py:66
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
-#, fuzzy
 msgid "Password is required!"
-msgstr "請提供電郵地址！"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:160
 #: frontend/js/src/forms/SignupNonCommercial.tsx:91
 #: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
-#, fuzzy
 msgid "Confirm Password is required!"
-msgstr "請提供聯繫人姓名！"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
@@ -105,9 +102,8 @@ msgid "You have deleted an application."
 msgstr ""
 
 #: metabrainz/index/views.py:426
-#, fuzzy
 msgid "Failed to delete an application."
-msgstr "無法產生新訪問令牌！"
+msgstr ""
 
 #: metabrainz/index/views.py:449
 msgid "Revoked tokens successfully!"
@@ -118,14 +114,12 @@ msgid "Your account has been deleted."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
-#, fuzzy
 msgid "Application Name"
-msgstr "組織名稱"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:59
-#, fuzzy
 msgid "Application name field is empty."
-msgstr "不可留空聯繫名稱。"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
@@ -141,9 +135,8 @@ msgid "Description"
 msgstr "組織描述"
 
 #: metabrainz/oauth/forms.py:64
-#, fuzzy
 msgid "Client description field is empty."
-msgstr "不可留空聯繫名稱。"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
@@ -154,19 +147,16 @@ msgid "Client description needs to be at most 512 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
-#, fuzzy
 msgid "Homepage"
-msgstr "回到首頁"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:69
-#, fuzzy
 msgid "Homepage field is empty."
-msgstr "不可留空聯繫名稱。"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:70
-#, fuzzy
 msgid "Homepage is not a valid URI."
-msgstr "電郵地址不正確。"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
@@ -177,14 +167,12 @@ msgid "Authorization callback URL"
 msgstr ""
 
 #: metabrainz/oauth/forms.py:74
-#, fuzzy
 msgid "Authorization callback URL field is empty."
-msgstr "不可留空聯繫電郵地址。"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:75
-#, fuzzy
 msgid "Authorization callback URL is invalid."
-msgstr "找不到授權碼！"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
@@ -263,9 +251,8 @@ msgstr "請告訴我們您會如何使用我們的數據。"
 #: frontend/js/src/forms/SignupCommercial.tsx:138
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
 #: metabrainz/supporter/forms.py:18
-#, fuzzy
 msgid "Please, limit usage description to 500 characters."
-msgstr "請以少於150個字元描述您會如何使用數據。"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:141
 #: frontend/js/src/forms/SignupCommercial.tsx:142
@@ -378,9 +365,8 @@ msgstr "自訂金額必須等於或多於已選取的等級之金額限制。"
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
-#, fuzzy
 msgid "You are already a supporter."
-msgstr "參見所有支持者"
+msgstr ""
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
@@ -408,9 +394,8 @@ msgid ""
 msgstr "感謝您的註冊！我們很快就會審視您的申請，並會透過電郵通知您審視的進度。"
 
 #: metabrainz/supporter/views.py:248
-#, fuzzy
 msgid "Thanks for becoming a supporter!"
-msgstr "感謝您的註冊！"
+msgstr ""
 
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
@@ -434,9 +419,8 @@ msgstr "專案"
 #: metabrainz/templates/index/datasets/derived-dumps.html:3
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
-#, fuzzy
 msgid "Datasets"
-msgstr "日期"
+msgstr ""
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
@@ -448,17 +432,15 @@ msgid "Shop"
 msgstr ""
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
-#, fuzzy
 msgid "Policies"
-msgstr "基金會人員"
+msgstr ""
 
 #: metabrainz/templates/base.html:55 metabrainz/templates/index/gdpr.html:178
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
-#, fuzzy
 msgid "Social Contract"
-msgstr "聯繫"
+msgstr ""
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
@@ -580,9 +562,8 @@ msgid "GDPR Compliance"
 msgstr ""
 
 #: metabrainz/templates/navbar.html:45
-#, fuzzy
 msgid "Supporter Sign Up"
-msgstr "支持者"
+msgstr ""
 
 #: metabrainz/templates/navbar.html:46
 #, fuzzy
@@ -654,21 +635,19 @@ msgid "MusicBrainz Live Data Feed"
 msgstr "MusicBrainz 實時數據源"
 
 #: metabrainz/templates/api/info.html:16
-#, fuzzy
 msgid "There are two endpoints for fetching live data:"
-msgstr "目前有三個終端來取得複製封包："
+msgstr ""
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
 msgstr ""
 
 #: metabrainz/templates/api/info.html:30
-#, fuzzy
 msgid ""
 "It is possible to get a signature for each replication packet. Just "
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
-msgstr "您可對每個複製封包取得簽章。只要把 <code>.tar.bz2</code> 取代為 <code>.asc</code>。"
+msgstr ""
 
 #: metabrainz/templates/api/info.html:34
 #, fuzzy
@@ -701,11 +680,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/api/info.html:67
-#, fuzzy
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
-msgstr "您可對每個複製封包取得簽章。只要把 <code>.tar.bz2</code> 取代為 <code>.asc</code>。"
+msgstr ""
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -839,9 +817,8 @@ msgid "Advisor"
 msgstr ""
 
 #: metabrainz/templates/index/about.html:63
-#, fuzzy
 msgid "Our board of directors is advised by:"
-msgstr "我們的董事會有以下成員："
+msgstr ""
 
 #: metabrainz/templates/index/about.html:65
 #, python-format
@@ -1072,11 +1049,10 @@ msgid "We are not distributing any of the music listed in MusicBrainz."
 msgstr "我們沒有發行MusicBrainz中的音樂。"
 
 #: metabrainz/templates/index/contact.html:61
-#, fuzzy
 msgid ""
 "For inquiries about advertising, SEO optimization, or software "
 "monetization services, please see above!"
-msgstr "我們對您的廣告、搜尋引擎最佳化及軟件營利服務都沒有興趣。請不要為我們提供<b>任何</b>服務！"
+msgstr ""
 
 #: metabrainz/templates/index/contact.html:62
 msgid "Please do not offer us <b>any</b> other services! We are not interested."
@@ -1141,9 +1117,8 @@ msgid "Mailing address"
 msgstr "地址"
 
 #: metabrainz/templates/index/datasets.html:9
-#, fuzzy
 msgid "The MetaBrainz Datasets"
-msgstr "MetaBrainz團隊"
+msgstr ""
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1304,9 +1279,8 @@ msgid "Summary"
 msgstr "摘要"
 
 #: metabrainz/templates/index/privacy.html:33
-#, fuzzy
 msgid "Applicable to all users"
-msgstr "參見所有支持者"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
@@ -1326,18 +1300,16 @@ msgid "Applicable to account holders"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "帳號類型"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:114
-#, fuzzy
 msgid "Subscriptions on MusicBrainz"
-msgstr "對 MusicBrainz 有任何疑問嗎？"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
@@ -1380,9 +1352,8 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
-#, fuzzy
 msgid "Delete your account"
-msgstr "進入您的帳號"
+msgstr ""
 
 #: metabrainz/templates/index/profile-edit.html:3
 msgid "Edit"
@@ -1480,9 +1451,8 @@ msgstr ""
 "href=\"%(lb_url)s\">ListenBrainz</a>是一個開源的音樂網站，讓用戶導入他們的聆聽紀錄。專案其中一個目標是使用這些紀錄打造一個開放的音樂推薦系統。"
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "專案"
+msgstr ""
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -1520,9 +1490,8 @@ msgstr ""
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
-#, fuzzy
 msgid "MetaBrainz Shop"
-msgstr "MetaBrainz API"
+msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -1742,9 +1711,8 @@ msgstr ""
 "France."
 
 #: metabrainz/templates/index/team.html:105
-#, fuzzy
 msgid "<span class=\"name\">Yvan Rivierre</span> &mdash; Software Engineer"
-msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; 軟件工程師"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:107
 msgid ""
@@ -1757,11 +1725,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:120
-#, fuzzy
 msgid ""
 "<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  "
 "Software Engineer & Graphic Designer"
-msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; 軟件工程師"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:122
 msgid ""
@@ -1803,9 +1770,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:166
-#, fuzzy
 msgid "<span class=\"name\">Adam James</span> &mdash; System Administrator"
-msgstr "<span class=\"name\">Laurent Monin</span> &mdash; 系統管理員"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:168
 msgid ""
@@ -1820,9 +1786,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:189
-#, fuzzy
 msgid "<span class=\"name\">Julian Anderson</span> &mdash; System Administrator"
-msgstr "<span class=\"name\">Laurent Monin</span> &mdash; 系統管理員"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:191
 msgid ""
@@ -1859,9 +1824,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:236
-#, fuzzy
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
-msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; 軟件工程師"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:238
 msgid ""
@@ -1879,9 +1843,8 @@ msgid "Voluntary Project Leaders"
 msgstr "志願專案領袖"
 
 #: metabrainz/templates/index/team.html:259
-#, fuzzy
 msgid "<span class=\"name\">Akshat Tiwari</span> &mdash; Junior Software Engineer"
-msgstr "<span class=\"name\">Roman Tsukanov</span> &mdash; 軟件工程師"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:261
 msgid ""
@@ -1899,11 +1862,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:278
-#, fuzzy
 msgid ""
 "<span class=\"name\">Param Singh</span> &mdash; Former ListenBrainz team "
 "leader"
-msgstr "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:280
 msgid ""
@@ -1918,11 +1880,10 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:301
-#, fuzzy
 msgid ""
 "<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
 "MusicBrainz Areas"
-msgstr "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:303
 #, python-format
@@ -1941,9 +1902,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/team.html:328
-#, fuzzy
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
-msgstr "<span class=\"name\">Alastair Porter</span> &mdash; AcousticBrainz"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:330
 msgid ""
@@ -1972,9 +1932,8 @@ msgstr "註冊"
 #: frontend/js/src/Applications.tsx:43
 #: frontend/js/src/forms/CreateApplication.tsx:42
 #: metabrainz/templates/oauth/create.html:3
-#, fuzzy
 msgid "Create new application"
-msgstr "產生新令牌"
+msgstr ""
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -2004,12 +1963,8 @@ msgid "Cancelling recurring payments"
 msgstr "取消定期付款"
 
 #: metabrainz/templates/payments/cancel_recurring.html:9
-#, fuzzy
 msgid "If you want to cancel a recurring donation (payment) that you have set up:"
 msgstr ""
-"In case you want to cancel recurring donation (payment) that you set up "
-"before,\n"
-"    you'll need to go to a service which you used to pay."
 
 #: metabrainz/templates/payments/cancel_recurring.html:14
 #, python-format
@@ -2166,11 +2121,10 @@ msgid "Other ways to donate"
 msgstr "透過其他方式捐款"
 
 #: metabrainz/templates/payments/donate.html:137
-#, fuzzy
 msgid ""
 "If you use GitHub to sponsor your favourite projects, you can click below"
 " to Sponsor @metabrainz on GitHub Sponsors:"
-msgstr "如果您使用Flattr去捐助您喜歡的專案，請按一下下方的連結，透過Flattr捐助MetaBrainz："
+msgstr ""
 
 #: metabrainz/templates/payments/donate.html:140
 #: metabrainz/templates/payments/payment_base.html:29
@@ -2276,9 +2230,8 @@ msgid "Organization:"
 msgstr "組織名稱"
 
 #: metabrainz/templates/payments/payment.html:20
-#, fuzzy
 msgid "Supporter level:"
-msgstr "支持者"
+msgstr ""
 
 #: metabrainz/templates/payments/payment.html:44
 #, fuzzy, python-format
@@ -2456,11 +2409,10 @@ msgid ""
 msgstr "我們的<a href=\"%(donors_url)s\">捐款追蹤器</a>列出所有向我們作出的捐助。"
 
 #: metabrainz/templates/reports/financial_reports/index.html:31
-#, fuzzy
 msgid ""
 "We attempt to publish our balance sheets within the first week of the "
 "succeeding quarter, or as close to that as possible."
-msgstr "如情況許可，我們會儘量在下一個月的首個星期公布財務狀況表。"
+msgstr ""
 
 #: metabrainz/templates/reports/financial_reports/index.html:36
 #: metabrainz/templates/reports/financial_reports/index.html:52
@@ -3122,9 +3074,8 @@ msgstr "每月財務狀況表"
 #: metabrainz/templates/supporters/signup-commercial.html:3
 #: metabrainz/templates/supporters/signup-non-commercial.html:3
 #: metabrainz/templates/supporters/supporters-list.html:8
-#, fuzzy
 msgid "Become a Supporter"
-msgstr "參見所有支持者"
+msgstr ""
 
 #: metabrainz/templates/supporters/account-type.html:3
 #: metabrainz/templates/supporters/account-type.html:6
@@ -3142,9 +3093,8 @@ msgid "Non-commercial"
 msgstr "註冊為非商業用戶"
 
 #: metabrainz/templates/supporters/account-type.html:43
-#, fuzzy
 msgid "$0.00/month and up"
-msgstr "每月$%(tier_price)s或以上"
+msgstr ""
 
 #: metabrainz/templates/supporters/account-type.html:44
 msgid "Personal or university assignment user."
@@ -3153,9 +3103,8 @@ msgstr ""
 #: metabrainz/templates/supporters/account-type.html:48
 #: metabrainz/templates/supporters/account-type.html:90
 #: metabrainz/templates/supporters/account-type.html:141
-#, fuzzy
 msgid "Upgrade"
-msgstr "更新"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:235
 #: frontend/js/src/forms/SignupCommercial.tsx:176
@@ -3217,7 +3166,7 @@ msgid ""
 msgstr "有不良紀錄的企業是我們資料庫的用戶，曾經同意支持MetaBrainz，但在付款期限超過60天後尚未付款。"
 
 #: metabrainz/templates/supporters/supporters-list.html:12
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The following organizations make use of the data-sets published by "
 "MetaBrainz and\n"
@@ -3232,16 +3181,6 @@ msgid ""
 "    to sign your company up as a supporter, go to our <a "
 "href=\"%(signup_form)s\">sign up page</a>."
 msgstr ""
-"The following organizations make use of the data-sets published by "
-"MetaBrainz and\n"
-"    are supporting us financially or through some other reciprocal "
-"agreement. There are also\n"
-"    organizations that make use of our data that have explicitly declined"
-" to support us. There\n"
-"    may also be other organizations making use of our data that we don't "
-"know about yet. If you\n"
-"    know of a company using our data, please <a "
-"href=\"%(contact_url)s\">contact us</a>."
 
 #: metabrainz/templates/supporters/supporters-list.html:26
 #: metabrainz/templates/supporters/tier.html:3
@@ -3264,14 +3203,12 @@ msgid "Supporters on this tier"
 msgstr "此等級的支持者"
 
 #: metabrainz/templates/users/lost-password.html:3
-#, fuzzy
 msgid "Forgot your password"
-msgstr "請提供聯繫人姓名！"
+msgstr ""
 
 #: metabrainz/templates/users/lost-username.html:3
-#, fuzzy
 msgid "Forgot your username"
-msgstr "名稱"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
 #: frontend/js/src/forms/SignupCommercial.tsx:320
@@ -3279,9 +3216,8 @@ msgstr "名稱"
 #: frontend/js/src/forms/SignupUser.tsx:169
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
-#, fuzzy
 msgid "Confirm Password"
-msgstr "請提供聯繫人姓名！"
+msgstr ""
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
@@ -3297,9 +3233,8 @@ msgid "Cancel"
 msgstr ""
 
 #: metabrainz/templates/users/reauthenticate.html:24
-#, fuzzy
 msgid "Continue"
-msgstr "捐款"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
 #: metabrainz/templates/users/reset-password.html:3
@@ -3316,9 +3251,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username"
-msgstr "名稱"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3326,9 +3260,8 @@ msgstr "名稱"
 #: frontend/js/src/forms/SignupNonCommercial.tsx:84
 #: frontend/js/src/forms/SignupUser.tsx:67 metabrainz/user/forms.py:21
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
-#, fuzzy
 msgid "Username is required!"
-msgstr "請提供聯繫人姓名！"
+msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:63
 #: frontend/js/src/forms/ResetPassword.tsx:72
@@ -3340,9 +3273,8 @@ msgid "Password"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
-#, fuzzy
 msgid "Remember me"
-msgstr "12月"
+msgstr ""
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
@@ -3366,9 +3298,8 @@ msgstr ""
 
 #: frontend/js/src/ApplicationRow.tsx:78
 #: frontend/js/src/forms/DeleteApplication.tsx:60
-#, fuzzy
 msgid "Delete"
-msgstr "日期"
+msgstr ""
 
 #: frontend/js/src/Applications.tsx:37
 msgid "Your applications"
@@ -3396,9 +3327,8 @@ msgid "Privileges"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:61 frontend/js/src/Applications.tsx:89
-#, fuzzy
 msgid "Actions"
-msgstr "捐款"
+msgstr ""
 
 #: frontend/js/src/Applications.tsx:77
 #, fuzzy
@@ -3410,14 +3340,12 @@ msgid "No tokens found"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:88
-#, fuzzy
 msgid "Access"
-msgstr "批准存取權"
+msgstr ""
 
 #: frontend/js/src/Applications.tsx:111
-#, fuzzy
 msgid "Revoke access"
-msgstr "批准存取權"
+msgstr ""
 
 #: frontend/js/src/OAuthError.tsx:17
 msgid "OAuth2 Error"
@@ -3511,14 +3439,12 @@ msgid "Unknown. :("
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:214
-#, fuzzy
 msgid "Active"
-msgstr "捐款"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:216
-#, fuzzy
 msgid "Rejected"
-msgstr "專案"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:218
 msgid "Pending"
@@ -3545,9 +3471,8 @@ msgid "Tier:"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:243
-#, fuzzy
 msgid "State:"
-msgstr "日期"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:251
 msgid ""
@@ -3556,9 +3481,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:267
-#, fuzzy
 msgid "Organization Information"
-msgstr "組織描述"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
@@ -3578,19 +3502,16 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:333
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
-#, fuzzy
 msgid "Contact name"
-msgstr "聯繫"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:312 frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Contact Email"
-msgstr "聯繫詳情"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:322
-#, fuzzy
 msgid "Datasets Used"
-msgstr "日期"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:333 frontend/js/src/forms/ProfileEdit.tsx:35
 msgid "Edit Contact Information"
@@ -3668,19 +3589,16 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:484 frontend/js/src/forms/LostPassword.tsx:53
 #: frontend/js/src/forms/LostUsername.tsx:43
 #: frontend/js/src/forms/ProfileEdit.tsx:79
-#, fuzzy
 msgid "Email"
-msgstr "以電郵聯絡我們"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:498
-#, fuzzy
 msgid "Edit Information"
-msgstr "基金會"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:510
-#, fuzzy
 msgid "Want access to MetaBrainz datasets?"
-msgstr "MetaBrainz團隊"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:515
 msgid ""
@@ -3698,14 +3616,12 @@ msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
-#, fuzzy
 msgid "Delete My Account"
-msgstr "進入您的帳號"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:567
-#, fuzzy
 msgid "Account Deletion"
-msgstr "帳號類型"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:571
 msgid "Need to delete your account?"
@@ -3718,14 +3634,12 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:594
-#, fuzzy
 msgid "Security"
-msgstr "城市"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:626
-#, fuzzy
 msgid "MetaBrainz Applications"
-msgstr "MetaBrainz API"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:630
 msgid ""
@@ -3746,9 +3660,8 @@ msgid "The open-source book database"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:679
-#, fuzzy
 msgid "Creative Commons licensed reviews"
-msgstr "為創用CC音樂評論而設的文庫"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:26
 msgid ""
@@ -3761,9 +3674,8 @@ msgid "Warning: This action is irreversible"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:61
-#, fuzzy
 msgid "Deleting your account will:"
-msgstr "進入您的帳號"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:63
 msgid "Permanently remove all your account information"
@@ -3864,66 +3776,56 @@ msgid "Sounds good"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:57
-#, fuzzy
 msgid "Application name is required."
-msgstr "請提供聯繫人姓名！"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:67
-#, fuzzy
 msgid "Application description is required."
-msgstr "組織描述"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:70
 msgid "Application description needs to be at least 3 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:76
-#, fuzzy
 msgid "Application description needs to be at most 512 characters long."
-msgstr "組織描述"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:78
-#, fuzzy
 msgid "Homepage is required."
-msgstr "請提供聯繫人姓名！"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:82
-#, fuzzy
 msgid "Authorization callback URL cannot be empty."
-msgstr "不可留空聯繫電郵地址。"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:85
-#, fuzzy
 msgid "Authorization callback URL is required."
-msgstr "找不到授權碼！"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:131
 msgid "Redirect URIs"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:175
-#, fuzzy
 msgid "Add a redirect URI"
-msgstr "董事會"
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:190
 msgid "Save changes"
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:191
-#, fuzzy
 msgid "Create application"
-msgstr "產生新令牌"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:20
-#, fuzzy
 msgid "Delete application"
-msgstr "產生新令牌"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
-#, fuzzy
 msgid "Client Details"
-msgstr "聯繫詳情"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
 #, fuzzy
@@ -3999,14 +3901,12 @@ msgid "New Password"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:89
-#, fuzzy
 msgid "Confirm New Password"
-msgstr "請提供聯繫人姓名！"
+msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
-#, fuzzy
 msgid "Update"
-msgstr "日期"
+msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
 msgid "Reset Password"
@@ -4023,9 +3923,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
 #: frontend/js/src/forms/SignupUser.tsx:87
-#, fuzzy
 msgid "Captcha is required!"
-msgstr "請提供電郵地址！"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:179
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
@@ -4052,14 +3951,12 @@ msgid "Account type"
 msgstr "帳號類型"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:234
-#, fuzzy
 msgid "Selected tier"
-msgstr "檢視特色等級"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:242
-#, fuzzy
 msgid "month and up"
-msgstr "每月$%(tier_price)s或以上"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:250
 msgid "Change account type or tier"
@@ -4067,9 +3964,8 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:261
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
-#, fuzzy
 msgid "Your account:"
-msgstr "進入您的帳號"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:271
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
@@ -4080,9 +3976,8 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:291
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
 #: frontend/js/src/forms/SignupUser.tsx:127
-#, fuzzy
 msgid "E-mail address"
-msgstr "地址"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:295
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
@@ -4138,9 +4033,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:430
-#, fuzzy
 msgid "Your project"
-msgstr "您的帳號"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
@@ -4148,9 +4042,8 @@ msgid "(max 150 characters)"
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:451
-#, fuzzy
 msgid "Billing address"
-msgstr "地址"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:502
 msgid ""
@@ -4191,15 +4084,13 @@ msgstr "您的帳號"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
-#, fuzzy
 msgid "Not a supporter?"
-msgstr "參見所有支持者"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-#, fuzzy
 msgid "Create a user account"
-msgstr "進入您的帳號"
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:573
 #: frontend/js/src/forms/SignupNonCommercial.tsx:338
@@ -4228,9 +4119,8 @@ msgid "Which datasets are you interested in?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
-#, fuzzy
 msgid "About your project"
-msgstr "專案"
+msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
@@ -4246,18 +4136,16 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:43
-#, fuzzy
 msgid "Create your account"
-msgstr "進入您的帳號"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:50
 msgid "Registration started by"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:69
-#, fuzzy
 msgid "Invalid email address."
-msgstr "地址"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:150
 msgid ""
@@ -4280,23 +4168,20 @@ msgid "Click here to read more"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:224
-#, fuzzy
 msgid "Create account"
-msgstr "進入您的帳號"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
-#, fuzzy
 msgid "This email address is already registered."
-msgstr "請提供電郵地址！"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
 msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:82
-#, fuzzy
 msgid "Invalid email address"
-msgstr "地址"
+msgstr ""
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "請輸入付款金額！"

@@ -9,19 +9,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:08+0000\n"
+"POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-07-24 18:12+0000\n"
 "Last-Translator: \"ApeKattQuest, MonkeyPython\" "
 "<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
 "Language: nb\n"
-"Language-Team: Norwegian Bokmål <https://translations.metabrainz.org/"
-"projects/metabrainz/website/nb_NO/>\n"
+"Language-Team: Norwegian Bokmål "
+"<https://translations.metabrainz.org/projects/metabrainz/website/nb_NO/>"
+"\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
@@ -118,9 +118,8 @@ msgid "Application Name"
 msgstr "Søknadsnavn"
 
 #: metabrainz/oauth/forms.py:59
-#, fuzzy
 msgid "Application name field is empty."
-msgstr "Feltet for kontaktnavn er tomt."
+msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
@@ -169,9 +168,8 @@ msgid "Authorization callback URL"
 msgstr "Adresse for tilbakekalling av autorisasjon"
 
 #: metabrainz/oauth/forms.py:74
-#, fuzzy
 msgid "Authorization callback URL field is empty."
-msgstr "Kontakt-e-postfeltet er tomt"
+msgstr ""
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
@@ -193,17 +191,17 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
-"Takk for at du donerte til MetaBrainz-stiftelsen. Vi setter stor pris på din "
-"støtte! Det kan ta litt tid før donasjonen vises i listen på grunn av "
-"behandlingsforsinkelser."
+"Takk for at du donerte til MetaBrainz-stiftelsen. Vi setter stor pris på "
+"din støtte! Det kan ta litt tid før donasjonen vises i listen på grunn av"
+" behandlingsforsinkelser."
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
-"Takk for at du betaler til MetaBrains-stiftelsen. Vi setter stor pris på din "
-"støtte!"
+"Takk for at du betaler til MetaBrains-stiftelsen. Vi setter stor pris på "
+"din støtte!"
 
 #: metabrainz/payments/views.py:182
 msgid ""
@@ -222,16 +220,16 @@ msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
 msgstr ""
-"Beklager, det later til at vi har støtte på en feil, og kan ikke behandle "
-"din donasjon."
+"Beklager, det later til at vi har støtte på en feil, og kan ikke behandle"
+" din donasjon."
 
 #: metabrainz/payments/views.py:208
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your payment."
 msgstr ""
-"Beklager, det later til at vi har støtt på en feil, og kan ikke behandle din "
-"betaling."
+"Beklager, det later til at vi har støtt på en feil, og kan ikke behandle "
+"din betaling."
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
@@ -251,8 +249,8 @@ msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
-"Fortell oss mer om prosjektet som skal bruke dataene våre. Skal det lagres "
-"på din egen server eller vil du bruke våre APIer?"
+"Fortell oss mer om prosjektet som skal bruke dataene våre. Skal det "
+"lagres på din egen server eller vil du bruke våre APIer?"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:137
 #: frontend/js/src/forms/SignupNonCommercial.tsx:68
@@ -263,9 +261,8 @@ msgstr "Fortell oss hvordan du bruker eller ønsker å bruke vår data."
 #: frontend/js/src/forms/SignupCommercial.tsx:138
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
 #: metabrainz/supporter/forms.py:18
-#, fuzzy
 msgid "Please, limit usage description to 500 characters."
-msgstr "Begrens bruksbeskrivelse til 150 tegn."
+msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:141
 #: frontend/js/src/forms/SignupCommercial.tsx:142
@@ -664,7 +661,8 @@ msgid ""
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
-"Det er mulig å hente en signatur for hver replikasjonspakke. Bare erstatt\n"
+"Det er mulig å hente en signatur for hver replikasjonspakke. Bare erstatt"
+"\n"
 "      <code>.tar.bz2</code> med <code>.tar.bz2.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
@@ -682,10 +680,10 @@ msgid ""
 "instrument, label, place, recording, release, release-group, series, or "
 "work."
 msgstr ""
-"JSON-dumpene er partisjonert etter enhetstype. <code>&lt;ENTITY_NAME&gt;</"
-"code> kan være én av følgende: område, artist, arrangement, instrument, "
-"plateselskap, sted, innspilling, utgivelse, utgivelsesgruppe, serie eller "
-"verk."
+"JSON-dumpene er partisjonert etter enhetstype. "
+"<code>&lt;ENTITY_NAME&gt;</code> kan være én av følgende: område, artist,"
+" arrangement, instrument, plateselskap, sted, innspilling, utgivelse, "
+"utgivelsesgruppe, serie eller verk."
 
 #: metabrainz/templates/api/info.html:61
 msgid ""
@@ -701,17 +699,17 @@ msgid ""
 "This file must be read line-by-line; each line contains one changed "
 "entity in JSON format."
 msgstr ""
-"Hver dump inneholder en fil med navnet <code>mbdump/&lt;ENTITY_NAME&gt;</"
-"code>. Denne filen må leses linje for linje; hver linje inneholder én endret "
-"enhet i JSON-format."
+"Hver dump inneholder en fil med navnet "
+"<code>mbdump/&lt;ENTITY_NAME&gt;</code>. Denne filen må leses linje for "
+"linje; hver linje inneholder én endret enhet i JSON-format."
 
 #: metabrainz/templates/api/info.html:67
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
 msgstr ""
-"Som med replikasjonspakker, kan du få en filsignatur ved å erstatte <code>"
-".tar.xz</code> med <code>.tar.xz.asc</code>."
+"Som med replikasjonspakker, kan du få en filsignatur ved å erstatte "
+"<code>.tar.xz</code> med <code>.tar.xz.asc</code>."
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -798,8 +796,9 @@ msgid ""
 "href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
 "Alliance</a>"
 msgstr ""
-"Direktør og sekretær Nick Ashton-Hart, administrerende direktør i <a href=\"%"
-"(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem Alliance</a>"
+"Direktør og sekretær Nick Ashton-Hart, administrerende direktør i <a "
+"href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
+"Alliance</a>"
 
 #: metabrainz/templates/index/about.html:54
 #, python-format
@@ -812,8 +811,8 @@ msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
 msgstr ""
-"Direktør <a href=\"%(matthew_url)s\">Matthew Hawn</a> av <a href=\"%"
-"(compass_url)s\">Compass, Map & Key</a>"
+"Direktør <a href=\"%(matthew_url)s\">Matthew Hawn</a> av <a "
+"href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, python-format
@@ -821,8 +820,8 @@ msgid ""
 "Director &amp; Treasurer <a href=\"%(rassami_url)s\">Rassami Hok "
 "Ljungberg</a> of <a href=\"%(rassami_com)s\">rassami.com</a>"
 msgstr ""
-"Direktør og kasserer <a href=\"%(rassami_url)s\">Rassami Hok Ljungberg</a> i "
-"<a href=\"%(rassami_com)s\">rassami.com</a>"
+"Direktør og kasserer <a href=\"%(rassami_url)s\">Rassami Hok "
+"Ljungberg</a> i <a href=\"%(rassami_com)s\">rassami.com</a>"
 
 #: metabrainz/templates/index/about.html:57
 #, python-format
@@ -839,8 +838,8 @@ msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
 msgstr ""
-"Direktør <a href=\"%(hazel_url)s\">Hazel Savage</a> av <a href=\"%(leeds_url)"
-"s\">Leeds Angels</a>"
+"Direktør <a href=\"%(hazel_url)s\">Hazel Savage</a> av <a "
+"href=\"%(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:62
 msgid "Advisor"
@@ -856,7 +855,8 @@ msgid ""
 "<a href=\"%(cory_url)s\">Cory Doctorow</a>, author, activist and "
 "journalist"
 msgstr ""
-"<a href=\"%(cory_url)s\">Cory Doctorow</a>, forfatter, aktivist og journalist"
+"<a href=\"%(cory_url)s\">Cory Doctorow</a>, forfatter, aktivist og "
+"journalist"
 
 #: metabrainz/templates/index/about.html:67
 msgid "Officers"
@@ -931,8 +931,8 @@ msgstr "Digg!!"
 #: metabrainz/templates/index/bad-customers.html:54
 msgid "There are currently no not-so-favorite commercial data supporters!"
 msgstr ""
-"Det finnes for øyeblikket ingen kommersielle data-støttespillere som ikke er "
-"fullt så populære!"
+"Det finnes for øyeblikket ingen kommersielle data-støttespillere som ikke"
+" er fullt så populære!"
 
 #: metabrainz/templates/index/bad-customers.html:56
 msgid ""
@@ -940,8 +940,8 @@ msgid ""
 "the\n"
 "          \"right thing\"... :)"
 msgstr ""
-"... enten det, eller kanskje vi jobber med å overbevise noen selskaper om å "
-"gjøre de\n"
+"... enten det, eller kanskje vi jobber med å overbevise noen selskaper om"
+" å gjøre de\n"
 "          \"riktige tingene\"... :)"
 
 #: metabrainz/templates/index/conflict-policy.html:14
@@ -975,8 +975,8 @@ msgid ""
 msgstr ""
 "Funnet en brutt lenke eller noe som ikke fungerer som forventet? Du kan "
 "rapportere problemer i vårt\n"
-"    <a href=\"%(bug_tracker_url)s\">feilrapporteringssystem</a>, gi oss en "
-"beskjed på chatten vår, eller\n"
+"    <a href=\"%(bug_tracker_url)s\">feilrapporteringssystem</a>, gi oss "
+"en beskjed på chatten vår, eller\n"
 "    via e-post. Kontaktinformasjon finner du nedenfor. Inkluder alle "
 "detaljer om hva som skjedde, hva du forventet\n"
 "    skulle skje, og nettadressene til eventuelle involverte sider."
@@ -1091,8 +1091,8 @@ msgid ""
 "Please do not contact us about any job openings, we do not hire people "
 "who are not part of our community."
 msgstr ""
-"Vennligst ikke kontakt oss om ledige stillinger. Vi ansetter ikke folk som "
-"ikke er en del av vårt brukersamfunn."
+"Vennligst ikke kontakt oss om ledige stillinger. Vi ansetter ikke folk "
+"som ikke er en del av vårt brukersamfunn."
 
 #: metabrainz/templates/index/contact.html:68
 msgid ""
@@ -1125,8 +1125,8 @@ msgid ""
 "href=\"%(forums_url)s\">forums</a>! We would love to\n"
 "    answer any questions you may have."
 msgstr ""
-"Kom og still spørsmål på vårt <a href=\"%(forums_url)s\">forum</a>! Vi ser "
-"fram til å svare\n"
+"Kom og still spørsmål på vårt <a href=\"%(forums_url)s\">forum</a>! Vi "
+"ser fram til å svare\n"
 "    på ethvert spørsmål du måtte ha."
 
 #: metabrainz/templates/index/contact.html:92
@@ -1243,8 +1243,8 @@ msgstr ""
 #, python-format
 msgid "Sign up to use the <a href=\"%(account_type_url)s\">Live Data Feed</a>"
 msgstr ""
-"Registrer deg for å bruke <a href=\"%(account_type_url)s\">"
-"sanntidsdatastrømmen</a>"
+"Registrer deg for å bruke <a "
+"href=\"%(account_type_url)s\">sanntidsdatastrømmen</a>"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
@@ -1321,9 +1321,8 @@ msgid "Summary"
 msgstr "Sammendrag"
 
 #: metabrainz/templates/index/privacy.html:33
-#, fuzzy
 msgid "Applicable to all users"
-msgstr "Se alle våre støttespillere"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
@@ -1343,18 +1342,16 @@ msgid "Applicable to account holders"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:94
-#, fuzzy
 msgid "Account creation"
-msgstr "Kontotype"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:114
-#, fuzzy
 msgid "Subscriptions on MusicBrainz"
-msgstr "Har du et spørsmål om MusicBrainz?"
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:131
 msgid "Third-party sites"
@@ -1392,9 +1389,8 @@ msgstr ""
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
-#, fuzzy
 msgid "Change Password"
-msgstr "Skjul passord"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
@@ -1493,9 +1489,8 @@ msgid ""
 msgstr ""
 
 #: metabrainz/templates/index/projects.html:104
-#, fuzzy
 msgid "Past Projects"
-msgstr "Prosjekter"
+msgstr ""
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
@@ -3046,9 +3041,8 @@ msgstr ""
 #: metabrainz/templates/supporters/signup-commercial.html:3
 #: metabrainz/templates/supporters/signup-non-commercial.html:3
 #: metabrainz/templates/supporters/supporters-list.html:8
-#, fuzzy
 msgid "Become a Supporter"
-msgstr "Se alle våre støttespillere"
+msgstr ""
 
 #: metabrainz/templates/supporters/account-type.html:3
 #: metabrainz/templates/supporters/account-type.html:6
@@ -3351,8 +3345,8 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:61
 msgid "Your current email will be replaced once the new email is verified."
 msgstr ""
-"Den nåværende e-postadressen vil bli erstattet når den nye e-postadressen er "
-"bekreftet."
+"Den nåværende e-postadressen vil bli erstattet når den nye e-postadressen"
+" er bekreftet."
 
 #: frontend/js/src/Profile.tsx:109
 msgid ""
@@ -3455,9 +3449,8 @@ msgid ""
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:267
-#, fuzzy
 msgid "Organization Information"
-msgstr "Beskrivelse av organisasjon"
+msgstr ""
 
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
@@ -3634,9 +3627,8 @@ msgid "The open-source book database"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:679
-#, fuzzy
 msgid "Creative Commons licensed reviews"
-msgstr "En pakkebrønn for Creative Commons-lisensierte musikkanmeldelser"
+msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:26
 msgid ""
@@ -3798,9 +3790,8 @@ msgid "Delete application"
 msgstr "Slett søknad"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:24
-#, fuzzy
 msgid "Client Details"
-msgstr "Kontaktdetaljer"
+msgstr ""
 
 #: frontend/js/src/forms/DeleteApplication.tsx:28
 #, fuzzy
@@ -3974,9 +3965,9 @@ msgid ""
 "supporter as a <nonCommercialLink>Non-commercial / "
 "Personal</nonCommercialLink> supporter."
 msgstr ""
-"Har du ikke et organisasjonsnavn, er støttespiller som <nonCommercialLink>"
-"Ikke-kommersiell / personlig</nonCommercialLink>, mest sannsynlig riktig "
-"løsning for deg."
+"Har du ikke et organisasjonsnavn, er støttespiller som <nonCommercialLink"
+">Ikke-kommersiell / personlig</nonCommercialLink>, mest sannsynlig riktig"
+" løsning for deg."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:358
 msgid ""
@@ -3984,8 +3975,8 @@ msgid ""
 " <nonCommercialLink>Non-commercial / Personal</nonCommercialLink> user."
 msgstr ""
 "Har du ikke et organisasjonsnavn, er det å registrere seg som "
-"<nonCommercialLink>Ikke-kommersiell / personlig</nonCommercialLink> bruker "
-"sannsynligvis riktig løsning for deg."
+"<nonCommercialLink>Ikke-kommersiell / personlig</nonCommercialLink> "
+"bruker sannsynligvis riktig løsning for deg."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:378
 msgid ""
@@ -3993,9 +3984,9 @@ msgid ""
 "our <apiLink>API</apiLink> or to <hostLink>host your own copy</hostLink> "
 "of the data."
 msgstr ""
-"Fortell oss litt om foretaket ditt og om du planlegger å bruke vår <apiLink>"
-"API</apiLink> eller lagre en kopi av datane på <hostLink>din egen server</"
-"hostLink>."
+"Fortell oss litt om foretaket ditt og om du planlegger å bruke vår "
+"<apiLink>API</apiLink> eller lagre en kopi av datane på <hostLink>din "
+"egen server</hostLink>."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:404
 #, fuzzy
@@ -4040,8 +4031,8 @@ msgid ""
 "I agree to support the MetaBrainz Foundation when my organization is able"
 " to do so."
 msgstr ""
-"Jeg samtykker i å støtte MetaBrainz-stiftelsen når organisasjonen min blir i "
-"stand til det."
+"Jeg samtykker i å støtte MetaBrainz-stiftelsen når organisasjonen min "
+"blir i stand til det."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:507
 msgid ""
@@ -4050,8 +4041,9 @@ msgid ""
 "or commit it to a source code repository."
 msgstr ""
 "Jeg samtykker også i at hvis jeg genererer en sanntidsdatastrøms "
-"tilgangspollett, behandler jeg tilgangspolletten min som en hemmelighet og "
-"vil ikke dele denne polletten offentlig eller lagre den i et kildekodelager."
+"tilgangspollett, behandler jeg tilgangspolletten min som en hemmelighet "
+"og vil ikke dele denne polletten offentlig eller lagre den i et "
+"kildekodelager."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:515
 msgid ""
@@ -4116,9 +4108,8 @@ msgid "Which datasets are you interested in?"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:257
-#, fuzzy
 msgid "About your project"
-msgstr "Prosjekter"
+msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:279
 msgid ""
@@ -4142,9 +4133,8 @@ msgid "Registration started by"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:69
-#, fuzzy
 msgid "Invalid email address."
-msgstr "Send oss e-post"
+msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:150
 msgid ""
@@ -4167,14 +4157,12 @@ msgid "Click here to read more"
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:224
-#, fuzzy
 msgid "Create account"
-msgstr "Bruk kontoen din"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
-#, fuzzy
 msgid "This email address is already registered."
-msgstr "E-postadresse kreves!"
+msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
