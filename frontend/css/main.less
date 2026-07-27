@@ -1,15 +1,15 @@
 @import "theme/theme.less";
 @import "carousel.less";
+@import "auth-page.less";
 
 // fixme: need to make it configurable for production and development and meb.org container and oauth container
-@icon-font-path:"/static/fonts/";
-
+@icon-font-path: "/static/fonts/";
 
 // -------------
 // General stuff
 // -------------
 
-@container-lg: @container-md;  // Limiting max width of the page
+// @container-lg: @container-md; // Limiting max width of the page
 
 @brand-primary: @green;
 @brand-secondary: @orange;
@@ -26,9 +26,26 @@ body {
   .support-link {
     > a {
       background-color: @orange !important;
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background-color: darken(@orange, 6.5%) !important;
       }
+    }
+  }
+  .language-selector {
+    > a {
+      white-space: nowrap;
+      @media (min-width: @grid-float-breakpoint) {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+    .glyphicon {
+      margin-right: 4px;
+      top: 1px;
+    }
+    .dropdown-menu {
+      min-width: 130px;
     }
   }
   font-size: 14px;
@@ -44,18 +61,21 @@ body {
   }
   ul {
     padding: 0;
-    li { list-style: none; }
+    li {
+      list-style: none;
+    }
   }
-  .lower-footer { margin-top: 4px; }
+  .lower-footer {
+    margin-top: 4px;
+  }
 }
 
-img { .img-responsive(); }
-img.pull-right { padding-left: 15px; }
-
-h1.page-title, h2.page-title {
-  @media (max-width: @grid-float-breakpoint) { margin-top: 0px; }
+img {
+  .img-responsive();
 }
-
+img.pull-right {
+  padding-left: 15px;
+}
 
 // ---------------
 // Different pages
@@ -65,7 +85,9 @@ h1.page-title, h2.page-title {
 #homepage {
   @section-margin: 40px;
 
-  #more-intro { margin-bottom: @section-margin; }
+  #more-intro {
+    margin-bottom: @section-margin;
+  }
 
   .featured-supporters {
     display: flex;
@@ -94,8 +116,9 @@ h1.page-title, h2.page-title {
     }
   }
 
-
-  .homepage-section { margin-bottom: @section-margin; }
+  .homepage-section {
+    margin-bottom: @section-margin;
+  }
 }
 
 // Account type selection
@@ -127,13 +150,17 @@ h1.page-title, h2.page-title {
       }
     }
     .tier.shiny {
-      .thumbnail { border-color: fade(@brand-secondary, 40%); }
+      .thumbnail {
+        border-color: fade(@brand-secondary, 40%);
+      }
     }
   }
   #featured-supporters {
-    .clearfix;
+    .clearfix();
     margin-bottom: 12px;
-    h3 { margin-bottom: 0px; }
+    h3 {
+      margin-bottom: 0px;
+    }
     @featured-supporter-height: 80px;
     @featured-supporter-width: 168px;
     .logo-container {
@@ -174,7 +201,9 @@ h1.page-title, h2.page-title {
   .supporter {
     margin-left: 15px;
     margin-right: 15px;
-    @media (min-width: @grid-float-breakpoint) { width: @supporter-width; }
+    @media (min-width: @grid-float-breakpoint) {
+      width: @supporter-width;
+    }
     @media (max-width: @grid-float-breakpoint) {
       padding-bottom: 12px;
       margin: 0 auto;
@@ -204,12 +233,20 @@ h1.page-title, h2.page-title {
     }
 
     &.bad-standing {
-      a { color: @red; }
-      .description { color: @red; }
+      a {
+        color: @red;
+      }
+      .description {
+        color: @red;
+      }
     }
 
-    a { font-weight: inherit; }
-    a:hover { text-decoration: none; }
+    a {
+      font-weight: inherit;
+    }
+    a:hover {
+      text-decoration: none;
+    }
   }
 }
 
@@ -217,7 +254,7 @@ h1.page-title, h2.page-title {
 .projects {
   .projects-list > div {
     padding: 10px;
-    .clearfix;
+    .clearfix();
     .logo-container {
       .pull-left;
       padding-top: 4px;
@@ -237,7 +274,7 @@ h1.page-title, h2.page-title {
 // Team page
 #team {
   .person {
-    .clearfix;
+    .clearfix();
     padding-bottom: 20px;
     span.name {
       font-weight: bold;
@@ -262,14 +299,17 @@ h1.page-title, h2.page-title {
 
 // Sponsors page
 #sponsors.table {
-  td { vertical-align: middle !important; }
+  td {
+    vertical-align: middle !important;
+  }
   td:first-child {
     padding-right: 10px;
     text-align: center;
-    img { max-width: 110px; }
+    img {
+      max-width: 110px;
+    }
   }
 }
-
 
 // Payment page
 #payment {
@@ -289,17 +329,17 @@ h1.page-title, h2.page-title {
         margin: 0;
         padding: 0;
 
-        .input-group-addon { font-weight: bold; }
+        .input-group-addon {
+          font-weight: bold;
+        }
 
         #input-amount {
-          -webkit-box-flex: 1;
           -webkit-flex: 1;
           flex: 1;
           height: 30px;
         }
 
         #currency-selector {
-          -webkit-box-flex: none;
           -webkit-flex: none;
           flex: none;
           margin-left: 4px;
@@ -319,7 +359,9 @@ h1.page-title, h2.page-title {
         button {
           height: 38px;
           font-weight: bold;
-          img { display: inline; }
+          img {
+            display: inline;
+          }
         }
 
         #btn-stripe {
@@ -336,7 +378,6 @@ h1.page-title, h2.page-title {
           }
         }
       }
-
     }
   }
 
@@ -344,7 +385,9 @@ h1.page-title, h2.page-title {
     font-style: italic;
   }
 
-  .form-group:last-child { margin-bottom: 0px; }
+  .form-group:last-child {
+    margin-bottom: 0px;
+  }
 }
 
 // API page
@@ -354,12 +397,11 @@ h1.page-title, h2.page-title {
   }
 }
 
-
 // OAuth prompt
 #oauth-prompt {
   .permissions {
     .permission {
-      .clearfix;
+      .clearfix();
       border-top: 1px solid @gray-lighter;
       padding: 12px;
       &:last-child {
@@ -389,45 +431,44 @@ table.finances td:nth-child(2) {
 
 // Datasets page
 .dataset-card {
-    background: #eee;
-    min-height: 16em;
-    filter: drop-shadow(0px 4px 4px fade(#000, 25%));
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    display: flex;
-    padding: 0.5em;
-    align-items: center;
-    
-    .dataset-card-logo {
-      width: 100%;
-      padding: 0.7em;
-    }
+  background: #eee;
+  min-height: 16em;
+  filter: drop-shadow(0px 4px 4px fade(#000, 25%));
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: flex;
+  padding: 0.5em;
+  align-items: center;
 
-    .dataset-card-text {
-      > p:first-of-type {
-          margin: 0 15px 10px 0px;
-      }
+  .dataset-card-logo {
+    width: 100%;
+    padding: 0.7em;
+  }
+
+  .dataset-card-text {
+    > p:first-of-type {
+      margin: 0 15px 10px 0px;
     }
-    
-    .dataset-card-heading {
-        color: #eb743b;
-        font-weight: bold;
-    }
+  }
+
+  .dataset-card-heading {
+    color: #eb743b;
+    font-weight: bold;
+  }
 }
-.dataset-flex-container{
+.dataset-flex-container {
   display: flex;
   align-items: stretch;
   gap: 2em;
   flex-wrap: wrap;
   .dataset-card {
-    flex:1;
+    flex: 1;
     flex-basis: 455px; // replicate the behavior of col-md-6
     margin: 0;
   }
 }
-
 
 @media (max-width: 400px) {
   #data {
@@ -436,40 +477,39 @@ table.finances td:nth-child(2) {
 }
 
 .dataset-summary {
-    background: #eee;
-    filter: drop-shadow(0px 4px 4px fade(#000, 25%));
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    margin-top: 1em;
-    margin-bottom: 3em;
-    padding: 1em;
-    align-items: center;
+  background: #eee;
+  filter: drop-shadow(0px 4px 4px fade(#000, 25%));
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-top: 1em;
+  margin-bottom: 3em;
+  padding: 1em;
+  align-items: center;
 
-    .dataset-summary-heading {
-        color: #eb743b;
-        font-weight: bold;
-        font-size: 15pt;
-        margin-bottom: 15px;
-    }
+  .dataset-summary-heading {
+    color: #eb743b;
+    font-weight: bold;
+    font-size: 15pt;
+    margin-bottom: 15px;
+  }
 
-    td {
-        padding: 0 3px 0 3px;
-        font-size: 11pt;
-    }
+  td {
+    padding: 0 3px 0 3px;
+    font-size: 11pt;
+  }
 
-    td:nth-child(1){
-        font-weight: bold;
-        text-align: right;
-    }
+  td:nth-child(1) {
+    font-weight: bold;
+    text-align: right;
+  }
 }
-
 
 .dataset-panel.panel .panel-heading,
 #dataset-signup .panel .panel-heading {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-weight: 500;
-    color: #EB743B;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 500;
+  color: #eb743b;
 }
 
 #dataset-signup {
@@ -477,16 +517,16 @@ table.finances td:nth-child(2) {
   flex-wrap: wrap;
   align-items: stretch;
   max-width: calc(100% - 2em);
-  .panel{
-    flex:1;
+  .panel {
+    flex: 1;
     min-width: 400px;
     margin: 0 1em 1em;
-    .panel-body{
+    .panel-body {
       min-height: 230px;
       display: flex;
       flex-direction: column;
       .buttons {
-        margin-top:auto;
+        margin-top: auto;
       }
     }
   }
@@ -538,6 +578,23 @@ table.finances td:nth-child(2) {
 
 // Oauth applications table has long token that need to be broken up
 // otherwise they make the page overflow
-.oauth-applications-table>tbody>tr>td {
-    word-break: break-word;
+.oauth-applications-table > tbody > tr > td {
+  overflow-wrap: anywhere;
+}
+
+.metabrainz-projects-list {
+  .project-description {
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin: 10px 0 10px 0;
+    text-align: center;
+
+    @media (max-width: @screen-xs-max) {
+      text-align: left;
+    }
+  }
+
+  img {
+    max-width: 200px;
+  }
 }

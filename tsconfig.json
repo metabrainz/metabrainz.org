@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "outDir": "./dist/",
+    "ignoreDeprecations": "6.0",
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",

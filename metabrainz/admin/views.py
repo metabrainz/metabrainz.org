@@ -1,13 +1,29 @@
 from decimal import Decimal
+from datetime import datetime, timezone
 from flask import Response, request, redirect, url_for, current_app
 from flask_admin import expose
-from metabrainz.admin import AdminIndexView, AdminBaseView, forms
+from flask_login import current_user
+from markupsafe import Markup
+
+from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
+from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm, DeleteUserForm, \
+    DeleteSupporterForm
 from metabrainz.admin.forms import get_logo_storage_dir
+from wtforms import SelectMultipleField
+from wtforms.widgets import CheckboxInput, ListWidget
+
+from metabrainz.model import db
+from metabrainz.model.oauth.client import (
+    OAuth2Client,
+    OAuth2ClientPrivilege,
+    OAUTH2_CLIENT_PRIVILEGE_LABELS,
+)
+from metabrainz.model.old_username import OldUsername
+from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
-from metabrainz.db import supporter as db_supporter
 from metabrainz.db import payment as db_payment
 from metabrainz import flash
 from brainzutils import cache
@@ -19,29 +35,90 @@ import time
 import uuid
 import json
 import socket
+from metabrainz.model.user import User
+from metabrainz.model.webhook import EVENT_USER_DELETED, EVENT_USER_UPDATED
 
 from metabrainz.utils import get_int_query_param
 
 
-class HomeView(AdminIndexView):
+class SupporterManagementHomeView(AdminIndexView):
+    """Home view for Supporter Management admin section"""
 
     @expose('/')
     def index(self):
         return self.render(
-            'admin/home.html',
+            'admin/supporter_home.html',
             pending_supporters=Supporter.get_all(state=STATE_PENDING),
             waiting_supporters=Supporter.get_all(state=STATE_WAITING),
         )
+
+
+class UserManagementHomeView(AdminIndexView):
+    """Home view for User Management admin section"""
+
+    @expose('/')
+    def index(self):
+        return self.render(
+            'admin/user_home.html',
+        )
+
+
+class MainAdminHomeView(AdminIndexView):
+    """Main admin landing page"""
+
+    @expose('/')
+    def index(self):
+        return self.render(
+            'admin/admin_home.html',
+        )
+
+
+def _get_boolean_param(name):
+    value = request.args.get(name)
+    if value is None:
+        return None
+    if value.lower() == "true":
+        return True
+    return False
 
 
 class SupportersView(AdminBaseView):
 
     @expose('/')
     def index(self):
-        value = request.args.get('value')
-        results = Supporter.search(value) if value else []
+        page = get_int_query_param('page', default=1)
+        if page < 1:
+            return redirect(url_for('.index'))
+        limit = 20
+        offset = (page - 1) * limit
+
+        state = request.args.get('state') or None
+        search = request.args.get('search') or None
+
+        is_commercial = _get_boolean_param("is_commercial")
+        featured = _get_boolean_param("featured")
+
+        standing_arg = request.args.get('standing')
+        good_standing = None
+        if standing_arg == 'good':
+            good_standing = True
+        elif standing_arg == 'bad':
+            good_standing = False
+
+        supporters, count = Supporter.get_all_with_filters(
+            limit=limit,
+            offset=offset,
+            state=state,
+            is_commercial=is_commercial,
+            featured=featured,
+            good_standing=good_standing,
+            search=search
+        )
         return self.render('admin/supporters/index.html',
-                           value=value, results=results)
+                           supporters=supporters,
+                           page=page,
+                           limit=limit,
+                           count=count)
 
     @expose('/<int:supporter_id>')
     def details(self, supporter_id):
@@ -58,9 +135,9 @@ class SupportersView(AdminBaseView):
         supporter = Supporter.get(id=supporter_id)
 
         form = forms.SupporterEditForm(defaults={
-            'musicbrainz_id': supporter.musicbrainz_id,
+            'username': supporter.user.name,
+            'email': supporter.user.email,
             'contact_name': supporter.contact_name,
-            'contact_email': supporter.contact_email,
             'state': supporter.state,
             'is_commercial': supporter.is_commercial,
             'org_name': supporter.org_name,
@@ -83,9 +160,7 @@ class SupportersView(AdminBaseView):
 
         if form.validate_on_submit():
             update_data = {
-                'musicbrainz_id': form.musicbrainz_id.data,
                 'contact_name': form.contact_name.data,
-                'contact_email': form.contact_email.data,
                 'state': form.state.data,
                 'is_commercial': form.is_commercial.data,
                 'org_name': form.org_name.data,
@@ -119,7 +194,43 @@ class SupportersView(AdminBaseView):
                         logging.warning(e)
                 # Saving new one
                 image_storage.save(os.path.join(get_logo_storage_dir(current_app), logo_filename))
-            db_supporter.update(supporter_id=supporter.id, **update_data)
+
+            old_name = supporter.user.name
+            old_email = supporter.user.email
+            new_name = form.username.data
+            new_email = form.email.data
+
+            supporter.user.name = new_name
+            supporter.user.email = new_email
+
+            email_changed = old_email != new_email
+            username_changed = old_name != new_name
+
+            updated_at = datetime.now(timezone.utc)
+            if email_changed or username_changed:
+                supporter.user.last_updated = updated_at
+            if email_changed and new_email:
+                supporter.user.email_confirmed_at = updated_at
+            supporter.update(**update_data)
+
+            # Emit user.updated event if username or email changed
+            if email_changed or username_changed:
+                old_data = {}
+                new_data = {}
+                if username_changed:
+                    old_data["name"] = old_name
+                    new_data["name"] = new_name
+                if email_changed:
+                    old_data["email"] = old_email
+                    new_data["email"] = new_email
+
+                supporter.user.emit_event(
+                    EVENT_USER_UPDATED,
+                    old=old_data,
+                    new=new_data,
+                    updated_at=updated_at.isoformat(),
+                )
+
             return redirect(url_for('.details', supporter_id=supporter.id))
 
         return self.render(
@@ -190,6 +301,57 @@ class SupportersView(AdminBaseView):
         flash.info('Token %s has been revoked.' % token_value)
         return redirect(url_for('.details', supporter_id=token.owner_id))
 
+    @expose('/<int:supporter_id>/delete', methods=('GET', 'POST'))
+    def delete(self, supporter_id):
+        """Delete a supporter and their associated user account."""
+        supporter = Supporter.get(id=supporter_id)
+        if supporter is None:
+            flash.error('Supporter not found.')
+            return redirect(url_for('.index'))
+
+        user = supporter.user
+        form = DeleteSupporterForm()
+
+        if request.method == 'GET':
+            return self.render(
+                'admin/supporters/delete.html',
+                supporter=supporter,
+                form=form,
+            )
+
+        if not form.validate_on_submit():
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash.error(error)
+            return self.render(
+                'admin/supporters/delete.html',
+                supporter=supporter,
+                form=form,
+            )
+
+        if user.deleted:
+            flash.warning('User is already deleted.')
+            return redirect(url_for('.details', supporter_id=supporter_id))
+
+        reason = form.reason.data.strip()
+
+        try:
+            # Delete supporter first (removes FK constraint)
+            db.session.delete(supporter)
+            db.session.flush()
+
+            user.delete(current_user, reason)
+            db.session.commit()
+
+            user.emit_event(EVENT_USER_DELETED, reason=reason, moderator_id=current_user.id)
+            flash.success('Supporter has been deleted.')
+            return redirect(url_for('.index'))
+        except Exception:
+            db.session.rollback()
+            flash.error('An error occurred while deleting the supporter.')
+            logging.exception(f'Error deleting supporter {supporter_id}:')
+            return redirect(url_for('.details', supporter_id=supporter_id))
+
 
 class CommercialSupportersView(AdminBaseView):
 
@@ -200,8 +362,28 @@ class CommercialSupportersView(AdminBaseView):
             return redirect(url_for('.index'))
         limit = 20
         offset = (page - 1) * limit
-        supporters, count = Supporter.get_all_commercial(limit=limit, offset=offset)
-        return self.render('admin/commercial-users/index.html', supporters=supporters,
+
+        state = request.args.get('state') or None
+        search = request.args.get('search') or None
+
+        featured = _get_boolean_param('featured')
+
+        standing_arg = request.args.get('standing')
+        good_standing = None
+        if standing_arg == 'good':
+            good_standing = True
+        elif standing_arg == 'bad':
+            good_standing = False
+
+        supporters, count = Supporter.get_all_commercial(
+            limit=limit,
+            offset=offset,
+            state=state,
+            featured=featured,
+            good_standing=good_standing,
+            search=search
+        )
+        return self.render('admin/commercial-supporters/index.html', supporters=supporters,
                            page=page, limit=limit, count=count)
 
 
@@ -248,6 +430,7 @@ class StatsView(AdminBaseView):
             top_downloaders=AccessLog.top_downloaders(10),
             token_actions=TokenLog.list(10)[0],
         )
+
 
     @staticmethod
     def dns_lookup(ip):
@@ -299,6 +482,7 @@ class StatsView(AdminBaseView):
             days=days
         )
 
+
     @expose('/top-tokens/')
     def top_tokens(self):
         days = get_int_query_param('days', default=7)
@@ -328,6 +512,7 @@ class StatsView(AdminBaseView):
             count=count,
         )
 
+
     @expose('/usage')
     def hourly_usage_data(self):
         stats = AccessLog.get_hourly_usage()
@@ -351,3 +536,333 @@ class StatsView(AdminBaseView):
             supporters=supporters,
             total=total
         )
+
+
+class UserModelView(AdminModelView):
+    column_list = ('name', 'email', 'member_since', 'is_blocked')
+    column_labels = {
+        'name': 'Username',
+        'email': 'Email',
+        'member_since': 'Member Since',
+        'is_blocked': 'Status'
+    }
+    column_searchable_list = ('name', 'email')
+    column_filters = ('name', 'email', 'member_since', 'is_blocked',)
+    column_default_sort = ('name', True)
+    can_create = False
+    can_delete = False
+    can_view_details = True
+    can_edit = False
+    column_display_actions = True
+
+    list_template = "admin/users/index.html"
+    details_template = "admin/users/details.html"
+
+    def __init__(self, session, **kwargs):
+        super().__init__(User, session, **kwargs)
+
+    @expose('/details/')
+    def details_view(self):
+        """Override details view to inject forms."""
+        return_url = self.get_url('.index_view')
+
+        user_id = request.args.get('id')
+        if not user_id:
+            flash.error('No user ID provided.')
+            return redirect(return_url)
+
+        model = self.get_one(user_id)
+        if model is None:
+            flash.error('User not found.')
+            return redirect(return_url)
+
+        verify_email_form = VerifyEmailForm()
+        edit_username_form = EditUsernameForm()
+        moderate_user_form = ModerateUserForm()
+        delete_user_form = DeleteUserForm()
+
+        return self.render(
+            self.details_template,
+            model=model,
+            details_columns=self._details_columns,
+            get_value=self.get_list_value,
+            return_url=return_url,
+            verify_email_form=verify_email_form,
+            edit_username_form=edit_username_form,
+            moderate_user_form=moderate_user_form,
+            delete_user_form=delete_user_form,
+        )
+
+    @expose('/user/<int:user_id>/verify-email', methods=['POST'])
+    def verify_user_email(self, user_id):
+        """Verify a user's email address manually"""
+        form = VerifyEmailForm()
+        user = User.query.get_or_404(user_id)
+
+        if not form.validate_on_submit():
+            flash.error('Invalid form submission.')
+            return redirect(url_for('.details_view', id=user_id))
+
+        try:
+            old_email = user.email
+            new_email = user.unconfirmed_email
+            user.verify_email_manually(current_user, f"Email manually verified by moderator {current_user.name}.")
+            db.session.commit()
+
+            user.emit_event(
+                EVENT_USER_UPDATED,
+                old={"email": old_email},
+                new={"email": new_email},
+                updated_at=user.email_confirmed_at.isoformat(),
+            )
+
+            flash.success(f'Email for {user.name} has been manually verified.')
+        except ValueError as e:
+            flash.error(str(e))
+        except Exception as e:
+            db.session.rollback()
+            flash.error('An error occurred while verifying the email.')
+            logging.exception(f'Error verifying email for user {user_id}:')
+
+        return redirect(url_for('.details_view', id=user_id))
+
+    @expose('/user/<int:user_id>/edit-username', methods=['POST'])
+    def edit_username(self, user_id):
+        """Edit a user's username"""
+        form = EditUsernameForm()
+        user = User.query.get_or_404(user_id)
+
+        if not form.validate_on_submit():
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash.error(error)
+            return redirect(url_for('.details_view', id=user_id))
+
+        new_username = form.username.data.strip()
+
+        if new_username == user.name:
+            flash.error("Username is already set to this value.")
+            return redirect(url_for('.details_view', id=user_id))
+
+        if User.query.filter_by(name=new_username).first() is not None:
+            flash.error("Username is already in use.")
+            return redirect(url_for('.details_view', id=user_id))
+
+        if OldUsername.query.filter_by(username=new_username).first() is not None:
+            flash.error("Username cannot be used.")
+            return redirect(url_for('.details_view', id=user_id))
+
+        try:
+            old_username = user.name
+            user.name = new_username
+            user.last_updated = datetime.now(timezone.utc)
+
+            log_message = f"Username changed from '{old_username}' to '{new_username}'."
+            user.moderate(current_user, "edit_username", log_message)
+
+            db.session.add(OldUsername(username=old_username))
+
+            db.session.commit()
+            user.emit_event(
+                EVENT_USER_UPDATED,
+                old={"name": old_username},
+                new={"name": new_username},
+                updated_at=user.last_updated.isoformat(),
+            )
+            flash.success("Username updated successfully.")
+        except Exception as e:
+            db.session.rollback()
+            flash.error(f"Error updating username: {str(e)}")
+
+        return redirect(url_for('.details_view', id=user_id))
+
+    @expose('/user/<int:user_id>/moderate', methods=['POST'])
+    def moderate_user(self, user_id):
+        """Handle user moderation actions"""
+        form = ModerateUserForm()
+        user = User.query.get_or_404(user_id)
+
+        if not form.validate_on_submit():
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash.error(error)
+            return redirect(url_for('.details_view', id=user_id))
+
+        action = form.action.data
+        reason = form.reason.data.strip()
+
+        if action not in ['block', 'unblock', 'comment']:
+            flash.error('Invalid moderation action.')
+            return redirect(url_for('.details_view', id=user_id))
+
+        try:
+            if action == "block":
+                if user.is_blocked:
+                    flash.warning('User is already blocked.')
+                else:
+                    user.block(current_user, reason)
+                    flash.success(f'User {user.name} has been blocked.')
+            elif action == "unblock":
+                if not user.is_blocked:
+                    flash.warning('User is not currently blocked.')
+                else:
+                    user.unblock(current_user, reason)
+                    flash.success(f'User {user.name} has been unblocked.')
+            elif action == "comment":
+                user.moderate(current_user, "comment", reason)
+                flash.success(f'Moderation note added for user {user.name}.')
+
+            db.session.commit()
+
+        except ValueError as e:
+            flash.error(str(e))
+        except Exception as e:
+            db.session.rollback()
+            flash.error(f'An error occurred while processing the {action} action.')
+            logging.exception(f'Error in moderation action {action} for user {user_id}:')
+
+        return redirect(url_for('.details_view', id=user_id))
+
+    @expose('/user/<int:user_id>/delete', methods=['POST'])
+    def delete_user(self, user_id):
+        """Handle user deletion with confirmation.
+
+        If the user is a supporter, deletion is refused and the admin
+        is directed to delete through the supporter portal instead.
+        """
+        form = DeleteUserForm()
+        user = User.query.get_or_404(user_id)
+
+        if not form.validate_on_submit():
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash.error(error)
+            return redirect(url_for('.details_view', id=user_id))
+
+        if user.deleted:
+            flash.warning('User is already deleted.')
+            return redirect(url_for('.details_view', id=user_id))
+
+        if user.supporter:
+            flash.error(
+                Markup(
+                    'This user is a supporter. Please delete them through the '
+                    '<a href="{}">Supporter Portal</a> instead.'.format(
+                        url_for('supportersview.details', supporter_id=user.supporter.id)
+                    )
+                )
+            )
+            return redirect(url_for('.details_view', id=user_id))
+
+        reason = form.reason.data.strip()
+
+        try:
+            user.delete(current_user, reason)
+            db.session.commit()
+            user.emit_event(EVENT_USER_DELETED, reason=reason, moderator_id=current_user.id)
+            flash.success('User has been deleted.')
+        except Exception:
+            db.session.rollback()
+            flash.error('An error occurred while deleting the user.')
+            logging.exception(f'Error deleting user {user_id}:')
+
+        return redirect(url_for('.details_view', id=user_id))
+
+
+class OldUsernameModelView(AdminModelView):
+    column_list = ('username', 'deleted_at')
+    can_edit = False
+    can_view_details = False
+
+    def __init__(self, session, **kwargs):
+        super().__init__(OldUsername, session, **kwargs)
+
+
+class PrivilegeBitmapField(SelectMultipleField):
+    """ A checkbox group that maps the OAuth2 client privileges bitmap column
+    to/from a list of selected privilege flags. """
+
+    widget = ListWidget(prefix_label=False)
+    option_widget = CheckboxInput()
+
+    def __init__(self, *args, **kwargs):
+        # the choices are fixed to the known privilege flags, ignore anything
+        # flask-admin tries to infer for the underlying Integer column
+        kwargs.pop("choices", None)
+        kwargs["coerce"] = int
+        super().__init__(*args, **kwargs)
+        self.choices = [
+            (privilege.value, OAUTH2_CLIENT_PRIVILEGE_LABELS[privilege])
+            for privilege in OAuth2ClientPrivilege
+        ]
+
+    def process_data(self, value):
+        # value is the integer bitmap coming from the model instance
+        granted = OAuth2ClientPrivilege(value or 0)
+        self.data = [privilege.value for privilege in OAuth2ClientPrivilege if privilege in granted]
+
+    def populate_obj(self, obj, name):
+        bitmap = 0
+        for value in self.data or []:
+            bitmap |= value
+        setattr(obj, name, bitmap)
+
+
+class OAuth2ClientModelView(AdminModelView):
+    """Admin view for managing OAuth2 applications and their privileges."""
+    edit_template = "admin/oauth_client/edit.html"
+
+    column_list = ("client_id", "name", "owner_id", "privileges", "client_id_issued_at")
+    column_labels = {
+        "client_id": "Client ID",
+        "name": "Name",
+        "owner_id": "Owner ID",
+        "privileges": "Privileges",
+        "client_id_issued_at": "Issued At",
+    }
+    column_searchable_list = ("client_id", "name")
+    column_default_sort = ("client_id_issued_at", True)
+
+    can_create = False
+    can_delete = False
+    can_edit = True
+    can_view_details = True
+
+    form_columns = ("privileges",)
+    form_overrides = {"privileges": PrivilegeBitmapField}
+    # the column is NOT NULL, but an empty selection (no privileges) is valid, so
+    # drop the InputRequired validator flask-admin would otherwise add.
+    form_args = {"privileges": {"label": "Privileges", "validators": []}}
+
+    @staticmethod
+    def _format_privileges(view, context, model, name):
+        labels = model.privilege_labels()
+        return ", ".join(labels) if labels else "—"
+
+    column_formatters = {"privileges": _format_privileges}
+    column_formatters_detail = {"privileges": _format_privileges}
+
+    def __init__(self, session, **kwargs):
+        super().__init__(OAuth2Client, session, **kwargs)
+
+
+class DomainBlacklistModelView(AdminModelView):
+    """Admin view for managing blacklisted email domains."""
+    column_list = ('domain', 'reason', 'created_at')
+    column_labels = {
+        'domain': 'Domain',
+        'reason': 'Reason',
+        'created_at': 'Created At'
+    }
+    column_searchable_list = ('domain', 'reason')
+    column_filters = ('domain', 'created_at')
+    column_default_sort = ('created_at', True)
+    can_create = True
+    can_delete = True
+    can_edit = True
+    can_view_details = True
+
+    form_columns = ('domain', 'reason')
+
+    def __init__(self, session, **kwargs):
+        super().__init__(DomainBlacklist, session, **kwargs)

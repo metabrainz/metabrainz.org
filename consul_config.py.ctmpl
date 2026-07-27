@@ -10,13 +10,29 @@
     {{- end -}}
 {{- end -}}
 
+from datetime import timedelta
+
 SECRET_KEY = '''{{template "KEY" "secret_key"}}'''
 DEBUG = False
+
+EMAIL_VERIFICATION_SECRET_KEY = '''{{template "KEY" "email_verification_secret_key"}}'''
+EMAIL_VERIFICATION_EXPIRY = timedelta(hours=24)
+EMAIL_RESET_PASSWORD_EXPIRY = timedelta(hours=24)
+
+# Bcrypt
+BCRYPT_HASH_PREFIX = "2a"
+BCRYPT_LOG_ROUNDS = 12
 
 {{if service "pgbouncer-master"}}
 {{with index (service "pgbouncer-master") 0}}
 SQLALCHEMY_DATABASE_URI = "postgresql://{{template "KEY" "postgresql/username"}}:{{template "KEY" "postgresql/password"}}@{{.Address}}:{{.Port}}/{{template "KEY" "postgresql/db_name"}}"
-SQLALCHEMY_MUSICBRAINZ_URI = 'postgresql://musicbrainz_ro@{{.Address}}:{{.Port}}/musicbrainz_db'
+{{end}}
+{{end}}
+
+{{- $mbDbService := key (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") "postgresql/mb_db_service") | trimSpace -}}
+{{if service $mbDbService}}
+{{with index (service $mbDbService) 0}}
+SQLALCHEMY_MUSICBRAINZ_URI = 'postgresql://{{template "KEY" "postgresql/mb_username"}}:{{template "KEY" "postgresql/mb_password"}}@{{.Address}}:{{.Port}}/{{template "KEY" "postgresql/mb_db_name"}}'
 {{end}}
 {{end}}
 
@@ -71,9 +87,9 @@ LOG_SENTRY = {
     'release': os.getenv('GIT_SHA', None),
 }
 
-# reCAPTCHA (https://www.google.com/recaptcha/)
-RECAPTCHA_PUBLIC_KEY = '''{{template "KEY" "recaptcha/public_key"}}'''
-RECAPTCHA_PRIVATE_KEY = '''{{template "KEY" "recaptcha/private_key"}}'''
+# MTCaptcha (https://www.mtcaptcha.com/)
+MTCAPTCHA_PUBLIC_KEY = '''{{template "KEY" "mtcaptcha/public_key"}}'''
+MTCAPTCHA_PRIVATE_KEY = '''{{template "KEY" "mtcaptcha/private_key"}}'''
 
 {{if service "metabrainz-org.exim-relay"}}
 {{with index (service "metabrainz-org.exim-relay") 0}}
@@ -104,8 +120,6 @@ SQLALCHEMY_BINDS = {
    "musicbrainz": MB_DATABASE_URI
 }
 
-MUSICBRAINZ_SERVER = '''{{template "KEY" "musicbrainz/oauth_server_url"}}'''
-
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [
     {{template "KEY_ARRAY" "notification_recipients"}}
@@ -127,21 +141,31 @@ USE_COMPILED_STYLING = True
 
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-OAUTH2_BLUEPRINT_PREFIX = "/new-oauth2"
-OAUTH2_ACCESS_TOKEN_GENERATOR = "oauth.generator.create_access_token"
-OAUTH2_REFRESH_TOKEN_GENERATOR = "oauth.generator.create_refresh_token"
+OAUTH2_BLUEPRINT_PREFIX = "/oauth2"
+OAUTH2_ACCESS_TOKEN_GENERATOR = "metabrainz.oauth.generator.create_access_token"
+OAUTH2_REFRESH_TOKEN_GENERATOR = "metabrainz.oauth.generator.create_refresh_token"
 OAUTH2_TOKEN_EXPIRES_IN = {
     "authorization_code": 3600,
     "implicit": 3600,
     "client_credentials": 3600,
 }
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
-OAUTH2_WHITELISTED_CCG_CLIENTS = [
-    {{template "KEY_ARRAY" "oauth2/whitelisted_ccg_clients"}}
-]
 
 OIDC_ID_TOKEN_EXPIRATION = 3600
 OIDC_JWT_PRIVATE_KEY = {{template "KEY" "oidc/jwt_private_key"}}
 OIDC_JWT_PUBLIC_KEY = {{template "KEY" "oidc/jwt_public_key"}}
 
 STATIC_RESOURCES_DIR = '/static'
+
+WEBHOOK_MAX_RETRIES = {{template "KEY" "webhook/max_retries"}}
+WEBHOOK_DELIVERY_TIMEOUT = {{template "KEY" "webhook/delivery_timeout"}}
+WEBHOOK_TASK_TIME_LIMIT = {{template "KEY" "webhook/task_time_limit"}}
+WEBHOOK_TASK_SOFT_TIME_LIMIT = {{template "KEY" "webhook/soft_time_limit"}}
+WEBHOOK_DEFAULT_RATE_LIMIT = '''{{template "KEY" "webhook/rate_limit"}}'''
+WEBHOOK_CIRCUIT_BREAKER_THRESHOLD = {{template "KEY" "webhook/circuit_breaker_threshold"}}
+WEBHOOK_CIRCUIT_BREAKER_TIMEOUT = {{template "KEY" "webhook/circuit_breaker_timeout"}}
+
+STATIC_RESOURCES_DIR = '/static'
+
+SIGNUP_RATE_LIMIT_PER_IP = 5
+REMEMBER_COOKIE_DURATION = timedelta(days=365)

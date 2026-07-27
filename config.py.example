@@ -1,10 +1,21 @@
 from os import path
 
+from datetime import timedelta
+from os import path
+
 # CUSTOM CONFIGURATION
 
 DEBUG = True  # set to False in production mode
 
 SECRET_KEY = "CHANGE_THIS"
+
+EMAIL_VERIFICATION_SECRET_KEY = "CHANGE THIS"
+EMAIL_VERIFICATION_EXPIRY = timedelta(hours=24)
+EMAIL_RESET_PASSWORD_EXPIRY = timedelta(hours=24)
+
+# Bcrypt
+BCRYPT_HASH_PREFIX = "2a"
+BCRYPT_LOG_ROUNDS = 12
 
 # DATABASE
 SQLALCHEMY_DATABASE_URI = "postgresql://metabrainz:metabrainz@meb_db:5432/metabrainz"
@@ -50,8 +61,6 @@ STRIPE_KEYS = {
 
 # if developing payment integration locally, change this to your localhost url
 SERVER_BASE_URL = "http://localhost:8000"
-
-MUSICBRAINZ_SERVER = "https://beta.musicbrainz.org"
 
 # REDIS
 REDIS = {
@@ -102,9 +111,9 @@ MAIL_FROM_DOMAIN = "metabrainz.org"
 
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-# reCAPTCHA (https://www.google.com/recaptcha/)
-RECAPTCHA_PUBLIC_KEY = ""
-RECAPTCHA_PRIVATE_KEY = ""
+# MTCaptcha (https://www.mtcaptcha.com/)
+MTCAPTCHA_PUBLIC_KEY = ""
+MTCAPTCHA_PRIVATE_KEY = ""
 
 # List of email addresses
 NOTIFICATION_RECIPIENTS = [
@@ -117,20 +126,20 @@ NOTIFICATION_RECIPIENTS = [
 USE_NGINX_X_ACCEL = False
 
 OAUTH2_BLUEPRINT_PREFIX = "/oauth2"
-OAUTH2_ACCESS_TOKEN_GENERATOR = "oauth.generator.create_access_token"
-OAUTH2_REFRESH_TOKEN_GENERATOR = "oauth.generator.create_refresh_token"
+OAUTH2_ACCESS_TOKEN_GENERATOR = "metabrainz.oauth.generator.create_access_token"
+OAUTH2_REFRESH_TOKEN_GENERATOR = "metabrainz.oauth.generator.create_refresh_token"
 OAUTH2_TOKEN_EXPIRES_IN = {
     "authorization_code": 3600,
     "implicit": 3600,
     "client_credentials": 3600,
 }
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
-OAUTH2_WHITELISTED_CCG_CLIENTS = []
+OAUTH2_REGISTRATION_REQUEST_EXPIRES_IN = 300
 
 OIDC_ID_TOKEN_EXPIRATION = 3600
 # DANGER: DO NOT USE THESE VALUES IN PRODUCTION
 OIDC_JWT_PRIVATE_KEY = {
-   "alg": "P-256",
+   "alg": "ES256",
    "kty": "EC",
    "kid": "admin@example.com",
    "use": "sig",
@@ -140,7 +149,7 @@ OIDC_JWT_PRIVATE_KEY = {
    "d": "r_kHyZ-a06rmxM3yESK84r1otSg-aQcVStkRhA-iCM8"
 }
 OIDC_JWT_PUBLIC_KEY = {
-   "alg": "P-256",
+   "alg": "ES256",
    "kty": "EC",
    "kid": "admin@example.com",
    "use": "sig",
@@ -150,3 +159,15 @@ OIDC_JWT_PUBLIC_KEY = {
 }
 
 STATIC_RESOURCES_DIR = path.join(path.dirname(__file__), 'frontend')
+
+# Webhooks
+WEBHOOK_MAX_RETRIES = 5  # Maximum number of retry attempts for failed webhook deliveries
+WEBHOOK_DELIVERY_TIMEOUT = 30  # Timeout in seconds for webhook delivery attempts
+WEBHOOK_TASK_TIME_LIMIT = 120  # Hard timeout for Celery tasks (seconds)
+WEBHOOK_TASK_SOFT_TIME_LIMIT = 90  # Soft timeout for Celery tasks (seconds)
+WEBHOOK_DEFAULT_RATE_LIMIT = '100/m'  # Default rate limit for webhook deliveries
+WEBHOOK_CIRCUIT_BREAKER_THRESHOLD = 5  # Number of failures before opening circuit breaker
+WEBHOOK_CIRCUIT_BREAKER_TIMEOUT = 300  # Seconds to wait before attempting recovery (5 minutes)
+
+SIGNUP_RATE_LIMIT_PER_IP = 5
+REMEMBER_COOKIE_DURATION = timedelta(days=365)

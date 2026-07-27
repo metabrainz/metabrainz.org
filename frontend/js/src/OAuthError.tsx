@@ -1,6 +1,6 @@
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
-import { getPageProps } from "./utils";
+import { useTranslation } from "react-i18next";
+import { getPageProps, renderRoot } from "./utils";
 
 type OAuthErrorProps = {
   error: {
@@ -10,10 +10,12 @@ type OAuthErrorProps = {
 };
 
 function OAuthError({ error }: OAuthErrorProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <>
-      <h1>OAuth2 Error</h1>
-      <p>An error occurred during OAuth authentication process.</p>
+      <h1>{t("OAuth2 Error")}</h1>
+      <p>{t("An error occurred during OAuth authentication process.")}</p>
       <p>
         {error.name}: {error.description}
       </p>
@@ -22,9 +24,10 @@ function OAuthError({ error }: OAuthErrorProps): JSX.Element {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { error } = reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(<OAuthError error={error} />);
+  renderRoot(
+    domContainer!,
+    <OAuthError error={error} />);
 });

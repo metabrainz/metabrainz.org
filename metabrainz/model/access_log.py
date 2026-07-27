@@ -10,6 +10,8 @@ from flask import current_app
 import logging
 import pytz
 
+from metabrainz.model.user import User
+
 CLEANUP_RANGE_MINUTES = 60
 DIFFERENT_IP_LIMIT = 50
 
@@ -57,7 +59,7 @@ class AccessLog(db.Model):
             .count()
         if count > DIFFERENT_IP_LIMIT:
             email = db.session \
-                .query(Supporter.contact_email) \
+                .query(Supporter.user.email) \
                 .join(Token) \
                 .filter(Token.value == access_token) \
                 .first()
@@ -98,24 +100,26 @@ class AccessLog(db.Model):
             List of <datetime, request count> tuples for every hour.
         """
         if not supporter_id:
-            rows = db.engine.execute(
-                'SELECT max("timestamp") as ts, count(*) '
-                'FROM access_log '
-                'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
-                '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
-                'ORDER BY ts'
-            )
+            rows = db.session.execute(text("""
+                SELECT max("timestamp") as ts, count(*)
+                FROM access_log
+                GROUP BY extract(year from "timestamp"), extract(month from "timestamp"),
+                         extract(day from "timestamp"), trunc(extract(hour from "timestamp"))
+                ORDER BY ts
+            """))
         else:
-            rows = db.engine.execute(
-                'SELECT max(access_log."timestamp") as ts, count(access_log.*) '
-                'FROM access_log '
-                'JOIN token ON access_log.token = token.value '
-                'JOIN supporter ON token.owner_id = supporter.id '
-                'WHERE supporter.id = %s '
-                'GROUP BY extract(year from "timestamp"), extract(month from "timestamp"), '
-                '         extract(day from "timestamp"), trunc(extract(hour from "timestamp")) '
-                'ORDER BY ts',
-                (supporter_id,)
+            rows = db.session.execute(
+                text("""
+                    SELECT max(access_log."timestamp") as ts, count(access_log.*)
+                    FROM access_log
+                    JOIN token ON access_log.token = token.value
+                    JOIN supporter ON token.owner_id = supporter.id
+                    WHERE supporter.id = :supporter_id
+                    GROUP BY extract(year from "timestamp"), extract(month from "timestamp"),
+                             extract(day from "timestamp"), trunc(extract(hour from "timestamp"))
+                    ORDER BY ts
+                """),
+                {"supporter_id": supporter_id}
             )
         return [(
             r[0].replace(
@@ -146,13 +150,30 @@ class AccessLog(db.Model):
         Returns:
             List of <Supporter, request count> pairs
         """
-        query = db.session.query(Supporter).join(Token).join(AccessLog) \
-            .filter(cls.timestamp > datetime.now() - timedelta(days=1)) \
-            .add_columns(func.count("AccessLog.*").label("count")).group_by(Supporter.id) \
-            .order_by(text("count DESC"))
+        count_query = db.session.query(
+            Token.owner_id.label("supporter_id"),
+            func.count(cls.token).label("count")
+        ).select_from(cls) \
+        .join(Token) \
+        .filter(cls.timestamp > datetime.now() - timedelta(days=1)) \
+        .group_by(Token.owner_id) \
+        .order_by(text("count DESC"))
+
         if limit:
-            query = query.limit(limit)
-        return query.all()
+            count_query = count_query.limit(limit)
+
+        count_results = count_query.all()
+
+        if not count_results:
+            return []
+
+        counts_dict = {row.supporter_id: row.count for row in count_results}
+        supporter_ids = list(counts_dict.keys())
+
+        supporters = Supporter.query.filter(Supporter.id.in_(supporter_ids)).all()
+        result = [(supporter, counts_dict[supporter.id]) for supporter in supporters]
+        result.sort(key=lambda x: x[1], reverse=True)
+        return result
 
     @classmethod
     def top_ips(cls, days=7, limit=None):
@@ -167,21 +188,22 @@ class AccessLog(db.Model):
             limit: Max number of items to return.
 
         Returns:
-            Tuple of (non_commercial, commercial) lists of [ip_address, token, musicbrainz_id, supporter_id, contact_name, contact_email]
+            Tuple of (non_commercial, commercial) lists of [ip_address, token, supporter_id, contact_name, email]
 
         """
         query = db.session.query(AccessLog) \
                           .select_from(AccessLog) \
                           .join(Token) \
                           .join(Supporter) \
-                          .with_entities(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id, \
-                                         Supporter.contact_name, Supporter.contact_email, Supporter.data_usage_desc) \
+                          .join(User) \
+                          .with_entities(AccessLog.ip_address, AccessLog.token, User.name, Supporter.id,
+                                         Supporter.contact_name, User.email, Supporter.data_usage_desc) \
                           .filter(Supporter.is_commercial == False) \
                           .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
                           .filter(Supporter.good_standing != True) \
                           .add_columns(func.count("AccessLog.*").label("count")) \
-                          .group_by(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id, \
-                                    Supporter.contact_name, Supporter.contact_email, Supporter.data_usage_desc) \
+                          .group_by(AccessLog.ip_address, AccessLog.token, User.name, Supporter.id,
+                                    Supporter.contact_name, User.email, Supporter.data_usage_desc) \
                           .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
@@ -191,19 +213,20 @@ class AccessLog(db.Model):
                           .select_from(AccessLog) \
                           .join(Token) \
                           .join(Supporter) \
-                          .with_entities(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id,
-                                         Supporter.contact_name, Supporter.contact_email, Supporter.data_usage_desc) \
+                          .join(User) \
+                          .with_entities(AccessLog.ip_address, AccessLog.token, User.name, Supporter.id,
+                                         Supporter.contact_name, User.email, Supporter.data_usage_desc) \
                           .filter(Supporter.is_commercial == True) \
                           .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
                           .add_columns(func.count("AccessLog.*").label("count")) \
-                          .group_by(AccessLog.ip_address, AccessLog.token, Supporter.musicbrainz_id, Supporter.id,
-                                    Supporter.contact_name, Supporter.contact_email, Supporter.data_usage_desc) \
+                          .group_by(AccessLog.ip_address, AccessLog.token, User.name, Supporter.id,
+                                         Supporter.contact_name, User.email, Supporter.data_usage_desc) \
                           .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         commercial = query.all()
 
-        return (non_commercial, commercial)
+        return non_commercial, commercial
 
 
     @classmethod
@@ -219,19 +242,18 @@ class AccessLog(db.Model):
             limit: Max number of items to return.
 
         Returns:
-            Tuple of (non_commercial, commercial) lists of [token, musicbrainz_id, supporter_id, contact_name, contact_email]
+            Tuple of (non_commercial, commercial) lists of [token, username, supporter_id, contact_name, email]
 
         """
         query = db.session.query(AccessLog) \
                           .select_from(AccessLog) \
-                          .join(Token).join(Supporter) \
-                          .with_entities(AccessLog.token, Supporter.musicbrainz_id, Supporter.id, Supporter.contact_name, \
-                                         Supporter.contact_email) \
+                          .join(Token).join(Supporter).join(User) \
+                          .with_entities(AccessLog.token, User.name, Supporter.id, Supporter.contact_name, User.email) \
                           .filter(Supporter.is_commercial == False) \
                           .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
                           .filter(Supporter.good_standing != True) \
                           .add_columns(func.count("AccessLog.*").label("count")) \
-                          .group_by(AccessLog.token, Supporter.musicbrainz_id, Supporter.id, Supporter.contact_name, Supporter.contact_email) \
+                          .group_by(AccessLog.token, User.name, Supporter.id, Supporter.contact_name, User.email) \
                           .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
@@ -239,15 +261,15 @@ class AccessLog(db.Model):
 
         query = db.session.query(AccessLog) \
                           .select_from(AccessLog) \
-                          .join(Token).join(Supporter) \
-                          .with_entities(AccessLog.token, Supporter.musicbrainz_id, Supporter.id, Supporter.contact_name, Supporter.contact_email) \
+                          .join(Token).join(Supporter).join(User) \
+                          .with_entities(AccessLog.token, User.name, Supporter.id, Supporter.contact_name, User.email) \
                           .filter(Supporter.is_commercial == True) \
                           .filter(cls.timestamp > datetime.now() - timedelta(days=days)) \
                           .add_columns(func.count("AccessLog.*").label("count")) \
-                          .group_by(AccessLog.token, Supporter.musicbrainz_id, Supporter.id, Supporter.contact_name, Supporter.contact_email) \
+                          .group_by(AccessLog.token, User.name, Supporter.id, Supporter.contact_name, User.email) \
                           .order_by(text("count DESC"))
         if limit:
             query = query.limit(limit)
         commercial = query.all()
 
-        return (non_commercial, commercial)
+        return non_commercial, commercial

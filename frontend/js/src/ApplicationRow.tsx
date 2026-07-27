@@ -1,0 +1,85 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+
+type Application = {
+  name: string;
+  website: string;
+  client_id: string;
+  client_secret: string;
+  privileges?: Array<string>;
+};
+
+type ApplicationRowProps = {
+  application: Application;
+  showPrivileges?: boolean;
+};
+
+function ApplicationRow({
+  application,
+  showPrivileges = false,
+}: ApplicationRowProps): React.JSX.Element {
+  const { t } = useTranslation();
+  const { name, website, client_id, client_secret, privileges } = application;
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const glyphIcon = passwordVisible
+    ? "glyphicon-eye-close"
+    : "glyphicon-eye-open";
+  const title = passwordVisible ? t("Hide password") : t("Show password");
+  const passwordShowButton = (
+    <button
+      className="btn btn-info btn-xs pull-right"
+      style={{ outline: "none" }}
+      title={title}
+      type="button"
+      onClick={() => {
+        setPasswordVisible((prev) => !prev);
+      }}
+    >
+      <span className={`glyphicon ${glyphIcon}`} aria-hidden="true" />
+    </button>
+  );
+
+  const secret = passwordVisible
+    ? client_secret
+    : "*".repeat(client_secret.length);
+
+  return (
+    <tr>
+      <td>{name}</td>
+      <td>{website}</td>
+      <td>{client_id}</td>
+      <td>
+        {secret} {passwordShowButton}
+      </td>
+      {showPrivileges && (
+        <td>
+          {privileges?.map((privilege) => (
+            <span
+              key={privilege}
+              className="label label-info"
+              style={{ marginRight: "4px", display: "inline-block" }}
+            >
+              {t(privilege)}
+            </span>
+          ))}
+        </td>
+      )}
+      <td>
+        <a
+          className="btn btn-block btn-warning btn-xs"
+          href={`/profile/applications/edit/${client_id}`}
+        >
+          {t("Modify")}
+        </a>
+        <a
+          className="btn btn-block btn-danger btn-xs"
+          href={`/profile/applications/delete/${client_id}`}
+        >
+          {t("Delete")}
+        </a>
+      </td>
+    </tr>
+  );
+}
+
+export default ApplicationRow;

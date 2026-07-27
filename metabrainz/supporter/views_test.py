@@ -1,13 +1,51 @@
+import json
 from urllib.parse import urlparse
 
-from metabrainz import create_app
-from metabrainz.testing import FlaskTestCase
-from metabrainz.model.supporter import Supporter
+from brainzutils import cache
+from flask import url_for, g
+from flask_login import current_user
+from sqlalchemy import delete
+
+from metabrainz.model import db
+from metabrainz.model.dataset import Dataset
+from metabrainz.model.supporter import Supporter, STATE_ACTIVE
 from metabrainz.model.tier import Tier
-from flask import url_for
+from metabrainz.model.user import User
+from metabrainz.testing import FlaskTestCase
 
 
 class SupportersViewsTestCase(FlaskTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.existing_user = User(name="existing-test-user", password="testpassword123")
+        db.session.add(self.existing_user)
+        db.session.commit()
+
+        self.tier = Tier.create(
+            name="Test Tier",
+            price=100,
+            available=True,
+            primary=False,
+        )
+
+        self.dataset = Dataset.create(
+            name="Test Dataset",
+            description="A test dataset",
+            project="musicbrainz"
+        )
+        self.app.config["SIGNUP_RATE_LIMIT_PER_IP"] = 2
+        self.ip_address = "10.0.0.100"
+
+    def tearDown(self):
+        db.session.rollback()
+        db.session.execute(delete(Supporter))
+        db.session.execute(delete(User))
+        db.session.execute(delete(Tier))
+        db.session.execute(delete(Dataset))
+        db.session.commit()
+        cache._r.flushall()
+        super().tearDown()
 
     def test_supporters_list(self):
         self.assert200(self.client.get(url_for('supporters.supporters_list')))
@@ -33,9 +71,6 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for('supporters.tier', tier_id=t.id)))
         self.assert404(self.client.get(url_for('supporters.tier', tier_id=t.id + 1)))
 
-    def test_signup(self):
-        self.assert200(self.client.get(url_for('supporters.signup')))
-
     def test_signup_commercial(self):
         resp = self.client.get(url_for('supporters.signup_commercial'))
         self.assertEqual(resp.location, urlparse(url_for('supporters.account_type')).path)
@@ -55,23 +90,11 @@ class SupportersViewsTestCase(FlaskTestCase):
         resp = self.client.get(url_for('supporters.signup_commercial', tier_id=unavailable_tier.id + 1))
         self.assertEqual(resp.location, url_for('supporters.account_type'))
 
-    def test_musicbrainz(self):
-        self.assertStatus(self.client.get(url_for('supporters.musicbrainz')), 302)
-
-    def test_musicbrainz_post(self):
-        app = create_app(debug=True, config_path='../config.py')
-        app.config['TESTING'] = True
-        client = app.test_client()
-
-        self.assert500(client.get(url_for('supporters.musicbrainz_post')))
-        self.assert400(client.get(url_for('supporters.musicbrainz_post', error="PANIC")))
-        self.assert400(client.get(url_for('supporters.musicbrainz_post', state="fake")))
-
     def test_profile(self):
-        self.assertStatus(self.client.get(url_for('supporters.profile')), 302)
+        self.assertStatus(self.client.get(url_for('index.profile')), 302)
 
     def test_profile_edit(self):
-        self.assertStatus(self.client.get(url_for('supporters.profile_edit')), 302)
+        self.assertStatus(self.client.get(url_for('index.profile_edit')), 302)
 
     def test_regenerate_token(self):
         self.assertStatus(self.client.post(url_for('supporters.regenerate_token')), 302)
@@ -79,15 +102,19 @@ class SupportersViewsTestCase(FlaskTestCase):
 
     def test_regenerate_token_success(self):
         """Test that generating a token returns it in JSON."""
+        user = User.add(
+            name='token_user',
+            unconfirmed_email='token@example.com',
+            password='testing',
+        )
         supporter = Supporter.add(
             is_commercial=False,
-            musicbrainz_id='token_user',
-            musicbrainz_row_id=10,
             contact_name='Token User',
-            contact_email='token@example.com',
             data_usage_desc='testing',
+            user=user,
         )
-        self.temporary_login(supporter.id)
+        db.session.flush()
+        self.temporary_login(supporter.user)
         response = self.client.post(url_for('supporters.regenerate_token'))
         self.assert200(response)
         data = response.json
@@ -96,15 +123,19 @@ class SupportersViewsTestCase(FlaskTestCase):
 
     def test_regenerate_token_rate_limit(self):
         """Test that TokenGenerationLimitException returns 429 with error message"""
+        user = User.add(
+            name='rate_limit_user',
+            unconfirmed_email='rate@example.com',
+            password='testing',
+        )
         supporter = Supporter.add(
             is_commercial=False,
-            musicbrainz_id='rate_limit_user',
-            musicbrainz_row_id=11,
             contact_name='Rate User',
-            contact_email='rate@example.com',
             data_usage_desc='testing',
+            user=user,
         )
-        self.temporary_login(supporter.id)
+        db.session.flush()
+        self.temporary_login(supporter.user)
 
         # First token generation should succeed
         response = self.client.post(url_for('supporters.regenerate_token'))
@@ -118,10 +149,608 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertIn("Can't generate more than one token per hour", data['error'])
 
     def test_login(self):
-        self.assert200(self.client.get(url_for('supporters.login')))
+        self.assert200(self.client.get(url_for('users.login')))
 
     def test_logout(self):
-        self.assertStatus(self.client.get(url_for('supporters.logout')), 302)
+        self.assertStatus(self.client.get(url_for('users.logout')), 302)
 
     def test_bad_standing(self):
         self.assert200(self.client.get(url_for('supporters.bad_standing')))
+
+    def test_become_commercial_supporter_success(self):
+        self.temporary_login(self.existing_user)
+
+        response = self.client.get(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id)
+        )
+        self.assert200(response)
+        self.assertTemplateUsed("supporters/signup-commercial.html")
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertTrue(props["existing_user"])
+        self.assertEqual(props["user"]["username"], "existing-test-user")
+        self.assertEqual(props["tier"]["name"], "Test Tier")
+        self.assertEqual(props["tier"]["price"], 100.0)
+
+        response = self.client.post(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            data={
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing the API for my project",
+                "org_name": "Test Organization",
+                "org_desc": "A test organization description",
+                "website_url": "https://example.com",
+                "logo_url": "https://example.com/logo.png",
+                "api_url": "https://api.example.com",
+                "address_street": "123 Test St",
+                "address_city": "Test City",
+                "address_state": "Test State",
+                "address_postcode": "12345",
+                "address_country": "Test Country",
+                "amount_pledged": "150",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False
+        )
+        self.assertRedirects(response, url_for('index.profile'))
+
+        supporter = Supporter.query.filter_by(user_id=self.existing_user.id).first()
+        self.assertIsNotNone(supporter)
+        self.assertTrue(supporter.is_commercial)
+        self.assertEqual(supporter.org_name, "Test Organization")
+        self.assertEqual(supporter.contact_name, "Test Contact")
+        self.assertEqual(float(supporter.amount_pledged), 150.0)
+
+    def test_become_commercial_supporter_amount_pledged_validation(self):
+        self.temporary_login(self.existing_user)
+
+        self.client.get(url_for('supporters.signup_commercial', tier_id=self.tier.id))
+
+        response = self.client.post(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            data={
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing the API for my project",
+                "org_name": "Test Organization",
+                "org_desc": "A test organization description",
+                "website_url": "https://example.com",
+                "address_street": "123 Test St",
+                "address_city": "Test City",
+                "address_state": "Test State",
+                "address_postcode": "12345",
+                "address_country": "Test Country",
+                "amount_pledged": "50",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            }
+        )
+        self.assert200(response)
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("amount_pledged", props["initial_errors"])
+
+        supporter = Supporter.query.filter_by(user_id=self.existing_user.id).first()
+        self.assertIsNone(supporter)
+
+    def test_become_noncommercial_supporter_success(self):
+        self.temporary_login(self.existing_user)
+
+        response = self.client.get(url_for('supporters.signup_noncommercial'))
+        self.assert200(response)
+        self.assertTemplateUsed("supporters/signup-non-commercial.html")
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertTrue(props["existing_user"])
+        self.assertEqual(props["user"]["username"], "existing-test-user")
+        self.assertEqual(len(props["datasets"]), 1)
+        self.assertEqual(props["datasets"][0]["name"], "Test Dataset")
+
+        response = self.client.post(
+            url_for('supporters.signup_noncommercial'),
+            data={
+                "contact_name": "Test Contact",
+                "usage_desc": "Personal project using the data",
+                f"datasets.{self.dataset.id}": "y",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False
+        )
+
+        self.assertRedirects(response, url_for('index.profile'))
+
+        supporter = Supporter.query.filter_by(user_id=self.existing_user.id).first()
+        self.assertIsNotNone(supporter)
+        self.assertFalse(supporter.is_commercial)
+        self.assertEqual(supporter.contact_name, "Test Contact")
+        self.assertEqual(supporter.data_usage_desc, "Personal project using the data")
+
+    def test_already_supporter_redirects(self):
+        self.temporary_login(self.existing_user)
+        Supporter.add(
+            is_commercial=False,
+            contact_name="Test",
+            data_usage_desc="Test",
+            datasets=[],
+            user=self.existing_user
+        )
+        db.session.commit()
+
+        response = self.client.get(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            follow_redirects=False
+        )
+        self.assertRedirects(response, url_for('index.profile'))
+
+        response = self.client.get(
+            url_for('supporters.signup_noncommercial'),
+            follow_redirects=False
+        )
+        self.assertRedirects(response, url_for('index.profile'))
+
+    def test_become_commercial_supporter_missing_required_fields(self):
+        self.temporary_login(self.existing_user)
+
+        self.client.get(url_for('supporters.signup_commercial', tier_id=self.tier.id))
+        response = self.client.post(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            data={
+                "csrf_token": g.csrf_token,
+                "mtcaptcha": "test-token",
+            }
+        )
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+
+        self.assertIn("contact_name", props["initial_errors"])
+        self.assertIn("org_name", props["initial_errors"])
+        self.assertIn("website_url", props["initial_errors"])
+
+    def test_become_noncommercial_supporter_missing_required_fields(self):
+        self.temporary_login(self.existing_user)
+
+        self.client.get(url_for('supporters.signup_noncommercial'))
+
+        response = self.client.post(
+            url_for('supporters.signup_noncommercial'),
+            data={
+                "csrf_token": g.csrf_token,
+                "mtcaptcha": "test-token",
+            }
+        )
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+
+        self.assertIn("contact_name", props["initial_errors"])
+        self.assertIn("usage_desc", props["initial_errors"])
+
+    def test_signup_commercial_success_new_user(self):
+        response = self.client.get(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id)
+        )
+        self.assert200(response)
+        self.assertTemplateUsed("supporters/signup-commercial.html")
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertFalse(props["existing_user"])
+        self.assertNotIn("user", props)
+        self.assertEqual(props["tier"]["name"], "Test Tier")
+        self.assertEqual(props["tier"]["price"], 100.0)
+
+        response = self.client.post(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            data={
+                "username": "new_commercial_user",
+                "email": "commercial@example.com",
+                "password": "securepassword123",
+                "confirm_password": "securepassword123",
+                "contact_name": "New Commercial Contact",
+                "usage_desc": "Building a commercial music app",
+                "org_name": "New Commercial Org",
+                "org_desc": "A new commercial organization",
+                "website_url": "https://newcommercial.example.com",
+                "logo_url": "https://newcommercial.example.com/logo.png",
+                "api_url": "https://api.newcommercial.example.com",
+                "address_street": "456 Commercial St",
+                "address_city": "Commerce City",
+                "address_state": "Commerce State",
+                "address_postcode": "67890",
+                "address_country": "Commerce Country",
+                "amount_pledged": "200",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False
+        )
+
+        self.assertRedirects(response, url_for("index.profile"))
+
+        user = User.get(name="new_commercial_user")
+        self.assertIsNotNone(user)
+        self.assertEqual(user.unconfirmed_email, "commercial@example.com")
+
+        supporter = Supporter.query.filter_by(user_id=user.id).first()
+        self.assertIsNotNone(supporter)
+        self.assertTrue(supporter.is_commercial)
+        self.assertEqual(supporter.org_name, "New Commercial Org")
+        self.assertEqual(supporter.contact_name, "New Commercial Contact")
+        self.assertEqual(float(supporter.amount_pledged), 200.0)
+
+    def test_signup_commercial_duplicate_username(self):
+        self.client.get(url_for('supporters.signup_commercial', tier_id=self.tier.id))
+
+        response = self.client.post(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            data={
+                "username": "existing-test-user",
+                "email": "newemail@example.com",
+                "password": "securepassword123",
+                "confirm_password": "securepassword123",
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing",
+                "org_name": "Test Org",
+                "org_desc": "Test description",
+                "website_url": "https://example.com",
+                "address_street": "123 Test St",
+                "address_city": "Test City",
+                "address_state": "Test State",
+                "address_postcode": "12345",
+                "address_country": "Test Country",
+                "amount_pledged": "150",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            }
+        )
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("username", props["initial_errors"])
+
+    def test_signup_commercial_missing_user_fields(self):
+        self.client.get(url_for('supporters.signup_commercial', tier_id=self.tier.id))
+
+        response = self.client.post(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            data={
+                # Missing username, email, password fields
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing",
+                "org_name": "Test Org",
+                "org_desc": "Test description",
+                "website_url": "https://example.com",
+                "address_street": "123 Test St",
+                "address_city": "Test City",
+                "address_state": "Test State",
+                "address_postcode": "12345",
+                "address_country": "Test Country",
+                "amount_pledged": "150",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            }
+        )
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("username", props["initial_errors"])
+        self.assertIn("email", props["initial_errors"])
+        self.assertIn("password", props["initial_errors"])
+
+    def test_signup_noncommercial_new_user(self):
+        response = self.client.get(url_for('supporters.signup_noncommercial'))
+        self.assert200(response)
+        self.assertTemplateUsed("supporters/signup-non-commercial.html")
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertFalse(props["existing_user"])
+        self.assertNotIn("user", props)
+        self.assertEqual(len(props["datasets"]), 1)
+        self.assertEqual(props["datasets"][0]["name"], "Test Dataset")
+
+        response = self.client.post(
+            url_for('supporters.signup_noncommercial'),
+            data={
+                "username": "new_noncommercial_user",
+                "email": "noncommercial@example.com",
+                "password": "securepassword123",
+                "confirm_password": "securepassword123",
+                "contact_name": "New NonCommercial Contact",
+                "usage_desc": "Personal hobby project",
+                f"datasets.{self.dataset.id}": "y",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False
+        )
+
+        self.assertRedirects(response, url_for('index.profile'))
+
+        user = User.get(name="new_noncommercial_user")
+        self.assertIsNotNone(user)
+        self.assertEqual(user.unconfirmed_email, "noncommercial@example.com")
+
+        supporter = Supporter.query.filter_by(user_id=user.id).first()
+        self.assertIsNotNone(supporter)
+        self.assertFalse(supporter.is_commercial)
+        self.assertEqual(supporter.contact_name, "New NonCommercial Contact")
+        self.assertEqual(supporter.data_usage_desc, "Personal hobby project")
+
+    def test_signup_noncommercial_duplicate_username(self):
+        self.client.get(url_for('supporters.signup_noncommercial'))
+
+        response = self.client.post(
+            url_for('supporters.signup_noncommercial'),
+            data={
+                "username": "existing-test-user",  # Already exists
+                "email": "newemail@example.com",
+                "password": "securepassword123",
+                "confirm_password": "securepassword123",
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing",
+                f"datasets.{self.dataset.id}": "y",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            }
+        )
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("username", props["initial_errors"])
+
+    def test_signup_noncommercial_duplicate_email(self):
+        self.existing_user.email = "existing@example.com"
+        db.session.commit()
+
+        self.client.get(url_for('supporters.signup_noncommercial'))
+
+        response = self.client.post(
+            url_for('supporters.signup_noncommercial'),
+            data={
+                "username": "brand_new_user",
+                "email": "existing@example.com",  # Already exists
+                "password": "securepassword123",
+                "confirm_password": "securepassword123",
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing",
+                f"datasets.{self.dataset.id}": "y",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            }
+        )
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("email", props["initial_errors"])
+
+    def test_signup_noncommercial_missing_user_fields(self):
+        self.client.get(url_for('supporters.signup_noncommercial'))
+
+        response = self.client.post(
+            url_for('supporters.signup_noncommercial'),
+            data={
+                # Missing username, email, password fields
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing",
+                f"datasets.{self.dataset.id}": "y",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            }
+        )
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("username", props["initial_errors"])
+        self.assertIn("email", props["initial_errors"])
+        self.assertIn("password", props["initial_errors"])
+
+    def test_signup_noncommercial_password_mismatch(self):
+        self.client.get(url_for('supporters.signup_noncommercial'))
+
+        response = self.client.post(
+            url_for('supporters.signup_noncommercial'),
+            data={
+                "username": "new_user",
+                "email": "new@example.com",
+                "password": "securepassword123",
+                "confirm_password": "differentpassword",  # Doesn't match
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing",
+                f"datasets.{self.dataset.id}": "y",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            }
+        )
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("confirm_password", props["initial_errors"])
+
+    def _signup_with_ip(self, is_commercial: bool, username: str | None, email: str | None, ip_address: str = None):
+        """Helper to perform commercial signup with a specific IP address."""
+        data = {
+            "username": username,
+            "email": email,
+            "password": "securepassword123",
+            "confirm_password": "securepassword123",
+            "contact_name": "Test Contact",
+            "usage_desc": "Testing",
+            "agreement": "y",
+        }
+        if is_commercial:
+            url = url_for('supporters.signup_commercial', tier_id=self.tier.id)
+            data.update({
+                "org_name": "Test Org 1",
+                "org_desc": "Test description",
+                "website_url": "https://example1.com",
+                "address_street": "123 Test St",
+                "address_city": "Test City",
+                "address_state": "Test State",
+                "address_postcode": "12345",
+                "address_country": "Test Country",
+                "amount_pledged": "150",
+            })
+        else:
+            url = url_for("supporters.signup_noncommercial")
+            data[f"datasets.{self.dataset.id}"] = "y"
+
+        env = {"REMOTE_ADDR": ip_address or self.ip_address}
+        self.client.get(url, environ_base=env)
+        data["csrf_token"] = g.csrf_token
+        return self.client.post(url, data=data, environ_base=env)
+
+    def _test_signup_rate_limit(self, is_commercial: bool):
+        # test failed validation doesn't increase signup count
+        for _ in range(5):
+            response = self._signup_with_ip(
+                is_commercial=is_commercial,
+                username=None,
+                email="test@email.com"
+            )
+            self.assert200(response)
+            props = json.loads(self.get_context_variable("props"))
+            self.assertIn("username", props["initial_errors"])
+            self.assertIn("Username is required!", props["initial_errors"]["username"])
+
+        response = self._signup_with_ip(
+            is_commercial=is_commercial,
+            username="new_user_1",
+            email="new_user_1@example.com"
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+        self.client.get("/logout")
+        response = self._signup_with_ip(
+            is_commercial=is_commercial,
+            username="new_user_2",
+            email="new_user_2@example.com"
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+        self.client.get("/logout")
+
+        response = self._signup_with_ip(
+            is_commercial=is_commercial,
+            username="new_user_3",
+            email="new_user_3@example.com"
+        )
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn("null", props["initial_errors"])
+        self.assertIn("Too many registration attempts", props["initial_errors"]["null"])
+
+        user = User.get(name="new_user_3")
+        self.assertIsNone(user)
+
+        # existing user becoming supporter is not rate-limited
+        self.temporary_login(self.existing_user)
+        response = self._signup_with_ip(
+            is_commercial=is_commercial,
+            username=self.existing_user.name,
+            email=self.existing_user.email
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+        self.assertIsNotNone(current_user.supporter)
+
+    def test_signup_commercial_rate_limit(self):
+        self._test_signup_rate_limit(is_commercial=True)
+
+    def test_signup_noncommercial_rate_limit(self):
+        self._test_signup_rate_limit(is_commercial=False)
+
+    def test_noncommercial_supporter_profile_edit(self):
+        """Test that non-commercial supporters can update only contact_name, contact_email
+         and dataset via profile edit."""
+        self.temporary_login(self.existing_user)
+        response = self._signup_with_ip(
+            is_commercial=False,
+            username=self.existing_user.name,
+            email=self.existing_user.email
+        )
+        self.assertStatus(response, 302)
+
+        dataset2 = Dataset.create(
+            name="Second Dataset",
+            description="Another test dataset",
+            project="listenbrainz"
+        )
+
+        original_state = self.existing_user.supporter.state
+        original_email = self.existing_user.email
+        original_data_usage_desc = self.existing_user.supporter.data_usage_desc
+        new_email = "updated-existing-user@gmail.com"
+        self.client.get(url_for("index.profile_edit"))
+        response = self.client.post(
+            url_for('index.profile_edit'),
+            data={
+                "contact_name": "Updated Contact Name",
+                "email": new_email,
+                "usage_desc": "Trying to change usage description",
+                "datasets": dataset2.id,
+                "csrf_token": g.csrf_token,
+                "state": STATE_ACTIVE,
+            },
+            follow_redirects=False
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+
+        supporter = Supporter.get(user_id=self.existing_user.id)
+        self.assertEqual(supporter.contact_name, "Updated Contact Name")
+        self.assertEqual(supporter.data_usage_desc, original_data_usage_desc)
+        self.assertEqual(len(supporter.datasets), 1)
+        self.assertEqual(supporter.datasets[0].id, dataset2.id)
+        self.assertEqual(self.existing_user.email, original_email)
+        self.assertEqual(self.existing_user.unconfirmed_email, new_email)
+        self.assertEqual(supporter.state, original_state)
+
+    def test_commercial_supporter_profile_edit(self):
+        """Test that commercial supporters cannot change org info via profile edit."""
+        self.temporary_login(self.existing_user)
+        response = self._signup_with_ip(
+            is_commercial=True,
+            username=self.existing_user.name,
+            email=self.existing_user.email
+        )
+        self.assertStatus(response, 302)
+
+        supporter = self.existing_user.supporter
+        original_email = self.existing_user.email
+        original_state = supporter.state
+        original_org_name = supporter.org_name
+        original_website_url = supporter.website_url
+        original_amount_pledged = supporter.amount_pledged
+        original_good_standing = supporter.good_standing
+
+        self.client.get(url_for("index.profile_edit"))
+        response = self.client.post(
+            url_for("index.profile_edit"),
+            data={
+                "contact_name": supporter.contact_name,
+                "email": "updated@example.com",
+                "org_name": "Trying to change org name",
+                "website_url": "https://malicious.com",
+                "amount_pledged": "125",
+                "good_standing": not original_good_standing,
+                "state": STATE_ACTIVE,
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+
+        self.assertEqual(supporter.org_name, original_org_name)
+        self.assertEqual(supporter.website_url, original_website_url)
+        self.assertEqual(supporter.amount_pledged, original_amount_pledged)
+        self.assertEqual(supporter.good_standing, original_good_standing)
+        self.assertEqual(self.existing_user.email, original_email)
+        self.assertEqual(self.existing_user.unconfirmed_email, "updated@example.com")
+        self.assertEqual(supporter.state, original_state)

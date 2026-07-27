@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE "user" ADD COLUMN remember_me_until TIMESTAMP WITH TIME ZONE;
+
+COMMIT;

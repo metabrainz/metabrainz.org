@@ -3,6 +3,7 @@ from __future__ import division
 from sqlalchemy import exists, text
 
 from metabrainz.model import db, Supporter
+from metabrainz.model.user import User
 from metabrainz.payments import Currency, SUPPORTED_CURRENCIES
 from metabrainz.payments.receipts import send_receipt
 from metabrainz.admin import AdminModelView
@@ -86,12 +87,14 @@ class Payment(db.Model):
         """
         days_per_dollar = 6
         result = db.session.execute(
-            "SELECT ((amount + COALESCE(fee, 0)) * :days_per_dollar) - "
-            "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
-            "FROM payment "
-            "WHERE lower(editor_name) = lower(:editor) "
-            "ORDER BY nag DESC "
-            "LIMIT 1",
+            text(
+                "SELECT ((amount + COALESCE(fee, 0)) * :days_per_dollar) - "
+                "((extract(epoch from now()) - extract(epoch from payment_date)) / 86400) as nag "
+                "FROM payment "
+                "WHERE lower(editor_name) = lower(:editor) "
+                "ORDER BY nag DESC "
+                "LIMIT 1"
+            ),
             {'editor': editor, 'days_per_dollar': days_per_dollar}
         ).fetchone()
 
@@ -157,26 +160,14 @@ class Payment(db.Model):
         return count, query.all()
 
     @staticmethod
-    def get_musicbrainz_row_id(editor_name):
+    def get_user_id(editor_name):
         """ Get the musicbrainz row id by given editor's name
 
             First try to retrieve the row id from the supporters table and then from MB database.
         """
-        supporter = Supporter.get(musicbrainz_id=editor_name)
-        if supporter is not None and supporter.musicbrainz_row_id is not None:
-            return supporter.musicbrainz_row_id
-
-        from metabrainz.db import mb_engine
-        if mb_engine is not None:
-            with mb_engine.connect() as mb_conn:
-                result = mb_conn.execute(
-                    text("SELECT id FROM editor WHERE lower(name) = lower(:editor_name)"),
-                    {"editor_name": editor_name}
-                )
-                row = result.fetchone()
-                if row is not None:
-                    return row.id
-
+        user = User.get(name=editor_name)
+        if user is not None:
+            return user.id
         return None
 
 
@@ -196,8 +187,6 @@ class Payment(db.Model):
 
         # Only processing completed donations
         if form['payment_status'] != 'Completed':
-            # TODO(roman): Convert to regular `logging.info` call when such detailed logs
-            # are no longer necessary to capture.
             logging.info("PayPal: Payment is not completed: %s",form)
             return
 
@@ -267,7 +256,7 @@ class Payment(db.Model):
 
         if is_donation:
             new_payment.editor_name = form.get('custom')
-            new_payment.editor_id = cls.get_musicbrainz_row_id(new_payment.editor_name)
+            new_payment.editor_id = cls.get_user_id(new_payment.editor_name)
 
             anonymous_opt = options.get("anonymous")
             if anonymous_opt is None:
@@ -411,7 +400,7 @@ class Payment(db.Model):
 
             if "editor" in metadata:
                 new_donation.editor_name = metadata["editor"]
-                new_donation.editor_id = cls.get_musicbrainz_row_id(new_donation.editor_name)
+                new_donation.editor_id = cls.get_user_id(new_donation.editor_name)
 
         else:  # Organization payment
             if "invoice_number" in metadata:
@@ -487,8 +476,44 @@ class PaymentAdminView(AdminModelView):
         'anonymous',
     )
 
+    can_create = False
+    can_delete = False
+    can_view_details = True
+    can_edit = True
+
+    column_details_list = (
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'is_donation',
+        'amount',
+        'fee',
+        'currency',
+        'payment_date',
+        'payment_method',
+        'transaction_id',
+        'address_street',
+        'address_city',
+        'address_state',
+        'address_postcode',
+        'address_country',
+        'editor_name',
+        'can_contact',
+        'anonymous',
+        'invoice_number',
+        'memo',
+    )
+
+    details_template = 'admin/payments/details.html'
+    edit_template = 'admin/payments/edit.html'
+
     def __init__(self, session, **kwargs):
         super(PaymentAdminView, self).__init__(Payment, session, name='Payments', **kwargs)
+
+    def is_visible(self):
+        # Hide from menu - accessed only via edit/details links
+        return False
 
     def after_model_change(self, form, new_donation, is_created):
         if is_created:

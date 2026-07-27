@@ -1,13 +1,15 @@
+from sqlalchemy import ForeignKey, Integer
+from sqlalchemy.orm import contains_eager, relationship, mapped_column, Mapped
+
 from metabrainz.model import db
 from brainzutils.mail import send_mail
 from metabrainz.model.token import Token
-from metabrainz.admin import AdminModelView
 from sqlalchemy.sql.expression import func, or_
 from sqlalchemy.dialects import postgresql
-from flask_login import UserMixin
 from flask import current_app
 from datetime import datetime
 
+from metabrainz.model.user import User
 
 STATE_ACTIVE = "active"
 STATE_PENDING = "pending"
@@ -24,7 +26,7 @@ SUPPORTER_STATES = [
 ]
 
 
-class Supporter(db.Model, UserMixin):
+class Supporter(db.Model):
     """Supporter model is used for supporters of MetaBrainz services like Live Data Feed.
 
     Supporters are either commercial or non-commercial (see `is_commercial`). Their
@@ -37,8 +39,7 @@ class Supporter(db.Model, UserMixin):
     # Common columns used by both commercial and non-commercial supporters:
     id = db.Column(db.Integer, primary_key=True)
     is_commercial = db.Column(db.Boolean, nullable=False)
-    musicbrainz_id = db.Column(db.Unicode, unique=True)  # MusicBrainz account that manages this supporter
-    musicbrainz_row_id = db.Column(db.Integer, unique=True)  # MusicBrainz row id of the account
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id", ondelete="SET NULL", onupdate="CASCADE"), unique=True)
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
     state = db.Column(postgresql.ENUM(
         STATE_ACTIVE,
@@ -49,7 +50,6 @@ class Supporter(db.Model, UserMixin):
         name='state_types'
     ), nullable=False)
     contact_name = db.Column(db.Unicode, nullable=False)
-    contact_email = db.Column(db.Unicode, nullable=False)
     data_usage_desc = db.Column(db.UnicodeText)
 
     # Columns specific to commercial supporters:
@@ -74,17 +74,19 @@ class Supporter(db.Model, UserMixin):
     in_deadbeat_club = db.Column(db.Boolean, nullable=False, default=False)
     featured = db.Column(db.Boolean, nullable=False, default=False)
 
-    tokens = db.relationship("Token", backref="owner", lazy="dynamic")
-    token_log_records = db.relationship("TokenLog", back_populates="supporter", lazy="dynamic")
+    tokens = db.relationship("Token", backref="owner", lazy="select")
+    token_log_records = db.relationship("TokenLog", back_populates="supporter", lazy="select")
 
     datasets = db.relationship("Dataset", secondary="dataset_supporter")
+    tier = db.relationship("Tier", uselist=False, back_populates="supporters")
+    user: Mapped["User"] = relationship("User", uselist=False, back_populates="supporter", lazy="joined")
 
     def __str__(self):
         if self.is_commercial:
             return "%s (#%s)" % (self.org_name, self.id)
         else:
-            if self.musicbrainz_id:
-                return "#%s (MBID: %s)" % (self.id, self.musicbrainz_id)
+            if self.user.name:
+                return "#%s (MBID: %s)" % (self.id, self.user.name)
             else:
                 return str(self.id)
 
@@ -96,14 +98,12 @@ class Supporter(db.Model, UserMixin):
     def add(cls, **kwargs):
         new_supporter = cls(
             is_commercial=kwargs.pop('is_commercial'),
-            musicbrainz_id=kwargs.pop('musicbrainz_id'),
-            musicbrainz_row_id=kwargs.pop('musicbrainz_row_id'),
-            contact_name=kwargs.pop('contact_name'),
-            contact_email=kwargs.pop('contact_email'),
             data_usage_desc=kwargs.pop('data_usage_desc'),
+            user=kwargs.pop('user'),
             datasets=kwargs.pop('datasets', []),
-            org_desc=kwargs.pop('org_desc', None),
 
+            contact_name=kwargs.pop('contact_name'),
+            org_desc=kwargs.pop('org_desc', None),
             org_name=kwargs.pop('org_name', None),
             org_logo_url=kwargs.pop('org_logo_url', None),
             website_url=kwargs.pop('website_url', None),
@@ -122,7 +122,6 @@ class Supporter(db.Model, UserMixin):
         if kwargs:
             raise TypeError('Unexpected **kwargs: %r' % kwargs)
         db.session.add(new_supporter)
-        db.session.commit()
 
         if new_supporter.is_commercial:
             send_supporter_signup_notification(new_supporter)
@@ -139,13 +138,85 @@ class Supporter(db.Model, UserMixin):
         return cls.query.filter_by(**kwargs).order_by(cls.created.desc()).all()
 
     @classmethod
-    def get_all_commercial(cls, limit=None, offset=None):
-        query = cls.query.filter(cls.is_commercial==True).order_by(cls.org_name)
+    def get_all_commercial(cls, limit=None, offset=None, state=None, featured=None, good_standing=None, search=None):
+        query = cls.query.filter(cls.is_commercial==True)
+
+        if state:
+            query = query.filter(cls.state == state)
+        if featured is not None:
+            query = query.filter(cls.featured == featured)
+        if good_standing is not None:
+            query = query.filter(cls.good_standing == good_standing)
+        if search:
+            # Search across multiple fields
+            from sqlalchemy import or_
+            search_term = f"%{search}%"
+            query = query.join(User).filter(
+                or_(
+                    cls.org_name.ilike(search_term),
+                    cls.contact_name.ilike(search_term),
+                    User.name.ilike(search_term),
+                    User.email.ilike(search_term)
+                )
+            )
+
+        query = query.order_by(cls.org_name)
         count = query.count()  # Total count should be calculated before limits
         if limit is not None:
             query = query.limit(limit)
         if offset is not None:
             query = query.offset(offset)
+        return query.all(), count
+
+    @classmethod
+    def get_all_with_filters(cls, limit=None, offset=None, state=None, is_commercial=None,
+                            featured=None, good_standing=None, search=None):
+        """Get all supporters with optional filters and pagination.
+
+        Args:
+            limit: Maximum number of results to return
+            offset: Number of results to skip
+            state: Filter by supporter state (active, pending, waiting, rejected, limited)
+            is_commercial: Filter by commercial status (True/False/None for all)
+            featured: Filter by featured status (True/False/None for all)
+            good_standing: Filter by good standing status (True/False/None for all)
+            search: Search term to filter by org_name, contact_name, username, or email
+
+        Returns:
+            Tuple of (supporters_list, total_count)
+        """
+        query = cls.query
+
+        if state:
+            query = query.filter(cls.state == state)
+        if is_commercial is not None:
+            query = query.filter(cls.is_commercial == is_commercial)
+        if featured is not None:
+            query = query.filter(cls.featured == featured)
+        if good_standing is not None:
+            query = query.filter(cls.good_standing == good_standing)
+        if search:
+            # Search across multiple fields
+            from sqlalchemy import or_
+            search_term = f"%{search}%"
+            query = query.join(User).filter(
+                or_(
+                    cls.org_name.ilike(search_term),
+                    cls.contact_name.ilike(search_term),
+                    User.name.ilike(search_term),
+                    User.email.ilike(search_term)
+                )
+            )
+
+        # Order by created date descending (most recent first)
+        query = query.order_by(cls.created.desc())
+        count = query.count()  # Total count should be calculated before limits
+
+        if limit is not None:
+            query = query.limit(limit)
+        if offset is not None:
+            query = query.offset(offset)
+
         return query.all(), count
 
     @classmethod
@@ -190,16 +261,18 @@ class Supporter(db.Model, UserMixin):
 
     @classmethod
     def search(cls, value):
-        """Search supporters by their musicbrainz_id, org_name, contact_name,
-        or contact_email.
-        """
-        query = cls.query.filter(or_(
-            cls.musicbrainz_id.ilike('%'+value+'%'),
+        """ Search supporters by their org_name, name, or email. """
+        return cls.query \
+        .join(Supporter.user) \
+        .options(contains_eager(Supporter.user)) \
+        .filter(or_(
             cls.org_name.ilike('%'+value+'%'),
             cls.contact_name.ilike('%'+value+'%'),
-            cls.contact_email.ilike('%'+value+'%'),
-        ))
-        return query.limit(20).all()
+            User.name.ilike('%'+value+'%'),
+            User.email.ilike('%'+value+'%'),
+        )) \
+        .limit(20) \
+        .all()
 
     def generate_token(self):
         """Generates new access token for this supporter."""
@@ -209,24 +282,63 @@ class Supporter(db.Model, UserMixin):
             raise InactiveSupporterException("Can't generate token for inactive supporter.")
 
     def update(self, **kwargs):
-        contact_name = kwargs.pop('contact_name')
+        """Update supporter fields."""
+        contact_name = kwargs.pop("contact_name", None)
         if contact_name is not None:
             self.contact_name = contact_name
-        contact_email = kwargs.pop('contact_email')
-        if contact_email is not None:
-            self.contact_email = contact_email
-        datasets = kwargs.pop('datasets', None)
+
+        datasets = kwargs.pop("datasets", None)
         if datasets is not None:
             self.datasets = datasets
+
+        if "state" in kwargs:
+            self.state = kwargs.pop("state")
+        if "is_commercial" in kwargs:
+            self.is_commercial = kwargs.pop("is_commercial")
+        if "org_name" in kwargs:
+            self.org_name = kwargs.pop("org_name")
+        if "org_desc" in kwargs:
+            self.org_desc = kwargs.pop("org_desc")
+        if "api_url" in kwargs:
+            self.api_url = kwargs.pop("api_url")
+        if "address_street" in kwargs:
+            self.address_street = kwargs.pop("address_street")
+        if "address_city" in kwargs:
+            self.address_city = kwargs.pop("address_city")
+        if "address_state" in kwargs:
+            self.address_state = kwargs.pop("address_state")
+        if "address_postcode" in kwargs:
+            self.address_postcode = kwargs.pop("address_postcode")
+        if "address_country" in kwargs:
+            self.address_country = kwargs.pop("address_country")
+        if "tier_id" in kwargs:
+            self.tier_id = kwargs.pop("tier_id")
+        if "amount_pledged" in kwargs:
+            self.amount_pledged = kwargs.pop("amount_pledged")
+        if "featured" in kwargs:
+            self.featured = kwargs.pop("featured")
+        if "website_url" in kwargs:
+            self.website_url = kwargs.pop("website_url")
+        if "logo_filename" in kwargs:
+            self.logo_filename = kwargs.pop("logo_filename")
+        if "org_logo_url" in kwargs:
+            self.org_logo_url = kwargs.pop("org_logo_url")
+        if "data_usage_desc" in kwargs:
+            self.data_usage_desc = kwargs.pop("data_usage_desc")
+        if "good_standing" in kwargs:
+            self.good_standing = kwargs.pop("good_standing")
+        if "in_deadbeat_club" in kwargs:
+            self.in_deadbeat_club = kwargs.pop("in_deadbeat_club")
+
         if kwargs:
-            raise TypeError('Unexpected **kwargs: %r' % kwargs)
+            raise TypeError("Unexpected **kwargs: %r" % kwargs)
         db.session.commit()
 
     def set_state(self, state):
         old_state = self.state
         self.state = state
         db.session.commit()
-        if old_state != self.state:
+        if old_state != self.state and not current_app.config["DEBUG"]:
             # TODO: Send additional info about new state.
             state_name = "ACTIVE" if self.state == STATE_ACTIVE else \
                          "REJECTED" if self.state == STATE_REJECTED else \
@@ -237,7 +349,7 @@ class Supporter(db.Model, UserMixin):
             send_mail(
                 subject="[MetaBrainz] Your account has been updated",
                 text='State of your MetaBrainz account has been changed to "%s".' % state_name,
-                recipients=[self.contact_email],
+                recipients=[self.user.email],
             )
 
 
@@ -252,7 +364,7 @@ def send_supporter_signup_notification(supporter):
             ('Organization name', supporter.org_name),
             ('Description', supporter.org_desc),
             ('Contact name', supporter.contact_name),
-            ('Contact email', supporter.contact_email),
+            ('Contact email', supporter.user.email),
 
             ('Website URL', supporter.website_url),
             ('Logo image URL', supporter.org_logo_url),
@@ -275,73 +387,3 @@ def send_supporter_signup_notification(supporter):
 
 class InactiveSupporterException(Exception):
     pass
-
-
-class SupporterAdminView(AdminModelView):
-    column_labels = dict(
-        id='ID',
-        is_commercial='Commercial',
-        musicbrainz_id='MusicBrainz ID',
-        data_usage_desc='Data usage description',
-        org_desc='Organization description',
-        good_standing='Good standing',
-        amount_pledged='Amount pledged',
-        org_name='Organization name',
-        org_logo_url='Organization logo URL',
-        website_url='Organization homepage URL',
-        api_url='Organization API page URL',
-        contact_name='Contact name',
-        contact_email='Email',
-        address_street='Street',
-        address_city='City',
-        address_state='State',
-        address_postcode='Postal code',
-        address_country='Country',
-        in_deadbeat_club='In Deadbeat Club',
-        datasets='Datasets'
-    )
-    column_descriptions = dict(
-        featured='Indicates if this supporter is publicly displayed on the website. '
-                 'If this is set, make sure to fill up information like '
-                 'organization name, logo URL, descriptions, etc.',
-        data_usage_desc='Short description of how our products are being used '
-                        'by this supporter. Usually one sentence.',
-        org_desc='Description of the organization (private).',
-        tier='Optional tier that is used only for commercial supporters.',
-        amount_pledged='USD',
-        in_deadbeat_club='Indicates if this supporter refuses to support us.',
-    )
-    column_list = (
-        'is_commercial', 'musicbrainz_id', 'org_name', 'tier', 'featured',
-        'good_standing', 'state', 'datasets'
-    )
-    form_columns = (
-        'musicbrainz_id',
-        'contact_name',
-        'contact_email',
-        'state',
-        'is_commercial',
-        'good_standing',
-        'tier',
-        'amount_pledged',
-        'org_name',
-        'org_logo_url',
-        'website_url',
-        'api_url',
-        'data_usage_desc',
-        'org_desc',
-        'in_deadbeat_club',
-        'featured',
-        'address_street',
-        'address_city',
-        'address_state',
-        'address_postcode',
-        'address_country',
-    )
-
-    def __init__(self, session, **kwargs):
-        super(SupporterAdminView, self).__init__(Supporter, session, name='All supporters', **kwargs)
-
-    def after_model_change(self, form, supporter, is_created):
-        if supporter.state != STATE_ACTIVE:
-            Token.revoke_tokens(supporter.id)

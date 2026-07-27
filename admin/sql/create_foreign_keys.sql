@@ -5,6 +5,10 @@ ALTER TABLE token
   REFERENCES supporter (id) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE SET NULL;
 
+ALTER TABLE supporter ADD CONSTRAINT supporter_user_id_fkey
+    FOREIGN KEY (user_id) REFERENCES "user" (id)
+    ON UPDATE CASCADE ON DELETE RESTRICT;
+
 ALTER TABLE supporter
   ADD CONSTRAINT supporter_tier_id_fkey FOREIGN KEY (tier_id)
   REFERENCES tier (id) MATCH SIMPLE
@@ -13,12 +17,12 @@ ALTER TABLE supporter
 ALTER TABLE dataset_supporter
     ADD CONSTRAINT dataset_supporter_supporter_id_fkey FOREIGN KEY (supporter_id)
     REFERENCES supporter (id) MATCH SIMPLE
-    ON UPDATE NO ACTION ON DELETE NO ACTION;
+    ON UPDATE NO ACTION ON DELETE CASCADE;
 
 ALTER TABLE dataset_supporter
     ADD CONSTRAINT dataset_supporter_dataset_id_fkey FOREIGN KEY (dataset_id)
-    REFERENCES "dataset" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION ON DELETE NO ACTION;
+    REFERENCES dataset (id) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE CASCADE;
 
 ALTER TABLE token_log
   ADD CONSTRAINT token_log_token_value_fkey FOREIGN KEY (token_value)
@@ -39,5 +43,25 @@ ALTER TABLE payment
   ADD CONSTRAINT payment_supporter_id_fkey FOREIGN KEY (supporter_id)
   REFERENCES supporter (id) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE SET NULL;
+
+ALTER TABLE payment
+  ADD CONSTRAINT payment_editor_id_fkey FOREIGN KEY (editor_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE SET NULL;
+
+ALTER TABLE moderation_log
+  ADD CONSTRAINT moderation_log_user_id_fkey FOREIGN KEY (user_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE SET NULL;
+
+ALTER TABLE moderation_log
+  ADD CONSTRAINT moderation_log_moderator_id_fkey FOREIGN KEY (moderator_id)
+  REFERENCES "user" (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE SET NULL;
+
+ALTER TABLE webhook_delivery
+    ADD CONSTRAINT webhook_delivery_webhook_fk FOREIGN KEY (webhook_id)
+    REFERENCES webhook(id)
+    ON DELETE CASCADE;
 
 COMMIT;

@@ -31,14 +31,14 @@
         <th>Count</th>
       </tr>
       </thead>
-      {% for ip, token, supporter_name, supporter_id, contact_name, contact_email, data_usage_desc, count in supporters %}
+      {% for ip, token, supporter_name, supporter_id, contact_name, email, data_usage_desc, count in supporters %}
         <tr>
           <td>
             {{ ip }}
           </td>
           <td><a href="{{ url_for('supportersview.details', supporter_id=supporter_id) }}">{{ supporter_name }}</a></td>
           <td>{{ contact_name }}</td>
-          <td>{{ contact_email }}</td>
+          <td>{{ email }}</td>
           <td>
           {% if show_usage %}
              {{ data_usage_desc }}

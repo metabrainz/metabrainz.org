@@ -1,6 +1,8 @@
 from metabrainz.testing import FlaskTestCase
+from metabrainz.model import db
 from metabrainz.model.payment import Payment
 from metabrainz.model.supporter import Supporter
+from metabrainz.model.user import User
 from flask import current_app, url_for
 from metabrainz.payments.paypal import views
 
@@ -65,14 +67,18 @@ class DonationsPayPalViewsTestCase(FlaskTestCase):
         self.assertEqual(Payment.query.all()[0].transaction_id, 'RANDOM-ID')
 
     def test_paypal_ipn_payment(self):
+        user = User.add(
+            name='test_user',
+            unconfirmed_email='test@example.org',
+            password='testing',
+        )
         supporter = Supporter.add(
             is_commercial=True,
-            musicbrainz_id='test_user',
-            musicbrainz_row_id=1,
             contact_name='Test User',
-            contact_email='test@example.org',
             data_usage_desc='Testing',
+            user=user,
         )
+        db.session.flush()
         ipn_data = {
             # This is not a complete list
             'first_name': 'Tester',

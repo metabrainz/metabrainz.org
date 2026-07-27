@@ -15,7 +15,7 @@
       {% for action in token_actions %}
         <tr>
           <td>
-            <a href="{{ url_for('supportersview.details', supporter_id=action.supporter.id) }}">{{ action.supporter.musicbrainz_id }}</a>
+            <a href="{{ url_for('supportersview.details', supporter_id=action.supporter.id) }}">{{ action.supporter.user.name }}</a>
             {% if action.supporter.id == action.token.owner.id %}
               {% if action.action == "create" %}
                 generated their token

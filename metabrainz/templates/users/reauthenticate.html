@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Confirm Password') }} - MetaBrainz Foundation{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{{ _('Confirm Password') }}</h1>
+  <p>{{ _('Please re-enter your password to continue.') }}</p>
+
+  {{ display_form_errors(form) }}
+
+  <form method="POST" class="form-horizontal">
+    {{ form.csrf_token }}
+
+    <div class="form-group">
+      {{ form.password.label(class="col-sm-4 control-label") }}
+      <div class="col-sm-5">
+        {{ form.password(class="form-control", autocomplete="current-password", required=True) }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-5" style="display: flex; gap: 10px;">
+        <a href="{{ url_for('index.profile') }}" class="btn btn-default" style="flex: 1;">{{ _('Cancel') }}</a>
+        <button type="submit" class="btn btn-primary" style="flex: 1;">{{ _('Continue') }}</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}

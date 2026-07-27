@@ -9,8 +9,9 @@ services:
       context: ..
       dockerfile: Dockerfile
       target: metabrainz-dev
-    command: python manage.py runserver -h 0.0.0.0 -p 8000
+    command: flask run --debug -h 0.0.0.0 -p 8000
     environment:
+      FLASK_APP: "metabrainz:create_web_app()"
       DEPLOY_ENV: dev
     volumes:
       - ../data/replication_packets:/data/replication_packets
@@ -30,9 +31,9 @@ services:
       context: ..
       dockerfile: Dockerfile
       target: metabrainz-dev
-    command: flask run --debug -h 0.0.0.0 -p 8150
+    command: flask run --debug -h 0.0.0.0 -p 8100
     environment:
-      FLASK_APP: "oauth:create_app()"
+      FLASK_APP: "metabrainz:create_oauth_app()"
       AUTHLIB_INSECURE_TRANSPORT: 1
     volumes:
       - ..:/code/metabrainz
@@ -40,10 +41,10 @@ services:
     depends_on:
       - meb_db
       - redis
-    ports:
-      - "8150:8150"
     expose:
-      - "8150"
+      - "8100"
+    ports:
+      - "8100:8100"
 
   meb_db:
     image: postgres:16.11
@@ -64,3 +65,61 @@ services:
     user: ${STATIC_BUILD_USER:-node}
     volumes:
       - ../frontend:/code/frontend:z
+      - ../metabrainz/translations:/code/metabrainz/translations:z
+
+  webhook-worker:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery worker --loglevel=info --queues=webhooks --max-tasks-per-child=1000 --hostname=webhook-worker@%h
+    depends_on:
+      - redis
+      - meb_db
+    volumes:
+      - ..:/code/metabrainz
+    profiles:
+      - webhooks
+
+  webhook-maintenance:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery worker --loglevel=info --concurrency=1 --queues=webhooks_maintenance --hostname=maintenance-worker@%h
+    depends_on:
+      - redis
+      - meb_db
+    volumes:
+      - ..:/code/metabrainz
+    profiles:
+      - webhooks
+
+  webhook-beat:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery beat --loglevel=info
+    depends_on:
+      - redis
+      - meb_db
+    volumes:
+      - ..:/code/metabrainz
+    profiles:
+      - webhooks
+
+  webhook-flower:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery flower --port=5555
+    depends_on:
+      - redis
+    ports:
+      - "5555:5555"
+    volumes:
+      - ..:/code/metabrainz
+    profiles:
+      - webhooks

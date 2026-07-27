@@ -1,11 +1,11 @@
-const path = require("path");
-const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const LessPluginCleanCSS = require("less-plugin-clean-css");
-const StylelintPlugin = require("stylelint-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
+import {WebpackManifestPlugin} from "webpack-manifest-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import path from "path";
+import StylelintPlugin from "stylelint-webpack-plugin";
+import ESLintPlugin from "eslint-webpack-plugin";
+import LessPluginCleanCSS from "less-plugin-clean-css";
 
-module.exports = function (env, argv) {
+export default function (env, argv) {
   const isProd = argv.mode === "production";
   const baseDir = "./frontend";
   const jsDir = path.join(baseDir, "js");
@@ -36,6 +36,9 @@ module.exports = function (env, argv) {
     new ESLintPlugin({
       files: path.join(jsDir, "src/**/*.{ts,tsx,js,jsx}"),
       fix: !isProd,
+      extensions: ["js", "jsx", "ts", "tsx"],
+      failOnError: isProd,
+      cache: false,
     }),
   ];
   return {
@@ -44,20 +47,29 @@ module.exports = function (env, argv) {
       // Otherwise with a standalone entrypoint Webpack would generate a superfluous js file.
       // All the Less/CSS will be exported separately to a main.css file and not appear in the main module
       main: path.resolve(cssDir, "main.less"),
+      admin: path.resolve(cssDir, "admin.css"),
       signupCommercial: path.resolve(jsDir, "src/forms/SignupCommercial.tsx"),
       signupNonCommercial: path.resolve(
         jsDir,
         "src/forms/SignupNonCommercial.tsx"
-      ),
-      supporterProfileEdit: path.resolve(
-        jsDir,
-        "src/forms/SupporterProfileEdit.tsx"
       ),
       createApplication: path.resolve(jsDir, "src/forms/CreateApplication.tsx"),
       deleteApplication: path.resolve(jsDir, "src/forms/DeleteApplication.tsx"),
       oauthPrompt: path.resolve(jsDir, "src/forms/OAuthPrompt.tsx"),
       applications: path.resolve(jsDir, "src/Applications.tsx"),
       oauthError: path.resolve(jsDir, "src/OAuthError.tsx"),
+      signupUser: path.resolve(jsDir, "src/forms/SignupUser.tsx"),
+      loginUser: path.resolve(jsDir, "src/forms/LoginUser.tsx"),
+      lostPassword: path.resolve(jsDir, "src/forms/LostPassword.tsx"),
+      lostUsername: path.resolve(jsDir, "src/forms/LostUsername.tsx"),
+      resetPassword: path.resolve(jsDir, "src/forms/ResetPassword.tsx"),
+      profileChangePassword: path.resolve(
+        jsDir,
+        "src/forms/ProfileChangePassword.tsx"
+      ),
+      profileEdit: path.resolve(jsDir, "src/forms/ProfileEdit.tsx"),
+      profile: path.resolve(jsDir, "src/Profile.tsx"),
+      profileDelete: path.resolve(jsDir, "src/ProfileDelete.tsx"),
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",
@@ -91,6 +103,13 @@ module.exports = function (env, argv) {
             },
           },
         },
+        {
+          test: /\.css$/i,
+          type: "asset/resource",
+          generator: {
+            filename: isProd ? "[name].[contenthash].css" : "[name].css",
+          },
+        },
       ],
     },
     resolve: {
@@ -103,4 +122,4 @@ module.exports = function (env, argv) {
     },
     plugins,
   };
-};
+}

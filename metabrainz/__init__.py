@@ -1,14 +1,18 @@
 import os
 import pprint
 import sys
-
-import stripe
-from brainzutils.flask import CustomFlask
-from brainzutils import sentry
-from flask import send_from_directory, request
-from metabrainz.admin.quickbooks.views import QuickBooksView
 from time import sleep
 
+from brainzutils import sentry
+from brainzutils.flask import CustomFlask
+from flask import send_from_directory, request
+from flask_admin import Admin
+from flask_bcrypt import Bcrypt
+from flask_uploads import configure_uploads
+from jinja2 import FileSystemLoader
+
+from metabrainz.admin import AdminModelView
+from metabrainz.i18n import get_locale_context, i18n_bp
 from metabrainz.utils import get_global_props
 
 # Check to see if we're running under a prod deployment. If so, don't second guess
@@ -17,12 +21,21 @@ deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
 
+# Service types control which set of blueprints (and admin views) a process serves.
+# This lets us run the website and the OAuth2 provider as separate, independently
+# scalable containers. The website container omits the OAuth2 endpoints. The OAuth2
+# container registers everything (the consent page renders the shared chrome and the
+# login redirect both need url_for() to resolve the website's endpoints); the gateway
+# is responsible for routing only OAuth2 traffic to it.
+SERVICE_ALL = "all"      # everything (used by tests, celery, manage.py and local dev)
+SERVICE_WEB = "web"      # the website: everything except the OAuth2 endpoints
+SERVICE_OAUTH = "oauth"  # the OAuth2 provider: the full app, gated to OAuth2 traffic by the gateway
 
-def create_app(debug=None, config_path=None):
-    app = CustomFlask(
-        import_name=__name__,
-        use_flask_uuid=True,
-    )
+bcrypt = Bcrypt()
+
+
+def create_app(debug=None, config_path=None, service=SERVICE_ALL):
+    app = CustomFlask(import_name=__name__)
 
     # get rid of some really pesky warning. Remove this in April 2020, when it shouldn't be needed anymore.
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -45,15 +58,15 @@ def create_app(debug=None, config_path=None):
     # Load configuration files: If we're running under a prod deployment, wait until
     # the consul configuration is available.
     if not is_dev_environment:
-        consul_config = os.path.join( os.path.dirname(os.path.realpath(__file__)), '..', 'consul_config.py')
+        consul_config = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'consul_config.py')
 
         print("loading consul %s" % consul_config)
         for i in range(CONSUL_CONFIG_FILE_RETRY_COUNT):
             if not os.path.exists(consul_config):
                 sleep(1)
-                    
+
         if not os.path.exists(consul_config):
-            print("No configuration file generated yet. Retried %d times, exiting." % CONSUL_CONFIG_FILE_RETRY_COUNT);
+            print("No configuration file generated yet. Retried %d times, exiting." % CONSUL_CONFIG_FILE_RETRY_COUNT)
             sys.exit(-1)
 
         app.config.from_pyfile(consul_config, silent=True)
@@ -89,13 +102,11 @@ def create_app(debug=None, config_path=None):
         get_static_path=static_manager.get_static_path,
         global_props=get_global_props()
     ))
+    app.context_processor(get_locale_context)
 
     # Database
     from metabrainz import db
     db.init_db_engine(app.config["SQLALCHEMY_DATABASE_URI"])
-    if app.config.get("SQLALCHEMY_MUSICBRAINZ_URI", None):
-        db.init_mb_db_engine(app.config["SQLALCHEMY_MUSICBRAINZ_URI"])
-
     from metabrainz import model
     model.db.init_app(app)
 
@@ -107,19 +118,21 @@ def create_app(debug=None, config_path=None):
     from metabrainz.admin.quickbooks import quickbooks
     quickbooks.init(app)
 
+    # bcrypt setup
+    bcrypt.init_app(app)
+
     # MusicBrainz OAuth
-    from metabrainz.supporter import login_manager, musicbrainz_login
+    from metabrainz.user import login_manager
     login_manager.init_app(app)
-    musicbrainz_login.init(
-        app.config['MUSICBRAINZ_BASE_URL'],
-        app.config['MUSICBRAINZ_CLIENT_ID'],
-        app.config['MUSICBRAINZ_CLIENT_SECRET']
-    )
 
     # Templates
     from metabrainz.utils import reformat_datetime
     app.jinja_env.filters['datetime'] = reformat_datetime
     app.jinja_env.filters['nl2br'] = lambda val: val.replace('\n', '<br />') if val else ''
+    app.jinja_loader = FileSystemLoader([
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), 'templates'),
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'oauth', 'templates')
+    ])
 
     # Error handling
     from metabrainz.errors import init_error_handlers
@@ -130,48 +143,123 @@ def create_app(debug=None, config_path=None):
     from metabrainz import babel
     babel.init_app(app)
 
-    from flask_uploads import configure_uploads
     from metabrainz.admin.forms import LOGO_UPLOAD_SET
     configure_uploads(app, upload_sets=[LOGO_UPLOAD_SET])
 
+    from metabrainz.oauth.authorization_server import authorization_server
+    authorization_server.init_app(app)
+
+    from metabrainz.webhooks.celery import init_celery
+    init_celery(app)
+
     # Blueprints
-    _register_blueprints(app)
+    _register_blueprints(app, service)
 
-    # ADMIN SECTION
+    _register_admin(app)
 
-    from flask_admin import Admin
-    from metabrainz.admin.views import HomeView
-    admin = Admin(app, index_view=HomeView(name='Pending supporters'), template_mode='bootstrap3')
+    return app
 
-    # Models
-    from metabrainz.model.supporter import SupporterAdminView
+
+def create_web_app():
+    """ uWSGI entrypoint for the website service (everything except OAuth2). """
+    return create_app(service=SERVICE_WEB)
+
+
+def create_oauth_app():
+    """ uWSGI entrypoint for the OAuth2 provider service (only OAuth2 endpoints). """
+    return create_app(service=SERVICE_OAUTH)
+
+
+def _register_admin(app):
+    from metabrainz import model
+    from metabrainz.admin.views import SupporterManagementHomeView, UserManagementHomeView, MainAdminHomeView
+
+    main_admin = Admin(
+        app,
+        name="MetaBrainz Admin",
+        index_view=MainAdminHomeView(
+            name="Admin Home",
+            url="/admin",
+            endpoint="main_admin"
+        ),
+        url="/admin",
+        endpoint="main_admin",
+    )
+
+    supporter_admin = Admin(
+        app,
+        name="Supporter Management",
+        index_view=SupporterManagementHomeView(
+            name="Pending supporters",
+            url="/admin/supporters",
+            endpoint="supporter_admin"
+        ),
+        url="/admin/supporters",
+        endpoint="supporter_admin",
+    )
+
     from metabrainz.model.payment import PaymentAdminView
     from metabrainz.model.tier import TierAdminView
     from metabrainz.model.dataset import DatasetAdminView
-    admin.add_view(SupporterAdminView(model.db.session, category='Supporters', endpoint="supporter_model"))
-    admin.add_view(PaymentAdminView(model.db.session, category='Payments', endpoint="payment_model"))
-    admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
-    admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
-
-    # Custom stuff
     from metabrainz.admin.views import CommercialSupportersView
     from metabrainz.admin.views import SupportersView
     from metabrainz.admin.views import PaymentsView
     from metabrainz.admin.views import TokensView
     from metabrainz.admin.views import StatsView
-    admin.add_view(CommercialSupportersView(name='Commercial supporters', category='Supporters'))
-    admin.add_view(SupportersView(name='Search', category='Supporters'))
-    admin.add_view(PaymentsView(name='All', category='Payments'))
-    admin.add_view(TokensView(name='Access tokens', category='Supporters'))
-    admin.add_view(StatsView(name='Statistics', category='Statistics'))
-    admin.add_view(StatsView(name='Top IPs', endpoint="statsview/top-ips", category='Statistics'))
-    admin.add_view(StatsView(name='Top Tokens', endpoint="statsview/top-tokens", category='Statistics'))
-    admin.add_view(StatsView(name='Supporters', endpoint="statsview/supporters", category='Statistics'))
+
+    supporter_admin.add_view(SupportersView(name="All Supporters", category="Supporters"))
+    supporter_admin.add_view(CommercialSupportersView(name="Commercial supporters", category="Supporters"))
+    supporter_admin.add_view(TokensView(name="Access tokens", category="Supporters"))
+    supporter_admin.add_view(PaymentsView(name="All", category="Payments"))
+    supporter_admin.add_view(PaymentAdminView(model.db.session, endpoint="payment_model"))
+    supporter_admin.add_view(TierAdminView(model.db.session, endpoint="tier_model"))
+    supporter_admin.add_view(DatasetAdminView(model.db.session, endpoint="dataset_model"))
+    supporter_admin.add_view(StatsView(name="Statistics", category="Statistics"))
+    supporter_admin.add_view(StatsView(name="Top IPs", endpoint="statsview/top-ips", category="Statistics"))
+    supporter_admin.add_view(StatsView(name="Top Tokens", endpoint="statsview/top-tokens", category="Statistics"))
+    supporter_admin.add_view(StatsView(name="Supporters", endpoint="statsview/supporters", category="Statistics"))
 
     if app.config["QUICKBOOKS_CLIENT_ID"]:
-        admin.add_view(QuickBooksView(name='Invoices', endpoint="quickbooks/", category='Quickbooks'))
+        from metabrainz.admin.quickbooks.views import QuickBooksView
+        supporter_admin.add_view(QuickBooksView(name="Invoices", endpoint="quickbooks/", category="Quickbooks"))
 
-    return app
+    user_admin = Admin(
+        app,
+        name="User Management",
+        index_view=UserManagementHomeView(
+            name="Dashboard",
+            url="/admin/users",
+            endpoint="user_admin"
+        ),
+        url="/admin/users",
+        endpoint="user_admin"
+    )
+
+    from metabrainz.admin.views import UserModelView
+    from metabrainz.admin.views import OldUsernameModelView
+    from metabrainz.admin.views import DomainBlacklistModelView
+    from metabrainz.admin.views import OAuth2ClientModelView
+    from metabrainz.admin.webhooks import WebhookModelView
+    from metabrainz.admin.webhooks import WebhookDeliveryModelView
+
+    user_admin.add_view(UserModelView(model.db.session, endpoint="users-admin", category="Users"))
+    user_admin.add_view(OldUsernameModelView(
+        model.db.session, endpoint="old-username-admin", name="Old Usernames", category="Users"
+    ))
+    user_admin.add_view(DomainBlacklistModelView(
+        model.db.session, endpoint="domain-blacklist-admin", name="Domain Blacklist", category="Users"
+    ))
+    user_admin.add_view(OAuth2ClientModelView(
+        model.db.session, endpoint="oauth-clients-admin", name="OAuth Applications", category="OAuth"
+    ))
+    user_admin.add_view(
+        WebhookModelView(model.db.session, endpoint="webhooks-admin", name="Webhooks", category="Webhooks")
+    )
+    user_admin.add_view(
+        WebhookDeliveryModelView(
+            model.db.session, endpoint="webhook-deliveries-admin", name="Webhook Deliveries", category="Webhooks"
+        )
+    )
 
 
 def add_robots(app):
@@ -180,19 +268,38 @@ def add_robots(app):
         return send_from_directory(app.static_folder, request.path[1:])
 
 
-def _register_blueprints(app):
-    from metabrainz.views import index_bp
+def _register_blueprints(app, service):
+    """ Register blueprints depending on the service this process is running as.
+
+    Every service registers the website blueprints so that url_for() can resolve the
+    shared chrome (navbar, login redirect, error pages) in every process. The website
+    (``SERVICE_WEB``) stops there. The OAuth2 provider (``SERVICE_OAUTH``) and the
+    all-in-one app (``SERVICE_ALL``, used by tests, celery, manage.py and local dev)
+    additionally register the OAuth2 endpoints; for ``SERVICE_OAUTH`` the gateway is
+    responsible for routing only OAuth2 traffic to the process.
+    """
+    _register_web_blueprints(app)
+
+    if service in (SERVICE_ALL, SERVICE_OAUTH):
+        _register_oauth_blueprints(app)
+
+
+def _register_web_blueprints(app):
+    from metabrainz.index.views import index_bp
     from metabrainz.reports.financial_reports.views import financial_reports_bp
     from metabrainz.reports.annual_reports.views import annual_reports_bp
     from metabrainz.supporter.views import supporters_bp
+    from metabrainz.user.views import users_bp
     from metabrainz.payments.views import payments_bp
     from metabrainz.payments.paypal.views import payments_paypal_bp
     from metabrainz.payments.stripe.views import payments_stripe_bp
 
+    app.register_blueprint(i18n_bp)
     app.register_blueprint(index_bp)
     app.register_blueprint(financial_reports_bp, url_prefix='/finances')
     app.register_blueprint(annual_reports_bp, url_prefix='/reports')
     app.register_blueprint(supporters_bp)
+    app.register_blueprint(users_bp)
     app.register_blueprint(payments_bp)
 
     # FIXME(roman): These URLs aren't named very correct since they receive payments
@@ -201,10 +308,20 @@ def _register_blueprints(app):
     app.register_blueprint(payments_stripe_bp, url_prefix='/donations/stripe')
 
     #############
-    # OAuth / API
+    # API
     #############
 
     from metabrainz.api.views.index import api_index_bp
     app.register_blueprint(api_index_bp, url_prefix='/api')
     from metabrainz.api.views.musicbrainz import api_musicbrainz_bp
     app.register_blueprint(api_musicbrainz_bp, url_prefix='/api/musicbrainz')
+
+
+def _register_oauth_blueprints(app):
+    #############
+    # OAuth2
+    #############
+
+    from metabrainz.oauth.views import oauth2_bp, wellknown_bp
+    app.register_blueprint(oauth2_bp, url_prefix="/oauth2")
+    app.register_blueprint(wellknown_bp, url_prefix="/.well-known")

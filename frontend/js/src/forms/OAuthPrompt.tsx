@@ -1,10 +1,9 @@
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
-import { getPageProps } from "../utils";
+import { useTranslation } from "react-i18next";
+import { getPageProps, renderRoot } from "../utils";
 import { OAuthScopeDesc } from "./utils";
 
 type OAuthPromptProps = {
-  urlPrefix: string;
   scopes: Array<Scope>;
   csrf_token: string;
   client_name: string;
@@ -13,28 +12,26 @@ type OAuthPromptProps = {
 };
 
 function OAuthPrompt({
-  urlPrefix,
   scopes,
   csrf_token,
   cancel_url,
   submission_url,
   client_name,
 }: OAuthPromptProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <div id="oauth-prompt">
       <h1 className="page-title">{client_name}</h1>
       <p style={{ fontSize: "1.1em" }}>
-        This app requested permission to access:
+        {t("This app requested permission to access:")}
       </p>
       <div className="permissions">
         <div className="permission">
           <div className="icon">
-            <img
-              src={`${urlPrefix}/static/img/oauth/identity.svg`}
-              alt="Identity"
-            />
+            <img src="/static/img/oauth/identity.svg" alt={t("Identity")} />
           </div>
-          <div className="description">Your identity on MetaBrainz</div>
+          <div className="description">{t("Your identity on MetaBrainz")}</div>
         </div>
 
         <div className="permission">{OAuthScopeDesc(scopes)}</div>
@@ -52,14 +49,16 @@ function OAuthPrompt({
           </div>
         </div>
         <div className="form-group">
-          <div className="col-md-offset-3 col-md-1">
+          <div className="col-sm-offset-3 col-sm-9">
             <a href={cancel_url} className="btn btn-default">
-              Cancel
+              {t("Cancel")}
             </a>
-          </div>
-          <div className="col-md-1" style={{ marginLeft: "8px" }}>
-            <button type="submit" className="btn btn-primary">
-              Allow access
+            <button
+              type="submit"
+              className="btn btn-primary"
+              style={{ marginLeft: "8px" }}
+            >
+              {t("Allow access")}
             </button>
           </div>
         </div>
@@ -69,15 +68,13 @@ function OAuthPrompt({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { csrf_token, scopes, client_name, cancel_url, submission_url } =
     reactProps;
-  const { url_prefix } = globalProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <OAuthPrompt
-      urlPrefix={url_prefix}
       scopes={scopes}
       csrf_token={csrf_token}
       client_name={client_name}

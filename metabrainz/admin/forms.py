@@ -2,8 +2,10 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, BooleanField, SelectField, TextAreaField
 from wtforms.fields import EmailField, URLField, DecimalField
+from wtforms.validators import DataRequired, Length
 from metabrainz.model import supporter
 from metabrainz.db import tier as db_tier
+from metabrainz.user.username import validate_username
 from flask_uploads import UploadSet, IMAGES
 
 import os.path
@@ -27,9 +29,10 @@ LOGO_UPLOAD_SET = UploadSet(
 
 class SupporterEditForm(FlaskForm):
     # General info
-    musicbrainz_id = StringField("MusicBrainz Username")
+    username = StringField("Username", validators=[validate_username])
+    email = EmailField("Email", validators=[DataRequired(message="Email cannot be empty")])
+
     contact_name = StringField("Name")
-    contact_email = EmailField("Email")
 
     # Data access
     state = SelectField("State", choices=[
@@ -72,3 +75,72 @@ class SupporterEditForm(FlaskForm):
         FlaskForm.__init__(self, **kwargs)
         self.tier.choices = [(str(t["id"]), t["name"]) for t in db_tier.get_all()]
         self.tier.choices.insert(0, ("None", "None"))
+
+
+class VerifyEmailForm(FlaskForm):
+    """Form for manually verifying a user's email address."""
+    pass
+
+
+class EditUsernameForm(FlaskForm):
+    """Form for editing a user's username."""
+    username = StringField(
+        "New Username",
+        validators=[
+            DataRequired(message="Username cannot be empty"),
+            Length(min=1, max=255, message="Username must be between 1 and 255 characters"),
+            validate_username,
+        ]
+    )
+
+
+class ModerateUserForm(FlaskForm):
+    """Form for moderating a user (block/unblock/comment)."""
+    action = SelectField(
+        "Action",
+        choices=[
+            ("", "Select an action"),
+            ("block", "Block User"),
+            ("unblock", "Unblock User"),
+            ("comment", "Add Note"),
+        ],
+        validators=[DataRequired(message="Please select an action")]
+    )
+    reason = TextAreaField(
+        "Reason / Notes",
+        validators=[DataRequired(message="A reason is required")]
+    )
+
+
+class DeleteUserForm(FlaskForm):
+    """Form for deleting a user with confirmation."""
+    reason = TextAreaField(
+        "Reason for deletion",
+        validators=[DataRequired(message="A reason is required")]
+    )
+    confirm = BooleanField(
+        "I confirm that I want to permanently delete this user",
+        validators=[DataRequired(message="You must confirm the deletion")]
+    )
+
+
+class DeleteSupporterForm(FlaskForm):
+    """Form for deleting a supporter and their associated user account."""
+    reason = TextAreaField(
+        "Reason for deletion",
+        validators=[DataRequired(message="A reason is required")]
+    )
+    confirm = BooleanField(
+        "I confirm that I want to permanently delete this supporter and their user account",
+        validators=[DataRequired(message="You must confirm the deletion")]
+    )
+
+
+class RetryDeliveryForm(FlaskForm):
+    """Form for retrying a failed webhook delivery."""
+    pass
+
+
+class DeleteForm(FlaskForm):
+    """Simple form for CSRF protection on delete operations."""
+    pass

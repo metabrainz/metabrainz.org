@@ -1,8 +1,8 @@
 import { Field, getIn, FieldArray, Formik } from "formik";
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
-import { getPageProps } from "../utils";
+import { getPageProps, renderRoot } from "../utils";
 import { OAuthTextInput } from "./utils";
 
 type CreateApplicationProps = {
@@ -15,7 +15,6 @@ type CreateApplicationProps = {
 function NestedErrorMessage({ name }: { name: string }) {
   return (
     <Field name={name}>
-      {/* eslint-disable-next-line react/no-unused-prop-types */}
       {({ form }: { form: any }) => {
         const error = getIn(form.errors, name);
         const touch = getIn(form.touched, name);
@@ -33,12 +32,14 @@ function CreateApplication({
   initial_form_data,
   initial_errors,
 }: CreateApplicationProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <>
       <h2>
         {is_edit_mode
-          ? `Edit application ${initial_form_data.client_name}`
-          : "Create new application"}
+          ? `${t("Edit application")} ${initial_form_data.client_name}`
+          : t("Create new application")}
       </h2>
       <hr />
       <Formik
@@ -53,30 +54,35 @@ function CreateApplication({
         initialTouched={initial_errors}
         validationSchema={Yup.object({
           client_name: Yup.string()
-            .required("Application name is required.")
-            .min(3, "Application name needs to be at least 3 characters long.")
-            .max(
-              64,
-              "Application name needs to be at most 64 characters long."
-            ),
-          description: Yup.string()
-            .required("Application description is required.")
+            .required(t("Application name is required."))
             .min(
               3,
-              "Application description needs to be at least 3 characters long."
+              t("Application name needs to be at least 3 characters long.")
+            )
+            .max(
+              64,
+              t("Application name needs to be at most 64 characters long.")
+            ),
+          description: Yup.string()
+            .required(t("Application description is required."))
+            .min(
+              3,
+              t(
+                "Application description needs to be at least 3 characters long."
+              )
             )
             .max(
               512,
-              "Application description needs to be at most 64 characters long."
+              t("Application description needs to be at most 512 characters long.")
             ),
-          website: Yup.string().required("Homepage is required."),
+          website: Yup.string().required(t("Homepage is required.")),
           redirect_uris: Yup.array()
             .of(
               Yup.string().required(
-                "Authorization callback URL cannot be empty."
+                t("Authorization callback URL cannot be empty.")
               )
             )
-            .min(1, "Authorization callback URL is required."),
+            .min(1, t("Authorization callback URL is required.")),
         })}
         onSubmit={() => {}}
       >
@@ -97,7 +103,7 @@ function CreateApplication({
             </div>
 
             <OAuthTextInput
-              label="Application Name"
+              label={t("Application Name")}
               id="client_name"
               name="client_name"
               type="text"
@@ -105,7 +111,7 @@ function CreateApplication({
             />
 
             <OAuthTextInput
-              label="Description"
+              label={t("Description")}
               id="description"
               name="description"
               type="text"
@@ -113,7 +119,7 @@ function CreateApplication({
             />
 
             <OAuthTextInput
-              label="Homepage"
+              label={t("Homepage")}
               id="website"
               name="website"
               type="text"
@@ -122,16 +128,15 @@ function CreateApplication({
 
             <div className="form-group">
               <label className="col-sm-3 control-label" htmlFor="redirect_uris">
-                Redirect URIs <span style={{ color: "red" }}>*</span>
+                {t("Redirect URIs")} <span style={{ color: "red" }}>*</span>
               </label>
-              <div className="col-sm-5">
+              <div className="col-sm-9">
                 <FieldArray name="redirect_uris">
                   {({ insert, remove, push }) => {
                     return values.redirect_uris &&
                       values.redirect_uris.length > 0 ? (
                       values.redirect_uris.map(
                         (redirect_uri: string, index: number) => {
-                          /* eslint-disable react/no-array-index-key */
                           return (
                             <div key={`${index}`}>
                               <Field
@@ -159,7 +164,6 @@ function CreateApplication({
                               </button>
                             </div>
                           );
-                          /* eslint-disable react/no-array-index-key */
                         }
                       )
                     ) : (
@@ -168,7 +172,7 @@ function CreateApplication({
                         className="btn btn-default"
                         onClick={() => push("")}
                       >
-                        Add a redirect uri
+                        {t("Add a redirect URI")}
                       </button>
                     );
                   }}
@@ -182,7 +186,9 @@ function CreateApplication({
             <div className="form-group">
               <div className="col-sm-offset-3 col-sm-10">
                 <button type="submit" className="btn btn-primary">
-                  {is_edit_mode ? "Save changes" : "Create application"}
+                  {is_edit_mode
+                    ? t("Save changes")
+                    : t("Create application")}
                 </button>
               </div>
             </div>
@@ -194,12 +200,12 @@ function CreateApplication({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { csrf_token, is_edit_mode, initial_form_data, initial_errors } =
     reactProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
+  renderRoot(
+    domContainer!,
     <CreateApplication
       csrf_token={csrf_token}
       is_edit_mode={is_edit_mode}

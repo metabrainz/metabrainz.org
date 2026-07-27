@@ -1,3 +1,7 @@
+BEGIN;
+
+CREATE TYPE moderation_action_type AS ENUM ('block', 'unblock', 'comment', 'verify_email', 'delete', 'edit_username');
+
 CREATE TYPE payment_method_types AS ENUM (
   'stripe',
   'paypal',
@@ -29,3 +33,7 @@ CREATE TYPE dataset_project_type AS ENUM (
   'listenbrainz',
   'critiquebrainz'
 );
+
+CREATE TYPE webhook_delivery_status_type AS ENUM ('pending', 'processing', 'delivered', 'failed');
+
+COMMIT;

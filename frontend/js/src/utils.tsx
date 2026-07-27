@@ -1,3 +1,9 @@
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { I18nextProvider } from "react-i18next";
+import i18next from "i18next";
+import { initI18n } from "./i18n";
+
 const getPageProps = (): {
   domContainer: HTMLElement;
   reactProps: Record<string, any>;
@@ -27,6 +33,8 @@ const getPageProps = (): {
     reactProps = JSON.parse(propsElement!.innerHTML);
   }
 
+  initI18n(globalProps);
+
   return {
     domContainer,
     reactProps,
@@ -34,5 +42,12 @@ const getPageProps = (): {
   };
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { getPageProps };
+const renderRoot = (
+  domContainer: HTMLElement,
+  element: React.ReactElement
+) => {
+  const root = createRoot(domContainer);
+  root.render(<I18nextProvider i18n={i18next}>{element}</I18nextProvider>);
+};
+
+export { getPageProps, renderRoot };

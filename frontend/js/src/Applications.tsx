@@ -1,15 +1,17 @@
 import React, { JSX } from "react";
-import { createRoot } from "react-dom/client";
-import { getPageProps } from "./utils";
+import { useTranslation } from "react-i18next";
+import { getPageProps, renderRoot } from "./utils";
 import { OAuthScopeDesc } from "./forms/utils";
+import ProfileTabs from "./ProfileTabs";
+import ApplicationRow from "./ApplicationRow";
 
 type ApplicationProps = {
-  urlPrefix: string;
   applications: Array<{
     name: string;
     website: string;
     client_id: string;
     client_secret: string;
+    privileges?: Array<string>;
   }>;
   tokens: Array<{
     name: string;
@@ -19,87 +21,77 @@ type ApplicationProps = {
   }>;
 };
 
-function Applications({
-  applications,
-  tokens,
-  urlPrefix,
-}: ApplicationProps): JSX.Element {
+function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
+  const { t } = useTranslation();
+
+  const showPrivileges = applications.some(
+    (application) => (application.privileges?.length ?? 0) > 0
+  );
+
   return (
     <>
-      <h2>Applications</h2>
+      <ProfileTabs activeTab="applications" />
 
-      <div className="clearfix">
-        <h3 className="pull-left">Your applications</h3>
-        <a
-          href={`${urlPrefix}/client/create`}
-          className="btn btn-success pull-right"
-          style={{ marginTop: "12px" }}
-        >
-          <span className="glyphicon glyphicon-plus-sign" />
-          Create new application
-        </a>
+      <div>
+        <h3>
+          {t("Your applications")}
+          <a
+            href="/profile/applications/create"
+            className="btn btn-success pull-right"
+          >
+            <span className="glyphicon glyphicon-plus-sign" />
+            {" "}{t("Create new application")}
+          </a>
+        </h3>
       </div>
+
       {applications.length === 0 ? (
         <p className="lead" style={{ textAlign: "center" }}>
-          No applications found
+          {t("No applications found")}
         </p>
       ) : (
         <table className="oauth-applications-table table table-hover">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Website</th>
-              <th>Client ID</th>
-              <th>Client secret</th>
-              <th>Actions</th>
+              <th>{t("Name")}</th>
+              <th>{t("Website")}</th>
+              <th>{t("Client ID")}</th>
+              <th style={{ width: "400px" }}>{t("Client secret")}</th>
+              {showPrivileges && <th>{t("Privileges")}</th>}
+              <th>{t("Actions")}</th>
             </tr>
           </thead>
           <tbody>
             {applications.map((application) => (
-              <tr>
-                <td>{application.name}</td>
-                <td>{application.website}</td>
-                <td>{application.client_id}</td>
-                <td>{application.client_secret}</td>
-                <td>
-                  <a
-                    className="btn btn-block btn-primary btn-xs"
-                    href={`${urlPrefix}/client/edit/${application.client_id}`}
-                  >
-                    Modify
-                  </a>
-                  <a
-                    className="btn btn-block btn-danger btn-xs"
-                    href={`${urlPrefix}/client/delete/${application.client_id}`}
-                  >
-                    Delete
-                  </a>
-                </td>
-              </tr>
+              <ApplicationRow
+                key={application.client_id}
+                application={application}
+                showPrivileges={showPrivileges}
+              />
             ))}
           </tbody>
         </table>
       )}
       <hr />
 
-      <h3>Authorized applications</h3>
+      <h3>{t("Authorized applications")}</h3>
       {tokens.length === 0 ? (
         <p className="lead" style={{ textAlign: "center" }}>
-          No tokens found
+          {t("No tokens found")}
         </p>
       ) : (
         <table className="oauth-applications-table table table-hover">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Website</th>
-              <th>Access</th>
-              <th>Actions</th>
+              <th>{t("Name")}</th>
+              <th>{t("Website")}</th>
+              <th>{t("Access")}</th>
+              <th>{t("Actions")}</th>
             </tr>
           </thead>
           <tbody>
             {tokens.map((token) => (
-              <tr>
+              <tr key={token.client_id}>
                 <td>
                   <b>{token.name}</b>
                 </td>
@@ -107,7 +99,7 @@ function Applications({
                 <td>{OAuthScopeDesc(token.scopes)}</td>
                 <td>
                   <form
-                    action={`${urlPrefix}/client/${token.client_id}/revoke/user`}
+                    action={`/profile/application/revoke/${token.client_id}/user`}
                     method="post"
                     className="btn btn-danger btn-xs"
                   >
@@ -116,7 +108,7 @@ function Applications({
                       className="btn btn-danger"
                       style={{ color: "white" }}
                     >
-                      Revoke access
+                      {t("Revoke access")}
                     </button>
                   </form>
                 </td>
@@ -130,16 +122,11 @@ function Applications({
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { domContainer, reactProps, globalProps } = getPageProps();
+  const { domContainer, reactProps } = getPageProps();
   const { applications, tokens } = reactProps;
-  const { url_prefix } = globalProps;
 
-  const renderRoot = createRoot(domContainer!);
-  renderRoot.render(
-    <Applications
-      applications={applications}
-      tokens={tokens}
-      urlPrefix={url_prefix}
-    />
+  renderRoot(
+    domContainer!,
+    <Applications applications={applications} tokens={tokens} />
   );
 });

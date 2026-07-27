@@ -39,8 +39,8 @@ def pay():
         charge_metadata["can_contact"] = form.can_contact.data
         description = "Donation to the MetaBrainz Foundation"
     else:  # Using PaymentForm
-        if current_user.is_authenticated:
-            charge_metadata["supporter_id"] = current_user.id
+        if current_user.is_authenticated and current_user.supporter:
+            charge_metadata["supporter_id"] = current_user.supporter.id
         else:
             current_app.logger.warning("Stripe: org payment POST with no authenticated user")
         if form.invoice_number.data:
