@@ -99,7 +99,7 @@ function Applications({ applications, tokens }: ApplicationProps): JSX.Element {
                 <td>{OAuthScopeDesc(token.scopes)}</td>
                 <td>
                   <form
-                    action={`/profile/application/revoke/${token.client_id}/user`}
+                    action={`/profile/applications/revoke/${token.client_id}/user`}
                     method="post"
                     className="btn btn-danger btn-xs"
                   >
