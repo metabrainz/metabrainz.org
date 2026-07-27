@@ -65,6 +65,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "newuser@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
@@ -114,6 +115,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "verify@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
@@ -183,6 +185,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "multi@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
@@ -232,6 +235,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "inactive@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
@@ -272,6 +276,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "retry@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
@@ -325,6 +330,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "filter@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
@@ -357,6 +363,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "sig@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
@@ -399,6 +406,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
                 "email": f"user{i}@example.com",
                 "password": "password123",
                 "confirm_password": "password123",
+                "agreement": "y",
                 "csrf_token": g.csrf_token
             })
             self.assertStatus(response, 302)
@@ -437,6 +445,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "delete@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
@@ -497,6 +506,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
             "email": "old@example.com",
             "password": "password123",
             "confirm_password": "password123",
+            "agreement": "y",
             "csrf_token": g.csrf_token
         })
 
