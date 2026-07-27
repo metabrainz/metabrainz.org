@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: metabrainz.org VERSION\n"
 "Report-Msgid-Bugs-To: support@metabrainz.org\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-07-27 11:25+0000\n"
+"PO-Revision-Date: 2026-07-27 19:34+0000\n"
 "Last-Translator: lucifer <kartikohri13@gmail.com>\n"
 "Language-Team: Punjabi <https://translations.metabrainz.org/projects/"
 "metabrainz/website/pa/>\n"
@@ -177,7 +177,7 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "ਪੁਸ਼ਟੀ ਕਰੋ"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -185,30 +185,38 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
+"ਮੈਟਾਬ੍ਰੇਂਜ਼ ਫਾਊਂਡੇਸ਼ਨ ਨੂੰ ਦਾਨ ਦੇਣ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ। ਤੁਹਾਡੇ ਸਮਰਥਨ ਦੀ ਬਹੁਤ ਪ੍ਰਸ਼ੰਸਾ ਕੀਤੀ ਜਾਂਦੀ ਹੈ! "
+"ਪ੍ਰਕਿਰਿਆ ਵਿੱਚ ਦੇਰੀ ਦੇ ਕਾਰਨ ਤੁਹਾਡੇ ਦਾਨ ਨੂੰ ਸੂਚੀ ਵਿੱਚ ਆਉਣ ਵਿੱਚ ਕੁਝ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ।"
 
 #: metabrainz/payments/views.py:171
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
 msgstr ""
+"ਮੈਟਾਬ੍ਰੇਂਜ਼ ਫਾਊਂਡੇਸ਼ਨ ਨੂੰ ਭੁਗਤਾਨ ਕਰਨ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ। ਤੁਹਾਡੇ ਸਮਰਥਨ ਦੀ ਬਹੁਤ ਪ੍ਰਸ਼ੰਸਾ ਕੀਤੀ ਜਾਂਦੀ "
+"ਹੈ!"
 
 #: metabrainz/payments/views.py:182
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
 msgstr ""
+"ਸਾਨੂੰ ਇਹ ਦੇਖ ਕੇ ਦੁੱਖ ਹੋਇਆ ਕਿ ਤੁਸੀਂ ਅੱਜ ਦਾਨ ਨਹੀਂ ਕਰ ਰਹੇ। ਸਾਨੂੰ ਉਮੀਦ ਹੈ ਕਿ ਤੁਸੀਂ ਆਪਣਾ ਮਨ ਬਦਲੋਗੇ!"
 
 #: metabrainz/payments/views.py:188
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
 msgstr ""
+"ਸਾਨੂੰ ਇਹ ਦੇਖ ਕੇ ਦੁੱਖ ਹੋਇਆ ਕਿ ਤੁਸੀਂ ਅੱਜ ਭੁਗਤਾਨ ਨਹੀਂ ਕਰੋਗੇ। ਸਾਨੂੰ ਉਮੀਦ ਹੈ ਕਿ ਤੁਸੀਂ ਆਪਣਾ ਮਨ ਬਦਲੋਗੇ!"
 
 #: metabrainz/payments/views.py:202
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
 msgstr ""
+"ਸਾਨੂੰ ਮਾਫ਼ ਕਰਨਾ, ਪਰ ਇੰਝ ਲੱਗਦਾ ਹੈ ਕਿ ਸਾਨੂੰ ਕੋਈ ਗਲਤੀ ਹੋ ਗਈ ਹੈ ਅਤੇ ਅਸੀਂ ਤੁਹਾਡੇ ਦਾਨ ਦੀ ਪ੍ਰਕਿਰਿਆ "
+"ਨਹੀਂ ਕਰ ਸਕਦੇ।"
 
 #: metabrainz/payments/views.py:208
 msgid ""
