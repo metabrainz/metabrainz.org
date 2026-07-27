@@ -168,6 +168,8 @@ WEBHOOK_TASK_SOFT_TIME_LIMIT = 90  # Soft timeout for Celery tasks (seconds)
 WEBHOOK_DEFAULT_RATE_LIMIT = '100/m'  # Default rate limit for webhook deliveries
 WEBHOOK_CIRCUIT_BREAKER_THRESHOLD = 5  # Number of failures before opening circuit breaker
 WEBHOOK_CIRCUIT_BREAKER_TIMEOUT = 300  # Seconds to wait before attempting recovery (5 minutes)
+WEBHOOK_PENDING_DELIVERY_TIMEOUT = 600  # Requeue pending deliveries not claimed within 10 minutes
+WEBHOOK_PROCESSING_DELIVERY_TIMEOUT = 300  # Recover deliveries abandoned by dead workers
 
 SIGNUP_RATE_LIMIT_PER_IP = 5
 REMEMBER_COOKIE_DURATION = timedelta(days=365)
