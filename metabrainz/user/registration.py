@@ -16,7 +16,7 @@ def validate_registration_username(username: str | None) -> tuple[str, str | Non
         return username, "invalid_username"
     if User.get(name=username) is not None:
         return username, "username_taken"
-    if OldUsername.query.filter_by(username=username).first() is not None:
+    if OldUsername.get(username) is not None:
         return username, "username_not_allowed"
     return username, None
 

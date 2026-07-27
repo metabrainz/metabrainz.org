@@ -175,13 +175,13 @@ class UsersViewsTestCase(FlaskTestCase):
         self.create_user()
 
         self._test_user_signup_helper({
-            "username": "test_user_1",
+            "username": "TEST_USER_1",
             "email": "test2@gmail.com",
             "password": "<PASSWORD>",
             "confirm_password": "<PASSWORD>",
         }, 200)
         props = json.loads(self.get_context_variable("props"))
-        self.assertEqual(props["initial_errors"], {"username": "Another user with username 'test_user_1' exists."})
+        self.assertEqual(props["initial_errors"], {"username": "Another user with username 'TEST_USER_1' exists."})
 
     def test_user_signup_logged_in(self):
         data = {
@@ -221,7 +221,7 @@ class UsersViewsTestCase(FlaskTestCase):
 
         current_dt = datetime.now(timezone.utc)
         self._test_user_login_helper({
-            "username": "test_user_1",
+            "username": "TEST_USER_1",
             "password": "<PASSWORD>",
         }, 302)
         self.assertEqual(current_user.name, "test_user_1")
@@ -1091,7 +1091,7 @@ class UsersViewsTestCase(FlaskTestCase):
 
         # Try to create a new user with the same username
         self._test_user_signup_helper({
-            "username": "test_user_1",
+            "username": "TEST_USER_1",
             "email": "newemail@example.com",
             "password": "<PASSWORD>",
             "confirm_password": "<PASSWORD>",

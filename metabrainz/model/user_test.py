@@ -1,9 +1,31 @@
+from sqlalchemy.exc import IntegrityError
+
 from metabrainz.model import db
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
 
 
 class UserModelTestCase(FlaskTestCase):
+
+    def test_username_lookup_and_uniqueness_are_case_insensitive(self):
+        user = User.add(
+            name="MixedCaseUser",
+            unconfirmed_email="mixed@example.com",
+            password="<PASSWORD>",
+        )
+        db.session.commit()
+
+        self.assertEqual(User.get(name="mixedcaseuser"), user)
+        self.assertEqual(User.get(name="MIXEDCASEUSER"), user)
+        self.assertEqual(user.name, "MixedCaseUser")
+
+        User.add(
+            name="mixedcaseuser",
+            unconfirmed_email="duplicate@example.com",
+            password="<PASSWORD>",
+        )
+        with self.assertRaises(IntegrityError):
+            db.session.commit()
 
     def test_add_requires_unconfirmed_email(self):
         with self.assertRaisesRegex(ValueError, "Email address is required."):
