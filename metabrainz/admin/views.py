@@ -4,6 +4,7 @@ from flask import Response, request, redirect, url_for, current_app
 from flask_admin import expose
 from flask_login import current_user
 from markupsafe import Markup
+from sqlalchemy.exc import IntegrityError
 
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
 from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm, DeleteUserForm, \
@@ -80,6 +81,22 @@ def _get_boolean_param(name):
     if value.lower() == "true":
         return True
     return False
+
+
+def _username_change_error(user, new_username, *, allow_unchanged=False):
+    if allow_unchanged and new_username == user.name:
+        return None
+
+    existing_user = User.get(name=new_username)
+    if existing_user is not None:
+        if existing_user.id == user.id:
+            return "Username is already set to this value."
+        return "Username is already in use."
+
+    if OldUsername.get(new_username) is not None:
+        return "Username cannot be used."
+
+    return None
 
 
 class SupportersView(AdminBaseView):
@@ -159,6 +176,20 @@ class SupportersView(AdminBaseView):
         })
 
         if form.validate_on_submit():
+            new_name = form.username.data.strip()
+            username_error = _username_change_error(
+                supporter.user,
+                new_name,
+                allow_unchanged=True,
+            )
+            if username_error is not None:
+                form.username.errors.append(username_error)
+                return self.render(
+                    'admin/supporters/edit.html',
+                    supporter=supporter,
+                    form=form,
+                )
+
             update_data = {
                 'contact_name': form.contact_name.data,
                 'state': form.state.data,
@@ -197,7 +228,6 @@ class SupportersView(AdminBaseView):
 
             old_name = supporter.user.name
             old_email = supporter.user.email
-            new_name = form.username.data
             new_email = form.email.data
 
             supporter.user.name = new_name
@@ -211,7 +241,19 @@ class SupportersView(AdminBaseView):
                 supporter.user.last_updated = updated_at
             if email_changed and new_email:
                 supporter.user.email_confirmed_at = updated_at
-            supporter.update(**update_data)
+            if username_changed:
+                db.session.add(OldUsername(username=old_name))
+
+            try:
+                supporter.update(**update_data)
+            except IntegrityError:
+                db.session.rollback()
+                form.username.errors.append("Username is already in use.")
+                return self.render(
+                    'admin/supporters/edit.html',
+                    supporter=supporter,
+                    form=form,
+                )
 
             # Emit user.updated event if username or email changed
             if email_changed or username_changed:
@@ -640,16 +682,9 @@ class UserModelView(AdminModelView):
 
         new_username = form.username.data.strip()
 
-        if new_username == user.name:
-            flash.error("Username is already set to this value.")
-            return redirect(url_for('.details_view', id=user_id))
-
-        if User.query.filter_by(name=new_username).first() is not None:
-            flash.error("Username is already in use.")
-            return redirect(url_for('.details_view', id=user_id))
-
-        if OldUsername.query.filter_by(username=new_username).first() is not None:
-            flash.error("Username cannot be used.")
+        username_error = _username_change_error(user, new_username)
+        if username_error is not None:
+            flash.error(username_error)
             return redirect(url_for('.details_view', id=user_id))
 
         try:

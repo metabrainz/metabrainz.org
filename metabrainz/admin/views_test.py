@@ -1,9 +1,10 @@
+from unittest.mock import patch
+
 from brainzutils import cache
-from metabrainz.testing import FlaskTestCase
-from metabrainz.model.supporter import Supporter
 from flask import url_for
 from flask_login import logout_user
 from sqlalchemy import delete
+from sqlalchemy.exc import IntegrityError
 
 from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
@@ -130,6 +131,131 @@ class AdminViewsTestCase(FlaskTestCase):
         )
         db.session.commit()
         return supporter
+
+    def _edit_username(self, user, new_username):
+        response = self.client.get(url_for("users-admin.details_view", id=user.id))
+        self.assertEqual(response.status_code, 200)
+        form = self.get_context_variable("edit_username_form")
+        return self.client.post(
+            url_for("users-admin.edit_username", user_id=user.id),
+            data={
+                "username": new_username,
+                "csrf_token": form.csrf_token.current_token,
+            },
+            follow_redirects=False,
+        )
+
+    def _edit_supporter_username(self, supporter, new_username):
+        supporter.user.email = supporter.user.unconfirmed_email
+        supporter.user.unconfirmed_email = None
+        db.session.commit()
+
+        response = self.client.get(url_for("supportersview.edit", supporter_id=supporter.id))
+        self.assertEqual(response.status_code, 200)
+        form = self.get_context_variable("form")
+        return self.client.post(
+            url_for("supportersview.edit", supporter_id=supporter.id),
+            data={
+                "username": new_username,
+                "email": supporter.user.email,
+                "contact_name": supporter.contact_name,
+                "state": supporter.state,
+                "tier": "None",
+                "amount_pledged": "0",
+                "csrf_token": form.csrf_token.current_token,
+            },
+            follow_redirects=False,
+        )
+
+    def test_admin_edit_username_rejects_different_case_of_existing_username(self):
+        user = self.create_user()
+
+        response = self._edit_username(user, "ADMIN_USER")
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(user)
+        self.assertEqual(user.name, "regular_user")
+        self.assertMessageFlashed("Username is already in use.", "error")
+
+    def test_admin_edit_username_rejects_different_case_of_old_username(self):
+        user = self.create_user()
+        db.session.add(OldUsername(username="FormerUser"))
+        db.session.commit()
+
+        response = self._edit_username(user, "formeruser")
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(user)
+        self.assertEqual(user.name, "regular_user")
+        self.assertMessageFlashed("Username cannot be used.", "error")
+
+    def test_admin_edit_username_treats_case_only_change_as_same_username(self):
+        user = self.create_user()
+
+        response = self._edit_username(user, "REGULAR_USER")
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(user)
+        self.assertEqual(user.name, "regular_user")
+        self.assertMessageFlashed("Username is already set to this value.", "error")
+
+    def test_admin_edit_username_treats_exact_change_as_same_username(self):
+        user = self.create_user()
+
+        response = self._edit_username(user, "regular_user")
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(user)
+        self.assertEqual(user.name, "regular_user")
+        self.assertMessageFlashed("Username is already set to this value.", "error")
+        self.assertIsNone(OldUsername.get("regular_user"))
+
+    def test_admin_supporter_edit_rejects_different_case_of_existing_username(self):
+        supporter = self.create_supporter()
+
+        response = self._edit_supporter_username(supporter, "ADMIN_USER")
+
+        self.assertEqual(response.status_code, 200)
+        form = self.get_context_variable("form")
+        self.assertIn("Username is already in use.", form.username.errors)
+        db.session.refresh(supporter.user)
+        self.assertEqual(supporter.user.name, "regular_user")
+
+    def test_admin_supporter_edit_rejects_different_case_of_old_username(self):
+        supporter = self.create_supporter()
+        db.session.add(OldUsername(username="FormerUser"))
+        db.session.commit()
+
+        response = self._edit_supporter_username(supporter, "formeruser")
+
+        self.assertEqual(response.status_code, 200)
+        form = self.get_context_variable("form")
+        self.assertIn("Username cannot be used.", form.username.errors)
+        db.session.refresh(supporter.user)
+        self.assertEqual(supporter.user.name, "regular_user")
+
+    def test_admin_supporter_edit_reserves_previous_username(self):
+        supporter = self.create_supporter()
+
+        response = self._edit_supporter_username(supporter, "RenamedUser")
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(supporter.user)
+        self.assertEqual(supporter.user.name, "RenamedUser")
+        self.assertIsNotNone(OldUsername.get("REGULAR_USER"))
+
+    def test_admin_supporter_edit_handles_concurrent_username_conflict(self):
+        supporter = self.create_supporter()
+
+        with patch.object(Supporter, "update", side_effect=IntegrityError(None, None, None)):
+            response = self._edit_supporter_username(supporter, "AvailableUser")
+
+        self.assertEqual(response.status_code, 200)
+        form = self.get_context_variable("form")
+        self.assertIn("Username is already in use.", form.username.errors)
+        db.session.refresh(supporter.user)
+        self.assertEqual(supporter.user.name, "regular_user")
+        self.assertIsNone(OldUsername.get("regular_user"))
 
     def test_admin_delete_user(self):
         """Test that admin can delete a regular (non-supporter) user."""

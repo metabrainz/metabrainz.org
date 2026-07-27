@@ -388,7 +388,7 @@ class SupportersViewsTestCase(FlaskTestCase):
         response = self.client.post(
             url_for('supporters.signup_commercial', tier_id=self.tier.id),
             data={
-                "username": "existing-test-user",
+                "username": "EXISTING-TEST-USER",
                 "email": "newemail@example.com",
                 "password": "securepassword123",
                 "confirm_password": "securepassword123",
@@ -489,7 +489,7 @@ class SupportersViewsTestCase(FlaskTestCase):
         response = self.client.post(
             url_for('supporters.signup_noncommercial'),
             data={
-                "username": "existing-test-user",  # Already exists
+                "username": "EXISTING-TEST-USER",  # Already exists
                 "email": "newemail@example.com",
                 "password": "securepassword123",
                 "confirm_password": "securepassword123",

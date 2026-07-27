@@ -39,7 +39,7 @@ to the watermark.
 
 ``old_editor_name`` has no id or update timestamp, so its comparatively small set of names
 is read in full on every run. Inserts into ``old_username`` skip names already present,
-making the repeated scan idempotent.
+using case-insensitive comparisons, making the repeated scan idempotent.
 """
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
@@ -158,7 +158,7 @@ INSERT_OLD_USERNAMES_QUERY = """
           WHERE NOT EXISTS (
                     SELECT 1
                       FROM old_username AS existing
-                     WHERE existing.username = candidate.username
+                     WHERE lower(existing.username) = lower(candidate.username)
                 )
 """
 

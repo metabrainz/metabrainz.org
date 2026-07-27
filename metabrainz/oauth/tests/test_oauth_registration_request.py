@@ -262,7 +262,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
 
-        response = self._create_registration_request(application, username="test-user-2")
+        response = self._create_registration_request(application, username="TEST-USER-2")
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json["error"], "invalid_request")
         self.assertEqual(response.json["error_description"], "The requested username is already in use.")

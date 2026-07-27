@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 from flask import current_app
 from flask_login import UserMixin
-from sqlalchemy import Column, Integer, Identity, Text, DateTime, func, Boolean
+from sqlalchemy import Column, Integer, Identity, Text, DateTime, Index, func, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import Mapped
@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
 
     id = Column(Integer, Identity(), primary_key=True)
     login_id = Column(UUID, nullable=False, unique=True, default=uuid4)
-    name = Column(Text, unique=True, nullable=False)
+    name = Column(Text, nullable=False)
     password = Column(Text, nullable=False)  # TODO: add a constraint to ensure password is cleared when deleted field is set
 
     email = Column(Text)
@@ -36,6 +36,10 @@ class User(db.Model, UserMixin):
 
     deleted = Column(Boolean, nullable=False, default=False)
     is_blocked = Column(Boolean, nullable=False, default=False)
+
+    __table_args__ = (
+        Index("user_name_unq_idx", func.lower(name), unique=True),
+    )
 
     # Tracks until when the user's "remember me" login is expected to stay valid. This mirrors the
     # lifetime of the flask-login remember cookie set at login time and is None when the user did not
@@ -91,7 +95,7 @@ class User(db.Model, UserMixin):
         from metabrainz import bcrypt
 
         name = kwargs.pop("name")
-        if OldUsername.query.filter_by(username=name).first() is not None:
+        if OldUsername.get(name) is not None:
             raise UsernameNotAllowedException()
 
         password = kwargs.pop("password")
@@ -108,14 +112,26 @@ class User(db.Model, UserMixin):
         return new_user
 
     @classmethod
+    def _get(cls, filters: dict):
+        filters = filters.copy()
+        query = cls.query
+        if "name" in filters:
+            name = filters.pop("name")
+            query = query.filter(func.lower(cls.name) == func.lower(name))
+        return query.filter_by(**filters).first()
+
+    @classmethod
     def get(cls, **kwargs):
-        row = cls.query.filter_by(**kwargs).first()
+        row = cls._get(kwargs)
         if row:
             return row
 
         if "email" in kwargs:
-            kwargs["unconfirmed_email"] = kwargs.pop("email")
-            return cls.query.filter_by(**kwargs).first()
+            unconfirmed_email_kwargs = kwargs.copy()
+            # check for email column was already performed and a matching user not found,
+            # so now check with unconfirmed email.
+            unconfirmed_email_kwargs["unconfirmed_email"] = unconfirmed_email_kwargs.pop("email")
+            return cls._get(unconfirmed_email_kwargs)
 
         return None
 
