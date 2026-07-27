@@ -336,6 +336,12 @@ def introspect_token():
     return authorization_server.create_endpoint_response("introspection")
 
 
+@oauth2_bp.route("/health")
+def health():
+    """Health check endpoint for HAProxy internal gateway."""
+    return "OK", 200
+
+
 def split_by_crlf(s):
     return [v for v in s.splitlines() if v]
 
