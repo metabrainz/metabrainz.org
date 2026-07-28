@@ -28,10 +28,11 @@ class RedisCircuitBreaker:
         now = time.time()
         # Scores are timestamps, so this returns only failures still inside the
         # rolling window. Older entries do not affect the circuit state.
-        return self.redis_client.zrangebyscore(
+        return self.redis_client.zrange(
             self.key,
             now - self.failure_window,
             "+inf",
+            byscore=True,
             withscores=True,
         )
 
