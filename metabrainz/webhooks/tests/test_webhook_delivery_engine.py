@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timezone
+from unittest.mock import patch
 
 import requests_mock
 
@@ -7,12 +8,15 @@ from metabrainz.model import db
 from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED
 from metabrainz.model.webhook_delivery import WebhookDelivery, WebhookDeliveryError
 from metabrainz.testing import FlaskTestCase
-from metabrainz.webhooks.circuit_breaker import CircuitBreakerState
 from metabrainz.webhooks.delivery import WebhookDeliveryEngine
 
 
 class WebhookDeliveryEngineTestCase(FlaskTestCase):
     """Test cases for WebhookDeliveryEngine."""
+
+    def record_circuit_failures(self, circuit_breaker, count):
+        for _ in range(count):
+            circuit_breaker.record_failure()
 
     def setUp(self):
         super().setUp()
@@ -32,13 +36,17 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
             "timestamp": datetime.now(timezone.utc).isoformat()
         }
 
-        WebhookDeliveryEngine._circuit_breakers.clear()
+        WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id).reset()
+
+    def tearDown(self):
+        WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id).reset()
+        super().tearDown()
 
     def test_get_circuit_breaker_creates_per_webhook(self):
         """Test that each webhook gets its own circuit breaker."""
         cb1 = WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id)
         cb2 = WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id)
-        self.assertIs(cb1, cb2)
+        self.assertEqual(cb1.key, cb2.key)
 
         webhook2 = Webhook(
             name="Webhook 2",
@@ -51,7 +59,29 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
         db.session.commit()
 
         cb3 = WebhookDeliveryEngine.get_circuit_breaker(webhook2.id)
-        self.assertIsNot(cb1, cb3)
+        self.assertNotEqual(cb1.key, cb3.key)
+
+        self.record_circuit_failures(cb1, 5)
+        self.assertTrue(cb1.is_open())
+        self.assertFalse(cb3.is_open())
+
+    def test_circuit_closes_when_failures_leave_window(self):
+        cb = WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id)
+        cb.failure_window = 60
+
+        with patch(
+            "metabrainz.webhooks.circuit_breaker.time.time",
+            return_value=100,
+        ):
+            self.record_circuit_failures(cb, 5)
+            self.assertTrue(cb.is_open())
+
+        with patch(
+            "metabrainz.webhooks.circuit_breaker.time.time",
+            return_value=161,
+        ):
+            self.assertFalse(cb.is_open())
+            self.assertEqual(cb.get_stats()["failure_count"], 0)
 
     @requests_mock.Mocker()
     def test_deliver_success(self, mock_requests):
@@ -156,6 +186,32 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
         self.assertEqual(delivery.status, "failed")
         self.assertIn("Connection refused", delivery.error_message)
 
+    def test_internal_error_does_not_trip_circuit(self):
+        """Internal processing failures use retries but not the circuit."""
+        delivery = WebhookDelivery(
+            webhook_id=self.webhook.id,
+            event_type=EVENT_USER_CREATED,
+            payload=self.payload,
+            status="pending",
+        )
+        db.session.add(delivery)
+        db.session.commit()
+        cb = WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id)
+
+        with patch.object(
+            Webhook,
+            "sign_payload",
+            side_effect=ValueError("signing failed"),
+        ):
+            result = WebhookDeliveryEngine.deliver(str(delivery.id))
+
+        self.assertFalse(result["success"])
+        db.session.refresh(delivery)
+        self.assertEqual(delivery.status, "failed")
+        self.assertEqual(delivery.retry_count, 1)
+        self.assertIsNotNone(delivery.next_retry_at)
+        self.assertEqual(cb.get_stats()["failure_count"], 0)
+
     def test_deliver_nonexistent_delivery(self):
         """Test delivering a nonexistent delivery raises error."""
         fake_id = "00000000-0000-0000-0000-000000000000"
@@ -191,9 +247,8 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
     def test_deliver_with_circuit_breaker_open(self, mock_requests):
         """Test that delivery is blocked when circuit breaker is open."""
         cb = WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id)
-        for _ in range(5):
-            cb.record_failure()
-        self.assertEqual(cb.state, CircuitBreakerState.OPEN)
+        self.record_circuit_failures(cb, 5)
+        self.assertTrue(cb.is_open())
 
         delivery = WebhookDelivery(
             webhook_id=self.webhook.id,
@@ -214,6 +269,7 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
         self.assertEqual(delivery.status, "failed")
         self.assertIn("Circuit breaker", delivery.error_message)
         self.assertIsNotNone(delivery.next_retry_at)
+        self.assertEqual(delivery.retry_count, 0)
 
         self.assertEqual(len(mock_requests.request_history), 0)
 
@@ -242,8 +298,8 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
         self.assertEqual(len(mock_requests.request_history), 1)
 
     @requests_mock.Mocker()
-    def test_circuit_breaker_records_success(self, mock_requests):
-        """Test that successful delivery records success in circuit breaker."""
+    def test_success_does_not_hide_recent_failures(self, mock_requests):
+        """The rolling window retains failures until they age out."""
         mock_requests.post(
             "https://example.com/webhook",
             status_code=200,
@@ -252,9 +308,8 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
 
         cb = WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id)
 
-        cb.record_failure()
-        cb.record_failure()
-        self.assertEqual(cb._failure_count, 2)
+        self.record_circuit_failures(cb, 2)
+        self.assertEqual(cb.get_stats()["failure_count"], 2)
 
         delivery = WebhookDelivery(
             webhook_id=self.webhook.id,
@@ -267,7 +322,7 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
 
         WebhookDeliveryEngine.deliver(str(delivery.id))
 
-        self.assertEqual(cb._failure_count, 0)
+        self.assertEqual(cb.get_stats()["failure_count"], 2)
 
     @requests_mock.Mocker()
     def test_circuit_breaker_records_failure(self, mock_requests):
@@ -279,7 +334,7 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
         )
 
         cb = WebhookDeliveryEngine.get_circuit_breaker(self.webhook.id)
-        initial_count = cb._failure_count
+        initial_count = cb.get_stats()["failure_count"]
 
         delivery = WebhookDelivery(
             webhook_id=self.webhook.id,
@@ -292,4 +347,7 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
 
         WebhookDeliveryEngine.deliver(str(delivery.id))
 
-        self.assertEqual(cb._failure_count, initial_count + 1)
+        self.assertEqual(
+            cb.get_stats()["failure_count"],
+            initial_count + 1,
+        )

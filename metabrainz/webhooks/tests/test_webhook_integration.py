@@ -34,7 +34,7 @@ class WebhookIntegrationTestCase(FlaskTestCase):
 
     def setUp(self):
         super().setUp()
-        WebhookDeliveryEngine._circuit_breakers.clear()
+        cache._r.flushall()
 
     def tearDown(self):
         cache._r.flushall()
