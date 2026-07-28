@@ -1,8 +1,11 @@
+from unittest.mock import patch
+
 from flask import url_for
 
 from metabrainz.model import db
 from metabrainz.model.user import User
 from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_UPDATED
+from metabrainz.model.webhook_delivery import WebhookDelivery
 from metabrainz.testing import FlaskTestCase
 
 
@@ -19,6 +22,27 @@ class WebhookAdminTestCase(FlaskTestCase):
         )
         db.session.commit()
         self.temporary_login(self.admin_user)
+
+    def create_failed_delivery(self):
+        webhook = Webhook(
+            name="Retry Webhook",
+            url="https://example.com/retry",
+            secret="secret",
+            events=[EVENT_USER_CREATED],
+            is_active=True,
+        )
+        db.session.add(webhook)
+        db.session.flush()
+        delivery = WebhookDelivery(
+            webhook_id=webhook.id,
+            event_type=EVENT_USER_CREATED,
+            payload={"user_id": 1},
+            status="failed",
+            retry_count=1,
+        )
+        db.session.add(delivery)
+        db.session.commit()
+        return delivery
 
     def test_webhook_admin_index_requires_auth(self):
         """Test that webhook admin index requires authentication."""
@@ -323,3 +347,61 @@ class WebhookAdminTestCase(FlaskTestCase):
         self.assertEqual(len(webhook.events), 2)
         self.assertIn(EVENT_USER_CREATED, webhook.events)
         self.assertIn(EVENT_USER_UPDATED, webhook.events)
+
+    def test_retry_delivery_enqueues_task(self):
+        """The admin retry action must publish a delivery task."""
+        delivery = self.create_failed_delivery()
+        self.client.get(url_for(
+            "webhook-deliveries-admin.details_view",
+            id=delivery.id,
+        ))
+        csrf_token = self.get_context_variable(
+            "retry_form"
+        ).csrf_token.current_token
+
+        with patch(
+            "metabrainz.webhooks.tasks.deliver_webhook.apply_async"
+        ) as apply_async:
+            response = self.client.post(
+                url_for(
+                    "webhook-deliveries-admin.retry_delivery",
+                    delivery_id=delivery.id,
+                ),
+                data={"csrf_token": csrf_token},
+            )
+
+        self.assertEqual(response.status_code, 302)
+        apply_async.assert_called_once_with(
+            args=[str(delivery.id)],
+            queue="webhooks",
+        )
+        db.session.refresh(delivery)
+        self.assertEqual(delivery.status, "pending")
+
+    def test_retry_delivery_broker_failure_is_recoverable(self):
+        """A failed admin enqueue must leave the row retryable."""
+        delivery = self.create_failed_delivery()
+        self.client.get(url_for(
+            "webhook-deliveries-admin.details_view",
+            id=delivery.id,
+        ))
+        csrf_token = self.get_context_variable(
+            "retry_form"
+        ).csrf_token.current_token
+
+        with patch(
+            "metabrainz.webhooks.tasks.deliver_webhook.apply_async",
+            side_effect=RuntimeError("broker unavailable"),
+        ):
+            response = self.client.post(
+                url_for(
+                    "webhook-deliveries-admin.retry_delivery",
+                    delivery_id=delivery.id,
+                ),
+                data={"csrf_token": csrf_token},
+            )
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(delivery)
+        self.assertEqual(delivery.status, "failed")
+        self.assertIsNotNone(delivery.next_retry_at)

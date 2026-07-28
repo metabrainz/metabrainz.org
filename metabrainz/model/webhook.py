@@ -79,11 +79,8 @@ class Webhook(db.Model):
         db.session.add(delivery)
         db.session.commit()
 
-        from metabrainz.webhooks.tasks import deliver_webhook
-        deliver_webhook.apply_async(
-            args=[str(delivery.id)],
-            queue="webhooks"
-        )
+        from metabrainz.webhooks.tasks import publish_new_webhook_delivery
+        publish_new_webhook_delivery(delivery)
 
         return delivery
 

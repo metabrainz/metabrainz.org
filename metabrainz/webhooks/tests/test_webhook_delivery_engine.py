@@ -218,6 +218,30 @@ class WebhookDeliveryEngineTestCase(FlaskTestCase):
         self.assertEqual(len(mock_requests.request_history), 0)
 
     @requests_mock.Mocker()
+    def test_duplicate_task_does_not_deliver_twice(self, mock_requests):
+        """Only one queued copy may claim and send a delivery."""
+        mock_requests.post(
+            "https://example.com/webhook",
+            status_code=200,
+            text="OK",
+        )
+        delivery = WebhookDelivery(
+            webhook_id=self.webhook.id,
+            event_type=EVENT_USER_CREATED,
+            payload=self.payload,
+            status="pending",
+        )
+        db.session.add(delivery)
+        db.session.commit()
+
+        first = WebhookDeliveryEngine.deliver(str(delivery.id))
+        second = WebhookDeliveryEngine.deliver(str(delivery.id))
+
+        self.assertTrue(first["success"])
+        self.assertTrue(second["skipped"])
+        self.assertEqual(len(mock_requests.request_history), 1)
+
+    @requests_mock.Mocker()
     def test_circuit_breaker_records_success(self, mock_requests):
         """Test that successful delivery records success in circuit breaker."""
         mock_requests.post(

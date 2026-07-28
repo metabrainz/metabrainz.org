@@ -164,6 +164,8 @@ WEBHOOK_TASK_SOFT_TIME_LIMIT = {{template "KEY" "webhook/soft_time_limit"}}
 WEBHOOK_DEFAULT_RATE_LIMIT = '''{{template "KEY" "webhook/rate_limit"}}'''
 WEBHOOK_CIRCUIT_BREAKER_THRESHOLD = {{template "KEY" "webhook/circuit_breaker_threshold"}}
 WEBHOOK_CIRCUIT_BREAKER_TIMEOUT = {{template "KEY" "webhook/circuit_breaker_timeout"}}
+WEBHOOK_PENDING_DELIVERY_TIMEOUT = 600  # Requeue pending deliveries not claimed within 10 minutes
+WEBHOOK_PROCESSING_DELIVERY_TIMEOUT = 300  # Recover deliveries abandoned by dead workers
 
 STATIC_RESOURCES_DIR = '/static'
 

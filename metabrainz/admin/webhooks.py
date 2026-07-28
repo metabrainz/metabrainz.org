@@ -14,6 +14,7 @@ from metabrainz.admin.forms import RetryDeliveryForm
 from metabrainz.model import db
 from metabrainz.model.webhook import Webhook, WebhookDelivery, EVENT_USER_CREATED, EVENT_USER_DELETED, \
     EVENT_USER_UPDATED
+from metabrainz.webhooks.tasks import enqueue_webhook_delivery
 
 
 def validate_webhook_url(form, field):
@@ -201,20 +202,31 @@ class WebhookDeliveryModelView(AdminModelView):
             
             count = 0
             skipped = 0
+            failed = 0
             for delivery in query.all():
                 if delivery.status in ["failed", "pending"]:
-                    delivery.status = "pending"
-                    delivery.error_message = None
-                    count += 1
+                    try:
+                        if enqueue_webhook_delivery(delivery):
+                            count += 1
+                        else:
+                            skipped += 1
+                    except Exception as error:
+                        failed += 1
+                        current_app.logger.error(
+                            "Failed to enqueue webhook delivery %s: %s",
+                            delivery.id,
+                            error,
+                            exc_info=True,
+                        )
                 else:
                     skipped += 1
-            
-            db.session.commit()
-            
+
             if count > 0:
                 flash(f"Queued {count} delivery(ies) for retry.", "success")
             if skipped > 0:
                 flash(f"Skipped {skipped} delivery(ies) (only failed/pending can be retried).", "info")
+            if failed > 0:
+                flash(f"Failed to queue {failed} delivery(ies). They will be retried automatically.", "error")
         except Exception as e:
             db.session.rollback()
             current_app.logger.error(f"Error retrying deliveries: {str(e)}", exc_info=True)
@@ -240,11 +252,14 @@ class WebhookDeliveryModelView(AdminModelView):
                 )
                 return redirect(url_for(".details_view", id=delivery_id))
 
-            delivery.status = "pending"
-            delivery.error_message = None
-            db.session.commit()
-
-            flash("Delivery has been queued for retry.", "success")
+            if enqueue_webhook_delivery(delivery):
+                flash("Delivery has been queued for retry.", "success")
+            else:
+                flash(
+                    "Delivery state changed before it could be queued. "
+                    "No retry task was created.",
+                    "warning",
+                )
         except Exception as e:
             db.session.rollback()
             current_app.logger.error(f"Error retrying delivery {delivery_id}: {str(e)}", exc_info=True)

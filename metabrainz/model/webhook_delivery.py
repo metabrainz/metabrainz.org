@@ -42,12 +42,8 @@ class WebhookDelivery(db.Model):
 
     def process(self, session: requests.Session):
         """Process the webhook delivery by making an HTTP request to the webhook URL."""
-        if self.status not in ["pending", "failed"]:
+        if self.status != "processing":
             raise ValueError(f"Cannot process delivery in status {self.status}")
-
-        self.status = "processing"
-        self.updated_at = datetime.now(timezone.utc)
-        db.session.commit()
 
         try:
             headers = {

@@ -105,6 +105,36 @@ class WebhookDeliveryEngine:
         if not webhook:
             raise WebhookDeliveryError(f"Webhook not found for delivery {delivery_id}")
 
+        # Atomically claim the row before checking the circuit or making an HTTP
+        # request. This makes stale-pending recovery safe when an older queued
+        # copy of the same Celery task eventually arrives.
+        claimed = WebhookDelivery.query.filter(
+            WebhookDelivery.id == delivery.id,
+            WebhookDelivery.status == "pending",
+        ).update(
+            {
+                WebhookDelivery.status: "processing",
+                WebhookDelivery.updated_at: datetime.now(timezone.utc),
+            },
+            synchronize_session=False,
+        )
+        db.session.commit()
+
+        if not claimed:
+            current_app.logger.info(
+                "Skipping webhook delivery %s because its status is %s",
+                delivery_id,
+                delivery.status,
+            )
+            return {
+                "success": False,
+                "delivery_id": str(delivery_id),
+                "skipped": True,
+                "error": f"Delivery is already {delivery.status}",
+            }
+
+        db.session.refresh(delivery)
+
         if not webhook.is_active:
             delivery.status = "failed"
             delivery.error_message = "Webhook is not active"
