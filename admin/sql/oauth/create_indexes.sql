@@ -16,10 +16,14 @@ CREATE INDEX code_client_id_idx ON oauth.code (client_id);
 CREATE INDEX access_token_user_id_idx ON oauth.access_token (user_id);
 CREATE INDEX access_token_client_id_idx ON oauth.access_token (client_id);
 CREATE INDEX access_token_authorization_code_id_idx ON oauth.access_token (authorization_code_id);
+CREATE INDEX access_token_cleanup_idx ON oauth.access_token (issued_at, id)
+    WHERE issued_at IS NOT NULL;
 
 CREATE INDEX refresh_token_user_id_idx ON oauth.refresh_token (user_id);
 CREATE INDEX refresh_token_client_id_idx ON oauth.refresh_token (client_id);
 CREATE INDEX refresh_token_authorization_code_id_idx ON oauth.refresh_token (authorization_code_id);
+CREATE INDEX refresh_token_cleanup_idx ON oauth.refresh_token (issued_at, id)
+    WHERE issued_at IS NOT NULL;
 
 CREATE INDEX l_access_token_scope_access_token_id_idx ON oauth.l_access_token_scope (access_token_id);
 CREATE INDEX l_access_token_scope_scope_id_idx ON oauth.l_access_token_scope (scope_id);

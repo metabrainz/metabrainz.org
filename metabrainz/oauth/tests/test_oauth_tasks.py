@@ -104,7 +104,8 @@ class OAuthTasksTestCase(OAuthTestCase):
         removed_refresh_ids = {old_expired_refresh.id, old_revoked_refresh.id}
         kept_refresh_ids = {recent_revoked_refresh.id, active_refresh.id}
 
-        result = cleanup_old_tokens(days=7)
+        # A batch size of one exercises multiple commits for each token table.
+        result = cleanup_old_tokens(days=7, batch_size=1)
 
         self.assertEqual(result["access_tokens"], 2)
         self.assertEqual(result["refresh_tokens"], 2)
@@ -128,3 +129,11 @@ class OAuthTasksTestCase(OAuthTestCase):
         self.assertEqual(schedule["task"], "metabrainz.oauth.tasks.cleanup_old_tokens")
         self.assertEqual(schedule["args"], (7,))
         self.assertEqual(schedule["options"], {"queue": "webhooks_maintenance"})
+
+    def test_cleanup_old_tokens_rejects_invalid_batch_size(self):
+        result = cleanup_old_tokens(days=7, batch_size=0)
+
+        self.assertEqual(result["access_tokens"], 0)
+        self.assertEqual(result["refresh_tokens"], 0)
+        self.assertEqual(result["total"], 0)
+        self.assertEqual(result["error"], "batch_size must be greater than zero")
