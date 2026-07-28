@@ -17,6 +17,11 @@ class WebhookDeliveryError(Exception):
     pass
 
 
+class WebhookEndpointError(WebhookDeliveryError):
+    """Exception raised when the remote webhook endpoint fails."""
+    pass
+
+
 class WebhookDelivery(db.Model):
     """Webhook delivery attempt model."""
     __tablename__ = "webhook_delivery"
@@ -79,11 +84,25 @@ class WebhookDelivery(db.Model):
 
             response.raise_for_status()
             self.status = "delivered"
-        except Exception as e:
+            self.error_message = None
+            self.next_retry_at = None
+        except requests.RequestException as e:
             self.status = "failed"
             self.error_message = str(e)[:1000]
             self.schedule_retry()
-            raise WebhookDeliveryError(f"Failed to send webhook: {str(e)}") from e
+            raise WebhookEndpointError(
+                f"Failed to send webhook: {str(e)}"
+            ) from e
+        except Exception as e:
+            # Application and persistence errors must not count against a
+            # healthy remote endpoint, but they still need a bounded delivery
+            # retry budget.
+            self.status = "failed"
+            self.error_message = str(e)[:1000]
+            self.schedule_retry()
+            raise WebhookDeliveryError(
+                f"Failed to process webhook delivery: {str(e)}"
+            ) from e
         finally:
             self.updated_at = datetime.now(timezone.utc)
             db.session.commit()
@@ -96,6 +115,12 @@ class WebhookDelivery(db.Model):
             self.next_retry_at = datetime.now(timezone.utc) + self._get_retry_delay()
         else:
             self.next_retry_at = None
+
+    def defer_retry(self, delay: timedelta | None = None):
+        """Defer delivery without consuming an HTTP-attempt retry."""
+        if delay is None:
+            delay = timedelta(seconds=30)
+        self.next_retry_at = datetime.now(timezone.utc) + delay
 
     def _get_retry_delay(self) -> timedelta:
         """Calculate the delay before the next retry using exponential backoff with jitter."""

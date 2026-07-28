@@ -1,16 +1,22 @@
-import json
+import math
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 import requests
 from flask import current_app
+from redis import Redis
 from requests.adapters import HTTPAdapter
+from sqlalchemy.exc import SQLAlchemyError
 from urllib3.util.retry import Retry
 
 from metabrainz.model import db
-from metabrainz.model.webhook_delivery import WebhookDelivery, WebhookDeliveryError
-from metabrainz.webhooks.circuit_breaker import CircuitBreaker
+from metabrainz.model.webhook_delivery import (
+    WebhookDelivery,
+    WebhookDeliveryError,
+    WebhookEndpointError,
+)
+from metabrainz.webhooks.circuit_breaker import RedisCircuitBreaker
 
 
 class WebhookDeliveryEngine:
@@ -19,7 +25,7 @@ class WebhookDeliveryEngine:
     """
 
     _session = None
-    _circuit_breakers: dict[int, CircuitBreaker] = {}
+    _redis_client = None
 
     @classmethod
     def get_session(cls) -> requests.Session:
@@ -48,24 +54,35 @@ class WebhookDeliveryEngine:
         return cls._session
 
     @classmethod
-    def get_circuit_breaker(cls, webhook_id: int) -> CircuitBreaker:
-        """
-        Get or create a circuit breaker for a webhook.
-
-        Args:
-            webhook_id: ID of the webhook
-
-        Returns:
-            CircuitBreaker instance for the webhook
-        """
-        if webhook_id not in cls._circuit_breakers:
-            failure_threshold = current_app.config.get("WEBHOOK_CIRCUIT_BREAKER_THRESHOLD", 5)
-            recovery_timeout = current_app.config.get("WEBHOOK_CIRCUIT_BREAKER_TIMEOUT", 300)
-            cls._circuit_breakers[webhook_id] = CircuitBreaker(
-                failure_threshold=failure_threshold,
-                recovery_timeout=recovery_timeout
+    def get_redis_client(cls) -> Redis:
+        """Get the Redis client used for shared circuit breaker state."""
+        if cls._redis_client is None:
+            redis_config = current_app.config["REDIS"]
+            cls._redis_client = Redis(
+                host=redis_config["host"],
+                port=redis_config["port"],
+                db=redis_config.get("db_number", 0),
+                username=redis_config.get("username"),
+                password=redis_config.get("password"),
+                decode_responses=True,
             )
-        return cls._circuit_breakers[webhook_id]
+        return cls._redis_client
+
+    @classmethod
+    def get_circuit_breaker(cls, webhook_id: int) -> RedisCircuitBreaker:
+        """Get the Redis-backed circuit breaker for a webhook."""
+        namespace = current_app.config["REDIS"].get("namespace", "")
+        key_prefix = f"{namespace}:" if namespace else ""
+        return RedisCircuitBreaker(
+            redis_client=cls.get_redis_client(),
+            key=f"{key_prefix}webhook-circuit-breaker:{webhook_id}",
+            failure_threshold=current_app.config.get(
+                "WEBHOOK_CIRCUIT_BREAKER_THRESHOLD", 5
+            ),
+            failure_window=current_app.config.get(
+                "WEBHOOK_CIRCUIT_BREAKER_TIMEOUT", 300
+            ),
+        )
 
     @classmethod
     def check_rate_limit(cls, webhook_id: int) -> bool:
@@ -138,15 +155,20 @@ class WebhookDeliveryEngine:
         if not webhook.is_active:
             delivery.status = "failed"
             delivery.error_message = "Webhook is not active"
+            delivery.next_retry_at = None
             delivery.updated_at = datetime.now(timezone.utc)
             db.session.commit()
             raise WebhookDeliveryError(f"Webhook {webhook.id} is not active")
 
         circuit_breaker = cls.get_circuit_breaker(webhook.id)
-        if not circuit_breaker.can_execute():
+        if circuit_breaker.is_open():
             delivery.status = "failed"
-            delivery.error_message = "Circuit breaker is open - webhook temporarily disabled"
-            delivery.schedule_retry()
+            delivery.error_message = (
+                "Circuit breaker is open; delivery deferred"
+            )
+            stats = circuit_breaker.get_stats()
+            retry_delay = max(30, math.ceil(stats["time_until_retry"]))
+            delivery.defer_retry(delay=timedelta(seconds=retry_delay))
             delivery.updated_at = datetime.now(timezone.utc)
             db.session.commit()
 
@@ -173,7 +195,6 @@ class WebhookDeliveryEngine:
 
         try:
             delivery.process(cls.get_session())
-            circuit_breaker.record_success()
 
             elapsed_time = time.time() - start_time
             current_app.logger.info(
@@ -187,7 +208,7 @@ class WebhookDeliveryEngine:
                 "delivery_id": str(delivery_id),
                 "duration": elapsed_time,
             }
-        except Exception as e:
+        except WebhookEndpointError as e:
             circuit_breaker.record_failure()
 
             elapsed_time = time.time() - start_time
@@ -208,6 +229,26 @@ class WebhookDeliveryEngine:
                 "will_retry": delivery.next_retry_at is not None,
                 "retry_count": delivery.retry_count,
             }
+        except SQLAlchemyError:
+            raise
+        except WebhookDeliveryError as e:
+            elapsed_time = time.time() - start_time
+            current_app.logger.error(
+                f"Webhook delivery {delivery_id} failed internally "
+                f"(webhook_id={webhook.id}, error={str(e)}, "
+                f"duration={elapsed_time:.2f}s, "
+                f"retry_count={delivery.retry_count}, "
+                f"next_retry={delivery.next_retry_at})",
+                exc_info=True,
+            )
+            return {
+                "success": False,
+                "delivery_id": str(delivery_id),
+                "error": str(e),
+                "duration": elapsed_time,
+                "will_retry": delivery.next_retry_at is not None,
+                "retry_count": delivery.retry_count,
+            }
 
     @classmethod
     def reset_circuit_breaker(cls, webhook_id: int) -> None:
@@ -217,6 +258,5 @@ class WebhookDeliveryEngine:
         Args:
             webhook_id: ID of the webhook
         """
-        if webhook_id in cls._circuit_breakers:
-            cls._circuit_breakers[webhook_id].reset()
-            current_app.logger.info(f"Circuit breaker reset for webhook {webhook_id}")
+        cls.get_circuit_breaker(webhook_id).reset()
+        current_app.logger.info(f"Circuit breaker reset for webhook {webhook_id}")
