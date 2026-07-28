@@ -19,7 +19,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-07-29 07:12+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Last-Translator: Libra <recreate_squall363@simplelogin.com>\n"
 "Language: ru\n"
 "Language-Team: Russian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/ru/>\n"
@@ -415,6 +415,8 @@ msgstr ""
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr ""
+"Спасибо за регистрацию! Пожалуйста, проверьте ваши входящие, чтобы завершить "
+"верификацию."
 
 #: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
@@ -1123,7 +1125,7 @@ msgstr ""
 
 #: metabrainz/templates/index/gdpr.html:37
 msgid "Right to be forgotten"
-msgstr ""
+msgstr "Право на забвение"
 
 #: metabrainz/templates/index/gdpr.html:77
 msgid "Restriction of processing"
@@ -1162,6 +1164,11 @@ msgid ""
 "Creative\n"
 "        Commons licenses."
 msgstr ""
+"Фонд MetaBrainz Foundation - это НКО, которая верит в свободный и открытый "
+"доступ к данным. Он был основан с целью создать контролируемые сообществом "
+"базы данных, которые также были бы доступны широкой публике посредством их "
+"публикации в общественном достоянии или под лицензиями семейства Creative "
+"Commons."
 
 #: metabrainz/templates/index/index.html:16
 #, python-format
@@ -1184,35 +1191,41 @@ msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
-"MusicBrainz — это открытая музыкальная энциклопедия, которая собирает "
-"музыкальные метаданные и делает их доступными для всех желающих."
+"Открытая музыкальная энциклопедия, которая собирает музыкальные метаданные и "
+"делает их доступными для всех желающих."
 
 #: metabrainz/templates/index/index.html:40
-#, fuzzy, python-format
+#, python-format
 msgid "Sign up to use the <a href=\"%(account_type_url)s\">Live Data Feed</a>"
 msgstr ""
-"Зарегистрируйтесь перед тем, как использовать <a "
-"href=\"%(account_type_url)s\"> Ленту прямых трансляций </a> </em>"
+"Зарегистрируйтесь, чтобы получить доступ к <a href=\"%(account_type_url)s\">"
+"ленте с динамически обновляемыми данными</a>"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
-msgstr "Кросс-платформенный музыкальный таггер"
+msgstr "Кросс-платформенный музыкальный теггер"
 
 #: metabrainz/templates/index/index.html:57
 msgid "An open encyclopedia which contains information about published literature"
 msgstr ""
+"Открытая энциклопедия, специализирующаяся на сборе информации обо всей "
+"опубликованной литературе"
 
 #: metabrainz/templates/index/index.html:65
 msgid "An open record of user listening habits"
 msgstr ""
+"Публичный трекер для записи и отслеживания пользовательских привычек "
+"прослушивания музыки"
 
 #: metabrainz/templates/index/index.html:73
 msgid "A repository for Creative Commons licensed music and book reviews"
 msgstr ""
+"Коллекция музыкальных и книжных рецензий, опубликованных под лицензиями "
+"семейства Creative Commons"
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
-msgstr ""
+msgstr "Коллекция обложек музыкальных релизов с бесплатным и легким доступом"
 
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
@@ -1255,6 +1268,7 @@ msgid ""
 "To get more information about the foundation, go to the\n"
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
+"Больше деталей о фонде вы можете узнать <a href=\"%(about_url)s\">здесь</a>."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:43
 #: metabrainz/templates/index/privacy.html:3
