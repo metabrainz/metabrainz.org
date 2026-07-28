@@ -70,7 +70,7 @@ def _create_commercial_supporter(form, tier_id, user):
         data_usage_desc=form.usage_desc.data,
         org_name=form.org_name.data,
         org_desc=form.org_desc.data,
-        website_url=form.website_url.data,
+        website_url=(form.website_url.data or "").strip() or None,
         org_logo_url=form.logo_url.data,
         api_url=form.api_url.data,
         address_street=form.address_street.data,

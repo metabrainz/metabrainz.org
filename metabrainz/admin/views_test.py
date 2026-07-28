@@ -132,6 +132,97 @@ class AdminViewsTestCase(FlaskTestCase):
         db.session.commit()
         return supporter
 
+    def _create_search_supporter(self, username, email, org_name):
+        user = User.add(
+            name=username,
+            unconfirmed_email=email,
+            password="password123",
+        )
+        supporter = Supporter.add(
+            is_commercial=False,
+            contact_name=f"{org_name} contact",
+            data_usage_desc="Test usage",
+            org_name=org_name,
+            user=user,
+        )
+        db.session.commit()
+        return supporter
+
+    def test_supporter_search_includes_exact_username_org_and_pending_email(self):
+        exact = self._create_search_supporter(
+            "exact-supporter",
+            "pending@example.com",
+            "Exact Organization",
+        )
+        partial = self._create_search_supporter(
+            "exact-supporter-extra",
+            "other@example.com",
+            "Exact Organization Europe",
+        )
+
+        self.client.get(
+            url_for("supportersview.index"),
+            query_string={"search": "  exact organization  "},
+        )
+        supporters = self.get_context_variable("supporters")
+        self.assertEqual([supporter.id for supporter in supporters], [exact.id, partial.id])
+
+        self.client.get(
+            url_for("supportersview.index"),
+            query_string={"search": "EXACT-SUPPORTER"},
+        )
+        supporters = self.get_context_variable("supporters")
+        self.assertEqual([supporter.id for supporter in supporters], [exact.id, partial.id])
+
+        self.client.get(
+            url_for("supportersview.index"),
+            query_string={"search": "pending@example.com"},
+        )
+        supporters = self.get_context_variable("supporters")
+        self.assertEqual([supporter.id for supporter in supporters], [exact.id])
+
+    def test_user_search_includes_pending_email_and_ranks_exact_username_first(self):
+        exact = User.add(
+            name="exact-user",
+            unconfirmed_email="pending-user@example.com",
+            password="password123",
+        )
+        partial = User.add(
+            name="exact-user-extra",
+            unconfirmed_email="other-user@example.com",
+            password="password123",
+        )
+        db.session.commit()
+
+        self.client.get(
+            url_for("users-admin.index_view"),
+            query_string={"search": "EXACT-USER"},
+        )
+        users = self.get_context_variable("data")
+        self.assertEqual([user.id for user in users], [exact.id, partial.id])
+
+        self.client.get(
+            url_for("users-admin.index_view"),
+            query_string={"search": "pending-user@example.com"},
+        )
+        users = self.get_context_variable("data")
+        self.assertEqual([user.id for user in users], [exact.id])
+
+    def test_old_username_page_can_be_searched(self):
+        matching = OldUsername(username="Former Exact User")
+        db.session.add_all([
+            matching,
+            OldUsername(username="Unrelated User"),
+        ])
+        db.session.commit()
+
+        self.client.get(
+            url_for("old-username-admin.index_view"),
+            query_string={"search": "former exact"},
+        )
+        old_usernames = self.get_context_variable("data")
+        self.assertEqual([old_username.id for old_username in old_usernames], [matching.id])
+
     def _edit_username(self, user, new_username):
         response = self.client.get(url_for("users-admin.details_view", id=user.id))
         self.assertEqual(response.status_code, 200)

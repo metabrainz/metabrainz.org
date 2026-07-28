@@ -1,5 +1,6 @@
 import json
 from urllib.parse import urlparse
+from unittest.mock import patch
 
 from brainzutils import cache
 from flask import url_for, g
@@ -309,7 +310,85 @@ class SupportersViewsTestCase(FlaskTestCase):
 
         self.assertIn("contact_name", props["initial_errors"])
         self.assertIn("org_name", props["initial_errors"])
+        self.assertNotIn("website_url", props["initial_errors"])
+
+    def test_become_commercial_supporter_normalizes_blank_website(self):
+        self.temporary_login(self.existing_user)
+
+        self.client.get(url_for('supporters.signup_commercial', tier_id=self.tier.id))
+        response = self.client.post(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            data={
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing the API for my project",
+                "org_name": "Test Organization",
+                "org_desc": "A test organization description",
+                "website_url": "   ",
+                "address_street": "123 Test St",
+                "address_city": "Test City",
+                "address_state": "Test State",
+                "address_postcode": "12345",
+                "address_country": "Test Country",
+                "amount_pledged": "150",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False,
+        )
+
+        self.assertRedirects(response, url_for("index.profile"))
+        supporter = Supporter.get(user_id=self.existing_user.id)
+        self.assertIsNone(supporter.website_url)
+
+    def test_become_commercial_supporter_rejects_invalid_website(self):
+        self.temporary_login(self.existing_user)
+
+        self.client.get(url_for('supporters.signup_commercial', tier_id=self.tier.id))
+        response = self.client.post(
+            url_for('supporters.signup_commercial', tier_id=self.tier.id),
+            data={
+                "contact_name": "Test Contact",
+                "usage_desc": "Testing the API for my project",
+                "org_name": "Test Organization",
+                "org_desc": "A test organization description",
+                "website_url": "not a URL",
+                "address_street": "123 Test St",
+                "address_city": "Test City",
+                "address_state": "Test State",
+                "address_postcode": "12345",
+                "address_country": "Test Country",
+                "amount_pledged": "150",
+                "agreement": "y",
+                "mtcaptcha": "test-token",
+                "csrf_token": g.csrf_token,
+            },
+        )
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
         self.assertIn("website_url", props["initial_errors"])
+        self.assertIsNone(Supporter.get(user_id=self.existing_user.id))
+
+    def test_commercial_signup_notification_includes_username(self):
+        user = User.add(
+            name="notification-user",
+            unconfirmed_email="notification@example.com",
+            password="password123",
+        )
+
+        with patch("metabrainz.model.supporter.send_mail") as send_mail:
+            Supporter.add(
+                is_commercial=True,
+                contact_name="Notification Contact",
+                data_usage_desc="Testing notifications",
+                org_name="Notification Organization",
+                user=user,
+            )
+
+        notification_text = send_mail.call_args.kwargs["text"]
+        self.assertIn("Username: notification-user", notification_text)
+        self.assertIn("Contact email: notification@example.com", notification_text)
 
     def test_become_noncommercial_supporter_missing_required_fields(self):
         self.temporary_login(self.existing_user)
