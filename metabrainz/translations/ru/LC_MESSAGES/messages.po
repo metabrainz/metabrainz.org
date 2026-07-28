@@ -18,23 +18,24 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-06-12 00:55+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-07-29 07:12+0000\n"
+"Last-Translator: Libra <recreate_squall363@simplelogin.com>\n"
 "Language: ru\n"
-"Language-Team: Russian "
-"<https://translations.metabrainz.org/projects/metabrainz/website/ru/>\n"
+"Language-Team: Russian <https://translations.metabrainz.org/projects/"
+"metabrainz/website/ru/>\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) "
-"|| (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "'%(value)s' не является подходящим значением для этого поля"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:27
 #: frontend/js/src/forms/SignupCommercial.tsx:154
@@ -49,7 +50,7 @@ msgstr "Укажите e-mail адрес!"
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
 msgid "Current password is required!"
-msgstr ""
+msgstr "Укажите текущий пароль!"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -60,7 +61,7 @@ msgstr ""
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
 msgid "Password is required!"
-msgstr ""
+msgstr "Укажите пароль!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:160
@@ -68,7 +69,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
 msgid "Confirm Password is required!"
-msgstr ""
+msgstr "Подтвердите выбранный пароль!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
@@ -77,7 +78,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:81 metabrainz/index/forms.py:72
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:75
 msgid "Confirm Password should match password!"
-msgstr ""
+msgstr "Подтверждение пароля и сам пароль должны совпадать!"
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
 #: frontend/js/src/Profile.tsx:272 frontend/js/src/Profile.tsx:482
@@ -91,15 +92,15 @@ msgstr "Имя контакта не заполнено."
 
 #: metabrainz/index/views.py:234
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "Профиль успешно обновлён."
 
 #: metabrainz/index/views.py:261
 msgid "Current password is incorrect."
-msgstr ""
+msgstr "Текущий пароль указан неверно."
 
 #: metabrainz/index/views.py:266
 msgid "Password changed successfully."
-msgstr ""
+msgstr "Пароль успешно изменён."
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
@@ -119,7 +120,7 @@ msgstr ""
 
 #: metabrainz/index/views.py:478
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Ваш аккаунт был удалён."
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
 msgid "Application Name"
@@ -160,11 +161,11 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr ""
+msgstr "Не заполнено поле \"Домашняя страница\"."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr ""
+msgstr "URL-адрес домашней страницы указан в неверном формате."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
@@ -252,6 +253,9 @@ msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
+"Не могли бы вы, пожалуйста, рассказать нам побольше о проекте, в котором "
+"планируете использовать наши данные? Планируете ли вы получать к ним доступ "
+"через наши API или же собираетесь селфхостить их самостоятельно?"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:137
 #: frontend/js/src/forms/SignupNonCommercial.tsx:68
@@ -378,7 +382,7 @@ msgstr ""
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
 msgid "You are already a supporter."
-msgstr ""
+msgstr "Вы уже поддерживаете проект."
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
@@ -528,27 +532,29 @@ msgstr "Блог"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "Чат"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
+#, fuzzy
 msgid "Mastodon"
-msgstr ""
+msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
+#, fuzzy
 msgid "Bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: metabrainz/templates/base.html:94
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
-msgstr ""
+msgstr "Проспонсировано <a href=\"%(github_url)s\">GitHub</a>"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
@@ -5309,4 +5315,3 @@ msgstr ""
 
 #~ msgid "Privacy policy"
 #~ msgstr "Политика конфиденциальности"
-
