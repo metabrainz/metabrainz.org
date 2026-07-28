@@ -1,7 +1,9 @@
+import re
+
 from flask_babel import gettext
 from wtforms import BooleanField, TextAreaField, ValidationError
 from wtforms.fields import StringField, URLField, DecimalField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, Optional, Regexp, URL
 
 from metabrainz.index.forms import DatasetsField, MeBFlaskForm
 from metabrainz.user.forms import UserSignupForm
@@ -32,7 +34,13 @@ class CommercialFieldsMixin:
     ])
 
     website_url = URLField(gettext("Website URL"), validators=[
-        DataRequired(gettext("You need to specify website of the organization.")),
+        Optional(),
+        URL(message=gettext("Website URL must be a valid URL.")),
+        Regexp(
+            r"^https?://",
+            flags=re.IGNORECASE,
+            message=gettext("Website URL must be a valid URL."),
+        ),
     ])
     logo_url = URLField(gettext("Logo image URL"))
     api_url = URLField(gettext("API URL"))

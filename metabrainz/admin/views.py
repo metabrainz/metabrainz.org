@@ -4,6 +4,7 @@ from flask import Response, request, redirect, url_for, current_app
 from flask_admin import expose
 from flask_login import current_user
 from markupsafe import Markup
+from sqlalchemy import case, func, or_
 from sqlalchemy.exc import IntegrityError
 
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
@@ -588,7 +589,7 @@ class UserModelView(AdminModelView):
         'member_since': 'Member Since',
         'is_blocked': 'Status'
     }
-    column_searchable_list = ('name', 'email')
+    column_searchable_list = ('name', 'email', 'unconfirmed_email')
     column_filters = ('name', 'email', 'member_since', 'is_blocked',)
     column_default_sort = ('name', True)
     can_create = False
@@ -602,6 +603,27 @@ class UserModelView(AdminModelView):
 
     def __init__(self, session, **kwargs):
         super().__init__(User, session, **kwargs)
+
+    def _apply_search(self, query, count_query, joins, count_joins, search):
+        fields = (User.name, User.email, User.unconfirmed_email)
+        for term in search.split():
+            partial_match = or_(*(
+                field.icontains(term, autoescape=True)
+                for field in fields
+            ))
+            query = query.filter(partial_match)
+            if count_query is not None:
+                count_query = count_query.filter(partial_match)
+
+        search = search.strip()
+        if search:
+            exact_match = or_(*(
+                func.lower(field) == search.lower()
+                for field in fields
+            ))
+            query = query.order_by(case((exact_match, 0), else_=1))
+
+        return query, count_query, joins, count_joins
 
     @expose('/details/')
     def details_view(self):
@@ -806,6 +828,7 @@ class UserModelView(AdminModelView):
 
 class OldUsernameModelView(AdminModelView):
     column_list = ('username', 'deleted_at')
+    column_searchable_list = ('username',)
     can_edit = False
     can_view_details = False
 

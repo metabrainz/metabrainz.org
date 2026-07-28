@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Integer
+from sqlalchemy import ForeignKey, Integer, case
 from sqlalchemy.orm import contains_eager, relationship, mapped_column, Mapped
 
 from metabrainz.model import db
@@ -138,6 +138,31 @@ class Supporter(db.Model):
         return cls.query.filter_by(**kwargs).order_by(cls.created.desc()).all()
 
     @classmethod
+    def _filter_by_search(cls, query, value):
+        """Filter a supporter query and return its exact-match condition."""
+        value = value.strip()
+        if not value:
+            return query, None
+
+        fields = (
+            cls.org_name,
+            cls.contact_name,
+            User.name,
+            User.email,
+            User.unconfirmed_email,
+        )
+        partial_match = or_(*(
+            field.icontains(value, autoescape=True)
+            for field in fields
+        ))
+        exact_match = or_(*(
+            func.lower(field) == value.lower()
+            for field in fields
+        ))
+
+        return query.join(cls.user).filter(partial_match), exact_match
+
+    @classmethod
     def get_all_commercial(cls, limit=None, offset=None, state=None, featured=None, good_standing=None, search=None):
         query = cls.query.filter(cls.is_commercial==True)
 
@@ -147,21 +172,16 @@ class Supporter(db.Model):
             query = query.filter(cls.featured == featured)
         if good_standing is not None:
             query = query.filter(cls.good_standing == good_standing)
-        if search:
-            # Search across multiple fields
-            from sqlalchemy import or_
-            search_term = f"%{search}%"
-            query = query.join(User).filter(
-                or_(
-                    cls.org_name.ilike(search_term),
-                    cls.contact_name.ilike(search_term),
-                    User.name.ilike(search_term),
-                    User.email.ilike(search_term)
-                )
-            )
 
-        query = query.order_by(cls.org_name)
+        exact_match = None
+        if search:
+            query, exact_match = cls._filter_by_search(query, search)
+
         count = query.count()  # Total count should be calculated before limits
+        if exact_match is not None:
+            query = query.order_by(case((exact_match, 0), else_=1))
+        query = query.order_by(cls.org_name)
+
         if limit is not None:
             query = query.limit(limit)
         if offset is not None:
@@ -195,22 +215,15 @@ class Supporter(db.Model):
             query = query.filter(cls.featured == featured)
         if good_standing is not None:
             query = query.filter(cls.good_standing == good_standing)
-        if search:
-            # Search across multiple fields
-            from sqlalchemy import or_
-            search_term = f"%{search}%"
-            query = query.join(User).filter(
-                or_(
-                    cls.org_name.ilike(search_term),
-                    cls.contact_name.ilike(search_term),
-                    User.name.ilike(search_term),
-                    User.email.ilike(search_term)
-                )
-            )
 
-        # Order by created date descending (most recent first)
-        query = query.order_by(cls.created.desc())
+        exact_match = None
+        if search:
+            query, exact_match = cls._filter_by_search(query, search)
+
         count = query.count()  # Total count should be calculated before limits
+        if exact_match is not None:
+            query = query.order_by(case((exact_match, 0), else_=1))
+        query = query.order_by(cls.created.desc())
 
         if limit is not None:
             query = query.limit(limit)
@@ -261,18 +274,15 @@ class Supporter(db.Model):
 
     @classmethod
     def search(cls, value):
-        """ Search supporters by their org_name, name, or email. """
-        return cls.query \
-        .join(Supporter.user) \
-        .options(contains_eager(Supporter.user)) \
-        .filter(or_(
-            cls.org_name.ilike('%'+value+'%'),
-            cls.contact_name.ilike('%'+value+'%'),
-            User.name.ilike('%'+value+'%'),
-            User.email.ilike('%'+value+'%'),
-        )) \
-        .limit(20) \
-        .all()
+        """Search supporters by organization, contact, username, or email."""
+        query, exact_match = cls._filter_by_search(cls.query, value)
+        if exact_match is None:
+            return []
+        return query \
+            .options(contains_eager(Supporter.user)) \
+            .order_by(case((exact_match, 0), else_=1), cls.created.desc()) \
+            .limit(20) \
+            .all()
 
     def generate_token(self):
         """Generates new access token for this supporter."""
@@ -364,7 +374,8 @@ def send_supporter_signup_notification(supporter):
             ('Organization name', supporter.org_name),
             ('Description', supporter.org_desc),
             ('Contact name', supporter.contact_name),
-            ('Contact email', supporter.user.email),
+            ('Contact email', supporter.user.get_email_any()),
+            ('Username', supporter.user.name),
 
             ('Website URL', supporter.website_url),
             ('Logo image URL', supporter.org_logo_url),

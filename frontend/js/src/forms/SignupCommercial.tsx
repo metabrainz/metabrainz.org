@@ -115,9 +115,12 @@ function SignupCommercial({
     org_desc: Yup.string().required(
       t("You need to provide description of your organization.")
     ),
-    website_url: Yup.string().required(
-      t("You need to specify website of the organization.")
-    ),
+    website_url: Yup.string()
+      .url(t("Website URL must be a valid URL."))
+      .matches(/^https?:\/\//i, {
+        message: t("Website URL must be a valid URL."),
+        excludeEmptyString: true,
+      }),
     logo_url: Yup.string(),
     api_url: Yup.string(),
     address_street: Yup.string().required(t("You need to specify street.")),
@@ -390,11 +393,10 @@ function SignupCommercial({
                 </TextAreaInput>
 
                 <AuthCardTextInput
-                  type="text"
+                  type="url"
                   id="website_url"
                   name="website_url"
                   label={t("Website URL")}
-                  required
                 />
 
                 <AuthCardTextInput
