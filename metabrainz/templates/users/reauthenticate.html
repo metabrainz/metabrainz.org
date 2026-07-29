@@ -14,7 +14,12 @@
     <div class="form-group">
       {{ form.password.label(class="col-sm-4 control-label") }}
       <div class="col-sm-5">
-        {{ form.password(class="form-control", autocomplete="current-password", required=True) }}
+        {{ form.password(
+          class="form-control",
+          autocomplete="current-password",
+          required=True,
+          data_max_utf8_bytes=72
+        ) }}
       </div>
     </div>
 
@@ -25,4 +30,22 @@
       </div>
     </div>
   </form>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var passwordInput = document.querySelector("[data-max-utf8-bytes]");
+      var byteLimitError = {{ _("Password must not exceed 72 bytes.")|tojson }};
+
+      function updatePasswordValidity() {
+        var byteLength = new TextEncoder().encode(passwordInput.value).byteLength;
+        passwordInput.setCustomValidity(byteLength > 72 ? byteLimitError : "");
+      }
+
+      passwordInput.addEventListener("input", updatePasswordValidity);
+      updatePasswordValidity();
+    });
+  </script>
 {% endblock %}

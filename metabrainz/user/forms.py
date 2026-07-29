@@ -6,6 +6,7 @@ from wtforms.validators import DataRequired, EqualTo, Length
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.index.forms import MeBFlaskForm
 from metabrainz.mtcaptcha import MTCaptchaField, validate_mtcaptcha
+from metabrainz.password import validate_bcrypt_password_length
 from metabrainz.user.username import validate_username
 
 
@@ -27,7 +28,8 @@ class UserSignupForm(MeBFlaskForm):
     ])
     password = PasswordField(validators=[
         DataRequired(gettext("Password is required!")),
-        Length(min=8, max=64)
+        Length(min=8, max=64),
+        validate_bcrypt_password_length,
     ])
     confirm_password = PasswordField(validators=[
         DataRequired(gettext("Confirm Password is required!")),
@@ -43,13 +45,19 @@ class UserSignupForm(MeBFlaskForm):
 class UserLoginForm(MeBFlaskForm):
     """ Login form for existing users. """
     username = StringField(gettext("Username"), validators=[DataRequired(gettext("Username is required!"))])
-    password = PasswordField(gettext("Password"), validators=[DataRequired(gettext("Password is required!"))])
+    password = PasswordField(gettext("Password"), validators=[
+        DataRequired(gettext("Password is required!")),
+        validate_bcrypt_password_length,
+    ])
     remember_me = BooleanField(gettext("Remember me"), default="checked")
 
 
 class UserReauthenticationForm(MeBFlaskForm):
     """Form for refreshing an existing login session."""
-    password = PasswordField(gettext("Password"), validators=[DataRequired(gettext("Password is required!"))])
+    password = PasswordField(gettext("Password"), validators=[
+        DataRequired(gettext("Password is required!")),
+        validate_bcrypt_password_length,
+    ])
 
 
 class ForgotUsernameForm(MeBFlaskForm):
@@ -67,7 +75,8 @@ class ResetPasswordForm(MeBFlaskForm):
     """ Form for a user to reset their password. """
     password = PasswordField(validators=[
         DataRequired(gettext("Password is required!")),
-        Length(min=8, max=64)
+        Length(min=8, max=64),
+        validate_bcrypt_password_length,
     ])
     confirm_password = PasswordField(validators=[
         DataRequired(gettext("Confirm Password is required!")),

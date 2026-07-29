@@ -7,6 +7,8 @@ from wtforms.validators import DataRequired
 from wtforms.validators import EqualTo, Length
 from wtforms.widgets.core import ListWidget, CheckboxInput
 
+from metabrainz.password import validate_bcrypt_password_length
+
 
 class MeBFlaskForm(FlaskForm):
 
@@ -61,10 +63,12 @@ class UserChangePasswordForm(MeBFlaskForm):
     """Password change form for logged in users."""
     current_password = PasswordField(validators=[
         DataRequired(gettext("Current password is required!")),
+        validate_bcrypt_password_length,
     ])
     password = PasswordField(validators=[
         DataRequired(gettext("Password is required!")),
-        Length(min=8, max=64)
+        Length(min=8, max=64),
+        validate_bcrypt_password_length,
     ])
     confirm_password = PasswordField(validators=[
         DataRequired(gettext("Confirm Password is required!")),
