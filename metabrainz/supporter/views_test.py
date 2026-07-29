@@ -9,7 +9,11 @@ from sqlalchemy import delete
 
 from metabrainz.model import db
 from metabrainz.model.dataset import Dataset
-from metabrainz.model.supporter import Supporter, STATE_ACTIVE
+from metabrainz.model.supporter import (
+    STATE_ACTIVE,
+    Supporter,
+    send_supporter_signup_notification,
+)
 from metabrainz.model.tier import Tier
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
@@ -173,28 +177,29 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertEqual(props["tier"]["name"], "Test Tier")
         self.assertEqual(props["tier"]["price"], 100.0)
 
-        response = self.client.post(
-            url_for('supporters.signup_commercial', tier_id=self.tier.id),
-            data={
-                "contact_name": "Test Contact",
-                "usage_desc": "Testing the API for my project",
-                "org_name": "Test Organization",
-                "org_desc": "A test organization description",
-                "website_url": "https://example.com",
-                "logo_url": "https://example.com/logo.png",
-                "api_url": "https://api.example.com",
-                "address_street": "123 Test St",
-                "address_city": "Test City",
-                "address_state": "Test State",
-                "address_postcode": "12345",
-                "address_country": "Test Country",
-                "amount_pledged": "150",
-                "agreement": "y",
-                "mtcaptcha": "test-token",
-                "csrf_token": g.csrf_token,
-            },
-            follow_redirects=False
-        )
+        with patch("metabrainz.model.supporter.send_mail") as send_mail:
+            response = self.client.post(
+                url_for('supporters.signup_commercial', tier_id=self.tier.id),
+                data={
+                    "contact_name": "Test Contact",
+                    "usage_desc": "Testing the API for my project",
+                    "org_name": "Test Organization",
+                    "org_desc": "A test organization description",
+                    "website_url": "https://example.com",
+                    "logo_url": "https://example.com/logo.png",
+                    "api_url": "https://api.example.com",
+                    "address_street": "123 Test St",
+                    "address_city": "Test City",
+                    "address_state": "Test State",
+                    "address_postcode": "12345",
+                    "address_country": "Test Country",
+                    "amount_pledged": "150",
+                    "agreement": "y",
+                    "mtcaptcha": "test-token",
+                    "csrf_token": g.csrf_token,
+                },
+                follow_redirects=False
+            )
         self.assertRedirects(response, url_for('index.profile'))
 
         supporter = Supporter.query.filter_by(user_id=self.existing_user.id).first()
@@ -203,6 +208,10 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertEqual(supporter.org_name, "Test Organization")
         self.assertEqual(supporter.contact_name, "Test Contact")
         self.assertEqual(float(supporter.amount_pledged), 150.0)
+        self.assertIn(
+            f"Tier: {self.tier.name} (#{self.tier.id})",
+            send_mail.call_args.kwargs["text"],
+        )
 
     def test_become_commercial_supporter_amount_pledged_validation(self):
         self.temporary_login(self.existing_user)
@@ -377,18 +386,26 @@ class SupportersViewsTestCase(FlaskTestCase):
             password="password123",
         )
 
+        supporter = Supporter.add(
+            is_commercial=True,
+            contact_name="Notification Contact",
+            data_usage_desc="Testing notifications",
+            org_name="Notification Organization",
+            tier_id=self.tier.id,
+            user=user,
+        )
+        db.session.commit()
+
         with patch("metabrainz.model.supporter.send_mail") as send_mail:
-            Supporter.add(
-                is_commercial=True,
-                contact_name="Notification Contact",
-                data_usage_desc="Testing notifications",
-                org_name="Notification Organization",
-                user=user,
-            )
+            send_supporter_signup_notification(supporter)
 
         notification_text = send_mail.call_args.kwargs["text"]
         self.assertIn("Username: notification-user", notification_text)
         self.assertIn("Contact email: notification@example.com", notification_text)
+        self.assertIn(
+            f"Tier: {self.tier.name} (#{self.tier.id})",
+            notification_text,
+        )
 
     def test_become_noncommercial_supporter_missing_required_fields(self):
         self.temporary_login(self.existing_user)
