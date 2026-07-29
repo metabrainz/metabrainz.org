@@ -1,3 +1,4 @@
+import logging
 import os
 import pprint
 import sys
@@ -20,6 +21,10 @@ from metabrainz.utils import get_global_props
 deploy_env = os.environ.get('DEPLOY_ENV', '')
 
 CONSUL_CONFIG_FILE_RETRY_COUNT = 10
+LOG_FORMAT = (
+    "[%(asctime)s] %(levelname)s %(name)s in "
+    "%(pathname)s:%(lineno)d: %(message)s"
+)
 
 # Service types control which set of blueprints (and admin views) a process serves.
 # This lets us run the website and the OAuth2 provider as separate, independently
@@ -32,6 +37,21 @@ SERVICE_WEB = "web"      # the website: everything except the OAuth2 endpoints
 SERVICE_OAUTH = "oauth"  # the OAuth2 provider: the full app, gated to OAuth2 traffic by the gateway
 
 bcrypt = Bcrypt()
+
+
+def configure_logging(app):
+    """Configure application and root handlers with a consistent log format."""
+    formatter = logging.Formatter(LOG_FORMAT)
+    root_logger = logging.getLogger()
+
+    if not root_logger.handlers:
+        root_logger.addHandler(logging.StreamHandler())
+
+    for handler in root_logger.handlers:
+        handler.setFormatter(formatter)
+
+    for handler in app.logger.handlers:
+        handler.setFormatter(formatter)
 
 
 def create_app(debug=None, config_path=None, service=SERVICE_ALL):
@@ -73,6 +93,8 @@ def create_app(debug=None, config_path=None, service=SERVICE_ALL):
 
     if debug is not None:
         app.debug = debug
+
+    configure_logging(app)
 
     if app.debug and app.config['SECRET_KEY']:
         app.init_debug_toolbar()
