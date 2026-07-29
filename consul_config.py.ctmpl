@@ -36,8 +36,9 @@ SQLALCHEMY_MUSICBRAINZ_URI = 'postgresql://{{template "KEY" "postgresql/mb_usern
 {{end}}
 {{end}}
 
-{{if service "metabrainz-redis"}}
-{{with index (service "metabrainz-redis") 0}}
+{{- $redisService := key (printf "docker-server-configs/MeB/config.%s.json/%s" (env "DEPLOY_ENV") "redis/service") | trimSpace -}}
+{{if service $redisService}}
+{{with index (service $redisService) 0}}
 REDIS = {
     "host": '''{{.Address}}''',
     "port": {{.Port}},
