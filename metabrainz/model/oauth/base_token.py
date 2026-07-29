@@ -115,7 +115,7 @@ def save_token(token_data, request: FlaskOAuth2Request):
             client_id=request.client.id,
             user_id=user_id,
             refresh_token=refresh_token,
-            expires_in=current_app.config["OAUTH2_TOKEN_EXPIRES_IN"]["refresh_token"],
+            expires_in=current_app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"],
             scopes=refresh_token_scopes,
             authorization_code_id=authorization_code_id
         )

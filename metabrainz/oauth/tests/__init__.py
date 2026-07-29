@@ -271,7 +271,7 @@ class OAuthTestCase(FlaskTestCase):
         db_refresh_token = next(token for token in refresh_tokens if token.refresh_token == data["refresh_token"])
         self.assertEqual(
             db_refresh_token.expires_in,
-            self.app.config["OAUTH2_TOKEN_EXPIRES_IN"]["refresh_token"],
+            self.app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"],
         )
         refresh_tokens = {token.refresh_token for token in refresh_tokens}
         self.assertIn(data["refresh_token"], refresh_tokens)
@@ -325,6 +325,14 @@ class OAuthTestCase(FlaskTestCase):
             OAuth2RefreshToken.user_id == self.user2.id,
             OAuth2RefreshToken.revoked.is_(False),
         ).all()
+        db_refresh_token = next(
+            token for token in refresh_tokens
+            if token.refresh_token == new_token["refresh_token"]
+        )
+        self.assertEqual(
+            db_refresh_token.expires_in,
+            self.app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"],
+        )
         refresh_tokens = {token.refresh_token for token in refresh_tokens}
         self.assertIn(new_token["refresh_token"], refresh_tokens)
         self.assertTrue(new_token["refresh_token"].startswith("mebr"))

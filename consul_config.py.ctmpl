@@ -149,10 +149,11 @@ OAUTH2_TOKEN_EXPIRES_IN = {
     "authorization_code": 3600,
     "implicit": 3600,
     "client_credentials": 3600,
-    # This entry configures the refresh token itself, not access tokens
-    # issued by the refresh token grant.
-    "refresh_token": 180 * 24 * 60 * 60,  # 6 months
 }
+# This entry configures the refresh token itself, not access tokens
+# issued by the refresh token grant and is therefore a separate variable
+# not a part of the OAUTH2_TOKEN_EXPIRES_IN dict.
+OAUTH2_REFRESH_TOKEN_EXPIRES_IN = 180 * 24 * 60 * 60  # 6 months
 OAUTH2_AUTHORIZATION_CODE_EXPIRES_IN = 600
 
 OIDC_ID_TOKEN_EXPIRATION = 3600
