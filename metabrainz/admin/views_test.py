@@ -223,16 +223,19 @@ class AdminViewsTestCase(FlaskTestCase):
         old_usernames = self.get_context_variable("data")
         self.assertEqual([old_username.id for old_username in old_usernames], [matching.id])
 
-    def _edit_username(self, user, new_username):
+    def _edit_username(self, user, new_username, reason=None):
         response = self.client.get(url_for("users-admin.details_view", id=user.id))
         self.assertEqual(response.status_code, 200)
         form = self.get_context_variable("edit_username_form")
+        data = {
+            "username": new_username,
+            "csrf_token": form.csrf_token.current_token,
+        }
+        if reason is not None:
+            data["reason"] = reason
         return self.client.post(
             url_for("users-admin.edit_username", user_id=user.id),
-            data={
-                "username": new_username,
-                "csrf_token": form.csrf_token.current_token,
-            },
+            data=data,
             follow_redirects=False,
         )
 
@@ -300,6 +303,41 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assertEqual(user.name, "regular_user")
         self.assertMessageFlashed("Username is already set to this value.", "error")
         self.assertIsNone(OldUsername.get("regular_user"))
+
+    def test_admin_edit_username_logs_optional_reason(self):
+        user = self.create_user()
+
+        response = self._edit_username(
+            user,
+            "RenamedUser",
+            reason="  Requested by the account owner.  ",
+        )
+
+        self.assertEqual(response.status_code, 302)
+        log = ModerationLog.query.filter_by(
+            user_id=user.id,
+            action="edit_username",
+        ).one()
+        self.assertEqual(
+            log.reason,
+            "Username changed from 'regular_user' to 'RenamedUser'. "
+            "Requested by the account owner.",
+        )
+
+    def test_admin_edit_username_keeps_existing_message_without_reason(self):
+        user = self.create_user()
+
+        response = self._edit_username(user, "RenamedUser")
+
+        self.assertEqual(response.status_code, 302)
+        log = ModerationLog.query.filter_by(
+            user_id=user.id,
+            action="edit_username",
+        ).one()
+        self.assertEqual(
+            log.reason,
+            "Username changed from 'regular_user' to 'RenamedUser'.",
+        )
 
     def test_admin_supporter_edit_rejects_different_case_of_existing_username(self):
         supporter = self.create_supporter()

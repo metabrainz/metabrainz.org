@@ -703,6 +703,7 @@ class UserModelView(AdminModelView):
             return redirect(url_for('.details_view', id=user_id))
 
         new_username = form.username.data.strip()
+        reason = (form.reason.data or "").strip()
 
         username_error = _username_change_error(user, new_username)
         if username_error is not None:
@@ -715,6 +716,8 @@ class UserModelView(AdminModelView):
             user.last_updated = datetime.now(timezone.utc)
 
             log_message = f"Username changed from '{old_username}' to '{new_username}'."
+            if reason:
+                log_message += f" {reason}"
             user.moderate(current_user, "edit_username", log_message)
 
             db.session.add(OldUsername(username=old_username))
