@@ -8,7 +8,11 @@ from werkzeug.exceptions import NotFound, BadRequest
 
 from metabrainz import flash
 from metabrainz.model import Dataset, db
-from metabrainz.model.supporter import Supporter, InactiveSupporterException
+from metabrainz.model.supporter import (
+    InactiveSupporterException,
+    Supporter,
+    send_supporter_signup_notification,
+)
 from metabrainz.model.tier import Tier
 from metabrainz.model.token import TokenGenerationLimitException
 from metabrainz.model.user import User
@@ -64,7 +68,7 @@ def tier(tier_id):
 
 def _create_commercial_supporter(form, tier_id, user):
     """Create a commercial supporter record."""
-    Supporter.add(
+    return Supporter.add(
         is_commercial=True,
         contact_name=form.contact_name.data,
         data_usage_desc=form.usage_desc.data,
@@ -157,8 +161,9 @@ def signup_commercial():
     if form.validate_on_submit():
         if existing_user:
             # Existing user becoming a supporter
-            _create_commercial_supporter(form, tier_id, current_user)
+            supporter = _create_commercial_supporter(form, tier_id, current_user)
             db.session.commit()
+            send_supporter_signup_notification(supporter)
 
             flash.success(gettext(
                 "Thanks for becoming a supporter! Your application will be reviewed "
@@ -178,8 +183,9 @@ def signup_commercial():
                 }))
 
             user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
-            _create_commercial_supporter(form, tier_id, user)
+            supporter = _create_commercial_supporter(form, tier_id, user)
             db.session.commit()
+            send_supporter_signup_notification(supporter)
             increment_signup_count()
 
             user.emit_event(EVENT_USER_CREATED)

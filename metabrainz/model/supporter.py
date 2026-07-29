@@ -123,9 +123,6 @@ class Supporter(db.Model):
             raise TypeError('Unexpected **kwargs: %r' % kwargs)
         db.session.add(new_supporter)
 
-        if new_supporter.is_commercial:
-            send_supporter_signup_notification(new_supporter)
-
         return new_supporter
 
     @classmethod
