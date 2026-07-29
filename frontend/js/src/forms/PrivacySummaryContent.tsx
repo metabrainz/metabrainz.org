@@ -7,7 +7,7 @@ export default function PrivacySummaryContent(): JSX.Element {
 
   return (
     <>
-      <h5>{t("Licensing")}</h5>
+      <h5><b>{t("Licensing")}</b></h5>
       <p>
         {t(
           "Any contributions you make to any MetaBrainz service will be released into the Public Domain and/or licensed under a Creative Commons by-nc-sa license. Furthermore, you give the MetaBrainz Foundation the right to license this data for commercial use."
@@ -29,7 +29,7 @@ export default function PrivacySummaryContent(): JSX.Element {
           }}
         />
       </p>
-      <h5>{t("Privacy")}</h5>
+      <h5><b>{t("Privacy")}</b></h5>
       <p>
         {t(
           "MetaBrainz strongly believes in the privacy of its users. Any personal information you choose to provide will not be sold or shared with anyone else."
@@ -47,7 +47,7 @@ export default function PrivacySummaryContent(): JSX.Element {
           }}
         />
       </p>
-      <h5>{t("GDPR compliance")}</h5>
+      <h5><b>{t("GDPR compliance")}</b></h5>
       <p>
         {t(
           "You may remove your personal information from our services anytime by deleting your account."
