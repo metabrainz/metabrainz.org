@@ -16,9 +16,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-07-29 07:12+0000\n"
-"Last-Translator: silentbird "
-"<silentbird@users.noreply.translations.metabrainz.org>\n"
+"PO-Revision-Date: 2026-07-29 11:24+0000\n"
+"Last-Translator: nullpinter <fanng233@gmail.com>\n"
 "Language: zh_CN\n"
 "Language-Team: Chinese (Simplified Han script) <https://"
 "translations.metabrainz.org/projects/metabrainz/website/zh_Hans/>\n"
@@ -85,19 +84,19 @@ msgstr "姓名"
 
 #: metabrainz/index/forms.py:79
 msgid "Contact name field is empty."
-msgstr "请输入名字。"
+msgstr "请输入姓名。"
 
 #: metabrainz/index/views.py:234
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "个人资料已成功更新。"
 
 #: metabrainz/index/views.py:261
 msgid "Current password is incorrect."
-msgstr ""
+msgstr "当前密码不正确。"
 
 #: metabrainz/index/views.py:266
 msgid "Password changed successfully."
-msgstr ""
+msgstr "已成功更改密码。"
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
@@ -117,28 +116,27 @@ msgstr ""
 
 #: metabrainz/index/views.py:478
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "您的账户已被删除。"
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
 msgid "Application Name"
-msgstr ""
+msgstr "应用名称"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr ""
+msgstr "应用名称字段为空。"
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "应用名称长度应长于三个字符。"
 
 #: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
 msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
-#, fuzzy
 msgid "Description"
-msgstr "机构描述"
+msgstr "描述"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
@@ -154,11 +152,11 @@ msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
-msgstr ""
+msgstr "主页"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr ""
+msgstr "主页字段为空。"
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
@@ -170,7 +168,7 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "验证回调URL"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
@@ -186,7 +184,7 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "确认"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -254,7 +252,7 @@ msgstr "请告诉我们您（未来）会如何使用我们的数据。"
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
 #: metabrainz/supporter/forms.py:18
 msgid "Please, limit usage description to 500 characters."
-msgstr ""
+msgstr "请将描述字段文字长度控制在500字符以内。"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:141
 #: frontend/js/src/forms/SignupCommercial.tsx:142
