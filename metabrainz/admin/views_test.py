@@ -567,3 +567,42 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assertEqual(user.email, "new@example.com")
         self.assertIsNone(user.unconfirmed_email)
         self.assertMessageFlashed("User's email is already verified", "error")
+
+    def test_admin_reject_supporter_with_unconfirmed_email(self):
+        """ Rejecting a supporter who has not confirmed their email notifies the unconfirmed address. """
+        self._login_admin()
+        supporter = self.create_supporter()
+        supporter_id = supporter.id
+        self.assertIsNone(supporter.user.email)
+
+        with patch("metabrainz.model.supporter.send_mail") as send_mail:
+            response = self.client.get(
+                url_for("supportersview.reject"),
+                query_string={"supporter_id": supporter_id},
+            )
+
+        self.assertStatus(response, 302)
+        self.assertEqual(send_mail.call_args.kwargs["recipients"], ["regular@example.com"])
+
+        supporter = Supporter.get(id=supporter_id)
+        self.assertEqual(supporter.state, "rejected")
+
+    def test_admin_reject_supporter_without_any_email(self):
+        """ Rejecting a supporter who has no email address at all does not attempt to send mail. """
+        self._login_admin()
+        supporter = self.create_supporter()
+        supporter_id = supporter.id
+        supporter.user.unconfirmed_email = None
+        db.session.commit()
+
+        with patch("metabrainz.model.supporter.send_mail") as send_mail:
+            response = self.client.get(
+                url_for("supportersview.reject"),
+                query_string={"supporter_id": supporter_id},
+            )
+
+        self.assertStatus(response, 302)
+        send_mail.assert_not_called()
+
+        supporter = Supporter.get(id=supporter_id)
+        self.assertEqual(supporter.state, "rejected")

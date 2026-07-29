@@ -353,11 +353,15 @@ class Supporter(db.Model):
                          "WAITING" if self.state == STATE_WAITING else \
                          "LIMITED" if self.state == STATE_LIMITED else \
                          self.state
-            send_mail(
-                subject="[MetaBrainz] Your account has been updated",
-                text='State of your MetaBrainz account has been changed to "%s".' % state_name,
-                recipients=[self.user.email],
-            )
+            # supporters whose email is not confirmed yet still need to be notified,
+            # but a supporter may have no email address at all (for instance, after
+            # the account is deleted) in which case there is nothing to notify.
+            if email := self.user.get_email_any():
+                send_mail(
+                    subject="[MetaBrainz] Your account has been updated",
+                    text='State of your MetaBrainz account has been changed to "%s".' % state_name,
+                    recipients=[email],
+                )
 
 
 def send_supporter_signup_notification(supporter):
