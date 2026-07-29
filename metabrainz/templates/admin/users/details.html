@@ -6,11 +6,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const editBtn = document.getElementById('edit-username-btn');
     const usernameInput = document.getElementById('new-username');
+    const reasonInput = document.getElementById('username-reason');
     const currentUsername = '{{ model.name }}';
 
     if (editBtn && usernameInput) {
         editBtn.addEventListener('click', function() {
             usernameInput.value = currentUsername;
+            reasonInput.value = '';
             $('#usernameModal').modal('show');
         });
 
@@ -244,6 +246,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             Please provide a username.
                         </div>
                     </div>
+                    <div class="mb-3">
+                        {{ edit_username_form.reason.label(for="username-reason", class="form-label") }}
+                        {{ edit_username_form.reason(
+                            class="form-control",
+                            id="username-reason",
+                            rows="3",
+                            placeholder="Enter a reason for this rename..."
+                        ) }}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -258,4 +269,4 @@ document.addEventListener('DOMContentLoaded', function() {
 {{ super() }}
 {% endblock %}
 
-{% endblock %} 
+{% endblock %}
