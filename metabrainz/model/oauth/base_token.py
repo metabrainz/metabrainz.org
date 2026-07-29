@@ -2,6 +2,7 @@ from datetime import timedelta, datetime, timezone
 
 from authlib.integrations.flask_oauth2.requests import FlaskOAuth2Request
 from authlib.oauth2.rfc6749 import TokenMixin
+from flask import current_app
 from sqlalchemy import func, Column, Integer, DateTime, ForeignKey, Boolean, Identity
 from sqlalchemy.orm import relationship, declared_attr
 
@@ -108,11 +109,13 @@ def save_token(token_data, request: FlaskOAuth2Request):
     db.session.add(access_token)
 
     if refresh_token is not None:
+        # refresh tokens are long lived compared to access tokens, the expiry is renewed
+        # every time the refresh token is used to obtain a new access token.
         refresh_token = OAuth2RefreshToken(
             client_id=request.client.id,
             user_id=user_id,
             refresh_token=refresh_token,
-            expires_in=token_data["expires_in"],  # TODO: fix refresh token expiry, for existing retain or reset ?
+            expires_in=current_app.config["OAUTH2_TOKEN_EXPIRES_IN"]["refresh_token"],
             scopes=refresh_token_scopes,
             authorization_code_id=authorization_code_id
         )

@@ -65,6 +65,9 @@ class CustomAuthorizationServer(AuthorizationServer):
         refresh_token_generator = create_token_generator(conf, 48)
 
         expires_conf = config.get("OAUTH2_TOKEN_EXPIRES_IN")
+        if isinstance(expires_conf, dict):
+            expires_conf = expires_conf.copy()
+            expires_conf.pop("refresh_token", None)
         expires_generator = create_token_expires_in_generator(expires_conf)
         return CustomBearerTokenGenerator(
             access_token_generator, refresh_token_generator, expires_generator
