@@ -92,6 +92,7 @@ class EditUsernameForm(FlaskForm):
             validate_username,
         ]
     )
+    reason = TextAreaField("Reason (optional)")
 
 
 class ModerateUserForm(FlaskForm):
