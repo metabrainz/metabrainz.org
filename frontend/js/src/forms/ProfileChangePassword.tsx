@@ -3,7 +3,7 @@ import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { getPageProps, renderRoot } from "../utils";
-import { TextInput } from "./utils";
+import { PasswordInput } from "./utils";
 
 type ProfileChangePasswordProps = {
   csrf_token: string;
@@ -64,8 +64,7 @@ function ProfileChangePassword({
               )}
             </div>
 
-            <TextInput
-              type="password"
+            <PasswordInput
               id="current_password"
               name="current_password"
               label={t("Current Password")}
@@ -73,8 +72,7 @@ function ProfileChangePassword({
               required
             />
 
-            <TextInput
-              type="password"
+            <PasswordInput
               id="password"
               name="password"
               label={t("New Password")}
@@ -82,8 +80,7 @@ function ProfileChangePassword({
               required
             />
 
-            <TextInput
-              type="password"
+            <PasswordInput
               id="confirm_password"
               name="confirm_password"
               label={t("Confirm New Password")}

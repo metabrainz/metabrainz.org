@@ -407,6 +407,21 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertMessageFlashed("Unable to verify email.", "error")
 
+    def test_user_email_verify_invalid_timestamp(self):
+        for timestamp in (None, "not-a-timestamp"):
+            with self.subTest(timestamp=timestamp):
+                query_string = {"user_id": 1, "checksum": "invalid"}
+                if timestamp is not None:
+                    query_string["timestamp"] = timestamp
+
+                response = self.client.get(
+                    url_for("users.verify_email"),
+                    query_string=query_string,
+                )
+
+                self.assertRedirects(response, url_for("index.home"))
+                self.assertMessageFlashed("Unable to verify email.", "error")
+
     def test_user_email_verify_user_invalid(self):
         self.create_user()
 
@@ -705,6 +720,42 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertFalse(current_user.is_anonymous)
         self.assertEqual(current_user.name, "test_user_1")
+
+    def test_reset_password_rejects_password_over_bcrypt_byte_limit(self):
+        self._test_forgot_password_helper({
+            "username": "test_user_1",
+            "email": "test@example.com",
+        }, 302)
+        reset_password_link = self.get_context_variable("reset_password_link")
+        password = "🔒" * 19
+
+        response = self.client.post(reset_password_link, data={
+            "password": password,
+            "confirm_password": password,
+            "csrf_token": g.csrf_token,
+        })
+
+        self.assertEqual(response.status_code, 200)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(
+            props["initial_errors"],
+            {"password": "Password must not exceed 72 bytes."},
+        )
+
+    def test_reset_password_invalid_timestamp(self):
+        for timestamp in (None, "not-a-timestamp"):
+            with self.subTest(timestamp=timestamp):
+                query_string = {"user_id": 1, "checksum": "invalid"}
+                if timestamp is not None:
+                    query_string["timestamp"] = timestamp
+
+                response = self.client.post(
+                    url_for("users.reset_password"),
+                    query_string=query_string,
+                )
+
+                self.assertRedirects(response, url_for("index.home"))
+                self.assertMessageFlashed("Unable to reset password.", "error")
 
     def test_reset_password_missing_checksum(self):
         self.create_user()

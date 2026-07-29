@@ -22,6 +22,15 @@ from metabrainz.user.registration import validate_registration_email
 users_bp = Blueprint("users", __name__)
 
 
+def _parse_link_timestamp(value):
+    try:
+        timestamp = int(value)
+        created_at = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+    except (OSError, OverflowError, TypeError, ValueError):
+        return None
+    return timestamp, created_at
+
+
 @users_bp.route("/signup", methods=["GET", "POST"])
 @login_forbidden
 def signup():
@@ -154,8 +163,13 @@ def reauthenticate():
 def verify_email():
     """ User"s email verification endpoint. """
     user_id = request.args.get("user_id")
-    timestamp = int(request.args.get("timestamp"))
-    if datetime.fromtimestamp(timestamp) + current_app.config["EMAIL_VERIFICATION_EXPIRY"] <= datetime.now():
+    parsed_timestamp = _parse_link_timestamp(request.args.get("timestamp"))
+    if parsed_timestamp is None:
+        flash.error("Unable to verify email.")
+        return redirect(url_for("index.home"))
+
+    timestamp, created_at = parsed_timestamp
+    if created_at + current_app.config["EMAIL_VERIFICATION_EXPIRY"] <= datetime.now(timezone.utc):
         flash.error("Email verification link expired.")
         return redirect(url_for("index.home"))
 
@@ -312,8 +326,13 @@ def reset_password():
     """ User"s reset password endpoint. """
     user_id = request.args.get("user_id")
 
-    timestamp = int(request.args.get("timestamp"))
-    if datetime.fromtimestamp(timestamp) + current_app.config["EMAIL_RESET_PASSWORD_EXPIRY"] <= datetime.now():
+    parsed_timestamp = _parse_link_timestamp(request.args.get("timestamp"))
+    if parsed_timestamp is None:
+        flash.error("Unable to reset password.")
+        return redirect(url_for("index.home"))
+
+    timestamp, created_at = parsed_timestamp
+    if created_at + current_app.config["EMAIL_RESET_PASSWORD_EXPIRY"] <= datetime.now(timezone.utc):
         flash.error("Password reset link expired.")
         return redirect(url_for("index.home"))
 

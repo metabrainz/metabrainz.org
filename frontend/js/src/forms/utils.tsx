@@ -1,6 +1,10 @@
 import React, { JSX } from "react";
 import { Field, FieldConfig, useField } from "formik";
 import { useTranslation } from "react-i18next";
+import {
+  passwordExceedsBcryptByteLimit,
+  setPasswordByteLimitValidity,
+} from "./password";
 
 export type FormLevelAlertProps = {
   errors: Record<string, string> | null | undefined;
@@ -20,18 +24,31 @@ export function getAuthPageUrl(path: "/login" | "/signup"): string {
 export type TextInputProps = JSX.IntrinsicElements["input"] &
   FieldConfig & {
     label: string;
+    inputRef?: React.RefObject<HTMLInputElement | null>;
   };
 
-export function TextInput({ label, children, ...props }: TextInputProps) {
+export function TextInput({
+  label,
+  children,
+  inputRef,
+  ...props
+}: TextInputProps) {
   const [field, meta] = useField(props);
   const hasError = meta.touched && meta.error;
+  const inputProps = { ...props };
+  delete inputProps.validate;
   return (
     <div className={`form-group ${hasError ? "has-error" : ""}`}>
       <label className="col-sm-4 control-label" htmlFor={props.id}>
         {label} {props.required && <span style={{ color: "red" }}>*</span>}
       </label>
       <div className="col-sm-5">
-        <input className="form-control" {...field} {...props} />
+        <input
+          className="form-control"
+          {...field}
+          {...inputProps}
+          ref={inputRef}
+        />
       </div>
       {children}
       {hasError ? (
@@ -129,17 +146,20 @@ export type AuthCardTextInputProps = JSX.IntrinsicElements["input"] &
     label: string | JSX.Element;
     labelLink?: string | JSX.Element;
     optionalInputButton?: JSX.Element;
+    inputRef?: React.RefObject<HTMLInputElement | null>;
   };
 
 export function AuthCardTextInput({
   label,
   labelLink,
   children,
+  inputRef,
   ...props
 }: AuthCardTextInputProps) {
   const [field, meta] = useField(props);
   const hasError = meta.touched && meta.error;
   const { optionalInputButton, ...otherProps } = props;
+  delete otherProps.validate;
   const labelElement = (
     <label className="control-label" htmlFor={props.id}>
       {label} {props.required && <span style={{ color: "red" }}>*</span>}
@@ -162,6 +182,7 @@ export function AuthCardTextInput({
           {...field}
           {...otherProps}
           required={props.required}
+          ref={inputRef}
         />
         {optionalInputButton}
       </div>
@@ -175,6 +196,22 @@ export function AuthCardTextInput({
 export function AuthCardPasswordInput({ ...props }: AuthCardTextInputProps) {
   const { t } = useTranslation();
   const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const byteLimitError = t("Password must not exceed 72 bytes.");
+  const { onInput, validate, ...inputProps } = props;
+  const updateByteLimitValidity = React.useCallback(
+    (input: HTMLInputElement) => {
+      setPasswordByteLimitValidity(input, byteLimitError);
+    },
+    [byteLimitError]
+  );
+
+  React.useEffect(() => {
+    if (inputRef.current) {
+      updateByteLimitValidity(inputRef.current);
+    }
+  }, [updateByteLimitValidity]);
+
   const glyphIcon = passwordVisible
     ? "glyphicon-eye-close"
     : "glyphicon-eye-open";
@@ -195,9 +232,57 @@ export function AuthCardPasswordInput({ ...props }: AuthCardTextInputProps) {
   );
   return (
     <AuthCardTextInput
-      {...props}
+      {...inputProps}
       type={passwordVisible ? "text" : "password"}
       optionalInputButton={passwordShowButton}
+      inputRef={inputRef}
+      validate={(value) => {
+        if (passwordExceedsBcryptByteLimit(value)) {
+          return byteLimitError;
+        }
+        return validate?.(value);
+      }}
+      onInput={(event) => {
+        updateByteLimitValidity(event.currentTarget);
+        onInput?.(event);
+      }}
+    />
+  );
+}
+
+export function PasswordInput({ ...props }: TextInputProps) {
+  const { t } = useTranslation();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const byteLimitError = t("Password must not exceed 72 bytes.");
+  const { onInput, validate, ...inputProps } = props;
+  const updateByteLimitValidity = React.useCallback(
+    (input: HTMLInputElement) => {
+      setPasswordByteLimitValidity(input, byteLimitError);
+    },
+    [byteLimitError]
+  );
+
+  React.useEffect(() => {
+    if (inputRef.current) {
+      updateByteLimitValidity(inputRef.current);
+    }
+  }, [updateByteLimitValidity]);
+
+  return (
+    <TextInput
+      {...inputProps}
+      type="password"
+      inputRef={inputRef}
+      validate={(value) => {
+        if (passwordExceedsBcryptByteLimit(value)) {
+          return byteLimitError;
+        }
+        return validate?.(value);
+      }}
+      onInput={(event) => {
+        updateByteLimitValidity(event.currentTarget);
+        onInput?.(event);
+      }}
     />
   );
 }
