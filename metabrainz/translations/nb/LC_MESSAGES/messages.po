@@ -10,9 +10,9 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-07-26 17:12+0000\n"
-"Last-Translator: \"ApeKattQuest, MonkeyPython\" "
-"<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
+"PO-Revision-Date: 2026-07-31 14:12+0000\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language: nb\n"
 "Language-Team: Norwegian Bokmål <https://translations.metabrainz.org/"
 "projects/metabrainz/website/nb_NO/>\n"
@@ -1957,7 +1957,7 @@ msgstr ""
 #: metabrainz/templates/oauth/edit.html:3
 #, python-format
 msgid "Edit application %(name)s"
-msgstr "Rediger søknad %(name)s"
+msgstr "Rediger %(name)s søknaden"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
