@@ -79,7 +79,7 @@ function useEmailValidation() {
       }
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        return t("Invalid email address");
+        return t("Invalid email address.");
       }
 
       if (emailValidationCache[email] !== undefined) {
