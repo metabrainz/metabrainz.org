@@ -30,7 +30,7 @@ class IntrospectionTestCase(OAuthTestCase):
             "client_secret": application["client_secret"],
             "token": token["refresh_token"],
         }
-        self.introspection_success_helper(data)
+        self.introspection_success_helper(data, self.app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"])
 
         data = {
             "client_id": application["client_id"],
@@ -46,7 +46,7 @@ class IntrospectionTestCase(OAuthTestCase):
             "token": token["refresh_token"],
             "token_type_hint": "refresh_token",
         }
-        self.introspection_success_helper(data)
+        self.introspection_success_helper(data, self.app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"])
 
     def _test_oauth_introspection_error_helper(self, data):
         response = self.client.post("/oauth2/introspect", data=data)
