@@ -101,6 +101,10 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertFalse(props["is_registration_request_signup"])
         self.assertIsNone(props["registration_request_client_name"])
 
+    def test_privacy_summary(self):
+        response = self.client.get(url_for("users.privacy_summary"))
+        self.assert200(response)
+
     def test_user_signup_missing_csrf_token(self):
         self._test_user_signup_missing_fields_helper({
             "username": "test_user_1",

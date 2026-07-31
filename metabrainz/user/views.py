@@ -31,6 +31,11 @@ def _parse_link_timestamp(value):
     return timestamp, created_at
 
 
+@users_bp.route("/privacy-summary")
+def privacy_summary():
+    return render_template("users/privacy-summary.html", props=json.dumps({}))
+
+
 @users_bp.route("/signup", methods=["GET", "POST"])
 @login_forbidden
 def signup():

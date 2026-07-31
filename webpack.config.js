@@ -58,6 +58,7 @@ export default function (env, argv) {
       oauthPrompt: path.resolve(jsDir, "src/forms/OAuthPrompt.tsx"),
       applications: path.resolve(jsDir, "src/Applications.tsx"),
       oauthError: path.resolve(jsDir, "src/OAuthError.tsx"),
+      privacySummary: path.resolve(jsDir, "src/PrivacySummary.tsx"),
       signupUser: path.resolve(jsDir, "src/forms/SignupUser.tsx"),
       loginUser: path.resolve(jsDir, "src/forms/LoginUser.tsx"),
       lostPassword: path.resolve(jsDir, "src/forms/LostPassword.tsx"),
