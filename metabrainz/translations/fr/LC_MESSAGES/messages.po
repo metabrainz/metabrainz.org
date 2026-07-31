@@ -12,18 +12,19 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-07-24 18:12+0000\n"
+"PO-Revision-Date: 2026-07-31 17:31+0000\n"
 "Last-Translator: mr_monkey "
 "<mr_monkey@users.noreply.translations.metabrainz.org>\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://translations.metabrainz.org/projects/metabrainz/website/fr/>\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n %"
-" 1000000 == 0) ? 1 : 2);\n"
+"Language-Team: French <https://translations.metabrainz.org/projects/"
+"metabrainz/website/fr/>\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
@@ -109,7 +110,7 @@ msgstr "Échec lors de la suppression d'une application."
 
 #: metabrainz/index/views.py:449
 msgid "Revoked tokens successfully!"
-msgstr "Clé révoquée avec succès !"
+msgstr "Clés révoquées avec succès !"
 
 #: metabrainz/index/views.py:478
 msgid "Your account has been deleted."
@@ -121,7 +122,7 @@ msgstr "Nom de l’application"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr "Le champ du nom d’application est vide."
+msgstr "Le champ \"Nom de l’application\" est vide."
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
@@ -137,15 +138,15 @@ msgstr "Description"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr "Le champ de description du client est vide."
+msgstr "Le champ \"Description\" est vide."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr "La description du client doit comporter au moins 3 caractères."
+msgstr "La description doit comporter au moins 3 caractères."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr "La description du client ne peut comporter plus de 512 caractères."
+msgstr "La description ne peut comporter plus de 512 caractères."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
@@ -153,7 +154,7 @@ msgstr "Site web"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr "Le champ du site web est vide."
+msgstr "Le champ \"Site web\" est vide."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
@@ -206,8 +207,8 @@ msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
 msgstr ""
-"Nous sommes désolés de voir que vous ne pouvez donner aujourd'hui. Nous "
-"espérons que vous changerez bientôt d'avis !"
+"Nous sommes désolés de voir que vous ne ferez pas de donation aujourd'hui. "
+"Nous espérons que vous changerez d'avis !"
 
 #: metabrainz/payments/views.py:188
 msgid ""
@@ -215,7 +216,7 @@ msgid ""
 "change your mind!"
 msgstr ""
 "Nous sommes désolés de voir que vous ne pouvez payer aujourd'hui. Nous "
-"espérons que vous changerez bientôt d'avis !"
+"espérons que vous changerez d'avis !"
 
 #: metabrainz/payments/views.py:202
 msgid ""
@@ -345,7 +346,7 @@ msgstr "État / Région"
 #: frontend/js/src/forms/SignupCommercial.tsx:126
 #: metabrainz/supporter/forms.py:47
 msgid "You need to specify state/province."
-msgstr "Vous devez spécifier un État ou une Région."
+msgstr "Vous devez spécifier un état ou une région."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:481
 #: metabrainz/supporter/forms.py:49
@@ -556,7 +557,7 @@ msgstr "Sponsorisé par <a href=\"%(github_url)s\">GitHub</a>"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
-msgstr "Afficher le menu"
+msgstr "Ouvrir/fermer le menu"
 
 #: metabrainz/templates/index/about.html:3 metabrainz/templates/navbar.html:21
 msgid "About"
@@ -599,7 +600,7 @@ msgstr "Rapports financiers"
 
 #: metabrainz/templates/navbar.html:58
 msgid "Donate"
-msgstr "Donner"
+msgstr "Faire un don"
 
 #: frontend/js/src/forms/LoginUser.tsx:110
 #: frontend/js/src/forms/SignupCommercial.tsx:175
@@ -641,9 +642,8 @@ msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
-"Tous les endpoints nécessitent une clé d'accès que vous pouvez obtenir "
-"sur\n"
-"    <a href=\"%(profile_url)s\">votre profil</a>."
+"Tous les points de terminaison nécessitent une clé d'accès que vous pouvez "
+"obtenir sur <a href=\"%(profile_url)s\">votre profil</a>."
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
@@ -651,11 +651,13 @@ msgstr "Flux de données en direct de MusicBrainz"
 
 #: metabrainz/templates/api/info.html:16
 msgid "There are two endpoints for fetching live data:"
-msgstr "Deux endpoints permettent de récupérer les données en temps réel :"
+msgstr ""
+"Deux points de terminaison permettent de récupérer les données en temps réel "
+":"
 
 #: metabrainz/templates/api/info.html:18
 msgid "Hourly Replication Packets"
-msgstr "Paquets de réplication horaires"
+msgstr "Paquets de réplication horaire"
 
 #: metabrainz/templates/api/info.html:30
 msgid ""
@@ -664,8 +666,7 @@ msgid ""
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
 "Vous pouvez obtenir une signature pour chaque paquet de réplication. "
-"Remplacez simplement\n"
-"      <code>.tar.bz2</code> par <code>.tar.bz2.asc</code>."
+"Remplacez simplement <code>.tar.bz2</code> par <code>.tar.bz2.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 msgid "You can find the latest replication packet number from this endpoint:"
@@ -1050,7 +1051,7 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
-msgstr "Une question à propos de MusicBrainz ?"
+msgstr "Une question à propos de MetaBrainz ?"
 
 #: metabrainz/templates/index/contact.html:18
 #, python-format
@@ -1260,7 +1261,7 @@ msgstr "Adresse postale"
 
 #: metabrainz/templates/index/datasets.html:9
 msgid "The MetaBrainz Datasets"
-msgstr "Les ensembles de données de MetaBrainz"
+msgstr "Ensembles de données de MetaBrainz"
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1381,7 +1382,7 @@ msgstr ""
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
-msgstr "Un référentiel de pochettes musicales librement et facilement accessible"
+msgstr "Un dépôt de pochettes musicales librement et facilement accessible"
 
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
@@ -1449,7 +1450,7 @@ msgstr "Sommaire"
 
 #: metabrainz/templates/index/privacy.html:33
 msgid "Applicable to all users"
-msgstr "Applicable à tous les utilisateurs"
+msgstr "S’appliquant à tous les utilisateurs"
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
@@ -1538,7 +1539,7 @@ msgstr "Modifier"
 
 #: metabrainz/templates/index/projects.html:6
 msgid "MetaBrainz Projects"
-msgstr "Les projets MetaBrainz"
+msgstr "Les projets de MetaBrainz"
 
 #: metabrainz/templates/index/projects.html:17
 msgid "MusicBrainz"
@@ -1681,7 +1682,7 @@ msgstr ""
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
 msgid "MetaBrainz Shop"
-msgstr "Boutique MetaBrainz"
+msgstr "Boutique de MetaBrainz"
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -2476,7 +2477,7 @@ msgid ""
 "          <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
 "          before you do."
 msgstr ""
-"Si vous souhaitez faire un don important, veuillez nous contacter à <a "
+"Si vous souhaitez faire un paiement important, veuillez nous contacter à <a "
 "href=\"%(mail_link)s\">donations@metabrainz.org</a> auparavant."
 
 #: metabrainz/templates/payments/payment.html:52
@@ -2490,7 +2491,7 @@ msgstr "Je veux en faire un paiement mensuel récurrent"
 
 #: metabrainz/templates/payments/payment.html:70
 msgid "Pay with Credit Card"
-msgstr "Payer avec une carte de crédit"
+msgstr "Payer par carte de crédit"
 
 #: metabrainz/templates/payments/payment.html:84
 #, python-format
@@ -2637,13 +2638,13 @@ msgid ""
 "    program. In these cases we will anonymize these payments before "
 "publishing on this site."
 msgstr ""
-"L'association publie, dans la mesure du possible, l'intégralité de ses "
-"informations financières. Il arrive que des tiers effectuant des "
-"paiements à l'association nous imposent de ne pas divulguer les sommes "
-"qui nous sont versées pour diverses activités. Par exemple, un partenaire"
-" de MetaBrainz nous interdit de publier le détail des revenus issus d'un "
-"programme d'affiliation. Dans ces cas-là, nous anonymisons ces paiements "
-"avant leur publication."
+"La fondation publie, dans la mesure du possible, l'intégralité de ses "
+"informations financières. Il arrive que des tiers effectuant des paiements à "
+"l'association nous imposent de ne pas divulguer les sommes qui nous sont "
+"versées pour diverses activités. Par exemple, un partenaire de MetaBrainz "
+"nous interdit de publier le détail des revenus issus d'un programme "
+"d'affiliation. Dans ces cas-là, nous anonymisons ces paiements avant leur "
+"publication."
 
 #: metabrainz/templates/reports/financial_reports/index.html:25
 #, python-format
@@ -3379,7 +3380,7 @@ msgstr "Voir tous les paliers"
 
 #: metabrainz/templates/supporters/account-type.html:112
 msgid "Some of our Unicorn members"
-msgstr "Quelques-uns de nos soutiens Licorne"
+msgstr "Quelques-uns de nos soutiens du palier Licorne"
 
 #: metabrainz/templates/supporters/account-type.html:123
 msgid "See all our supporters"
@@ -3844,7 +3845,7 @@ msgstr "Télécharger les données"
 
 #: frontend/js/src/Profile.tsx:402
 msgid "Thank you for registering with us -- we really appreciate it!"
-msgstr "Nous vous remercions pour votre inscription - c'est vraiment apprécié !"
+msgstr "Merci de votre inscription - c'est vraiment apprécié !"
 
 #: frontend/js/src/Profile.tsx:407
 msgid "Proceed to our download page to download datasets:"
@@ -3929,8 +3930,8 @@ msgid ""
 "Deletion of supporter accounts requires manual review. Please contact us "
 "at"
 msgstr ""
-"La suppression des comptes de supporters nécessite un confirmation "
-"manuelle. Veuillez nous contacter au"
+"La suppression des comptes de supporters nécessite un confirmation manuelle. "
+"Veuillez nous contacter à"
 
 #: frontend/js/src/Profile.tsx:594
 msgid "Security"
@@ -4188,7 +4189,6 @@ msgstr "Pas encore de compte ?"
 
 #: frontend/js/src/forms/LostPassword.tsx:38
 #: frontend/js/src/forms/LostUsername.tsx:36
-#, fuzzy
 msgid "Email is required!"
 msgstr "Une adresse email est requise !"
 
@@ -4207,7 +4207,7 @@ msgstr "Identité"
 
 #: frontend/js/src/forms/OAuthPrompt.tsx:34
 msgid "Your identity on MetaBrainz"
-msgstr "Votre identité chez MetaBrainz"
+msgstr "Votre identité sur MetaBrainz"
 
 #: frontend/js/src/forms/OAuthPrompt.tsx:61
 msgid "Allow access"
@@ -4239,7 +4239,7 @@ msgstr "Si vous souhaitez nous soutenir avec plus que $"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:39
 msgid ", please enter the actual amount here:"
-msgstr ", veuillez saisir le montant réel ici :"
+msgstr ", veuillez saisir le montant ici :"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
@@ -4428,7 +4428,7 @@ msgstr "Retour au profil"
 #: frontend/js/src/forms/SignupCommercial.tsx:569
 #: frontend/js/src/forms/SignupNonCommercial.tsx:334
 msgid "Not a supporter?"
-msgstr ""
+msgstr "Pas encore un soutien ?"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:570
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
@@ -4529,7 +4529,7 @@ msgstr "Créer un compte"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
 msgid "This email address is already registered."
-msgstr "Cette adresse e-mail est déjà enregistrée"
+msgstr "Cette adresse e-mail est déjà enregistrée."
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
