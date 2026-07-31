@@ -379,7 +379,7 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertIn("website_url", props["initial_errors"])
         self.assertIsNone(Supporter.get(user_id=self.existing_user.id))
 
-    def test_commercial_signup_notification_includes_username(self):
+    def test_commercial_signup_notification_includes_signup_details(self):
         user = User.add(
             name="notification-user",
             unconfirmed_email="notification@example.com",

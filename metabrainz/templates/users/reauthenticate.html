@@ -44,7 +44,30 @@
         passwordInput.setCustomValidity(byteLength > 72 ? byteLimitError : "");
       }
 
-      passwordInput.addEventListener("input", updatePasswordValidity);
+      function throttle(callback, limit) {
+        var waiting = false;
+        var queued = false;
+
+        return function throttledCallback() {
+          if (waiting) {
+            queued = true;
+            return;
+          }
+
+          callback();
+          waiting = true;
+          window.setTimeout(function () {
+            waiting = false;
+            if (queued) {
+              queued = false;
+              throttledCallback();
+            }
+          }, limit);
+        };
+      }
+
+      var throttledUpdatePasswordValidity = throttle(updatePasswordValidity, 500);
+      passwordInput.addEventListener("input", throttledUpdatePasswordValidity);
       updatePasswordValidity();
     });
   </script>
