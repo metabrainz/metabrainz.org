@@ -1,50 +1,65 @@
 {% extends 'admin/master.html' %}
-{% block body %}
-  <h1>Access tokens</h1>
 
-  <h3>Search</h3>
-  <form method="GET" class="form-horizontal" role="form">
-    <input id="input-value" name="value" class="form-control" autofocus
-           placeholder="Value" {{ 'value='+value if value }}>
-    <button type="submit" class="btn btn-default">Search</button>
+{% block page_heading %}Access tokens{% endblock %}
+{% block page_description %}Look up an access token by its value.{% endblock %}
+
+{% block body %}
+  <form class="admin-card" method="GET" role="form">
+    <div class="form-group">
+      <label for="input-value">Token value</label>
+      {# the attribute must stay quoted: an unquoted value= lets a search term
+         break out and inject event handler attributes #}
+      <input id="input-value" name="value" class="form-control" autofocus
+             placeholder="Paste a token value" value="{{ value or '' }}">
+    </div>
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
   </form>
 
   {% if value %}
-    <hr />
-    {% if results %}
-      <table class="table table-hover">
-        <thead>
-        <tr>
-          <th>{# is_active #}</th>
-          <th>Value</th>
-          <th>Owner</th>
-          <th>Created on</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for token in results %}
-          <tr>
-            <td>
-              {% if token.is_active %}
-                <span class="label label-success">active</span>
-              {% else %}
-                <span class="label label-danger">revoked</span>
-              {% endif %}
-            </td>
-            <td>{{ token.value }}</td>
-            <td>
-              {% if token.owner_id %}
-                <a href="{{ url_for('supportersview.details', supporter_id=token.owner_id) }}">{{ token.owner }}</a>
-              {% endif %}
-            </td>
-            <td>{{ token.created }}</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      No tokens found.
-    {% endif %}
+    <div class="admin-card admin-card--flush">
+      {% if results %}
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Status</th>
+              <th>Value</th>
+              <th>Owner</th>
+              <th>Created on</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for token in results %}
+              <tr>
+                <td>
+                  {% if token.is_active %}
+                    <span class="badge badge-success">Active</span>
+                  {% else %}
+                    <span class="badge badge-danger">Revoked</span>
+                  {% endif %}
+                </td>
+                <td><code>{{ token.value }}</code></td>
+                <td>
+                  {% if token.owner_id %}
+                    <a href="{{ url_for('supportersview.details', supporter_id=token.owner_id) }}">{{ token.owner }}</a>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+                <td>{{ token.created }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fa fa-search"></i>
+          <p>No tokens found.</p>
+        </div>
+      {% endif %}
+    </div>
   {% endif %}
-
 {% endblock %}

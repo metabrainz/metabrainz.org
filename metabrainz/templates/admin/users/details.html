@@ -1,5 +1,14 @@
 {% extends 'admin/master.html' %}
 
+{% block page_heading %}{{ model.name }}{% endblock %}
+{% block page_description %}User account details, moderation and history.{% endblock %}
+
+{% block page_actions %}
+<a href="{{ url_for('.index_view') }}" class="btn btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to users
+</a>
+{% endblock %}
+
 {% block body %}
 {% block extra_js %}
 <script>
@@ -27,12 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 {% endblock %}
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>User Details: {{ model.name }}</h2>
-        <a href="{{ url_for('.index_view') }}" class="btn btn-secondary">Back to Users List</a>
-    </div>
-
+<div>
     <div class="row mb-4">
         <!-- User Information -->
         <div class="col-md-6">
@@ -187,9 +191,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- Delete User -->
     {% if not model.deleted %}
-    <div class="card mt-4" style="border-color: #dc3545;">
-        <div class="card-header bg-danger text-white">
-            <h3 class="card-title mb-0"><i class="fa fa-exclamation-triangle"></i> Danger Zone</h3>
+    <div class="card card--danger mt-4">
+        <div class="card-header">
+            <h3 class="card-title mb-0">Danger zone</h3>
         </div>
         <div class="card-body">
             <p><strong>Delete this user account</strong></p>

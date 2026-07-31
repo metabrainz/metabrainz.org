@@ -1,3 +1,4 @@
+import re
 from unittest.mock import patch
 
 from brainzutils import cache
@@ -8,8 +9,11 @@ from sqlalchemy.exc import IntegrityError
 
 from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
+from metabrainz.model.oauth.client import OAuth2Client, OAuth2ClientPrivilege
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.supporter import Supporter
+from metabrainz.model.token import Token
+from metabrainz.model.token_log import TokenLog
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
 
@@ -46,9 +50,13 @@ class AdminViewsTestCase(FlaskTestCase):
     def tearDown(self):
         db.session.rollback()
         db.session.execute(delete(ModerationLog))
+        # token_log references token, so it has to go first
+        db.session.execute(delete(TokenLog))
+        db.session.execute(delete(Token))
         db.session.execute(delete(Supporter))
         db.session.execute(delete(User))
         db.session.execute(delete(OldUsername))
+        db.session.execute(delete(OAuth2Client))
         db.session.commit()
         cache._r.flushall()
         super().tearDown()
@@ -131,6 +139,26 @@ class AdminViewsTestCase(FlaskTestCase):
         )
         db.session.commit()
         return supporter
+
+    def test_stats_pages_render_token_log_row_without_supporter(self):
+        """ TokenLog.supporter_id is nullable, so the stats pages must not
+        dereference the relationship without a guard.
+
+        An admin who has no supporter row of their own generating a token for
+        somebody else is exactly how a NULL lands there; the FK is also
+        ON DELETE SET NULL, so deleting a supporter produces the same shape. """
+        self._login_admin()
+        supporter = self.create_supporter()
+        Token.generate_token(supporter.id)
+
+        record = TokenLog.query.one()
+        self.assertIsNone(record.supporter_id)
+
+        for endpoint in ("statsview.token_log", "statsview.overview"):
+            with self.subTest(endpoint=endpoint):
+                response = self.client.get(url_for(endpoint))
+                self.assert200(response)
+                self.assertIn("Deleted Supporter", response.get_data(as_text=True))
 
     def _create_search_supporter(self, username, email, org_name):
         user = User.add(
@@ -644,3 +672,151 @@ class AdminViewsTestCase(FlaskTestCase):
 
         supporter = Supporter.get(id=supporter_id)
         self.assertEqual(supporter.state, "rejected")
+
+    def create_oauth_client(self, **overrides):
+        client = OAuth2Client(
+            client_id="test-client-id",
+            client_secret="test-client-secret",
+            owner_id=1,
+            name="Test Application",
+            description="A test application.",
+            website="https://example.org",
+            redirect_uris=["https://example.org/callback"],
+            privileges=OAuth2ClientPrivilege.REMEMBER_ME.value,
+            **overrides,
+        )
+        db.session.add(client)
+        db.session.commit()
+        return client
+
+    def _oauth_client_edit_url(self, client):
+        return url_for("oauth-clients-admin.edit_view", id=client.id)
+
+    @staticmethod
+    def _rendered_control(body, field_name):
+        """ The tag name of the form control rendered for a field, or None.
+
+        wtforms emits attributes in alphabetical order, so matching on the name
+        attribute keeps this independent of where it lands in the tag. """
+        match = re.search(rf'<(input|textarea|select)[^>]*\bname="{re.escape(field_name)}"', body)
+        return match.group(1) if match else None
+
+    def test_oauth_client_edit_page_renders_details(self):
+        self._login_admin()
+        client = self.create_oauth_client()
+
+        response = self.client.get(self._oauth_client_edit_url(client))
+
+        self.assert200(response)
+        body = response.get_data(as_text=True)
+        # assert on the rendered controls, not bare substrings: the field names also
+        # occur in labels and CSS classes, so a column dropped from form_columns
+        # would otherwise still look present. name and website must be single line
+        # inputs - flask-admin renders Text columns as textareas unless overridden.
+        self.assertEqual(self._rendered_control(body, "name"), "input")
+        self.assertEqual(self._rendered_control(body, "website"), "input")
+        self.assertEqual(self._rendered_control(body, "description"), "textarea")
+        self.assertEqual(self._rendered_control(body, "redirect_uris"), "textarea")
+        self.assertIn('id="privileges"', body)
+
+    def test_oauth_client_edit_updates_details(self):
+        self._login_admin()
+        client = self.create_oauth_client()
+        client_id = client.id
+
+        self.assert200(self.client.get(self._oauth_client_edit_url(client)))
+        form = self.get_context_variable("form")
+        response = self.client.post(self._oauth_client_edit_url(client), data={
+            "csrf_token": form.csrf_token.current_token,
+            "name": "Renamed Application",
+            "description": "An updated description.",
+            "website": "https://renamed.example.org",
+            "redirect_uris": "https://renamed.example.org/cb\nhttp://localhost:8080/cb",
+            "privileges": [str(OAuth2ClientPrivilege.CLIENT_CREDENTIALS.value)],
+        })
+
+        self.assertStatus(response, 302)
+        db.session.expire_all()
+        updated = db.session.get(OAuth2Client, client_id)
+        self.assertEqual(updated.name, "Renamed Application")
+        self.assertEqual(updated.description, "An updated description.")
+        self.assertEqual(updated.website, "https://renamed.example.org")
+        self.assertEqual(
+            updated.redirect_uris,
+            ["https://renamed.example.org/cb", "http://localhost:8080/cb"],
+        )
+        self.assertEqual(updated.privileges, OAuth2ClientPrivilege.CLIENT_CREDENTIALS.value)
+        # the client identity must survive an edit untouched
+        self.assertEqual(updated.client_id, "test-client-id")
+        self.assertEqual(updated.client_secret, "test-client-secret")
+        self.assertEqual(updated.owner_id, 1)
+
+    def test_oauth_client_edit_rejects_non_http_redirect_uri(self):
+        self._login_admin()
+        client = self.create_oauth_client()
+        client_id = client.id
+
+        self.assert200(self.client.get(self._oauth_client_edit_url(client)))
+        form = self.get_context_variable("form")
+        response = self.client.post(self._oauth_client_edit_url(client), data={
+            "csrf_token": form.csrf_token.current_token,
+            "name": "Test Application",
+            "description": "A test application.",
+            "website": "https://example.org",
+            "redirect_uris": "javascript:alert(1)",
+            "privileges": [],
+        })
+
+        self.assert200(response)
+        db.session.expire_all()
+        unchanged = db.session.get(OAuth2Client, client_id)
+        self.assertEqual(unchanged.redirect_uris, ["https://example.org/callback"])
+
+    def test_oauth_client_edit_rejects_empty_redirect_uris(self):
+        self._login_admin()
+        client = self.create_oauth_client()
+        client_id = client.id
+
+        for blank in ("   \n  ", ""):
+            with self.subTest(redirect_uris=blank):
+                self.assert200(self.client.get(self._oauth_client_edit_url(client)))
+                form = self.get_context_variable("form")
+                response = self.client.post(self._oauth_client_edit_url(client), data={
+                    "csrf_token": form.csrf_token.current_token,
+                    "name": "Test Application",
+                    "description": "A test application.",
+                    "website": "https://example.org",
+                    "redirect_uris": blank,
+                    "privileges": [],
+                })
+
+                self.assert200(response)
+                # the specific message must survive the InputRequired that
+                # flask-admin appends for this NOT NULL column
+                self.assertIn(
+                    "At least one authorization callback URL is required.",
+                    response.get_data(as_text=True),
+                )
+                db.session.expire_all()
+                unchanged = db.session.get(OAuth2Client, client_id)
+                self.assertEqual(unchanged.redirect_uris, ["https://example.org/callback"])
+
+    def test_oauth_client_edit_reports_every_invalid_redirect_uri(self):
+        self._login_admin()
+        client = self.create_oauth_client()
+
+        self.assert200(self.client.get(self._oauth_client_edit_url(client)))
+        form = self.get_context_variable("form")
+        response = self.client.post(self._oauth_client_edit_url(client), data={
+            "csrf_token": form.csrf_token.current_token,
+            "name": "Test Application",
+            "description": "A test application.",
+            "website": "https://example.org",
+            "redirect_uris": "ftp://one.example/cb\nhttps://ok.example/cb\nnot a url",
+            "privileges": [],
+        })
+
+        self.assert200(response)
+        body = response.get_data(as_text=True)
+        self.assertIn("ftp://one.example/cb", body)
+        self.assertIn("not a url", body)

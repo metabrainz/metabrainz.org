@@ -6,28 +6,22 @@
   {{ lib.form_css() }}
 {% endblock %}
 
+{% block page_heading %}Edit OAuth application{% endblock %}
+{% block page_description %}Review application details and manage privileged OAuth capabilities.{% endblock %}
+
+{% block page_actions %}
+  <a href="{{ return_url }}" class="btn btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to list
+  </a>
+  {%- if admin_view.can_view_details -%}
+  <a class="btn btn-secondary" href="{{ get_url('.details_view', id=request.args.get('id'), url=return_url) }}">
+    <i class="fa fa-eye"></i> Details
+  </a>
+  {%- endif -%}
+{% endblock %}
+
 {% block body %}
   <div class="oauth-client-edit">
-    <div class="page-title">
-      <i class="fa fa-key"></i> Edit OAuth Application
-    </div>
-    <p class="page-subtitle">
-      Review application details and manage privileged OAuth capabilities.
-    </p>
-
-    <div class="admin-card oauth-client-nav">
-      <div class="btn-group" role="group">
-        <a href="{{ return_url }}" class="btn btn-secondary">
-          <i class="fa fa-list"></i> List
-        </a>
-        {%- if admin_view.can_view_details -%}
-        <a class="btn btn-secondary" href="{{ get_url('.details_view', id=request.args.get('id'), url=return_url) }}">
-          <i class="fa fa-eye"></i> Details
-        </a>
-        {%- endif -%}
-      </div>
-    </div>
-
     <div class="oauth-client-layout">
       <section class="admin-card oauth-client-panel oauth-client-summary">
         <div class="oauth-client-panel-header">
@@ -56,35 +50,7 @@
             <dt>Client Secret</dt>
             <dd>{{ 'Set' if model.client_secret else 'Not set' }}</dd>
           </div>
-          <div class="oauth-client-detail-wide">
-            <dt>Website</dt>
-            <dd>
-              {% if model.website %}
-                <a href="{{ model.website }}" rel="noopener noreferrer">{{ model.website }}</a>
-              {% else %}
-                &mdash;
-              {% endif %}
-            </dd>
-          </div>
         </dl>
-
-        <div class="oauth-client-section">
-          <h3>Description</h3>
-          <p>{{ model.description or 'No description provided.' }}</p>
-        </div>
-
-        <div class="oauth-client-section">
-          <h3>Redirect URIs</h3>
-          {% if model.redirect_uris %}
-            <ul class="oauth-client-uri-list">
-              {% for redirect_uri in model.redirect_uris %}
-                <li><code>{{ redirect_uri }}</code></li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p>No redirect URIs configured.</p>
-          {% endif %}
-        </div>
 
         <div class="oauth-client-section">
           <h3>Current Privileges</h3>
@@ -98,28 +64,48 @@
             <p>No privileged capabilities are enabled.</p>
           {% endif %}
         </div>
+
+        <p class="help-block">
+          The client ID, secret and owner are fixed once an application is registered
+          and cannot be changed here.
+        </p>
       </section>
 
       <section class="admin-card oauth-client-panel oauth-privileges-panel">
-        <h2>Privileges</h2>
+        <h2>Application</h2>
         <p class="oauth-client-help">
-          Enable only the elevated capabilities this application is allowed to use.
+          These details are shown to users on the authorization prompt.
         </p>
 
         {% if form.errors %}
           <div class="alert alert-danger" role="alert">
-            <strong>Unable to save privileges.</strong>
+            <strong>Unable to save this application.</strong>
             <ul>
               {% for field_name, errors in form.errors.items() %}
                 {% if field_name != 'csrf_token' %}
                   {% for error in errors %}
-                    <li>{{ error }}</li>
+                    <li>{{ form[field_name].label.text if field_name in form else field_name }}: {{ error }}</li>
                   {% endfor %}
                 {% endif %}
               {% endfor %}
             </ul>
           </div>
         {% endif %}
+
+        {% macro render_field(field, hint=None, rows=None) %}
+          <div class="form-group{% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id }}">{{ field.label.text }}</label>
+            {% if rows %}
+              {{ field(class="form-control", rows=rows) }}
+            {% else %}
+              {{ field(class="form-control") }}
+            {% endif %}
+            {% if hint %}<p class="help-block">{{ hint }}</p>{% endif %}
+            {% for error in field.errors %}
+              <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endmacro %}
 
         <form method="POST" class="admin-form oauth-client-form" role="form">
           {% if form.hidden_tag is defined %}
@@ -129,17 +115,27 @@
             {{ form.csrf_token }}
           {% endif %}
 
+          {{ render_field(form.name) }}
+          {{ render_field(form.description, rows=3) }}
+          {{ render_field(form.website, hint="Optional. Must use http or https.") }}
+          {{ render_field(form.redirect_uris,
+                          hint="One URL per line. Authorization codes are only ever sent to these addresses.",
+                          rows=4) }}
+
           <div class="oauth-privileges-field{% if form.privileges.errors %} has-error{% endif %}">
             <div class="oauth-field-header">
               <label for="{{ form.privileges.id }}">{{ form.privileges.label.text }}</label>
-              <span>Select one or more capabilities.</span>
+              <span>Enable only the elevated capabilities this application is allowed to use.</span>
             </div>
             {{ form.privileges()|safe }}
+            {% for error in form.privileges.errors %}
+              <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
 
           <div class="oauth-form-actions">
             <button type="submit" class="btn btn-primary">
-              <i class="fa fa-save"></i> Save privileges
+              <i class="fa fa-save"></i> Save changes
             </button>
             <input name="_continue_editing" type="submit" class="btn btn-secondary" value="Save and Continue Editing">
             <a href="{{ return_url }}" class="btn btn-secondary">

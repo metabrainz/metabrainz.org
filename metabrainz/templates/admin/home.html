@@ -1,73 +1,76 @@
 {% extends 'admin/master.html' %}
-{% block body %}
-  <div class="page-title">
-    <i class="fa fa-dashboard"></i> Admin Dashboard
-  </div>
-  <p class="page-subtitle">Welcome to the MetaBrainz administration panel</p>
 
+{% block page_heading %}Admin dashboard{% endblock %}
+{% block page_description %}Commercial supporter applications awaiting a decision.{% endblock %}
+
+{% block body %}
   {% macro print_table(supporters) %}
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Organization Name</th>
-        <th>Contact name</th>
-        <th>Contact email</th>
-        <th>Username</th>
-        <th>Tier</th>
-        <th>Applied on</th>
-      </tr>
-      </thead>
-      <tbody>
-      {% for supporter in supporters %}
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
         <tr>
-          <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
-          <td>{{ supporter.contact_name }}</td>
-          <td>{{ supporter.user.email }}</td>
-          <td>{{ supporter.user.name }}</td>
-          <td>{{ supporter.tier }}</td>
-          <td>{{ supporter.created.strftime('%Y-%m-%d %H:%M:%S') if supporter.created else 'N/A' }}</td>
+          <th>Organization</th>
+          <th>Contact name</th>
+          <th>Contact email</th>
+          <th>Username</th>
+          <th>Tier</th>
+          <th>Applied on</th>
         </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        {% for supporter in supporters %}
+          <tr>
+            <td><a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">{{ supporter.org_name }}</a></td>
+            <td>{{ supporter.contact_name }}</td>
+            <td>{{ supporter.user.email }}</td>
+            <td>{{ supporter.user.name }}</td>
+            <td>{{ supporter.tier }}</td>
+            <td>{{ supporter.created.strftime('%Y-%m-%d %H:%M') if supporter.created else '—' }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
   {% endmacro %}
 
-  <div class="row" style="margin-bottom: 20px;">
-    <div class="col-md-6">
-      <div class="stats-card-primary">
-        <h4><i class="fa fa-clock-o"></i> Pending Approval</h4>
-        <p class="count">{{ pending_supporters|length }}</p>
-      </div>
+  <div class="metric-grid">
+    <div class="metric">
+      <h4>Pending approval</h4>
+      <p class="count">{{ pending_supporters|length }}</p>
     </div>
-    <div class="col-md-6">
-      <div class="stats-card-success">
-        <h4><i class="fa fa-hourglass-half"></i> Waiting List</h4>
-        <p class="count">{{ waiting_supporters|length }}</p>
-      </div>
+    <div class="metric metric--success">
+      <h4>Waiting list</h4>
+      <p class="count">{{ waiting_supporters|length }}</p>
     </div>
   </div>
 
-  <div class="admin-card">
-    <h3><i class="fa fa-exclamation-circle"></i> Commercial supporters pending approval</h3>
+  <section class="admin-card admin-card--flush">
+    <div class="section-head">
+      <h3>Pending approval</h3>
+      <span class="count-pill">{{ pending_supporters|length }}</span>
+    </div>
     {% if pending_supporters %}
       {{ print_table(pending_supporters) }}
     {% else %}
       <div class="empty-state">
-        <i class="fa fa-check-circle" style="font-size: 48px; margin-bottom: 15px;"></i>
-        <p>No pending supporters! All caught up.</p>
+        <i class="fa fa-check"></i>
+        <p>Nothing pending. All caught up.</p>
       </div>
     {% endif %}
-  </div>
+  </section>
 
-  <div class="admin-card">
-    <h3><i class="fa fa-list"></i> Commercial supporters in the waiting list</h3>
+  <section class="admin-card admin-card--flush">
+    <div class="section-head">
+      <h3>Waiting list</h3>
+      <span class="count-pill">{{ waiting_supporters|length }}</span>
+    </div>
     {% if waiting_supporters %}
       {{ print_table(waiting_supporters) }}
     {% else %}
       <div class="empty-state">
-        <i class="fa fa-inbox" style="font-size: 48px; margin-bottom: 15px;"></i>
-        <p>No supporters in the waiting list.</p>
+        <i class="fa fa-inbox"></i>
+        <p>The waiting list is empty.</p>
       </div>
     {% endif %}
-  </div>
+  </section>
 {% endblock %}

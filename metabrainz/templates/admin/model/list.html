@@ -10,80 +10,78 @@
     {{ lib.form_css() }}
 {% endblock %}
 
+{% block page_heading %}{{ admin_view.name }}{% endblock %}
+{% block page_description %}{% if count %}{{ count }} record{{ 's' if count != 1 else '' }}{% else %}Manage records{% endif %}{% endblock %}
+
+{% block page_actions %}
+    {% if admin_view.can_create %}
+        {%- if admin_view.create_modal -%}
+            {{ lib.add_modal_button(url=get_url('.create_view', url=return_url, modal=True), btn_class='btn btn-primary', title='Create New Record', content='<i class="fa fa-plus"></i> Create') }}
+        {% else %}
+            <a href="{{ get_url('.create_view', url=return_url) }}" title="Create New Record" class="btn btn-primary">
+                <i class="fa fa-plus"></i> Create
+            </a>
+        {%- endif -%}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     {% block model_menu_bar %}
-    {% block page_header %}
-    <div class="page-title">
-        <i class="fa fa-list"></i> {{ admin_view.name }}
-    </div>
-    <p class="page-subtitle">
-        {% if count %}{{ count }} record{{ 's' if count != 1 else '' }} found{% else %}Manage records{% endif %}
-    </p>
-    {% endblock %}
+    {% block page_header %}{% endblock %}
 
-    <div class="admin-card" style="margin-bottom: 25px;">
-        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-            <div class="btn-group" role="group">
-                {% if admin_view.can_create %}
-                    {%- if admin_view.create_modal -%}
-                        {{ lib.add_modal_button(url=get_url('.create_view', url=return_url, modal=True), btn_class='btn btn-success', title='Create New Record', content='<i class="fa fa-plus"></i> Create') }}
-                    {% else %}
-                        <a href="{{ get_url('.create_view', url=return_url) }}" title="Create New Record" class="btn btn-success">
-                            <i class="fa fa-plus"></i> Create
-                        </a>
-                    {%- endif -%}
-                {% endif %}
-
-                {% if admin_view.can_export %}
-                    {{ model_layout.export_options() }}
-                {% endif %}
-            </div>
-
-            <div class="d-flex flex-wrap gap-2 align-items-center">
-                {% if filters %}
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-filter"></i> Add Filter
-                        </a>
-                        <div class="dropdown-menu field-filters">
-                            {% for k in filter_groups %}
-                                <a href="javascript:void(0)" class="dropdown-item filter" onclick="return false;">{{ k }}</a>
-                            {% endfor %}
-                        </div>
+    {% if filters or actions or search_supported or can_set_page_size or admin_view.can_export %}
+    <div class="toolbar">
+        <div class="toolbar-group">
+            {% if filters %}
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-filter"></i> Filter
+                    </a>
+                    <div class="dropdown-menu field-filters">
+                        {% for k in filter_groups %}
+                            <a href="javascript:void(0)" class="dropdown-item filter" onclick="return false;">{{ k }}</a>
+                        {% endfor %}
                     </div>
-                {% endif %}
+                </div>
+            {% endif %}
 
-                {% if can_set_page_size %}
-                    <div class="dropdown">
-                        {{ model_layout.page_size_form(page_size_url, admin_view.page_size_options) }}
-                    </div>
-                {% endif %}
+            {% if actions %}
+                <div class="dropdown">
+                    {{ actionlib.dropdown(actions) }}
+                </div>
+            {% endif %}
 
-                {% if actions %}
-                    <div class="dropdown">
-                        {{ actionlib.dropdown(actions) }}
-                    </div>
-                {% endif %}
+            {% if admin_view.can_export %}
+                {{ model_layout.export_options() }}
+            {% endif %}
+        </div>
 
-                {% if search_supported %}
-                    {{ model_layout.search_form() }}
-                {% endif %}
-            </div>
+        <div class="toolbar-group">
+            {% if can_set_page_size %}
+                <div class="dropdown">
+                    {{ model_layout.page_size_form(page_size_url, admin_view.page_size_options) }}
+                </div>
+            {% endif %}
+
+            {% if search_supported %}
+                {{ model_layout.search_form() }}
+            {% endif %}
         </div>
     </div>
+    {% endif %}
     {% endblock %}
 
     {% if filters %}
-    <div id="filter-container" class="admin-card" style="margin-bottom: 25px; display: none;">
+    <div id="filter-container" class="admin-card" style="display: none;">
         {{ model_layout.filter_form() }}
     </div>
     {% endif %}
 
-    <div class="admin-card">
+    <div class="admin-card admin-card--flush">
         {% block model_list_table %}
         {% if data %}
             <div class="table-responsive">
-                <table class="table table-striped model-list">
+                <table class="table model-list">
                     <thead>
                         <tr>
                             {% block list_header scoped %}
@@ -172,15 +170,17 @@
             </div>
 
             {% block list_pager %}
-            {% if num_pages is not none %}
-            {{ lib.pager(page, num_pages, pager_url) }}
-            {% else %}
-            {{ lib.simple_pager(page, data|length == page_size, pager_url) }}
-            {% endif %}
+            <div class="card-footer-bar">
+                {% if num_pages is not none %}
+                {{ lib.pager(page, num_pages, pager_url) }}
+                {% else %}
+                {{ lib.simple_pager(page, data|length == page_size, pager_url) }}
+                {% endif %}
+            </div>
             {% endblock %}
         {% else %}
             <div class="empty-state">
-                <i class="fa fa-inbox" style="font-size: 48px; margin-bottom: 15px;"></i>
+                <i class="fa fa-inbox"></i>
                 {% block empty_list_message %}
                 <p>{{ admin_view.get_empty_list_message() }}</p>
                 {% endblock %}

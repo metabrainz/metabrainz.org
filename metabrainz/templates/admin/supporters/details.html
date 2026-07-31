@@ -1,316 +1,246 @@
 {% extends 'admin/master.html' %}
-{% block body %}
-  <div class="page-title" style="margin-bottom: 5px;">
-    <i class="fa fa-user-circle"></i> Supporter Details
-  </div>
 
-  <div class="admin-card" style="margin-bottom: 25px;">
-    <div class="row">
-      <div class="col-sm-8">
-        <h2 style="margin-top:0; color: #2d3748; font-weight: 700;">
+{% block page_heading %}Supporter details{% endblock %}
+
+{% block page_actions %}
+  <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}" class="btn btn-primary" role="button">
+    <i class="fa fa-edit"></i> Edit
+  </a>
+  <a href="{{ url_for('supportersview.delete', supporter_id=supporter.id) }}" class="btn btn-danger" role="button">
+    <i class="fa fa-trash"></i> Delete
+  </a>
+{% endblock %}
+
+{% block body %}
+  <div class="admin-card">
+    <div class="entity-head">
+      <div>
+        <h2>
           {% if supporter.is_commercial %}
-            <strong>{{ supporter.org_name }}</strong>
-            <small class="text-muted" style="font-size: 18px;">({{ supporter.user.name }})</small>
+            {{ supporter.org_name }}
+            <span class="text-muted">({{ supporter.user.name }})</span>
           {% else %}
             {{ supporter.user.name }}
           {% endif %}
-          <span class="badge" style="background-color: #e2e8f0; color: #4a5568; font-size: 14px;">
-            #{{ supporter.id }}
-          </span>
+          <span class="badge badge-secondary">#{{ supporter.id }}</span>
         </h2>
-        <p class="text-muted"><i class="fa fa-calendar"></i> Created on {{ supporter.created.strftime('%Y-%m-%d %H:%M:%S') if supporter.created else 'N/A' }}</p>
-
-        <div style="margin-top: 20px;">
-          <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}"
-             class="btn btn-primary" role="button">
-            <i class="fa fa-edit"></i> Edit supporter
-          </a>
-          <a href="{{ url_for('supportersview.delete', supporter_id=supporter.id) }}"
-             class="btn btn-danger" role="button">
-            <i class="fa fa-trash"></i> Delete supporter
-          </a>
-        </div>
+        <p class="entity-meta">
+          Created {{ supporter.created.strftime('%Y-%m-%d %H:%M') if supporter.created else 'unknown' }}
+        </p>
       </div>
       {% if supporter.logo_filename %}
-        <div class="col-sm-4 text-right">
-          <img src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"
-               class="supporter-logo" style="max-width:280px; max-height:73px;" />
-        </div>
+        <img src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"
+             alt="{{ supporter.org_name }} logo" class="supporter-logo" style="max-width:240px; max-height:64px;" />
       {% elif supporter.org_logo_url %}
-        <div class="col-sm-4 text-right">
-          <img src="{{ supporter.org_logo_url }}"
-               class="supporter-logo" style="max-width:280px; max-height:73px;" />
-        </div>
+        <img src="{{ supporter.org_logo_url }}"
+             alt="{{ supporter.org_name }} logo" class="supporter-logo" style="max-width:240px; max-height:64px;" />
       {% endif %}
     </div>
   </div>
 
+  {% if supporter.state == 'pending' or supporter.state == 'waiting' %}
+  <div class="callout callout--warning">
+    <h3>This application needs a decision</h3>
+    <p class="page-actions">
+      <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id) }}"
+         class="btn btn-success" role="button">Approve</a>
+      <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id, limited=True) }}"
+         title="This supporter is not going to have access to the API."
+         class="btn btn-secondary" role="button">Approve (limited)</a>
+      {% if supporter.state != 'waiting' %}
+        <a href="{{ url_for('supportersview.wait', supporter_id=supporter.id) }}"
+           class="btn btn-secondary" role="button">Put into waiting list</a>
+      {% endif %}
+      <a href="{{ url_for('supportersview.reject', supporter_id=supporter.id) }}"
+         class="btn btn-danger" role="button">Reject</a>
+    </p>
+    <p class="text-muted">
+      You will be redirected to the next pending supporter after approving or rejecting this one.
+    </p>
+  </div>
+  {% endif %}
+
   <div class="admin-card">
-    <h3><i class="fa fa-info-circle"></i> General info</h3>
-  <div class="row">
-
-    <div class="form-group col-md-6">
-      <label>Username</label>
-      <input class="form-control" type="text" value="{{ supporter.user.name }}" readonly>
-      <div style="padding-top: 7px">
-        <em class="text-muted">
-          Determines which user manages this supporter account.
-          Can be changed to switch the owner. Only one user can be an owner.
-        </em>
+    <div class="section-head"><h3>General</h3></div>
+    <dl class="detail-grid">
+      <div>
+        <dt>Username</dt>
+        <dd>{{ supporter.user.name }}</dd>
       </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Name</label>
-        <input class="form-control" type="text" value="{{ supporter.contact_name }}" readonly>
+      <div>
+        <dt>Contact name</dt>
+        <dd>{{ supporter.contact_name or '—' }}</dd>
       </div>
       {% if supporter.user.email and supporter.user.unconfirmed_email %}
-      <div class="form-group">
-        <label>Email (Current)</label>
-        <div class="input-group">
-          <input class="form-control" type="email" value="{{ supporter.user.email }}" readonly>
-          <span class="input-group-addon"><span class="badge bg-success">Confirmed</span></span>
-        </div>
+      <div>
+        <dt>Email (current)</dt>
+        <dd>{{ supporter.user.email }} <span class="badge badge-success">Confirmed</span></dd>
       </div>
-      <div class="form-group">
-        <label>Email (New)</label>
-        <div class="input-group">
-          <input class="form-control" type="email" value="{{ supporter.user.unconfirmed_email }}" readonly>
-          <span class="input-group-addon"><span class="badge bg-danger">Pending</span></span>
-        </div>
-        <div style="padding-top: 8px">
-          <em class="text-muted">Current email will be replaced once new email is verified.</em>
-        </div>
+      <div>
+        <dt>Email (new)</dt>
+        <dd>
+          {{ supporter.user.unconfirmed_email }} <span class="badge badge-warning">Pending</span>
+          <div class="text-muted">Replaces the current address once verified.</div>
+        </dd>
       </div>
       {% elif supporter.user.email %}
-      <div class="form-group">
-        <label>Email</label>
-        <div class="input-group">
-          <input class="form-control" type="email" value="{{ supporter.user.email }}" readonly>
-          <span class="input-group-addon"><span class="badge bg-success">Confirmed</span></span>
-        </div>
+      <div>
+        <dt>Email</dt>
+        <dd>{{ supporter.user.email }} <span class="badge badge-success">Confirmed</span></dd>
       </div>
       {% elif supporter.user.unconfirmed_email %}
-      <div class="form-group">
-        <label>Email</label>
-        <div class="input-group">
-          <input class="form-control" type="email" value="{{ supporter.user.unconfirmed_email }}" readonly>
-          <span class="input-group-addon"><span class="badge bg-danger">Unconfirmed</span></span>
-        </div>
+      <div>
+        <dt>Email</dt>
+        <dd>{{ supporter.user.unconfirmed_email }} <span class="badge badge-danger">Unconfirmed</span></dd>
       </div>
       {% else %}
-      <div class="form-group">
-        <label>Email</label>
-        <input class="form-control" type="text" value="No email" readonly disabled>
+      <div>
+        <dt>Email</dt>
+        <dd class="text-muted">No email</dd>
       </div>
       {% endif %}
-    </div>
-
-  </div>
+    </dl>
+    <p class="help-block">
+      The username determines which user manages this supporter account. Change it to switch
+      the owner — only one user can own an account.
+    </p>
   </div>
 
   <div class="admin-card">
-    <h3><i class="fa fa-database"></i> Data access</h3>
-  <div class="row">
-    <div class="form-group col-md-6">
-      <label>State</label>
-      <input class="form-control" type="text" value="{{ supporter.state }}" readonly>
-      <div style="padding-top: 7px">
-        <em class="text-muted">
-          State determines whether this supporter has access to the MetaBrainz Live Data Feed API.
-        </em>
+    <div class="section-head">
+      <div>
+        <h3>Data access</h3>
+        <p>State decides whether this supporter can reach the MetaBrainz Live Data Feed API.</p>
       </div>
+      <span class="badge {{ 'badge-success' if supporter.state == 'active' else 'badge-secondary' }}">{{ supporter.state }}</span>
     </div>
-    <div class="col-md-6">
-      <ul class="text-muted">
-        <li><code>Active</code> - Full access to the API</li>
-        <li><code>Pending</code> - New supporter waiting for approval</li>
-        <li><code>Waiting</code> - Old supporter in the waiting list (for approval)</li>
-        <li><code>Rejected</code> - Rejected access the API</li>
-        <li><code>Limited</code> - Cannot access the API</li>
-      </ul>
-    </div>
-  </div>
+    <ul class="text-muted">
+      <li><code>Active</code> — full access to the API</li>
+      <li><code>Pending</code> — new supporter waiting for approval</li>
+      <li><code>Waiting</code> — old supporter in the waiting list</li>
+      <li><code>Rejected</code> — refused access to the API</li>
+      <li><code>Limited</code> — cannot access the API</li>
+    </ul>
   </div>
 
   <div class="admin-card">
-    <h3><i class="fa fa-building"></i> Commercial info</h3>
-  <div class="row">
-
-    <div style="font-size:15px;font-weight:bold;margin-bottom:20px" class="col-md-12">
-      {% if supporter.is_commercial %}
-        This is a commercial supporter
-      {% else %}
-        This is <u>not</u> a commercial supporter
-      {% endif %}
+    <div class="section-head">
+      <h3>Commercial</h3>
+      <span class="badge {{ 'badge-primary' if supporter.is_commercial else 'badge-secondary' }}">
+        {{ 'Commercial' if supporter.is_commercial else 'Non-commercial' }}
+      </span>
     </div>
-
     {% if supporter.is_commercial %}
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Organization name</label>
-          <input class="form-control" type="text" value="{{ supporter.org_name }}" readonly>
+      <dl class="detail-grid">
+        <div>
+          <dt>Organization name</dt>
+          <dd>{{ supporter.org_name or '—' }}</dd>
         </div>
-        <div class="form-group">
-          <label>URL of the organization's API (if exists)</label>
-          <input class="form-control" type="url" value="{{ supporter.api_url }}" readonly>
+        <div>
+          <dt>Organization API URL</dt>
+          <dd>{{ supporter.api_url or '—' }}</dd>
         </div>
-      </div>
-      <div class="form-group col-md-6">
-        <label>Description</label>
-        <textarea class="form-control" rows="5" readonly>{{ supporter.org_desc }}</textarea>
-      </div>
+        <div class="detail-wide">
+          <dt>Description</dt>
+          <dd>{{ supporter.org_desc or '—' }}</dd>
+        </div>
+      </dl>
+    {% else %}
+      <p class="text-muted">This is not a commercial supporter.</p>
     {% endif %}
-
-  </div>
   </div>
 
   {% if supporter.is_commercial %}
   <div class="admin-card">
-    <h4><i class="fa fa-map-marker"></i> Address</h4>
-    <div class="row">
-      <div class="form-group col-md-6">
-        <label>Street</label>
-        <input class="form-control" type="text" value="{{ supporter.address_street }}" readonly>
-      </div>
-      <div class="form-group col-md-6">
-        <label>City</label>
-        <input class="form-control" type="text" value="{{ supporter.address_city }}" readonly>
-      </div>
-      <div class="form-group col-md-6">
-        <label>Postcode</label>
-        <input class="form-control" type="text" value="{{ supporter.address_postcode }}" readonly>
-      </div>
-      <div class="form-group col-md-6">
-        <label>State / Province</label>
-        <input class="form-control" type="text" value="{{ supporter.address_state }}" readonly>
-      </div>
-      <div class="form-group col-md-6">
-        <label>Country</label>
-        <input class="form-control" type="text" value="{{ supporter.address_country }}" readonly>
-      </div>
-    </div>
+    <div class="section-head"><h3>Address</h3></div>
+    <dl class="detail-grid">
+      <div><dt>Street</dt><dd>{{ supporter.address_street or '—' }}</dd></div>
+      <div><dt>City</dt><dd>{{ supporter.address_city or '—' }}</dd></div>
+      <div><dt>Postcode</dt><dd>{{ supporter.address_postcode or '—' }}</dd></div>
+      <div><dt>State / province</dt><dd>{{ supporter.address_state or '—' }}</dd></div>
+      <div><dt>Country</dt><dd>{{ supporter.address_country or '—' }}</dd></div>
+    </dl>
   </div>
 
   <div class="admin-card">
-    <h4><i class="fa fa-dollar"></i> Financial info</h4>
-    <div class="row">
-      <div class="form-group col-md-6">
-        <label>Tier</label>
-        <input class="form-control" type="text" value="{{ supporter.tier }}" readonly>
-      </div>
-      <div class="form-group col-md-6">
-        <label>Amount pledged</label>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <input class="form-control" type="number" value="{{ supporter.amount_pledged }}" readonly>
-        </div>
-      </div>
-    </div>
+    <div class="section-head"><h3>Financial</h3></div>
+    <dl class="detail-grid">
+      <div><dt>Tier</dt><dd>{{ supporter.tier or '—' }}</dd></div>
+      <div><dt>Amount pledged</dt><dd>${{ supporter.amount_pledged }}</dd></div>
+    </dl>
   </div>
 
   <div class="admin-card">
-    <h3><i class="fa fa-star"></i> Promotion</h3>
-    <div class="row">
-
-    <div style="font-size:15px;font-weight:bold;margin-bottom:20px" class="col-md-12">
-      {% if supporter.featured %}
-        This supporter is featured on the website
-      {% else %}
-        This supporter is <u>not</u> featured on the website
-      {% endif %}
+    <div class="section-head">
+      <h3>Promotion</h3>
+      <span class="badge {{ 'badge-primary' if supporter.featured else 'badge-secondary' }}">
+        {{ 'Featured' if supporter.featured else 'Not featured' }}
+      </span>
     </div>
-
     {% if supporter.featured %}
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Website URL</label>
-          <input class="form-control" type="url" value="{{ supporter.website_url }}" readonly>
+      <dl class="detail-grid">
+        <div><dt>Website URL</dt><dd>{{ supporter.website_url or '—' }}</dd></div>
+        <div><dt>Good standing</dt><dd>{{ 'Yes' if supporter.good_standing else 'No' }}</dd></div>
+        <div><dt>In the Deadbeat Club</dt><dd>{{ 'Yes' if supporter.in_deadbeat_club else 'No' }}</dd></div>
+        <div class="detail-wide">
+          <dt>Data usage description</dt>
+          <dd>{{ supporter.data_usage_desc or '—' }}</dd>
         </div>
-        <dl class="dl-horizontal">
-          <dt class="text-success">Good standing</dt><dd>{{ 'Yes' if supporter.good_standing else 'No' }}</dd>
-          <dt class="text-warning">In the Deadbeat Club</dt><dd>{{ 'Yes' if supporter.in_deadbeat_club else 'No' }}</dd>
-        </dl>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label>Data usage description</label>
-        <textarea class="form-control" id="usage_desc" name="usage_desc" rows="4" readonly>{{ supporter.data_usage_desc }}</textarea>
-      </div>
-
+      </dl>
+    {% else %}
+      <p class="text-muted">This supporter is not featured on the website.</p>
     {% endif %}
   </div>
-  </div>
   {% endif %}
 
-  {% if supporter.state == 'pending' or supporter.state == 'waiting' %}
-  <div class="admin-card" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); color: #2d3748;">
-    <h3><i class="fa fa-edit"></i> State modification</h3>
-    <div>
-      <p>
-        <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id) }}"
-           class="btn btn-success" role="button">Approve</a>
-        <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id, limited=True) }}"
-           title="This supporter is not going to have access to the API."
-           class="btn btn-warning" role="button">Approve (limited)</a>
-        {% if supporter.state != 'waiting' %}
-          <a href="{{ url_for('supportersview.wait', supporter_id=supporter.id) }}"
-             class="btn btn-warning" role="button">Put into waiting list</a>
-        {% endif %}
-        <a href="{{ url_for('supportersview.reject', supporter_id=supporter.id) }}"
-           class="btn btn-danger" role="button">Reject</a>
-      </p>
-      <p class="text-muted">
-        <em>
-          You will be redirected to the next pending supporter after approving
-          or rejecting this one.
-        </em>
-      </p>
+  <div class="admin-card admin-card--flush">
+    <div class="section-head">
+      <div>
+        <h3>Active tokens</h3>
+        <p>
+          To revoke existing tokens <strong>and</strong> stop new ones being generated,
+          <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}">set the state</a>
+          to <code>rejected</code>.
+        </p>
+      </div>
+      <span class="count-pill">{{ active_tokens|length }}</span>
     </div>
-  </div>
-  {% endif %}
-
-  <div class="admin-card">
-    <h3><i class="fa fa-key"></i> Active tokens</h3>
-  {% if active_tokens %}
-    <p class="text-muted">
-      <em>
-        If you need to revoke existing tokens <b>and</b> prevent supporter from
-        generating new ones, <a href="{{ url_for('supportersview.edit', supporter_id=supporter.id) }}">
-        set their status</a> to <code>rejected</code>.
-      </em>
-    </p>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Value</th>
-        <th>Created on</th>
-        <th>{# Controls #}</th>
-      </tr>
-      </thead>
-      {% for token in active_tokens %}
-        <tr>
-          <td>{{ token.value }}</td>
-          <td>{{ token.created.strftime('%Y-%m-%d %H:%M:%S') if token.created else 'N/A' }}</td>
-          <td><a href="{{ url_for('supportersview.revoke_token', token_value=token.value) }}"
-                 class="btn btn-warning" role="button"
-                 title="Revoke this access token">Revoke</a></td>
-        </tr>
-      {% endfor %}
-    </table>
-  {% else %}
-    <div class="empty-state">
-      <i class="fa fa-key" style="font-size: 48px; margin-bottom: 15px;"></i>
-      <p>This supporter has no active access tokens.</p>
-    </div>
-  {% endif %}
+    {% if active_tokens %}
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Value</th>
+            <th>Created on</th>
+            <th>{# Controls #}</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for token in active_tokens %}
+            <tr>
+              <td><code>{{ token.value }}</code></td>
+              <td>{{ token.created.strftime('%Y-%m-%d %H:%M') if token.created else '—' }}</td>
+              <td class="list-buttons-column">
+                <a href="{{ url_for('supportersview.revoke_token', token_value=token.value) }}"
+                   class="btn btn-secondary btn-sm" role="button"
+                   title="Revoke this access token">Revoke</a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <i class="fa fa-key"></i>
+        <p>This supporter has no active access tokens.</p>
+      </div>
+    {% endif %}
   </div>
 
   <div class="admin-card">
-    <h3><i class="fa fa-line-chart"></i> Hourly API usage</h3>
-    <div id="chart" style="height:500px; width:100%;"></div>
+    <div class="section-head"><h3>Hourly API usage</h3></div>
+    <div id="chart" style="height:420px; width:100%;"></div>
   </div>
 {% endblock %}
 

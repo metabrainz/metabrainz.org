@@ -11,8 +11,11 @@ from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelVie
 from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm, DeleteUserForm, \
     DeleteSupporterForm
 from metabrainz.admin.forms import get_logo_storage_dir
-from wtforms import SelectMultipleField
+from types import SimpleNamespace
+from wtforms import SelectMultipleField, StringField, TextAreaField, validators
 from wtforms.widgets import CheckboxInput, ListWidget
+
+from metabrainz.oauth.forms import CustomURLValidator
 
 from metabrainz.model import db
 from metabrainz.model.oauth.client import (
@@ -869,6 +872,52 @@ class PrivilegeBitmapField(SelectMultipleField):
         setattr(obj, name, bitmap)
 
 
+class RedirectUriListField(TextAreaField):
+    """ Edits the ``redirect_uris`` ARRAY(Text) column as one URI per line.
+
+    Each URI is checked with the same validators ApplicationForm applies when an
+    owner edits their own application, so the admin cannot save a client that the
+    user facing form would have rejected. """
+
+    # instantiated once: these validators are stateless
+    _uri_validators = (
+        validators.URL(require_tld=False, message="is not a valid URL"),
+        CustomURLValidator(message="must use http or https"),
+    )
+
+    def _value(self):
+        if isinstance(self.data, (list, tuple)):
+            return "\n".join(self.data)
+        return self.data or ""
+
+    def process_formdata(self, valuelist):
+        raw = valuelist[0] if valuelist else ""
+        self.data = [line.strip() for line in raw.splitlines() if line.strip()]
+
+    def pre_validate(self, form):
+        # StopValidation rather than ValidationError: it skips the rest of the chain,
+        # including the InputRequired flask-admin appends for this NOT NULL column,
+        # which clears field.errors before raising its own generic message.
+        if not self.data:
+            raise validators.StopValidation("At least one authorization callback URL is required.")
+
+        problems = []
+        for uri in self.data:
+            # the validators only read .data and .name off the field
+            proxy = SimpleNamespace(data=uri, name=self.name)
+            for validator in self._uri_validators:
+                try:
+                    validator(form, proxy)
+                except validators.ValidationError as error:
+                    # report every bad line at once, not just the first
+                    problems.append(f"'{uri}' {error.args[0]}.")
+                    break
+
+        if problems:
+            self.errors.extend(problems)
+            raise validators.StopValidation()
+
+
 class OAuth2ClientModelView(AdminModelView):
     """Admin view for managing OAuth2 applications and their privileges."""
     edit_template = "admin/oauth_client/edit.html"
@@ -889,11 +938,52 @@ class OAuth2ClientModelView(AdminModelView):
     can_edit = True
     can_view_details = True
 
-    form_columns = ("privileges",)
-    form_overrides = {"privileges": PrivilegeBitmapField}
-    # the column is NOT NULL, but an empty selection (no privileges) is valid, so
-    # drop the InputRequired validator flask-admin would otherwise add.
-    form_args = {"privileges": {"label": "Privileges", "validators": []}}
+    # client_id, client_secret and client_id_issued_at identify the client and are
+    # deliberately left out; owner_id is omitted because there is no FK to validate
+    # a new owner against (user data lives in the MB database).
+    form_columns = ("name", "description", "website", "redirect_uris", "privileges")
+    form_overrides = {
+        # name and website are Text columns, which flask-admin would otherwise
+        # render as textareas; they are single line values like in ApplicationForm
+        "name": StringField,
+        "website": StringField,
+        "privileges": PrivilegeBitmapField,
+        "redirect_uris": RedirectUriListField,
+    }
+    # Length and URL rules mirror ApplicationForm in metabrainz/oauth/forms.py.
+    # flask-admin appends InputRequired itself for the NOT NULL columns.
+    form_args = {
+        "name": {
+            "label": "Name",
+            "validators": [validators.Length(min=3, max=64)],
+        },
+        "description": {
+            "label": "Description",
+            "validators": [validators.Length(min=3, max=512)],
+        },
+        # nullable in the schema and some existing rows have no website, so it
+        # stays optional here rather than blocking edits to those clients
+        "website": {
+            "label": "Homepage",
+            # flask-admin returns a form_overrides field before it runs the column
+            # converter, so the converter's own "empty string -> NULL" filter for
+            # nullable columns never gets attached. Clearing the field would
+            # otherwise store '' instead of NULL.
+            "filters": [lambda value: value or None],
+            "validators": [
+                validators.Optional(),
+                validators.URL(require_tld=False, message="Homepage is not a valid URL."),
+                CustomURLValidator(message="Homepage must use http or https."),
+            ],
+        },
+        "redirect_uris": {
+            "label": "Authorization callback URLs",
+            "description": "One URL per line.",
+        },
+        # the column is NOT NULL, but an empty selection (no privileges) is valid, so
+        # drop the InputRequired validator flask-admin would otherwise add.
+        "privileges": {"label": "Privileges", "validators": []},
+    }
 
     @staticmethod
     def _format_privileges(view, context, model, name):
