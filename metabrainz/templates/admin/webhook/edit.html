@@ -8,10 +8,17 @@
     {{ lib.form_css() }}
 {% endblock %}
 
+{% block page_heading %}Edit webhook{% endblock %}
+{% block page_description %}Update the endpoint, secret and subscribed events.{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-secondary">
+        <i class="fa fa-arrow-left"></i> Back to list
+    </a>
+{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <h1>Edit Webhook</h1>
-        
+    <div class="admin-card">
         {% if form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -125,11 +132,9 @@
                 </div>
             </div>
             
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Save Changes</button>
-                    <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-warning btn-lg"><i class="fa fa-times"></i> Cancel</a>
-                </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>

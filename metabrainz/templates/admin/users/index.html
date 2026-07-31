@@ -1,13 +1,7 @@
 {% extends "admin/model/list.html" %}
 
-{% block page_header %}
-  <div class="page-title">
-    <i class="fa fa-users"></i> Users
-  </div>
-  <p class="page-subtitle">
-    {% if count %}{{ count }} user{{ 's' if count != 1 else '' }} found{% else %}Manage user accounts{% endif %}
-  </p>
-{% endblock %}
+{% block page_heading %}Users{% endblock %}
+{% block page_description %}{% if count %}{{ count }} user{{ 's' if count != 1 else '' }}{% else %}Manage user accounts{% endif %}{% endblock %}
 
 {% block list_row scoped %}
   {% if actions %}

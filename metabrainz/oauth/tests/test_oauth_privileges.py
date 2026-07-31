@@ -81,8 +81,14 @@ class OAuthPrivilegesTestCase(OAuthTestCase):
         self.assert200(response)
         form = self.get_context_variable("form")
 
+        # the admin form edits the application details alongside the privileges,
+        # so a partial POST would fail validation and re-render the page
         response = self.client.post(url, data={
             "csrf_token": form.csrf_token.current_token,
+            "name": client.name,
+            "description": client.description,
+            "website": client.website,
+            "redirect_uris": "\n".join(client.redirect_uris),
             "privileges": [
                 str(OAuth2ClientPrivilege.REMEMBER_ME.value),
                 str(OAuth2ClientPrivilege.CLIENT_CREDENTIALS.value),

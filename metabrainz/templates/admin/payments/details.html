@@ -1,30 +1,23 @@
 {% extends 'admin/master.html' %}
 
+{% block page_heading %}Payment details{% endblock %}
+
+{% block page_actions %}
+  <a href="{{ get_url('paymentsview.list') }}" class="btn btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to list
+  </a>
+  {% if admin_view.can_edit %}
+  <a href="{{ get_url('.edit_view', id=model.id, url=return_url) }}" class="btn btn-primary">
+    <i class="fa fa-edit"></i> Edit
+  </a>
+  {% endif %}
+{% endblock %}
+
 {% block body %}
-  <div class="page-title">
-    <i class="fa fa-eye"></i> Payment Details
-  </div>
-  <p class="page-subtitle">
-    View payment information
-  </p>
-
-  <div class="admin-card" style="margin-bottom: 25px;">
-    <div class="btn-group" role="group">
-      <a href="{{ get_url('paymentsview.list') }}" class="btn btn-secondary">
-        <i class="fa fa-list"></i> Back to List
-      </a>
-      {% if admin_view.can_edit %}
-      <a href="{{ get_url('.edit_view', id=model.id, url=return_url) }}" class="btn btn-primary">
-        <i class="fa fa-edit"></i> Edit
-      </a>
-      {% endif %}
-    </div>
-  </div>
-
   <div class="admin-card">
     <div class="row">
       <div class="col-md-6">
-        <h4 style="margin-bottom: 20px; color: #2d3748;">
+        <h4>
           <i class="fa fa-user"></i> Personal Information
         </h4>
         <dl class="row">
@@ -48,7 +41,7 @@
       </div>
 
       <div class="col-md-6">
-        <h4 style="margin-bottom: 20px; color: #2d3748;">
+        <h4>
           <i class="fa fa-credit-card"></i> Transaction Details
         </h4>
         <dl class="row">
@@ -90,11 +83,11 @@
       </div>
     </div>
 
-    <hr style="margin: 20px 0;">
+    <hr>
 
     <div class="row">
       <div class="col-md-6">
-        <h4 style="margin-bottom: 20px; color: #2d3748;">
+        <h4>
           <i class="fa fa-map-marker"></i> Address
         </h4>
         <dl class="row">
@@ -131,7 +124,7 @@
 
       {% if model.is_donation %}
       <div class="col-md-6">
-        <h4 style="margin-bottom: 20px; color: #2d3748;">
+        <h4>
           <i class="fa fa-cog"></i> Donation Preferences
         </h4>
         <dl class="row">
@@ -158,10 +151,10 @@
     </div>
 
     {% if model.memo %}
-    <hr style="margin: 20px 0;">
+    <hr>
     <div class="row">
       <div class="col-12">
-        <h4 style="margin-bottom: 20px; color: #2d3748;">
+        <h4>
           <i class="fa fa-sticky-note"></i> Memo
         </h4>
         <p>{{ model.memo }}</p>

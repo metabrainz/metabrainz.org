@@ -1,33 +1,35 @@
 {% extends 'admin/master.html' %}
-{% block body %}
-  <div class="page-title">
-    <i class="fa fa-bar-chart"></i> Statistics Overview
-  </div>
-  <p class="page-subtitle">Monitor API usage and supporter activity</p>
 
-  <div class="row" style="margin-bottom: 20px;">
-    <div class="col-md-12">
-      <div class="stats-card-primary">
-        <h4><i class="fa fa-users"></i> Active Supporters (Last 24 Hours)</h4>
-        <p class="count">{{ active_supporter_count }}</p>
-        <p style="opacity: 0.9; margin: 0; font-size: 14px;">Supporters who used the API</p>
-      </div>
+{% block page_heading %}Statistics{% endblock %}
+{% block page_description %}API usage and supporter activity.{% endblock %}
+
+{% block body %}
+  <div class="metric-grid">
+    <div class="metric">
+      <h4>Active supporters</h4>
+      <p class="count">{{ active_supporter_count }}</p>
+      <p class="metric-note">Used the API in the last 24 hours</p>
     </div>
   </div>
 
   {% if top_downloaders %}
   <div class="admin-card">
-    <h3><i class="fa fa-trophy"></i> Top Downloaders (Last 24 Hours)</h3>
-    <ol style="padding-left: 20px;">
+    <div class="section-head">
+      <div>
+        <h3>Top downloaders</h3>
+        <p>Last 24 hours.</p>
+      </div>
+    </div>
+    <ol class="plain-list ranked-list">
       {% for supporter, req_count in top_downloaders %}
         <li class="list-item-border">
-          <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}" style="font-weight: 600;">
+          <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">
             {{ supporter.user.name }}
           </a>
           {% if supporter.is_commercial %}
             <span class="text-muted">({{ supporter.org_name }})</span>
           {% endif %}
-          <span class="badge-orange" style="float: right;">{{ req_count }} requests</span>
+          <span class="badge badge-secondary ml-auto">{{ req_count }} requests</span>
         </li>
       {% endfor %}
     </ol>
@@ -36,8 +38,9 @@
 
   {% if token_actions %}
   <div class="admin-card">
-    <h3><i class="fa fa-key"></i> Recent Access Token Changes</h3>
-    <ol style="padding-left: 20px;">
+    <div class="section-head"><h3>Recent access token changes</h3></div>
+    {# unordered: this is a chronological log, the positions carry no ranking #}
+    <ul class="plain-list">
       {% for action in token_actions %}
         <li class="list-item-border">
           {% if action.supporter %}
@@ -66,18 +69,16 @@
           <code>{{ action.token_value }}</code>
         </li>
       {% endfor %}
-    </ol>
-    <div style="margin-top: 15px;">
-      <a href="{{ url_for('statsview.token_log') }}" class="btn btn-primary">
-        <i class="fa fa-list"></i> View All Changes
-      </a>
+    </ul>
+    <div class="form-buttons">
+      <a href="{{ url_for('statsview.token_log') }}" class="btn btn-secondary">View all changes</a>
     </div>
   </div>
   {% endif %}
 
   <div class="admin-card">
-    <h3><i class="fa fa-line-chart"></i> Hourly API Usage</h3>
-    <div id="chart" style="height:500px; width:100%;"></div>
+    <div class="section-head"><h3>Hourly API usage</h3></div>
+    <div id="chart" style="height:420px; width:100%;"></div>
   </div>
 {% endblock %}
 

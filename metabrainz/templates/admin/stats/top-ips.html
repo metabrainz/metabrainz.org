@@ -1,21 +1,31 @@
 {% extends 'admin/master.html' %}
-{% block body %}
-  <div style="float: right">
-    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_ips', days=1) }}">last day</a>
-    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_ips', days=7) }}">last week</a>
-    <a type="button" class="btn btn-default" href="{{ url_for('statsview.top_ips', days=30) }}">last month</a>
+
+{% block page_heading %}Top IP addresses{% endblock %}
+{% block page_description %}Last {{ days }} days.{% endblock %}
+
+{% block page_actions %}
+  <div class="segmented">
+    <a href="{{ url_for('statsview.top_ips', days=1) }}" class="{{ 'is-active' if days == 1 }}">Day</a>
+    <a href="{{ url_for('statsview.top_ips', days=7) }}" class="{{ 'is-active' if days == 7 }}">Week</a>
+    <a href="{{ url_for('statsview.top_ips', days=30) }}" class="{{ 'is-active' if days == 30 }}">Month</a>
   </div>
-  <h1>Top IP addresses -- {{ days }} days</h1>
+{% endblock %}
 
-    <h2>Non commercial supporters</h2>
-    <p>
-       Supporters in good standing are not listed here.
-    </p>
+{% block body %}
+  <div class="admin-card">
+    <div class="section-head">
+      <div>
+        <h3>Non-commercial supporters</h3>
+        <p>Supporters in good standing are not listed here.</p>
+      </div>
+    </div>
     {{ supporter_list(non_commercial, True) }}
+  </div>
 
-    <h2>Commercial supporters</h2>
+  <div class="admin-card">
+    <div class="section-head"><h3>Commercial supporters</h3></div>
     {{ supporter_list(commercial, False) }}
-
+  </div>
 {% endblock %}
 
 {% macro supporter_list(supporters, show_usage) -%}

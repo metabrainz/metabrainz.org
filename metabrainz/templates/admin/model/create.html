@@ -7,22 +7,16 @@
   {{ lib.form_css() }}
 {% endblock %}
 
+{% block page_heading %}Create {{ admin_view.name }}{% endblock %}
+{% block page_description %}Add a new record.{% endblock %}
+
+{% block page_actions %}
+  <a href="{{ return_url }}" class="btn btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to list
+  </a>
+{% endblock %}
+
 {% block body %}
-  <div class="page-title">
-    <i class="fa fa-plus"></i> Create {{ admin_view.name }}
-  </div>
-  <p class="page-subtitle">
-    Add a new record
-  </p>
-
-  <div class="admin-card" style="margin-bottom: 25px;">
-    <div class="btn-group" role="group">
-      <a href="{{ return_url }}" class="btn btn-secondary">
-        <i class="fa fa-list"></i> List
-      </a>
-    </div>
-  </div>
-
   <div class="admin-card">
     {% block create_form %}
       {{ lib.render_form(form, return_url, extra(), form_opts) }}

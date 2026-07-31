@@ -8,10 +8,17 @@
     {{ lib.form_css() }}
 {% endblock %}
 
+{% block page_heading %}Create webhook{% endblock %}
+{% block page_description %}Send user events to an endpoint you control.{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-secondary">
+        <i class="fa fa-arrow-left"></i> Back to list
+    </a>
+{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <h1>Create Webhook</h1>
-        
+    <div class="admin-card">
         {% if form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -110,20 +117,19 @@
                 </div>
             </div>
             
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-check"></i> Create Webhook</button>
-                    <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-warning btn-lg"><i class="fa fa-times"></i> Cancel</a>
-                </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Create webhook</button>
+                <a href="{{ url_for('webhooks-admin.index_view') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
-        
-        <div class="alert alert-info">
-            <h4><i class="fa fa-info-circle"></i> Webhook Security</h4>
-            <p>Each webhook is assigned a secret key that is used to sign the payloads sent to your endpoint.</p>
-            <p>When you create a webhook, you'll receive a secret key that you should store securely. This key will be used to verify that the webhook requests are coming from MetaBrainz.</p>
-            <p>The signature will be included in the <code>X-MetaBrainz-Signature</code> header of each request.</p>
-        </div>
+    </div>
+
+    <div class="callout">
+        <h3>Webhook security</h3>
+        <p>Each webhook is assigned a secret key that is used to sign the payloads sent to your endpoint.</p>
+        <p>When you create a webhook you receive that secret key — store it securely. It verifies that the
+           requests really come from MetaBrainz.</p>
+        <p>The signature is sent in the <code>X-MetaBrainz-Signature</code> header of each request.</p>
     </div>
 {% endblock %}
 

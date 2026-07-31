@@ -3,14 +3,16 @@
 
 {% block head_css %}
   {{ super() }}
+  {# Same families the public site loads in theme.less, so the admin matches it. #}
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Sintony:400,700&display=swap" rel="stylesheet" media="screen" />
   <link href="{{ url_for('static', filename='fonts/font_awesome/less/font-awesome.css') }}" rel="stylesheet" media="screen" />
   <link href="{{ get_static_path('admin.css') }}" rel="stylesheet" media="screen" />
 {% endblock %}
 
 {% block brand %}
-  <a href="/admin/" class="navbar-brand" style="display: inline-flex; align-items: center;">
-    <i class="fa fa-shield" style="margin-right: 8px;"></i>
-    MetaBrainz Admin
+  <a href="{{ admin_view.admin.url }}" class="navbar-brand">
+    <span class="brand-mark"><i class="fa fa-shield"></i></span>
+    {{ admin_view.admin.name }}
   </a>
 {% endblock %}
 
@@ -23,16 +25,57 @@
 {% block menu_links %}
   <ul class="nav navbar-nav navbar-right">
     {{ layout.menu_links() }}
+    {# the brand links to the current section's root, so the way back to the
+       top-level admin has to live here to stay reachable from every page #}
     <li class="nav-item">
-      <a href="/" class="nav-link">
-        <i class="fa fa-home"></i> Back to Site
-      </a>
+      <a href="{{ url_for('main_admin.index') }}" class="nav-link">Admin home</a>
+    </li>
+    <li class="nav-item">
+      <a href="/" class="nav-link">Back to site</a>
     </li>
   </ul>
 {% endblock %}
 
+{#
+  The whole shell is rebuilt here rather than extended: Flask-Admin's base
+  template puts the navbar inside the content container, which stops the bar
+  from spanning the viewport. Keep the block names so child templates and
+  Flask-Admin's own views keep overriding the right things.
+#}
 {% block page_body %}
-  <div class="admin-content">
-    {{ super() }}
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-light admin-navbar" role="navigation">
+    {{ self.brand() }}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#admin-navbar-collapse"
+            aria-controls="admin-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="admin-navbar-collapse">
+      {{ self.main_menu() }}
+      {{ self.menu_links() }}
+      {% block access_control %}{% endblock %}
+    </div>
+  </nav>
+
+  <main class="admin-content">
+    {% block messages %}
+      {{ layout.messages() }}
+    {% endblock %}
+
+    {# store the jinja2 context for form_rules rendering logic #}
+    {% set render_ctx = h.resolve_ctx() %}
+
+    {% block page_title %}
+      <header class="page-head">
+        <div class="page-head-row">
+          <div class="page-head-text">
+            <h1 class="page-title">{% block page_heading %}{{ admin_view.name }}{% endblock %}</h1>
+            <p class="page-subtitle">{% block page_description %}{% endblock %}</p>
+          </div>
+          <div class="page-actions">{% block page_actions %}{% endblock %}</div>
+        </div>
+      </header>
+    {% endblock %}
+
+    {% block body %}{% endblock %}
+  </main>
 {% endblock %}

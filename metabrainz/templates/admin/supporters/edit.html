@@ -1,41 +1,42 @@
 {% extends 'admin/master.html' %}
-{% block body %}
-  <div class="page-title" style="margin-bottom: 5px;">
-    <i class="fa fa-edit"></i> Edit Supporter
-  </div>
 
-  <div class="admin-card" style="margin-bottom: 25px;">
-    <div class="row">
-      <div class="col-sm-8">
-        <h2 style="margin-top:0; color: #2d3748; font-weight: 700;">
+{% block page_heading %}Edit supporter{% endblock %}
+
+{% block page_actions %}
+  <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}" class="btn btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to details
+  </a>
+{% endblock %}
+
+{% block body %}
+  <div class="admin-card">
+    <div class="entity-head">
+      <div>
+        <h2>
           {% if supporter.is_commercial %}
-            <strong>{{ supporter.org_name }}</strong>
-            <small class="text-muted" style="font-size: 18px;">({{ supporter.user.name }})</small>
+            {{ supporter.org_name }}
+            <span class="text-muted">({{ supporter.user.name }})</span>
           {% else %}
             {{ supporter.user.name }}
           {% endif %}
-          <span class="badge" style="background-color: #e2e8f0; color: #4a5568; font-size: 14px;">
-            #{{ supporter.id }}
-          </span>
+          <span class="badge badge-secondary">#{{ supporter.id }}</span>
         </h2>
-        <p class="text-muted"><i class="fa fa-calendar"></i> Created on {{ supporter.created.strftime('%Y-%m-%d %H:%M:%S') if supporter.created else 'N/A' }}</p>
+        <p class="entity-meta">
+          Created {{ supporter.created.strftime('%Y-%m-%d %H:%M') if supporter.created else 'unknown' }}
+        </p>
       </div>
       {% if supporter.logo_filename %}
-        <div class="col-sm-4 text-right">
-          <img src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"
-               class="supporter-logo" style="max-width:280px; max-height:73px;" />
-        </div>
+        <img src="{{ url_for('static', filename='img/logos/supporters/'+supporter.logo_filename) }}"
+             alt="{{ supporter.org_name }} logo" class="supporter-logo" style="max-width:240px; max-height:64px;" />
       {% elif supporter.org_logo_url %}
-        <div class="col-sm-4 text-right">
-          <img src="{{ supporter.org_logo_url }}"
-               class="supporter-logo" style="max-width:280px; max-height:73px;" />
-        </div>
+        <img src="{{ supporter.org_logo_url }}"
+             alt="{{ supporter.org_name }} logo" class="supporter-logo" style="max-width:240px; max-height:64px;" />
       {% endif %}
     </div>
   </div>
 
   {% if form.errors %}
-    <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 25px;">
+    <div class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -215,15 +216,15 @@
           <label>Logo URL</label>
           {{ form.logo_url(class="form-control") }}
         </div>
-        <div style="margin-top: 20px;">
+        <div class="checkbox-list">
           <div class="checkbox">
-            <label style="font-weight: 600; color: #44a248;">
+            <label>
               {{ form.good_standing() }}
               Good standing
             </label>
           </div>
           <div class="checkbox">
-            <label style="font-weight: 600; color: #ed8936;">
+            <label>
               {{ form.in_deadbeat_club() }}
               In the Deadbeat Club
             </label>
@@ -244,13 +245,11 @@
       </div>
     </div>
 
-    <div class="admin-card" style="background: #f7fafc; border: 2px solid #e2e8f0; padding: 30px;">
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary btn-lg" style="min-width: 150px; margin-right: 10px;">
-          <i class="fa fa-save"></i> Save Changes
-        </button>
-        <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}" class="btn btn-secondary btn-lg" style="background-color: #e2e8f0 !important; color: #4a5568 !important; border: 1px solid #cbd5e0 !important; min-width: 150px;">
-          <i class="fa fa-times"></i> Cancel
+    <div class="admin-card">
+      <div class="page-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}" class="btn btn-secondary">
+          Cancel
         </a>
       </div>
     </div>

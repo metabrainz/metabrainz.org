@@ -1,24 +1,26 @@
 {% extends 'admin/model/details.html' %}
 
-{% block model_menu_bar %}
-  <div class="btn-toolbar pull-right" style="margin-bottom: 15px;">
-    {% if model.status == 'failed' or model.status == 'pending' %}
-      <form method="POST" action="{{ url_for('.retry_delivery', delivery_id=model.id) }}" style="display: inline-block;">
-        {{ retry_form.hidden_tag() }}
-        <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to retry this delivery?');">
-          <i class="fa fa-redo"></i> Retry Delivery
-        </button>
-      </form>
-    {% endif %}
-    <a href="{{ url_for('.index_view') }}" class="btn btn-primary">
-      <i class="fa fa-arrow-left"></i> Back to List
-    </a>
-  </div>
-  <div class="clearfix"></div>
+{% block page_heading %}Webhook delivery{% endblock %}
+{% block page_description %}Delivery attempt #{{ model.id }}.{% endblock %}
+
+{% block page_actions %}
+  <a href="{{ url_for('.index_view') }}" class="btn btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to list
+  </a>
+  {% if model.status == 'failed' or model.status == 'pending' %}
+    <form method="POST" action="{{ url_for('.retry_delivery', delivery_id=model.id) }}" class="inline-form">
+      {{ retry_form.hidden_tag() }}
+      <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to retry this delivery?');">
+        <i class="fa fa-redo"></i> Retry delivery
+      </button>
+    </form>
+  {% endif %}
 {% endblock %}
 
+{% block model_menu_bar %}{% endblock %}
+
 {% block body %}
-  <div class="container-fluid">
+  <div>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
