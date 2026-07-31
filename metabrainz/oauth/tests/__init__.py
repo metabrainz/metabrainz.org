@@ -341,7 +341,12 @@ class OAuthTestCase(FlaskTestCase):
 
         return token
 
-    def introspection_success_helper(self, data):
+    def introspection_success_helper(self, data, expires_in=3600):
+        """ ``expires_in`` is the lifetime of the token being introspected.
+
+        Refresh tokens have their own lifetime, so callers introspecting one
+        pass OAUTH2_REFRESH_TOKEN_EXPIRES_IN rather than the access token
+        default. """
         self.temporary_login(self.user2)
 
         response = self.client.post("/oauth2/introspect", data=data)
@@ -355,6 +360,6 @@ class OAuthTestCase(FlaskTestCase):
         self.assertEqual(response.json["token_type"],  "Bearer")
         self.assertNotIn("metabrainz_user_id", response.json)
         self.assertIsNotNone(response.json["issued_at"])
-        self.assertEqual(response.json["expires_at"] - response.json["issued_at"], 3600)
+        self.assertEqual(response.json["expires_at"] - response.json["issued_at"], expires_in)
 
         self.assert_security_headers(response)

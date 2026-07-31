@@ -59,7 +59,7 @@ class RevocationTestCase(OAuthTestCase):
             "client_secret": application["client_secret"],
             "token": token["refresh_token"],
         }
-        self.introspection_success_helper(data)
+        self.introspection_success_helper(data, self.app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"])
         self.refresh_grant_success_helper(application, token)
 
     def test_oauth_revoke_refresh_token(self):
@@ -75,7 +75,7 @@ class RevocationTestCase(OAuthTestCase):
             "client_secret": application["client_secret"],
             "token": token["refresh_token"],
         }
-        self.introspection_success_helper(data)
+        self.introspection_success_helper(data, self.app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"])
 
         response = self.client.post("/oauth2/revoke", data=data)
         self.assert200(response)
