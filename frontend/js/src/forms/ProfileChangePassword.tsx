@@ -3,7 +3,7 @@ import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { getPageProps, renderRoot } from "../utils";
-import { PasswordInput } from "./utils";
+import { AuthCardPasswordInput } from "./utils";
 
 type ProfileChangePasswordProps = {
   csrf_token: string;
@@ -31,7 +31,7 @@ function ProfileChangePassword({
         initialTouched={initial_errors}
         validationSchema={Yup.object({
           current_password: Yup.string().required(
-            t("Current password is required!")
+            t("Current password is required!"),
           ),
           password: Yup.string()
             .required(t("Password is required!"))
@@ -43,7 +43,7 @@ function ProfileChangePassword({
             .max(64)
             .oneOf(
               [Yup.ref("password")],
-              t("Confirm Password should match password!")
+              t("Confirm Password should match password!"),
             ),
         })}
         onSubmit={() => {}}
@@ -64,27 +64,30 @@ function ProfileChangePassword({
               )}
             </div>
 
-            <PasswordInput
+            <AuthCardPasswordInput
               id="current_password"
               name="current_password"
               label={t("Current Password")}
               autoComplete="current-password"
+              horizontal
               required
             />
 
-            <PasswordInput
+            <AuthCardPasswordInput
               id="password"
               name="password"
               label={t("New Password")}
               autoComplete="new-password"
+              horizontal
               required
             />
 
-            <PasswordInput
+            <AuthCardPasswordInput
               id="confirm_password"
               name="confirm_password"
               label={t("Confirm New Password")}
               autoComplete="new-password"
+              horizontal
               required
             />
 
@@ -125,6 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
     <ProfileChangePassword
       csrf_token={csrf_token}
       initial_errors={initial_errors}
-    />
+    />,
   );
 });
