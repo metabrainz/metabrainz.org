@@ -2404,15 +2404,15 @@ msgid "Supporter level:"
 msgstr ""
 
 #: metabrainz/templates/payments/payment.html:44
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "If you would like to make a large payment, please contact us at\n"
 "          <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
 "          before you do."
 msgstr ""
 "Se desideri effettuare un pagamento particolarmente grande, contattaci "
-"all'indirizzo <a href=\"%(mail_link)s\">payments@metabrainz.org</a> prima"
-" di farlo."
+"all'indirizzo <a href=\"%(mail_link)s\">payments@metabrainz.org</a> prima di "
+"farlo."
 
 #: metabrainz/templates/payments/payment.html:52
 #: metabrainz/templates/payments/payment.html:159
