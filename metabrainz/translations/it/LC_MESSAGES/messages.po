@@ -11,7 +11,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-08-04 06:12+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language: it\n"
 "Language-Team: Italian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/it/>\n"
@@ -171,7 +172,7 @@ msgstr "Il campo URL di callback dell'autorizzazione è vuoto."
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
-msgstr ""
+msgstr "L'URL di callback dell'autorizzazione non è valido."
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
@@ -179,7 +180,7 @@ msgstr "L'URL di callback dell'autorizzazione deve usare http o https"
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "Conferma"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -440,7 +441,7 @@ msgstr "Squadra"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr ""
+msgstr "Negozio"
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
 msgid "Policies"
@@ -451,14 +452,14 @@ msgstr ""
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
 msgid "Social Contract"
-msgstr ""
+msgstr "Contratto sociale"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
 #: metabrainz/templates/index/gdpr.html:181 metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
-msgstr ""
+msgstr "Codice di condotta"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:21
 #: metabrainz/templates/base.html:57 metabrainz/templates/index/gdpr.html:184
@@ -528,17 +529,17 @@ msgstr "Blog"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "Chat"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
 msgid "Mastodon"
-msgstr ""
+msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
 msgid "Bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
@@ -570,7 +571,7 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
-msgstr ""
+msgstr "Conformità con la GDPR"
 
 #: metabrainz/templates/navbar.html:45
 msgid "Supporter Sign Up"
@@ -628,7 +629,7 @@ msgstr "Autorizzazione OAuth"
 
 #: metabrainz/templates/navbar.html:80 metabrainz/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Lingua"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
@@ -661,6 +662,8 @@ msgid ""
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
 msgstr ""
+"È possibile ottenere una firma per ogni pacchetto di replica\n"
+"sostituendo <code>.tar.bz2</code> con <code>.asc</code>."
 
 #: metabrainz/templates/api/info.html:34
 #, fuzzy
