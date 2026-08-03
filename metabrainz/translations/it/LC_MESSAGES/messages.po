@@ -156,7 +156,7 @@ msgstr "Il campo homepage è vuoto."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr ""
+msgstr "L'homepage non contiene un URI valido."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
