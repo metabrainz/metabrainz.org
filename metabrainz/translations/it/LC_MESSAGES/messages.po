@@ -124,7 +124,7 @@ msgstr "Il campo nome dell'applicazione è vuoto."
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "Il nome dell'applicazione deve essere lungo almeno 3 caratteri."
 
 #: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
