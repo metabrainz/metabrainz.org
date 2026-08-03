@@ -131,13 +131,12 @@ msgid "Application name needs to be at most 64 characters long."
 msgstr "Il nome dell'applicazione deve essere lungo al massimo 64 caratteri."
 
 #: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
-#, fuzzy
 msgid "Description"
-msgstr "Descrizione organizzazione"
+msgstr "Descrizione"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr ""
+msgstr "Il campo descrizione client è vuoto."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
