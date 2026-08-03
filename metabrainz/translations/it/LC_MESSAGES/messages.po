@@ -2428,7 +2428,7 @@ msgid "Pay with Credit Card"
 msgstr "Paga con carta di credito"
 
 #: metabrainz/templates/payments/payment.html:84
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The personal information provided to the MetaBrainz Foundation during the"
 "\n"
@@ -2439,8 +2439,8 @@ msgid ""
 msgstr ""
 "Le informazioni personali fornite alla Fondazione MetaBrainz durante il "
 "processo di pagamento non saranno condivise con nessuno.\n"
-"Per maggiori informazioni, dai un'occhiata alle nostre <a "
-"href=\"%(privacy_policy_url)s\">informazioni sulla privacy</a>."
+"Per maggiori informazioni, dai un'occhiata alle nostre <a href=\"%"
+"(privacy_policy_url)s\">informazioni sulla privacy</a>."
 
 #: metabrainz/templates/payments/payment.html:93
 #, fuzzy, python-format
