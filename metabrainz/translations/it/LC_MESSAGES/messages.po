@@ -164,11 +164,11 @@ msgstr "L'URL dell'homepage deve usare http o https"
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "URL di callback dell'autorizzazione"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
-msgstr ""
+msgstr "Il campo URL di callback dell'autorizzazione è vuoto."
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
