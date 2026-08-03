@@ -2443,7 +2443,7 @@ msgstr ""
 "(privacy_policy_url)s\">informazioni sulla privacy</a>."
 
 #: metabrainz/templates/payments/payment.html:93
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "To find out how to cancel recurring payments take a look at\n"
 "      <a href=\"%(cancel_recurring_url)s\">this page</a>."
