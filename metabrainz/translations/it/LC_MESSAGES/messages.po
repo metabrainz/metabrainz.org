@@ -2382,7 +2382,7 @@ msgid "First"
 msgstr "Primo"
 
 #: metabrainz/templates/payments/payment.html:7
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>Be careful!</b> This is a development version of the website. Do NOT\n"
 "      use your real credit card credentials! If you want to send an "
@@ -2391,8 +2391,8 @@ msgid ""
 msgstr ""
 "<b>Fai attenzione!</b> Questa è una versione di sviluppo del sito. NON "
 "utilizzare le credenziali autentiche della tua carta di credito! Se vuoi "
-"inviarci un pagamento vero e proprio, visita <a "
-"href=\"%(mb_url)s\">metabrainz.org</a>."
+"inviarci un pagamento vero e proprio, visita <a href=\"%(mb_url)s\">"
+"metabrainz.org</a>."
 
 #: metabrainz/templates/payments/payment.html:17
 #, fuzzy
