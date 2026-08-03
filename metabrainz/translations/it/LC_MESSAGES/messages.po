@@ -11,8 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-08-04 06:12+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language: it\n"
 "Language-Team: Italian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/it/>\n"
@@ -116,7 +115,7 @@ msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
 msgid "Application Name"
-msgstr ""
+msgstr "Nome dell'applicazione"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
@@ -176,7 +175,7 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
-msgstr ""
+msgstr "L'URL di callback dell'autorizzazione deve usare http o https"
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
