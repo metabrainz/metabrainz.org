@@ -1642,7 +1642,6 @@ msgid "Special thanks"
 msgstr "Ringraziamenti speciali"
 
 #: metabrainz/templates/index/sponsors.html:36
-#, fuzzy
 msgid ""
 "In our past, we've had a lot of people support us with many different "
 "levels of support:\n"
@@ -1652,11 +1651,11 @@ msgid ""
 "a few individuals\n"
 "    and companies who have made a big difference for us."
 msgstr ""
-"In passato tante persone ci hanno sostenuto in modi molto diversi: "
-"dandoci accesso a conferenze, coprendo spese di viaggio, fornendoci "
-"grandi donazioni personali e innumerevoli pasti. Questi sono ormai troppo"
-" numerosi per elencarli tutti, ma vogliamo comunque sottolineare alcune "
-"persone che hanno fatto una grande differenza per noi."
+"In passato tante persone ci hanno sostenuto in modi molto diversi: dandoci "
+"accesso a conferenze, coprendo spese di viaggio, fornendoci grandi donazioni "
+"personali e innumerevoli pasti. Questi sono ormai troppo numerosi per "
+"elencarli tutti, ma vogliamo comunque sottolineare alcune persone che hanno "
+"fatto una grande differenza per noi."
 
 #: metabrainz/templates/index/sponsors.html:42
 #, fuzzy, python-format
