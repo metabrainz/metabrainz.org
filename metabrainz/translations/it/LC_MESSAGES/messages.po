@@ -144,7 +144,7 @@ msgstr "La descrizione client deve essere lunga almeno 3 caratteri."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr ""
+msgstr "La descrizione client deve essere lunga almeno 512 caratteri."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
