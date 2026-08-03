@@ -1504,7 +1504,7 @@ msgid "CritiqueBrainz"
 msgstr "CritiqueBrainz"
 
 #: metabrainz/templates/index/projects.html:65
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<a href=\"%(cb_url)s\">CritiqueBrainz</a> fills the gap between music and"
 " book critics and raw data by\n"
@@ -1512,8 +1512,8 @@ msgid ""
 " Commons licensed reviews."
 msgstr ""
 "<a href=\"%(cb_url)s\">CritiqueBrainz</a> colma la distanza tra critici "
-"musicali e dati non elaborati fornendo una piattaforma creata al solo "
-"fine di ospitare recensioni sotto licenza Creative Commons."
+"musicali e dati non elaborati fornendo una piattaforma creata al solo fine "
+"di ospitare recensioni sotto licenza Creative Commons."
 
 #: metabrainz/templates/index/projects.html:78
 msgid "BookBrainz"
