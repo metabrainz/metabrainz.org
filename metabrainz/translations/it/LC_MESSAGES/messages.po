@@ -148,11 +148,11 @@ msgstr "La descrizione client deve essere lunga almeno 512 caratteri."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
-msgstr ""
+msgstr "Homepage"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr ""
+msgstr "Il campo homepage è vuoto."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
