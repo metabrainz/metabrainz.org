@@ -970,7 +970,7 @@ msgid "Found a bug in one of our projects?"
 msgstr "Hai trovato un bug in uno dei nostri progetti?"
 
 #: metabrainz/templates/index/contact.html:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Found a broken link or something that doesn't work as you expect it to? "
 "You can report issues in our\n"
@@ -981,11 +981,11 @@ msgid ""
 "    to happen, and the URLs of any pages involved."
 msgstr ""
 "Hai trovato un link non funzionante o qualcosa che non funziona come ti "
-"aspetteresti? Puoi segnalare i problemi sul nostro <a "
-"href=\"%(bug_tracker_url)s\">bug tracker</a>, o contattarci su IRC o via "
-"email. Le nostre informazioni di contatto sono qui sotto. Ricordati di "
-"includere dettagli su cosa è successo, cosa ti aspettavi succedesse e "
-"l'URL delle pagine interessate."
+"aspetteresti? Puoi segnalare i problemi sul nostro <a href=\"%"
+"(bug_tracker_url)s\">bug tracker</a>, o contattarci su IRC o via email. Le "
+"nostre informazioni di contatto sono qui sotto. Ricordati di includere "
+"dettagli su cosa è successo, cosa ti aspettavi succedesse e l'URL delle "
+"pagine interessate."
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
@@ -2081,7 +2081,7 @@ msgstr "Registrati"
 #: frontend/js/src/forms/CreateApplication.tsx:42
 #: metabrainz/templates/oauth/create.html:3
 msgid "Create new application"
-msgstr ""
+msgstr "Crea nuova applicazione"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -2091,7 +2091,7 @@ msgstr ""
 #: metabrainz/templates/oauth/edit.html:3
 #, python-format
 msgid "Edit application %(name)s"
-msgstr ""
+msgstr "Modifica l'applicazione %(name)s"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
@@ -2099,7 +2099,7 @@ msgstr ""
 
 #: frontend/js/src/ProfileTabs.tsx:22 metabrainz/templates/oauth/index.html:3
 msgid "Applications"
-msgstr ""
+msgstr "Applicazioni"
 
 #: metabrainz/templates/oauth/prompt.html:3
 msgid "OAuth Authorization"
@@ -3454,7 +3454,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
 msgid "Username"
-msgstr ""
+msgstr "Nome utente"
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3472,7 +3472,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:157 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
 msgid "Remember me"
@@ -3496,33 +3496,32 @@ msgstr ""
 
 #: frontend/js/src/ApplicationRow.tsx:72
 msgid "Modify"
-msgstr ""
+msgstr "Modifica"
 
 #: frontend/js/src/ApplicationRow.tsx:78
 #: frontend/js/src/forms/DeleteApplication.tsx:60
 msgid "Delete"
-msgstr ""
+msgstr "Elimina"
 
 #: frontend/js/src/Applications.tsx:37
 msgid "Your applications"
-msgstr ""
+msgstr "Le tue applicazioni"
 
 #: frontend/js/src/Applications.tsx:50
 msgid "No applications found"
-msgstr ""
+msgstr "Nessuna appplicazione trovata"
 
 #: frontend/js/src/Applications.tsx:57 frontend/js/src/Applications.tsx:87
-#, fuzzy
 msgid "Website"
-msgstr "URL sito web"
+msgstr "Sito web"
 
 #: frontend/js/src/Applications.tsx:58
 msgid "Client ID"
-msgstr ""
+msgstr "ID client"
 
 #: frontend/js/src/Applications.tsx:59
 msgid "Client secret"
-msgstr ""
+msgstr "Client secret"
 
 #: frontend/js/src/Applications.tsx:60
 msgid "Privileges"
@@ -3530,12 +3529,11 @@ msgstr ""
 
 #: frontend/js/src/Applications.tsx:61 frontend/js/src/Applications.tsx:89
 msgid "Actions"
-msgstr ""
+msgstr "Azioni"
 
 #: frontend/js/src/Applications.tsx:77
-#, fuzzy
 msgid "Authorized applications"
-msgstr "Autorizzazione OAuth"
+msgstr "Applicazioni autorizzate"
 
 #: frontend/js/src/Applications.tsx:80
 msgid "No tokens found"
@@ -3543,11 +3541,11 @@ msgstr ""
 
 #: frontend/js/src/Applications.tsx:88
 msgid "Access"
-msgstr ""
+msgstr "Accesso"
 
 #: frontend/js/src/Applications.tsx:111
 msgid "Revoke access"
-msgstr ""
+msgstr "Revoca accesso"
 
 #: frontend/js/src/OAuthError.tsx:17
 msgid "OAuth2 Error"
