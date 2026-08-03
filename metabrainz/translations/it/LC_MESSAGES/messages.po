@@ -160,7 +160,7 @@ msgstr "L'homepage non contiene un URI valido."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
-msgstr ""
+msgstr "L'URL dell'homepage deve usare http o https"
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
