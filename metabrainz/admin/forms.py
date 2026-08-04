@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, BooleanField, SelectField, TextAreaField
+from wtforms import StringField, BooleanField, HiddenField, SelectField, TextAreaField
 from wtforms.fields import EmailField, URLField, DecimalField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import AnyOf, DataRequired, Email, Length
 from metabrainz.model import supporter
 from metabrainz.db import tier as db_tier
 from metabrainz.user.username import validate_username
@@ -98,6 +98,16 @@ class ChangeEmailForm(FlaskForm):
     )
     confirmed = BooleanField("Mark this address as confirmed")
     reason = TextAreaField("Reason (optional)")
+
+
+class ChangeSupporterTypeForm(FlaskForm):
+    """Form for explicitly converting a supporter to the requested type."""
+    target_type = HiddenField(
+        validators=[
+            DataRequired(),
+            AnyOf(("commercial", "non-commercial")),
+        ]
+    )
 
 
 class EditUsernameForm(FlaskForm):

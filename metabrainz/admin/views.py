@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
 from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm, DeleteUserForm, \
-    DeleteSupporterForm, ChangeEmailForm
+    DeleteSupporterForm, ChangeEmailForm, ChangeSupporterTypeForm
 from metabrainz.admin.forms import get_logo_storage_dir
 from types import SimpleNamespace
 from wtforms import SelectMultipleField, StringField, TextAreaField, validators
@@ -230,12 +230,40 @@ class SupportersView(AdminBaseView):
     def details(self, supporter_id):
         supporter = Supporter.get(id=supporter_id)
         active_tokens = Token.get_all(owner_id=supporter.id, is_active=True)
+        target_type = "non-commercial" if supporter.is_commercial else "commercial"
         return self.render(
             'admin/supporters/details.html',
             supporter=supporter,
             active_tokens=active_tokens,
             change_email_form=ChangeEmailForm(),
+            change_supporter_type_form=ChangeSupporterTypeForm(target_type=target_type),
         )
+
+    @expose('/<int:supporter_id>/change-type', methods=('POST',))
+    def change_type(self, supporter_id):
+        """Convert a supporter between commercial and non-commercial."""
+        supporter = Supporter.get(id=supporter_id)
+        if supporter is None:
+            flash.error('Supporter not found.')
+            return redirect(url_for('.index'))
+
+        form = ChangeSupporterTypeForm()
+        if not form.validate_on_submit():
+            flash.error('Invalid supporter type change.')
+            return redirect(url_for('.details', supporter_id=supporter_id))
+
+        target_is_commercial = form.target_type.data == "commercial"
+        if supporter.is_commercial == target_is_commercial:
+            flash.info(
+                f'{supporter.user.name} is already a '
+                f'{"commercial" if target_is_commercial else "non-commercial"} supporter.'
+            )
+            return redirect(url_for('.details', supporter_id=supporter_id))
+
+        supporter.update(is_commercial=target_is_commercial)
+        new_type = "commercial" if target_is_commercial else "non-commercial"
+        flash.success(f'{supporter.user.name} has been converted to a {new_type} supporter.')
+        return redirect(url_for('.details', supporter_id=supporter_id))
 
     @expose('/<int:supporter_id>/change-email', methods=('POST',))
     def change_email(self, supporter_id):
