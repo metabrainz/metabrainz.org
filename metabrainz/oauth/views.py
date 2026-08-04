@@ -12,6 +12,7 @@ from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.user import User
 from metabrainz.oauth.authorization_server import authorization_server
 from metabrainz.oauth.forms import AuthorizationForm
+from metabrainz.oauth.oidc_grant import build_user_info
 from metabrainz.oauth.registration_request import (
     create_registration_request,
     delete_registration_request,
@@ -324,11 +325,7 @@ def user_info():
 
     user = User.get(id=token.user_id)
 
-    return {
-        "sub": str(user.id),
-        "username": user.name,
-        "member_since": user.member_since.isoformat() if user.member_since else None,
-    }
+    return build_user_info(user, token.get_scope(), include_member_since=True)
 
 
 @oauth2_bp.route("/introspect", methods=["POST"])

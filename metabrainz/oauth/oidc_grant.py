@@ -1,7 +1,27 @@
 from authlib.oidc.core import grants, UserInfo
+from authlib.oauth2.rfc6749.util import scope_to_list
 from flask import current_app
 
 from metabrainz.model import db, OAuth2AuthorizationCode, OAuth2Client
+
+
+def build_user_info(user, scope, include_member_since=False):
+    user_info = UserInfo(
+        sub=str(user.id),
+        username=user.name,
+    )
+
+    if include_member_since:
+        user_info["member_since"] = user.member_since.isoformat() if user.member_since else None
+
+    granted_scopes = set(scope_to_list(scope) or [])
+    if "email" in granted_scopes:
+        email = user.get_email_any()
+        if email:
+            user_info["email"] = email
+            user_info["email_verified"] = user.is_email_confirmed()
+
+    return user_info
 
 
 class OpenIDCodeMixin:
@@ -25,11 +45,7 @@ class OpenIDCodeMixin:
         }
 
     def generate_user_info(self, user, scope):
-        user_info = UserInfo(
-            sub=str(user.id),
-            username=user.name,
-        )
-        return user_info
+        return build_user_info(user, scope)
 
 
 class OpenIDCode(OpenIDCodeMixin, grants.OpenIDCode):

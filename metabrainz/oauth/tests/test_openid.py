@@ -58,6 +58,9 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
     def test_openid_userinfo_endpoint_success(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+        self.user2.email = "confirmed@example.com"
+        self.user2.email_confirmed_at = self.user2.member_since
+        db.session.commit()
 
         self.temporary_login(self.user2)
         code = self.authorize_success_for_token_grant_helper(application, redirect_uri, True)
@@ -74,6 +77,59 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         self.assertEqual(data["username"], self.user2.name)
         self.assertNotIn("metabrainz_user_id", data)
         self.assertEqual(data["member_since"], self.user2.member_since.isoformat())
+        self.assertNotIn("email", data)
+        self.assertNotIn("email_verified", data)
+        self.assert_security_headers(response)
+
+    def test_openid_userinfo_endpoint_returns_confirmed_email_with_email_scope(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        self.user2.email = "confirmed@example.com"
+        self.user2.email_confirmed_at = self.user2.member_since
+        db.session.commit()
+
+        self.temporary_login(self.user2)
+        code = self.authorize_success_for_token_grant_helper(
+            application,
+            redirect_uri,
+            True,
+            scope="profile email",
+        )
+        token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
+
+        response = self.client.get(
+            "/oauth2/userinfo",
+            headers={"Authorization": f"Bearer {token['access_token']}"},
+        )
+
+        self.assert200(response)
+        self.assertEqual(response.json["email"], "confirmed@example.com")
+        self.assertIs(response.json["email_verified"], True)
+        self.assert_security_headers(response)
+
+    def test_openid_userinfo_endpoint_returns_unconfirmed_email_with_email_scope(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        self.user2.unconfirmed_email = "pending@example.com"
+        db.session.commit()
+
+        self.temporary_login(self.user2)
+        code = self.authorize_success_for_token_grant_helper(
+            application,
+            redirect_uri,
+            True,
+            scope="profile email",
+        )
+        token = self.token_success_token_grant_helper(application, code, redirect_uri, True)
+
+        response = self.client.get(
+            "/oauth2/userinfo",
+            headers={"Authorization": f"Bearer {token['access_token']}"},
+        )
+
+        self.assert200(response)
+        self.assertEqual(response.json["email"], "pending@example.com")
+        self.assertIs(response.json["email_verified"], False)
         self.assert_security_headers(response)
 
     def test_openid_userinfo_endpoint_missing_token(self):
@@ -134,6 +190,9 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
     def test_openid_code_flow_success(self):
         application = self.create_oauth_app()
         redirect_uri = "https://example.com/callback"
+        self.user2.email = "confirmed@example.com"
+        self.user2.email_confirmed_at = self.user2.member_since
+        db.session.commit()
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
@@ -175,6 +234,50 @@ class OpenIdIntegrationTestCase(OAuthTestCase):
         claims = _decode_id_token_claims(data["id_token"])
         self.assertEqual(claims["sub"], str(self.user2.id))
         self.assertEqual(claims["username"], self.user2.name)
+        self.assertNotIn("email", claims)
+        self.assertNotIn("email_verified", claims)
+        self.assert_security_headers(token_response)
+
+    def test_openid_code_flow_id_token_includes_email_claims_with_email_scope(self):
+        application = self.create_oauth_app()
+        redirect_uri = "https://example.com/callback"
+        self.user2.email = "confirmed@example.com"
+        self.user2.email_confirmed_at = self.user2.member_since
+        db.session.commit()
+        query_string = {
+            "client_id": application["client_id"],
+            "response_type": "code",
+            "scope": "openid profile email",
+            "state": "random-state",
+            "nonce": "test-nonce",
+            "redirect_uri": redirect_uri,
+        }
+
+        self.temporary_login(self.user2)
+        self.authorize_oauth_prompt_helper(query_string, openid=True)
+        response = self.client.post(
+            "/oauth2/authorize/confirm",
+            query_string=query_string,
+            data={"confirm": "yes", "csrf_token": g.csrf_token},
+        )
+        self.assertEqual(response.status_code, 302)
+        code = parse_qs(urlparse(response.location).query)["code"][0]
+
+        token_response = self.client.post(
+            "/oauth2/token",
+            data={
+                "client_id": application["client_id"],
+                "client_secret": application["client_secret"],
+                "grant_type": "authorization_code",
+                "redirect_uri": redirect_uri,
+                "code": code,
+            },
+        )
+
+        self.assert200(token_response)
+        claims = _decode_id_token_claims(token_response.json["id_token"])
+        self.assertEqual(claims["email"], "confirmed@example.com")
+        self.assertIs(claims["email_verified"], True)
         self.assert_security_headers(token_response)
 
     def test_openid_implicit_flow_id_token_token(self):

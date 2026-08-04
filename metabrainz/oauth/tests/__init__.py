@@ -98,6 +98,11 @@ class OAuthTestCase(FlaskTestCase):
         expected_scopes = [
             {"name": "profile", "description": "View your public account information"}
         ]
+        if "email" in query_string["scope"].split():
+            expected_scopes.append({
+                "name": "email",
+                "description": "View your email address"
+            })
         if openid:
             expected_scopes.append({
                 "name": "openid",
@@ -169,11 +174,12 @@ class OAuthTestCase(FlaskTestCase):
         self.authorize_oauth_prompt_confirm_helper(query_string, only_one_code=only_one_code)
 
     def authorize_success_for_token_grant_helper(self, application, redirect_uri,
-                                                 only_one_code=False, approval_prompt=None):
+                                                 only_one_code=False, approval_prompt=None,
+                                                 scope="profile"):
         query_string = {
             "client_id": application["client_id"],
             "response_type": "code",
-            "scope": "profile",
+            "scope": scope,
             "state": "random-state",
             "redirect_uri": redirect_uri,
         }
