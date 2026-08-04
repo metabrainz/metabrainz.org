@@ -48,7 +48,9 @@
           {% else %}
             <span class="text-muted">Deleted Supporter</span>
           {% endif %}
-          {% if action.supporter.id == action.token.owner.id %}
+          {# both sides are nullable, and two Undefineds compare equal in jinja,
+             so an unguarded comparison claims a deleted supporter owned the token #}
+          {% if action.supporter and action.token.owner and action.supporter.id == action.token.owner.id %}
             {% if action.action == "create" %}
               <span class="text-green">generated their token</span>
             {% elif action.action == "deactivate" %}

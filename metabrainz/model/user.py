@@ -68,7 +68,13 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def confirmed_email_exists(cls, email, exclude_user_id=None):
-        query = cls.query.filter_by(email=email)
+        # case insensitively, because mailboxes are: an exact match let
+        # 'Bob@x.com' past a guard that 'bob@x.com' would have tripped, leaving
+        # two confirmed rows for the one mailbox
+        email = (email or "").strip()
+        if not email:
+            return False
+        query = cls.query.filter(func.lower(cls.email) == email.lower())
         if exclude_user_id is not None:
             query = query.filter(cls.id != exclude_user_id)
         return query.first() is not None
@@ -80,7 +86,8 @@ class User(db.Model, UserMixin):
         Nothing stops two accounts sharing an address, so this is only ever
         used to warn about it, never to reject a change.
         """
-        email = (email or "").strip()
+        # the address reaches this from a JSON body, so it need not be a string
+        email = email.strip() if isinstance(email, str) else ""
         if not email:
             return []
         query = cls.query.filter(

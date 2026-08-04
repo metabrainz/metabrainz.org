@@ -114,32 +114,40 @@ def _apply_admin_email_change(user, form):
     warning. An address the moderator did not vouch for gets a verification
     email, and only a change to the confirmed address is announced downstream:
     until the user follows that link the account's email is still the old one.
+
+    Handles its own failures rather than raising, because the write is committed
+    partway through: once that lands, nothing after it may report the change as
+    having failed.
     """
+    if user.deleted:
+        flash.error("This account has been deleted, so its email cannot be changed.")
+        return
+
     new_email = form.email.data.strip()
     others = User.get_others_using_email(new_email, exclude_user_id=user.id)
+    # captured before the commit expires the instance and re-queries every attribute
+    username = user.name
 
     old_email = user.email
-    confirmed_email_changed = user.change_email(
-        current_user,
-        new_email,
-        confirmed=form.confirmed.data,
-        reason=(form.reason.data or "").strip(),
-    )
-    db.session.commit()
-
-    if confirmed_email_changed:
-        user.emit_event(
-            EVENT_USER_UPDATED,
-            old={"email": old_email},
-            new={"email": user.email},
-            updated_at=user.last_updated.isoformat(),
+    try:
+        confirmed_email_changed = user.change_email(
+            current_user,
+            new_email,
+            confirmed=form.confirmed.data,
+            reason=(form.reason.data or "").strip(),
         )
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        logging.exception("Error changing email for user %s:", user.id)
+        flash.error("An error occurred while changing the email address.")
+        return
 
+    # past this point the change is durable, so every remaining failure is
+    # reported as a follow up problem, never as the change not happening
     if form.confirmed.data:
-        flash.success(f"Email for {user.name} changed to {new_email} and marked confirmed.")
+        flash.success(f"Email for {username} changed to {new_email} and marked confirmed.")
     else:
-        # the change is already committed, so a mail failure must not read as one:
-        # say what actually happened and leave the address in place to retry
         try:
             # its own template: the self service one closes by naming the IP the
             # request came from, which here would be the admin's, not the user's
@@ -150,14 +158,34 @@ def _apply_admin_email_change(user, form):
             )
         except Exception:
             logging.exception("Error sending verification email to user %s:", user.id)
-            flash.success(f"Email for {user.name} changed to {new_email}.")
+            flash.success(f"Email for {username} changed to {new_email}.")
             flash.error("The verification email could not be sent. Ask the user to request a new one.")
         else:
-            flash.success(f"Email for {user.name} changed to {new_email}. A verification email has been sent.")
+            flash.success(f"Email for {username} changed to {new_email}. A verification email has been sent.")
 
     if others:
         names = ", ".join(other.name for other in others)
         flash.warning(f"{new_email} is also used by {names}.")
+        # a pending address cannot be verified while another account holds it
+        # confirmed: users.verify_email rejects that before writing anything, so
+        # the link just sent is a dead end
+        if not form.confirmed.data and any(other.is_email_confirmed() for other in others):
+            flash.error(
+                f"{new_email} is already confirmed on another account, so the verification "
+                f"link will not work. Tick 'Mark this address as confirmed' to set it anyway."
+            )
+
+    if confirmed_email_changed:
+        try:
+            user.emit_event(
+                EVENT_USER_UPDATED,
+                old={"email": old_email},
+                new={"email": new_email},
+                updated_at=user.last_updated.isoformat(),
+            )
+        except Exception:
+            logging.exception("Error emitting the update event for user %s:", user.id)
+            flash.error("The change was saved but downstream services could not be notified.")
 
 
 class SupportersView(AdminBaseView):
@@ -227,13 +255,9 @@ class SupportersView(AdminBaseView):
                     flash.error(error)
             return redirect(url_for('.details', supporter_id=supporter_id))
 
-        try:
-            _apply_admin_email_change(supporter.user, form)
-        except Exception:
-            db.session.rollback()
-            flash.error('An error occurred while changing the email address.')
-            logging.exception('Error changing email for supporter %s:', supporter_id)
-
+        # the helper reports its own failures: it commits partway through, so a
+        # rollback out here could not undo the change anyway
+        _apply_admin_email_change(supporter.user, form)
         return redirect(url_for('.details', supporter_id=supporter_id))
 
     @expose('/<int:supporter_id>/edit', methods=('GET', 'POST'))
@@ -742,13 +766,9 @@ class UserModelView(AdminModelView):
                     flash.error(error)
             return redirect(url_for('.details_view', id=user_id))
 
-        try:
-            _apply_admin_email_change(user, form)
-        except Exception:
-            db.session.rollback()
-            flash.error('An error occurred while changing the email address.')
-            logging.exception('Error changing email for user %s:', user_id)
-
+        # the helper reports its own failures: it commits partway through, so a
+        # rollback out here could not undo the change anyway
+        _apply_admin_email_change(user, form)
         return redirect(url_for('.details_view', id=user_id))
 
     @expose('/user/<int:user_id>/email-in-use', methods=['POST'])
@@ -1080,7 +1100,10 @@ class OAuth2ClientModelView(AdminModelView):
             # converter, so the converter's own "empty string -> NULL" filter for
             # nullable columns never gets attached. Clearing the field would
             # otherwise store '' instead of NULL.
-            "filters": [lambda value: value or None],
+            # strip before the emptiness test: Optional() strips the raw data
+            # before deciding to skip the URL validators, so a whitespace only
+            # homepage would otherwise be stored verbatim
+            "filters": [lambda value: (value or "").strip() or None],
             "validators": [
                 validators.Optional(),
                 validators.URL(require_tld=False, message="Homepage is not a valid URL."),

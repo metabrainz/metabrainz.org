@@ -5,7 +5,7 @@
   form           a ChangeEmailForm instance
   action_url     where the form is posted
   lookup_url     endpoint reporting other accounts already holding an address
-  current_email  prefilled into the input
+  current_email  shown as the placeholder, never prefilled
 #}
 <div class="modal fade" id="changeEmailModal" tabindex="-1" aria-labelledby="changeEmailModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -21,7 +21,12 @@
         <div class="modal-body">
           <div class="form-group">
             {{ form.email.label(for="change-email-input") }}
-            {{ form.email(class="form-control", id="change-email-input", value=current_email or "") }}
+            {# deliberately not prefilled: get_email_any() returns the confirmed
+               address, so opening this and submitting it unchanged would move the
+               confirmed address into the pending slot and kill any verification
+               link the user is already holding #}
+            {{ form.email(class="form-control", id="change-email-input", value="",
+                          autocomplete="off", placeholder=current_email or "No current address") }}
           </div>
 
           {# populated by the lookup below; duplicates are allowed, so this only warns #}
@@ -62,6 +67,9 @@
     var openers = document.querySelectorAll('[data-change-email]');
     var lookupUrl = {{ lookup_url | tojson }};
     var lookupTimer = null;
+    // responses can land out of order, and the slow one is the one whose warning
+    // would stick; only the newest request is allowed to paint
+    var lookupSequence = 0;
 
     var PENDING_HINT = hint.textContent.trim();
     var CONFIRMED_HINT = 'The address is treated as verified immediately and no ' +
@@ -88,6 +96,7 @@
 
     function lookup() {
       var email = input.value.trim();
+      var sequence = ++lookupSequence;
       if (!email) {
         warning.hidden = true;
         return;
@@ -100,10 +109,15 @@
       }).then(function (response) {
         return response.ok ? response.json() : { accounts: [] };
       }).then(function (data) {
+        if (sequence !== lookupSequence) {
+          return;  // a newer lookup has been issued; this answer is stale
+        }
         renderWarning(data.accounts || []);
       }).catch(function () {
         // the warning is advisory; a failed lookup must not block the change
-        warning.hidden = true;
+        if (sequence === lookupSequence) {
+          warning.hidden = true;
+        }
       });
     }
 

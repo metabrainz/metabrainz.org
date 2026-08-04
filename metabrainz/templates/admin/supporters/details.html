@@ -72,9 +72,11 @@
         <dd>{{ supporter.contact_name or '—' }}</dd>
       </div>
       {% set change_email_button %}
-        <button type="button" class="btn btn-secondary btn-sm" data-change-email>
-          <i class="fa fa-edit"></i> Change email
-        </button>
+        {% if not supporter.user.deleted %}
+          <button type="button" class="btn btn-secondary btn-sm" data-change-email>
+            <i class="fa fa-edit"></i> Change email
+          </button>
+        {% endif %}
       {% endset %}
 
       {% if supporter.user.email and supporter.user.unconfirmed_email %}
@@ -261,12 +263,14 @@
     <div id="chart" style="height:420px; width:100%;"></div>
   </div>
 
-  {% with form=change_email_form,
-          action_url=url_for('supportersview.change_email', supporter_id=supporter.id),
-          lookup_url=url_for('users-admin.email_in_use', user_id=supporter.user.id),
-          current_email=supporter.user.get_email_any() %}
-    {% include 'admin/_change_email_modal.html' %}
-  {% endwith %}
+  {% if not supporter.user.deleted %}
+    {% with form=change_email_form,
+            action_url=url_for('supportersview.change_email', supporter_id=supporter.id),
+            lookup_url=url_for('users-admin.email_in_use', user_id=supporter.user.id),
+            current_email=supporter.user.get_email_any() %}
+      {% include 'admin/_change_email_modal.html' %}
+    {% endwith %}
+  {% endif %}
 {% endblock %}
 
 {% block tail_js %}
