@@ -831,6 +831,56 @@ class AdminViewsTestCase(FlaskTestCase):
             ModerationLog.query.filter_by(user_id=user_id, action="change_email").count(), 1
         )
 
+    @patch("metabrainz.model.user.Webhook.create_delivery_for_event")
+    def test_admin_change_email_refuses_deleted_account(self, create_delivery):
+        """ delete() scrubs the address; changing it would write PII back. """
+        user = self.create_user()
+        user_id = user.id
+        user.delete()
+        db.session.commit()
+
+        response = self._change_email_from_user_page(user_id, "new@example.com")
+
+        self.assertEqual(response.status_code, 302)
+        user = User.get(id=user_id)
+        self.assertIsNone(user.email)
+        self.assertIsNone(user.unconfirmed_email)
+        create_delivery.assert_not_called()
+        self.assertMessageFlashed(
+            "This account has been deleted, so its email cannot be changed.", "error"
+        )
+
+    def test_admin_change_email_warns_that_a_confirmed_duplicate_cannot_verify(self):
+        """ users.verify_email rejects an address confirmed elsewhere, so the
+        link sent by the unconfirmed path would be a dead end. """
+        holder = self.create_user()
+        holder.email = "shared@example.com"
+        db.session.commit()
+
+        supporter = self._create_search_supporter("other", "other@example.com", "Other Org")
+        user_id = supporter.user.id
+
+        response = self._change_email_from_user_page(user_id, "shared@example.com")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(User.get(id=user_id).unconfirmed_email, "shared@example.com")
+        self.assertMessageFlashed("shared@example.com is also used by regular_user.", "warning")
+        self.assertMessageFlashed(
+            "shared@example.com is already confirmed on another account, so the verification "
+            "link will not work. Tick 'Mark this address as confirmed' to set it anyway.",
+            "error",
+        )
+
+    def test_confirmed_email_exists_matches_case_insensitively(self):
+        """ Mailboxes are case insensitive; an exact match let a differently
+        cased address past every duplicate guard. """
+        user = self.create_user()
+        user.email = "bob@example.com"
+        db.session.commit()
+
+        self.assertTrue(User.confirmed_email_exists("Bob@Example.com"))
+        self.assertFalse(User.confirmed_email_exists("Bob@Example.com", exclude_user_id=user.id))
+
     def test_admin_change_email_rejects_invalid_address(self):
         user = self.create_user()
         user_id = user.id
@@ -1025,6 +1075,10 @@ class AdminViewsTestCase(FlaskTestCase):
         })
 
         self.assert200(response)
-        body = response.get_data(as_text=True)
-        self.assertIn("ftp://one.example/cb", body)
-        self.assertIn("not a url", body)
+        # assert on the errors, not the body: the textarea echoes every submitted
+        # line back, so matching the URIs there passes even if nothing was reported
+        errors = self.get_context_variable("form").redirect_uris.errors
+        self.assertEqual(errors, [
+            "'ftp://one.example/cb' must use http or https.",
+            "'not a url' is not a valid URL.",
+        ])
