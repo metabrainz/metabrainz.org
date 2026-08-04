@@ -1,0 +1,16 @@
+Hello {{ username }},
+
+This is a verification email for your MetaBrainz account. Please click
+on the link below to verify your email address:
+
+{{ verification_link }}
+
+If clicking the link above doesn't work, please copy and paste the URL in a
+new browser window instead.
+
+This change was made by a MetaBrainz administrator on your behalf. If you did
+not ask for it, please contact us at https://metabrainz.org/contact
+
+Thanks for using MetaBrainz!
+
+-- The MetaBrainz Team

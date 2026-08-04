@@ -71,10 +71,19 @@
         <dt>Contact name</dt>
         <dd>{{ supporter.contact_name or '—' }}</dd>
       </div>
+      {% set change_email_button %}
+        <button type="button" class="btn btn-secondary btn-sm" data-change-email>
+          <i class="fa fa-edit"></i> Change email
+        </button>
+      {% endset %}
+
       {% if supporter.user.email and supporter.user.unconfirmed_email %}
       <div>
         <dt>Email (current)</dt>
-        <dd>{{ supporter.user.email }} <span class="badge badge-success">Confirmed</span></dd>
+        <dd>
+          {{ supporter.user.email }} <span class="badge badge-success">Confirmed</span>
+          {{ change_email_button }}
+        </dd>
       </div>
       <div>
         <dt>Email (new)</dt>
@@ -86,17 +95,26 @@
       {% elif supporter.user.email %}
       <div>
         <dt>Email</dt>
-        <dd>{{ supporter.user.email }} <span class="badge badge-success">Confirmed</span></dd>
+        <dd>
+          {{ supporter.user.email }} <span class="badge badge-success">Confirmed</span>
+          {{ change_email_button }}
+        </dd>
       </div>
       {% elif supporter.user.unconfirmed_email %}
       <div>
         <dt>Email</dt>
-        <dd>{{ supporter.user.unconfirmed_email }} <span class="badge badge-danger">Unconfirmed</span></dd>
+        <dd>
+          {{ supporter.user.unconfirmed_email }} <span class="badge badge-danger">Unconfirmed</span>
+          {{ change_email_button }}
+        </dd>
       </div>
       {% else %}
       <div>
         <dt>Email</dt>
-        <dd class="text-muted">No email</dd>
+        <dd>
+          <span class="text-muted">No email</span>
+          {{ change_email_button }}
+        </dd>
       </div>
       {% endif %}
     </dl>
@@ -242,6 +260,13 @@
     <div class="section-head"><h3>Hourly API usage</h3></div>
     <div id="chart" style="height:420px; width:100%;"></div>
   </div>
+
+  {% with form=change_email_form,
+          action_url=url_for('supportersview.change_email', supporter_id=supporter.id),
+          lookup_url=url_for('users-admin.email_in_use', user_id=supporter.user.id),
+          current_email=supporter.user.get_email_any() %}
+    {% include 'admin/_change_email_modal.html' %}
+  {% endwith %}
 {% endblock %}
 
 {% block tail_js %}

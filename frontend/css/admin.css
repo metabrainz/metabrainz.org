@@ -1231,6 +1231,14 @@ a.btn-light-green:focus {
   font-weight: 600;
 }
 
+/* A value shown where a control would otherwise sit, aligned with the inputs
+   around it so a read-only field does not look like a missing one. */
+.form-control-static {
+  margin: 0;
+  padding: 9px 0;
+  color: var(--ab-text);
+}
+
 .form-control,
 .filters select,
 .filters input[type="text"],

@@ -1,6 +1,6 @@
 from decimal import Decimal
 from datetime import datetime, timezone
-from flask import Response, request, redirect, url_for, current_app
+from flask import Response, jsonify, request, redirect, url_for, current_app
 from flask_admin import expose
 from flask_login import current_user
 from markupsafe import Markup
@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 from metabrainz.admin import AdminIndexView, AdminBaseView, forms, AdminModelView
 from metabrainz.admin.forms import VerifyEmailForm, EditUsernameForm, ModerateUserForm, DeleteUserForm, \
-    DeleteSupporterForm
+    DeleteSupporterForm, ChangeEmailForm
 from metabrainz.admin.forms import get_logo_storage_dir
 from types import SimpleNamespace
 from wtforms import SelectMultipleField, StringField, TextAreaField, validators
@@ -42,6 +42,7 @@ import json
 import socket
 from metabrainz.model.user import User
 from metabrainz.model.webhook import EVENT_USER_DELETED, EVENT_USER_UPDATED
+from metabrainz.user.email import send_verification_email
 
 from metabrainz.utils import get_int_query_param
 
@@ -103,6 +104,62 @@ def _username_change_error(user, new_username, *, allow_unchanged=False):
     return None
 
 
+def _apply_admin_email_change(user, form):
+    """ Apply a ChangeEmailForm submission and fan out its side effects.
+
+    The single implementation behind the change email action on both the user
+    page and the supporter page, so the two cannot drift apart.
+
+    Sharing an address between accounts is allowed, so a duplicate only earns a
+    warning. An address the moderator did not vouch for gets a verification
+    email, and only a change to the confirmed address is announced downstream:
+    until the user follows that link the account's email is still the old one.
+    """
+    new_email = form.email.data.strip()
+    others = User.get_others_using_email(new_email, exclude_user_id=user.id)
+
+    old_email = user.email
+    confirmed_email_changed = user.change_email(
+        current_user,
+        new_email,
+        confirmed=form.confirmed.data,
+        reason=(form.reason.data or "").strip(),
+    )
+    db.session.commit()
+
+    if confirmed_email_changed:
+        user.emit_event(
+            EVENT_USER_UPDATED,
+            old={"email": old_email},
+            new={"email": user.email},
+            updated_at=user.last_updated.isoformat(),
+        )
+
+    if form.confirmed.data:
+        flash.success(f"Email for {user.name} changed to {new_email} and marked confirmed.")
+    else:
+        # the change is already committed, so a mail failure must not read as one:
+        # say what actually happened and leave the address in place to retry
+        try:
+            # its own template: the self service one closes by naming the IP the
+            # request came from, which here would be the admin's, not the user's
+            send_verification_email(
+                user,
+                "Please verify your email address",
+                "email/user-email-address-verification-admin.txt",
+            )
+        except Exception:
+            logging.exception("Error sending verification email to user %s:", user.id)
+            flash.success(f"Email for {user.name} changed to {new_email}.")
+            flash.error("The verification email could not be sent. Ask the user to request a new one.")
+        else:
+            flash.success(f"Email for {user.name} changed to {new_email}. A verification email has been sent.")
+
+    if others:
+        names = ", ".join(other.name for other in others)
+        flash.warning(f"{new_email} is also used by {names}.")
+
+
 class SupportersView(AdminBaseView):
 
     @expose('/')
@@ -149,7 +206,35 @@ class SupportersView(AdminBaseView):
             'admin/supporters/details.html',
             supporter=supporter,
             active_tokens=active_tokens,
+            change_email_form=ChangeEmailForm(),
         )
+
+    @expose('/<int:supporter_id>/change-email', methods=('POST',))
+    def change_email(self, supporter_id):
+        """ Change the email of the user who owns this supporter account.
+
+        Defers to the same helper as the user page so both behave identically.
+        """
+        supporter = Supporter.get(id=supporter_id)
+        if supporter is None:
+            flash.error('Supporter not found.')
+            return redirect(url_for('.index'))
+
+        form = ChangeEmailForm()
+        if not form.validate_on_submit():
+            for errors in form.errors.values():
+                for error in errors:
+                    flash.error(error)
+            return redirect(url_for('.details', supporter_id=supporter_id))
+
+        try:
+            _apply_admin_email_change(supporter.user, form)
+        except Exception:
+            db.session.rollback()
+            flash.error('An error occurred while changing the email address.')
+            logging.exception('Error changing email for supporter %s:', supporter_id)
+
+        return redirect(url_for('.details', supporter_id=supporter_id))
 
     @expose('/<int:supporter_id>/edit', methods=('GET', 'POST'))
     def edit(self, supporter_id):
@@ -157,7 +242,6 @@ class SupportersView(AdminBaseView):
 
         form = forms.SupporterEditForm(defaults={
             'username': supporter.user.name,
-            'email': supporter.user.email,
             'contact_name': supporter.contact_name,
             'state': supporter.state,
             'is_commercial': supporter.is_commercial,
@@ -231,21 +315,12 @@ class SupportersView(AdminBaseView):
                 image_storage.save(os.path.join(get_logo_storage_dir(current_app), logo_filename))
 
             old_name = supporter.user.name
-            old_email = supporter.user.email
-            new_email = form.email.data
-
             supporter.user.name = new_name
-            supporter.user.email = new_email
-
-            email_changed = old_email != new_email
             username_changed = old_name != new_name
 
             updated_at = datetime.now(timezone.utc)
-            if email_changed or username_changed:
-                supporter.user.last_updated = updated_at
-            if email_changed and new_email:
-                supporter.user.email_confirmed_at = updated_at
             if username_changed:
+                supporter.user.last_updated = updated_at
                 db.session.add(OldUsername(username=old_name))
 
             try:
@@ -259,21 +334,11 @@ class SupportersView(AdminBaseView):
                     form=form,
                 )
 
-            # Emit user.updated event if username or email changed
-            if email_changed or username_changed:
-                old_data = {}
-                new_data = {}
-                if username_changed:
-                    old_data["name"] = old_name
-                    new_data["name"] = new_name
-                if email_changed:
-                    old_data["email"] = old_email
-                    new_data["email"] = new_email
-
+            if username_changed:
                 supporter.user.emit_event(
                     EVENT_USER_UPDATED,
-                    old=old_data,
-                    new=new_data,
+                    old={"name": old_name},
+                    new={"name": new_name},
                     updated_at=updated_at.isoformat(),
                 )
 
@@ -647,6 +712,7 @@ class UserModelView(AdminModelView):
         edit_username_form = EditUsernameForm()
         moderate_user_form = ModerateUserForm()
         delete_user_form = DeleteUserForm()
+        change_email_form = ChangeEmailForm()
 
         return self.render(
             self.details_template,
@@ -658,7 +724,52 @@ class UserModelView(AdminModelView):
             edit_username_form=edit_username_form,
             moderate_user_form=moderate_user_form,
             delete_user_form=delete_user_form,
+            change_email_form=change_email_form,
         )
+
+    @expose('/user/<int:user_id>/change-email', methods=['POST'])
+    def change_email(self, user_id):
+        """ Change a user's email address.
+
+        Defers to the same helper as the supporter page so both behave identically.
+        """
+        user = User.query.get_or_404(user_id)
+
+        form = ChangeEmailForm()
+        if not form.validate_on_submit():
+            for errors in form.errors.values():
+                for error in errors:
+                    flash.error(error)
+            return redirect(url_for('.details_view', id=user_id))
+
+        try:
+            _apply_admin_email_change(user, form)
+        except Exception:
+            db.session.rollback()
+            flash.error('An error occurred while changing the email address.')
+            logging.exception('Error changing email for user %s:', user_id)
+
+        return redirect(url_for('.details_view', id=user_id))
+
+    @expose('/user/<int:user_id>/email-in-use', methods=['POST'])
+    def email_in_use(self, user_id):
+        """ Report which other accounts already hold an address.
+
+        Backs the warning in the change email dialog. Sharing an address is
+        allowed, so this only ever reports, it never rejects. Read only, and
+        the address travels in the body rather than the query string to keep it
+        out of access logs.
+        """
+        payload = request.get_json(silent=True) or {}
+        others = User.get_others_using_email(payload.get("email"), exclude_user_id=user_id)
+        email = (payload.get("email") or "").strip().lower()
+        return jsonify({"accounts": [
+            {
+                "name": other.name,
+                "confirmed": (other.email or "").lower() == email,
+            }
+            for other in others
+        ]})
 
     @expose('/user/<int:user_id>/verify-email', methods=['POST'])
     def verify_user_email(self, user_id):
