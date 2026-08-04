@@ -1,4 +1,5 @@
 from functools import wraps
+from uuid import UUID
 
 from flask import abort, flash, redirect, request, url_for
 from flask_login import LoginManager, current_user
@@ -15,10 +16,14 @@ login_manager.needs_refresh_message_category = "info"
 
 @login_manager.user_loader
 def load_user(login_id):
+    # Sessions created before get_id() switched from the integer primary key to login_id
+    # still carry an integer here. Reject anything that isn't a UUID before it reaches the
+    # database, otherwise postgres raises a DataError on the ::uuid cast.
     try:
-        return User.get(login_id=login_id)
-    except (ValueError, TypeError):
+        login_id = str(UUID(str(login_id)))
+    except (ValueError, TypeError, AttributeError):
         return None
+    return User.get(login_id=login_id)
 
 
 @login_manager.unauthorized_handler
