@@ -291,6 +291,53 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assertIsNone(supporter.user.email)
         self.assertEqual(supporter.user.unconfirmed_email, "regular@example.com")
 
+    def _change_supporter_type(self, supporter, target_type):
+        response = self.client.get(url_for("supportersview.details", supporter_id=supporter.id))
+        self.assert200(response)
+        form = self.get_context_variable("change_supporter_type_form")
+        return self.client.post(
+            url_for("supportersview.change_type", supporter_id=supporter.id),
+            data={
+                "target_type": target_type,
+                "csrf_token": form.csrf_token.current_token,
+            },
+            follow_redirects=False,
+        )
+
+    def test_admin_can_convert_supporter_between_commercial_types(self):
+        supporter = self.create_supporter()
+        original_state = supporter.state
+
+        response = self.client.get(url_for("supportersview.details", supporter_id=supporter.id))
+        self.assert200(response)
+        self.assertIn("Convert to commercial", response.get_data(as_text=True))
+
+        response = self._change_supporter_type(supporter, "commercial")
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(supporter)
+        self.assertTrue(supporter.is_commercial)
+        self.assertEqual(supporter.state, original_state)
+        self.assertMessageFlashed(
+            f"{supporter.user.name} has been converted to a commercial supporter.",
+            "success",
+        )
+
+        response = self.client.get(url_for("supportersview.details", supporter_id=supporter.id))
+        self.assert200(response)
+        self.assertIn("Convert to non-commercial", response.get_data(as_text=True))
+
+        response = self._change_supporter_type(supporter, "non-commercial")
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(supporter)
+        self.assertFalse(supporter.is_commercial)
+        self.assertEqual(supporter.state, original_state)
+        self.assertMessageFlashed(
+            f"{supporter.user.name} has been converted to a non-commercial supporter.",
+            "success",
+        )
+
     def test_old_username_page_can_be_searched(self):
         matching = OldUsername(username="Former Exact User")
         db.session.add_all([

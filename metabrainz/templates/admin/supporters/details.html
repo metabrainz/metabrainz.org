@@ -168,6 +168,15 @@
     {% else %}
       <p class="text-muted">This is not a commercial supporter.</p>
     {% endif %}
+    <form method="POST"
+          action="{{ url_for('supportersview.change_type', supporter_id=supporter.id) }}"
+          onsubmit="return confirm('Convert this supporter to {{ 'non-commercial' if supporter.is_commercial else 'commercial' }}? Their state and existing details will be kept.');">
+      {{ change_supporter_type_form.hidden_tag() }}
+      <button type="submit" class="btn btn-secondary">
+        <i class="fa fa-exchange"></i>
+        Convert to {{ 'non-commercial' if supporter.is_commercial else 'commercial' }}
+      </button>
+    </form>
   </div>
 
   {% if supporter.is_commercial %}
