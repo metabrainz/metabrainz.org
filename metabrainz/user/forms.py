@@ -18,10 +18,15 @@ def validate_email_domain(form, field):
 
 class UserSignupForm(MeBFlaskForm):
     """ Sign up form for new users. """
-    username = StringField(gettext("Username"), validators=[
-        DataRequired(gettext("Username is required!")),
-        validate_username,
-    ])
+    username = StringField(
+        gettext("Username"),
+        default="",
+        filters=[str.strip],
+        validators=[
+            DataRequired(gettext("Username is required!")),
+            validate_username,
+        ],
+    )
     email = EmailField(validators=[
         DataRequired(gettext("Email address is required!")),
         validate_email_domain

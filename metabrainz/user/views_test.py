@@ -95,6 +95,18 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertIsNotNone(user.last_updated)
         self.assertEqual(current_user, user)
 
+    def test_user_signup_trims_username_whitespace(self):
+        self._test_user_signup_helper({
+            "username": "  test_user_1 \t",
+            "email": "test@example.com",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+        }, 302)
+
+        user = User.get(name="test_user_1")
+        self.assertIsNotNone(user)
+        self.assertEqual(user.name, "test_user_1")
+
     def test_user_signup_regular_flow_is_not_registration_request_signup(self):
         self.client.get("/signup")
         props = json.loads(self.get_context_variable("props"))
