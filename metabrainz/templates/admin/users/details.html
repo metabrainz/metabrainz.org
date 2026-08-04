@@ -58,11 +58,20 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </dd>
 
+                        {% set change_email_button %}
+                            {% if not model.deleted %}
+                            <button type="button" class="btn btn-sm btn-link" data-change-email>
+                                <i class="fa fa-edit"></i> Change
+                            </button>
+                            {% endif %}
+                        {% endset %}
+
                         {% if model.email and model.unconfirmed_email %}
                         <dt class="col-sm-4">Email (Current):</dt>
                         <dd class="col-sm-8">
                             {{ model.email }}
                             <span class="badge bg-success">Confirmed</span>
+                            {{ change_email_button }}
                         </dd>
                         <dt class="col-sm-4">Email (New):</dt>
                         <dd class="col-sm-8">
@@ -79,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <dd class="col-sm-8">
                             {{ model.email }}
                             <span class="badge bg-success">Confirmed</span>
+                            {{ change_email_button }}
                         </dd>
                         {% elif model.unconfirmed_email %}
                         <dt class="col-sm-4">Email:</dt>
@@ -89,10 +99,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                 {{ verify_email_form.hidden_tag() }}
                                 <button type="submit" class="btn btn-sm btn-outline-success">Verify Email</button>
                             </form>
+                            {{ change_email_button }}
                         </dd>
                         {% else %}
                         <dt class="col-sm-4">Email:</dt>
-                        <dd class="col-sm-8 text-muted">No email</dd>
+                        <dd class="col-sm-8">
+                            <span class="text-muted">No email</span>
+                            {{ change_email_button }}
+                        </dd>
                         {% endif %}
 
                         <dt class="col-sm-4">Created:</dt>
@@ -268,6 +282,15 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
+
+{% if not model.deleted %}
+  {% with form=change_email_form,
+          action_url=url_for('.change_email', user_id=model.id),
+          lookup_url=url_for('.email_in_use', user_id=model.id),
+          current_email=model.get_email_any() %}
+    {% include 'admin/_change_email_modal.html' %}
+  {% endwith %}
+{% endif %}
 
 {% block tail %}
 {{ super() }}

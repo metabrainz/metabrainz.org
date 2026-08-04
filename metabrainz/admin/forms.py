@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, BooleanField, SelectField, TextAreaField
 from wtforms.fields import EmailField, URLField, DecimalField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Email, Length
 from metabrainz.model import supporter
 from metabrainz.db import tier as db_tier
 from metabrainz.user.username import validate_username
@@ -29,8 +29,10 @@ LOGO_UPLOAD_SET = UploadSet(
 
 class SupporterEditForm(FlaskForm):
     # General info
+    # The email address is deliberately not editable here. It is changed from the
+    # supporter page through ChangeEmailForm, which is the same path the user page
+    # uses, so an admin cannot confirm an address without saying that is what they meant.
     username = StringField("Username", validators=[validate_username])
-    email = EmailField("Email", validators=[DataRequired(message="Email cannot be empty")])
 
     contact_name = StringField("Name")
 
@@ -80,6 +82,22 @@ class SupporterEditForm(FlaskForm):
 class VerifyEmailForm(FlaskForm):
     """Form for manually verifying a user's email address."""
     pass
+
+
+class ChangeEmailForm(FlaskForm):
+    """Form for changing a user's email address from the admin panel.
+
+    Shared by the user page and the supporter page so the two cannot drift.
+    """
+    email = EmailField(
+        "New email address",
+        validators=[
+            DataRequired(message="Email cannot be empty"),
+            Email(message="This is not a valid email address"),
+        ]
+    )
+    confirmed = BooleanField("Mark this address as confirmed")
+    reason = TextAreaField("Reason (optional)")
 
 
 class EditUsernameForm(FlaskForm):

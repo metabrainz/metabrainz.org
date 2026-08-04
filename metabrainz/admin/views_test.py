@@ -15,6 +15,7 @@ from metabrainz.model.supporter import Supporter
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.user import User
+from metabrainz.model.webhook import EVENT_USER_UPDATED
 from metabrainz.testing import FlaskTestCase
 
 
@@ -236,6 +237,60 @@ class AdminViewsTestCase(FlaskTestCase):
         users = self.get_context_variable("data")
         self.assertEqual([user.id for user in users], [exact.id])
 
+    def test_supporter_edit_shows_unconfirmed_email_with_verification_status(self):
+        supporter = self.create_supporter()
+
+        response = self.client.get(url_for("supportersview.edit", supporter_id=supporter.id))
+
+        self.assert200(response)
+        body = response.get_data(as_text=True)
+        self.assertIn("regular@example.com", body)
+        self.assertIn("Unverified", body)
+
+    def test_supporter_edit_shows_confirmed_email_with_verification_status(self):
+        supporter = self.create_supporter()
+        supporter.user.email = "confirmed@example.com"
+        supporter.user.unconfirmed_email = "pending@example.com"
+        db.session.commit()
+
+        response = self.client.get(url_for("supportersview.edit", supporter_id=supporter.id))
+
+        self.assert200(response)
+        body = response.get_data(as_text=True)
+        self.assertIn("confirmed@example.com", body)
+        self.assertIn("Verified", body)
+        self.assertNotIn("Unverified", body)
+
+    def test_supporter_edit_cannot_change_email(self):
+        """ The address is changed from the supporter page, not from this form.
+
+        Posting one anyway must be ignored rather than quietly applied, since
+        the form carries no answer to whether it should count as confirmed. """
+        supporter = self.create_supporter()
+        response = self.client.get(url_for("supportersview.edit", supporter_id=supporter.id))
+        self.assert200(response)
+        form = self.get_context_variable("form")
+        self.assertFalse(hasattr(form, "email"))
+
+        response = self.client.post(
+            url_for("supportersview.edit", supporter_id=supporter.id),
+            data={
+                "username": supporter.user.name,
+                "email": "updated@example.com",
+                "contact_name": supporter.contact_name,
+                "state": supporter.state,
+                "tier": "None",
+                "amount_pledged": "0",
+                "csrf_token": form.csrf_token.current_token,
+            },
+            follow_redirects=False,
+        )
+
+        self.assertEqual(response.status_code, 302)
+        db.session.refresh(supporter.user)
+        self.assertIsNone(supporter.user.email)
+        self.assertEqual(supporter.user.unconfirmed_email, "regular@example.com")
+
     def test_old_username_page_can_be_searched(self):
         matching = OldUsername(username="Former Exact User")
         db.session.add_all([
@@ -279,7 +334,6 @@ class AdminViewsTestCase(FlaskTestCase):
             url_for("supportersview.edit", supporter_id=supporter.id),
             data={
                 "username": new_username,
-                "email": supporter.user.email,
                 "contact_name": supporter.contact_name,
                 "state": supporter.state,
                 "tier": "None",
@@ -633,6 +687,160 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assertEqual(user.email, "new@example.com")
         self.assertIsNone(user.unconfirmed_email)
         self.assertMessageFlashed("User's email is already verified", "error")
+
+    def _change_email_from_user_page(self, user_id, email, confirmed=False, reason=None):
+        self.assert200(self.client.get(url_for("users-admin.details_view", id=user_id)))
+        form = self.get_context_variable("change_email_form")
+        data = {"email": email, "csrf_token": form.csrf_token.current_token}
+        if confirmed:
+            data["confirmed"] = "y"
+        if reason is not None:
+            data["reason"] = reason
+        return self.client.post(
+            url_for("users-admin.change_email", user_id=user_id),
+            data=data,
+            follow_redirects=False,
+        )
+
+    def _change_email_from_supporter_page(self, supporter_id, email, confirmed=False):
+        self.assert200(self.client.get(url_for("supportersview.details", supporter_id=supporter_id)))
+        form = self.get_context_variable("change_email_form")
+        data = {"email": email, "csrf_token": form.csrf_token.current_token}
+        if confirmed:
+            data["confirmed"] = "y"
+        return self.client.post(
+            url_for("supportersview.change_email", supporter_id=supporter_id),
+            data=data,
+            follow_redirects=False,
+        )
+
+    @patch("metabrainz.model.user.Webhook.create_delivery_for_event")
+    def test_admin_change_email_confirmed(self, create_delivery):
+        user = self.create_user()
+        user.email = "old@example.com"
+        user.unconfirmed_email = "stale@example.com"
+        db.session.commit()
+        user_id = user.id
+
+        response = self._change_email_from_user_page(
+            user_id, "new@example.com", confirmed=True, reason="Owner asked over the phone."
+        )
+        self.assertEqual(response.status_code, 302)
+
+        user = User.get(id=user_id)
+        self.assertEqual(user.email, "new@example.com")
+        # the superseded pending address must go, or its verification link could
+        # later overwrite the address that was just confirmed
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertIsNotNone(user.email_confirmed_at)
+
+        event, payload = create_delivery.call_args.args
+        self.assertEqual(event, EVENT_USER_UPDATED)
+        self.assertEqual(payload["old"], {"email": "old@example.com"})
+        self.assertEqual(payload["new"], {"email": "new@example.com"})
+
+        log = ModerationLog.query.filter_by(user_id=user_id, action="change_email").one()
+        self.assertIn("new@example.com", log.reason)
+        self.assertIn("confirmed", log.reason)
+        self.assertIn("Owner asked over the phone.", log.reason)
+
+    @patch("metabrainz.model.user.Webhook.create_delivery_for_event")
+    def test_admin_change_email_unconfirmed_sends_verification(self, create_delivery):
+        user = self.create_user()
+        user.email = "old@example.com"
+        db.session.commit()
+        user_id = user.id
+
+        response = self._change_email_from_user_page(user_id, "new@example.com")
+        self.assertEqual(response.status_code, 302)
+
+        user = User.get(id=user_id)
+        # the confirmed address keeps working until the user follows the link
+        self.assertEqual(user.email, "old@example.com")
+        self.assertEqual(user.unconfirmed_email, "new@example.com")
+
+        # nothing downstream has changed yet, so nothing is announced
+        create_delivery.assert_not_called()
+
+        # rendering the verification email is what puts this in the context
+        self.assertIsNotNone(self.get_context_variable("verification_link"))
+        # the admin variant, which says who made the change instead of naming an
+        # IP address that would be the admin's rather than the user's
+        self.assertTemplateUsed("email/user-email-address-verification-admin.txt")
+
+        log = ModerationLog.query.filter_by(user_id=user_id, action="change_email").one()
+        self.assertIn("pending verification", log.reason)
+
+    def test_admin_change_email_warns_when_address_already_in_use(self):
+        """ Two accounts may share an address; the admin is told, not stopped. """
+        user = self.create_user()
+        user_id = user.id
+
+        response = self._change_email_from_user_page(user_id, "admin@metabrainz.org")
+
+        self.assertEqual(response.status_code, 302)
+        user = User.get(id=user_id)
+        self.assertEqual(user.unconfirmed_email, "admin@metabrainz.org")
+        self.assertMessageFlashed("admin@metabrainz.org is also used by admin_user.", "warning")
+
+    def test_admin_email_in_use_lookup_reports_other_accounts(self):
+        user = self.create_user()
+
+        response = self.client.post(
+            url_for("users-admin.email_in_use", user_id=user.id),
+            json={"email": "ADMIN@metabrainz.org"},
+        )
+
+        self.assert200(response)
+        self.assertEqual(
+            response.json["accounts"],
+            [{"name": "admin_user", "confirmed": False}],
+        )
+
+        # the account being edited is never reported against itself
+        response = self.client.post(
+            url_for("users-admin.email_in_use", user_id=user.id),
+            json={"email": user.unconfirmed_email},
+        )
+        self.assert200(response)
+        self.assertEqual(response.json["accounts"], [])
+
+    @patch("metabrainz.model.user.Webhook.create_delivery_for_event")
+    def test_supporter_change_email_matches_user_page(self, create_delivery):
+        """ Both pages route through one implementation, so both must agree. """
+        supporter = self.create_supporter()
+        supporter.user.email = "old@example.com"
+        db.session.commit()
+        supporter_id, user_id = supporter.id, supporter.user.id
+
+        response = self._change_email_from_supporter_page(
+            supporter_id, "new@example.com", confirmed=True
+        )
+        self.assertEqual(response.status_code, 302)
+
+        user = User.get(id=user_id)
+        self.assertEqual(user.email, "new@example.com")
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertIsNotNone(user.email_confirmed_at)
+
+        event, payload = create_delivery.call_args.args
+        self.assertEqual(event, EVENT_USER_UPDATED)
+        self.assertEqual(payload["new"], {"email": "new@example.com"})
+
+        self.assertEqual(
+            ModerationLog.query.filter_by(user_id=user_id, action="change_email").count(), 1
+        )
+
+    def test_admin_change_email_rejects_invalid_address(self):
+        user = self.create_user()
+        user_id = user.id
+
+        response = self._change_email_from_user_page(user_id, "not-an-email")
+
+        self.assertEqual(response.status_code, 302)
+        user = User.get(id=user_id)
+        self.assertEqual(user.unconfirmed_email, "regular@example.com")
+        self.assertMessageFlashed("This is not a valid email address", "error")
 
     def test_admin_reject_supporter_with_unconfirmed_email(self):
         """ Rejecting a supporter who has not confirmed their email notifies the unconfirmed address. """

@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 from flask import current_app
 from flask_login import UserMixin
-from sqlalchemy import Column, Integer, Identity, Text, DateTime, Index, func, Boolean
+from sqlalchemy import Column, Integer, Identity, Text, DateTime, Index, func, or_, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import Mapped, validates
@@ -72,6 +72,61 @@ class User(db.Model, UserMixin):
         if exclude_user_id is not None:
             query = query.filter(cls.id != exclude_user_id)
         return query.first() is not None
+
+    @classmethod
+    def get_others_using_email(cls, email, exclude_user_id=None, limit=10):
+        """ Accounts other than ``exclude_user_id`` holding this address, confirmed or pending.
+
+        Nothing stops two accounts sharing an address, so this is only ever
+        used to warn about it, never to reject a change.
+        """
+        email = (email or "").strip()
+        if not email:
+            return []
+        query = cls.query.filter(
+            cls.deleted.is_(False),
+            or_(
+                func.lower(cls.email) == email.lower(),
+                func.lower(cls.unconfirmed_email) == email.lower(),
+            ),
+        )
+        if exclude_user_id is not None:
+            query = query.filter(cls.id != exclude_user_id)
+        return query.order_by(cls.name).limit(limit).all()
+
+    def change_email(self, moderator, new_email, confirmed, reason=None):
+        """ Change this user's email address on a moderator's behalf.
+
+        ``confirmed`` records whether the moderator vouches for the address. If
+        they do it becomes the account's email immediately; otherwise it is
+        stored as a pending address and any already confirmed one keeps working
+        until the user follows a verification link, which is what happens when
+        a user changes their own email.
+
+        Returns whether the confirmed address changed, so the caller knows
+        whether downstream needs to hear about it.
+        """
+        new_email = new_email.strip()
+        old_email = self.email
+        changed_at = datetime.now(timezone.utc)
+
+        if confirmed:
+            self.email = new_email
+            # drop any pending address: it is superseded, and leaving it behind
+            # would let a stale verification link overwrite what was just set
+            self.unconfirmed_email = None
+            self.email_confirmed_at = changed_at
+        else:
+            self.unconfirmed_email = new_email
+        self.last_updated = changed_at
+
+        status = "confirmed" if confirmed else "pending verification"
+        log_message = f"Email changed to '{new_email}' ({status})."
+        if reason:
+            log_message += f" {reason}"
+        self.moderate(moderator, "change_email", log_message)
+
+        return confirmed and old_email != new_email
 
     def is_active(self):
         return not self.is_blocked

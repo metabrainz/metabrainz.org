@@ -78,8 +78,22 @@
           {{ form.contact_name(class="form-control") }}
         </div>
         <div class="form-group">
-          <label>Email</label>
-          {{ form.email(class="form-control") }}
+          <label>
+            Email
+            {% if supporter.user.is_email_confirmed() %}
+              <span class="badge badge-success" style="margin-left: 4px;">Verified</span>
+            {% elif supporter.user.unconfirmed_email %}
+              <span class="badge badge-danger" style="margin-left: 4px;">Unverified</span>
+            {% endif %}
+          </label>
+          {# read only here: changing an address is its own action on the supporter
+             page, so that confirming one is always a deliberate choice #}
+          <p class="form-control-static">{{ supporter.user.get_email_any() or '—' }}</p>
+          <p class="help-block">
+            <a href="{{ url_for('supportersview.details', supporter_id=supporter.id) }}">
+              Change it from the supporter page
+            </a>.
+          </p>
         </div>
       </div>
 

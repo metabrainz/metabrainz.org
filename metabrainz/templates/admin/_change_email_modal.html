@@ -1,0 +1,124 @@
+{#
+  Change email dialog, shared by the user page and the supporter page so the
+  two offer the same choices and reach the same code path.
+
+  form           a ChangeEmailForm instance
+  action_url     where the form is posted
+  lookup_url     endpoint reporting other accounts already holding an address
+  current_email  prefilled into the input
+#}
+<div class="modal fade" id="changeEmailModal" tabindex="-1" aria-labelledby="changeEmailModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeEmailModalLabel">Change email address</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="change-email-form" method="POST" action="{{ action_url }}">
+        {{ form.hidden_tag() }}
+        <div class="modal-body">
+          <div class="form-group">
+            {{ form.email.label(for="change-email-input") }}
+            {{ form.email(class="form-control", id="change-email-input", value=current_email or "") }}
+          </div>
+
+          {# populated by the lookup below; duplicates are allowed, so this only warns #}
+          <div class="callout callout--warning" id="change-email-in-use" role="status" hidden></div>
+
+          <div class="form-group">
+            <div class="form-check">
+              {{ form.confirmed(class="form-check-input", id="change-email-confirmed") }}
+              {{ form.confirmed.label(for="change-email-confirmed", class="form-check-label") }}
+            </div>
+            <p class="help-block" id="change-email-confirmed-hint">
+              A verification email will be sent to the new address. Any address already
+              confirmed on this account keeps working until the user follows that link.
+            </p>
+          </div>
+
+          <div class="form-group">
+            {{ form.reason.label(for="change-email-reason") }}
+            {{ form.reason(class="form-control", id="change-email-reason", rows="2",
+                           placeholder="Recorded in the moderation log") }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Change email</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var input = document.getElementById('change-email-input');
+    var warning = document.getElementById('change-email-in-use');
+    var checkbox = document.getElementById('change-email-confirmed');
+    var hint = document.getElementById('change-email-confirmed-hint');
+    var openers = document.querySelectorAll('[data-change-email]');
+    var lookupUrl = {{ lookup_url | tojson }};
+    var lookupTimer = null;
+
+    var PENDING_HINT = hint.textContent.trim();
+    var CONFIRMED_HINT = 'The address is treated as verified immediately and no ' +
+      'verification email is sent. Only do this when you know the account owner ' +
+      'controls it.';
+
+    function renderHint() {
+      hint.textContent = checkbox.checked ? CONFIRMED_HINT : PENDING_HINT;
+    }
+
+    function renderWarning(accounts) {
+      if (!accounts.length) {
+        warning.hidden = true;
+        return;
+      }
+      var names = accounts.map(function (account) {
+        return account.name + (account.confirmed ? ' (confirmed)' : ' (pending)');
+      }).join(', ');
+      // textContent, not innerHTML: these are usernames from the database
+      warning.textContent = 'Already used by ' + names + '. Saving leaves more than ' +
+        'one account on this address, which is allowed but rarely intended.';
+      warning.hidden = false;
+    }
+
+    function lookup() {
+      var email = input.value.trim();
+      if (!email) {
+        warning.hidden = true;
+        return;
+      }
+      fetch(lookupUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email }),
+        credentials: 'same-origin'
+      }).then(function (response) {
+        return response.ok ? response.json() : { accounts: [] };
+      }).then(function (data) {
+        renderWarning(data.accounts || []);
+      }).catch(function () {
+        // the warning is advisory; a failed lookup must not block the change
+        warning.hidden = true;
+      });
+    }
+
+    input.addEventListener('input', function () {
+      window.clearTimeout(lookupTimer);
+      lookupTimer = window.setTimeout(lookup, 300);
+    });
+    checkbox.addEventListener('change', renderHint);
+
+    Array.prototype.forEach.call(openers, function (opener) {
+      opener.addEventListener('click', function () {
+        renderHint();
+        lookup();
+        $('#changeEmailModal').modal('show');
+      });
+    });
+  })();
+</script>
