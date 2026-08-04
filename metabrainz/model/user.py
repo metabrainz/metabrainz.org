@@ -6,7 +6,7 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, Identity, Text, DateTime, Index, func, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import Mapped, validates
 
 from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
@@ -90,11 +90,19 @@ class User(db.Model, UserMixin):
             return False
         return self.remember_me_until > datetime.now(timezone.utc)
 
+    @staticmethod
+    def normalize_name(name):
+        return name.strip() if isinstance(name, str) else name
+
+    @validates("name")
+    def _normalize_name(self, key, name):
+        return self.normalize_name(name)
+
     @classmethod
     def add(cls, **kwargs):
         from metabrainz import bcrypt
 
-        name = kwargs.pop("name")
+        name = cls.normalize_name(kwargs.pop("name"))
         if OldUsername.get(name) is not None:
             raise UsernameNotAllowedException()
 

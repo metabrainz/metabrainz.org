@@ -1,7 +1,8 @@
 from sqlalchemy.exc import IntegrityError
 
 from metabrainz.model import db
-from metabrainz.model.user import User
+from metabrainz.model.old_username import OldUsername
+from metabrainz.model.user import User, UsernameNotAllowedException
 from metabrainz.testing import FlaskTestCase
 
 
@@ -26,6 +27,39 @@ class UserModelTestCase(FlaskTestCase):
         )
         with self.assertRaises(IntegrityError):
             db.session.commit()
+
+    def test_add_trims_username_whitespace(self):
+        user = User.add(
+            name="  test-user \t",
+            unconfirmed_email="trimmed@example.com",
+            password="<PASSWORD>",
+        )
+        db.session.commit()
+
+        self.assertEqual(user.name, "test-user")
+        self.assertEqual(User.get(name="test-user"), user)
+
+    def test_name_assignment_trims_username_whitespace(self):
+        user = User.add(
+            name="test-user",
+            unconfirmed_email="trimmed@example.com",
+            password="<PASSWORD>",
+        )
+
+        user.name = "  renamed-user \t"
+
+        self.assertEqual(user.name, "renamed-user")
+
+    def test_add_checks_trimmed_username_against_old_usernames(self):
+        db.session.add(OldUsername(username="reserved-user"))
+        db.session.commit()
+
+        with self.assertRaises(UsernameNotAllowedException):
+            User.add(
+                name="  reserved-user \t",
+                unconfirmed_email="reserved@example.com",
+                password="<PASSWORD>",
+            )
 
     def test_add_requires_unconfirmed_email(self):
         with self.assertRaisesRegex(ValueError, "Email address is required."):
