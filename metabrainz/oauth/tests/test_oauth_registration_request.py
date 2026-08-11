@@ -2,6 +2,7 @@ import base64
 import hashlib
 import json
 import os
+from unittest.mock import patch
 from urllib.parse import parse_qs, urlparse
 
 from brainzutils import cache
@@ -112,7 +113,8 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.assertEqual(code.code, query_args["code"][0])
         return query_args["code"][0]
 
-    def test_registration_request_signup_chains_to_pkce_authorization(self):
+    @patch("metabrainz.user.email.send_mail")
+    def test_registration_request_signup_chains_to_pkce_authorization(self, send_mail):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
         code_verifier, code_challenge = self._pkce_pair()
@@ -151,6 +153,16 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         user = User.get(name="seeded-user")
         self.assertIsNotNone(user)
         self.assertIsNone(User.get(name="changed-user"))
+        send_mail.assert_called_once()
+        email = send_mail.call_args.kwargs
+        self.assertEqual(
+            email["subject"],
+            "Welcome to MetaBrainz - please verify your email address",
+        )
+        self.assertEqual(email["recipients"], ["seeded-user <seeded.user@example.com>"])
+        self.assertIn("Welcome to MetaBrainz!", email["text"])
+        self.assertIn("signing up with test-client", email["text"])
+        self.assertIn("/verify-email?", email["text"])
 
         authorize_url = self._continue_to_authorize(response.location)
         code = self._confirm_authorization(authorize_url, user.id)

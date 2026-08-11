@@ -12,8 +12,15 @@ from metabrainz.model.user import User, UsernameNotAllowedException
 from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_UPDATED
 from metabrainz.oauth.registration_request import get_registration_request
 from metabrainz.user import login_forbidden
-from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
-    VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
+from metabrainz.user.email import (
+    RESET_PASSWORD,
+    VERIFY_EMAIL,
+    create_email_link_checksum,
+    send_forgot_password_email,
+    send_forgot_username_email,
+    send_registration_request_welcome_email,
+    send_verification_email,
+)
 from metabrainz.user.forms import UserLoginForm, UserReauthenticationForm, UserSignupForm, ForgotPasswordForm, \
     ForgotUsernameForm, ResetPasswordForm
 from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup_count
@@ -66,11 +73,17 @@ def signup():
                     increment_signup_count()
                     user.emit_event(EVENT_USER_CREATED)
 
-                    send_verification_email(
-                        user,
-                        "Please verify your email address",
-                        "email/user-email-address-verification.txt"
-                    )
+                    if registration_request is not None:
+                        send_registration_request_welcome_email(
+                            user,
+                            registration_request["client_name"],
+                        )
+                    else:
+                        send_verification_email(
+                            user,
+                            "Please verify your email address",
+                            "email/user-email-address-verification.txt"
+                        )
                     login_user(user)
                     flash.success("Account created. Please check your inbox to complete verification.")
                     redirect_to = request.args.get("next") or url_for("index.home")

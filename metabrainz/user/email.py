@@ -23,7 +23,7 @@ def _send_user_email(username: str, email: str, subject: str, content: str):
         send_mail(subject=subject, text=content, recipients=[f"{username} <{email}>"])
 
 
-def send_verification_email(user: User, subject, template):
+def send_verification_email(user: User, subject, template, **template_context):
     """ Send email for verification of user's email address. """
     timestamp = int(datetime.now().timestamp())
     email = user.unconfirmed_email
@@ -40,9 +40,20 @@ def send_verification_email(user: User, subject, template):
         template,
         username=user.name,
         verification_link=verification_link,
-        ip=request.remote_addr
+        ip=request.remote_addr,
+        **template_context,
     )
     _send_user_email(user.name, email, subject, content)
+
+
+def send_registration_request_welcome_email(user: User, client_name: str):
+    """Welcome a user whose account was created through a registration request."""
+    send_verification_email(
+        user,
+        "Welcome to MetaBrainz - please verify your email address",
+        "email/user-registration-request-welcome.txt",
+        client_name=client_name,
+    )
 
 
 def send_forgot_username_email(user: User):
