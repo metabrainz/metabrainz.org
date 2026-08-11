@@ -3,8 +3,10 @@ from urllib.parse import urlparse, parse_qs
 from authlib.oauth2.rfc6749 import grants, InvalidRequestError
 from flask import render_template
 
+from metabrainz.oauth.restricted_scope import RestrictedScopeMixin
 
-class ImplicitGrant(grants.ImplicitGrant):
+
+class ImplicitGrant(RestrictedScopeMixin, grants.ImplicitGrant):
 
     def validate_authorization_request(self):
         result = super().validate_authorization_request()

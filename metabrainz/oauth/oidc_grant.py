@@ -3,6 +3,7 @@ from authlib.oauth2.rfc6749.util import scope_to_list
 from flask import current_app
 
 from metabrainz.model import db, OAuth2AuthorizationCode, OAuth2Client
+from metabrainz.oauth.restricted_scope import RestrictedScopeMixin
 
 
 def build_user_info(user, scope, include_member_since=False):
@@ -54,7 +55,7 @@ class OpenIDCode(OpenIDCodeMixin, grants.OpenIDCode):
         return self._get_jwt_config()
 
 
-class OpenIDImplicitGrant(OpenIDCodeMixin, grants.OpenIDImplicitGrant):
+class OpenIDImplicitGrant(RestrictedScopeMixin, OpenIDCodeMixin, grants.OpenIDImplicitGrant):
 
     def get_jwt_config(self):
         return self._get_jwt_config()
