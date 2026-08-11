@@ -77,6 +77,10 @@ ListenBrainz
    * - ``listenbrainz:submit-listens``
      - Submit listens to ListenBrainz.
      - *Submit listens to ListenBrainz.*
+   * - ``listenbrainz:connect-services``
+     - Connect external services to ListenBrainz on the user's behalf.
+       **Restricted**, see below.
+     - *Connect external services to your ListenBrainz account.*
 
 CritiqueBrainz
 ^^^^^^^^^^^^^^

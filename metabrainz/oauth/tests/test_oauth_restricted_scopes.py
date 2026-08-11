@@ -4,7 +4,7 @@ from urllib.parse import urlparse, parse_qs
 from flask import g, url_for
 
 from metabrainz.admin.views import OAuth2ClientModelView, RestrictedScopeField
-from metabrainz.model import db, OAuth2Client, OAuth2AccessToken
+from metabrainz.model import db, OAuth2Client, OAuth2Scope, OAuth2AccessToken
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.oauth.tests import OAuthTestCase
 
@@ -197,6 +197,25 @@ class RestrictedScopesTestCase(OAuthTestCase):
         self.assert200(response)
         self.assertEqual(self._access_token_scopes(response.json["access_token"]), {"profile"})
 
+    def test_connect_services_scope_ships_restricted(self):
+        scope = db.session.query(OAuth2Scope).filter_by(name="listenbrainz:connect-services").first()
+        self.assertIsNotNone(scope)
+        self.assertTrue(scope.restricted)
+
+        application = self.create_oauth_app()
+        self.temporary_login(self.user2)
+        query_string = self._authorization_query(application, "code", "listenbrainz:connect-services")
+        error = {
+            "name": "invalid_scope",
+            "description": "The client is not allowed to request the following scopes:"
+                           " listenbrainz:connect-services",
+        }
+        self.authorize_error_helper(self.user2, query_string, error)
+
+        response = self.client.get("/.well-known/openid-configuration")
+        self.assert200(response)
+        self.assertNotIn("listenbrainz:connect-services", response.json["scopes_supported"])
+
     def test_restricted_scopes_are_not_advertised(self):
         response = self.client.get("/.well-known/openid-configuration")
         self.assert200(response)
@@ -218,7 +237,8 @@ class RestrictedScopesTestCase(OAuthTestCase):
         field = form.restricted_scopes
         self.assertIsInstance(field, RestrictedScopeField)
         # only restricted scopes can be granted
-        self.assertEqual(field.choices, [(scope.id, RESTRICTED_SCOPE)])
+        self.assertIn((scope.id, RESTRICTED_SCOPE), field.choices)
+        self.assertNotIn("profile", [name for _, name in field.choices])
         self.assertEqual(field.data, [])
 
         field.data = [scope.id]
@@ -245,9 +265,9 @@ class RestrictedScopesTestCase(OAuthTestCase):
 
         form = OAuth2ClientModelView(db.session).get_form()(meta={"csrf": False}, obj=client)
         self.assertEqual(form.restricted_scopes.data, [scope.id])
-        self.assertEqual(
+        self.assertIn(
+            (scope.id, f"{RESTRICTED_SCOPE} (no longer restricted)"),
             form.restricted_scopes.choices,
-            [(scope.id, f"{RESTRICTED_SCOPE} (no longer restricted)")],
         )
 
     def test_admin_list_view_shows_restricted_scopes(self):
