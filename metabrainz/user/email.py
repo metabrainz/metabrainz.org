@@ -1,6 +1,6 @@
 import hashlib
 import hmac
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urljoin
 
 from flask import url_for, request, render_template, current_app
@@ -10,17 +10,28 @@ from metabrainz.model.user import User
 
 VERIFY_EMAIL = "verify-email"
 RESET_PASSWORD = "reset-password"
+SET_PASSWORD = "set-password"
 
 # The timestamp travels as "ts": "&times" is an HTML entity for × that parsers decode even
 # without the trailing semicolon, so mail clients turned "&timestamp=" into "×tamp=".
+
+
+def describe_expiry(expiry: timedelta) -> str:
+    """Render an expiry as the plain English an email can put in front of a user."""
+    seconds = int(expiry.total_seconds())
+    for unit, length in (("day", 86400), ("hour", 3600), ("minute", 60)):
+        if seconds >= length and seconds % length == 0:
+            count = seconds // length
+            return f"{count} {unit}" if count == 1 else f"{count} {unit}s"
+    return f"{seconds} seconds"
 
 
 def email_link(endpoint: str, **values) -> str:
     """Build an absolute link for an email out of the configured base URL.
 
     Never url_for(_external=True): that derives the host from the incoming request,
-    so whoever controls the Host header of the request that triggers the email also
-    controls where its recipient lands.
+    and links are also sent on behalf of a third party through the Host header, where
+    the recipient of the email lands.
     """
     return urljoin(
         current_app.config["SERVER_BASE_URL"],
@@ -84,7 +95,7 @@ def send_verification_email(user: User, subject, template):
         template,
         username=user.name,
         verification_link=verification_link,
-        ip=request.remote_addr
+        ip=request.remote_addr,
     )
     _send_user_email(email, subject, content)
 
@@ -110,3 +121,33 @@ def send_forgot_password_email(user: User):
         contact_url="https://metabrainz.org/contact"
     )
     _send_user_email(user.get_email_any(), "Password reset request", content)
+
+
+def send_welcome_email(
+    user: User,
+    oauth_client_name: str,
+    oauth_client_description: str,
+    granted_scopes: list[dict[str, str]],
+):
+    """Send a newly provisioned user a link for choosing their password."""
+    timestamp = int(datetime.now(timezone.utc).timestamp())
+    email = user.get_email_any()
+    checksum = create_email_link_checksum(SET_PASSWORD, user.id, email, timestamp)
+    password_link = email_link(
+        "users.reset_password",
+        user_id=user.id,
+        ts=timestamp,
+        checksum=checksum,
+        initial_setup="1",
+    )
+    content = render_template(
+        "email/user-welcome.txt",
+        username=user.name,
+        oauth_client_name=oauth_client_name,
+        oauth_client_description=oauth_client_description,
+        granted_scopes=granted_scopes,
+        password_link=password_link,
+        link_expiry=describe_expiry(current_app.config["EMAIL_SET_PASSWORD_EXPIRY"]),
+        contact_url="https://metabrainz.org/contact",
+    )
+    _send_user_email(email, "Welcome to MetaBrainz", content)

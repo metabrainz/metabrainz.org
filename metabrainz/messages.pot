@@ -4134,6 +4134,11 @@ msgstr ""
 msgid "Reset your password"
 msgstr ""
 
+#: frontend/js/src/forms/ResetPassword.tsx:29
+#: metabrainz/templates/users/reset-password.html:3
+msgid "Set your password"
+msgstr ""
+
 #: frontend/js/src/hooks/useEmailValidation.ts:41 metabrainz/user/forms.py:16
 msgid "Registration from this email domain is not allowed."
 msgstr ""
@@ -4797,6 +4802,10 @@ msgstr ""
 msgid "Reset Password"
 msgstr ""
 
+#: frontend/js/src/forms/ResetPassword.tsx:93
+msgid "Set Password"
+msgstr ""
+
 #: frontend/js/src/forms/SignupCommercial.tsx:40
 msgid ""
 "If you would like to support us with more than ${{minPledge}}, please "
@@ -5002,22 +5011,12 @@ msgstr ""
 msgid "Create your account"
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:51
-msgid "Registration started by <client />"
-msgstr ""
-
-#: frontend/js/src/forms/SignupUser.tsx:75
+#: frontend/js/src/forms/SignupUser.tsx:69
 #: frontend/js/src/hooks/useEmailValidation.ts:82
 msgid "Invalid email address."
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:156
-msgid ""
-"This username and email were provided by the app that started "
-"registration. You can change them later from MetaBrainz settings."
-msgstr ""
-
-#: frontend/js/src/forms/SignupUser.tsx:188
+#: frontend/js/src/forms/SignupUser.tsx:182
 msgid ""
 "I accept that my contributions will be released into the public domain or"
 " licensed for use."

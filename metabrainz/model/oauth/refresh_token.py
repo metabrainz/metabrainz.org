@@ -1,5 +1,5 @@
 from authlib.oauth2.rfc6749.util import scope_to_list
-from sqlalchemy import Column, Text, Integer
+from sqlalchemy import Boolean, Column, Text, Integer
 from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
@@ -13,6 +13,8 @@ class OAuth2RefreshToken(db.Model, OAuth2BaseToken):
 
     user_id = Column(Integer, nullable=False)
     refresh_token = Column(Text, nullable=False, unique=True)
+    # carried over to every access token minted from this one
+    provisioned = Column(Boolean, nullable=False, default=False, server_default="false")
     scopes = relationship(OAuth2Scope, secondary=OAuth2RefreshTokenScope)
 
     def get_scope(self):

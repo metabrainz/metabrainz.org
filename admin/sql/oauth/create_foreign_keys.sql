@@ -44,6 +44,14 @@ ALTER TABLE oauth.l_client_scope
     ADD CONSTRAINT l_client_scope_scope_id_fkey FOREIGN KEY (scope_id)
     REFERENCES oauth.scope (id) ON DELETE CASCADE;
 
+ALTER TABLE oauth.provisioned_user
+    ADD CONSTRAINT provisioned_user_user_id_fkey FOREIGN KEY (user_id)
+    REFERENCES "user" (id) ON DELETE CASCADE;
+
+ALTER TABLE oauth.provisioned_user
+    ADD CONSTRAINT provisioned_user_client_id_fkey FOREIGN KEY (client_id)
+    REFERENCES oauth.client (id) ON DELETE CASCADE;
+
 ALTER TABLE oauth.l_access_token_scope
     ADD CONSTRAINT l_access_token_scope_access_token_id_fkey FOREIGN KEY (access_token_id)
     REFERENCES oauth.access_token (id) ON DELETE CASCADE;
