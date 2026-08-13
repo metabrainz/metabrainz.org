@@ -80,6 +80,16 @@ class User(db.Model, UserMixin):
         return query.first() is not None
 
     @classmethod
+    def email_in_use(cls, email):
+        """ Whether any account already holds this address, confirmed or pending.
+
+        Case insensitively, like confirmed_email_exists: registration normalizes
+        the address to lower case, so an exact match would miss an account
+        holding 'Bob@x.com' and let a second one register the same mailbox.
+        """
+        return bool(cls.get_others_using_email(email, limit=1))
+
+    @classmethod
     def get_others_using_email(cls, email, exclude_user_id=None, limit=10):
         """ Accounts other than ``exclude_user_id`` holding this address, confirmed or pending.
 

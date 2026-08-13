@@ -33,6 +33,6 @@ def validate_registration_email(email: str | None) -> tuple[str, str | None]:
         return email, "invalid_email"
     if DomainBlacklist.is_email_blacklisted(email):
         return email, "domain_blacklisted"
-    if User.get(email=email) is not None:
+    if User.email_in_use(email):
         return email, "email_taken"
     return email, None
