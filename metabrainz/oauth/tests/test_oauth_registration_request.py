@@ -15,6 +15,8 @@ from metabrainz.model import db, OAuth2AccessToken, OAuth2AuthorizationCode, OAu
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.user import User
+from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_UPDATED
+from metabrainz.model.webhook_delivery import WebhookDelivery
 from metabrainz.oauth.tests import OAuthTestCase
 
 
@@ -508,6 +510,58 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json["error"], "invalid_scope")
         self.assertIsNone(User.get(name="seeded-user"))
+
+    def _subscribe_webhook(self):
+        webhook = Webhook(
+            name="User Events Webhook",
+            url="https://example.com/webhooks/user-events",
+            secret="mebw_secret",
+            events=[EVENT_USER_CREATED, EVENT_USER_UPDATED],
+            is_active=True,
+        )
+        db.session.add(webhook)
+        db.session.commit()
+        return webhook
+
+    def _delivered_events(self, webhook):
+        deliveries = WebhookDelivery.query.filter_by(webhook_id=webhook.id).all()
+        return {delivery.event_type: delivery.payload for delivery in deliveries}
+
+    def test_registration_request_emits_user_updated_for_confirmed_email(self):
+        application = self.create_oauth_app()
+        self._allow_registration_request_client(application)
+        webhook = self._subscribe_webhook()
+
+        with patch("metabrainz.webhooks.tasks.publish_new_webhook_delivery"):
+            response = self._create_registration_request(application, email_confirmed=True)
+
+        self.assertEqual(response.status_code, 201)
+        user = User.get(name="seeded-user")
+
+        # user.created carries no address, so subscribers only hear about the
+        # confirmed email if user.updated is emitted here: nothing is left for the
+        # user to confirm that would emit it later
+        events = self._delivered_events(webhook)
+        self.assertCountEqual(events, [EVENT_USER_CREATED, EVENT_USER_UPDATED])
+        self.assertNotIn("email", events[EVENT_USER_CREATED])
+        self.assertEqual(events[EVENT_USER_UPDATED], {
+            "user_id": user.id,
+            "old": {"email": None},
+            "new": {"email": "seeded.user@example.com"},
+            "updated_at": user.email_confirmed_at.isoformat(),
+        })
+
+    def test_registration_request_defers_user_updated_for_unconfirmed_email(self):
+        application = self.create_oauth_app()
+        self._allow_registration_request_client(application)
+        webhook = self._subscribe_webhook()
+
+        with patch("metabrainz.webhooks.tasks.publish_new_webhook_delivery"):
+            response = self._create_registration_request(application)
+
+        self.assertEqual(response.status_code, 201)
+        # the address is still unconfirmed, the flow that confirms it emits the event
+        self.assertCountEqual(self._delivered_events(webhook), [EVENT_USER_CREATED])
 
     def test_registration_request_rejects_openid_scope(self):
         application = self.create_oauth_app()

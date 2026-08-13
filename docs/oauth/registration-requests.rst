@@ -76,6 +76,12 @@ and chooses a password. The setup link is single-use and expires after seven
 days. It confirms the address during setup only when ``email_confirmed`` was
 false or omitted.
 
+Subscribers to the ``user.created`` webhook event receive it for the new
+account; the event carries no email address. The address is announced with a
+``user.updated`` event instead, emitted when the user confirms it during setup,
+or immediately after ``user.created`` when ``email_confirmed`` was true and
+there is nothing left for the user to confirm.
+
 When ``scope`` is omitted, no OAuth tokens are issued and the response contains
 only ``user_id``, ``username``, ``email``, and ``email_confirmed``. Access and
 refresh tokens are credentials and must be stored securely. The refresh token

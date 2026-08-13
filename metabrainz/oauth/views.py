@@ -11,7 +11,7 @@ from metabrainz.decorators import nocache, crossdomain
 from metabrainz.model import db, OAuth2Scope, get_scopes, OAuth2AccessToken, OAuth2RefreshToken
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.user import User
-from metabrainz.model.webhook import EVENT_USER_CREATED
+from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_UPDATED
 from metabrainz.oauth.authorization_server import authorization_server
 from metabrainz.oauth.forms import AuthorizationForm
 from metabrainz.oauth.oidc_grant import build_user_info
@@ -203,6 +203,7 @@ def create_oauth_registration_request():
         unconfirmed_email=user_details["email"],
         password=None,
     )
+    confirmed_at = None
     if user_details["email_confirmed"]:
         confirmed_at = datetime.now(timezone.utc)
         user.email = user.unconfirmed_email
@@ -248,6 +249,17 @@ def create_oauth_registration_request():
             } for granted_scope in scopes],
         )
         user.emit_event(EVENT_USER_CREATED)
+        if confirmed_at is not None:
+            # user.created carries no email address: subscribers only learn about
+            # one from user.updated, which is otherwise fired when the user confirms
+            # the address themselves. Nothing is left to confirm here, so without
+            # this the address the client vouched for never reaches them.
+            user.emit_event(
+                EVENT_USER_UPDATED,
+                old={"email": None},
+                new={"email": user.email},
+                updated_at=confirmed_at.isoformat(),
+            )
         db.session.commit()
     except Exception:
         db.session.rollback()
