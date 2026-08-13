@@ -241,7 +241,6 @@ def create_oauth_registration_request():
         send_welcome_email(
             user,
             oauth_client_name=client.name,
-            oauth_client_id=client.client_id,
             oauth_client_description=client.description,
             granted_scopes=[{
                 "name": granted_scope.name,

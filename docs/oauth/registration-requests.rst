@@ -6,11 +6,12 @@ Client-initiated user registration requests
 Trusted clients can provision MetaBrainz accounts from their backend. The
 client supplies a username, email address, and optionally its trusted email
 confirmation status and OAuth scopes. MetaBrainz creates an account without a
-password and sends a welcome email containing the OAuth client's name, client
-ID, description, the exact scopes granted (or that none were granted), and a
-link for the user to choose a password. The link verifies an unconfirmed email
-address and expires after seven days. When scopes are requested, the response
-includes access and refresh tokens for the new user.
+password and sends a welcome email containing the OAuth client's name,
+description, the exact scopes granted (or that none were granted), and a link
+for the user to choose a password. The welcome email is always sent, since it
+carries the only link with which the user can set a password. The link verifies
+an unconfirmed email address and expires after seven days. When scopes are
+requested, the response includes access and refresh tokens for the new user.
 
 This endpoint is restricted. Your client must be granted the *Registration
 requests* privilege by the MetaBrainz OAuth provider before it can create

@@ -93,13 +93,12 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
             normalized_email_text,
         )
         self.assertIn(
-            f"Client ID: {application['client_id']}",
-            normalized_email_text,
-        )
-        self.assertIn(
             "Description: test-description",
             normalized_email_text,
         )
+        # the client id identifies the application to its developer, not to the
+        # user being written to, so it is left out of the email
+        self.assertNotIn(application["client_id"], normalized_email_text)
         self.assertIn(
             "No OAuth scopes were granted to this client.",
             normalized_email_text,
@@ -179,10 +178,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         send_mail.assert_called_once()
         normalized_email_text = " ".join(send_mail.call_args.kwargs["text"].split())
         self.assertIn("Name: test-client", normalized_email_text)
-        self.assertIn(
-            f"Client ID: {application['client_id']}",
-            normalized_email_text,
-        )
+        self.assertNotIn(application["client_id"], normalized_email_text)
         self.assertIn("Description: test-description", normalized_email_text)
         self.assertIn(
             "The following OAuth scopes were granted to this client:",
@@ -257,10 +253,21 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
 
-        response = self._create_registration_request(application, email_confirmed=True)
+        with patch("metabrainz.user.email.send_mail") as send_mail:
+            response = self._create_registration_request(application, email_confirmed=True)
         self.assertEqual(response.status_code, 201)
         self.assertTrue(response.json["email_confirmed"])
+
+        # the welcome email carries the link the user needs to choose a password, so
+        # it goes out whether or not the client vouched for the address
+        send_mail.assert_called_once()
+        self.assertEqual(send_mail.call_args.kwargs["subject"], "Welcome to MetaBrainz")
+        self.assertEqual(
+            send_mail.call_args.kwargs["recipients"],
+            ["seeded-user <seeded.user@example.com>"],
+        )
         password_link = self.get_context_variable("password_link")
+        self.assertIn(password_link, send_mail.call_args.kwargs["text"])
 
         user = User.get(name="seeded-user")
         confirmed_at = user.email_confirmed_at

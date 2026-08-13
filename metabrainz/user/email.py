@@ -73,7 +73,6 @@ def send_forgot_password_email(user: User):
 def send_welcome_email(
     user: User,
     oauth_client_name: str,
-    oauth_client_id: str,
     oauth_client_description: str,
     granted_scopes: list[dict[str, str]],
 ):
@@ -93,7 +92,6 @@ def send_welcome_email(
         "email/user-welcome.txt",
         username=user.name,
         oauth_client_name=oauth_client_name,
-        oauth_client_id=oauth_client_id,
         oauth_client_description=oauth_client_description,
         granted_scopes=granted_scopes,
         password_link=password_link,

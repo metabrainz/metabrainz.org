@@ -4,7 +4,6 @@ Welcome to MetaBrainz! An account has been created for you by this OAuth
 client:
 
 Name: {{ oauth_client_name }}
-Client ID: {{ oauth_client_id }}
 Description: {{ oauth_client_description }}
 
 {% if granted_scopes %}
