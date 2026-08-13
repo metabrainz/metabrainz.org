@@ -509,6 +509,22 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.assertEqual(response.json["error"], "invalid_scope")
         self.assertIsNone(User.get(name="seeded-user"))
 
+    def test_registration_request_rejects_openid_scope(self):
+        application = self.create_oauth_app()
+        self._allow_registration_request_client(application)
+
+        response = self._create_registration_request(application, scope="openid profile")
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json["error"], "invalid_scope")
+        self.assertEqual(
+            response.json["error_description"],
+            "The 'openid' scope cannot be requested at this endpoint; it does not issue ID tokens.",
+        )
+        self.assertIsNone(User.get(name="seeded-user"))
+        self.assertEqual(db.session.query(OAuth2AccessToken).count(), 0)
+        self.assertEqual(db.session.query(OAuth2RefreshToken).count(), 0)
+
     def test_registration_request_rejects_ungranted_restricted_scope(self):
         restricted_scope = "musicbrainz:submit_isrc"
         application = self.create_oauth_app()

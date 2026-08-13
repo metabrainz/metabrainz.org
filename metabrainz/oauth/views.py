@@ -121,6 +121,15 @@ def _registration_request_scope(data, client):
     except OAuth2Error as error:
         return None, _authlib_oauth_error(error)
 
+    # the token is generated here directly, without the OIDC extension and without
+    # a nonce to bind it to, so the response cannot carry the id_token that openid
+    # promises. Refuse it rather than return a token that silently lacks one.
+    if "openid" in scopes:
+        return None, _oauth_error(
+            "invalid_scope",
+            "The 'openid' scope cannot be requested at this endpoint; it does not issue ID tokens.",
+        )
+
     disallowed = client.disallowed_scopes(scope)
     if disallowed:
         return None, _oauth_error(

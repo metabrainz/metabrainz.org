@@ -35,8 +35,10 @@ browser or mobile application.
       Defaults to ``false``.
    :json string scope: Optional. A space-separated list of OAuth scopes to
       grant to the requesting client for the newly created user. Unknown scopes
-      are rejected. Restricted scopes are accepted only when they have been
-      granted to the OAuth client by the MetaBrainz OAuth provider.
+      are rejected, and so is ``openid``: this endpoint issues the token
+      directly and cannot return an ID token. Restricted scopes are accepted
+      only when they have been granted to the OAuth client by the MetaBrainz
+      OAuth provider.
    :reqheader Authorization: **Required.** HTTP Basic client authentication.
    :reqheader Content-Type: **Required.** ``application/json``.
 
@@ -102,8 +104,8 @@ Common errors:
        used.
    * - ``400``
      - ``invalid_scope``
-     - A requested scope is unknown or is restricted and has not been granted
-       to the OAuth client.
+     - A requested scope is unknown, is ``openid``, or is restricted and has
+       not been granted to the OAuth client.
 
 After account setup
 -------------------
