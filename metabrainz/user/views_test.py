@@ -107,12 +107,6 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertIsNotNone(user)
         self.assertEqual(user.name, "test_user_1")
 
-    def test_user_signup_regular_flow_is_not_registration_request_signup(self):
-        self.client.get("/signup")
-        props = json.loads(self.get_context_variable("props"))
-        self.assertFalse(props["is_registration_request_signup"])
-        self.assertIsNone(props["registration_request_client_name"])
-
     def test_privacy_summary(self):
         response = self.client.get(url_for("users.privacy_summary"))
         self.assert200(response)
@@ -321,6 +315,24 @@ class UsersViewsTestCase(FlaskTestCase):
             "password": "<PASSWORD-1>",
         }, {"password": "Invalid username or password."})
         self.assertTrue(current_user.is_anonymous)
+
+    def test_user_login_without_password_prompts_for_welcome_email(self):
+        User.add(
+            name="invited-user",
+            unconfirmed_email="invited-user@example.com",
+            password=None,
+        )
+        db.session.commit()
+
+        self._test_user_login_error({
+            "username": "invited-user",
+            "password": "<PASSWORD>",
+        }, {
+            "password": (
+                "This account does not have a password yet. Please check your inbox "
+                "for the welcome email or contact support."
+            )
+        })
 
     def test_user_login_mismatched_password(self):
         self.create_user()

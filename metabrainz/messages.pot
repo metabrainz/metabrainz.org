@@ -3085,6 +3085,11 @@ msgstr ""
 msgid "Reset your password"
 msgstr ""
 
+#: frontend/js/src/forms/ResetPassword.tsx:29
+#: metabrainz/templates/users/reset-password.html:3
+msgid "Set your password"
+msgstr ""
+
 #: frontend/js/src/hooks/useEmailValidation.ts:41 metabrainz/user/forms.py:15
 msgid "Registration from this email domain is not allowed."
 msgstr ""
@@ -3746,6 +3751,10 @@ msgstr ""
 msgid "Reset Password"
 msgstr ""
 
+#: frontend/js/src/forms/ResetPassword.tsx:93
+msgid "Set Password"
+msgstr ""
+
 #: frontend/js/src/forms/SignupCommercial.tsx:38
 msgid "If you would like to support us with more than $"
 msgstr ""
@@ -3968,18 +3977,8 @@ msgstr ""
 msgid "Create your account"
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:50
-msgid "Registration started by"
-msgstr ""
-
 #: frontend/js/src/forms/SignupUser.tsx:69
 msgid "Invalid email address."
-msgstr ""
-
-#: frontend/js/src/forms/SignupUser.tsx:150
-msgid ""
-"This username and email were provided by the app that started "
-"registration. You can change them later from MetaBrainz settings."
 msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:182
@@ -4011,4 +4010,3 @@ msgstr ""
 #: frontend/js/src/hooks/useEmailValidation.ts:82
 msgid "Invalid email address"
 msgstr ""
-

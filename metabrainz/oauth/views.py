@@ -1,45 +1,26 @@
 import json
+from datetime import datetime, timezone
 from urllib.parse import urljoin
 
-from authlib.oauth2.rfc6749 import InvalidRequestError, OAuth2Error
+from authlib.oauth2.rfc6749 import InvalidRequestError, OAuth2Error, scope_to_list
 from flask import Blueprint, request, render_template, redirect, url_for, jsonify, current_app
 from flask_login import login_required, current_user
 from flask_wtf.csrf import generate_csrf
 
 from metabrainz.decorators import nocache, crossdomain
-from metabrainz.model import db, OAuth2Scope, get_scopes, OAuth2AccessToken
+from metabrainz.model import db, OAuth2Scope, get_scopes, OAuth2AccessToken, OAuth2RefreshToken
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.user import User
+from metabrainz.model.webhook import EVENT_USER_CREATED
 from metabrainz.oauth.authorization_server import authorization_server
 from metabrainz.oauth.forms import AuthorizationForm
 from metabrainz.oauth.oidc_grant import build_user_info
-from metabrainz.oauth.registration_request import (
-    create_registration_request,
-    delete_registration_request,
-    get_registration_request,
-)
+from metabrainz.user.email import send_welcome_email
 from metabrainz.user.registration import validate_registration_email, validate_registration_username
 from metabrainz.utils import build_url
 
 oauth2_bp = Blueprint("oauth2", __name__)
 wellknown_bp = Blueprint("well-known", __name__)
-
-REGISTRATION_REQUEST_AUTHORIZE_KEYS = {
-    "client_id",
-    "response_type",
-    "scope",
-    "state",
-    "redirect_uri",
-    "code_challenge",
-    "code_challenge_method",
-    "nonce",
-    "response_mode",
-}
-REGISTRATION_REQUEST_STORED_AUTHORIZE_KEYS = REGISTRATION_REQUEST_AUTHORIZE_KEYS | {
-    "approval_prompt",
-    "login_hint",
-}
-
 
 @oauth2_bp.after_request
 def after_oauth2_request(response):
@@ -77,7 +58,7 @@ def _authenticate_registration_request_client():
         oauth_request = authorization_server.create_oauth2_request(request)
         client = authorization_server.authenticate_client(
             oauth_request,
-            ["client_secret_basic", "client_secret_post"],
+            ["client_secret_basic"],
             endpoint="registration_request",
         )
     except OAuth2Error as error:
@@ -108,121 +89,170 @@ REGISTRATION_REQUEST_EMAIL_ERRORS = {
 }
 
 
-def _registration_request_hints(data):
-    username, username_error = validate_registration_username(data.get("username"))
+def _registration_request_email_confirmed(data):
+    if "email_confirmed" not in data:
+        return False, None
+
+    value = data.get("email_confirmed")
+    if isinstance(value, bool):
+        return value, None
+
+    return None, _oauth_error(
+        "invalid_request",
+        "Invalid 'email_confirmed' in request; expected a boolean.",
+    )
+
+
+def _registration_request_scope(data, client):
+    if "scope" not in data:
+        return None, None
+
+    scope = data.get("scope")
+    if not isinstance(scope, str):
+        return None, _oauth_error(
+            "invalid_request",
+            "Invalid 'scope' in request; expected a space-separated string.",
+        )
+
+    scopes = scope_to_list(scope) or []
+    scope = " ".join(scopes)
+    try:
+        authorization_server.validate_requested_scope(scope)
+    except OAuth2Error as error:
+        return None, _authlib_oauth_error(error)
+
+    disallowed = client.disallowed_scopes(scope)
+    if disallowed:
+        return None, _oauth_error(
+            "invalid_scope",
+            "The client is not allowed to request the following scopes: "
+            + ", ".join(disallowed),
+        )
+
+    return scope, None
+
+
+def _registration_request_user_details(data):
+    username_value = data.get("username")
+    if username_value is not None and not isinstance(username_value, str):
+        return None, _oauth_error(
+            "invalid_request",
+            REGISTRATION_REQUEST_USERNAME_ERRORS["invalid_username"],
+        )
+
+    username, username_error = validate_registration_username(username_value)
     if username_error:
         return None, _oauth_error("invalid_request", REGISTRATION_REQUEST_USERNAME_ERRORS[username_error])
 
-    email, email_error = validate_registration_email(data.get("email"))
+    email_value = data.get("email")
+    if email_value is not None and not isinstance(email_value, str):
+        return None, _oauth_error(
+            "invalid_request",
+            REGISTRATION_REQUEST_EMAIL_ERRORS["invalid_email"],
+        )
+
+    email, email_error = validate_registration_email(email_value)
     if email_error:
         return None, _oauth_error("invalid_request", REGISTRATION_REQUEST_EMAIL_ERRORS[email_error])
+
+    email_confirmed, error = _registration_request_email_confirmed(data)
+    if error is not None:
+        return None, error
 
     return {
         "username": username,
         "email": email,
+        "email_confirmed": email_confirmed,
     }, None
-
-
-def _preflight_authorization_request(authorize_params):
-    authorize_url = build_url(url_for(".authorize", _external=False), authorize_params)
-    with current_app.test_request_context(
-        authorize_url,
-        method="GET",
-        base_url=request.url_root,
-    ):
-        authorization_server.get_consent_grant()
-
-
-def _validate_registration_request(data, client):
-    response_type = data.get("response_type", "code")
-    if response_type != "code":
-        return None, _oauth_error(
-            "unsupported_response_type",
-            "Only authorization code registration requests are supported.",
-        )
-
-    if not data.get("state"):
-        return None, _oauth_error("invalid_request", "Missing 'state' in request.")
-
-    if not data.get("code_challenge"):
-        return None, _oauth_error("invalid_request", "Missing 'code_challenge' in request.")
-
-    authorize_params = {}
-    for key in REGISTRATION_REQUEST_AUTHORIZE_KEYS:
-        value = data.get(key)
-        if value is not None:
-            authorize_params[key] = value
-    authorize_params["client_id"] = client.client_id
-    authorize_params["response_type"] = "code"
-    authorize_params.setdefault("code_challenge_method", "plain")
-    authorize_params["approval_prompt"] = "force"
-    authorize_params["login_hint"] = "register"
-
-    try:
-        _preflight_authorization_request(authorize_params)
-    except OAuth2Error as error:
-        return None, _authlib_oauth_error(error)
-
-    return authorize_params, None
 
 
 @oauth2_bp.route("/registration-requests", methods=["POST"])
 @nocache
 def create_oauth_registration_request():
-    """Create a short-lived browser redirect for client-initiated user registration."""
-    data = request.form
+    """Provision a user account and email them a link to choose a password."""
     client, error = _authenticate_registration_request_client()
     if error is not None:
         return error
 
-    authorize_params, error = _validate_registration_request(data, client)
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return _oauth_error(
+            "invalid_request",
+            "Request body must be a JSON object.",
+        )
+
+    scope, error = _registration_request_scope(data, client)
     if error is not None:
         return error
 
-    hints, error = _registration_request_hints(data)
+    user_details, error = _registration_request_user_details(data)
     if error is not None:
         return error
 
-    registration_request = dict(authorize_params)
-    registration_request["client_name"] = client.name
-    registration_request.update(hints)
+    user = User.add(
+        name=user_details["username"],
+        unconfirmed_email=user_details["email"],
+        password=None,
+    )
+    if user_details["email_confirmed"]:
+        confirmed_at = datetime.now(timezone.utc)
+        user.email = user.unconfirmed_email
+        user.unconfirmed_email = None
+        user.email_confirmed_at = confirmed_at
+        user.last_updated = confirmed_at
 
-    request_id, expires_in = create_registration_request(registration_request)
-    redirect_to = url_for(".begin_registration_request", request_id=request_id, _external=True)
-    response = jsonify({
-        "request_id": request_id,
-        "redirect_to": redirect_to,
-        "expires_in": expires_in,
-    })
-    response.status_code = 201
-    response.headers["Location"] = redirect_to
-    return response
+    token = None
+    scopes = []
+    try:
+        db.session.flush()
+        if scope is not None:
+            token = authorization_server.generate_token(
+                grant_type="authorization_code",
+                client=client,
+                user=user,
+                scope=scope,
+                include_refresh_token=True,
+            )
+            scopes = get_scopes(db.session, scope)
+            db.session.add(OAuth2AccessToken(
+                client_id=client.id,
+                user_id=user.id,
+                access_token=token["access_token"],
+                expires_in=token["expires_in"],
+                scopes=scopes,
+            ))
+            db.session.add(OAuth2RefreshToken(
+                client_id=client.id,
+                user_id=user.id,
+                refresh_token=token["refresh_token"],
+                expires_in=current_app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"],
+                scopes=scopes,
+            ))
+        send_welcome_email(
+            user,
+            oauth_client_name=client.name,
+            oauth_client_id=client.client_id,
+            oauth_client_description=client.description,
+            granted_scopes=[{
+                "name": granted_scope.name,
+                "description": granted_scope.description,
+            } for granted_scope in scopes],
+        )
+        user.emit_event(EVENT_USER_CREATED)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        raise
 
-
-@oauth2_bp.route("/registration-requests/<request_id>", methods=["GET"])
-@nocache
-def begin_registration_request(request_id):
-    registration_request = get_registration_request(request_id)
-    if registration_request is None:
-        return render_template("oauth/error.html", props=json.dumps({
-            "error": {
-                "name": "invalid_request",
-                "description": "Registration request is invalid or expired.",
-            }
-        })), 400
-
-    next_url = url_for(".begin_registration_request", request_id=request_id)
-    if current_user.is_anonymous:
-        return redirect(url_for("users.signup", next=next_url, registration_request=request_id))
-
-    authorize_params = {
-        key: registration_request[key]
-        for key in REGISTRATION_REQUEST_STORED_AUTHORIZE_KEYS
-        if key in registration_request
+    response = {
+        "user_id": user.id,
+        "username": user.name,
+        "email": user.get_email_any(),
+        "email_confirmed": user.is_email_confirmed(),
     }
-    authorize_url = build_url(url_for(".authorize", _external=False), authorize_params)
-    delete_registration_request(request_id)
-    return redirect(authorize_url)
+    if token is not None:
+        response.update(token)
+    return jsonify(response), 201
 
 
 def _access_denied_url(redirect_uri, state):

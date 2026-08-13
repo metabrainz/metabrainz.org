@@ -1,0 +1,31 @@
+Hello {{ username }},
+
+Welcome to MetaBrainz! An account has been created for you by this OAuth
+client:
+
+Name: {{ oauth_client_name }}
+Client ID: {{ oauth_client_id }}
+Description: {{ oauth_client_description }}
+
+{% if granted_scopes %}
+The following OAuth scopes were granted to this client:
+
+{% for scope in granted_scopes %}
+- {{ scope.name }}: {{ scope.description }}
+{% endfor %}
+{% else %}
+No OAuth scopes were granted to this client.
+{% endif %}
+
+To choose your password and finish setting up your account, click the link
+below:
+
+{{ password_link }}
+
+This link expires in 7 days. If clicking the link above doesn't work, please
+copy and paste the URL into a new browser window instead.
+
+If you did not give "{{ oauth_client_name }}" permission to create this
+account, please contact us immediately at {{ contact_url }}.
+
+-- The MetaBrainz Team

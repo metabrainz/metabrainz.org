@@ -1,5 +1,5 @@
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask import url_for, request, render_template, current_app
 
@@ -8,6 +8,7 @@ from metabrainz.model.user import User
 
 VERIFY_EMAIL = "verify-email"
 RESET_PASSWORD = "reset-password"
+SET_PASSWORD = "set-password"
 
 
 def create_email_link_checksum(purpose: str, user_id: int, email: str, timestamp: int) -> str:
@@ -46,16 +47,6 @@ def send_verification_email(user: User, subject, template, **template_context):
     _send_user_email(user.name, email, subject, content)
 
 
-def send_registration_request_welcome_email(user: User, client_name: str):
-    """Welcome a user whose account was created through a registration request."""
-    send_verification_email(
-        user,
-        "Welcome to MetaBrainz - please verify your email address",
-        "email/user-registration-request-welcome.txt",
-        client_name=client_name,
-    )
-
-
 def send_forgot_username_email(user: User):
     """ Send email for forgotten username. """
     content = render_template(
@@ -77,3 +68,35 @@ def send_forgot_password_email(user: User):
         contact_url="https://metabrainz.org/contact"
     )
     _send_user_email(user.name, user.get_email_any(), "Password reset request", content)
+
+
+def send_welcome_email(
+    user: User,
+    oauth_client_name: str,
+    oauth_client_id: str,
+    oauth_client_description: str,
+    granted_scopes: list[dict[str, str]],
+):
+    """Send a newly provisioned user a link for choosing their password."""
+    timestamp = int(datetime.now(timezone.utc).timestamp())
+    email = user.get_email_any()
+    checksum = create_email_link_checksum(SET_PASSWORD, user.id, email, timestamp)
+    password_link = url_for(
+        "users.reset_password",
+        user_id=user.id,
+        timestamp=timestamp,
+        checksum=checksum,
+        initial_setup="1",
+        _external=True,
+    )
+    content = render_template(
+        "email/user-welcome.txt",
+        username=user.name,
+        oauth_client_name=oauth_client_name,
+        oauth_client_id=oauth_client_id,
+        oauth_client_description=oauth_client_description,
+        granted_scopes=granted_scopes,
+        password_link=password_link,
+        contact_url="https://metabrainz.org/contact",
+    )
+    _send_user_email(user.name, email, "Welcome to MetaBrainz", content)

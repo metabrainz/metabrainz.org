@@ -1,24 +1,24 @@
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
 from flask_login import confirm_login, logout_user, login_required, login_user, current_user
 from flask_wtf.csrf import generate_csrf
+from sqlalchemy import update
 
 from metabrainz import bcrypt, flash
 from metabrainz.index.forms import MeBFlaskForm
 from metabrainz.model import db
 from metabrainz.model.user import User, UsernameNotAllowedException
 from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_UPDATED
-from metabrainz.oauth.registration_request import get_registration_request
 from metabrainz.user import login_forbidden
 from metabrainz.user.email import (
     RESET_PASSWORD,
+    SET_PASSWORD,
     VERIFY_EMAIL,
     create_email_link_checksum,
     send_forgot_password_email,
     send_forgot_username_email,
-    send_registration_request_welcome_email,
     send_verification_email,
 )
 from metabrainz.user.forms import UserLoginForm, UserReauthenticationForm, UserSignupForm, ForgotPasswordForm, \
@@ -47,11 +47,7 @@ def privacy_summary():
 @login_forbidden
 def signup():
     """ User signup endpoint. """
-    registration_request = get_registration_request(request.args.get("registration_request"))
     form = UserSignupForm()
-    if request.method == "POST" and registration_request is not None:
-        form.username.data = registration_request["username"]
-        form.email.data = registration_request["email"]
 
     if form.validate_on_submit() and not check_signup_rate_limit(form):
         user = User.get(name=form.username.data)
@@ -73,17 +69,11 @@ def signup():
                     increment_signup_count()
                     user.emit_event(EVENT_USER_CREATED)
 
-                    if registration_request is not None:
-                        send_registration_request_welcome_email(
-                            user,
-                            registration_request["client_name"],
-                        )
-                    else:
-                        send_verification_email(
-                            user,
-                            "Please verify your email address",
-                            "email/user-email-address-verification.txt"
-                        )
+                    send_verification_email(
+                        user,
+                        "Please verify your email address",
+                        "email/user-email-address-verification.txt"
+                    )
                     login_user(user)
                     flash.success("Account created. Please check your inbox to complete verification.")
                     redirect_to = request.args.get("next") or url_for("index.home")
@@ -97,18 +87,12 @@ def signup():
 
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
-    if request.method == "GET" and registration_request is not None:
-        form_data["username"] = registration_request["username"]
-        form_data["email"] = registration_request["email"]
 
     return render_template("users/signup.html", props=json.dumps({
         "mtcaptcha_site_key": current_app.config.get("MTCAPTCHA_PUBLIC_KEY"),
         "csrf_token": generate_csrf(),
         "initial_form_data": form_data,
         "initial_errors": form.props_errors,
-        "is_registration_request_signup": registration_request is not None,
-        "registration_request_client_name": registration_request["client_name"]
-        if registration_request is not None else None,
     }))
 
 
@@ -122,7 +106,12 @@ def login():
         if user is None:
             form.username.errors.append(f"Username {form.username.data} not found.")
         else:
-            if not bcrypt.check_password_hash(user.password, form.password.data):
+            if not user.password:
+                form.password.errors.append(
+                    "This account does not have a password yet. Please check your inbox "
+                    "for the welcome email or contact support."
+                )
+            elif not bcrypt.check_password_hash(user.password, form.password.data):
                 form.password.errors.append("Invalid username or password.")
             else:
                 if user.is_blocked:
@@ -145,9 +134,6 @@ def login():
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
-    registration_request = get_registration_request(request.args.get("registration_request"))
-    if request.method == "GET" and registration_request is not None:
-        form_data["username"] = registration_request["username"]
 
     return render_template("users/login.html", props=json.dumps({
         "mtcaptcha_site_key": current_app.config.get("MTCAPTCHA_PUBLIC_KEY"),
@@ -165,7 +151,7 @@ def reauthenticate():
     redirect_to = request.args.get("next") or url_for("index.profile")
 
     if form.validate_on_submit():
-        if not bcrypt.check_password_hash(current_user.password, form.password.data):
+        if not current_user.password or not bcrypt.check_password_hash(current_user.password, form.password.data):
             form.password.errors.append("Invalid password.")
         else:
             confirm_login()
@@ -341,17 +327,28 @@ def lost_password():
 @users_bp.route("/reset-password", methods=["GET", "POST"])
 @login_forbidden
 def reset_password():
-    """ User"s reset password endpoint. """
+    """Set or reset a password using a signed email link."""
     user_id = request.args.get("user_id")
+    is_welcome_link = request.args.get("initial_setup") == "1"
+    action = "set" if is_welcome_link else "reset"
 
     parsed_timestamp = _parse_link_timestamp(request.args.get("timestamp"))
     if parsed_timestamp is None:
-        flash.error("Unable to reset password.")
+        flash.error(f"Unable to {action} password.")
         return redirect(url_for("index.home"))
 
     timestamp, created_at = parsed_timestamp
-    if created_at + current_app.config["EMAIL_RESET_PASSWORD_EXPIRY"] <= datetime.now(timezone.utc):
-        flash.error("Password reset link expired.")
+    expiry = (
+        current_app.config.get("EMAIL_SET_PASSWORD_EXPIRY", timedelta(days=7))
+        if is_welcome_link
+        else current_app.config["EMAIL_RESET_PASSWORD_EXPIRY"]
+    )
+    if created_at + expiry <= datetime.now(timezone.utc):
+        flash.error(
+            "Set password link expired."
+            if is_welcome_link
+            else "Password reset link expired."
+        )
         return redirect(url_for("index.home"))
 
     user = User.get(id=user_id)
@@ -360,23 +357,73 @@ def reset_password():
         return redirect(url_for("index.home"))
 
     received_checksum = request.args.get("checksum")
-    checksum = create_email_link_checksum(RESET_PASSWORD, user.id, user.get_email_any(), timestamp)
+    purpose = SET_PASSWORD if is_welcome_link else RESET_PASSWORD
+    checksum = create_email_link_checksum(purpose, user.id, user.get_email_any(), timestamp)
     if checksum != received_checksum:
-        flash.error("Unable to reset password.")
+        flash.error(f"Unable to {action} password.")
         return redirect(url_for("index.home"))
 
+    if is_welcome_link and user.password:
+        flash.error("This account already has a password.")
+        return redirect(url_for("index.home"))
+
+    is_initial_setup = not user.password
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        user.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        email_to_confirm = user.unconfirmed_email if is_initial_setup else None
+        if email_to_confirm is not None:
+            if User.confirmed_email_exists(email_to_confirm, exclude_user_id=user.id):
+                flash.error("The email is already associated with an another account.")
+                return redirect(url_for("index.home"))
+
+        updated_at = datetime.now(timezone.utc)
+        password_hash = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        updates = {
+            "password": password_hash,
+            "last_updated": updated_at,
+        }
+        if email_to_confirm is not None:
+            updates.update({
+                "email": email_to_confirm,
+                "unconfirmed_email": None,
+                "email_confirmed_at": updated_at,
+            })
+
+        if is_welcome_link:
+            result = db.session.execute(
+                update(User)
+                .where(User.id == user.id, User.password == "")
+                .values(**updates)
+            )
+            if result.rowcount != 1:
+                db.session.rollback()
+                flash.error("This account already has a password.")
+                return redirect(url_for("index.home"))
+        else:
+            for field, value in updates.items():
+                setattr(user, field, value)
+
+        if email_to_confirm is not None:
+            user.emit_event(
+                EVENT_USER_UPDATED,
+                old={"email": None},
+                new={"email": email_to_confirm},
+                updated_at=updated_at.isoformat(),
+            )
         db.session.commit()
+
+        if is_initial_setup:
+            flash.success("Password set! You can now sign in.")
+            return redirect(url_for("users.login"))
 
         flash.success("Password reset!")
         return redirect(url_for("index.home"))
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
-    return render_template("users/reset-password.html", props=json.dumps({
+    return render_template("users/reset-password.html", is_initial_setup=is_initial_setup, props=json.dumps({
         "csrf_token": generate_csrf(),
-        "initial_errors": form_errors
+        "initial_errors": form_errors,
+        "is_initial_setup": is_initial_setup,
     }))
 
 

@@ -11,11 +11,13 @@ import {
 type ResetPasswordProps = {
   csrf_token: string;
   initial_errors: any;
+  is_initial_setup: boolean;
 };
 
 function ResetPassword({
   csrf_token,
   initial_errors,
+  is_initial_setup,
 }: ResetPasswordProps): JSX.Element {
   const { t } = useTranslation();
 
@@ -24,7 +26,9 @@ function ResetPassword({
       <div className="auth-card-container">
         <div className="auth-card">
           <h1 className="page-title text-center">
-            {t("Reset your password")}
+            {is_initial_setup
+              ? t("Set your password")
+              : t("Reset your password")}
           </h1>
           <Formik
             initialValues={{
@@ -86,7 +90,7 @@ function ResetPassword({
                   className="btn btn-primary main-action-button"
                   type="submit"
                 >
-                  {t("Reset Password")}
+                  {is_initial_setup ? t("Set Password") : t("Reset Password")}
                 </button>
               </form>
             )}
@@ -99,10 +103,18 @@ function ResetPassword({
 
 document.addEventListener("DOMContentLoaded", () => {
   const { domContainer, reactProps } = getPageProps();
-  const { csrf_token, initial_errors } = reactProps;
+  const {
+    csrf_token,
+    initial_errors,
+    is_initial_setup = false,
+  } = reactProps;
 
   renderRoot(
     domContainer!,
-    <ResetPassword csrf_token={csrf_token} initial_errors={initial_errors} />
+    <ResetPassword
+      csrf_token={csrf_token}
+      initial_errors={initial_errors}
+      is_initial_setup={is_initial_setup}
+    />
   );
 });

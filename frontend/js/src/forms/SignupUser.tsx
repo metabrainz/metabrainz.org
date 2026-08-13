@@ -20,8 +20,6 @@ type SignupUserProps = {
   csrf_token: string;
   initial_form_data: any;
   initial_errors: any;
-  is_registration_request_signup: boolean;
-  registration_request_client_name: string | null;
 };
 
 function SignupUser({
@@ -29,8 +27,6 @@ function SignupUser({
   mtcaptcha_site_key,
   initial_form_data,
   initial_errors,
-  is_registration_request_signup,
-  registration_request_client_name,
 }: SignupUserProps): JSX.Element {
   const { t } = useTranslation();
   const { isValidatingEmail, validateEmailAsync } = useEmailValidation();
@@ -45,18 +41,6 @@ function SignupUser({
           <div className="h4 text-center">
             {t("Access all MetaBrainz projects")}
           </div>
-          {is_registration_request_signup && registration_request_client_name && (
-            <p className="text-center text-muted">
-              <Trans
-                defaults={t(
-                  "Registration started by <client />"
-                )}
-                components={{
-                  client: <strong>{registration_request_client_name}</strong>
-                }}
-              />
-            </p>
-          )}
           <Formik
             initialValues={{
               username: initial_form_data.username ?? "",
@@ -124,14 +108,13 @@ function SignupUser({
                   name="username"
                   id="username"
                   required
-                  readOnly={is_registration_request_signup}
                 />
 
                 <AuthCardTextInput
                   label={
                     <>
                       {t("E-mail address")}
-                      {!is_registration_request_signup && isValidatingEmail && (
+                      {isValidatingEmail && (
                         <span className="small text-muted">
                           {" "}
                           {t("(checking...)")}
@@ -143,21 +126,8 @@ function SignupUser({
                   name="email"
                   id="email"
                   required
-                  readOnly={is_registration_request_signup}
-                  validate={
-                    is_registration_request_signup
-                      ? undefined
-                      : validateEmailAsync
-                  }
+                  validate={validateEmailAsync}
                 />
-
-                {is_registration_request_signup && (
-                  <p className="small text-muted">
-                    {t(
-                      "This username and email were provided by the app that started registration. You can change them later from MetaBrainz settings."
-                    )}
-                  </p>
-                )}
 
                 <AuthCardPasswordInput
                   label={t("Password")}
@@ -255,8 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
     csrf_token,
     initial_form_data,
     initial_errors,
-    is_registration_request_signup = false,
-    registration_request_client_name = null,
   } = reactProps;
 
   renderRoot(
@@ -266,8 +234,6 @@ document.addEventListener("DOMContentLoaded", () => {
       csrf_token={csrf_token}
       initial_form_data={initial_form_data}
       initial_errors={initial_errors}
-      is_registration_request_signup={is_registration_request_signup}
-      registration_request_client_name={registration_request_client_name}
     />
   );
 });

@@ -144,8 +144,8 @@ After registering you will have:
 If a secret is ever leaked, delete and re-create the application to obtain new
 credentials.
 
-Trusted clients can also start a MetaBrainz account signup from their own
-application. See :doc:`registration-requests`.
+Trusted clients can also provision a MetaBrainz account from their backend.
+See :doc:`registration-requests`.
 
 Next steps
 ----------

@@ -179,7 +179,11 @@ class User(db.Model, UserMixin):
             raise UsernameNotAllowedException()
 
         password = kwargs.pop("password")
-        password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+        password_hash = (
+            bcrypt.generate_password_hash(password).decode("utf-8")
+            if password is not None
+            else ""
+        )
         unconfirmed_email = kwargs.pop("unconfirmed_email", None)
         if not unconfirmed_email or not unconfirmed_email.strip():
             raise ValueError("Email address is required.")
