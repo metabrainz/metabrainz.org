@@ -9,6 +9,7 @@ from urllib.parse import parse_qs, urlparse
 from flask import g
 from flask_login import current_user
 from freezegun import freeze_time
+from sqlalchemy import func
 
 from metabrainz import bcrypt
 from metabrainz.model import db, OAuth2AccessToken, OAuth2AuthorizationCode, OAuth2RefreshToken
@@ -585,6 +586,27 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.assertIsNone(User.get(name="seeded-user"))
         self.assertEqual(db.session.query(OAuth2AccessToken).count(), 0)
         self.assertEqual(db.session.query(OAuth2RefreshToken).count(), 0)
+
+    def test_registration_request_rejects_email_taken_in_another_case(self):
+        application = self.create_oauth_app()
+        self._allow_registration_request_client(application)
+
+        # the address is normalized to lower case before it is looked up, so a
+        # confirmed address stored in another case has to be matched all the same
+        self.user2.email = "Seeded.User@example.com"
+        db.session.commit()
+
+        response = self._create_registration_request(application, email_confirmed=True)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json["error"], "invalid_request")
+        self.assertEqual(response.json["error_description"], "The requested email is already in use.")
+        self.assertIsNone(User.get(name="seeded-user"))
+        self.assertEqual(User.confirmed_email_exists("seeded.user@example.com"), True)
+        self.assertEqual(
+            db.session.query(User).filter(func.lower(User.email) == "seeded.user@example.com").count(),
+            1,
+        )
 
     def test_registration_request_rejects_ungranted_restricted_scope(self):
         restricted_scope = "musicbrainz:submit_isrc"

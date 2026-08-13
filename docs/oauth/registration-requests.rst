@@ -29,8 +29,9 @@ browser or mobile application.
    :json string username: **Required.** The requested MetaBrainz username. It must
       pass normal username validation and must not already be in use.
    :json string email: **Required.** The user's email address. It is normalized, must
-      pass normal email validation, must not already be in use, and must not
-      be from a blocked domain.
+      pass normal email validation, must not already be in use by another
+      account, whether confirmed or pending and matched case insensitively, and
+      must not be from a blocked domain.
    :json boolean email_confirmed: Optional. Set to ``true`` if your trusted
       backend has already confirmed that the email belongs to the user.
       Defaults to ``false``.
