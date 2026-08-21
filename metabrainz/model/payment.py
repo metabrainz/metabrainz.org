@@ -20,6 +20,19 @@ PAYMENT_METHOD_WEPAY = 'wepay'  # no longer supported
 PAYMENT_METHOD_CHECK = 'check'
 
 
+def _stripe_metadata_bool(metadata, key):
+    value = metadata.get(key)
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized == "true":
+            return True
+        if normalized == "false":
+            return False
+    raise ValueError(f"Invalid Stripe boolean metadata for {key}: {value!r}")
+
+
 class Payment(db.Model):
     __tablename__ = 'payment'
 
@@ -287,14 +300,20 @@ class Payment(db.Model):
         db.session.commit()
         logging.info('PayPal: Payment added. ID: %s.', new_payment.id)
 
-        send_receipt(
-            email=new_payment.email,
-            date=new_payment.payment_date,
-            amount=new_payment.amount,
-            name='%s %s' % (new_payment.first_name, new_payment.last_name),
-            is_donation=new_payment.is_donation,
-            editor_name=new_payment.editor_name,
-        )
+        # The payment is already committed and the duplicate guard above stops a
+        # retried IPN from getting this far, so a mail failure must not bubble up
+        # and fail the webhook.
+        try:
+            send_receipt(
+                email=new_payment.email,
+                date=new_payment.payment_date,
+                amount=new_payment.amount,
+                name='%s %s' % (new_payment.first_name, new_payment.last_name),
+                is_donation=new_payment.is_donation,
+                editor_name=new_payment.editor_name,
+            )
+        except Exception:
+            logging.exception("PayPal: Error sending receipt for payment %s", new_payment.id)
 
     @staticmethod
     def _extract_paypal_ipn_options(form: dict) -> dict:
@@ -366,6 +385,8 @@ class Payment(db.Model):
             current_app.logger.warning("Unsupported currency: ", transaction["currency"])
             return
 
+        is_donation = _stripe_metadata_bool(metadata, "is_donation")
+
         new_donation = cls(
             first_name=details["name"],
             last_name="",
@@ -374,7 +395,7 @@ class Payment(db.Model):
             currency=currency,
             transaction_id=charge["id"],
             payment_method=PAYMENT_METHOD_STRIPE,
-            is_donation=metadata["is_donation"],
+            is_donation=is_donation,
             email=details["email"],
             address_street=address["line1"],  # TODO: stripe also gives line2, should we use it?
             address_city=address["city"],
@@ -383,20 +404,9 @@ class Payment(db.Model):
             address_country=address["country"],
         )
 
-        if metadata["is_donation"] == "True":
-            new_donation.is_donation = 1
-        if metadata["is_donation"] == "False":
-            new_donation.is_donation = 0
-
         if new_donation.is_donation:
-            if metadata["can_contact"] == "True":
-                new_donation.can_contact = 1
-            else:
-                new_donation.can_contact = 0
-            if metadata["anonymous"] == "True":
-                new_donation.anonymous = 1
-            else:
-                new_donation.anonymous = 0
+            new_donation.can_contact = _stripe_metadata_bool(metadata, "can_contact")
+            new_donation.anonymous = _stripe_metadata_bool(metadata, "anonymous")
 
             if "editor" in metadata:
                 new_donation.editor_name = metadata["editor"]
@@ -409,20 +419,23 @@ class Payment(db.Model):
                 new_donation.supporter_id = metadata["supporter_id"]
 
         db.session.add(new_donation)
-        try:
-            db.session.commit()
-            logging.info("Stripe: Payment added. ID: %s.", new_donation.id)
-        except TypeError as err:
-            logging.error("Cannot record payment: ", err)
+        db.session.commit()
+        logging.info("Stripe: Payment added. ID: %s.", new_donation.id)
 
-        send_receipt(
-            email=new_donation.email,
-            date=new_donation.payment_date,
-            amount=new_donation.amount,
-            name=new_donation.first_name,  # Last name is not used with Stripe
-            is_donation=new_donation.is_donation,
-            editor_name=new_donation.editor_name,
-        )
+        # The payment is already committed and the duplicate guard above stops a
+        # retried webhook from getting this far, so a mail failure must not bubble
+        # up and fail the webhook.
+        try:
+            send_receipt(
+                email=new_donation.email,
+                date=new_donation.payment_date,
+                amount=new_donation.amount,
+                name=new_donation.first_name,  # Last name is not used with Stripe
+                is_donation=new_donation.is_donation,
+                editor_name=new_donation.editor_name,
+            )
+        except Exception:
+            logging.exception("Stripe: Error sending receipt for payment %s", new_donation.id)
 
 
 class PaymentAdminView(AdminModelView):

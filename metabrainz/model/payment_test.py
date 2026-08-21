@@ -452,6 +452,24 @@ class PaymentModelStripeTestCase(FlaskTestCase):
         self.assertEqual(len(Payment.query.all()), 1)
 
     @patch("stripe.PaymentIntent")
+    def test_log_stripe_charge_accepts_lowercase_boolean_metadata(self, mock_stripe):
+        payment_intent = self.payment_intent.copy()
+        payment_intent["metadata"] = {
+            "is_donation": "true",
+            "editor": "lucifer",
+            "anonymous": "false",
+            "can_contact": "true",
+        }
+        mock_stripe.retrieve.return_value = payment_intent
+
+        Payment.log_one_time_charge("usd", self.session_without_metadata)
+
+        payment = Payment.query.one()
+        self.assertIs(payment.is_donation, True)
+        self.assertIs(payment.anonymous, False)
+        self.assertIs(payment.can_contact, True)
+
+    @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_payment(self, mock_stripe):
         # Function should execute without any exceptions
         payment_intent = self.payment_intent.copy()
