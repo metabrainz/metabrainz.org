@@ -1,6 +1,7 @@
 import json
 from datetime import datetime, timezone, timedelta
 from urllib.parse import urlparse, parse_qs
+from unittest.mock import patch
 
 from brainzutils import cache
 from flask import g, url_for
@@ -94,6 +95,25 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertIsNotNone(user.last_login_at)
         self.assertIsNotNone(user.last_updated)
         self.assertEqual(current_user, user)
+
+    def test_user_signup_survives_verification_email_failure(self):
+        with patch(
+            "metabrainz.user.views.send_verification_email",
+            side_effect=RuntimeError("SMTP unavailable"),
+        ):
+            self._test_user_signup_helper({
+                "username": "test_user_1",
+                "email": "test@example.com",
+                "password": "<PASSWORD>",
+                "confirm_password": "<PASSWORD>",
+            }, 302)
+
+        self.assertIsNotNone(User.get(name="test_user_1"))
+        self.assertMessageFlashed("Account created.", "success")
+        self.assertMessageFlashed(
+            "The verification email could not be sent. Please request a new one from your profile.",
+            "error",
+        )
 
     def test_user_signup_trims_username_whitespace(self):
         self._test_user_signup_helper({
@@ -549,6 +569,26 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertTrue(response.location.startswith("/login"))
 
+    def test_resend_verification_email_delivery_failure(self):
+        self.create_user()
+        self.login_test_user()
+        self.client.get(url_for("index.profile"))
+
+        with patch(
+            "metabrainz.user.views.send_verification_email",
+            side_effect=RuntimeError("SMTP unavailable"),
+        ):
+            response = self.client.post(
+                "/resend-verification-email",
+                data={"csrf_token": g.csrf_token},
+            )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed(
+            "The verification email could not be sent. Please try again later.",
+            "error",
+        )
+
     def test_forgot_username_success(self):
         self.create_user()
 
@@ -560,6 +600,25 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(self.get_context_variable("username"), "test_user_1")
         self.assertMessageFlashed("Username recovery email sent!", "success")
+
+    def test_forgot_username_delivery_failure(self):
+        self.create_user()
+        self.client.get("/lost-username")
+
+        with patch(
+            "metabrainz.user.views.send_forgot_username_email",
+            side_effect=RuntimeError("SMTP unavailable"),
+        ):
+            response = self.client.post("/lost-username", data={
+                "email": "test@example.com",
+                "csrf_token": g.csrf_token,
+            })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertMessageFlashed(
+            "The username recovery email could not be sent. Please try again later.",
+            "error",
+        )
 
     def test_forgot_username_logged_in(self):
         self.create_user()
@@ -640,6 +699,26 @@ class UsersViewsTestCase(FlaskTestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertMessageFlashed("Password reset link sent!", "success")
+
+    def test_forgot_password_delivery_failure(self):
+        self.create_user()
+        self.client.get("/lost-password")
+
+        with patch(
+            "metabrainz.user.views.send_forgot_password_email",
+            side_effect=RuntimeError("SMTP unavailable"),
+        ):
+            response = self.client.post("/lost-password", data={
+                "username": "test_user_1",
+                "email": "test@example.com",
+                "csrf_token": g.csrf_token,
+            })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertMessageFlashed(
+            "The password reset email could not be sent. Please try again later.",
+            "error",
+        )
 
     def test_forgot_password_logged_in(self):
         self.create_user()

@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from flask import Blueprint, render_template, redirect, url_for, make_response, g, request
+from flask import Blueprint, current_app, render_template, redirect, url_for, make_response, g, request
 from flask_login import current_user, login_required, fresh_login_required, logout_user
 from flask_wtf.csrf import generate_csrf
 from werkzeug.exceptions import NotFound, Forbidden
@@ -207,32 +207,48 @@ def profile_edit():
         form = UserEditForm()
 
     if form.validate_on_submit():
+        email_conflict = False
         if current_user.email != form.email.data:
             user = User.get(email=form.email.data)
             if user is None:
                 current_user.unconfirmed_email = form.email.data
                 db.session.commit()
-                flash.success(f"Email verification link sent to {form.email.data}")
-                send_verification_email(
-                    current_user,
-                    "Please verify your email address",
-                    "email/user-email-address-verification.txt"
-                )
+                try:
+                    send_verification_email(
+                        current_user,
+                        "Please verify your email address",
+                        "email/user-email-address-verification.txt"
+                    )
+                except Exception:
+                    current_app.logger.exception(
+                        "Error sending verification email for user %s", current_user.id
+                    )
+                    flash.error(
+                        f"The verification email for {form.email.data} could not be sent. "
+                        f"Your email address is unchanged until it is verified. "
+                        f"Please request a new verification email from your profile."
+                    )
+                else:
+                    flash.success(f"Email verification link sent to {form.email.data}")
             else:
+                # The address belongs to someone else. Fall through to the form so
+                # the error is rendered instead of being discarded by the redirect.
+                email_conflict = True
                 form.email.errors.append(
                     f"The given email address ({form.email.data}) is associated with a different account."
                 )
 
-        if current_user.supporter:
-            kwargs = {
-                "contact_name": form.contact_name.data,
-            }
-            if not current_user.supporter.is_commercial:
-                kwargs["datasets"] = form.datasets.data
-            current_user.supporter.update(**kwargs)
+        if not email_conflict:
+            if current_user.supporter:
+                kwargs = {
+                    "contact_name": form.contact_name.data,
+                }
+                if not current_user.supporter.is_commercial:
+                    kwargs["datasets"] = form.datasets.data
+                current_user.supporter.update(**kwargs)
 
-        flash.success(gettext("Profile updated successfully."))
-        return redirect(url_for("index.profile"))
+            flash.success(gettext("Profile updated successfully."))
+            return redirect(url_for("index.profile"))
 
     form_data = {"email": current_user.email}
     if current_user.supporter:

@@ -807,6 +807,87 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertEqual(self.existing_user.email, original_email)
         self.assertEqual(self.existing_user.unconfirmed_email, new_email)
         self.assertEqual(supporter.state, original_state)
+        self.assertMessageFlashed(f"Email verification link sent to {new_email}", "success")
+
+    def test_noncommercial_supporter_profile_edit_email_send_failure(self):
+        """A failure to send the verification email must not fail the profile edit."""
+        self.temporary_login(self.existing_user)
+        response = self._signup_with_ip(
+            is_commercial=False,
+            username=self.existing_user.name,
+            email=self.existing_user.email
+        )
+        self.assertStatus(response, 302)
+
+        original_email = self.existing_user.email
+        new_email = "updated-existing-user@gmail.com"
+        self.client.get(url_for("index.profile_edit"))
+        with patch(
+            "metabrainz.index.views.send_verification_email",
+            side_effect=RuntimeError("SMTP unavailable"),
+        ):
+            response = self.client.post(
+                url_for('index.profile_edit'),
+                data={
+                    "contact_name": "Updated Contact Name",
+                    "email": new_email,
+                    "datasets": self.dataset.id,
+                    "csrf_token": g.csrf_token,
+                },
+                follow_redirects=False
+            )
+        self.assertRedirects(response, url_for("index.profile"))
+
+        supporter = Supporter.get(user_id=self.existing_user.id)
+        self.assertEqual(supporter.contact_name, "Updated Contact Name")
+        self.assertEqual(self.existing_user.email, original_email)
+        self.assertEqual(self.existing_user.unconfirmed_email, new_email)
+        self.assertMessageFlashed(
+            f"The verification email for {new_email} could not be sent. "
+            f"Your email address is unchanged until it is verified. "
+            f"Please request a new verification email from your profile.",
+            "error",
+        )
+
+    def test_profile_edit_email_belongs_to_another_account(self):
+        """An email address already in use must be reported, not silently ignored."""
+        self.temporary_login(self.existing_user)
+        response = self._signup_with_ip(
+            is_commercial=False,
+            username=self.existing_user.name,
+            email=self.existing_user.email
+        )
+        self.assertStatus(response, 302)
+
+        other_user = User(name="other-test-user", email="taken@gmail.com", password="testpassword123")
+        db.session.add(other_user)
+        db.session.commit()
+
+        original_email = self.existing_user.email
+        original_contact_name = self.existing_user.supporter.contact_name
+        self.client.get(url_for("index.profile_edit"))
+        response = self.client.post(
+            url_for('index.profile_edit'),
+            data={
+                "contact_name": "Updated Contact Name",
+                "email": other_user.email,
+                "datasets": self.dataset.id,
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False
+        )
+        # The form is re-rendered with the error instead of redirecting away from it.
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertIn(
+            f"The given email address ({other_user.email}) is associated with a different account.",
+            props["initial_errors"]["email"]
+        )
+
+        supporter = Supporter.get(user_id=self.existing_user.id)
+        self.assertEqual(supporter.contact_name, original_contact_name)
+        self.assertEqual(self.existing_user.email, original_email)
+        self.assertIsNone(self.existing_user.unconfirmed_email)
 
     def test_commercial_supporter_profile_edit(self):
         """Test that commercial supporters cannot change org info via profile edit."""
