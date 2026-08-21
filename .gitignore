@@ -40,3 +40,6 @@ config.py
 .DS_Store
 *.csv
 .idea/
+
+# pytest --junitxml output
+/reports/
