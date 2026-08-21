@@ -13,7 +13,7 @@ from quickbooks.objects.detailline import SalesItemLineDetail
 from quickbooks import exceptions
 
 from brainzutils import cache
-from brainzutils.mail import send_mail
+from metabrainz.mail import send_mail
 
 SEND_DELAY = 5
 MAIL_SUBJECT = "Invoice {invoice_number} from the MetaBrainz Foundation"

@@ -2,7 +2,7 @@ from sqlalchemy import ForeignKey, Integer, case
 from sqlalchemy.orm import contains_eager, relationship, mapped_column, Mapped
 
 from metabrainz.model import db
-from brainzutils.mail import send_mail
+from metabrainz.mail import send_mail
 from metabrainz.model.token import Token
 from sqlalchemy.sql.expression import func, or_
 from sqlalchemy.dialects import postgresql
