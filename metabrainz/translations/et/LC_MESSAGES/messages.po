@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
 "PO-Revision-Date: 2026-08-22 22:12+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"Last-Translator: Priit Jõerüüt "
+"<jmmbrz@users.noreply.translations.metabrainz.org>\n"
 "Language: et\n"
 "Language-Team: Estonian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/et/>\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: metabrainz/index/forms.py:46
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "„%(value)s“ pole korrektne väärtus selle välja jaoks"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:27
 #: frontend/js/src/forms/SignupCommercial.tsx:154
@@ -35,12 +35,12 @@ msgstr ""
 #: metabrainz/user/forms.py:25 metabrainz/user/forms.py:57
 #: metabrainz/user/forms.py:63
 msgid "Email address is required!"
-msgstr ""
+msgstr "E-posti aadressi sisestamine on kohustuslik!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
 msgid "Current password is required!"
-msgstr ""
+msgstr "Senise salasõna sisestamine on kohustuslik!"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -51,7 +51,7 @@ msgstr ""
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
 msgid "Password is required!"
-msgstr ""
+msgstr "Salasõna sisestamine on kohustuslik!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:160
@@ -59,7 +59,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
 msgid "Confirm Password is required!"
-msgstr ""
+msgstr "Salasõna kordamine on kohustuslik!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
@@ -68,41 +68,41 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:81 metabrainz/index/forms.py:72
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:75
 msgid "Confirm Password should match password!"
-msgstr ""
+msgstr "Korratud saalsõna peaks vastama esmalt sisestatuga!"
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
 #: frontend/js/src/Profile.tsx:272 frontend/js/src/Profile.tsx:482
 #: metabrainz/index/forms.py:78
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: metabrainz/index/forms.py:79
 msgid "Contact name field is empty."
-msgstr ""
+msgstr "Kontaktinime väli on tühi."
 
 #: metabrainz/index/views.py:234
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "Profiil on kenasti uuendatud."
 
 #: metabrainz/index/views.py:261
 msgid "Current password is incorrect."
-msgstr ""
+msgstr "Praegune salasõna pole õige."
 
 #: metabrainz/index/views.py:266
 msgid "Password changed successfully."
-msgstr ""
+msgstr "Salasõna on kenasti muudetud."
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
-msgstr ""
+msgstr "Sa oled rakendust uuendanud!"
 
 #: metabrainz/index/views.py:424
 msgid "You have deleted an application."
-msgstr ""
+msgstr "Sa oled rakenduse kustutanud."
 
 #: metabrainz/index/views.py:426
 msgid "Failed to delete an application."
-msgstr ""
+msgstr "Rakenduse kustutamine ei õnnestunud."
 
 #: metabrainz/index/views.py:449
 msgid "Revoked tokens successfully!"
@@ -110,39 +110,39 @@ msgstr ""
 
 #: metabrainz/index/views.py:478
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Sinu kasutajakonto on kustutatud."
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
 msgid "Application Name"
-msgstr ""
+msgstr "Rakenduse nimi"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr ""
+msgstr "Rakenduse nime väli on tühi."
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "Rakenduse nimi peab olema vähemalt 3 tähemärki pikk."
 
 #: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
-msgstr ""
+msgstr "Rakenduse nimi võib olla kuni 64 tähemärki pikk."
 
 #: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
 msgid "Description"
-msgstr ""
+msgstr "Kirjeldus"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr ""
+msgstr "Kliendi kirjelduse väli on tühi."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr ""
+msgstr "Kliendi kirjeldus peab olema vähemalt 3 tähemärki pikk."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr ""
+msgstr "Kliendi kirjeldus võib olla kuni 64 tähemärki pikk."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
@@ -154,7 +154,7 @@ msgstr "Kodulehe väli on tühi."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr "Kodulehe URI on vigane."
+msgstr "Kodulehe aadress (URI) on vigane."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
@@ -219,14 +219,14 @@ msgstr ""
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
-msgstr ""
+msgstr "Soovitud aastaaruannet ei leidu."
 
 #: frontend/js/src/forms/ProfileEdit.tsx:30
 #: frontend/js/src/forms/SignupCommercial.tsx:139
 #: frontend/js/src/forms/SignupNonCommercial.tsx:70
 #: metabrainz/supporter/forms.py:13
 msgid "Contact name is required!"
-msgstr ""
+msgstr "Kontakti nime lisamine on kohustuslik!"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:437
 #: frontend/js/src/forms/SignupNonCommercial.tsx:264
@@ -4014,7 +4014,7 @@ msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:82
 msgid "Invalid email address"
-msgstr ""
+msgstr "Vigane e-posti aadress"
 
 #~ msgid "You need to specify amount!"
 #~ msgstr ""
