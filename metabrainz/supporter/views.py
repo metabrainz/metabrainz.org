@@ -23,6 +23,41 @@ from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup
 
 supporters_bp = Blueprint('supporters', __name__)
 
+
+def _notify_signup(supporter):
+    """Notify MetaBrainz of a new supporter signup.
+
+    The notification is for us, not the supporter, so a mail outage must not
+    fail the signup request after the supporter has already been committed.
+    """
+    try:
+        send_supporter_signup_notification(supporter)
+    except Exception:
+        current_app.logger.exception(
+            "Error sending supporter signup notification for supporter %s", supporter.id
+        )
+
+
+def _send_signup_verification_email(user, template):
+    """Send the sign up verification email, tolerating a mail outage.
+
+    The user row is already committed by this point, so raising here would
+    leave the user unable to log in or to sign up again with the same name.
+    """
+    try:
+        send_verification_email(user, "[MetaBrainz] Sign up confirmation", template)
+    except Exception:
+        current_app.logger.exception(
+            "Error sending verification email for new user %s", user.id
+        )
+        flash.error(gettext(
+            "The verification email could not be sent. "
+            "Please request a new one from your profile."
+        ))
+        return False
+    return True
+
+
 SESSION_KEY_ACCOUNT_TYPE = 'account_type'
 SESSION_KEY_TIER_ID = 'account_tier'
 SESSION_KEY_MB_USERNAME = 'mb_username'
@@ -163,7 +198,7 @@ def signup_commercial():
             # Existing user becoming a supporter
             supporter = _create_commercial_supporter(form, tier_id, current_user)
             db.session.commit()
-            send_supporter_signup_notification(supporter)
+            _notify_signup(supporter)
 
             flash.success(gettext(
                 "Thanks for becoming a supporter! Your application will be reviewed "
@@ -185,7 +220,7 @@ def signup_commercial():
             user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
             supporter = _create_commercial_supporter(form, tier_id, user)
             db.session.commit()
-            send_supporter_signup_notification(supporter)
+            _notify_signup(supporter)
             increment_signup_count()
 
             user.emit_event(EVENT_USER_CREATED)
@@ -193,9 +228,8 @@ def signup_commercial():
                 "Thanks for signing up! Your application will be reviewed "
                 "soon. We will send you updates via email."
             ))
-            send_verification_email(
+            _send_signup_verification_email(
                 user,
-                "[MetaBrainz] Sign up confirmation",
                 "email/supporter-commercial-welcome-email-address-verification.txt"
             )
             login_user(user)
@@ -271,13 +305,11 @@ def signup_noncommercial():
             increment_signup_count()
 
             user.emit_event(EVENT_USER_CREATED)
-            send_verification_email(
+            if _send_signup_verification_email(
                 user,
-                "[MetaBrainz] Sign up confirmation",
                 "email/supporter-noncommercial-welcome-email-address-verification.txt"
-            )
-
-            flash.success(gettext("Thanks for signing up! Please check your inbox to complete verification."))
+            ):
+                flash.success(gettext("Thanks for signing up! Please check your inbox to complete verification."))
 
             login_user(user)
             return redirect(url_for('index.profile'))

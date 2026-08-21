@@ -66,13 +66,24 @@ def signup():
                     increment_signup_count()
                     user.emit_event(EVENT_USER_CREATED)
 
-                    send_verification_email(
-                        user,
-                        "Please verify your email address",
-                        "email/user-email-address-verification.txt"
-                    )
+                    try:
+                        send_verification_email(
+                            user,
+                            "Please verify your email address",
+                            "email/user-email-address-verification.txt"
+                        )
+                    except Exception:
+                        current_app.logger.exception(
+                            "Error sending verification email for new user %s", user.id
+                        )
+                        flash.success("Account created.")
+                        flash.error(
+                            "The verification email could not be sent. "
+                            "Please request a new one from your profile."
+                        )
+                    else:
+                        flash.success("Account created. Please check your inbox to complete verification.")
                     login_user(user)
-                    flash.success("Account created. Please check your inbox to complete verification.")
                     redirect_to = request.args.get("next") or url_for("index.home")
                     return redirect(redirect_to)
                 except UsernameNotAllowedException:
@@ -264,12 +275,19 @@ def check_email():
 def resend_verification_email():
     form = MeBFlaskForm()
     if form.validate_on_submit():
-        send_verification_email(
-            current_user,
-            "Please verify your email address",
-            "email/user-email-address-verification.txt"
-        )
-        flash.success("Verification email sent!")
+        try:
+            send_verification_email(
+                current_user,
+                "Please verify your email address",
+                "email/user-email-address-verification.txt"
+            )
+        except Exception:
+            current_app.logger.exception(
+                "Error resending verification email for user %s", current_user.id
+            )
+            flash.error("The verification email could not be sent. Please try again later.")
+        else:
+            flash.success("Verification email sent!")
     return redirect(url_for("index.profile"))
 
 
@@ -283,9 +301,16 @@ def lost_username():
         if user is None:
             form.email.errors.append(f"The given email address ({form.email.data}) does not exist in our database.")
         else:
-            send_forgot_username_email(user)
-            flash.success("Username recovery email sent!")
-            return redirect(url_for("index.home"))
+            try:
+                send_forgot_username_email(user)
+            except Exception:
+                current_app.logger.exception(
+                    "Error sending username recovery email for user %s", user.id
+                )
+                flash.error("The username recovery email could not be sent. Please try again later.")
+            else:
+                flash.success("Username recovery email sent!")
+                return redirect(url_for("index.home"))
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
     form_data = dict(**form.data)
@@ -309,9 +334,16 @@ def lost_password():
         if user is None:
             form.email.errors.append(f"User with given username ({form.username.data}) and email ({form.email.data}) combination not found.")
         else:
-            send_forgot_password_email(user)
-            flash.success("Password reset link sent!")
-            return redirect(url_for("index.home"))
+            try:
+                send_forgot_password_email(user)
+            except Exception:
+                current_app.logger.exception(
+                    "Error sending password reset email for user %s", user.id
+                )
+                flash.error("The password reset email could not be sent. Please try again later.")
+            else:
+                flash.success("Password reset link sent!")
+                return redirect(url_for("index.home"))
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}
     form_data = dict(**form.data)
