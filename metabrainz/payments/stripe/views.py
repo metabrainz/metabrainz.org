@@ -2,6 +2,7 @@ from flask import Blueprint, request, current_app, redirect, url_for, jsonify
 from flask_login import current_user
 
 from metabrainz.model import Payment
+from metabrainz.model.payment import StripeChargeNotReadyError
 from metabrainz.payments.forms import DonationForm, PaymentForm
 import stripe
 
@@ -121,11 +122,17 @@ def webhook(currency):
     # for one time payments, mode is payment, and we use the checkout.session.completed event to log charges
     # other option is mode = subscription i.e. recurring payments, for which payment_intent data is unavailable
     # in this webhook. hence, we use invoice.paid event instead which contains it.
-    if event["type"] == "checkout.session.completed":
-        session = event["data"]["object"]
-        if session["mode"] == "payment":
-            Payment.log_one_time_charge(currency, session)
-    elif event["type"] == "invoice.paid":
-        Payment.log_subscription_charge(currency, event["data"]["object"])
+    try:
+        if event["type"] == "checkout.session.completed":
+            session = event["data"]["object"]
+            if session["mode"] == "payment":
+                Payment.log_one_time_charge(currency, session)
+        elif event["type"] == "invoice.paid":
+            Payment.log_subscription_charge(currency, event["data"]["object"])
+    except StripeChargeNotReadyError as e:
+        # Stripe occasionally delivers the event before the charge has settled. Reject
+        # the delivery so that Stripe redelivers it once the missing data is available.
+        current_app.logger.warning("Stripe: event %s is not ready to be processed: %s", event["id"], e)
+        return jsonify({"error": "charge not ready, please retry"}), 503
 
     return jsonify({"status": "ok"})

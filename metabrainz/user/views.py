@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
 from flask_login import confirm_login, logout_user, login_required, login_user, current_user
 from flask_wtf.csrf import generate_csrf
+from sqlalchemy.exc import IntegrityError
 
 from metabrainz import bcrypt, flash
 from metabrainz.index.forms import MeBFlaskForm
@@ -89,9 +90,16 @@ def signup():
                 except UsernameNotAllowedException:
                     form.username.errors.append("Username is not allowed.")
                     db.session.rollback()
-                except Exception as e:
-                    flash.error(f"An unexpected error occurred: {e}")
-                    current_app.logger.exception("Error creating user", exc_info=True)
+                except IntegrityError:
+                    # Two signups for the same username can race past the check above.
+                    db.session.rollback()
+                    form.username.errors.append(
+                        f"Another user with username '{form.username.data}' exists."
+                    )
+                except Exception:
+                    db.session.rollback()
+                    flash.error("An unexpected error occurred. Please try again later.")
+                    current_app.logger.exception("Error creating user")
 
     form_data = dict(**form.data)
     form_data.pop("csrf_token", None)
@@ -275,6 +283,10 @@ def check_email():
 def resend_verification_email():
     form = MeBFlaskForm()
     if form.validate_on_submit():
+        if not current_user.unconfirmed_email:
+            flash.info("There is no email address awaiting verification on your account.")
+            return redirect(url_for("index.profile"))
+
         try:
             send_verification_email(
                 current_user,

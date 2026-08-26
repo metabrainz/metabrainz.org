@@ -219,6 +219,24 @@ class UsersViewsTestCase(FlaskTestCase):
         props = json.loads(self.get_context_variable("props"))
         self.assertEqual(props["initial_errors"], {"username": "Another user with username 'TEST_USER_1' exists."})
 
+    def test_user_signup_username_exists_race(self):
+        """Two concurrent signups can both get past the User.get() check."""
+        self.create_user()
+
+        # Simulate the race window: the pre-check misses the existing user, so the
+        # unique index is what rejects the insert.
+        with patch("metabrainz.user.views.User.get", return_value=None):
+            self._test_user_signup_helper({
+                "username": "test_user_1",
+                "email": "test2@gmail.com",
+                "password": "<PASSWORD>",
+                "confirm_password": "<PASSWORD>",
+            }, 200)
+
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(props["initial_errors"], {"username": "Another user with username 'test_user_1' exists."})
+        self.assertEqual(len(User.query.all()), 1)
+
     def test_user_signup_logged_in(self):
         data = {
             "username": "test_user_1",
@@ -587,6 +605,26 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertMessageFlashed(
             "The verification email could not be sent. Please try again later.",
             "error",
+        )
+
+    def test_resend_verification_email_without_pending_address(self):
+        self.create_user()
+        self.login_test_user()
+        self.client.get(url_for("index.profile"))
+
+        user = User.get(name="test_user_1")
+        user.unconfirmed_email = None
+        db.session.commit()
+
+        response = self.client.post(
+            "/resend-verification-email",
+            data={"csrf_token": g.csrf_token},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed(
+            "There is no email address awaiting verification on your account.",
+            "info",
         )
 
     def test_forgot_username_success(self):
