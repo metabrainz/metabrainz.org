@@ -23,6 +23,7 @@ from metabrainz.model.oauth.client import (
     OAuth2ClientPrivilege,
     OAUTH2_CLIENT_PRIVILEGE_LABELS,
 )
+from metabrainz.model.oauth.scope import OAuth2Scope
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
@@ -1031,6 +1032,50 @@ class PrivilegeBitmapField(SelectMultipleField):
         setattr(obj, name, bitmap)
 
 
+class RestrictedScopeField(SelectMultipleField):
+    """ A checkbox group listing the restricted scopes, mapped to/from the
+    ``restricted_scopes`` relation of a client. """
+
+    widget = ListWidget(prefix_label=False)
+    option_widget = CheckboxInput()
+
+    def __init__(self, *args, **kwargs):
+        # the choices are the restricted scopes in the database, ignore anything
+        # flask-admin tries to infer for the underlying relationship
+        kwargs.pop("choices", None)
+        # flask-admin adds this for the QuerySelectMultipleField it would have built
+        # for a relationship, a plain SelectMultipleField does not accept it
+        kwargs.pop("allow_blank", None)
+        kwargs["coerce"] = int
+        super().__init__(*args, **kwargs)
+        self.choices = [
+            (scope.id, scope.name)
+            for scope in db.session
+            .query(OAuth2Scope)
+            .filter(OAuth2Scope.restricted.is_(True))
+            .order_by(OAuth2Scope.name)
+        ]
+
+    def process_data(self, value):
+        # value is the list of scopes currently granted to the client. A scope that
+        # is no longer restricted keeps its (now meaningless) grant row, so add it to
+        # the choices as well, otherwise the form could neither show nor save it.
+        scopes = list(value or [])
+        known = {choice[0] for choice in self.choices}
+        for scope in scopes:
+            if scope.id not in known:
+                self.choices.append((scope.id, f"{scope.name} (no longer restricted)"))
+        self.data = [scope.id for scope in scopes]
+
+    def populate_obj(self, obj, name):
+        selected = set(self.data or [])
+        if selected:
+            scopes = db.session.query(OAuth2Scope).filter(OAuth2Scope.id.in_(selected)).all()
+        else:
+            scopes = []
+        setattr(obj, name, scopes)
+
+
 class RedirectUriListField(TextAreaField):
     """ Edits the ``redirect_uris`` ARRAY(Text) column as one URI per line.
 
@@ -1081,12 +1126,13 @@ class OAuth2ClientModelView(AdminModelView):
     """Admin view for managing OAuth2 applications and their privileges."""
     edit_template = "admin/oauth_client/edit.html"
 
-    column_list = ("client_id", "name", "owner_id", "privileges", "client_id_issued_at")
+    column_list = ("client_id", "name", "owner_id", "privileges", "restricted_scopes", "client_id_issued_at")
     column_labels = {
         "client_id": "Client ID",
         "name": "Name",
         "owner_id": "Owner ID",
         "privileges": "Privileges",
+        "restricted_scopes": "Restricted Scopes",
         "client_id_issued_at": "Issued At",
     }
     column_searchable_list = ("client_id", "name")
@@ -1100,13 +1146,14 @@ class OAuth2ClientModelView(AdminModelView):
     # client_id, client_secret and client_id_issued_at identify the client and are
     # deliberately left out; owner_id is omitted because there is no FK to validate
     # a new owner against (user data lives in the MB database).
-    form_columns = ("name", "description", "website", "redirect_uris", "privileges")
+    form_columns = ("name", "description", "website", "redirect_uris", "privileges", "restricted_scopes")
     form_overrides = {
         # name and website are Text columns, which flask-admin would otherwise
         # render as textareas; they are single line values like in ApplicationForm
         "name": StringField,
         "website": StringField,
         "privileges": PrivilegeBitmapField,
+        "restricted_scopes": RestrictedScopeField,
         "redirect_uris": RedirectUriListField,
     }
     # Length and URL rules mirror ApplicationForm in metabrainz/oauth/forms.py.
@@ -1145,6 +1192,11 @@ class OAuth2ClientModelView(AdminModelView):
         # the column is NOT NULL, but an empty selection (no privileges) is valid, so
         # drop the InputRequired validator flask-admin would otherwise add.
         "privileges": {"label": "Privileges", "validators": []},
+        "restricted_scopes": {
+            "label": "Restricted scopes",
+            "description": "Restricted scopes this application is allowed to request.",
+            "validators": [],
+        },
     }
 
     @staticmethod
@@ -1152,8 +1204,19 @@ class OAuth2ClientModelView(AdminModelView):
         labels = model.privilege_labels()
         return ", ".join(labels) if labels else "—"
 
-    column_formatters = {"privileges": _format_privileges}
-    column_formatters_detail = {"privileges": _format_privileges}
+    @staticmethod
+    def _format_restricted_scopes(view, context, model, name):
+        names = sorted(scope.name for scope in model.restricted_scopes)
+        return ", ".join(names) if names else "—"
+
+    column_formatters = {
+        "privileges": _format_privileges,
+        "restricted_scopes": _format_restricted_scopes,
+    }
+    column_formatters_detail = {
+        "privileges": _format_privileges,
+        "restricted_scopes": _format_restricted_scopes,
+    }
 
     def __init__(self, session, **kwargs):
         super().__init__(OAuth2Client, session, **kwargs)

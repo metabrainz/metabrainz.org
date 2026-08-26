@@ -1,6 +1,6 @@
 import sqlalchemy.orm
 from authlib.oauth2.rfc6749.util import scope_to_list
-from sqlalchemy import Integer, Text
+from sqlalchemy import Integer, Text, Boolean
 from sqlalchemy.sql.schema import Identity, Column
 
 from metabrainz.model import db
@@ -15,6 +15,9 @@ class OAuth2Scope(db.Model):
     id = Column(Integer, Identity(), primary_key=True)
     name = Column(Text, nullable=False, unique=True)
     description = Column(Text, nullable=False)
+    # a restricted scope may only be requested by the clients it has been granted
+    # to, see OAuth2Client.restricted_scopes
+    restricted = Column(Boolean, nullable=False, server_default="false", default=False)
 
 
 def get_scopes(session: sqlalchemy.orm.Session, scope):

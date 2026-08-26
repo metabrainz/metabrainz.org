@@ -9,9 +9,10 @@ from metabrainz.model.user import User
 from metabrainz.model import db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2AuthorizationCode, OAuth2Client
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.oauth.scope import get_scopes
+from metabrainz.oauth.restricted_scope import RestrictedScopeMixin
 
 
-class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
+class AuthorizationCodeGrant(RestrictedScopeMixin, grants.AuthorizationCodeGrant):
 
     TOKEN_ENDPOINT_AUTH_METHODS = ["client_secret_basic", "client_secret_post"]
 

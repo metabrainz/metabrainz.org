@@ -354,8 +354,13 @@ def jwks_uri():
 
 @wellknown_bp.route("/openid-configuration", methods=["GET"])
 def well_known_oauth_authorization_server():
+    # restricted scopes are only available to the clients they have been granted to,
+    # so they are left out of the publicly advertised metadata
     scopes = [
-        s[0] for s in db.session.query(OAuth2Scope.name).all()
+        s[0] for s in db.session
+        .query(OAuth2Scope.name)
+        .filter(OAuth2Scope.restricted.is_(False))
+        .all()
     ]
     server = current_app.config["SERVER_BASE_URL"]
     url_prefix = urljoin(server, current_app.config["OAUTH2_BLUEPRINT_PREFIX"])

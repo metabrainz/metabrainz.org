@@ -1,9 +1,13 @@
 from enum import IntFlag
 
 from authlib.oauth2.rfc6749 import ClientMixin
+from authlib.oauth2.rfc6749.util import scope_to_list
 from sqlalchemy import Column, Text, Integer, ARRAY, Identity, DateTime, func, CheckConstraint
+from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
+from metabrainz.model.oauth.relation_scope import OAuth2ClientScope
+from metabrainz.model.oauth.scope import OAuth2Scope
 
 
 class OAuth2ClientPrivilege(IntFlag):
@@ -49,6 +53,10 @@ class OAuth2Client(db.Model, ClientMixin):
     # bitmap of OAuth2ClientPrivilege flags granted to this client
     privileges = Column(Integer, nullable=False, server_default="0")
 
+    # the restricted scopes this client has been granted, every other client is
+    # refused these scopes with an invalid_scope error
+    restricted_scopes = relationship(OAuth2Scope, secondary=OAuth2ClientScope)
+
     def has_privilege(self, privilege: OAuth2ClientPrivilege) -> bool:
         """ Check whether this client has been granted the given privilege. """
         return bool(self.privileges & privilege)
@@ -62,6 +70,28 @@ class OAuth2Client(db.Model, ClientMixin):
             if privilege in granted
         ]
 
+    def disallowed_scopes(self, scope) -> list[str]:
+        """ Of the given scope, return the scope names this client may not request.
+
+        A scope marked restricted may only be requested by the clients it has been
+        granted to; unknown scope names are not reported here, the authorization
+        server rejects those separately. """
+        requested = set(scope_to_list(scope) or [])
+        if not requested:
+            return []
+
+        rows = db.session \
+            .query(OAuth2Scope.name) \
+            .filter(OAuth2Scope.name.in_(requested), OAuth2Scope.restricted.is_(True)) \
+            .all()
+        restricted = {row[0] for row in rows}
+        # the grants of this client are only worth loading if it asked for a
+        # restricted scope at all, which is the uncommon case
+        if not restricted:
+            return []
+
+        return sorted(restricted - {s.name for s in self.restricted_scopes})
+
     def get_client_id(self):
         return self.client_id
 
@@ -69,6 +99,8 @@ class OAuth2Client(db.Model, ClientMixin):
         return None
 
     def get_allowed_scope(self, scope):
+        if self.disallowed_scopes(scope):
+            return None
         return scope
 
     def check_redirect_uri(self, redirect_uri):

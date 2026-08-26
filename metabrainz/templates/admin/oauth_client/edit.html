@@ -65,6 +65,20 @@
           {% endif %}
         </div>
 
+        <div class="oauth-client-section">
+          <h3>Restricted Scopes</h3>
+          {% set granted_scopes = model.restricted_scopes|map(attribute='name')|sort %}
+          {% if granted_scopes %}
+            <div class="oauth-client-badges">
+              {% for scope in granted_scopes %}
+                <span>{{ scope }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p>No restricted scopes are granted.</p>
+          {% endif %}
+        </div>
+
         <p class="help-block">
           The client ID, secret and owner are fixed once an application is registered
           and cannot be changed here.
@@ -129,6 +143,21 @@
             </div>
             {{ form.privileges()|safe }}
             {% for error in form.privileges.errors %}
+              <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <div class="oauth-privileges-field{% if form.restricted_scopes.errors %} has-error{% endif %}">
+            <div class="oauth-field-header">
+              <label for="{{ form.restricted_scopes.id }}">{{ form.restricted_scopes.label.text }}</label>
+              <span>Allow this application to request these otherwise restricted scopes.</span>
+            </div>
+            {% if form.restricted_scopes.choices %}
+              {{ form.restricted_scopes()|safe }}
+            {% else %}
+              <p class="help-block">No scope is marked restricted yet.</p>
+            {% endif %}
+            {% for error in form.restricted_scopes.errors %}
               <p class="help-block text-danger">{{ error }}</p>
             {% endfor %}
           </div>

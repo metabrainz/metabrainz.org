@@ -7,7 +7,8 @@ from sqlalchemy import delete
 
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
-from metabrainz.model import db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2Client, OAuth2AuthorizationCode
+from metabrainz.model import db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2Client, OAuth2AuthorizationCode, \
+    OAuth2Scope
 
 
 class OAuthTestCase(FlaskTestCase):
@@ -79,6 +80,24 @@ class OAuthTestCase(FlaskTestCase):
         for privilege in privileges:
             bitmap |= privilege
         client.privileges = bitmap
+        db.session.commit()
+        return client
+
+    def restrict_scope(self, name):
+        """ Mark a scope restricted so that only the clients granted it may request it. """
+        scope = db.session.query(OAuth2Scope).filter_by(name=name).first()
+        scope.restricted = True
+        db.session.commit()
+        return scope
+
+    def grant_scopes(self, application, *names):
+        """ Grant the given restricted scopes to a client created via create_oauth_app
+        (accepts the returned dict), replacing the ones granted earlier. """
+        client = db.session.query(OAuth2Client).filter_by(client_id=application["client_id"]).first()
+        client.restricted_scopes = db.session \
+            .query(OAuth2Scope) \
+            .filter(OAuth2Scope.name.in_(names)) \
+            .all()
         db.session.commit()
         return client
 
