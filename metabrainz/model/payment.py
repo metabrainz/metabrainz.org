@@ -20,8 +20,25 @@ PAYMENT_METHOD_WEPAY = 'wepay'  # no longer supported
 PAYMENT_METHOD_CHECK = 'check'
 
 
+class StripeChargeNotReadyError(Exception):
+    """Raised when Stripe has not finished settling a charge we were notified about."""
+
+
+def stripe_get(obj, key):
+    """Read an optional key out of a Stripe object.
+
+    Stripe's StripeObject is not a dict subclass and has no ``get()``, so only
+    the ``in``/``[]`` protocol can be used to read it safely. Fields Stripe drops
+    entirely between API versions are absent rather than null, so subscripting them
+    raises KeyError; this returns None for both cases.
+    """
+    if obj is None or key not in obj:
+        return None
+    return obj[key]
+
+
 def _stripe_metadata_bool(metadata, key):
-    value = metadata.get(key)
+    value = stripe_get(metadata, key)
     if isinstance(value, bool):
         return value
     if isinstance(value, str):
@@ -344,7 +361,11 @@ class Payment(db.Model):
             api_key = current_app.config["STRIPE_KEYS"]["USD"]["SECRET"]
         else:
             api_key = current_app.config["STRIPE_KEYS"]["EUR"]["SECRET"]
-        charge = stripe.Charge.retrieve(invoice["charge"], expand=["balance_transaction"], api_key=api_key)
+        charge_id = stripe_get(invoice, "charge")
+        if not charge_id:
+            raise StripeChargeNotReadyError(f"Invoice {invoice['id']} has no charge yet")
+
+        charge = stripe.Charge.retrieve(charge_id, expand=["balance_transaction"], api_key=api_key)
         metadata = invoice["lines"]["data"][0]["metadata"]
         return cls._log_stripe_charge(charge, metadata)
 
@@ -359,6 +380,11 @@ class Payment(db.Model):
                                                        expand=["latest_charge.balance_transaction"],
                                                        api_key=api_key)
         charge = payment_intent["latest_charge"]
+        if charge is None:
+            raise StripeChargeNotReadyError(
+                f"Payment intent {payment_intent['id']} has no charge yet"
+            )
+
         metadata = payment_intent["metadata"]
         return cls._log_stripe_charge(charge, metadata)
 
@@ -380,6 +406,13 @@ class Payment(db.Model):
         address = details["address"]
 
         transaction = charge["balance_transaction"]
+        if transaction is None:
+            # Stripe sometimes notifies us before the balance transaction exists, and we
+            # need its net/fee amounts. Ask Stripe to redeliver the event later instead.
+            raise StripeChargeNotReadyError(
+                f"Balance transaction for charge {charge['id']} is not available yet"
+            )
+
         currency = transaction["currency"].lower()
         if currency not in SUPPORTED_CURRENCIES:
             current_app.logger.warning("Unsupported currency: ", transaction["currency"])
@@ -408,15 +441,18 @@ class Payment(db.Model):
             new_donation.can_contact = _stripe_metadata_bool(metadata, "can_contact")
             new_donation.anonymous = _stripe_metadata_bool(metadata, "anonymous")
 
-            if "editor" in metadata:
-                new_donation.editor_name = metadata["editor"]
-                new_donation.editor_id = cls.get_user_id(new_donation.editor_name)
+            editor_name = stripe_get(metadata, "editor")
+            if editor_name is not None:
+                new_donation.editor_name = editor_name
+                new_donation.editor_id = cls.get_user_id(editor_name)
 
         else:  # Organization payment
-            if "invoice_number" in metadata:
-                new_donation.invoice_number = metadata["invoice_number"]
-            if "supporter_id" in metadata:
-                new_donation.supporter_id = metadata["supporter_id"]
+            invoice_number = stripe_get(metadata, "invoice_number")
+            if invoice_number is not None:
+                new_donation.invoice_number = invoice_number
+            supporter_id = stripe_get(metadata, "supporter_id")
+            if supporter_id is not None:
+                new_donation.supporter_id = supporter_id
 
         db.session.add(new_donation)
         db.session.commit()

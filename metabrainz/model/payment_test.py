@@ -2,9 +2,10 @@ import copy
 from unittest.mock import patch
 
 from flask import current_app
+from stripe import StripeObject
 
 from metabrainz.model import db
-from metabrainz.model.payment import Payment
+from metabrainz.model.payment import Payment, StripeChargeNotReadyError
 from metabrainz.payments import Currency
 from metabrainz.testing import FlaskTestCase
 
@@ -436,31 +437,41 @@ class PaymentModelStripeTestCase(FlaskTestCase):
             "transfer_group": None
         }
 
+    def stripe_payment_intent(self, metadata=None, **overrides):
+        """Build a PaymentIntent the way the Stripe client hands one back.
+
+        Stripe deserialises responses into StripeObject, which is *not* a dict and
+        does not implement the dict API (notably ``get()``). A fixture left as a
+        plain dict silently tests a type that never reaches production, so every
+        fixture must go through construct_from.
+        """
+        payload = copy.deepcopy(self.payment_intent)
+        if metadata is not None:
+            payload["metadata"] = metadata
+        payload.update(overrides)
+        return StripeObject.construct_from(payload, "sk_test")
+
     @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_donation(self, mock_stripe):
         # Function should execute without any exceptions
-        payment_intent = self.payment_intent.copy()
-        payment_intent["metadata"] = {
+        mock_stripe.retrieve.return_value = self.stripe_payment_intent({
             "is_donation": "True",
             "editor": "lucifer",
             "anonymous": "False",
             "can_contact": "False"
-        }
-        mock_stripe.retrieve.return_value = payment_intent
+        })
         session = self.session_without_metadata.copy()
         Payment.log_one_time_charge("usd", session)
         self.assertEqual(len(Payment.query.all()), 1)
 
     @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_accepts_lowercase_boolean_metadata(self, mock_stripe):
-        payment_intent = self.payment_intent.copy()
-        payment_intent["metadata"] = {
+        mock_stripe.retrieve.return_value = self.stripe_payment_intent({
             "is_donation": "true",
             "editor": "lucifer",
             "anonymous": "false",
             "can_contact": "true",
-        }
-        mock_stripe.retrieve.return_value = payment_intent
+        })
 
         Payment.log_one_time_charge("usd", self.session_without_metadata)
 
@@ -472,24 +483,20 @@ class PaymentModelStripeTestCase(FlaskTestCase):
     @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_payment(self, mock_stripe):
         # Function should execute without any exceptions
-        payment_intent = self.payment_intent.copy()
-        payment_intent["metadata"] = {
+        mock_stripe.retrieve.return_value = self.stripe_payment_intent({
             "is_donation": "False",
             "email": "mail@example.com",
             "invoice_number": 42,
-        }
-        mock_stripe.retrieve.return_value = payment_intent
+        })
         Payment.log_one_time_charge("usd", self.session_without_metadata)
         self.assertEqual(len(Payment.query.all()), 1)
 
     @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_payment_with_invoice_number(self, mock_stripe):
-        payment_intent = self.payment_intent.copy()
-        payment_intent["metadata"] = {
+        mock_stripe.retrieve.return_value = self.stripe_payment_intent({
             "is_donation": "False",
             "invoice_number": 42,
-        }
-        mock_stripe.retrieve.return_value = payment_intent
+        })
         Payment.log_one_time_charge("usd", self.session_without_metadata)
         payments = Payment.query.all()
         self.assertEqual(len(payments), 1)
@@ -497,12 +504,74 @@ class PaymentModelStripeTestCase(FlaskTestCase):
 
     @patch("stripe.PaymentIntent")
     def test_log_stripe_charge_payment_without_invoice_number(self, mock_stripe):
-        payment_intent = self.payment_intent.copy()
-        payment_intent["metadata"] = {
+        mock_stripe.retrieve.return_value = self.stripe_payment_intent({
             "is_donation": "False",
-        }
-        mock_stripe.retrieve.return_value = payment_intent
+        })
         Payment.log_one_time_charge("usd", self.session_without_metadata)
         payments = Payment.query.all()
         self.assertEqual(len(payments), 1)
         self.assertIsNone(payments[0].invoice_number)
+
+    @patch("stripe.PaymentIntent")
+    def test_log_stripe_charge_without_balance_transaction(self, mock_stripe):
+        """Stripe can notify us before the balance transaction has settled."""
+        payment_intent = self.stripe_payment_intent()
+        payment_intent["latest_charge"]["balance_transaction"] = None
+        mock_stripe.retrieve.return_value = payment_intent
+
+        with self.assertRaises(StripeChargeNotReadyError):
+            Payment.log_one_time_charge("usd", self.session_without_metadata)
+
+        self.assertEqual(len(Payment.query.all()), 0)
+
+    @patch("stripe.PaymentIntent")
+    def test_log_stripe_charge_without_charge(self, mock_stripe):
+        mock_stripe.retrieve.return_value = self.stripe_payment_intent(latest_charge=None)
+
+        with self.assertRaises(StripeChargeNotReadyError):
+            Payment.log_one_time_charge("usd", self.session_without_metadata)
+
+        self.assertEqual(len(Payment.query.all()), 0)
+
+    @staticmethod
+    def stripe_invoice(**overrides):
+        """Build an invoice.paid payload the way Stripe hands one back."""
+        payload = {
+            "id": "in_test_1",
+            "object": "invoice",
+            "lines": {"data": [{"metadata": {
+                "is_donation": "True",
+                "editor": "lucifer",
+                "anonymous": "False",
+                "can_contact": "False",
+            }}]},
+        }
+        payload.update(overrides)
+        return StripeObject.construct_from(payload, "sk_test")
+
+    @patch("stripe.Charge")
+    def test_log_subscription_charge(self, mock_charge):
+        mock_charge.retrieve.return_value = self.stripe_payment_intent()["latest_charge"]
+
+        Payment.log_subscription_charge("usd", self.stripe_invoice(charge="ch_test_1"))
+
+        self.assertEqual(mock_charge.retrieve.call_args[0][0], "ch_test_1")
+        self.assertEqual(len(Payment.query.all()), 1)
+
+    @patch("stripe.Charge")
+    def test_log_subscription_charge_without_charge_field(self, mock_charge):
+        """Newer Stripe API versions dropped Invoice.charge, so the key is absent
+        rather than null. Subscripting it raises KeyError before the guard runs."""
+        with self.assertRaises(StripeChargeNotReadyError):
+            Payment.log_subscription_charge("usd", self.stripe_invoice())
+
+        mock_charge.retrieve.assert_not_called()
+        self.assertEqual(len(Payment.query.all()), 0)
+
+    @patch("stripe.Charge")
+    def test_log_subscription_charge_with_null_charge(self, mock_charge):
+        with self.assertRaises(StripeChargeNotReadyError):
+            Payment.log_subscription_charge("usd", self.stripe_invoice(charge=None))
+
+        mock_charge.retrieve.assert_not_called()
+        self.assertEqual(len(Payment.query.all()), 0)
