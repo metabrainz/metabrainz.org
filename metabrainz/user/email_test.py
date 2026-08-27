@@ -1,11 +1,12 @@
+import hashlib
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
 from metabrainz import create_app
-from metabrainz.user.email import create_reset_password_checksum, send_forgot_username_email, \
-    send_verification_email
+from metabrainz.user.email import VERIFY_EMAIL, create_email_link_checksum, \
+    create_reset_password_checksum, send_forgot_username_email, send_verification_email
 
 
 class UserEmailTestCase(unittest.TestCase):
@@ -22,9 +23,29 @@ class UserEmailTestCase(unittest.TestCase):
     def tearDown(self):
         self.context.pop()
 
+    def test_verification_checksum_construction_is_pinned(self):
+        """Changing this invalidates every verification link already sitting in an inbox."""
+        with patch.dict(self.app.config, {"EMAIL_VERIFICATION_SECRET_KEY": "test-secret"}):
+            checksum = create_email_link_checksum(VERIFY_EMAIL, 1, "user@example.com", 1756200000)
+
+        expected = hashlib.sha256(
+            b"verify-email; user_id: 1; email: user@example.com; timestamp: 1756200000;"
+            b" secret: test-secret"
+        ).hexdigest()
+        self.assertEqual(expected, checksum)
+
+    def test_reset_password_checksum_depends_on_the_secret(self):
+        user = SimpleNamespace(id=1, password="hash", get_email_any=lambda: "user@example.com")
+
+        with patch.dict(self.app.config, {"EMAIL_VERIFICATION_SECRET_KEY": "secret-one"}):
+            one = create_reset_password_checksum(user, 1756200000)
+        with patch.dict(self.app.config, {"EMAIL_VERIFICATION_SECRET_KEY": "secret-two"}):
+            two = create_reset_password_checksum(user, 1756200000)
+
+        self.assertNotEqual(one, two)
+
     def test_reset_password_checksum_changes_with_the_password(self):
-        """The checksum is bound to the password hash, which is what makes a reset link
-        unusable once it has been used to set a new one."""
+        """What makes a reset link unusable once it has been used."""
         user = SimpleNamespace(id=1, password="hash-before", get_email_any=lambda: "user@example.com")
         timestamp = 1756200000
 
