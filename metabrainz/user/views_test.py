@@ -10,6 +10,7 @@ from flask_wtf.csrf import generate_csrf
 from freezegun import freeze_time
 from sqlalchemy import delete
 
+from metabrainz import bcrypt
 from metabrainz.model import db
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.old_username import OldUsername
@@ -476,6 +477,46 @@ class UsersViewsTestCase(FlaskTestCase):
                 self.assertRedirects(response, url_for("index.home"))
                 self.assertMessageFlashed("Unable to verify email.", "error")
 
+    def test_user_email_verify_mangled_user_id(self):
+        """Mail clients that decode "&times" weld the timestamp onto the user id."""
+        self.create_user()
+
+        verification_link = self.get_context_variable("verification_link")
+        query = parse_qs(urlparse(verification_link).query)
+        mangled_link = url_for(
+            "users.verify_email",
+            user_id=f"{query['user_id'][0]}\u00d7tamp={query['ts'][0]}",
+            checksum=query["checksum"][0],
+            _external=True,
+        )
+
+        response = self.client.get(mangled_link)
+
+        self.assertEqual(response.status_code, 302)
+        user = User.get(name="test_user_1")
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertEqual(user.email, "test@example.com")
+
+    def test_user_email_verify_legacy_timestamp_param(self):
+        """Links issued before the rename carry the timestamp as "timestamp"."""
+        self.create_user()
+
+        verification_link = self.get_context_variable("verification_link")
+        query = parse_qs(urlparse(verification_link).query)
+        legacy_link = url_for(
+            "users.verify_email",
+            user_id=query["user_id"][0],
+            timestamp=query["ts"][0],
+            checksum=query["checksum"][0],
+            _external=True,
+        )
+
+        response = self.client.get(legacy_link)
+
+        self.assertEqual(response.status_code, 302)
+        user = User.get(name="test_user_1")
+        self.assertEqual(user.email, "test@example.com")
+
     def test_user_email_verify_user_invalid(self):
         self.create_user()
 
@@ -484,7 +525,7 @@ class UsersViewsTestCase(FlaskTestCase):
         url = url_for(
             "users.verify_email",
             user_id=1000,
-            timestamp=query.get("timestamp")[0],
+            ts=query.get("ts")[0],
             checksum=query.get("checksum")[0],
             _external=True
         )
@@ -948,6 +989,89 @@ class UsersViewsTestCase(FlaskTestCase):
             })
             self.assertEqual(response.status_code, 302)
             self.assertMessageFlashed("Password reset link expired.", "error")
+
+    def test_reset_password_link_is_single_use(self):
+        self._test_forgot_password_helper({
+            "username": "test_user_1",
+            "email": "test@example.com",
+        }, 302)
+        reset_password_link = self.get_context_variable("reset_password_link")
+
+        response = self.client.post(reset_password_link, data={
+            "password": "<NEW-PASSWORD>",
+            "confirm_password": "<NEW-PASSWORD>",
+            "csrf_token": g.csrf_token
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed("Password reset!", "success")
+
+        # the link is bound to the password it was issued against, so it is dead now
+        response = self.client.get(reset_password_link)
+        self.assertRedirects(response, url_for("index.home"))
+        self.assertMessageFlashed("Unable to reset password.", "error")
+
+        response = self.client.post(reset_password_link, data={
+            "password": "<OTHER-PASSWORD>",
+            "confirm_password": "<OTHER-PASSWORD>",
+            "csrf_token": g.csrf_token
+        })
+        self.assertRedirects(response, url_for("index.home"))
+        self.assertMessageFlashed("Unable to reset password.", "error")
+
+        user = User.get(name="test_user_1")
+        self.assertTrue(bcrypt.check_password_hash(user.password, "<NEW-PASSWORD>"))
+        self.assertFalse(bcrypt.check_password_hash(user.password, "<OTHER-PASSWORD>"))
+
+    def test_reset_password_mangled_user_id(self):
+        """Mail clients that decode "&times" weld the timestamp onto the user id."""
+        self._test_forgot_password_helper({
+            "username": "test_user_1",
+            "email": "test@example.com",
+        }, 302)
+        reset_password_link = self.get_context_variable("reset_password_link")
+        query = parse_qs(urlparse(reset_password_link).query)
+        mangled_link = url_for(
+            "users.reset_password",
+            user_id=f"{query['user_id'][0]}\u00d7tamp={query['ts'][0]}",
+            checksum=query["checksum"][0],
+            _external=True,
+        )
+
+        response = self.client.post(mangled_link, data={
+            "password": "<NEW-PASSWORD>",
+            "confirm_password": "<NEW-PASSWORD>",
+            "csrf_token": g.csrf_token
+        })
+
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed("Password reset!", "success")
+        user = User.get(name="test_user_1")
+        self.assertTrue(bcrypt.check_password_hash(user.password, "<NEW-PASSWORD>"))
+
+    def test_reset_password_legacy_timestamp_param(self):
+        """Links issued before the rename carry the timestamp as "timestamp"."""
+        self._test_forgot_password_helper({
+            "username": "test_user_1",
+            "email": "test@example.com",
+        }, 302)
+        reset_password_link = self.get_context_variable("reset_password_link")
+        query = parse_qs(urlparse(reset_password_link).query)
+        legacy_link = url_for(
+            "users.reset_password",
+            user_id=query["user_id"][0],
+            timestamp=query["ts"][0],
+            checksum=query["checksum"][0],
+            _external=True,
+        )
+
+        response = self.client.post(legacy_link, data={
+            "password": "<NEW-PASSWORD>",
+            "confirm_password": "<NEW-PASSWORD>",
+            "csrf_token": g.csrf_token
+        })
+
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed("Password reset!", "success")
 
     def test_user_signup_without_mtcaptcha_not_configured(self):
         self.app.config["MTCAPTCHA_PRIVATE_KEY"] = ""

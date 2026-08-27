@@ -4,7 +4,8 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from metabrainz import create_app
-from metabrainz.user.email import send_forgot_username_email, send_verification_email
+from metabrainz.user.email import create_reset_password_checksum, send_forgot_username_email, \
+    send_verification_email
 
 
 class UserEmailTestCase(unittest.TestCase):
@@ -20,6 +21,18 @@ class UserEmailTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.context.pop()
+
+    def test_reset_password_checksum_changes_with_the_password(self):
+        """The checksum is bound to the password hash, which is what makes a reset link
+        unusable once it has been used to set a new one."""
+        user = SimpleNamespace(id=1, password="hash-before", get_email_any=lambda: "user@example.com")
+        timestamp = 1756200000
+
+        before = create_reset_password_checksum(user, timestamp)
+        self.assertEqual(before, create_reset_password_checksum(user, timestamp))
+
+        user.password = "hash-after"
+        self.assertNotEqual(before, create_reset_password_checksum(user, timestamp))
 
     @patch("metabrainz.user.email.send_mail")
     def test_verification_uses_bare_address_for_all_usernames(self, send_mail):
