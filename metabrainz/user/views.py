@@ -1,4 +1,6 @@
+import hmac
 import json
+import re
 from datetime import datetime, timezone
 
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
@@ -14,7 +16,7 @@ from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_UPDATED
 from metabrainz.oauth.registration_request import get_registration_request
 from metabrainz.user import login_forbidden
 from metabrainz.user.email import send_forgot_password_email, send_forgot_username_email, create_email_link_checksum, \
-    VERIFY_EMAIL, RESET_PASSWORD, send_verification_email
+    create_reset_password_checksum, VERIFY_EMAIL, send_verification_email
 from metabrainz.user.forms import UserLoginForm, UserReauthenticationForm, UserSignupForm, ForgotPasswordForm, \
     ForgotUsernameForm, ResetPasswordForm
 from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup_count
@@ -23,13 +25,40 @@ from metabrainz.user.registration import validate_registration_email
 users_bp = Blueprint("users", __name__)
 
 
-def _parse_link_timestamp(value):
+# Mail clients that decode "&times" hand us "user_id=123×tamp=1699999999" and no timestamp,
+# so pull both back out. Only links predating the "ts" rename can arrive this way.
+_MANGLED_USER_ID_RE = re.compile(r"\A(?P<user_id>\d+)\u00d7tamp=(?P<timestamp>\d+)\Z")
+
+
+def _parse_email_link_args():
+    """Read the user id and timestamp out of an email link.
+
+    Returns ``(user_id, timestamp, created_at)``, or None if the link is unusable. Keeps
+    junk out of the database query, which raises rather than returning no user.
+    """
+    raw_user_id = request.args.get("user_id") or ""
+    raw_timestamp = request.args.get("ts") or request.args.get("timestamp")
+
+    mangled = _MANGLED_USER_ID_RE.match(raw_user_id)
+    if mangled is not None:
+        raw_user_id = mangled.group("user_id")
+        if raw_timestamp is None:
+            raw_timestamp = mangled.group("timestamp")
+
     try:
-        timestamp = int(value)
+        user_id = int(raw_user_id)
+        timestamp = int(raw_timestamp)
         created_at = datetime.fromtimestamp(timestamp, tz=timezone.utc)
     except (OSError, OverflowError, TypeError, ValueError):
         return None
-    return timestamp, created_at
+    return user_id, timestamp, created_at
+
+
+def _checksum_matches(expected: str, received) -> bool:
+    """Compare an email link checksum against the one we expect, in constant time."""
+    if not received:
+        return False
+    return hmac.compare_digest(expected, received)
 
 
 @users_bp.route("/privacy-summary")
@@ -186,13 +215,12 @@ def reauthenticate():
 @users_bp.route("/verify-email")
 def verify_email():
     """ User"s email verification endpoint. """
-    user_id = request.args.get("user_id")
-    parsed_timestamp = _parse_link_timestamp(request.args.get("timestamp"))
-    if parsed_timestamp is None:
+    parsed_link = _parse_email_link_args()
+    if parsed_link is None:
         flash.error("Unable to verify email.")
         return redirect(url_for("index.home"))
 
-    timestamp, created_at = parsed_timestamp
+    user_id, timestamp, created_at = parsed_link
     if created_at + current_app.config["EMAIL_VERIFICATION_EXPIRY"] <= datetime.now(timezone.utc):
         flash.error("Email verification link expired.")
         return redirect(url_for("index.home"))
@@ -205,7 +233,7 @@ def verify_email():
         return redirect(url_for("index.home"))
 
     checksum = create_email_link_checksum(VERIFY_EMAIL, user.id, user.unconfirmed_email, timestamp)
-    if checksum != received_checksum:
+    if not _checksum_matches(checksum, received_checksum):
         flash.error("Unable to verify email.")
         return redirect(url_for("index.home"))
 
@@ -373,14 +401,12 @@ def lost_password():
 @login_forbidden
 def reset_password():
     """ User"s reset password endpoint. """
-    user_id = request.args.get("user_id")
-
-    parsed_timestamp = _parse_link_timestamp(request.args.get("timestamp"))
-    if parsed_timestamp is None:
+    parsed_link = _parse_email_link_args()
+    if parsed_link is None:
         flash.error("Unable to reset password.")
         return redirect(url_for("index.home"))
 
-    timestamp, created_at = parsed_timestamp
+    user_id, timestamp, created_at = parsed_link
     if created_at + current_app.config["EMAIL_RESET_PASSWORD_EXPIRY"] <= datetime.now(timezone.utc):
         flash.error("Password reset link expired.")
         return redirect(url_for("index.home"))
@@ -391,8 +417,9 @@ def reset_password():
         return redirect(url_for("index.home"))
 
     received_checksum = request.args.get("checksum")
-    checksum = create_email_link_checksum(RESET_PASSWORD, user.id, user.get_email_any(), timestamp)
-    if checksum != received_checksum:
+    # bound to the current password hash, so a used link no longer validates
+    checksum = create_reset_password_checksum(user, timestamp)
+    if not _checksum_matches(checksum, received_checksum):
         flash.error("Unable to reset password.")
         return redirect(url_for("index.home"))
 
