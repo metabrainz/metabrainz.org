@@ -1,4 +1,5 @@
 import hashlib
+import hmac
 from datetime import datetime
 
 from flask import url_for, request, render_template, current_app
@@ -13,14 +14,9 @@ RESET_PASSWORD = "reset-password"
 # without the trailing semicolon, so mail clients turned "&timestamp=" into "×tamp=".
 
 
-def create_email_link_checksum(purpose: str, user_id: int, email: str, timestamp: int, binding: str = None) -> str:
-    """ Create a checksum based on user details, time and a secret key for the user's email verification
-
-    ``binding`` ties the link to account state that changes, invalidating it when that does.
-    """
+def create_email_link_checksum(purpose: str, user_id: int, email: str, timestamp: int) -> str:
+    """ Create a checksum based on user details, time and a secret key for the user's email verification """
     text = f"{purpose}; user_id: {user_id}; email: {email}; timestamp: {timestamp}; secret: {current_app.config['EMAIL_VERIFICATION_SECRET_KEY']}"
-    if binding is not None:
-        text = f"{text}; binding: {binding}"
     m = hashlib.sha256()
     m.update(text.encode("utf-8"))
     return m.hexdigest()
@@ -31,10 +27,17 @@ def create_reset_password_checksum(user: User, timestamp: int) -> str:
 
     Binding it to the password hash makes the link single use: changing the password
     invalidates every reset link outstanding for the user, including the one just used.
+    The hash is an input to the digest, never part of the link.
+
+    An HMAC rather than the digest-with-embedded-secret above. Verification links keep the
+    older construction so the ones already in inboxes stay valid.
     """
-    return create_email_link_checksum(
-        RESET_PASSWORD, user.id, user.get_email_any(), timestamp, binding=user.password
-    )
+    message = f"{RESET_PASSWORD}; user_id: {user.id}; email: {user.get_email_any()}; timestamp: {timestamp}; binding: {user.password}"
+    return hmac.new(
+        current_app.config["EMAIL_VERIFICATION_SECRET_KEY"].encode("utf-8"),
+        message.encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
 
 
 def _send_user_email(email: str, subject: str, content: str):
