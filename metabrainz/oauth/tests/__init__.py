@@ -225,7 +225,7 @@ class OAuthTestCase(FlaskTestCase):
         )
         self.assertTemplateUsed("oauth/error.html")
         props = json.loads(self.get_context_variable("props"))
-        self.assertEqual(props["error"], error)
+        self._assert_error_matches(props["error"], error)
 
         response = self.client.post(
             "/oauth2/authorize/confirm",
@@ -237,9 +237,15 @@ class OAuthTestCase(FlaskTestCase):
         )
         self.assertTemplateUsed("oauth/error.html")
         props = json.loads(self.get_context_variable("props"))
-        self.assertEqual(props["error"], error)
+        self._assert_error_matches(props["error"], error)
 
         self.assert_security_headers(response)
+
+    def _assert_error_matches(self, actual, expected):
+        # The error props may include an extra localized "message" field
+        # (derived from the error code); only assert the stable fields.
+        for key, value in expected.items():
+            self.assertEqual(actual.get(key), value)
 
 
     def token_success_token_grant_helper(self, application, code, redirect_uri, only_one_token=False):
