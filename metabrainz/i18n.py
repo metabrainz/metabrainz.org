@@ -16,11 +16,42 @@ def get_supported_locale_codes():
     return [language["code"] for language in SUPPORTED_LANGUAGES]
 
 
+def match_ui_locales(ui_locales):
+    """Return the first supported locale requested via OIDC ``ui_locales``.
+
+    ``ui_locales`` is a space-separated, preference-ordered list of BCP 47
+    language tags (e.g. ``"fr-CA fr en"``), as defined by OpenID Connect Core
+    1.0 section 3.1.2.1. Matching is done on the primary language subtag
+    against the supported locale codes. Returns None if nothing matches.
+    """
+    if not ui_locales:
+        return None
+    supported = get_supported_locale_codes()
+    for tag in ui_locales.split():
+        primary_subtag = tag.replace("_", "-").split("-")[0].lower()
+        if primary_subtag in supported:
+            return primary_subtag
+    return None
+
+
 def get_locale():
-    """Return the active locale from the language cookie"""
+    """Return the active locale.
+
+    Precedence:
+      1. The user's explicit language cookie (their site-wide choice).
+      2. The OpenID Connect ``ui_locales`` request hint, e.g. from an OAuth
+         client such as MusicBrainz Picard (section 3.1.2.1). This lets the
+         authorization/consent and error pages match the client's language
+         when the user has not set their own preference here.
+      3. The default locale.
+    """
     cookie_locale = request.cookies.get(LANGUAGE_COOKIE_NAME)
     if cookie_locale in get_supported_locale_codes():
         return cookie_locale
+
+    ui_locale = match_ui_locales(request.args.get("ui_locales"))
+    if ui_locale:
+        return ui_locale
 
     return DEFAULT_LOCALE
 
