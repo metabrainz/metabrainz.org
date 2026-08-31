@@ -417,7 +417,7 @@ msgstr ""
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
 msgid "Team"
-msgstr ""
+msgstr "Meeskond"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
