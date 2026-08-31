@@ -575,7 +575,7 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:58
 msgid "Donate"
-msgstr ""
+msgstr "Anneta"
 
 #: frontend/js/src/forms/LoginUser.tsx:110
 #: frontend/js/src/forms/SignupCommercial.tsx:175
