@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-08-22 22:12+0000\n"
-"Last-Translator: Priit Jõerüüt "
-"<jmmbrz@users.noreply.translations.metabrainz.org>\n"
+"PO-Revision-Date: 2026-09-01 10:12+0000\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language: et\n"
 "Language-Team: Estonian <https://translations.metabrainz.org/projects/"
 "metabrainz/website/et/>\n"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "Autoriseerimise suhtlus-URL"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
