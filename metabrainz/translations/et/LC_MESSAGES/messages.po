@@ -3169,7 +3169,7 @@ msgstr "Kliendi ID"
 
 #: frontend/js/src/Applications.tsx:59
 msgid "Client secret"
-msgstr ""
+msgstr "Kliendi saladus"
 
 #: frontend/js/src/Applications.tsx:60
 msgid "Privileges"
@@ -3181,7 +3181,7 @@ msgstr ""
 
 #: frontend/js/src/Applications.tsx:77
 msgid "Authorized applications"
-msgstr ""
+msgstr "Volitatud rakendused"
 
 #: frontend/js/src/Applications.tsx:80
 msgid "No tokens found"
@@ -3189,11 +3189,11 @@ msgstr ""
 
 #: frontend/js/src/Applications.tsx:88
 msgid "Access"
-msgstr ""
+msgstr "Juurdepääs"
 
 #: frontend/js/src/Applications.tsx:111
 msgid "Revoke access"
-msgstr ""
+msgstr "Tühista luba"
 
 #: frontend/js/src/OAuthError.tsx:17
 msgid "OAuth2 Error"
