@@ -605,7 +605,7 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:80 metabrainz/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Keel"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
@@ -1043,7 +1043,7 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:84
 msgid "Forums"
-msgstr ""
+msgstr "Foorumid"
 
 #: metabrainz/templates/index/contact.html:86
 #, python-format
@@ -1147,6 +1147,8 @@ msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
+"MusicBrainz on vaba muusikaentsüklopeedia, mis kogub andmeid muusika kohta "
+"ja teeb need üldsusele kättesaadavaks."
 
 #: metabrainz/templates/index/index.html:40
 #, python-format
