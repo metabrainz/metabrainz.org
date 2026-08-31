@@ -421,7 +421,7 @@ msgstr "Meeskond"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr ""
+msgstr "Pood"
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
 msgid "Policies"
@@ -432,7 +432,7 @@ msgstr ""
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
 msgid "Social Contract"
-msgstr ""
+msgstr "Ühiskondlik lepe"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
@@ -468,7 +468,7 @@ msgstr ""
 #: metabrainz/templates/index/sponsors.html:6
 #: metabrainz/templates/index/sponsors.html:20
 msgid "Sponsors"
-msgstr ""
+msgstr "Sponsorid"
 
 #: metabrainz/templates/base.html:66 metabrainz/templates/base.html:70
 #: metabrainz/templates/navbar.html:43
@@ -483,11 +483,11 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:232 metabrainz/templates/base.html:73
 #: metabrainz/templates/navbar.html:66 metabrainz/templates/users/login.html:3
 msgid "Sign in"
-msgstr ""
+msgstr "Logi sisse"
 
 #: metabrainz/templates/base.html:75 metabrainz/templates/navbar.html:75
 msgid "Sign out"
-msgstr ""
+msgstr "Logi välja"
 
 #: metabrainz/templates/base.html:77
 msgid "Access your account"
@@ -550,7 +550,7 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
-msgstr ""
+msgstr "Vastavus GDPR-ile"
 
 #: metabrainz/templates/navbar.html:45
 msgid "Supporter Sign Up"
@@ -567,7 +567,7 @@ msgstr ""
 #: metabrainz/templates/navbar.html:51
 #: metabrainz/templates/reports/financial_reports/index.html:29
 msgid "Reports"
-msgstr ""
+msgstr "Võimalike vigade aruanded"
 
 #: metabrainz/templates/navbar.html:54
 msgid "Financial Reports"
