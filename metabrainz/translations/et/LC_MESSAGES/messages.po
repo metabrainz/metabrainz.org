@@ -1178,11 +1178,11 @@ msgstr ""
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
 msgid "Previous"
-msgstr ""
+msgstr "Eelmine"
 
 #: metabrainz/templates/index/index.html:92
 msgid "Next"
-msgstr ""
+msgstr "Järgmine"
 
 #: metabrainz/templates/index/index.html:99
 #, python-format
@@ -1220,11 +1220,11 @@ msgstr ""
 #: frontend/js/src/forms/ConditionsModal.tsx:43
 #: metabrainz/templates/index/privacy.html:3
 msgid "Privacy"
-msgstr ""
+msgstr "Privaatsus"
 
 #: metabrainz/templates/index/privacy.html:8
 msgid "Summary"
-msgstr ""
+msgstr "Kokkuvõte"
 
 #: metabrainz/templates/index/privacy.html:33
 msgid "Applicable to all users"
@@ -1312,7 +1312,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:17
 msgid "MusicBrainz"
-msgstr ""
+msgstr "MusicBrainz"
 
 #: metabrainz/templates/index/projects.html:19
 #, python-format
@@ -1324,7 +1324,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
-msgstr ""
+msgstr "MusicBrainz Picard"
 
 #: metabrainz/templates/index/projects.html:34
 #, python-format
@@ -1336,7 +1336,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
-msgstr ""
+msgstr "Kaanepildiarhiiv"
 
 #: metabrainz/templates/index/projects.html:49
 #, python-format
@@ -1832,7 +1832,7 @@ msgstr ""
 #: frontend/js/src/forms/CreateApplication.tsx:42
 #: metabrainz/templates/oauth/create.html:3
 msgid "Create new application"
-msgstr ""
+msgstr "Loo uus rakendus"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -1850,11 +1850,11 @@ msgstr ""
 
 #: frontend/js/src/ProfileTabs.tsx:22 metabrainz/templates/oauth/index.html:3
 msgid "Applications"
-msgstr ""
+msgstr "Rakendused"
 
 #: metabrainz/templates/oauth/prompt.html:3
 msgid "OAuth Authorization"
-msgstr ""
+msgstr "OAuthi autoriseerimine"
 
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
