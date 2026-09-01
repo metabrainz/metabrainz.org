@@ -125,8 +125,24 @@ img.pull-right {
 #tiers {
   margin-top: 40px;
   #primary-tiers {
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
     .tier {
+      display: flex;
+      @media (max-width: @screen-sm-max) {
+        width: 100%;
+      }
       .thumbnail {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .caption {
+          flex: 1;
+          display: grid;
+          grid-template-rows: auto auto 1fr auto;
+        }
         h3 {
           margin-top: 8px;
           font-size: 20px;
