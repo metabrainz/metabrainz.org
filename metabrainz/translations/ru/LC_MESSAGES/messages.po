@@ -18,23 +18,24 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-06-12 00:55+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-07-29 07:12+0000\n"
+"Last-Translator: Libra <recreate_squall363@simplelogin.com>\n"
 "Language: ru\n"
-"Language-Team: Russian "
-"<https://translations.metabrainz.org/projects/metabrainz/website/ru/>\n"
+"Language-Team: Russian <https://translations.metabrainz.org/projects/"
+"metabrainz/website/ru/>\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) "
-"|| (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "'%(value)s' не является подходящим значением для этого поля"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:27
 #: frontend/js/src/forms/SignupCommercial.tsx:154
@@ -49,7 +50,7 @@ msgstr "Укажите e-mail адрес!"
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
 msgid "Current password is required!"
-msgstr ""
+msgstr "Укажите текущий пароль!"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -60,7 +61,7 @@ msgstr ""
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
 msgid "Password is required!"
-msgstr ""
+msgstr "Укажите пароль!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:160
@@ -68,7 +69,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
 msgid "Confirm Password is required!"
-msgstr ""
+msgstr "Подтвердите выбранный пароль!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
@@ -77,7 +78,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:81 metabrainz/index/forms.py:72
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:75
 msgid "Confirm Password should match password!"
-msgstr ""
+msgstr "Подтверждение пароля и сам пароль должны совпадать!"
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
 #: frontend/js/src/Profile.tsx:272 frontend/js/src/Profile.tsx:482
@@ -91,15 +92,15 @@ msgstr "Имя контакта не заполнено."
 
 #: metabrainz/index/views.py:234
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "Профиль успешно обновлён."
 
 #: metabrainz/index/views.py:261
 msgid "Current password is incorrect."
-msgstr ""
+msgstr "Текущий пароль указан неверно."
 
 #: metabrainz/index/views.py:266
 msgid "Password changed successfully."
-msgstr ""
+msgstr "Пароль успешно изменён."
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
@@ -119,7 +120,7 @@ msgstr ""
 
 #: metabrainz/index/views.py:478
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Ваш аккаунт был удалён."
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
 msgid "Application Name"
@@ -156,19 +157,19 @@ msgstr ""
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
-msgstr ""
+msgstr "Домашняя страница"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr ""
+msgstr "Не заполнено поле \"Домашняя страница\"."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr ""
+msgstr "URL-адрес домашней страницы указан в неверном формате."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
-msgstr ""
+msgstr "Адрес домашней страницы должен содержать http или https"
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
@@ -188,7 +189,7 @@ msgstr ""
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "Подтвердить"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -252,6 +253,9 @@ msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
+"Не могли бы вы, пожалуйста, рассказать нам побольше о проекте, в котором "
+"планируете использовать наши данные? Планируете ли вы получать к ним доступ "
+"через наши API или же собираетесь селфхостить их самостоятельно?"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:137
 #: frontend/js/src/forms/SignupNonCommercial.tsx:68
@@ -378,7 +382,7 @@ msgstr ""
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
 msgid "You are already a supporter."
-msgstr ""
+msgstr "Вы уже поддерживаете проект."
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
@@ -411,6 +415,8 @@ msgstr ""
 #: metabrainz/supporter/views.py:274
 msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr ""
+"Спасибо за регистрацию! Пожалуйста, проверьте ваши входящие, чтобы завершить "
+"верификацию."
 
 #: metabrainz/supporter/views.py:302
 msgid "Can't generate new token unless account is active."
@@ -528,27 +534,28 @@ msgstr "Блог"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "Чат"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
+#, fuzzy
 msgid "Mastodon"
-msgstr ""
+msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
 msgid "Bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: metabrainz/templates/base.html:94
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
-msgstr ""
+msgstr "Проспонсировано <a href=\"%(github_url)s\">GitHub</a>"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
@@ -626,7 +633,7 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:80 metabrainz/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
@@ -1118,7 +1125,7 @@ msgstr ""
 
 #: metabrainz/templates/index/gdpr.html:37
 msgid "Right to be forgotten"
-msgstr ""
+msgstr "Право на забвение"
 
 #: metabrainz/templates/index/gdpr.html:77
 msgid "Restriction of processing"
@@ -1157,6 +1164,11 @@ msgid ""
 "Creative\n"
 "        Commons licenses."
 msgstr ""
+"Фонд MetaBrainz Foundation - это НКО, которая верит в свободный и открытый "
+"доступ к данным. Он был основан с целью создать контролируемые сообществом "
+"базы данных, которые также были бы доступны широкой публике посредством их "
+"публикации в общественном достоянии или под лицензиями семейства Creative "
+"Commons."
 
 #: metabrainz/templates/index/index.html:16
 #, python-format
@@ -1179,33 +1191,41 @@ msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
+"Открытая музыкальная энциклопедия, которая собирает музыкальные метаданные и "
+"делает их доступными для всех желающих."
 
 #: metabrainz/templates/index/index.html:40
-#, fuzzy, python-format
+#, python-format
 msgid "Sign up to use the <a href=\"%(account_type_url)s\">Live Data Feed</a>"
 msgstr ""
-"Зарегистрируйтесь перед тем, как использовать <a "
-"href=\"%(account_type_url)s\"> Ленту прямых трансляций </a> </em>"
+"Зарегистрируйтесь, чтобы получить доступ к <a href=\"%(account_type_url)s\">"
+"ленте с динамически обновляемыми данными</a>"
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
-msgstr "Кросс-платформенный музыкальный таггер"
+msgstr "Кросс-платформенный музыкальный теггер"
 
 #: metabrainz/templates/index/index.html:57
 msgid "An open encyclopedia which contains information about published literature"
 msgstr ""
+"Открытая энциклопедия, специализирующаяся на сборе информации обо всей "
+"опубликованной литературе"
 
 #: metabrainz/templates/index/index.html:65
 msgid "An open record of user listening habits"
 msgstr ""
+"Публичный трекер для записи и отслеживания пользовательских привычек "
+"прослушивания музыки"
 
 #: metabrainz/templates/index/index.html:73
 msgid "A repository for Creative Commons licensed music and book reviews"
 msgstr ""
+"Коллекция музыкальных и книжных рецензий, опубликованных под лицензиями "
+"семейства Creative Commons"
 
 #: metabrainz/templates/index/index.html:81
 msgid "A repository of music cover art that is freely and easily accessible"
-msgstr ""
+msgstr "Коллекция обложек музыкальных релизов с бесплатным и легким доступом"
 
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
@@ -1248,6 +1268,7 @@ msgid ""
 "To get more information about the foundation, go to the\n"
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
+"Больше деталей о фонде вы можете узнать <a href=\"%(about_url)s\">здесь</a>."
 
 #: frontend/js/src/forms/ConditionsModal.tsx:43
 #: metabrainz/templates/index/privacy.html:3
@@ -5309,4 +5330,3 @@ msgstr ""
 
 #~ msgid "Privacy policy"
 #~ msgstr "Политика конфиденциальности"
-

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: metabrainz.org VERSION\n"
 "Report-Msgid-Bugs-To: support@metabrainz.org\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-07-26 17:12+0000\n"
+"PO-Revision-Date: 2026-08-27 13:12+0000\n"
 "Last-Translator: Marc Riera <marc@marcriera.cat>\n"
 "Language: ca\n"
 "Language-Team: Catalan <https://translations.metabrainz.org/projects/"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
@@ -1322,23 +1322,23 @@ msgstr ""
 
 #: metabrainz/templates/index/privacy.html:158
 msgid "Exceptions"
-msgstr ""
+msgstr "Excepcions"
 
 #: frontend/js/src/Profile.tsx:598
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
 msgid "Change Password"
-msgstr ""
+msgstr "Canvia la contrasenya"
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
 msgid "Delete your account"
-msgstr ""
+msgstr "Suprimeix el compte"
 
 #: metabrainz/templates/index/profile-edit.html:3
 msgid "Edit"
-msgstr ""
+msgstr "Edita"
 
 #: metabrainz/templates/index/projects.html:6
 msgid "MetaBrainz Projects"
@@ -1355,10 +1355,13 @@ msgid ""
 "source music encyclopedia that\n"
 "            collects music metadata and makes it available to the public."
 msgstr ""
+"<a href=\"%(mb_url)s\">MusicBrainz</a> és una enciclopèdia musical lliure "
+"mantinguda per la comunitat que\n"
+"            recopila metadades musicals i les posa a disposició del públic."
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
-msgstr ""
+msgstr "MusicBrainz Picard"
 
 #: metabrainz/templates/index/projects.html:34
 #, python-format
@@ -1367,10 +1370,14 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
+"<a href=\"%(picard_url)s\">MusicBrainz Picard</a> és una aplicació de "
+"programari lliure per a\n"
+"            identificar, etiquetar i organitzar enregistraments d'àudio "
+"digitals."
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
-msgstr ""
+msgstr "Cover Art Archive"
 
 #: metabrainz/templates/index/projects.html:49
 #, python-format
@@ -1380,10 +1387,14 @@ msgid ""
 "            releases in MusicBrainz. It is a joint project with the <a "
 "href=\"%(archive_org_url)s\">Internet Archive</a>."
 msgstr ""
+"<a href=\"%(caa_url)s\">Cover Art Archive</a> és una base de dades de "
+"caràtules corresponents\n"
+"            a publicacions de MusicBrainz. És un projecte conjunt amb <a "
+"href=\"%(archive_org_url)s\">Internet Archive</a>."
 
 #: metabrainz/templates/index/projects.html:63
 msgid "CritiqueBrainz"
-msgstr ""
+msgstr "CritiqueBrainz"
 
 #: metabrainz/templates/index/projects.html:65
 #, python-format
@@ -1393,10 +1404,14 @@ msgid ""
 "            providing a platform created for the sole purpose of Creative"
 " Commons licensed reviews."
 msgstr ""
+"<a href=\"%(cb_url)s\">CritiqueBrainz</a> omple el buit entre els crítics de "
+"música i llibres i les dades sense processar\n"
+"            proporcionant una plataforma creada únicament per a les "
+"ressenyes amb llicència Creative Commons."
 
 #: metabrainz/templates/index/projects.html:78
 msgid "BookBrainz"
-msgstr ""
+msgstr "BookBrainz"
 
 #: metabrainz/templates/index/projects.html:80
 #, python-format
@@ -1406,10 +1421,14 @@ msgid ""
 "            literature. Its aim is to collect and store data about every "
 "publication ever written."
 msgstr ""
+"<a href=\"%(bb_url)s\">BookBrainz</a> és una enciclopèdia en línia que conté "
+"informació sobre la literatura\n"
+"            publicada. Té com a objectiu recopilar i emmagatzemar dades "
+"sobre totes les publicacions escrites."
 
 #: metabrainz/templates/index/projects.html:93
 msgid "ListenBrainz"
-msgstr ""
+msgstr "ListenBrainz"
 
 #: metabrainz/templates/index/projects.html:95
 #, python-format
@@ -1419,14 +1438,18 @@ msgid ""
 "            their listen history. One of the goals is for this data to be"
 " used for building open music recommendation systems."
 msgstr ""
+"<a href=\"%(lb_url)s\">ListenBrainz</a> és un lloc web musical lliure que "
+"permet als usuaris importar\n"
+"            el seu historial de reproduccions. Un dels objectius és fer "
+"servir aquestes dades per a crear sistemes de recomanació musical lliures."
 
 #: metabrainz/templates/index/projects.html:104
 msgid "Past Projects"
-msgstr ""
+msgstr "Projectes anteriors"
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
-msgstr ""
+msgstr "AcousticBrainz"
 
 #: metabrainz/templates/index/projects.html:117
 #, python-format
@@ -1439,10 +1462,17 @@ msgid ""
 "href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
 "            in Barcelona."
 msgstr ""
+"<a href=\"%(ab_url)s\">AcousticBrainz</a> va recopilar col·lectivament "
+"informació acústica de tota\n"
+"            la músicadel món i la va posar a disposició del públic. Va ser "
+"un projecte conjunt amb el\n"
+"            <a href=\"%(mtg_url)s\">Grup de Tecnologia Musical</a> de la <a "
+"href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
+"            de Barcelona."
 
 #: metabrainz/templates/index/projects.html:132
 msgid "MessyBrainz"
-msgstr ""
+msgstr "MessyBrainz"
 
 #: metabrainz/templates/index/projects.html:134
 #, python-format
@@ -1453,11 +1483,16 @@ msgid ""
 "used for AcousticBrainz and is still being\n"
 "            used in ListenBrainz."
 msgstr ""
+"<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifica metadades sense "
+"netejar i, quan és possible,\n"
+"            les enllaça amb identificadors de MusicBrainz estables. "
+"MessyBrainz es feia servir per a AcousticBrainz\n"
+"            i encara es fa servir a ListenBrainz."
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
 msgid "MetaBrainz Shop"
-msgstr ""
+msgstr "Botiga de MetaBrainz"
 
 #: metabrainz/templates/index/sponsors.html:9
 msgid ""
@@ -1465,6 +1500,8 @@ msgid ""
 "    sponsors and partners for their support in helping MusicBrainz "
 "operate."
 msgstr ""
+"MetaBrainz Foundation està molt agraïda a tots els patrocinadors i socis\n"
+"    pel seu suport per a ajudar que MusicBrainz funcioni."
 
 #: metabrainz/templates/index/sponsors.html:13
 msgid ""
@@ -1479,7 +1516,7 @@ msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:18
 msgid "We would not exist without you — <b>Thank You!</b>"
-msgstr ""
+msgstr "No existiríem sense tots vosaltres — <b>Gràcies!</b>"
 
 #: metabrainz/templates/index/sponsors.html:26
 #, python-format
@@ -1491,7 +1528,7 @@ msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:34
 msgid "Special thanks"
-msgstr ""
+msgstr "Agraïments especials"
 
 #: metabrainz/templates/index/sponsors.html:36
 msgid ""
@@ -1534,14 +1571,16 @@ msgid ""
 "Thanks to everyone who has helped make the MetaBrainz Foundation what it "
 "is today!"
 msgstr ""
+"Gràcies a tothom qui ha ajudat a fer que MetaBrainz Foundation sigui el que "
+"és avui!"
 
 #: metabrainz/templates/index/team.html:6
 msgid "The MetaBrainz Team"
-msgstr ""
+msgstr "L'equip de MetaBrainz"
 
 #: metabrainz/templates/index/team.html:12
 msgid "<span class=\"name\">Robert Kaye</span> &mdash; Founder"
-msgstr ""
+msgstr "<span class=\"name\">Robert Kaye</span> &mdash; Fundador"
 
 #: metabrainz/templates/index/team.html:14
 #, python-format
@@ -1568,13 +1607,15 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives on in our hearts and in open source."
-msgstr ""
+msgstr "Viu en els nostres cors i en el codi lliure."
 
 #: metabrainz/templates/index/team.html:39
 msgid ""
 "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Software "
 "Engineer"
 msgstr ""
+"<span class=\"name\">Michael Wiencek</span> &mdash; Enginyer de programari "
+"sènior"
 
 #: metabrainz/templates/index/team.html:41
 msgid ""
@@ -1593,6 +1634,8 @@ msgid ""
 "<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer"
 " Support/Community Manager/Software Engineer"
 msgstr ""
+"<span class=\"name\">Nicolás Tamargo</span> &mdash; Líder d'estil, atenció "
+"al client, gestor de la comunitat i enginyer de programari"
 
 #: metabrainz/templates/index/team.html:59
 #, python-format
@@ -1614,11 +1657,12 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:68
 msgid "Originally from Spain, he now lives in Tartu, Estonia."
-msgstr ""
+msgstr "Originari d'Espanya, ara viu a Tartu, Estònia."
 
 #: metabrainz/templates/index/team.html:81
 msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
 msgstr ""
+"<span class=\"name\">Laurent Monin</span> &mdash; Administrador de sistemes"
 
 #: metabrainz/templates/index/team.html:83
 msgid ""
@@ -1647,6 +1691,7 @@ msgstr ""
 #: metabrainz/templates/index/team.html:105
 msgid "<span class=\"name\">Yvan Rivierre</span> &mdash; Software Engineer"
 msgstr ""
+"<span class=\"name\">Yvan Rivierre</span> &mdash; Enginyer de programari"
 
 #: metabrainz/templates/index/team.html:107
 msgid ""
@@ -1663,6 +1708,8 @@ msgid ""
 "<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  "
 "Software Engineer & Graphic Designer"
 msgstr ""
+"<span class=\"name\">Nicolas Pelletier</span> &mdash; Líder de BookBrainz, "
+"enginyer de programari i dissenyador gràfic"
 
 #: metabrainz/templates/index/team.html:122
 msgid ""
@@ -1685,6 +1732,7 @@ msgid ""
 "Born in Canada and raised in France, Nicolas now lives in Barcelona, "
 "Spain."
 msgstr ""
+"Nascut al Canadà i criat a França, Nicolas ara viu a Barcelona, Espanya."
 
 #: metabrainz/templates/index/team.html:146
 msgid ""
@@ -1692,6 +1740,8 @@ msgid ""
 "ListenBrainz/CritiqueBrainz/Android App Lead &amp; Junior Software "
 "Engineer"
 msgstr ""
+"<span class=\"name\">Kartik Ohri</span> &mdash; Líder de ListenBrainz, "
+"CritiqueBrainz i aplicació de l'Android i enginyer de programari júnior"
 
 #: metabrainz/templates/index/team.html:148
 msgid ""
@@ -1706,6 +1756,7 @@ msgstr ""
 #: metabrainz/templates/index/team.html:166
 msgid "<span class=\"name\">Adam James</span> &mdash; System Administrator"
 msgstr ""
+"<span class=\"name\">Adam James</span> &mdash; Administrador de sistemes"
 
 #: metabrainz/templates/index/team.html:168
 msgid ""
@@ -1722,6 +1773,7 @@ msgstr ""
 #: metabrainz/templates/index/team.html:189
 msgid "<span class=\"name\">Julian Anderson</span> &mdash; System Administrator"
 msgstr ""
+"<span class=\"name\">Julian Anderson</span> &mdash; Administrador de sistemes"
 
 #: metabrainz/templates/index/team.html:191
 msgid ""
@@ -1760,6 +1812,7 @@ msgstr ""
 #: metabrainz/templates/index/team.html:236
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
 msgstr ""
+"<span class=\"name\">Ansh Goyal</span> &mdash; Enginyer de programari júnior"
 
 #: metabrainz/templates/index/team.html:238
 msgid ""
@@ -1774,11 +1827,13 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:250
 msgid "Voluntary Project Leaders"
-msgstr ""
+msgstr "Líders del projecte voluntaris"
 
 #: metabrainz/templates/index/team.html:259
 msgid "<span class=\"name\">Akshat Tiwari</span> &mdash; Junior Software Engineer"
 msgstr ""
+"<span class=\"name\">Akshat Tiwari</span> &mdash; Enginyer de programari "
+"júnior"
 
 #: metabrainz/templates/index/team.html:261
 msgid ""
@@ -1800,6 +1855,8 @@ msgid ""
 "<span class=\"name\">Param Singh</span> &mdash; Former ListenBrainz team "
 "leader"
 msgstr ""
+"<span class=\"name\">Param Singh</span> &mdash; Antic líder de l'equip de "
+"ListenBrainz"
 
 #: metabrainz/templates/index/team.html:280
 msgid ""
@@ -1818,6 +1875,8 @@ msgid ""
 "<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
 "MusicBrainz Areas"
 msgstr ""
+"<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; Àrees de "
+"MusicBrainz"
 
 #: metabrainz/templates/index/team.html:303
 #, python-format
@@ -1838,6 +1897,7 @@ msgstr ""
 #: metabrainz/templates/index/team.html:328
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
 msgstr ""
+"<span class=\"name\">Akira Holm</span> &mdash; Instruments de MusicBrainz"
 
 #: metabrainz/templates/index/team.html:330
 msgid ""
@@ -1866,29 +1926,29 @@ msgstr ""
 #: frontend/js/src/forms/CreateApplication.tsx:42
 #: metabrainz/templates/oauth/create.html:3
 msgid "Create new application"
-msgstr ""
+msgstr "Crea una aplicació nova"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
 msgid "Delete application %(name)s"
-msgstr ""
+msgstr "Suprimeix l'aplicació %(name)s"
 
 #: metabrainz/templates/oauth/edit.html:3
 #, python-format
 msgid "Edit application %(name)s"
-msgstr ""
+msgstr "Edita l'aplicació %(name)s"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
-msgstr ""
+msgstr "Error d'OAuth"
 
 #: frontend/js/src/ProfileTabs.tsx:22 metabrainz/templates/oauth/index.html:3
 msgid "Applications"
-msgstr ""
+msgstr "Aplicacions"
 
 #: metabrainz/templates/oauth/prompt.html:3
 msgid "OAuth Authorization"
-msgstr ""
+msgstr "Autorització d'OAuth"
 
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
@@ -1969,7 +2029,7 @@ msgstr ""
 #: metabrainz/templates/payments/donate.html:39
 #: metabrainz/templates/payments/payment.html:31
 msgid "Amount"
-msgstr ""
+msgstr "Import"
 
 #: metabrainz/templates/payments/donate.html:54
 #, python-format
@@ -1981,31 +2041,32 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:65
 msgid "I want this to be a recurring monthly donation"
-msgstr ""
+msgstr "Vull que sigui una donació mensual recurrent"
 
 #: metabrainz/templates/payments/donate.html:73
 msgid "MusicBrainz username"
-msgstr ""
+msgstr "Nom d'usuari de MusicBrainz"
 
 #: metabrainz/templates/payments/donate.html:82
 msgid "Email me about future fundraising events"
 msgstr ""
+"Envia'm correus electrònics sobre futurs esdeveniments de recollida de fons"
 
 #: metabrainz/templates/payments/donate.html:83
 msgid "This will be very seldom"
-msgstr ""
+msgstr "Això serà molt poc freqüent"
 
 #: metabrainz/templates/payments/donate.html:91
 msgid "I would like this donation to be anonymous"
-msgstr ""
+msgstr "Vull que aquesta donació sigui anònima"
 
 #: metabrainz/templates/payments/donate.html:92
 msgid "Your name and username won't appear in the donors list"
-msgstr ""
+msgstr "El vostre nom i nom d'usuari no apareixeran a la llista de donants"
 
 #: metabrainz/templates/payments/donate.html:100
 msgid "Donate with Credit Card"
-msgstr ""
+msgstr "Fes una donació amb targeta de crèdit"
 
 #: metabrainz/templates/payments/donate.html:113
 msgid ""
@@ -2033,7 +2094,7 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:134
 msgid "Other ways to donate"
-msgstr ""
+msgstr "Altres maneres de fer una donació"
 
 #: metabrainz/templates/payments/donate.html:137
 msgid ""
@@ -2044,7 +2105,7 @@ msgstr ""
 #: metabrainz/templates/payments/donate.html:140
 #: metabrainz/templates/payments/payment_base.html:29
 msgid "Non-US Bank transfer"
-msgstr ""
+msgstr "Transferència bancària fora dels EUA"
 
 #: metabrainz/templates/payments/donate.html:141
 msgid ""
@@ -2061,7 +2122,7 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:145
 msgid "US Check"
-msgstr ""
+msgstr "Xec dels EUA"
 
 #: metabrainz/templates/payments/donate.html:146
 msgid ""
@@ -2077,15 +2138,15 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:256
 msgid "MusicBrainz is currently unavailable."
-msgstr ""
+msgstr "MusicBrainz no està disponible actualment."
 
 #: metabrainz/templates/payments/donate.html:257
 msgid "Please, make sure that your username is correct."
-msgstr ""
+msgstr "Assegureu-vos que el nom d'usuari sigui correcte."
 
 #: metabrainz/templates/payments/donate.html:259
 msgid "Your donation will be associated with this account."
-msgstr ""
+msgstr "La donació s'associarà a aquest compte."
 
 #: metabrainz/templates/payments/donate.html:261
 msgid "We can't find this account. Please, make sure it's correct"
@@ -2094,35 +2155,35 @@ msgstr ""
 #: metabrainz/templates/payments/donors.html:3
 #: metabrainz/templates/reports/financial_reports/index.html:23
 msgid "Donations"
-msgstr ""
+msgstr "Donacions"
 
 #: metabrainz/templates/payments/donors.html:11
 msgid "by date"
-msgstr ""
+msgstr "per data"
 
 #: metabrainz/templates/payments/donors.html:14
 msgid "by amount"
-msgstr ""
+msgstr "per import"
 
 #: metabrainz/templates/payments/donors.html:20
 msgid "No donations. :("
-msgstr ""
+msgstr "No hi ha cap donació. :("
 
 #: metabrainz/templates/payments/donors.html:25
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: metabrainz/templates/payments/donors.html:26
 msgid "Donor"
-msgstr ""
+msgstr "Donant"
 
 #: metabrainz/templates/payments/donors.html:27
 msgid "Donation"
-msgstr ""
+msgstr "Donació"
 
 #: metabrainz/templates/payments/donors.html:28
 msgid "Fee"
-msgstr ""
+msgstr "Taxes"
 
 #: metabrainz/templates/payments/donors.html:61
 msgid "First"
