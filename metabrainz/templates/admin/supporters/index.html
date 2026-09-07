@@ -28,6 +28,7 @@
           <select name="state" id="supporter-state" class="form-control">
             <option value="">All states</option>
             <option value="active" {% if request.args.get('state') == 'active' %}selected{% endif %}>Active</option>
+            <option value="pre_revenue" {% if request.args.get('state') == 'pre_revenue' %}selected{% endif %}>Pre-revenue</option>
             <option value="pending" {% if request.args.get('state') == 'pending' %}selected{% endif %}>Pending</option>
             <option value="waiting" {% if request.args.get('state') == 'waiting' %}selected{% endif %}>Waiting</option>
             <option value="rejected" {% if request.args.get('state') == 'rejected' %}selected{% endif %}>Rejected</option>
@@ -114,6 +115,8 @@
                 <td>
                   {% if supporter.state == 'active' %}
                     <span class="badge badge-success">Active</span>
+                  {% elif supporter.state == 'pre_revenue' %}
+                    <span class="badge badge-success">Pre-revenue</span>
                   {% elif supporter.state == 'pending' %}
                     <span class="badge badge-warning">Pending</span>
                   {% elif supporter.state == 'waiting' %}

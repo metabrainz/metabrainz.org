@@ -44,6 +44,9 @@
     <p class="page-actions">
       <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id) }}"
          class="btn btn-success" role="button">Approve</a>
+      <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id, pre_revenue=True) }}"
+         title="This supporter gets access to the API and tells us when they have more income."
+         class="btn btn-secondary" role="button">Approve (pre-revenue)</a>
       <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id, limited=True) }}"
          title="This supporter is not going to have access to the API."
          class="btn btn-secondary" role="button">Approve (limited)</a>
@@ -132,10 +135,12 @@
         <h3>Data access</h3>
         <p>State decides whether this supporter can reach the MetaBrainz Live Data Feed API.</p>
       </div>
-      <span class="badge {{ 'badge-success' if supporter.state == 'active' else 'badge-secondary' }}">{{ supporter.state }}</span>
+      <span class="badge {{ 'badge-success' if supporter.state in ['active', 'pre_revenue'] else 'badge-secondary' }}">{{ supporter.state }}</span>
     </div>
     <ul class="text-muted">
       <li><code>Active</code> — full access to the API</li>
+      <li><code>Pre-revenue</code> — full access to the API, not paying yet; they get
+        in touch once they have more income</li>
       <li><code>Pending</code> — new supporter waiting for approval</li>
       <li><code>Waiting</code> — old supporter in the waiting list</li>
       <li><code>Rejected</code> — refused access to the API</li>

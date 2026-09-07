@@ -180,7 +180,7 @@ def profile():
         else:
             user["supporter"]["token"] = None
 
-        if supporter.is_commercial:
+        if supporter.is_commercial and supporter.tier:
             user["supporter"]["tier"] = {
                 "name": supporter.tier.name
             }

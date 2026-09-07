@@ -12,6 +12,7 @@ CREATE TYPE payment_method_types AS ENUM (
 
 CREATE TYPE state_types AS ENUM (
   'active',
+  'pre_revenue',
   'pending',
   'waiting',
   'rejected',

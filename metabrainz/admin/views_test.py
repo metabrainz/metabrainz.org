@@ -11,7 +11,7 @@ from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
 from metabrainz.model.oauth.client import OAuth2Client, OAuth2ClientPrivilege
 from metabrainz.model.old_username import OldUsername
-from metabrainz.model.supporter import Supporter
+from metabrainz.model.supporter import STATE_ACTIVE, STATE_PENDING, STATE_PRE_REVENUE, Supporter
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.user import User
@@ -977,6 +977,59 @@ class AdminViewsTestCase(FlaskTestCase):
 
         supporter = Supporter.get(id=supporter_id)
         self.assertEqual(supporter.state, "rejected")
+
+    def test_admin_approve_supporter_as_pre_revenue(self):
+        """ Approving with pre_revenue puts the supporter in the pre-revenue state. """
+        self._login_admin()
+        supporter = self.create_supporter()
+        supporter.set_state(STATE_PENDING)
+        supporter_id = supporter.id
+
+        with patch("metabrainz.model.supporter.send_mail"):
+            response = self.client.get(
+                url_for("supportersview.approve"),
+                query_string={"supporter_id": supporter_id, "pre_revenue": True},
+            )
+
+        self.assertStatus(response, 302)
+        self.assertEqual(Supporter.get(id=supporter_id).state, STATE_PRE_REVENUE)
+
+    def test_admin_approve_supporter_without_flags_stays_active(self):
+        """ A plain approval is unaffected by the pre-revenue branch. """
+        self._login_admin()
+        supporter = self.create_supporter()
+        supporter.set_state(STATE_PENDING)
+        supporter_id = supporter.id
+
+        with patch("metabrainz.model.supporter.send_mail"):
+            response = self.client.get(
+                url_for("supportersview.approve"),
+                query_string={"supporter_id": supporter_id},
+            )
+
+        self.assertStatus(response, 302)
+        self.assertEqual(Supporter.get(id=supporter_id).state, STATE_ACTIVE)
+
+    def test_supporters_list_can_be_filtered_by_pre_revenue(self):
+        self._login_admin()
+        supporter = self.create_supporter()
+        supporter.set_state(STATE_PRE_REVENUE)
+
+        response = self.client.get(
+            url_for("supportersview.index"),
+            query_string={"state": STATE_PRE_REVENUE},
+        )
+        self.assert200(response)
+        self.assertIn(supporter.user.name, response.get_data(as_text=True))
+
+    def test_pre_revenue_supporter_pages_render(self):
+        self._login_admin()
+        supporter = self.create_supporter()
+        supporter.set_state(STATE_PRE_REVENUE)
+
+        self.assert200(self.client.get(url_for("supportersview.details", supporter_id=supporter.id)))
+        self.assert200(self.client.get(url_for("supportersview.edit", supporter_id=supporter.id)))
+        self.assert200(self.client.get(url_for("supporter_admin.index")))
 
     def create_oauth_client(self, **overrides):
         client = OAuth2Client(

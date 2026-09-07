@@ -12,27 +12,33 @@ from datetime import datetime
 from metabrainz.model.user import User
 
 STATE_ACTIVE = "active"
+STATE_PRE_REVENUE = "pre_revenue"
 STATE_PENDING = "pending"
 STATE_WAITING = "waiting"
 STATE_REJECTED = "rejected"
 STATE_LIMITED = "limited"
 
-SUPPORTER_STATES = [
-    STATE_ACTIVE,
-    STATE_PENDING,
-    STATE_WAITING,
-    STATE_REJECTED,
-    STATE_LIMITED,
-]
+# Keep the order in sync with the state_types enum in admin/sql/create_types.sql.
+STATE_NAMES = {
+    STATE_ACTIVE: "Active",
+    STATE_PRE_REVENUE: "Pre-revenue",
+    STATE_PENDING: "Pending",
+    STATE_WAITING: "Waiting",
+    STATE_REJECTED: "Rejected",
+    STATE_LIMITED: "Limited",
+}
+
+SUPPORTER_STATES = list(STATE_NAMES)
 
 
 class Supporter(db.Model):
     """Supporter model is used for supporters of MetaBrainz services like Live Data Feed.
 
     Supporters are either commercial or non-commercial (see `is_commercial`). Their
-    access to the API is determined by their `state` (active, pending, waiting,
-    or rejected). All non-commercial supporters have active state by default, but
-    commercial supporters need to be approved by one of the admins first.
+    access to the API is determined by their `state` (active, pre_revenue, pending,
+    waiting, rejected or limited). All non-commercial supporters have active state
+    by default, but commercial supporters need to be approved by one of the admins
+    first.
     """
     __tablename__ = 'supporter'
 
@@ -42,11 +48,7 @@ class Supporter(db.Model):
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id", ondelete="SET NULL", onupdate="CASCADE"), unique=True)
     created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
     state = db.Column(postgresql.ENUM(
-        STATE_ACTIVE,
-        STATE_PENDING,
-        STATE_WAITING,
-        STATE_REJECTED,
-        STATE_LIMITED,
+        *SUPPORTER_STATES,
         name='state_types'
     ), nullable=False)
     contact_name = db.Column(db.Unicode, nullable=False)
@@ -193,7 +195,7 @@ class Supporter(db.Model):
         Args:
             limit: Maximum number of results to return
             offset: Number of results to skip
-            state: Filter by supporter state (active, pending, waiting, rejected, limited)
+            state: Filter by supporter state (active, pre_revenue, pending, waiting, rejected, limited)
             is_commercial: Filter by commercial status (True/False/None for all)
             featured: Filter by featured status (True/False/None for all)
             good_standing: Filter by good standing status (True/False/None for all)
@@ -347,12 +349,7 @@ class Supporter(db.Model):
         db.session.commit()
         if old_state != self.state and not current_app.config["DEBUG"]:
             # TODO: Send additional info about new state.
-            state_name = "ACTIVE" if self.state == STATE_ACTIVE else \
-                         "REJECTED" if self.state == STATE_REJECTED else \
-                         "PENDING" if self.state == STATE_PENDING else \
-                         "WAITING" if self.state == STATE_WAITING else \
-                         "LIMITED" if self.state == STATE_LIMITED else \
-                         self.state
+            state_name = STATE_NAMES.get(self.state, self.state).upper()
             # supporters whose email is not confirmed yet still need to be notified,
             # but a supporter may have no email address at all (for instance, after
             # the account is deleted) in which case there is nothing to notify.

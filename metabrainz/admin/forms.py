@@ -37,13 +37,7 @@ class SupporterEditForm(FlaskForm):
     contact_name = StringField("Name")
 
     # Data access
-    state = SelectField("State", choices=[
-        (supporter.STATE_ACTIVE, "Active"),
-        (supporter.STATE_PENDING, "Pending"),
-        (supporter.STATE_WAITING, "Waiting"),
-        (supporter.STATE_REJECTED, "Rejected"),
-        (supporter.STATE_LIMITED, "Limited"),
-    ])
+    state = SelectField("State", choices=list(supporter.STATE_NAMES.items()))
 
     # Commercial info
     is_commercial = BooleanField("This is a commercial supporter")

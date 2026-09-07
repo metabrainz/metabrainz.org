@@ -25,7 +25,7 @@ from metabrainz.model.oauth.client import (
 )
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.domain_blacklist import DomainBlacklist
-from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED
+from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED, STATE_PRE_REVENUE
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
@@ -416,6 +416,8 @@ class SupportersView(AdminBaseView):
         supporter_id = request.args.get('supporter_id')
         if request.args.get('limited'):
             Supporter.get(id=supporter_id).set_state(STATE_LIMITED)
+        elif request.args.get('pre_revenue'):
+            Supporter.get(id=supporter_id).set_state(STATE_PRE_REVENUE)
         else:
             Supporter.get(id=supporter_id).set_state(STATE_ACTIVE)
         flash.info('Supporter #%s has been approved.' % supporter_id)
