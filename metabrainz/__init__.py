@@ -148,8 +148,9 @@ def create_app(debug=None, config_path=None, service=SERVICE_ALL):
     login_manager.init_app(app)
 
     # Templates
-    from metabrainz.utils import reformat_datetime
+    from metabrainz.utils import reformat_datetime, react_props
     app.jinja_env.filters['datetime'] = reformat_datetime
+    app.jinja_env.filters['react_props'] = react_props
     app.jinja_env.filters['nl2br'] = lambda val: val.replace('\n', '<br />') if val else ''
     app.jinja_loader = FileSystemLoader([
         os.path.join(os.path.dirname(os.path.realpath(__file__)), 'templates'),
