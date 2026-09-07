@@ -60,7 +60,7 @@ def get_locale():
 def set_language(locale):
     """Set the language cookie and redirect back to the originating page."""
     returnto = request.args.get("returnto", url_for("index.home"))
-    if not returnto.startswith("/") or returnto.startswith("//"):
+    if not _is_safe_returnto(returnto):
         abort(400)
 
     if locale not in get_supported_locale_codes():
@@ -78,6 +78,19 @@ def set_language(locale):
     return response
 
 
+def _is_safe_returnto(returnto):
+    """Return True if returnto is a path on this site and not a redirect off it.
+
+    Browsers normalise a backslash to a forward slash while parsing a URL (per
+    the WHATWG URL standard), so "/\\evil.example.com" is treated as the
+    protocol-relative "//evil.example.com" and navigates cross-origin. Reject
+    backslashes outright rather than trying to spot every such spelling.
+    """
+    if not returnto or "\\" in returnto:
+        return False
+    return returnto.startswith("/") and not returnto.startswith("//")
+
+
 def get_locale_context():
     """Provide locale variables and helpers to Jinja templates."""
     locale = get_locale()
@@ -89,4 +102,11 @@ def get_locale_context():
 
 
 def get_language_url(locale):
-    return url_for("i18n.set_language", locale=locale, returnto=request.full_path.rstrip("?"))
+    # The language switcher is a link, so it can only return the user to a URL
+    # that answers GET. A page rendered in response to a POST (the OAuth error
+    # page, for one) would answer 405, so send those back to the home page.
+    if request.method == "GET":
+        returnto = request.full_path.rstrip("?")
+    else:
+        returnto = url_for("index.home")
+    return url_for("i18n.set_language", locale=locale, returnto=returnto)

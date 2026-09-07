@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from flask import Flask
+from flask import Blueprint, Flask
 
 from metabrainz import i18n
 
@@ -63,3 +63,42 @@ class GetLocaleTestCase(TestCase):
     def test_unsupported_ui_locales_falls_back_to_default(self):
         with self.app.test_request_context("/?ui_locales=ja"):
             self.assertEqual(i18n.get_locale(), i18n.DEFAULT_LOCALE)
+
+
+class SetLanguageTestCase(TestCase):
+
+    def setUp(self):
+        self.app = Flask(__name__)
+        self.app.secret_key = "i18n-test"
+        # set_language falls back to the home page, so that endpoint has to exist.
+        index_bp = Blueprint("index", __name__)
+        index_bp.add_url_rule("/", "home", lambda: "")
+        self.app.register_blueprint(index_bp)
+        self.app.register_blueprint(i18n.i18n_bp)
+        self.client = self.app.test_client()
+
+    def test_sets_cookie_and_redirects(self):
+        response = self.client.get("/set-language/fr?returnto=/donate")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers["Location"], "/donate")
+        self.assertIn(f"{i18n.LANGUAGE_COOKIE_NAME}=fr", response.headers["Set-Cookie"])
+
+    def test_unsupported_locale_is_rejected(self):
+        response = self.client.get("/set-language/ja?returnto=/donate")
+        self.assertEqual(response.status_code, 404)
+
+    def test_absolute_url_is_rejected(self):
+        response = self.client.get("/set-language/fr?returnto=https://evil.example.com")
+        self.assertEqual(response.status_code, 400)
+
+    def test_protocol_relative_url_is_rejected(self):
+        response = self.client.get("/set-language/fr?returnto=//evil.example.com")
+        self.assertEqual(response.status_code, 400)
+
+    def test_backslash_url_is_rejected(self):
+        # Browsers normalise "\" to "/" while parsing a URL, so this would
+        # otherwise navigate to //evil.example.com.
+        response = self.client.get("/set-language/fr?returnto=/\\evil.example.com")
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get("/set-language/fr?returnto=\\\\evil.example.com")
+        self.assertEqual(response.status_code, 400)
