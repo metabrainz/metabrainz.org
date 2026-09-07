@@ -10,9 +10,9 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-07-26 17:12+0000\n"
+"PO-Revision-Date: 2026-08-01 22:12+0000\n"
 "Last-Translator: \"ApeKattQuest, MonkeyPython\" "
-"<ApeKattQuest_MonkeyPython@users.noreply.translations.metabrainz.org>\n"
+"<monkeypython+inst@yepmail.net>\n"
 "Language: nb\n"
 "Language-Team: Norwegian Bokmål <https://translations.metabrainz.org/"
 "projects/metabrainz/website/nb_NO/>\n"
@@ -135,7 +135,7 @@ msgstr "Organisasjonsbeskrivelse"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr "Feltet for klientens beskrivelse er tomt."
+msgstr "Klienttbeskrivelsen er tom."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
@@ -143,7 +143,7 @@ msgstr "Klientfbeskrivelsen må være på minst 3 tegn."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr "Klientforklaringen kan bare ha maksimum 512 tegn."
+msgstr "Klienttbeskrivelsen kan bare ha maksimum 512 tegn."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
@@ -920,6 +920,9 @@ msgid ""
 "them for support!\n"
 "      Please <a href=\"%(contact_url)s\">let us know</a>!"
 msgstr ""
+"Kjenner du til andre selskaper som bruker dataene våre? Vi vil gjerne vite "
+"om dem og spørre dem om støtte!\n"
+"      Send oss <a href=\"%(contact_url)s\">en melding</a>!"
 
 #: metabrainz/templates/index/bad-customers.html:53
 msgid "Nice!!"
@@ -1354,7 +1357,7 @@ msgstr "Brukerkontooppretting"
 
 #: metabrainz/templates/index/privacy.html:108
 msgid "Edits and Notes"
-msgstr ""
+msgstr "Endringer og Endringsnotat"
 
 #: metabrainz/templates/index/privacy.html:114
 msgid "Subscriptions on MusicBrainz"
@@ -1390,7 +1393,7 @@ msgstr ""
 
 #: metabrainz/templates/index/privacy.html:158
 msgid "Exceptions"
-msgstr ""
+msgstr "Unntak"
 
 #: frontend/js/src/Profile.tsx:598
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
@@ -1528,6 +1531,11 @@ msgid ""
 "used for AcousticBrainz and is still being\n"
 "            used in ListenBrainz."
 msgstr ""
+"<a href=\"%(messybrainz_url)s\">MessyBrainz</a> identifiserer rotete "
+"metadata, og der det er mulig,\n"
+"            kobler dem til stabile MusicBrainz-identifikatorer. MessyBrainz "
+"ble brukt i AcousticBrainz og blir fortsatt\n"
+"            brukt i ListenBrainz."
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
@@ -1565,6 +1573,8 @@ msgid ""
 "Bronze\n"
 "        account for hosting our sysadmin repositories."
 msgstr ""
+"<b><a href=\"%(github_url)s\">GitHub</a></b> gir oss en gratis bronse\n"
+"        konto til å vertskap for våre sysadmin-repositorier."
 
 #: metabrainz/templates/index/sponsors.html:34
 msgid "Special thanks"
@@ -1620,7 +1630,7 @@ msgstr "MetaBrainz-staben"
 
 #: metabrainz/templates/index/team.html:12
 msgid "<span class=\"name\">Robert Kaye</span> &mdash; Founder"
-msgstr ""
+msgstr "<span class=\"name\">Robert Kaye</span> – Grunnlegger"
 
 #: metabrainz/templates/index/team.html:14
 #, python-format
@@ -1654,6 +1664,7 @@ msgid ""
 "<span class=\"name\">Michael Wiencek</span> &mdash; Senior Software "
 "Engineer"
 msgstr ""
+"<span class=\"name\">Michael Wiencek</span> – Senior programvareingeniør"
 
 #: metabrainz/templates/index/team.html:41
 msgid ""
@@ -1699,7 +1710,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:81
 msgid "<span class=\"name\">Laurent Monin</span> &mdash; System Administrator"
-msgstr ""
+msgstr "<span class=\"name\">Laurent Monin</span> – Systemadministrator"
 
 #: metabrainz/templates/index/team.html:83
 msgid ""
@@ -1727,7 +1738,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:105
 msgid "<span class=\"name\">Yvan Rivierre</span> &mdash; Software Engineer"
-msgstr ""
+msgstr "<span class=\"name\">Yvan Rivierre</span> – programvareingeniør"
 
 #: metabrainz/templates/index/team.html:107
 msgid ""
@@ -1744,6 +1755,8 @@ msgid ""
 "<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  "
 "Software Engineer & Graphic Designer"
 msgstr ""
+"<span class=\"name\">Nicolas Pelletier</span> – BookBrainz-leder, "
+"programvareingeniør og grafisk designer"
 
 #: metabrainz/templates/index/team.html:122
 msgid ""
@@ -1760,12 +1773,16 @@ msgid ""
 "In his free time, Nicolas likes to go rock climbing, hence the nickname, "
 "and designing and building structures."
 msgstr ""
+"På fritiden liker Nicolas å klatre, derav kallenavnet, og å designe og bygge "
+"strukturer."
 
 #: metabrainz/templates/index/team.html:130
 msgid ""
 "Born in Canada and raised in France, Nicolas now lives in Barcelona, "
 "Spain."
 msgstr ""
+"Nicolas er født i Canada og oppvokst i Frankrike, og bor nå i Barcelona i "
+"Spania."
 
 #: metabrainz/templates/index/team.html:146
 msgid ""
@@ -1773,6 +1790,8 @@ msgid ""
 "ListenBrainz/CritiqueBrainz/Android App Lead &amp; Junior Software "
 "Engineer"
 msgstr ""
+"<span class=\"name\">Kartik Ohri</span> – ListenBrainz/CritiqueBrainz/"
+"Android App leder og junior programvareingeniør"
 
 #: metabrainz/templates/index/team.html:148
 msgid ""
@@ -1786,7 +1805,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:166
 msgid "<span class=\"name\">Adam James</span> &mdash; System Administrator"
-msgstr ""
+msgstr "<span class=\"name\">Adam James</span> – Systemadministrator"
 
 #: metabrainz/templates/index/team.html:168
 msgid ""
@@ -1802,7 +1821,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:189
 msgid "<span class=\"name\">Julian Anderson</span> &mdash; System Administrator"
-msgstr ""
+msgstr "<span class=\"name\">Julian Anderson</span> – Systemadministrator"
 
 #: metabrainz/templates/index/team.html:191
 msgid ""
@@ -1827,6 +1846,8 @@ msgid ""
 "<span class=\"name\">Simon Hartman</span> &mdash; Design, UX Consultant &"
 " Social Media Jockey"
 msgstr ""
+"<span class=\"name\">Simon Hartman</span> – design, UX-konsulent og sosiale "
+"medier-jockey"
 
 #: metabrainz/templates/index/team.html:217
 msgid ""
@@ -1840,7 +1861,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:236
 msgid "<span class=\"name\">Ansh Goyal</span> &mdash; Junior Software Engineer"
-msgstr ""
+msgstr "<span class=\"name\">Ansh Goyal</span> – Junior programvareingeniør"
 
 #: metabrainz/templates/index/team.html:238
 msgid ""
@@ -1855,11 +1876,12 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:250
 msgid "Voluntary Project Leaders"
-msgstr ""
+msgstr "Frivillige prosjektledere"
 
 #: metabrainz/templates/index/team.html:259
 msgid "<span class=\"name\">Akshat Tiwari</span> &mdash; Junior Software Engineer"
 msgstr ""
+"<span class=\"name\">Akshat Tiwari</span> &mdash; Junior programvareingeniør"
 
 #: metabrainz/templates/index/team.html:261
 msgid ""
@@ -1937,7 +1959,7 @@ msgstr ""
 #: frontend/js/src/Profile.tsx:409
 #: metabrainz/templates/index/datasets/download.html:3
 msgid "Download Datasets"
-msgstr ""
+msgstr "Last ned datasett"
 
 #: metabrainz/templates/index/datasets/signup.html:3
 msgid "Please sign up"
@@ -1952,12 +1974,12 @@ msgstr "Opprett en ny søknad"
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
 msgid "Delete application %(name)s"
-msgstr ""
+msgstr "Slett søknaden %(name)s"
 
 #: metabrainz/templates/oauth/edit.html:3
 #, python-format
 msgid "Edit application %(name)s"
-msgstr "Rediger søknad %(name)s"
+msgstr "Rediger søknaden %(name)s"
 
 #: metabrainz/templates/oauth/error.html:3
 msgid "OAuth Error"
@@ -1974,11 +1996,12 @@ msgstr "OAuth-autorisasjon"
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
 msgid "Cancelling recurring payments"
-msgstr ""
+msgstr "Avbryte gjentakende betalinger"
 
 #: metabrainz/templates/payments/cancel_recurring.html:9
 msgid "If you want to cancel a recurring donation (payment) that you have set up:"
 msgstr ""
+"Hvis du vil avbryte en regelmessig donasjon (betaling) du har opprettet:"
 
 #: metabrainz/templates/payments/cancel_recurring.html:14
 #, python-format
@@ -2030,6 +2053,8 @@ msgid ""
 "Where has my contribution gone? See our <a "
 "href=\"%(finance_reports_url)s\">transparent finances</a>."
 msgstr ""
+"Hvor har bidraget mitt blitt av? Se vår <a href=\"%(finance_reports_url)s\">"
+"transparente økonomi</a>."
 
 #: metabrainz/templates/payments/donate.html:24
 #, python-format
@@ -2037,6 +2062,7 @@ msgid ""
 "Who else is contributing? See our list of <a "
 "href=\"%(donors_url)s\">donors</a>."
 msgstr ""
+"Hvem andre bidrar? Se listen vår over <a href=\"%(donors_url)s\">givere</a>."
 
 #: metabrainz/templates/payments/donate.html:28
 #, python-format
@@ -2046,6 +2072,10 @@ msgid ""
 "actual\n"
 "        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
+"<b>Vær forsiktig!</b> Dette er en utviklingsversjon av nettstedet. IKKE\n"
+"        bruk dine ordentlige kredittkortopplysninger! Hvis du vil sende en "
+"ekte\n"
+"        donasjon, gå til <a href=\"%(mb_url)s\">metabrainz.org</a>."
 
 #: metabrainz/templates/payments/donate.html:39
 #: metabrainz/templates/payments/payment.html:31
@@ -2087,7 +2117,7 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:100
 msgid "Donate with Credit Card"
-msgstr ""
+msgstr "Doner med kredittkort"
 
 #: metabrainz/templates/payments/donate.html:113
 msgid ""
@@ -2128,7 +2158,7 @@ msgstr ""
 #: metabrainz/templates/payments/donate.html:140
 #: metabrainz/templates/payments/payment_base.html:29
 msgid "Non-US Bank transfer"
-msgstr ""
+msgstr "Bankoverføring utenfor USA"
 
 #: metabrainz/templates/payments/donate.html:141
 msgid ""
@@ -2154,28 +2184,32 @@ msgid ""
 "Due to the increased unreliability of the US Postal Service we have "
 "stopped accepting paper checks. Sorry!"
 msgstr ""
+"På grunn av den økte upåliteligheten til det amerikanske postvesenet har vi "
+"sluttet å godta papirsjekker. Beklager!"
 
 #: metabrainz/templates/payments/donate.html:241
 msgid ""
 "Enter your MusicBrainz username to have Picard/MusicBrainz stop nagging "
 "you"
 msgstr ""
+"Skriv inn MusicBrainz-brukernavnet ditt for å få Picard/MusicBrainz til å "
+"slutte å mase på deg"
 
 #: metabrainz/templates/payments/donate.html:256
 msgid "MusicBrainz is currently unavailable."
-msgstr ""
+msgstr "MusicBrainz er for øyeblikket utilgjengelig."
 
 #: metabrainz/templates/payments/donate.html:257
 msgid "Please, make sure that your username is correct."
-msgstr ""
+msgstr "Pass på at brukernavnet ditt er riktig."
 
 #: metabrainz/templates/payments/donate.html:259
 msgid "Your donation will be associated with this account."
-msgstr ""
+msgstr "Donasjonen din vil bli knyttet til denne brukerkontoen."
 
 #: metabrainz/templates/payments/donate.html:261
 msgid "We can't find this account. Please, make sure it's correct"
-msgstr ""
+msgstr "Vi finner ikke denne brukerkontoen. Sjekk at navnet er riktig"
 
 #: metabrainz/templates/payments/donors.html:3
 #: metabrainz/templates/reports/financial_reports/index.html:23
@@ -2222,6 +2256,10 @@ msgid ""
 "actual\n"
 "      payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
+"<b>Vær forsiktig!</b> Dette er en utviklingsversjon av nettstedet. IKKE\n"
+"        bruk dine ordentlige kredittkortopplysninger! Hvis du vil sende en "
+"virkelig\n"
+"        betaling, gå til <a href=\"%(mb_url)s\">metabrainz.org</a>."
 
 #: metabrainz/templates/payments/payment.html:17
 msgid "Organization:"
@@ -2250,7 +2288,7 @@ msgstr "Gjør dette til en månedlig betaling"
 
 #: metabrainz/templates/payments/payment.html:70
 msgid "Pay with Credit Card"
-msgstr ""
+msgstr "Betal med kredittkort"
 
 #: metabrainz/templates/payments/payment.html:84
 #, python-format
@@ -2306,6 +2344,8 @@ msgid ""
 "<p>Where has your contribution gone? See our <a "
 "href=\"%(financial_reports_url)s\">transparent finances</a>.</p>"
 msgstr ""
+"<p>Hvor har bidraget ditt blitt av? Se vår <a href=\"%(financial_reports_url)"
+"s\">gjennomsiktige økonomi</a>.</p>"
 
 #: metabrainz/templates/payments/payment_base.html:27
 msgid "Other ways to pay"
@@ -2324,10 +2364,12 @@ msgid ""
 "Please specify the invoice number(s) you are paying in the description "
 "field of the transfer."
 msgstr ""
+"Vennligst oppgi fakturanummeret/ene du betaler for i beskrivelsesfeltet for "
+"overføringen."
 
 #: metabrainz/templates/payments/payment_selector.html:7
 msgid "Please, select a currency that you want to use for payment:"
-msgstr ""
+msgstr "Velg den valuta du ønsker skal brukes til betalingen:"
 
 #: metabrainz/templates/payments/payment_selector.html:8
 msgid "United States dollar"
@@ -2388,6 +2430,8 @@ msgid ""
 "We attempt to publish our balance sheets within the first week of the "
 "succeeding quarter, or as close to that as possible."
 msgstr ""
+"Vi forsøker å publisere balansene våre innen den første uka i det påfølgende "
+"kvartalet, eller så nært det som mulig."
 
 #: metabrainz/templates/reports/financial_reports/index.html:36
 #: metabrainz/templates/reports/financial_reports/index.html:52
@@ -2632,7 +2676,7 @@ msgstr "Kvartalsrapporter"
 #: metabrainz/templates/reports/financial_reports/index.html:525
 #: metabrainz/templates/reports/financial_reports/index.html:547
 msgid "profit &amp; loss"
-msgstr ""
+msgstr "fortjeneste og tap"
 
 #: metabrainz/templates/reports/financial_reports/index.html:39
 #: metabrainz/templates/reports/financial_reports/index.html:41
@@ -2814,7 +2858,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:524
 #: metabrainz/templates/reports/financial_reports/index.html:546
 msgid "balance sheet"
-msgstr ""
+msgstr "balanse"
 
 #: metabrainz/templates/reports/financial_reports/index.html:46
 #: metabrainz/templates/reports/financial_reports/index.html:66
@@ -3037,7 +3081,7 @@ msgstr "Januar"
 #: metabrainz/templates/reports/financial_reports/index.html:527
 #: metabrainz/templates/reports/financial_reports/index.html:549
 msgid "Monthly balance sheets"
-msgstr ""
+msgstr "Månedlige balanser"
 
 #: frontend/js/src/Profile.tsx:520
 #: frontend/js/src/forms/SignupCommercial.tsx:175
@@ -3059,17 +3103,17 @@ msgstr "Støtt oss"
 
 #: metabrainz/templates/supporters/account-type.html:24
 msgid "Non-commercial / Personal"
-msgstr ""
+msgstr "Ikke-kommersiell / personlig"
 
 #: frontend/js/src/Profile.tsx:235
 #: frontend/js/src/forms/SignupNonCommercial.tsx:151
 #: metabrainz/templates/supporters/account-type.html:42
 msgid "Non-commercial"
-msgstr ""
+msgstr "Ikke-kommersiell"
 
 #: metabrainz/templates/supporters/account-type.html:43
 msgid "$0.00/month and up"
-msgstr ""
+msgstr "0,00 kr per måned og oppover"
 
 #: metabrainz/templates/supporters/account-type.html:44
 msgid "Personal or university assignment user."
@@ -3092,7 +3136,7 @@ msgstr "Kommersiell"
 #: metabrainz/templates/supporters/account-type.html:135
 #, python-format
 msgid "$%(tier_price)s/month and up"
-msgstr ""
+msgstr "$%(tier_price)s per måned og oppover"
 
 #: metabrainz/templates/supporters/account-type.html:87
 #: metabrainz/templates/supporters/account-type.html:138
@@ -3113,7 +3157,7 @@ msgstr "Se alle våre støttespillere"
 
 #: metabrainz/templates/supporters/account-type.html:151
 msgid "View featured tiers"
-msgstr ""
+msgstr "Se utvalgte nivåer"
 
 #: metabrainz/templates/supporters/account-type.html:158
 #, python-format
@@ -3121,6 +3165,8 @@ msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
 msgstr ""
+"Hvis du er usikker på hvilket nivå du skal velge, vennligst\n"
+"      <a href=\"%(contact_url)s\">kontakt oss</a>."
 
 #: metabrainz/templates/supporters/account-type.html:166
 msgid "Back to Profile"
@@ -3166,7 +3212,7 @@ msgstr "%(tier_name)snivå"
 #: metabrainz/templates/supporters/supporters-list.html:35
 #: metabrainz/templates/supporters/tier.html:25
 msgid "This supporter is behind on their payments."
-msgstr ""
+msgstr "Denne støttespilleren er etterpå med betalingene sine."
 
 #: metabrainz/templates/supporters/tier.html:13
 msgid "Sign up for this tier"
@@ -3195,7 +3241,7 @@ msgstr "Bekreft passord"
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
-msgstr ""
+msgstr "Vennligst skriv inn passordet ditt på nytt for å fortsette."
 
 #: frontend/js/src/ProfileDelete.tsx:108
 #: frontend/js/src/forms/DeleteApplication.tsx:53
@@ -3345,7 +3391,7 @@ msgstr "Ny:"
 
 #: frontend/js/src/Profile.tsx:56 frontend/js/src/Profile.tsx:77
 msgid "Unverified"
-msgstr ""
+msgstr "Ubekreftet"
 
 #: frontend/js/src/Profile.tsx:61
 msgid "Your current email will be replaced once the new email is verified."
@@ -3456,7 +3502,7 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:267
 msgid "Organization Information"
-msgstr ""
+msgstr "Informasjon on organisasjonen"
 
 #: frontend/js/src/Profile.tsx:275 frontend/js/src/Profile.tsx:281
 #: frontend/js/src/Profile.tsx:287
@@ -3466,6 +3512,7 @@ msgstr "Uspesifisert"
 #: frontend/js/src/Profile.tsx:293
 msgid "<contactLink>Contact us</contactLink> to update this information."
 msgstr ""
+"<contactLink>Kontakt oss</contactLink> for å oppdatere denne informasjonen."
 
 #: frontend/js/src/Profile.tsx:306 frontend/js/src/Profile.tsx:478
 msgid "Contact Information"
@@ -3531,14 +3578,15 @@ msgstr "Datanedlasting"
 #: frontend/js/src/Profile.tsx:402
 msgid "Thank you for registering with us -- we really appreciate it!"
 msgstr ""
+"Takk for at du registrerte deg hos oss – vi setter virkelig pris på det!"
 
 #: frontend/js/src/Profile.tsx:407
 msgid "Proceed to our download page to download datasets:"
-msgstr ""
+msgstr "Forsett til vår nedlastningsside for å laste ned datasett:"
 
 #: frontend/js/src/Profile.tsx:423
 msgid "Live Data Feed Access Token"
-msgstr ""
+msgstr "Tilgangspollett for sanntidsdatastrøm"
 
 #: frontend/js/src/Profile.tsx:428
 msgid ""
@@ -3813,7 +3861,7 @@ msgstr "Nettsted:"
 
 #: frontend/js/src/forms/DeleteApplication.tsx:37
 msgid "Are you sure you want to delete this client?"
-msgstr ""
+msgstr "Er du sikker på at du vill slette denne klienten?"
 
 #: frontend/js/src/forms/LoginUser.tsx:31
 msgid "Welcome back!"

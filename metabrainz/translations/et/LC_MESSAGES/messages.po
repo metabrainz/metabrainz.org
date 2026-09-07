@@ -9,21 +9,23 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-07-25 16:21+0200\n"
-"PO-Revision-Date: 2026-06-12 00:52+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-09-01 10:12+0000\n"
+"Last-Translator: Priit Jõerüüt "
+"<jmmbrz@users.noreply.translations.metabrainz.org>\n"
 "Language: et\n"
-"Language-Team: Estonian "
-"<https://translations.metabrainz.org/projects/metabrainz/website/et/>\n"
+"Language-Team: Estonian <https://translations.metabrainz.org/projects/"
+"metabrainz/website/et/>\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #: metabrainz/index/forms.py:46
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
-msgstr ""
+msgstr "„%(value)s“ pole korrektne väärtus selle välja jaoks"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:27
 #: frontend/js/src/forms/SignupCommercial.tsx:154
@@ -33,12 +35,12 @@ msgstr ""
 #: metabrainz/user/forms.py:25 metabrainz/user/forms.py:57
 #: metabrainz/user/forms.py:63
 msgid "Email address is required!"
-msgstr ""
+msgstr "E-posti aadressi sisestamine on kohustuslik!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
 #: metabrainz/index/forms.py:63
 msgid "Current password is required!"
-msgstr ""
+msgstr "Senise salasõna sisestamine on kohustuslik!"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
@@ -49,7 +51,7 @@ msgstr ""
 #: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
 msgid "Password is required!"
-msgstr ""
+msgstr "Salasõna sisestamine on kohustuslik!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:160
@@ -57,7 +59,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
 #: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
 msgid "Confirm Password is required!"
-msgstr ""
+msgstr "Salasõna kordamine on kohustuslik!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
@@ -66,117 +68,119 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:81 metabrainz/index/forms.py:72
 #: metabrainz/user/forms.py:35 metabrainz/user/forms.py:75
 msgid "Confirm Password should match password!"
-msgstr ""
+msgstr "Korratud saalsõna peaks vastama esmalt sisestatuga!"
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
 #: frontend/js/src/Profile.tsx:272 frontend/js/src/Profile.tsx:482
 #: metabrainz/index/forms.py:78
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: metabrainz/index/forms.py:79
 msgid "Contact name field is empty."
-msgstr ""
+msgstr "Kontaktinime väli on tühi."
 
 #: metabrainz/index/views.py:234
 msgid "Profile updated successfully."
-msgstr ""
+msgstr "Profiil on kenasti uuendatud."
 
 #: metabrainz/index/views.py:261
 msgid "Current password is incorrect."
-msgstr ""
+msgstr "Praegune salasõna pole õige."
 
 #: metabrainz/index/views.py:266
 msgid "Password changed successfully."
-msgstr ""
+msgstr "Salasõna on kenasti muudetud."
 
 #: metabrainz/index/views.py:372
 msgid "You have updated an application!"
-msgstr ""
+msgstr "Sa oled rakendust uuendanud!"
 
 #: metabrainz/index/views.py:424
 msgid "You have deleted an application."
-msgstr ""
+msgstr "Sa oled rakenduse kustutanud."
 
 #: metabrainz/index/views.py:426
 msgid "Failed to delete an application."
-msgstr ""
+msgstr "Rakenduse kustutamine ei õnnestunud."
 
 #: metabrainz/index/views.py:449
 msgid "Revoked tokens successfully!"
-msgstr ""
+msgstr "Tunnuslubade tühistamine õnnestus!"
 
 #: metabrainz/index/views.py:478
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Sinu kasutajakonto on kustutatud."
 
 #: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
 msgid "Application Name"
-msgstr ""
+msgstr "Rakenduse nimi"
 
 #: metabrainz/oauth/forms.py:59
 msgid "Application name field is empty."
-msgstr ""
+msgstr "Rakenduse nime väli on tühi."
 
 #: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at least 3 characters long."
-msgstr ""
+msgstr "Rakenduse nimi peab olema vähemalt 3 tähemärki pikk."
 
 #: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
 msgid "Application name needs to be at most 64 characters long."
-msgstr ""
+msgstr "Rakenduse nimi võib olla kuni 64 tähemärki pikk."
 
 #: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
 msgid "Description"
-msgstr ""
+msgstr "Kirjeldus"
 
 #: metabrainz/oauth/forms.py:64
 msgid "Client description field is empty."
-msgstr ""
+msgstr "Kliendi kirjelduse väli on tühi."
 
 #: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at least 3 characters long."
-msgstr ""
+msgstr "Kliendi kirjeldus peab olema vähemalt 3 tähemärki pikk."
 
 #: metabrainz/oauth/forms.py:66
 msgid "Client description needs to be at most 512 characters long."
-msgstr ""
+msgstr "Kliendi kirjeldus võib olla kuni 64 tähemärki pikk."
 
 #: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
 msgid "Homepage"
-msgstr ""
+msgstr "Koduleht"
 
 #: metabrainz/oauth/forms.py:69
 msgid "Homepage field is empty."
-msgstr ""
+msgstr "Kodulehe väli on tühi."
 
 #: metabrainz/oauth/forms.py:70
 msgid "Homepage is not a valid URI."
-msgstr ""
+msgstr "Kodulehe aadress (URI) on vigane."
 
 #: metabrainz/oauth/forms.py:71
 msgid "Homepage URL must use http or https"
-msgstr ""
+msgstr "Kodulehe võrguaadressi alguses peab olema http või https"
 
 #: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL"
-msgstr ""
+msgstr "Autoriseerimisel kasutatav tagasipäringute võrguaadress"
 
 #: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL field is empty."
-msgstr ""
+msgstr "Autoriseerimisel kasutatav tagasipäringute võrguaadressi väli on tühi."
 
 #: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL is invalid."
-msgstr ""
+msgstr "Autoriseerimisel kasutatav tagasipäringute võrguaadress on vigane."
 
 #: metabrainz/oauth/forms.py:76
 msgid "Authorization callback URL must use http or https."
 msgstr ""
+"Autoriseerimisel kasutatav tagasipäringute võrguaadressi alguses peab olema "
+"http või https."
 
 #: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
 msgid "Confirm"
-msgstr ""
+msgstr "Kinnita"
 
 #: metabrainz/payments/views.py:164
 msgid ""
@@ -184,6 +188,9 @@ msgid ""
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
 msgstr ""
+"Täname sind MetaBrainz Foundationile tehtud annetuse eest. Hindame sinu "
+"toetust väga! Töötlemisviivituste tõttu võib kuluda mõni aeg, enne kui sinu "
+"rahaline toetus saab loendis kuvatud."
 
 #: metabrainz/payments/views.py:171
 msgid ""
@@ -217,14 +224,14 @@ msgstr ""
 
 #: metabrainz/reports/annual_reports/views.py:25
 msgid "Requested annual report was not found."
-msgstr ""
+msgstr "Soovitud aastaaruannet ei leidu."
 
 #: frontend/js/src/forms/ProfileEdit.tsx:30
 #: frontend/js/src/forms/SignupCommercial.tsx:139
 #: frontend/js/src/forms/SignupNonCommercial.tsx:70
 #: metabrainz/supporter/forms.py:13
 msgid "Contact name is required!"
-msgstr ""
+msgstr "Kontakti nime lisamine on kohustuslik!"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:437
 #: frontend/js/src/forms/SignupNonCommercial.tsx:264
@@ -244,7 +251,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
 #: metabrainz/supporter/forms.py:18
 msgid "Please, limit usage description to 500 characters."
-msgstr ""
+msgstr "Palun koosta kirjeldus kuni 500-tähemärgisena."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:141
 #: frontend/js/src/forms/SignupCommercial.tsx:142
@@ -254,98 +261,98 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:85 metabrainz/supporter/forms.py:21
 #: metabrainz/user/forms.py:38
 msgid "You need to accept the agreement!"
-msgstr ""
+msgstr "Sa pead lepinguga nõustuma!"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:342
 #: metabrainz/supporter/forms.py:27
 msgid "Organization name"
-msgstr ""
+msgstr "Organisatsiooni nimi"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:113
 #: metabrainz/supporter/forms.py:28
 msgid "You need to specify the name of your organization."
-msgstr ""
+msgstr "Sa pead määratlema organisatsiooni nime."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:373
 #: metabrainz/supporter/forms.py:30
 msgid "Organization description"
-msgstr ""
+msgstr "Organisatsiooni kirjeldus"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:116
 #: metabrainz/supporter/forms.py:31
 msgid "You need to provide description of your organization."
-msgstr ""
+msgstr "Sa pead määratlema organisatsiooni kirjelduse."
 
 #: frontend/js/src/Profile.tsx:278
 #: frontend/js/src/forms/SignupCommercial.tsx:396
 #: metabrainz/supporter/forms.py:34
 msgid "Website URL"
-msgstr ""
+msgstr "Veebisaidi aadress"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:119
 #: metabrainz/supporter/forms.py:35
 msgid "You need to specify website of the organization."
-msgstr ""
+msgstr "Sa pead määratlema veebisaidi võrguaadressi."
 
 #: metabrainz/supporter/forms.py:37
 msgid "Logo image URL"
-msgstr ""
+msgstr "Logo võrguaadress"
 
 #: frontend/js/src/Profile.tsx:284
 #: frontend/js/src/forms/SignupCommercial.tsx:418
 #: metabrainz/supporter/forms.py:38
 msgid "API URL"
-msgstr ""
+msgstr "API võrguaadress"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:457
 #: metabrainz/supporter/forms.py:40
 msgid "Street"
-msgstr ""
+msgstr "Tänav"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:123
 #: metabrainz/supporter/forms.py:41
 msgid "You need to specify street."
-msgstr ""
+msgstr "Sa pead sisestama tänava."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:465
 #: metabrainz/supporter/forms.py:43
 msgid "City"
-msgstr ""
+msgstr "Linn"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:124
 #: metabrainz/supporter/forms.py:44
 msgid "You need to specify city."
-msgstr ""
+msgstr "Sa pead sisestama linna."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:473
 #: metabrainz/supporter/forms.py:46
 msgid "State / Province"
-msgstr ""
+msgstr "Osariik / Provints"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:126
 #: metabrainz/supporter/forms.py:47
 msgid "You need to specify state/province."
-msgstr ""
+msgstr "Sa pead sisestama osariigi või provintsi."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:481
 #: metabrainz/supporter/forms.py:49
 msgid "Postcode"
-msgstr ""
+msgstr "Sihtnumber"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:128
 #: metabrainz/supporter/forms.py:50
 msgid "You need to specify postcode."
-msgstr ""
+msgstr "Sa pead sisestama sihtnumbri."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:489
 #: metabrainz/supporter/forms.py:52
 msgid "Country"
-msgstr ""
+msgstr "Riik"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:129
 #: metabrainz/supporter/forms.py:53
 msgid "You need to specify country."
-msgstr ""
+msgstr "Sa pead sisestama riigi."
 
 #: frontend/js/src/forms/SignupCommercial.tsx:132
 #: metabrainz/supporter/forms.py:64
@@ -353,11 +360,13 @@ msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
 msgstr ""
+"Sinu sisestatud summa peab olema valitud taseme künnisest suurem või sellega "
+"võrdne!"
 
 #: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
 #: metabrainz/supporter/views.py:220
 msgid "You are already a supporter."
-msgstr ""
+msgstr "Sa juba oled toetaja."
 
 #: metabrainz/supporter/views.py:61
 msgid "Can't find tier with a specified ID."
@@ -402,7 +411,7 @@ msgstr ""
 #: metabrainz/templates/base.html:46 metabrainz/templates/index/projects.html:3
 #: metabrainz/templates/navbar.html:24
 msgid "Projects"
-msgstr ""
+msgstr "Projektid"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:87 metabrainz/templates/base.html:47
 #: metabrainz/templates/index/datasets.html:3
@@ -410,70 +419,70 @@ msgstr ""
 #: metabrainz/templates/index/datasets/postgres-dumps.html:3
 #: metabrainz/templates/navbar.html:25
 msgid "Datasets"
-msgstr ""
+msgstr "Andmekogud"
 
 #: metabrainz/templates/base.html:48 metabrainz/templates/index/team.html:3
 #: metabrainz/templates/navbar.html:26
 msgid "Team"
-msgstr ""
+msgstr "Tiim"
 
 #: metabrainz/templates/base.html:49 metabrainz/templates/navbar.html:27
 msgid "Shop"
-msgstr ""
+msgstr "Pood"
 
 #: metabrainz/templates/base.html:53 metabrainz/templates/navbar.html:32
 msgid "Policies"
-msgstr ""
+msgstr "Reeglid"
 
 #: metabrainz/templates/base.html:55 metabrainz/templates/index/gdpr.html:178
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
 msgid "Social Contract"
-msgstr ""
+msgstr "Ühiskondlik lepe"
 
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
 #: metabrainz/templates/index/gdpr.html:181 metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
-msgstr ""
+msgstr "Tegevuse põhimõtted"
 
 #: frontend/js/src/forms/ConditionsModal.tsx:21
 #: metabrainz/templates/base.html:57 metabrainz/templates/index/gdpr.html:184
 #: metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Andmekaitsepõhimõtted"
 
 #: metabrainz/templates/base.html:61
 #: metabrainz/templates/reports/financial_reports/index.html:3
 #: metabrainz/templates/reports/financial_reports/index.html:6
 msgid "Finances"
-msgstr ""
+msgstr "Rahandus"
 
 #: metabrainz/templates/base.html:63 metabrainz/templates/navbar.html:53
 #: metabrainz/templates/reports/annual_reports/view.html:4
 msgid "Archived Annual Reports"
-msgstr ""
+msgstr "Arhiveeritud aastaaruanded"
 
 #: metabrainz/templates/base.html:64 metabrainz/templates/navbar.html:55
 #: metabrainz/templates/payments/donors.html:6
 msgid "Donors"
-msgstr ""
+msgstr "Rahalise toetusega olid abiks"
 
 #: metabrainz/templates/base.html:65 metabrainz/templates/index/sponsors.html:3
 #: metabrainz/templates/index/sponsors.html:6
 #: metabrainz/templates/index/sponsors.html:20
 msgid "Sponsors"
-msgstr ""
+msgstr "Sponsorid"
 
 #: metabrainz/templates/base.html:66 metabrainz/templates/base.html:70
 #: metabrainz/templates/navbar.html:43
 #: metabrainz/templates/supporters/supporters-list.html:3
 #: metabrainz/templates/supporters/supporters-list.html:7
 msgid "Supporters"
-msgstr ""
+msgstr "Toetajad"
 
 #: frontend/js/src/forms/LoginUser.tsx:103
 #: frontend/js/src/forms/SignupCommercial.tsx:574
@@ -481,52 +490,52 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:232 metabrainz/templates/base.html:73
 #: metabrainz/templates/navbar.html:66 metabrainz/templates/users/login.html:3
 msgid "Sign in"
-msgstr ""
+msgstr "Logi sisse"
 
 #: metabrainz/templates/base.html:75 metabrainz/templates/navbar.html:75
 msgid "Sign out"
-msgstr ""
+msgstr "Logi välja"
 
 #: metabrainz/templates/base.html:77
 msgid "Access your account"
-msgstr ""
+msgstr "Ligipääs sinu kasutajakontole"
 
 #: metabrainz/templates/base.html:78
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: metabrainz/templates/base.html:83
 msgid "Contact us"
-msgstr ""
+msgstr "Kontakt"
 
 #: metabrainz/templates/base.html:85
 #: metabrainz/templates/index/contact.html:105
 msgid "Blog"
-msgstr ""
+msgstr "Ajaveeb"
 
 #: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
 msgid "Chat"
-msgstr ""
+msgstr "Vestle meiega"
 
 #: metabrainz/templates/base.html:87
 #: metabrainz/templates/index/contact.html:106
 msgid "Mastodon"
-msgstr ""
+msgstr "Jälgi Mastodonis"
 
 #: metabrainz/templates/base.html:88
 #: metabrainz/templates/index/contact.html:107
 msgid "Bluesky"
-msgstr ""
+msgstr "Jälgi BlueSky's"
 
 #: metabrainz/templates/base.html:89
 #: metabrainz/templates/index/contact.html:108
 msgid "Instagram"
-msgstr ""
+msgstr "Jälgi Instagramis"
 
 #: metabrainz/templates/base.html:94
 #, python-format
 msgid "Sponsored by <a href=\"%(github_url)s\">GitHub</a>"
-msgstr ""
+msgstr "Meid toetab <a href=\"%(github_url)s\">GitHub</a>"
 
 #: metabrainz/templates/navbar.html:7
 msgid "Toggle navigation"
@@ -534,7 +543,7 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:3 metabrainz/templates/navbar.html:21
 msgid "About"
-msgstr ""
+msgstr "Saidi teave"
 
 #: metabrainz/templates/navbar.html:23
 msgid "The Foundation"
@@ -548,32 +557,32 @@ msgstr ""
 
 #: metabrainz/templates/navbar.html:38
 msgid "GDPR Compliance"
-msgstr ""
+msgstr "Vastavus GDPR-ile"
 
 #: metabrainz/templates/navbar.html:45
 msgid "Supporter Sign Up"
-msgstr ""
+msgstr "Liitumine toetajatele"
 
 #: metabrainz/templates/navbar.html:46
 msgid "Our Supporters"
-msgstr ""
+msgstr "Meie toetajad"
 
 #: metabrainz/templates/navbar.html:47
 msgid "Our Sponsors"
-msgstr ""
+msgstr "Meie sponsorid"
 
 #: metabrainz/templates/navbar.html:51
 #: metabrainz/templates/reports/financial_reports/index.html:29
 msgid "Reports"
-msgstr ""
+msgstr "Aruanded"
 
 #: metabrainz/templates/navbar.html:54
 msgid "Financial Reports"
-msgstr ""
+msgstr "Rahandusaruanded"
 
 #: metabrainz/templates/navbar.html:58
 msgid "Donate"
-msgstr ""
+msgstr "Toeta rahaliselt"
 
 #: frontend/js/src/forms/LoginUser.tsx:110
 #: frontend/js/src/forms/SignupCommercial.tsx:175
@@ -586,7 +595,7 @@ msgstr ""
 #: metabrainz/templates/supporters/account-type.html:144
 #: metabrainz/templates/users/signup.html:3
 msgid "Sign up"
-msgstr ""
+msgstr "Liitu"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:21
 #: frontend/js/src/forms/ProfileEdit.tsx:34
@@ -595,19 +604,19 @@ msgstr ""
 #: metabrainz/templates/index/profile.html:3
 #: metabrainz/templates/navbar.html:73
 msgid "Your Profile"
-msgstr ""
+msgstr "Sinu profiil"
 
 #: metabrainz/templates/navbar.html:74
 msgid "OAuth applications"
-msgstr ""
+msgstr "OAuthi rakendused"
 
 #: metabrainz/templates/navbar.html:80 metabrainz/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Keel"
 
 #: metabrainz/templates/api/info.html:8
 msgid "MetaBrainz API"
-msgstr ""
+msgstr "MetaBrainzi API"
 
 #: metabrainz/templates/api/info.html:11
 #, python-format
@@ -672,11 +681,11 @@ msgstr ""
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
-msgstr ""
+msgstr "Tagasi avalehele"
 
 #: metabrainz/templates/index/about.html:8
 msgid "About the MetaBrainz Foundation"
-msgstr ""
+msgstr "Teave MetaBrainz Foundationi kohta"
 
 #: metabrainz/templates/index/about.html:13
 #, python-format
@@ -742,11 +751,11 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:50
 msgid "Board of Directors"
-msgstr ""
+msgstr "Fondi nõukogu"
 
 #: metabrainz/templates/index/about.html:51
 msgid "Our board of directors consists of:"
-msgstr ""
+msgstr "Meie nõukogu liikmed on:"
 
 #: metabrainz/templates/index/about.html:53
 #, python-format
@@ -806,11 +815,11 @@ msgstr ""
 
 #: metabrainz/templates/index/about.html:67
 msgid "Officers"
-msgstr ""
+msgstr "Tegevjuhid"
 
 #: metabrainz/templates/index/about.html:68
 msgid "The officers of this company are:"
-msgstr ""
+msgstr "Meie organisatsiooni tegevjuhid on:"
 
 #: metabrainz/templates/index/about.html:70
 msgid "President Nicolás Tamargo"
@@ -946,7 +955,7 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:30
 msgid "Copyright issues"
-msgstr ""
+msgstr "Autoriõigustega seotud küsimused"
 
 #: metabrainz/templates/index/contact.html:32
 #, python-format
@@ -966,7 +975,7 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:40
 msgid "Advertising requests"
-msgstr ""
+msgstr "Reklaamipäringud"
 
 #: metabrainz/templates/index/contact.html:42
 msgid ""
@@ -1041,7 +1050,7 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:84
 msgid "Forums"
-msgstr ""
+msgstr "Foorumid"
 
 #: metabrainz/templates/index/contact.html:86
 #, python-format
@@ -1063,19 +1072,19 @@ msgstr ""
 
 #: metabrainz/templates/index/contact.html:101
 msgid "Social media"
-msgstr ""
+msgstr "Sotsiaalmeedia"
 
 #: metabrainz/templates/index/contact.html:103
 msgid "You can follow us on these social channels:"
-msgstr ""
+msgstr "Sa võid meid jälgida neis sotsiaalmeediakanaleis:"
 
 #: metabrainz/templates/index/contact.html:112
 msgid "Mailing address"
-msgstr ""
+msgstr "E-posti aadress"
 
 #: metabrainz/templates/index/datasets.html:9
 msgid "The MetaBrainz Datasets"
-msgstr ""
+msgstr "MetaBrainzi andmekogud"
 
 #: metabrainz/templates/index/gdpr.html:3
 #: metabrainz/templates/index/gdpr.html:6
@@ -1145,6 +1154,8 @@ msgid ""
 "An open music encyclopedia that collects music metadata and makes it\n"
 "              available to the public"
 msgstr ""
+"MusicBrainz on vaba muusikaentsüklopeedia, mis kogub andmeid muusika kohta\n"
+"                        ja teeb need üldsusele kättesaadavaks"
 
 #: metabrainz/templates/index/index.html:40
 #, python-format
@@ -1153,7 +1164,7 @@ msgstr ""
 
 #: metabrainz/templates/index/index.html:49
 msgid "A cross-platform music tagger"
-msgstr ""
+msgstr "Platvormiülene muusikasildistaja"
 
 #: metabrainz/templates/index/index.html:57
 msgid "An open encyclopedia which contains information about published literature"
@@ -1174,11 +1185,11 @@ msgstr ""
 #: metabrainz/templates/index/index.html:88
 #: metabrainz/templates/payments/donors.html:66
 msgid "Previous"
-msgstr ""
+msgstr "Eelmine"
 
 #: metabrainz/templates/index/index.html:92
 msgid "Next"
-msgstr ""
+msgstr "Järgmine"
 
 #: metabrainz/templates/index/index.html:99
 #, python-format
@@ -1216,27 +1227,27 @@ msgstr ""
 #: frontend/js/src/forms/ConditionsModal.tsx:43
 #: metabrainz/templates/index/privacy.html:3
 msgid "Privacy"
-msgstr ""
+msgstr "Privaatsus"
 
 #: metabrainz/templates/index/privacy.html:8
 msgid "Summary"
-msgstr ""
+msgstr "Kokkuvõte"
 
 #: metabrainz/templates/index/privacy.html:33
 msgid "Applicable to all users"
-msgstr ""
+msgstr "Kehtib kõigile kasutajatele"
 
 #: metabrainz/templates/index/privacy.html:35
 msgid "Cookies"
-msgstr ""
+msgstr "Küpsised"
 
 #: metabrainz/templates/index/privacy.html:54
 msgid "Web and FTP access logs"
-msgstr ""
+msgstr "Veebiliikluse ja FTP-ligipääsu logid"
 
 #: metabrainz/templates/index/privacy.html:62
 msgid "Third-Party content"
-msgstr ""
+msgstr "Kolmandate osapoolte sisu"
 
 #: metabrainz/templates/index/privacy.html:92
 msgid "Applicable to account holders"
@@ -1291,24 +1302,24 @@ msgstr ""
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
 msgid "Change Password"
-msgstr ""
+msgstr "Muuda salasõna"
 
 #: frontend/js/src/Profile.tsx:542 frontend/js/src/ProfileDelete.tsx:46
 #: metabrainz/templates/index/profile-delete.html:3
 msgid "Delete your account"
-msgstr ""
+msgstr "Kustuta oma kasutajakonto"
 
 #: metabrainz/templates/index/profile-edit.html:3
 msgid "Edit"
-msgstr ""
+msgstr "Muuda"
 
 #: metabrainz/templates/index/projects.html:6
 msgid "MetaBrainz Projects"
-msgstr ""
+msgstr "MetaBrainzi projektid"
 
 #: metabrainz/templates/index/projects.html:17
 msgid "MusicBrainz"
-msgstr ""
+msgstr "MusicBrainz"
 
 #: metabrainz/templates/index/projects.html:19
 #, python-format
@@ -1320,7 +1331,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
-msgstr ""
+msgstr "MusicBrainz Picard"
 
 #: metabrainz/templates/index/projects.html:34
 #, python-format
@@ -1332,7 +1343,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
-msgstr ""
+msgstr "Kaanepildiarhiiv"
 
 #: metabrainz/templates/index/projects.html:49
 #, python-format
@@ -1358,7 +1369,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:78
 msgid "BookBrainz"
-msgstr ""
+msgstr "BookBrainz"
 
 #: metabrainz/templates/index/projects.html:80
 #, python-format
@@ -1371,7 +1382,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:93
 msgid "ListenBrainz"
-msgstr ""
+msgstr "ListenBrainz"
 
 #: metabrainz/templates/index/projects.html:95
 #, python-format
@@ -1384,11 +1395,11 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:104
 msgid "Past Projects"
-msgstr ""
+msgstr "Varasemad projektid"
 
 #: metabrainz/templates/index/projects.html:115
 msgid "AcousticBrainz"
-msgstr ""
+msgstr "AcousticBrainz"
 
 #: metabrainz/templates/index/projects.html:117
 #, python-format
@@ -1404,7 +1415,7 @@ msgstr ""
 
 #: metabrainz/templates/index/projects.html:132
 msgid "MessyBrainz"
-msgstr ""
+msgstr "MessyBrainz"
 
 #: metabrainz/templates/index/projects.html:134
 #, python-format
@@ -1453,7 +1464,7 @@ msgstr ""
 
 #: metabrainz/templates/index/sponsors.html:34
 msgid "Special thanks"
-msgstr ""
+msgstr "Erilised tänuavaldused"
 
 #: metabrainz/templates/index/sponsors.html:36
 msgid ""
@@ -1499,7 +1510,7 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:6
 msgid "The MetaBrainz Team"
-msgstr ""
+msgstr "MetaBrainzi tiim"
 
 #: metabrainz/templates/index/team.html:12
 msgid "<span class=\"name\">Robert Kaye</span> &mdash; Founder"
@@ -1828,7 +1839,7 @@ msgstr ""
 #: frontend/js/src/forms/CreateApplication.tsx:42
 #: metabrainz/templates/oauth/create.html:3
 msgid "Create new application"
-msgstr ""
+msgstr "Loo uus rakendus"
 
 #: metabrainz/templates/oauth/delete.html:3
 #, python-format
@@ -1846,11 +1857,11 @@ msgstr ""
 
 #: frontend/js/src/ProfileTabs.tsx:22 metabrainz/templates/oauth/index.html:3
 msgid "Applications"
-msgstr ""
+msgstr "Rakendused"
 
 #: metabrainz/templates/oauth/prompt.html:3
 msgid "OAuth Authorization"
-msgstr ""
+msgstr "Autoriseerimine OAuthiga"
 
 #: metabrainz/templates/payments/cancel_recurring.html:3
 #: metabrainz/templates/payments/cancel_recurring.html:6
@@ -2072,7 +2083,7 @@ msgstr ""
 
 #: metabrainz/templates/payments/donors.html:25
 msgid "Date"
-msgstr ""
+msgstr "Kuupäev"
 
 #: metabrainz/templates/payments/donors.html:26
 msgid "Donor"
@@ -2844,7 +2855,7 @@ msgstr ""
 #: metabrainz/templates/reports/financial_reports/index.html:536
 #: metabrainz/templates/reports/financial_reports/index.html:558
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #: metabrainz/templates/reports/financial_reports/index.html:254
 #: metabrainz/templates/reports/financial_reports/index.html:283
@@ -3050,11 +3061,11 @@ msgstr ""
 
 #: metabrainz/templates/users/lost-password.html:3
 msgid "Forgot your password"
-msgstr ""
+msgstr "Kas unustasid oma salasõna"
 
 #: metabrainz/templates/users/lost-username.html:3
 msgid "Forgot your username"
-msgstr ""
+msgstr "Kas unustasid oma kasutajanime"
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
 #: frontend/js/src/forms/SignupCommercial.tsx:320
@@ -3063,11 +3074,11 @@ msgstr ""
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
 msgid "Confirm Password"
-msgstr ""
+msgstr "Kinnita salasõna"
 
 #: metabrainz/templates/users/reauthenticate.html:7
 msgid "Please re-enter your password to continue."
-msgstr ""
+msgstr "Jätkamiseks palun sisesta salasõna uuesti."
 
 #: frontend/js/src/ProfileDelete.tsx:108
 #: frontend/js/src/forms/DeleteApplication.tsx:53
@@ -3076,20 +3087,20 @@ msgstr ""
 #: frontend/js/src/forms/ProfileEdit.tsx:105
 #: metabrainz/templates/users/reauthenticate.html:23
 msgid "Cancel"
-msgstr ""
+msgstr "Katkesta"
 
 #: metabrainz/templates/users/reauthenticate.html:24
 msgid "Continue"
-msgstr ""
+msgstr "Jätka"
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
 #: metabrainz/templates/users/reset-password.html:3
 msgid "Reset your password"
-msgstr ""
+msgstr "Lähtesta oma salasõna"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:41 metabrainz/user/forms.py:15
 msgid "Registration from this email domain is not allowed."
-msgstr ""
+msgstr "Registreerimine pole selle e-postidomeeni puhul lubatud."
 
 #: frontend/js/src/forms/LoginUser.tsx:50
 #: frontend/js/src/forms/LostPassword.tsx:45
@@ -3098,7 +3109,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
 msgid "Username"
-msgstr ""
+msgstr "Kasutajanimi"
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
@@ -3107,7 +3118,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:67 metabrainz/user/forms.py:21
 #: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
 msgid "Username is required!"
-msgstr ""
+msgstr "Kasutajanime sisestamine on kohustuslik!"
 
 #: frontend/js/src/forms/LoginUser.tsx:63
 #: frontend/js/src/forms/ResetPassword.tsx:72
@@ -3116,84 +3127,84 @@ msgstr ""
 #: frontend/js/src/forms/SignupUser.tsx:157 metabrainz/user/forms.py:46
 #: metabrainz/user/forms.py:52
 msgid "Password"
-msgstr ""
+msgstr "Salasõna"
 
 #: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
 msgid "Remember me"
-msgstr ""
+msgstr "Jäta mind meelde"
 
 #: metabrainz/user/username.py:180
 msgid "Username is not valid."
-msgstr ""
+msgstr "Kasutajanimi pole korrektne."
 
 #: metabrainz/user/username.py:183
 msgid "Username contains invalid or invisible characters."
-msgstr ""
+msgstr "Kasutajanimes on vigaseid või nähtamatuid tähemärke."
 
 #: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:181
 msgid "Hide password"
-msgstr ""
+msgstr "Peida salasõna"
 
 #: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:181
 msgid "Show password"
-msgstr ""
+msgstr "Näita salasõna"
 
 #: frontend/js/src/ApplicationRow.tsx:72
 msgid "Modify"
-msgstr ""
+msgstr "Muuda"
 
 #: frontend/js/src/ApplicationRow.tsx:78
 #: frontend/js/src/forms/DeleteApplication.tsx:60
 msgid "Delete"
-msgstr ""
+msgstr "Kustuta"
 
 #: frontend/js/src/Applications.tsx:37
 msgid "Your applications"
-msgstr ""
+msgstr "Sinu rakendused"
 
 #: frontend/js/src/Applications.tsx:50
 msgid "No applications found"
-msgstr ""
+msgstr "Ühtegi rakendust ei leidu"
 
 #: frontend/js/src/Applications.tsx:57 frontend/js/src/Applications.tsx:87
 msgid "Website"
-msgstr ""
+msgstr "Veebisait"
 
 #: frontend/js/src/Applications.tsx:58
 msgid "Client ID"
-msgstr ""
+msgstr "Kliendi tunnus"
 
 #: frontend/js/src/Applications.tsx:59
 msgid "Client secret"
-msgstr ""
+msgstr "Kliendi saladus"
 
 #: frontend/js/src/Applications.tsx:60
 msgid "Privileges"
-msgstr ""
+msgstr "Eelised"
 
 #: frontend/js/src/Applications.tsx:61 frontend/js/src/Applications.tsx:89
 msgid "Actions"
-msgstr ""
+msgstr "Tegevused"
 
 #: frontend/js/src/Applications.tsx:77
 msgid "Authorized applications"
-msgstr ""
+msgstr "Volitatud rakendused"
 
 #: frontend/js/src/Applications.tsx:80
 msgid "No tokens found"
-msgstr ""
+msgstr "Ühtegi tunnusluba ei leidu"
 
 #: frontend/js/src/Applications.tsx:88
 msgid "Access"
-msgstr ""
+msgstr "Juurdepääs"
 
 #: frontend/js/src/Applications.tsx:111
 msgid "Revoke access"
-msgstr ""
+msgstr "Tühista juurdepääs"
 
 #: frontend/js/src/OAuthError.tsx:17
 msgid "OAuth2 Error"
-msgstr ""
+msgstr "Viga OAuth2 kasutamisel"
 
 #: frontend/js/src/OAuthError.tsx:18
 msgid "An error occurred during OAuth authentication process."
@@ -3205,19 +3216,19 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:47
 msgid "Current:"
-msgstr ""
+msgstr "Praegune:"
 
 #: frontend/js/src/Profile.tsx:50 frontend/js/src/Profile.tsx:70
 msgid "Verified"
-msgstr ""
+msgstr "Kontrollitud"
 
 #: frontend/js/src/Profile.tsx:53
 msgid "New:"
-msgstr ""
+msgstr "Uus:"
 
 #: frontend/js/src/Profile.tsx:56 frontend/js/src/Profile.tsx:77
 msgid "Unverified"
-msgstr ""
+msgstr "Kontrollimata"
 
 #: frontend/js/src/Profile.tsx:61
 msgid "Your current email will be replaced once the new email is verified."
@@ -3696,7 +3707,7 @@ msgstr ""
 #: frontend/js/src/forms/LoginUser.tsx:66
 #: frontend/js/src/forms/LostPassword.tsx:26
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Kas unustasid oma salasõna?"
 
 #: frontend/js/src/forms/LoginUser.tsx:109
 msgid "Don't have an account?"
@@ -3730,15 +3741,15 @@ msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:71
 msgid "Current Password"
-msgstr ""
+msgstr "Senine salasõna"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:80
 msgid "New Password"
-msgstr ""
+msgstr "Uus salasõna"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:89
 msgid "Confirm New Password"
-msgstr ""
+msgstr "Korda uut salasõna"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:112
 msgid "Update"
@@ -3746,7 +3757,7 @@ msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:89
 msgid "Reset Password"
-msgstr ""
+msgstr "Lähtesta salasõna"
 
 #: frontend/js/src/forms/SignupCommercial.tsx:38
 msgid "If you would like to support us with more than $"
@@ -3992,27 +4003,27 @@ msgstr ""
 
 #: frontend/js/src/forms/SignupUser.tsx:191
 msgid "We will never share your personal information."
-msgstr ""
+msgstr "Me iialgi ei jaga sinu isikuandmeid."
 
 #: frontend/js/src/forms/SignupUser.tsx:200
 msgid "Click here to read more"
-msgstr ""
+msgstr "Lisateabe lugemiseks klõpsa siia"
 
 #: frontend/js/src/forms/SignupUser.tsx:224
 msgid "Create account"
-msgstr ""
+msgstr "Loo kasutajakonto"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:39
 msgid "This email address is already registered."
-msgstr ""
+msgstr "See e-posti aadress on juba registreeritud."
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
-msgstr ""
+msgstr "E-posti aadressi õigsuse kontrollimine ei õnnestunud"
 
 #: frontend/js/src/hooks/useEmailValidation.ts:82
 msgid "Invalid email address"
-msgstr ""
+msgstr "Vigane e-posti aadress"
 
 #~ msgid "You need to specify amount!"
 #~ msgstr ""
@@ -5317,4 +5328,3 @@ msgstr ""
 
 #~ msgid "Privacy policy"
 #~ msgstr ""
-
