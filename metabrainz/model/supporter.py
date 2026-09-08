@@ -38,7 +38,9 @@ class Supporter(db.Model):
     access to the API is determined by their `state` (active, pre_revenue, pending,
     waiting, rejected or limited). All non-commercial supporters have active state
     by default, but commercial supporters need to be approved by one of the admins
-    first.
+    first. Only supporters in the active state can access the replication API;
+    pre_revenue and limited supporters may use our data but do not get a replication
+    token, pre_revenue ones for free until their income grows.
     """
     __tablename__ = 'supporter'
 

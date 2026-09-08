@@ -386,7 +386,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                         )
                       )}
                     </li>
-                    {!isPreRevenue && (
+                    {state === "active" && (
                       <li>
                         {t(
                           "IP addresses from which replication packets are downloaded are logged."
