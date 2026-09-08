@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-25 16:21+0200\n"
+"POT-Creation-Date: 2026-09-08 11:18+0200\n"
 "PO-Revision-Date: 2026-06-12 00:55+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language: zh_HK\n"
@@ -21,162 +21,247 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: metabrainz/index/forms.py:46
+#: metabrainz/errors.py:24
+msgid "Authorization was declined."
+msgstr ""
+
+#: metabrainz/errors.py:25
+msgid "The authorization request was invalid."
+msgstr ""
+
+#: metabrainz/errors.py:26
+msgid "The application could not be authenticated."
+msgstr ""
+
+#: metabrainz/errors.py:27
+msgid "This application is not allowed to request authorization."
+msgstr ""
+
+#: metabrainz/errors.py:28
+msgid "The application asked for a response type this server does not support."
+msgstr ""
+
+#: metabrainz/errors.py:29
+msgid "The permissions requested by the application are invalid."
+msgstr ""
+
+#: metabrainz/errors.py:30
+msgid "You need to sign in to continue."
+msgstr ""
+
+#: metabrainz/errors.py:31
+msgid "Your consent is required to continue."
+msgstr ""
+
+#: metabrainz/password.py:12
+#, python-format
+msgid "Password must not exceed %(max_bytes)s bytes."
+msgstr ""
+
+#: metabrainz/index/forms.py:48
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:27
-#: frontend/js/src/forms/SignupCommercial.tsx:154
+#: frontend/js/src/forms/SignupCommercial.tsx:159
 #: frontend/js/src/forms/SignupNonCommercial.tsx:85
-#: frontend/js/src/forms/SignupUser.tsx:70
-#: frontend/js/src/hooks/useEmailValidation.ts:78 metabrainz/index/forms.py:57
-#: metabrainz/user/forms.py:25 metabrainz/user/forms.py:57
-#: metabrainz/user/forms.py:63
+#: frontend/js/src/forms/SignupUser.tsx:76
+#: frontend/js/src/hooks/useEmailValidation.ts:78 metabrainz/index/forms.py:59
+#: metabrainz/user/forms.py:31 metabrainz/user/forms.py:70
+#: metabrainz/user/forms.py:76
 msgid "Email address is required!"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
-#: metabrainz/index/forms.py:63
+#: metabrainz/index/forms.py:65
 msgid "Current password is required!"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
 #: frontend/js/src/forms/ResetPassword.tsx:39
-#: frontend/js/src/forms/SignupCommercial.tsx:156
+#: frontend/js/src/forms/SignupCommercial.tsx:161
 #: frontend/js/src/forms/SignupNonCommercial.tsx:87
-#: frontend/js/src/forms/SignupUser.tsx:72 metabrainz/index/forms.py:66
-#: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
-#: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
+#: frontend/js/src/forms/SignupUser.tsx:78 metabrainz/index/forms.py:69
+#: metabrainz/user/forms.py:35 metabrainz/user/forms.py:54
+#: metabrainz/user/forms.py:63 metabrainz/user/forms.py:82
 msgid "Password is required!"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
-#: frontend/js/src/forms/SignupCommercial.tsx:160
+#: frontend/js/src/forms/SignupCommercial.tsx:165
 #: frontend/js/src/forms/SignupNonCommercial.tsx:91
-#: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
-#: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
+#: frontend/js/src/forms/SignupUser.tsx:82 metabrainz/index/forms.py:74
+#: metabrainz/user/forms.py:40 metabrainz/user/forms.py:87
 msgid "Confirm Password is required!"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
-#: frontend/js/src/forms/SignupCommercial.tsx:165
+#: frontend/js/src/forms/SignupCommercial.tsx:170
 #: frontend/js/src/forms/SignupNonCommercial.tsx:96
-#: frontend/js/src/forms/SignupUser.tsx:81 metabrainz/index/forms.py:72
-#: metabrainz/user/forms.py:35 metabrainz/user/forms.py:75
+#: frontend/js/src/forms/SignupUser.tsx:87 metabrainz/index/forms.py:76
+#: metabrainz/user/forms.py:42 metabrainz/user/forms.py:89
 msgid "Confirm Password should match password!"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
 #: frontend/js/src/Profile.tsx:272 frontend/js/src/Profile.tsx:482
-#: metabrainz/index/forms.py:78
+#: metabrainz/index/forms.py:82
 msgid "Name"
 msgstr ""
 
-#: metabrainz/index/forms.py:79
+#: metabrainz/index/forms.py:83
 msgid "Contact name field is empty."
 msgstr ""
 
-#: metabrainz/index/views.py:234
+#: metabrainz/index/views.py:251
 msgid "Profile updated successfully."
 msgstr ""
 
-#: metabrainz/index/views.py:261
+#: metabrainz/index/views.py:278
 msgid "Current password is incorrect."
 msgstr ""
 
-#: metabrainz/index/views.py:266
+#: metabrainz/index/views.py:283
 msgid "Password changed successfully."
 msgstr ""
 
-#: metabrainz/index/views.py:372
+#: metabrainz/index/views.py:389
 msgid "You have updated an application!"
 msgstr ""
 
-#: metabrainz/index/views.py:424
+#: metabrainz/index/views.py:441
 msgid "You have deleted an application."
 msgstr ""
 
-#: metabrainz/index/views.py:426
+#: metabrainz/index/views.py:443
 msgid "Failed to delete an application."
 msgstr ""
 
-#: metabrainz/index/views.py:449
+#: metabrainz/index/views.py:466
 msgid "Revoked tokens successfully!"
 msgstr ""
 
-#: metabrainz/index/views.py:478
+#: metabrainz/index/views.py:495
 msgid "Your account has been deleted."
 msgstr ""
 
-#: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
+#: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:57
 msgid "Application Name"
 msgstr ""
 
-#: metabrainz/oauth/forms.py:59
+#: metabrainz/oauth/forms.py:58
 msgid "Application name field is empty."
 msgstr ""
 
-#: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
+#: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:59
 msgid "Application name needs to be at least 3 characters long."
 msgstr ""
 
-#: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
+#: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at most 64 characters long."
 msgstr ""
 
-#: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
+#: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:62
 msgid "Description"
 msgstr ""
 
-#: metabrainz/oauth/forms.py:64
+#: metabrainz/oauth/forms.py:63
 msgid "Client description field is empty."
 msgstr ""
 
-#: metabrainz/oauth/forms.py:65
+#: metabrainz/oauth/forms.py:64
 msgid "Client description needs to be at least 3 characters long."
 msgstr ""
 
-#: metabrainz/oauth/forms.py:66
+#: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at most 512 characters long."
 msgstr ""
 
-#: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
+#: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:67
 msgid "Homepage"
 msgstr ""
 
-#: metabrainz/oauth/forms.py:69
+#: metabrainz/oauth/forms.py:68
 msgid "Homepage field is empty."
 msgstr ""
 
-#: metabrainz/oauth/forms.py:70
+#: metabrainz/oauth/forms.py:69
 msgid "Homepage is not a valid URI."
 msgstr ""
 
-#: metabrainz/oauth/forms.py:71
+#: metabrainz/oauth/forms.py:70
 msgid "Homepage URL must use http or https"
 msgstr ""
 
-#: metabrainz/oauth/forms.py:73
+#: metabrainz/oauth/forms.py:72
 msgid "Authorization callback URL"
 msgstr ""
 
-#: metabrainz/oauth/forms.py:74
+#: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL field is empty."
 msgstr ""
 
-#: metabrainz/oauth/forms.py:75
+#: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL is invalid."
 msgstr ""
 
-#: metabrainz/oauth/forms.py:76
+#: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL must use http or https."
 msgstr ""
 
-#: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
+#: metabrainz/oauth/forms.py:80 metabrainz/oauth/forms.py:84
 msgid "Confirm"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:15
+msgid "View your public account information"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:16
+msgid "View your email address"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:17
+msgid "View and modify your private tags"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:18
+msgid "View and modify your private ratings"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:19
+msgid "View and modify your private collections"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:20
+msgid "Submit new ISRCs to the database"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:21
+msgid "Submit new barcodes to the database"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:22
+msgid "Sign you in and view your unique user id"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:23
+msgid "Submit listens to ListenBrainz."
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:24
+msgid "Create and modify CritiqueBrainz reviews."
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:25
+msgid "Submit and delete votes on CritiqueBrainz reviews."
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:26
+msgid "Modify profile info and delete profile on CritiqueBrainz."
 msgstr ""
 
 #: metabrainz/payments/views.py:164
@@ -221,178 +306,185 @@ msgid "Requested annual report was not found."
 msgstr ""
 
 #: frontend/js/src/forms/ProfileEdit.tsx:30
-#: frontend/js/src/forms/SignupCommercial.tsx:139
+#: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:70
-#: metabrainz/supporter/forms.py:13
+#: metabrainz/supporter/forms.py:15
 msgid "Contact name is required!"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:437
+#: frontend/js/src/forms/SignupCommercial.tsx:441
 #: frontend/js/src/forms/SignupNonCommercial.tsx:264
-#: metabrainz/supporter/forms.py:15
+#: metabrainz/supporter/forms.py:17
 msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:137
+#: frontend/js/src/forms/SignupCommercial.tsx:142
 #: frontend/js/src/forms/SignupNonCommercial.tsx:68
-#: metabrainz/supporter/forms.py:17
+#: metabrainz/supporter/forms.py:19
 msgid "Please, tell us how you (will) use our data."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:138
+#: frontend/js/src/forms/SignupCommercial.tsx:143
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
-#: metabrainz/supporter/forms.py:18
+#: metabrainz/supporter/forms.py:20
 msgid "Please, limit usage description to 500 characters."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:141
-#: frontend/js/src/forms/SignupCommercial.tsx:142
+#: frontend/js/src/forms/SignupCommercial.tsx:146
+#: frontend/js/src/forms/SignupCommercial.tsx:147
 #: frontend/js/src/forms/SignupNonCommercial.tsx:72
 #: frontend/js/src/forms/SignupNonCommercial.tsx:73
-#: frontend/js/src/forms/SignupUser.tsx:84
-#: frontend/js/src/forms/SignupUser.tsx:85 metabrainz/supporter/forms.py:21
-#: metabrainz/user/forms.py:38
+#: frontend/js/src/forms/SignupUser.tsx:90
+#: frontend/js/src/forms/SignupUser.tsx:91 metabrainz/supporter/forms.py:23
+#: metabrainz/user/forms.py:45
 msgid "You need to accept the agreement!"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:342
-#: metabrainz/supporter/forms.py:27
+#: frontend/js/src/forms/SignupCommercial.tsx:347
+#: metabrainz/supporter/forms.py:29
 msgid "Organization name"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:113
-#: metabrainz/supporter/forms.py:28
+#: frontend/js/src/forms/SignupCommercial.tsx:115
+#: metabrainz/supporter/forms.py:30
 msgid "You need to specify the name of your organization."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:373
-#: metabrainz/supporter/forms.py:30
+#: frontend/js/src/forms/SignupCommercial.tsx:378
+#: metabrainz/supporter/forms.py:32
 msgid "Organization description"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:116
-#: metabrainz/supporter/forms.py:31
+#: frontend/js/src/forms/SignupCommercial.tsx:118
+#: metabrainz/supporter/forms.py:33
 msgid "You need to provide description of your organization."
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:278
-#: frontend/js/src/forms/SignupCommercial.tsx:396
-#: metabrainz/supporter/forms.py:34
+#: frontend/js/src/forms/SignupCommercial.tsx:401
+#: metabrainz/supporter/forms.py:36
 msgid "Website URL"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:119
-#: metabrainz/supporter/forms.py:35
-msgid "You need to specify website of the organization."
+#: frontend/js/src/forms/SignupCommercial.tsx:121
+#: frontend/js/src/forms/SignupCommercial.tsx:123
+#: metabrainz/supporter/forms.py:38 metabrainz/supporter/forms.py:42
+msgid "Website URL must be a valid URL."
 msgstr ""
 
-#: metabrainz/supporter/forms.py:37
+#: metabrainz/supporter/forms.py:45
 msgid "Logo image URL"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:284
-#: frontend/js/src/forms/SignupCommercial.tsx:418
-#: metabrainz/supporter/forms.py:38
+#: frontend/js/src/forms/SignupCommercial.tsx:422
+#: metabrainz/supporter/forms.py:46
 msgid "API URL"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:457
-#: metabrainz/supporter/forms.py:40
+#: frontend/js/src/forms/SignupCommercial.tsx:461
+#: metabrainz/supporter/forms.py:48
 msgid "Street"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:123
-#: metabrainz/supporter/forms.py:41
+#: frontend/js/src/forms/SignupCommercial.tsx:128
+#: metabrainz/supporter/forms.py:49
 msgid "You need to specify street."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:465
-#: metabrainz/supporter/forms.py:43
+#: frontend/js/src/forms/SignupCommercial.tsx:469
+#: metabrainz/supporter/forms.py:51
 msgid "City"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:124
-#: metabrainz/supporter/forms.py:44
+#: frontend/js/src/forms/SignupCommercial.tsx:129
+#: metabrainz/supporter/forms.py:52
 msgid "You need to specify city."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:473
-#: metabrainz/supporter/forms.py:46
+#: frontend/js/src/forms/SignupCommercial.tsx:477
+#: metabrainz/supporter/forms.py:54
 msgid "State / Province"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:126
-#: metabrainz/supporter/forms.py:47
+#: frontend/js/src/forms/SignupCommercial.tsx:131
+#: metabrainz/supporter/forms.py:55
 msgid "You need to specify state/province."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:481
-#: metabrainz/supporter/forms.py:49
+#: frontend/js/src/forms/SignupCommercial.tsx:485
+#: metabrainz/supporter/forms.py:57
 msgid "Postcode"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:128
-#: metabrainz/supporter/forms.py:50
+#: frontend/js/src/forms/SignupCommercial.tsx:133
+#: metabrainz/supporter/forms.py:58
 msgid "You need to specify postcode."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:489
-#: metabrainz/supporter/forms.py:52
+#: frontend/js/src/forms/SignupCommercial.tsx:493
+#: metabrainz/supporter/forms.py:60
 msgid "Country"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:129
-#: metabrainz/supporter/forms.py:53
+#: frontend/js/src/forms/SignupCommercial.tsx:134
+#: metabrainz/supporter/forms.py:61
 msgid "You need to specify country."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:132
-#: metabrainz/supporter/forms.py:64
+#: frontend/js/src/forms/SignupCommercial.tsx:137
+#: metabrainz/supporter/forms.py:72
 msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
 msgstr ""
 
-#: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
-#: metabrainz/supporter/views.py:220
+#: metabrainz/supporter/views.py:54
+msgid ""
+"The verification email could not be sent. Please request a new one from "
+"your profile."
+msgstr ""
+
+#: metabrainz/supporter/views.py:85 metabrainz/supporter/views.py:158
+#: metabrainz/supporter/views.py:260
 msgid "You are already a supporter."
 msgstr ""
 
-#: metabrainz/supporter/views.py:61
+#: metabrainz/supporter/views.py:100
 msgid "Can't find tier with a specified ID."
 msgstr ""
 
-#: metabrainz/supporter/views.py:127
+#: metabrainz/supporter/views.py:166
 msgid "You need to choose support tier before signing up!"
 msgstr ""
 
-#: metabrainz/supporter/views.py:137
+#: metabrainz/supporter/views.py:176
 msgid "You need to choose existing tier before signing up!"
 msgstr ""
 
-#: metabrainz/supporter/views.py:164
+#: metabrainz/supporter/views.py:204
 msgid ""
 "Thanks for becoming a supporter! Your application will be reviewed soon. "
 "We will send you updates via email."
 msgstr ""
 
-#: metabrainz/supporter/views.py:187
+#: metabrainz/supporter/views.py:228
 msgid ""
 "Thanks for signing up! Your application will be reviewed soon. We will "
 "send you updates via email."
 msgstr ""
 
-#: metabrainz/supporter/views.py:248
+#: metabrainz/supporter/views.py:288
 msgid "Thanks for becoming a supporter!"
 msgstr ""
 
-#: metabrainz/supporter/views.py:274
+#: metabrainz/supporter/views.py:312
 msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr ""
 
-#: metabrainz/supporter/views.py:302
+#: metabrainz/supporter/views.py:340
 msgid "Can't generate new token unless account is active."
 msgstr ""
 
@@ -426,7 +518,7 @@ msgstr ""
 msgid "Policies"
 msgstr ""
 
-#: metabrainz/templates/base.html:55 metabrainz/templates/index/gdpr.html:178
+#: metabrainz/templates/base.html:55
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
@@ -436,14 +528,15 @@ msgstr ""
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
-#: metabrainz/templates/index/gdpr.html:181 metabrainz/templates/navbar.html:35
+#: metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
 msgstr ""
 
+#: frontend/js/src/PrivacySummary.tsx:11
 #: frontend/js/src/forms/ConditionsModal.tsx:21
-#: metabrainz/templates/base.html:57 metabrainz/templates/index/gdpr.html:184
-#: metabrainz/templates/index/privacy.html:6
+#: metabrainz/templates/base.html:57 metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
+#: metabrainz/templates/users/privacy-summary.html:3
 msgid "Privacy Policy"
 msgstr ""
 
@@ -476,10 +569,7 @@ msgstr ""
 msgid "Supporters"
 msgstr ""
 
-#: frontend/js/src/forms/LoginUser.tsx:103
-#: frontend/js/src/forms/SignupCommercial.tsx:574
-#: frontend/js/src/forms/SignupNonCommercial.tsx:339
-#: frontend/js/src/forms/SignupUser.tsx:232 metabrainz/templates/base.html:73
+#: frontend/js/src/forms/LoginUser.tsx:103 metabrainz/templates/base.html:73
 #: metabrainz/templates/navbar.html:66 metabrainz/templates/users/login.html:3
 msgid "Sign in"
 msgstr ""
@@ -501,26 +591,26 @@ msgid "Contact us"
 msgstr ""
 
 #: metabrainz/templates/base.html:85
-#: metabrainz/templates/index/contact.html:105
+#: metabrainz/templates/index/contact.html:106
 msgid "Blog"
 msgstr ""
 
-#: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
+#: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:91
 msgid "Chat"
 msgstr ""
 
 #: metabrainz/templates/base.html:87
-#: metabrainz/templates/index/contact.html:106
+#: metabrainz/templates/index/contact.html:107
 msgid "Mastodon"
 msgstr ""
 
 #: metabrainz/templates/base.html:88
-#: metabrainz/templates/index/contact.html:107
+#: metabrainz/templates/index/contact.html:108
 msgid "Bluesky"
 msgstr ""
 
 #: metabrainz/templates/base.html:89
-#: metabrainz/templates/index/contact.html:108
+#: metabrainz/templates/index/contact.html:109
 msgid "Instagram"
 msgstr ""
 
@@ -576,15 +666,14 @@ msgstr ""
 msgid "Donate"
 msgstr ""
 
-#: frontend/js/src/forms/LoginUser.tsx:110
-#: frontend/js/src/forms/SignupCommercial.tsx:175
-#: frontend/js/src/forms/SignupCommercial.tsx:555
+#: frontend/js/src/forms/SignupCommercial.tsx:180
+#: frontend/js/src/forms/SignupCommercial.tsx:559
 #: frontend/js/src/forms/SignupNonCommercial.tsx:106
 #: frontend/js/src/forms/SignupNonCommercial.tsx:319
 #: metabrainz/templates/navbar.html:65
-#: metabrainz/templates/supporters/account-type.html:51
-#: metabrainz/templates/supporters/account-type.html:93
-#: metabrainz/templates/supporters/account-type.html:144
+#: metabrainz/templates/supporters/account-type.html:47
+#: metabrainz/templates/supporters/account-type.html:84
+#: metabrainz/templates/supporters/account-type.html:130
 #: metabrainz/templates/users/signup.html:3
 msgid "Sign up"
 msgstr ""
@@ -891,8 +980,430 @@ msgstr ""
 msgid "Introduction"
 msgstr ""
 
-#: metabrainz/templates/index/conflict-policy.html:55
+#: metabrainz/templates/index/conflict-policy.html:17
+msgid ""
+"Conflicts between people arise in open source projects constantly and the"
+" projects by the \n"
+"    MetaBrainz Foundation are no different. This policy aims to establish"
+" a clear and unambiguous \n"
+"    policy for reporting and addressing conflicts in our community. In "
+"this policy we aim to \n"
+"    establish a fair practice that balances the need for confidentiality "
+"and our desire for \n"
+"    transparency in our operations."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:25
+#, python-format
+msgid ""
+"Before you continue to read this policy, we encourage you to review our "
+"existing community policies \n"
+"    including our <a href=\"%(social_contract_url)s\">Social "
+"Contract</a>, \n"
+"    <a href=\"%(code_of_conduct_url)s\">the Code of Conduct</a>, \n"
+"    and our <a href=\"%(privacy_policy_url)s\">Privacy Policy</a>. These "
+"policies establish the norms and rules for \n"
+"    participation in our projects; these policies apply equally to the "
+"contractors of the MetaBrainz \n"
+"    Foundation and any participants in our projects."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:37
+msgid ""
+"This policy divides conflicts into two categories: Private and public. "
+"Private conflicts are conflicts \n"
+"    that involve *confidential* information regarding contributors, "
+"contractors or supporters. Otherwise, any conflicts \n"
+"    that do not involve confidential information are considered to be "
+"public conflicts. For instance, a \n"
+"    conflict between a contractor and the Executive Director (aka BDFL) "
+"that involves contractor pay is \n"
+"    considered a private conflict because pay rates are confidential "
+"information. A public conflict in edit \n"
+"    notes between two editors in our community does not involve "
+"confidential information and therefore should \n"
+"    be considered a public conflict."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:47
+msgid ""
+"When conflicts arise we aim to disclose as much information as possible "
+"about the conflict in a timely \n"
+"    fashion. When conflicts contain confidential matters we will aim to "
+"disclose as much information as \n"
+"    possible, while fully respecting the confidentiality of the people "
+"involved in the conflict. With any \n"
+"    private conflict we will aim to extract the relevant lessons for the "
+"team and community in an effort to \n"
+"    evolve our policies to prevent future conflicts. Should the involved "
+"parties disagree whether a conflict \n"
+"    is private or public, the question about the nature of the conflict "
+"will be presented for the next higher \n"
+"    level in the chain of command to decide. (e.g. if a community member "
+"and the community manager disagree on \n"
+"    a conflict being public or private, the Executive Director shall "
+"decide if the conflict is public or private)."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:58
 msgid "Reporting and Response"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:61
+msgid ""
+"We aim to not have conflict in our community, but we recognize that in "
+"reality conflicts will arise and we \n"
+"    must be prepared to address them in a fair manner. When conflicts "
+"arise, we prefer to have community or team \n"
+"    members resolve the conflicts among themselves, using our existing "
+"policies as guidelines for resolving the \n"
+"    conflict."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:69
+msgid ""
+"If you do not feel comfortable resolving a conflict on your own, you "
+"should feel free to report the conflict to \n"
+"    us. How you address the conflict depends on who is involved in the "
+"conflict and your comfort level. Please see \n"
+"    the detailed sections below on how and with whom to address your "
+"conflict. We aim to address conflicts as soon \n"
+"    as possible in an effort to prevent them from escalating "
+"unnecessarily."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:75
+msgid "Direct conflict resolution"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:78
+msgid ""
+"In direct conflict resolution, the involved parties will attempt to "
+"resolve the conflict themselves without \n"
+"   involving any MetaBrainz Foundation team member. You should aim to use"
+" direct resolution when the conflict does \n"
+"   not involve the violation of one of our policies or if the conflict is"
+" minor."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:84
+#, python-format
+msgid ""
+"For instance, if a user uses a rude tone, is disruptive or flagrantly "
+"ignores our project guidelines, we suggest \n"
+"    that you use direct conflict resolution to resolve the conflict. Some"
+" resources that might give you some suggestions \n"
+"    on how to go about resolving the conflict might be this <a "
+"href=\"%(conflict_resolution_primer_url)s\">\n"
+"    conflict resolution primer</a> and <a "
+"href=\"%(difficult_conversations_url)s\">how to\n"
+"    have difficult conversations at work</a>."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:93
+msgid "Informal reporting"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:96
+msgid ""
+"You may use informal reporting of a conflict if you aim to communicate a "
+"concern or incident without \n"
+"    seeking a corrective outcome. Informal reporting may also be an "
+"option if you have not been personally \n"
+"    victimized, but you’ve witnessed a violation of our policies or where"
+" you wish to maintain confidentiality \n"
+"    throughout the entire reporting process."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:103
+msgid ""
+"For editing in MusicBrainz you may informally report a user using the "
+"“Report this user for bad behavior” \n"
+"    link from the user’s profile. For reporting bad user behavior in "
+"other of our projects, please report them to our \n"
+"    community manager by mailing <span class=\"backemail\">gro.zniarbatem"
+"@reganam-ytinummoc</span> . For conflicts \n"
+"    that involve the community manager, report them by mailing <span "
+"class=\"backemail\">gro.zniarbatem@de</span> ."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:110
+msgid ""
+"Depending the the severity of the issue, repeated informal complaints may"
+" eventually require a formal response \n"
+"    from the MetaBrainz team. If an involved party requires anonymity, "
+"the conflict becomes a private conflict. If at \n"
+"    all possible minor issues should be resolved in a public forum in "
+"order for all people to witness and learn from \n"
+"    the issue at hand."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:116
+msgid "Formal complaint process"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:119
+msgid ""
+"All complaints about conflicts should be submitted via email. To whom a "
+"complaint should be mailed and who will \n"
+"    carry out the investigation will be described in the next section."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:124
+msgid "All complaint submissions to the Foundation should include the following:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:128
+msgid ""
+"Contact info, if it is different than the email used to submit the "
+"conflict"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:129
+msgid "Who was involved in the conflict"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:130
+msgid "Where and when the incident happened"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:131
+msgid ""
+"A description of what happened -- ideally with links (e.g. chatlogs, edit"
+" notes) that outlines what \n"
+"         happened so that the persons evaluating the conflict may "
+"understand the issue at hand"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:133
+msgid ""
+"Any related pieces of information that provide more context on the "
+"conflict (e.g. links, screenshots)"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:134
+msgid "An indication if this conflict is ongoing or not"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:139
+msgid "The investigation that follows aims to determine:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:143
+msgid "The nature and severity of the incident"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:144
+msgid ""
+"Whether or not the incident is considered a violation of MetaBrainz’ "
+"conduct policies or core values"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:145
+msgid ""
+"The amount of harm experienced by the person who submitted the complaint "
+"and the broader MetaBrainz community \n"
+"         as a result of the incident"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:147
+msgid ""
+"Whether there have been prior complaints against the individual or "
+"individuals reported"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:148
+msgid "Whether the incident is ongoing"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:152
+msgid ""
+"The following potential forms of resolution may apply to any team members"
+" involved in the conflict:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:155
+#: metabrainz/templates/index/conflict-policy.html:168
+msgid "Nothing (if it has been found no violation occurred)"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:156
+msgid "Creating a plan to improve the performance"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:157
+msgid "Creating a negative performance evaluation"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:158
+msgid "Mediation, an intervention by a third party to resolve the conflict"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:159
+msgid "Suspension or forced leave"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:160
+msgid "Termination of contract"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:164
+msgid ""
+"The following potential forms of resolution may apply to non team members"
+" involved in the conflict:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:169
+msgid "A reprimand, either public or private"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:170
+msgid "Suspension of the users’ account"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:171
+msgid "Deletion of the users’ account"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:172
+msgid ""
+"Removal of user privileges (e.g. if an auto editor commits a serious "
+"offence, they may lose their auto editor status)"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:175
+msgid "Filing a complaint"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:178
+msgid ""
+"NOTE: For complaints not about MetaBrainz staff, please see the "
+"<em>Informal reporting</em> section above."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:182
+msgid ""
+"If the complaint does not involve the Executive Director (ED), do the "
+"following:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:186
+msgid ""
+"If team member has directly violated conduct policies or engaged in "
+"otherwise harmful behavior, a formal complaint should be filed."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:187
+msgid ""
+"Mail <span class=\"backemail\">gro.zniarbatem@de</span> and include the "
+"complaint information outlined above."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:188
+msgid ""
+"You should expect a response within a working day acknowledging the "
+"complaint."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:189
+msgid ""
+"The complaint will be investigated by the ED, member(s) of the board of "
+"directors or a neutral third party."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:190
+msgid ""
+"Once the investigation has been completed, the ED, with the support of "
+"others involved in the investigation will respond. The \n"
+"        ED will respond to incidents no later than 7 working days after a"
+" complaint has been filed with either a resolution or an \n"
+"        explanation of why the process must be extended."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:196
+msgid "If a complaint involves the Executive Director, do the following:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:200
+msgid ""
+"If the Executive Director has directly violated conduct policies or "
+"engaged in otherwise harmful behavior, \n"
+"        a formal complaint should be filed with the board of directors."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:202
+msgid ""
+"Mail <span class=\"backemail\">gro.zniarbatem@noituloser-tcilfnoc</span> "
+"and include the complaint information outlined above."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:203
+msgid ""
+"You should get a response within 5 working days acknowledging the "
+"complaint."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:204
+msgid ""
+"The complaint will be investigated by the member(s) of the board of "
+"directors, the community manager, a neutral \n"
+"        third party or a combination thereof."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:206
+msgid ""
+"Once the investigation has been completed, the board, with the support of"
+" others involved in the investigation \n"
+"        will respond. The board will aim to respond to incidents no later"
+" than 15 working days after a complaint has been filed \n"
+"        with either a resolution or an explanation of why the process "
+"must be extended."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:211
+msgid "Confidentiality"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:214
+msgid ""
+"Confidentiality is an important aspect of conflict resolution and all of "
+"the conflicts brought to the attention of the foundation \n"
+"    will be evaluated with confidentiality in mind and acted upon "
+"accordingly."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:219
+msgid ""
+"We work hard to make all of the actions of the foundation as transparent "
+"and open as possible. In cases where we cannot \n"
+"    disclose all aspects of a conflict we will disclose that a conflict "
+"is or has occurred and we will attempt to disclose the \n"
+"    appropriate amount of information about the conflict while balancing "
+"the need for confidentiality and our desire to learn \n"
+"    from conflicts so that we as a foundation and community can learn "
+"from these conflicts and improve our policies to avoid the \n"
+"    conflicts in the future."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:227
+msgid ""
+"Any breaches of confidentiality will be treated as severe breaches of our"
+" conduct policies."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:230
+msgid "Retaliation"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:233
+msgid ""
+"We will not allow retaliation for any contractor or volunteer that files "
+"a complaint or is involved in an investigation. If you \n"
+"    believe that you are being treated negatively because of your "
+"involvement in a complaint please report this complaint directly \n"
+"    to the ED at <span class=\"backemail\">gro.zniarbatem@de</span> or "
+"the board at \n"
+"    <span class=\"backemail\">gro.zniarbatem@noituloser-tcilfnoc</span>."
 msgstr ""
 
 #: metabrainz/templates/index/contact.html:3
@@ -973,7 +1484,7 @@ msgstr ""
 msgid ""
 "We are currently evaluating our overall online advertising strategy. We "
 "are evaluating advertising, traffic optimization,\n"
-"    search engine optimization and software monitization technologies. If"
+"    search engine optimization and software monetization technologies. If"
 " you provide these professional services, please provide a detailed\n"
 "    deck of your comprehensive services to the following email address. "
 "<em>Please respect our other non-media teams and do not contact us \n"
@@ -1048,11 +1559,11 @@ msgstr ""
 #, python-format
 msgid ""
 "Please come ask your questions at our <a "
-"href=\"%(forums_url)s\">forums</a>! We would love to\n"
-"    answer any questions you may have."
+"href=\"%(forums_url)s\">forums</a>!\n"
+"    The community and the team will be more than happy to help you."
 msgstr ""
 
-#: metabrainz/templates/index/contact.html:92
+#: metabrainz/templates/index/contact.html:93
 #, python-format
 msgid ""
 "The MetaBrainz/MusicBrainz/ListenBrainz team and community hang out\n"
@@ -1062,15 +1573,15 @@ msgid ""
 "    <a href=\"%(chatlogs_url)s\">chat log archives</a>."
 msgstr ""
 
-#: metabrainz/templates/index/contact.html:101
+#: metabrainz/templates/index/contact.html:102
 msgid "Social media"
 msgstr ""
 
-#: metabrainz/templates/index/contact.html:103
+#: metabrainz/templates/index/contact.html:104
 msgid "You can follow us on these social channels:"
 msgstr ""
 
-#: metabrainz/templates/index/contact.html:112
+#: metabrainz/templates/index/contact.html:113
 msgid "Mailing address"
 msgstr ""
 
@@ -1083,33 +1594,349 @@ msgstr ""
 msgid "GDPR Compliance Statement"
 msgstr ""
 
-#: metabrainz/templates/index/gdpr.html:37
+#: metabrainz/templates/index/gdpr.html:10
+msgid ""
+"The General Data Protection Regulation is a complex EU regulation that "
+"stipulates many points for protecting private data of\n"
+"    users on the Internet. Even though this is an EU regulation, it has a"
+" worldwide impact due to the nature of the Internet.\n"
+"    The MetaBrainz Foundation with its collection of projects is also "
+"affected by this regulation. We’ve been learning and adapting\n"
+"    our sites to be compliant with the GDPR – sadly this regulation isn’t"
+" entirely black and white and there is an incredible\n"
+"    amount of room left for interpretation of these rules."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:17
+msgid ""
+"The good news is that this regulation is roughly in line with our "
+"established practices: We’ve always held private information\n"
+"    in a high regard and applied the sort of rules to ourselves as we "
+"wish to have our own private data treated. Luckily, this\n"
+"    makes our compliance effort considerably easier. We’ve made two "
+"significant changes to how we treat your data and also adopted\n"
+"    terminology as used in the GDPR in order to use the same languages "
+"that many other sites are now adopting. Please keep reading\n"
+"    to find out the exact details of what we are doing to comply."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:24
+#, python-format
+msgid ""
+"However, we do ask for your compassion and help in our process of "
+"complying with the GDPR. As we already mentioned, the GDPR is\n"
+"    a complex set of rules that are not fully clarified yet. We’ve taken "
+"action on the steps that are clear to us and we’re following\n"
+"    ongoing conversations on points that are in gray zones or unclear to "
+"us. We’ve made our best initial effort on compliance and\n"
+"    promise to keep working on it as the picture becomes more clear. If "
+"you believe that we could improve our compliance, please\n"
+"    <a href=\"%(contact_url)s\">contact us</a> and let us know what we "
+"can do to improve. It would also help us if you\n"
+"    could provide concrete discussion or examples to help us understand "
+"and take action on your suggestion."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:33
+msgid ""
+"Finally, below are the key sections of the GDPR as we understand them and"
+" how they affect your data in our ecosystem. Where\n"
+"    possible, we provide links for deeper understanding, links for you to"
+" examine our relevant code and links to tickets to follow\n"
+"    the process of improving our compliance."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:38
 msgid "Right to be forgotten"
 msgstr ""
 
-#: metabrainz/templates/index/gdpr.html:77
+#: metabrainz/templates/index/gdpr.html:41
+msgid ""
+"Summary: <i>Provide the user with the ability to remove their private "
+"data from our services</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:44
+msgid ""
+"The most important aspect of the right to be forgotten is the ability to "
+"delete your account. Once you request for us to delete\n"
+"    your account, we will remove any personally identifying information "
+"you may have provided us from your account (name, email\n"
+"    address, gender, biography, URL, etc.). The visible name on your "
+"account will be changed to “Deleted User #####” and effectively\n"
+"    the account will no longer be identifiable as your account."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:50
+msgid ""
+"However, given the nature of our projects where we work on collaborative "
+"databases, your contributions that are not personally\n"
+"    identifying are valuable assets to our database and these "
+"contributions will not be removed from our databases. But we will\n"
+"    ensure that these contributions no longer contain personally "
+"identifying data."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:55
+#, python-format
+msgid ""
+"Our process of automatically deleting your accounts across the MetaBrainz"
+" ecosystem is not complete yet (see below for a set of\n"
+"    tickets where you can track our progress). If you would like to "
+"delete your accounts in the MetaBrainz ecosystem or mark a\n"
+"    donation that is currently public as a private donation, please <a "
+"href=\"%(contact_url)s\">contact us</a>\n"
+"    and we will address your request as soon as possible."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:62
+#: metabrainz/templates/index/gdpr.html:182
+msgid "Links:"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:66
+#, python-format
+msgid ""
+"<a href=\"%(editor_deletion_doc_url)s\">How we delete accounts\n"
+"       in MusicBrainz</a> (warning, geek content ahead!)"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:70
+msgid ""
+"Implement sitewide user account deletion in\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/MBS-9680\">MusicBrainz</a>,"
+"\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/AB-337\">AcousticBrainz</a>,"
+"\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/BB-260\">BookBrainz</a>,\n"
+"         <a href=\"https://tickets.metabrainz.org/browse/MEB-103\">the "
+"MetaBrainz Site</a>,\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/LB-354\">ListenBrainz</a>, "
+"and\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/CB-307\">CritiqueBrainz</a>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:80
 msgid "Restriction of processing"
 msgstr ""
 
-#: metabrainz/templates/index/gdpr.html:110
+#: metabrainz/templates/index/gdpr.html:83
+msgid ""
+"Summary: <i>To allow the user to control how their personally identifying"
+" data is being used.</i>"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:86
+msgid ""
+"Except for the ListenBrainz and AcousticBrainz projects, we do not "
+"process personally identifying data. Any personally\n"
+"    identifying data that our projects store is for the purpose of being "
+"able to contact you about your contributions to our database\n"
+"    (email address) or for voluntarily showing information about you to "
+"other users (biography, homepage, location, etc)."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:91
+#, python-format
+msgid ""
+"The ListenBrainz project differs in that the Listens (metadata about what"
+" music you have listened to) are stored on our servers\n"
+"    and <a href=\"%(listenbrainz_data_url)s\">made available to the "
+"public</a>. We believe Listens to be personally identifying\n"
+"    data and furthermore, we have goals of creating open source "
+"recommendation engines with this data, which involves processing the\n"
+"    user’s data. These two points are fundamental goals of the "
+"ListenBrainz project and we do not see a reasonable way to reach another"
+"\n"
+"    compromise position."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:99
+msgid ""
+"Because of this, we are going to require users to either acknowledge that"
+" we may process their Listen data or alternatively to\n"
+"    delete their account, including all of their Listens. Please note "
+"that if you decide to delete your ListenBrainz account, it may\n"
+"    take up to two weeks for all of your listens to no longer be included"
+" in our efforts to build a recommendation engine."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:104
+msgid ""
+"We have always made it clear that the data in ListenBrainz was to be "
+"public and that we plan to build new tools with your data, so\n"
+"    this should not come as a surprise to our users."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:108
+msgid ""
+"The AcousticBrainz project does not track who submits data to the "
+"database. If you create an account and use our data creation\n"
+"    tools (e.g. create a dataset or participate in a challenge) then we "
+"link your participation and the things that you create to\n"
+"    your account. If you choose to delete your account then we keep the "
+"non personally identifying data that you create, but anonymize\n"
+"    it so that it cannot be linked back to you."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:114
 msgid "Right to data portability / exporting your data"
 msgstr ""
 
-#: metabrainz/templates/index/gdpr.html:150
+#: metabrainz/templates/index/gdpr.html:117
+msgid ""
+"Summary: <i>You have the right to access/download the data we store about"
+" you</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:120
+msgid ""
+"Except for the ListenBrainz and AcousticBrainz projects, we do not store "
+"personally identifying data beyond the\n"
+"    information that is available in your public profile on each of our "
+"projects. Since this data is plainly available in your\n"
+"    profile we do not provide a means for you to export this data."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:125
+msgid "There are the following exceptions to this:"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:129
+msgid ""
+"<b>IP addresses</b>: If you visit one of our sites the IP address of your"
+" computer is stored in our web logs for 7 days\n"
+"        before our servers automatically delete them. This data is almost"
+" never used by anyone: the only time we look at the\n"
+"        IP addresses is if our sites are adversely impacted by the "
+"actions of some unknown users. In that case, we may investigate\n"
+"        the logs to identify the IP address that needs to be blocked in "
+"order to restore the stability of our service.\n"
+"        This data is not available to anyone but the contractors of the "
+"MetaBrainz Foundation and is not available to download\n"
+"        to anyone at all."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:137
+#, python-format
+msgid ""
+"<b>ListenBrainz Listen data</b>: Users may <a "
+"href=\"%(listenbrainz_export_url)s\">export their ListenBrainz Listen\n"
+"        data</a> directly from the site. The user Listen data is also "
+"included in the <a href=\"%(listenbrainz_data_url)s\">ListenBrainz\n"
+"        data dumps</a> that are available for public download."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:146
+msgid ""
+"All of the non personally identifying data, such as your metadata "
+"contributions, are publicly visible, available for download\n"
+"    and available via the project APIs. For details about this data, "
+"downloads and APIs please check the documentation for the\n"
+"    respective projects you are interested in."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:151
+#, python-format
+msgid ""
+"Anyone wishing to get a list of financial donations they have made to the"
+" MetaBrainz Foundation, please\n"
+"    <a href=\"%(contact_url)s\">contact us</a> and provide your "
+"MusicBrainz editor name so that we can look up\n"
+"    your donations."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:157
 msgid "Right to rectification"
 msgstr ""
 
-#: metabrainz/templates/index/gdpr.html:165
+#: metabrainz/templates/index/gdpr.html:160
+msgid "Summary: <i>You have the right to correct your data</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:163
+msgid ""
+"All of our projects allow their users to update their personally "
+"identifying information in their profiles. Furthermore, most\n"
+"    of our projects allow the editing of their own metadata "
+"contributions. If you find that some of your data is incorrect, please\n"
+"    feel free to edit the data since we provide the tools to do so."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:168
+#, python-format
+msgid ""
+"If anyone who has made a financial donation to the MetaBrainz Foundation "
+"would like to make their donation private, please\n"
+"    <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:173
 msgid "Right to be informed"
 msgstr ""
 
-#: metabrainz/templates/index/gdpr.html:188
+#: metabrainz/templates/index/gdpr.html:175
+msgid ""
+"Summary: <i>You have the right to be informed about how we use your data "
+"in plain English</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:178
+msgid ""
+"Our privacy policy, as well as other policies, have always been written "
+"by humans for human consumption. We abhor legalese and\n"
+"    not speaking in direct terms."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:186
+msgid "Social contract"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:189
+msgid "Code of conduct"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:192
+msgid "Privacy policy"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:196
 msgid "Right to access"
 msgstr ""
 
-#: metabrainz/templates/index/gdpr.html:198
-#: metabrainz/templates/index/privacy.html:166
+#: metabrainz/templates/index/gdpr.html:199
+msgid ""
+"Summary: <i>You have the right to access the data that we collect about "
+"you</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:202
+msgid ""
+"All of our projects make all of the data we collect on your behalf, "
+"privately identifying or not, available to you. The\n"
+"    only exception to this are the IP addresses we store for 7 days – see"
+" above for details."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:206
+#: metabrainz/templates/index/privacy.html:168
 msgid "Privacy/GDPR Representative"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:209
+#, python-format
+msgid ""
+"If you have any questions about our privacy policy, please <a "
+"href=\"%(contact_url)s\">contact us</a>. To report\n"
+"   any privacy problems, violations or leaks, our GDPR representative is "
+"our Interim Executive Director Nicolás Tamargo and for\n"
+"   privacy issues contact him at <strong><a "
+"href=\"mailto:gdpr@metabrainz.org\">gdpr@metabrainz.org</a></strong>."
 msgstr ""
 
 #: metabrainz/templates/index/index.html:6
@@ -1214,13 +2041,51 @@ msgid ""
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:43
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:32
 #: metabrainz/templates/index/privacy.html:3
 msgid "Privacy"
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:8
 msgid "Summary"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:12
+msgid ""
+"You do not have to provide any personal data to be able to browse the "
+"contents of the databases published by MetaBrainz."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:15
+msgid ""
+"You do not have to provide any personally-identifying information if you "
+"choose not to."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:18
+msgid ""
+"We will never reveal your email address on MetaBrainz controlled web "
+"sites."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:22
+msgid ""
+"In order to get maximum value out of the MetaBrainz projects, you may "
+"want to create an account and log in. \n"
+"    Doing so grants you the ability to: edit the databases, contribute "
+"your own data, communicate with other users, and keep track \n"
+"    of recently released music from artists in your MusicBrainz "
+"collection. If you choose to create an account then the minimum we \n"
+"    ask is that you: choose a unique username and password, use a web "
+"browser that accepts \"session\" cookies, and provide a verified \n"
+"    email address."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:29
+msgid ""
+"If you do not create an account (or are not logged in) you will not have "
+"access to the above listed features, however, you will \n"
+"    still have full access to browse and examine the databases."
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:33
@@ -1231,39 +2096,197 @@ msgstr ""
 msgid "Cookies"
 msgstr ""
 
+#: metabrainz/templates/index/privacy.html:37
+msgid "We use two cookies that contain sensitive information:"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:42
+msgid ""
+"<b>remember_login</b>: If you choose the \"Log in permanently\" option "
+"when logging in to one of our sites; the cookie will be used to \n"
+"      remember your login details."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:46
+msgid ""
+"<b>musicbrainz_server_session, session, or connect.sid</b>: If you are "
+"logged into one of our sites, your current session ID is stored in this "
+"cookie."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:51
+msgid ""
+"We may store dynamic preference information in other cookies, but these "
+"do not contain any sensitive information."
+msgstr ""
+
 #: metabrainz/templates/index/privacy.html:54
 msgid "Web and FTP access logs"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:57
+msgid ""
+"In a practice similar to other web sites (and APIs) we keep logs of all "
+"web requests made against our servers. These logs include: your IP\n"
+"    address, your browser's (or API client's) \"User-Agent\" string, and "
+"which page (or API endpoint) you requested with which parameters. "
+"Aggregate information about web and FTP traffic is\n"
+"    made available to the public via our site usage pages."
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:62
 msgid "Third-Party content"
 msgstr ""
 
-#: metabrainz/templates/index/privacy.html:92
+#: metabrainz/templates/index/privacy.html:64
+msgid ""
+"Our projects' web pages may load some third-party content. Some, but "
+"possibly not all sites are listed below:"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:69
+#, python-format
+msgid ""
+"Cover art and other images: These are provided by the various cover art "
+"sites that have given MusicBrainz permission to do so and our own \n"
+"      <a href=\"%(caa_url)s\">Cover Art Archive</a>. This means that the "
+"relevant site will know (if they want to) your IP \n"
+"      address, User-Agent string, etc., and which MusicBrainz web page "
+"you were visiting (the one which included the cover art image)."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:75
+msgid ""
+"AcoustID: Our fingerprints tab loads fingerprint information from "
+"acoustid.org."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:78
+msgid ""
+"MTCaptcha: Our account creation page loads third party content in order "
+"to prevent spammers from creating accounts."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:83
+msgid ""
+"<i>The above information assumes that you are using \"normal\" web "
+"browser settings, whereby images are always loaded and HTTP referrer \n"
+"    information is always sent.</i>"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:88
+msgid ""
+"It is impractical to constantly modify this privacy policy when "
+"MetaBrainz projects change which third party content they utilize. We "
+"will \n"
+"    aim to use common sense, respect to our community and community "
+"review when adding more content from third party sites. We will also \n"
+"    periodically review our policy to ensure that it remains current."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:93
 msgid "Applicable to account holders"
 msgstr ""
 
-#: metabrainz/templates/index/privacy.html:94
+#: metabrainz/templates/index/privacy.html:95
 msgid "Account creation"
 msgstr ""
 
-#: metabrainz/templates/index/privacy.html:108
+#: metabrainz/templates/index/privacy.html:97
+msgid ""
+"When creating an account with a MetaBrainz project you need to pick a "
+"unique username and choose a password, the username you pick is the \n"
+"    only name associated with your account and will be what other "
+"MetaBrainz users know you as. You may optionally also tell us other \n"
+"    information about yourself that will be displayed to other MetaBrainz"
+" users and the public."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:103
+msgid ""
+"Additionally, in order to edit the databases you will need to provide a "
+"confirmed email address. This email address will be held in \n"
+"    confidence, the only method of revealing your email address to "
+"another user is if you choose to send a message to another \n"
+"    user and enable the option to \"reveal my email address\". Changing "
+"the email address stored with your account will require you to \n"
+"    verify the new address."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:109
 msgid "Edits and Notes"
 msgstr ""
 
-#: metabrainz/templates/index/privacy.html:114
+#: metabrainz/templates/index/privacy.html:111
+msgid ""
+"If you make any changes to a MetaBrainz project database, such as adding "
+"any data, the details of those changes will be visible to \n"
+"    other logged-in users and the change will be associated with your "
+"username."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:115
 msgid "Subscriptions on MusicBrainz"
 msgstr ""
 
-#: metabrainz/templates/index/privacy.html:131
+#: metabrainz/templates/index/privacy.html:117
+msgid ""
+"As a logged-in user you can subscribe to one or more artists, labels, "
+"collections or other editors. The act of subscribing causes \n"
+"    any edits made to (or by in the case of another editor) those "
+"entities to be emailed to you. By default, other users can see your \n"
+"    list of subscriptions, however, you can opt out of this by editing "
+"the appropriate preference."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:123
+msgid ""
+"This does not provide \"perfect\" privacy though, in some cases it will "
+"be possible to infer information about the contents of your \n"
+"    subscription list even though you have disallowed others from viewing"
+" that list directly. This imperfection arises because various \n"
+"    parts of the system behave differently depending on whether or not an"
+" entity has any subscribers; also, the number of users \n"
+"    subscribed to each artist is available via the artist pages. In the "
+"most extreme (possibly contrived) example, imagine that all \n"
+"    users have their subscriptions set to \"public\", except for exactly "
+"one user whose list is \"private\". In that case, any discrepancy \n"
+"    for a given artist between the shown list of subscribers and the "
+"total number of subscribers must be down to that one user. Thus, \n"
+"    you can infer what artists are on that user's list."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:132
 msgid "Third-party sites"
 msgstr ""
 
-#: metabrainz/templates/index/privacy.html:145
-msgid "MetaBrainz donors"
+#: metabrainz/templates/index/privacy.html:134
+#, python-format
+msgid ""
+"Our code reviews are done on GitHub, which is not under the control of "
+"MetaBrainz. Participating in code reviews or other\n"
+"    tasks carried out on GitHub are subject to <a "
+"href=\"%(github_url)s\">GitHub's privacy policy</a>."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:140
+#, python-format
+msgid ""
+"Our translations platform is provided and hosted by Weblate, which has a "
+"data processing agreement with MetaBrainz.\n"
+"    Participating in translations is subject to <a "
+"href=\"%(weblate_url)s\">dedicated legal terms</a>.\n"
+"    Any translations you make will be submitted to our Git repositories "
+"and publicly associated with your username;\n"
+"    if you so choose, you can also publicly associate them with your own "
+"verified email address."
 msgstr ""
 
 #: metabrainz/templates/index/privacy.html:147
+msgid "MetaBrainz donors"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:149
 msgid ""
 "When you make a donation to the MetaBrainz Foundation, we are legally\n"
 "    required to collect your personal information and keep it in our "
@@ -1273,7 +2296,7 @@ msgid ""
 "    information to anyone else, ever."
 msgstr ""
 
-#: metabrainz/templates/index/privacy.html:153
+#: metabrainz/templates/index/privacy.html:155
 msgid ""
 "We believe in transparent finances, which means that we list all "
 "donations\n"
@@ -1283,11 +2306,34 @@ msgid ""
 "process."
 msgstr ""
 
-#: metabrainz/templates/index/privacy.html:158
+#: metabrainz/templates/index/privacy.html:160
 msgid "Exceptions"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:598
+#: metabrainz/templates/index/privacy.html:162
+msgid ""
+"<i><b>Please note</b>: Reasonable exceptions may apply to the above "
+"policy, for example to comply with applicable laws.\n"
+"    Also, members of the MetaBrainz team and other personnel contracted "
+"to provide services to MetaBrainz may have access to\n"
+"    our infrastructure and could therefore view any information contained"
+" therein. However all personnel are contractually bound\n"
+"    by non-disclosure clauses which prevent them from making any such "
+"information available to others."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:171
+#, python-format
+msgid ""
+"If you have any questions about our GDPR statement, please <a "
+"href=\"%(contact_url)s\">contact us</a>. To report\n"
+"   any privacy problems, violations or leaks, our GDPR representative is "
+"our Interim Executive Director Nicolás Tamargo and for\n"
+"   privacy issues contact him at <strong><a "
+"href=\"mailto:gdpr@metabrainz.org\">gdpr@metabrainz.org</a></strong>."
+msgstr ""
+
+#: frontend/js/src/Profile.tsx:603
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
@@ -1531,6 +2577,11 @@ msgstr ""
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives on in our hearts and in open source."
+msgstr ""
+
+#: metabrainz/templates/index/team.html:29
+#: metabrainz/templates/index/team.html:315
+msgid "you’re welcome to try"
 msgstr ""
 
 #: metabrainz/templates/index/team.html:39
@@ -2028,8 +3079,10 @@ msgstr ""
 
 #: metabrainz/templates/payments/donate.html:146
 msgid ""
-"Due to the increased unreliability of the US Postal Service we have "
-"stopped accepting paper checks. Sorry!"
+"Due to the increased unreliability of the US Postal Service and the "
+"relatively large fees involved, we ask you to only send a paper check if "
+"it is the only possible option. Due to the fees, we will not cash checks "
+"for less than $25."
 msgstr ""
 
 #: metabrainz/templates/payments/donate.html:241
@@ -2913,8 +3966,8 @@ msgid "Monthly balance sheets"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:520
-#: frontend/js/src/forms/SignupCommercial.tsx:175
-#: frontend/js/src/forms/SignupCommercial.tsx:554
+#: frontend/js/src/forms/SignupCommercial.tsx:180
+#: frontend/js/src/forms/SignupCommercial.tsx:558
 #: frontend/js/src/forms/SignupNonCommercial.tsx:106
 #: frontend/js/src/forms/SignupNonCommercial.tsx:318
 #: metabrainz/templates/supporters/account-type.html:3
@@ -2935,6 +3988,7 @@ msgid "Non-commercial / Personal"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:235
+#: frontend/js/src/forms/SignupNonCommercial.tsx:107
 #: frontend/js/src/forms/SignupNonCommercial.tsx:151
 #: metabrainz/templates/supporters/account-type.html:42
 msgid "Non-commercial"
@@ -2948,55 +4002,45 @@ msgstr ""
 msgid "Personal or university assignment user."
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:48
-#: metabrainz/templates/supporters/account-type.html:90
-#: metabrainz/templates/supporters/account-type.html:141
-msgid "Upgrade"
-msgstr ""
-
 #: frontend/js/src/Profile.tsx:235
-#: frontend/js/src/forms/SignupCommercial.tsx:176
-#: frontend/js/src/forms/SignupCommercial.tsx:228
-#: metabrainz/templates/supporters/account-type.html:61
+#: frontend/js/src/forms/SignupCommercial.tsx:181
+#: frontend/js/src/forms/SignupCommercial.tsx:233
+#: metabrainz/templates/supporters/account-type.html:56
 msgid "Commercial"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:83
-#: metabrainz/templates/supporters/account-type.html:135
+#: metabrainz/templates/supporters/account-type.html:78
+#: metabrainz/templates/supporters/account-type.html:125
 #, python-format
 msgid "$%(tier_price)s/month and up"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:87
-#: metabrainz/templates/supporters/account-type.html:138
+#: metabrainz/templates/supporters/account-type.html:82
+#: metabrainz/templates/supporters/account-type.html:128
 msgid "More info"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:104
+#: metabrainz/templates/supporters/account-type.html:94
 msgid "View all tiers"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:112
+#: metabrainz/templates/supporters/account-type.html:102
 msgid "Some of our Unicorn members"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:123
+#: metabrainz/templates/supporters/account-type.html:113
 msgid "See all our supporters"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:151
+#: metabrainz/templates/supporters/account-type.html:136
 msgid "View featured tiers"
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:158
+#: metabrainz/templates/supporters/account-type.html:143
 #, python-format
 msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
-msgstr ""
-
-#: metabrainz/templates/supporters/account-type.html:166
-msgid "Back to Profile"
 msgstr ""
 
 #: metabrainz/templates/supporters/bad-standing.html:3
@@ -3058,9 +4102,9 @@ msgid "Forgot your username"
 msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
-#: frontend/js/src/forms/SignupCommercial.tsx:320
+#: frontend/js/src/forms/SignupCommercial.tsx:325
 #: frontend/js/src/forms/SignupNonCommercial.tsx:227
-#: frontend/js/src/forms/SignupUser.tsx:169
+#: frontend/js/src/forms/SignupUser.tsx:175
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
 msgid "Confirm Password"
@@ -3070,17 +4114,22 @@ msgstr ""
 msgid "Please re-enter your password to continue."
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:108
+#: frontend/js/src/ProfileDelete.tsx:110
 #: frontend/js/src/forms/DeleteApplication.tsx:53
 #: frontend/js/src/forms/OAuthPrompt.tsx:54
 #: frontend/js/src/forms/ProfileChangePassword.tsx:104
 #: frontend/js/src/forms/ProfileEdit.tsx:105
-#: metabrainz/templates/users/reauthenticate.html:23
+#: metabrainz/templates/users/reauthenticate.html:28
 msgid "Cancel"
 msgstr ""
 
-#: metabrainz/templates/users/reauthenticate.html:24
+#: metabrainz/templates/users/reauthenticate.html:29
 msgid "Continue"
+msgstr ""
+
+#: frontend/js/src/forms/utils.tsx:202
+#: metabrainz/templates/users/reauthenticate.html:40
+msgid "Password must not exceed 72 bytes."
 msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
@@ -3088,38 +4137,38 @@ msgstr ""
 msgid "Reset your password"
 msgstr ""
 
-#: frontend/js/src/hooks/useEmailValidation.ts:41 metabrainz/user/forms.py:15
+#: frontend/js/src/hooks/useEmailValidation.ts:41 metabrainz/user/forms.py:16
 msgid "Registration from this email domain is not allowed."
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:50
 #: frontend/js/src/forms/LostPassword.tsx:45
-#: frontend/js/src/forms/SignupCommercial.tsx:270
+#: frontend/js/src/forms/SignupCommercial.tsx:275
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
-#: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
-#: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
+#: frontend/js/src/forms/SignupUser.tsx:120 metabrainz/user/forms.py:22
+#: metabrainz/user/forms.py:52 metabrainz/user/forms.py:75
 msgid "Username"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
-#: frontend/js/src/forms/SignupCommercial.tsx:153
+#: frontend/js/src/forms/SignupCommercial.tsx:158
 #: frontend/js/src/forms/SignupNonCommercial.tsx:84
-#: frontend/js/src/forms/SignupUser.tsx:67 metabrainz/user/forms.py:21
-#: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
+#: frontend/js/src/forms/SignupUser.tsx:73 metabrainz/user/forms.py:26
+#: metabrainz/user/forms.py:52 metabrainz/user/forms.py:75
 msgid "Username is required!"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:63
 #: frontend/js/src/forms/ResetPassword.tsx:72
-#: frontend/js/src/forms/SignupCommercial.tsx:308
+#: frontend/js/src/forms/SignupCommercial.tsx:313
 #: frontend/js/src/forms/SignupNonCommercial.tsx:214
-#: frontend/js/src/forms/SignupUser.tsx:157 metabrainz/user/forms.py:46
-#: metabrainz/user/forms.py:52
+#: frontend/js/src/forms/SignupUser.tsx:163 metabrainz/user/forms.py:53
+#: metabrainz/user/forms.py:62
 msgid "Password"
 msgstr ""
 
-#: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
+#: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:57
 msgid "Remember me"
 msgstr ""
 
@@ -3131,11 +4180,11 @@ msgstr ""
 msgid "Username contains invalid or invisible characters."
 msgstr ""
 
-#: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:181
+#: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:220
 msgid "Hide password"
 msgstr ""
 
-#: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:181
+#: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:220
 msgid "Show password"
 msgstr ""
 
@@ -3192,11 +4241,11 @@ msgstr ""
 msgid "Revoke access"
 msgstr ""
 
-#: frontend/js/src/OAuthError.tsx:17
+#: frontend/js/src/OAuthError.tsx:18
 msgid "OAuth2 Error"
 msgstr ""
 
-#: frontend/js/src/OAuthError.tsx:18
+#: frontend/js/src/OAuthError.tsx:19
 msgid "An error occurred during OAuth authentication process."
 msgstr ""
 
@@ -3226,8 +4275,8 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:109
 msgid ""
-"Are you sure you want to generate new access token? Current token will be"
-" revoked!"
+"Are you sure you want to generate a new access token? The current token "
+"will be revoked!"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:118
@@ -3342,8 +4391,8 @@ msgid "Contact Information"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:310 frontend/js/src/forms/ProfileEdit.tsx:70
-#: frontend/js/src/forms/SignupCommercial.tsx:284
-#: frontend/js/src/forms/SignupCommercial.tsx:333
+#: frontend/js/src/forms/SignupCommercial.tsx:289
+#: frontend/js/src/forms/SignupCommercial.tsx:338
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
 msgid "Contact name"
@@ -3458,7 +4507,7 @@ msgstr ""
 msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
+#: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:107
 msgid "Delete My Account"
 msgstr ""
 
@@ -3470,39 +4519,39 @@ msgstr ""
 msgid "Need to delete your account?"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:574
+#: frontend/js/src/Profile.tsx:575
 msgid ""
 "Deletion of supporter accounts requires manual review. Please contact us "
-"at"
+"at <email />."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:594
+#: frontend/js/src/Profile.tsx:599
 msgid "Security"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:626
+#: frontend/js/src/Profile.tsx:631
 msgid "MetaBrainz Applications"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:630
+#: frontend/js/src/Profile.tsx:635
 msgid ""
 "With your MetaBrainz account, you can access every project in the "
 "MetaBrainz family:"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:643
+#: frontend/js/src/Profile.tsx:648
 msgid "The open-source music encyclopedia"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:655
+#: frontend/js/src/Profile.tsx:660
 msgid "Track, visualise and share the music you listen to"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:667
+#: frontend/js/src/Profile.tsx:672
 msgid "The open-source book database"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:679
+#: frontend/js/src/Profile.tsx:684
 msgid "Creative Commons licensed reviews"
 msgstr ""
 
@@ -3525,7 +4574,7 @@ msgid "Permanently remove all your account information"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:64
-msgid "Revoke all your API tokens and access"
+msgid "Revoke all your tokens and access to the replication API"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:65
@@ -3537,14 +4586,16 @@ msgid "Log you out of all MetaBrainz services"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:70
-msgid "Your username will be reserved and cannot be reused."
+msgid ""
+"Your username will be reserved and cannot be reused without the "
+"intervention of an administrator."
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:82
+#: frontend/js/src/ProfileDelete.tsx:84
 msgid "To confirm, type your username '<username />' below:"
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:105
+#: frontend/js/src/ProfileDelete.tsx:107
 msgid "Deleting..."
 msgstr ""
 
@@ -3556,64 +4607,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: frontend/js/src/forms/ConditionsModal.tsx:23
-msgid "Licensing"
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:25
-msgid ""
-"Any contributions you make to any MetaBrainz service will be released "
-"into the Public Domain and/or licensed under a Creative Commons by-nc-sa "
-"license. Furthermore, you give the MetaBrainz Foundation the right to "
-"license this data for commercial use."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:30
-msgid "Please read our <licenseLink>license page</licenseLink> for more details."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:45
-msgid ""
-"MetaBrainz strongly believes in the privacy of its users. Any personal "
-"information you choose to provide will not be sold or shared with anyone "
-"else."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:50
-msgid ""
-"Please read our <privacyLink>privacy policy</privacyLink> for more "
-"details."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:59
-msgid "GDPR compliance"
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:61
-msgid ""
-"You may remove your personal information from our services anytime by "
-"deleting your account."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:66
-msgid ""
-"Please read our <gdprLink>GDPR compliance statement</gdprLink> for more "
-"details."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:78
-msgid ""
-"Creating an account on MetaBrainz will give you access to all of our "
-"projects, such as MusicBrainz, ListenBrainz, BookBrainz, and more."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:82
-msgid ""
-"We create a placeholder account for all the MetaBrainz projects when you "
-"sign up, and you are one log-in away from activating them."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:91
+#: frontend/js/src/forms/ConditionsModal.tsx:29
 msgid "Sounds good"
 msgstr ""
 
@@ -3699,8 +4693,8 @@ msgstr ""
 msgid "Forgot your password?"
 msgstr ""
 
-#: frontend/js/src/forms/LoginUser.tsx:109
-msgid "Don't have an account?"
+#: frontend/js/src/forms/LoginUser.tsx:110
+msgid "Don't have an account? <signupLink>Sign up</signupLink>"
 msgstr ""
 
 #: frontend/js/src/forms/LostPassword.tsx:38
@@ -3729,15 +4723,72 @@ msgstr ""
 msgid "Allow access"
 msgstr ""
 
-#: frontend/js/src/forms/ProfileChangePassword.tsx:71
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:10
+msgid "Licensing"
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:12
+msgid ""
+"Any contributions you make to any MetaBrainz service will be released "
+"into the Public Domain and/or licensed under a Creative Commons by-nc-sa "
+"license. Furthermore, you give the MetaBrainz Foundation the right to "
+"license this data for commercial use."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:17
+msgid "Please read our <licenseLink>license page</licenseLink> for more details."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:34
+msgid ""
+"MetaBrainz strongly believes in the privacy of its users. Any personal "
+"information you choose to provide will not be sold or shared with anyone "
+"else."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:39
+msgid ""
+"Please read our <privacyLink>privacy policy</privacyLink> for more "
+"details."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:50
+msgid "GDPR compliance"
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:52
+msgid ""
+"You may remove your personal information from our services anytime by "
+"deleting your account."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:57
+msgid ""
+"Please read our <gdprLink>GDPR compliance statement</gdprLink> for more "
+"details."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:71
+msgid ""
+"Creating an account on MetaBrainz will give you access to all of our "
+"projects, such as MusicBrainz, ListenBrainz, BookBrainz, and more."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:75
+msgid ""
+"We create a placeholder account for all the MetaBrainz projects when you "
+"sign up, and you are one log-in away from activating them."
+msgstr ""
+
+#: frontend/js/src/forms/ProfileChangePassword.tsx:70
 msgid "Current Password"
 msgstr ""
 
-#: frontend/js/src/forms/ProfileChangePassword.tsx:80
+#: frontend/js/src/forms/ProfileChangePassword.tsx:79
 msgid "New Password"
 msgstr ""
 
-#: frontend/js/src/forms/ProfileChangePassword.tsx:89
+#: frontend/js/src/forms/ProfileChangePassword.tsx:88
 msgid "Confirm New Password"
 msgstr ""
 
@@ -3749,190 +4800,180 @@ msgstr ""
 msgid "Reset Password"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:38
-msgid "If you would like to support us with more than $"
+#: frontend/js/src/forms/SignupCommercial.tsx:40
+msgid ""
+"If you would like to support us with more than ${{minPledge}}, please "
+"enter the actual amount here:"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:39
-msgid ", please enter the actual amount here:"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:144
+#: frontend/js/src/forms/SignupCommercial.tsx:149
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
-#: frontend/js/src/forms/SignupUser.tsx:87
+#: frontend/js/src/forms/SignupUser.tsx:93
 msgid "Captcha is required!"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:179
+#: frontend/js/src/forms/SignupCommercial.tsx:184
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
 #: frontend/js/src/forms/SignupUser.tsx:46
 msgid "Access all MetaBrainz projects"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:182
+#: frontend/js/src/forms/SignupCommercial.tsx:187
 msgid "Note:"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:184
+#: frontend/js/src/forms/SignupCommercial.tsx:189
 msgid ""
 "Signing up for any tier other than the <italic>Stealth startup</italic> "
 "tier will publicly list your company on this web site. However, we will "
 "not publish any of your private details."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:221
+#: frontend/js/src/forms/SignupCommercial.tsx:226
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
 msgid "Account type"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:234
+#: frontend/js/src/forms/SignupCommercial.tsx:239
 msgid "Selected tier"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:242
-msgid "month and up"
+#: frontend/js/src/forms/SignupCommercial.tsx:247
+msgid "${{tierPrice}}/month and up"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:250
+#: frontend/js/src/forms/SignupCommercial.tsx:255
 msgid "Change account type or tier"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:261
+#: frontend/js/src/forms/SignupCommercial.tsx:266
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
 msgid "Your account:"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:271
+#: frontend/js/src/forms/SignupCommercial.tsx:276
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
-#: frontend/js/src/forms/SignupUser.tsx:114
+#: frontend/js/src/forms/SignupUser.tsx:120
 msgid "(public)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:291
+#: frontend/js/src/forms/SignupCommercial.tsx:296
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
-#: frontend/js/src/forms/SignupUser.tsx:127
+#: frontend/js/src/forms/SignupUser.tsx:133
 msgid "E-mail address"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:295
+#: frontend/js/src/forms/SignupCommercial.tsx:300
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
-#: frontend/js/src/forms/SignupUser.tsx:131
+#: frontend/js/src/forms/SignupUser.tsx:137
 msgid "(checking...)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:314
+#: frontend/js/src/forms/SignupCommercial.tsx:319
 #: frontend/js/src/forms/SignupNonCommercial.tsx:220
-#: frontend/js/src/forms/SignupUser.tsx:163
+#: frontend/js/src/forms/SignupUser.tsx:169
 msgid "Must be at least 8 characters"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:348
+#: frontend/js/src/forms/SignupCommercial.tsx:353
 msgid ""
 "If you don't have an organization name, you probably want to become a "
 "supporter as a <nonCommercialLink>Non-commercial / "
 "Personal</nonCommercialLink> supporter."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:358
+#: frontend/js/src/forms/SignupCommercial.tsx:363
 msgid ""
 "If you don't have an organization name, you probably want to sign up as a"
 " <nonCommercialLink>Non-commercial / Personal</nonCommercialLink> user."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:378
+#: frontend/js/src/forms/SignupCommercial.tsx:383
 msgid ""
 "Please tell us a little about your company and whether you plan to use "
 "our <apiLink>API</apiLink> or to <hostLink>host your own copy</hostLink> "
 "of the data."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:404
+#: frontend/js/src/forms/SignupCommercial.tsx:408
 msgid "Logo URL"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:405
+#: frontend/js/src/forms/SignupCommercial.tsx:409
 msgid "(preferably in SVG format)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:408
+#: frontend/js/src/forms/SignupCommercial.tsx:412
 msgid ""
 "Image should be about 250 pixels wide on a white or transparent "
 "background. We will host it on our site."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:421
+#: frontend/js/src/forms/SignupCommercial.tsx:425
 msgid ""
 "URL to where developers can use your APIs using MusicBrainz IDs, if "
-"available.."
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:430
-msgid "Your project"
+"available."
 msgstr ""
 
 #: frontend/js/src/forms/SignupCommercial.tsx:434
+msgid "Your project"
+msgstr ""
+
+#: frontend/js/src/forms/SignupCommercial.tsx:438
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
 msgid "(max 150 characters)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:451
+#: frontend/js/src/forms/SignupCommercial.tsx:455
 msgid "Billing address"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:502
+#: frontend/js/src/forms/SignupCommercial.tsx:506
 msgid ""
 "I agree to support the MetaBrainz Foundation when my organization is able"
 " to do so."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:507
+#: frontend/js/src/forms/SignupCommercial.tsx:511
+#: frontend/js/src/forms/SignupNonCommercial.tsx:284
 msgid ""
-"I also agree that if I generate a Live Data Feed access token, that I "
-"treat my access token as a secret and will not share this token publicly "
-"or commit it to a source code repository."
+"I also agree that if I generate a Live Data Feed access token, then I "
+"will treat my access token as a secret and will not share this token "
+"publicly or commit it to a source code repository."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:515
+#: frontend/js/src/forms/SignupCommercial.tsx:519
 msgid ""
 "The following information will be shown publicly: organization name, "
 "logo, website and API URLs, data usage description."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:520
+#: frontend/js/src/forms/SignupCommercial.tsx:524
 msgid ""
 "We'll send you more details about payment process once your application "
 "is approved."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:552
+#: frontend/js/src/forms/SignupCommercial.tsx:556
 #: frontend/js/src/forms/SignupNonCommercial.tsx:316
-#: frontend/js/src/forms/SignupUser.tsx:224
+#: frontend/js/src/forms/SignupUser.tsx:230
 msgid "Validating..."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:564
+#: frontend/js/src/forms/SignupCommercial.tsx:568
 #: frontend/js/src/forms/SignupNonCommercial.tsx:329
 msgid "Back to profile"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:569
-#: frontend/js/src/forms/SignupNonCommercial.tsx:334
-msgid "Not a supporter?"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:570
+#: frontend/js/src/forms/SignupCommercial.tsx:574
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-msgid "Create a user account"
+msgid "Not a supporter? <signupLink>Create a user account</signupLink>"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:573
-#: frontend/js/src/forms/SignupNonCommercial.tsx:338
-#: frontend/js/src/forms/SignupUser.tsx:231
-msgid "Already have an account?"
-msgstr ""
-
-#: frontend/js/src/forms/SignupNonCommercial.tsx:107
-msgid "non-commercial"
+#: frontend/js/src/forms/SignupCommercial.tsx:583
+#: frontend/js/src/forms/SignupNonCommercial.tsx:344
+#: frontend/js/src/forms/SignupUser.tsx:238
+msgid "Already have an account? <loginLink>Sign in</loginLink>"
 msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:113
@@ -3960,46 +5001,40 @@ msgid ""
 "income per year) or personal uses only."
 msgstr ""
 
-#: frontend/js/src/forms/SignupNonCommercial.tsx:284
-msgid ""
-"I also agree that if I generate a Live Data Feed access token, then I "
-"will treat my access token as a secret and will not share this token "
-"publicly or commit it to a source code repository."
-msgstr ""
-
 #: frontend/js/src/forms/SignupUser.tsx:43
 msgid "Create your account"
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:50
-msgid "Registration started by"
+#: frontend/js/src/forms/SignupUser.tsx:51
+msgid "Registration started by <client />"
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:69
+#: frontend/js/src/forms/SignupUser.tsx:75
+#: frontend/js/src/hooks/useEmailValidation.ts:82
 msgid "Invalid email address."
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:150
+#: frontend/js/src/forms/SignupUser.tsx:156
 msgid ""
 "This username and email were provided by the app that started "
 "registration. You can change them later from MetaBrainz settings."
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:182
+#: frontend/js/src/forms/SignupUser.tsx:188
 msgid ""
 "I accept that my contributions will be released into the public domain or"
 " licensed for use."
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:191
+#: frontend/js/src/forms/SignupUser.tsx:197
 msgid "We will never share your personal information."
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:200
+#: frontend/js/src/forms/SignupUser.tsx:206
 msgid "Click here to read more"
 msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:224
+#: frontend/js/src/forms/SignupUser.tsx:230
 msgid "Create account"
 msgstr ""
 
@@ -4009,10 +5044,6 @@ msgstr ""
 
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
-msgstr ""
-
-#: frontend/js/src/hooks/useEmailValidation.ts:82
-msgid "Invalid email address"
 msgstr ""
 
 #~ msgid "You need to specify amount!"
@@ -5317,5 +6348,97 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Privacy policy"
+#~ msgstr ""
+
+#~ msgid "You need to specify website of the organization."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We are currently evaluating our overall"
+#~ " online advertising strategy. We are "
+#~ "evaluating advertising, traffic optimization,\n"
+#~ ""
+#~ "    search engine optimization and "
+#~ "software monitization technologies. If you "
+#~ "provide these professional services, please"
+#~ " provide a detailed\n"
+#~ "    deck of your comprehensive services"
+#~ " to the following email address. "
+#~ "<em>Please respect our other non-media"
+#~ " teams and do not contact us \n"
+#~ "    regarding these services on any "
+#~ "other of our email addresses. We "
+#~ "will disregard the entirety of your "
+#~ "submissions if you contact us any "
+#~ "other way!</em>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Please come ask your questions at "
+#~ "our <a href=\"%(forums_url)s\">forums</a>! We "
+#~ "would love to\n"
+#~ "    answer any questions you may have."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Due to the increased unreliability of"
+#~ " the US Postal Service we have "
+#~ "stopped accepting paper checks. Sorry!"
+#~ msgstr ""
+
+#~ msgid "Upgrade"
+#~ msgstr ""
+
+#~ msgid "Back to Profile"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Deletion of supporter accounts requires "
+#~ "manual review. Please contact us at"
+#~ msgstr ""
+
+#~ msgid "Revoke all your API tokens and access"
+#~ msgstr ""
+
+#~ msgid "Your username will be reserved and cannot be reused."
+#~ msgstr ""
+
+#~ msgid "Don't have an account?"
+#~ msgstr ""
+
+#~ msgid "If you would like to support us with more than $"
+#~ msgstr ""
+
+#~ msgid ", please enter the actual amount here:"
+#~ msgstr ""
+
+#~ msgid "month and up"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "I also agree that if I generate"
+#~ " a Live Data Feed access token, "
+#~ "that I treat my access token as"
+#~ " a secret and will not share "
+#~ "this token publicly or commit it "
+#~ "to a source code repository."
+#~ msgstr ""
+
+#~ msgid "Not a supporter?"
+#~ msgstr ""
+
+#~ msgid "Create a user account"
+#~ msgstr ""
+
+#~ msgid "Already have an account?"
+#~ msgstr ""
+
+#~ msgid "non-commercial"
+#~ msgstr ""
+
+#~ msgid "Registration started by"
+#~ msgstr ""
+
+#~ msgid "Invalid email address"
 #~ msgstr ""
 

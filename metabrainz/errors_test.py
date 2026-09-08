@@ -1,14 +1,19 @@
 import importlib
+import os
 import pkgutil
 from unittest import TestCase
 
 import authlib
 from authlib.oauth2 import OAuth2Error
+from babel.messages.pofile import read_po
 from flask import Flask
 from flask_babel import Babel
 
 from metabrainz import errors
 from metabrainz.errors import OAUTH_ERROR_MESSAGES
+from metabrainz.oauth.scopes import SCOPE_DESCRIPTIONS
+
+POT_FILE = os.path.join(os.path.dirname(__file__), "messages.pot")
 
 
 def authlib_error_codes():
@@ -28,6 +33,11 @@ def authlib_error_codes():
             codes.add(code)
         pending.extend(error_class.__subclasses__())
     return codes
+
+
+def extracted_message_ids():
+    with open(POT_FILE, "rb") as pot:
+        return {message.id for message in read_po(pot) if message.id}
 
 
 class OAuthErrorMessageTestCase(TestCase):
@@ -62,3 +72,22 @@ class OAuthErrorMessageTestCase(TestCase):
         known = authlib_error_codes()
         for code in OAUTH_ERROR_MESSAGES:
             self.assertIn(code, known)
+
+
+class TranslatableStringsTestCase(TestCase):
+    """The catalogs are what actually make these strings translated.
+
+    A message that was never extracted is returned unchanged by gettext, so the
+    feature silently ships in English. These tests fail until
+    `python manage.py extract_strings` has been run and its output committed.
+    """
+
+    def test_error_messages_are_extracted(self):
+        extracted = extracted_message_ids()
+        for message in OAUTH_ERROR_MESSAGES.values():
+            self.assertIn(message, extracted)
+
+    def test_scope_descriptions_are_extracted(self):
+        extracted = extracted_message_ids()
+        for description in SCOPE_DESCRIPTIONS.values():
+            self.assertIn(description, extracted)
