@@ -70,6 +70,9 @@ authenticate with ``client_secret_basic`` (HTTP Basic) or
    :form response_mode: Optional. Same behavior as the authorization endpoint;
       use ``form_post`` if you need the authorization response posted to your
       ``redirect_uri``.
+   :form ui_locales: Optional. Same behavior as the authorization endpoint. It
+      is carried through the signup page and into the authorization request
+      that follows.
    :reqheader Authorization: Client authentication when using
       ``client_secret_basic``. Alternatively, send ``client_id`` and
       ``client_secret`` as form fields.

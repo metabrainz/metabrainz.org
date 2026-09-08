@@ -45,7 +45,8 @@ Example response:
      "response_modes_supported": ["query", "fragment", "form_post"],
      "grant_types_supported": ["authorization_code", "refresh_token", "implicit"],
      "id_token_signing_alg_values_supported": ["ES256", "none"],
-     "subject_types_supported": ["public"]
+     "subject_types_supported": ["public"],
+     "ui_locales_supported": ["en", "es", "fr", "de"]
    }
 
 The ``issuer`` is ``https://metabrainz.org``. This is the value you must match

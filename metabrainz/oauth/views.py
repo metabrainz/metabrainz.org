@@ -7,7 +7,7 @@ from flask_login import login_required, current_user
 from flask_wtf.csrf import generate_csrf
 
 from metabrainz.decorators import nocache, crossdomain
-from metabrainz.i18n import remember_ui_locales
+from metabrainz.i18n import get_supported_locale_codes, remember_ui_locales
 from metabrainz.model import db, OAuth2Scope, get_scopes, OAuth2AccessToken
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.user import User
@@ -387,4 +387,5 @@ def well_known_oauth_authorization_server():
         "grant_types_supported": ["authorization_code", "refresh_token", "implicit"],
         "id_token_signing_alg_values_supported": ["ES256", "none"],
         "subject_types_supported": ["public"],
+        "ui_locales_supported": get_supported_locale_codes(),
     }
