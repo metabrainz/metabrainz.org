@@ -4,36 +4,41 @@ from authlib.oauth2 import OAuth2Error
 from flask import render_template
 from flask_babel import gettext
 
+from metabrainz.i18n import N_
 
-def _oauth_error_message(code):
+# User-facing messages keyed by the OAuth/OIDC error *code*. Codes (e.g.
+# ``access_denied``) are stable ASCII tokens, so they can be translated, unlike
+# ``error_description``, which is a developer-facing, ASCII-only field per RFC
+# 6749 section 4.1.2.1.
+#
+# Only codes that can actually reach this handler are listed: it renders HTML
+# for the authorization endpoint, and authlib handles token endpoint errors
+# (invalid_grant, unsupported_grant_type, ...) internally, never letting them
+# escape as an exception. Unlisted codes fall back to the generic message in
+# the client, so an unreachable entry is only a string translators must
+# needlessly translate. test_error_codes_are_known_to_authlib guards this.
+#
+# See RFC 6749 sections 4.1.2.1 and 5.2, and OpenID Connect Core 1.0
+# section 3.1.2.6 for the error codes handled here.
+OAUTH_ERROR_MESSAGES = {
+    "access_denied": N_("Authorization was declined."),
+    "invalid_request": N_("The authorization request was invalid."),
+    "invalid_client": N_("The application could not be authenticated."),
+    "unauthorized_client": N_("This application is not allowed to request authorization."),
+    "unsupported_response_type": N_("The application asked for a response type this server does not support."),
+    "invalid_scope": N_("The permissions requested by the application are invalid."),
+    "login_required": N_("You need to sign in to continue."),
+    "consent_required": N_("Your consent is required to continue."),
+}
+
+
+def oauth_error_message(code):
     """Return a translated, user-facing message for an OAuth error code.
 
-    OAuth/OIDC error *codes* (e.g. ``access_denied``) are stable ASCII tokens,
-    so they can be safely translated, unlike ``error_description`` which is a
-    developer-facing, ASCII-only field per RFC 6749 section 4.1.2.1. Unknown
-    codes return None so the caller can fall back to the raw description.
-
-    See RFC 6749 sections 4.1.2.1 and 5.2, and OpenID Connect Core 1.0
-    section 3.1.2.6 for the error codes handled here.
+    Unknown codes return None so the caller can fall back to a generic message.
     """
-    # Built at request time so translations reflect the active locale.
-    messages = {
-        "access_denied": gettext("Authorization was declined."),
-        "invalid_request": gettext("The authorization request was invalid."),
-        "invalid_client": gettext("The application could not be authenticated."),
-        "invalid_grant": gettext("The authorization has expired or is no longer valid."),
-        "unauthorized_client": gettext("This application is not allowed to request authorization."),
-        "unsupported_response_type": gettext("The authorization request is not supported."),
-        "unsupported_grant_type": gettext("The authorization request is not supported."),
-        "invalid_scope": gettext("The requested permissions are invalid."),
-        "server_error": gettext("The server encountered an error. Please try again later."),
-        "temporarily_unavailable": gettext("The service is temporarily unavailable. Please try again later."),
-        "interaction_required": gettext("Additional interaction is required to sign in."),
-        "login_required": gettext("You need to sign in to continue."),
-        "consent_required": gettext("Your consent is required to continue."),
-        "account_selection_required": gettext("You need to select an account to continue."),
-    }
-    return messages.get(code)
+    message = OAUTH_ERROR_MESSAGES.get(code)
+    return gettext(message) if message else None
 
 
 def init_error_handlers(app):
@@ -66,7 +71,7 @@ def init_error_handlers(app):
                 "description": error.get_error_description(),
                 # Translated, user-facing message chosen by the stable error
                 # code; None for unknown codes so the client falls back to the
-                # developer-facing description.
-                "message": _oauth_error_message(error.error),
+                # generic translated message.
+                "message": oauth_error_message(error.error),
             }
         }))

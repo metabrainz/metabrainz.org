@@ -16,7 +16,8 @@ function OAuthError({ error }: OAuthErrorProps): JSX.Element {
   return (
     <>
       <h1>{t("OAuth2 Error")}</h1>
-      <p>{error.message || t("An error occurred during OAuth authentication process.")}</p>
+      <p>{t("An error occurred during OAuth authentication process.")}</p>
+      {error.message && <p>{error.message}</p>}
       <p className="text-muted">
         <small>
           {error.name}: {error.description}
