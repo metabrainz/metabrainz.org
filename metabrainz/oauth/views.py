@@ -7,6 +7,7 @@ from flask_login import login_required, current_user
 from flask_wtf.csrf import generate_csrf
 
 from metabrainz.decorators import nocache, crossdomain
+from metabrainz.i18n import remember_ui_locales
 from metabrainz.model import db, OAuth2Scope, get_scopes, OAuth2AccessToken
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.user import User
@@ -34,11 +35,23 @@ REGISTRATION_REQUEST_AUTHORIZE_KEYS = {
     "code_challenge_method",
     "nonce",
     "response_mode",
+    "ui_locales",
 }
 REGISTRATION_REQUEST_STORED_AUTHORIZE_KEYS = REGISTRATION_REQUEST_AUTHORIZE_KEYS | {
     "approval_prompt",
     "login_hint",
 }
+
+
+@oauth2_bp.before_request
+def before_oauth2_request():
+    """Remember the client's ``ui_locales`` hint for the rest of the flow.
+
+    This runs before the view, and so before @login_required can redirect an
+    anonymous user to the sign in or sign up page, where the hint is no longer
+    part of the query string.
+    """
+    remember_ui_locales(request.args.get("ui_locales"))
 
 
 @oauth2_bp.after_request
@@ -210,6 +223,10 @@ def begin_registration_request(request_id):
                 "description": "Registration request is invalid or expired.",
             }
         })), 400
+
+    # The hint was sent when the registration request was created, not on this
+    # URL, so it has to be picked up from the stored request.
+    remember_ui_locales(registration_request.get("ui_locales"))
 
     next_url = url_for(".begin_registration_request", request_id=request_id)
     if current_user.is_anonymous:

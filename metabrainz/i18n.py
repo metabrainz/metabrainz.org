@@ -1,8 +1,12 @@
-from flask import Blueprint, abort, redirect, request, url_for
+from babel import negotiate_locale
+from flask import Blueprint, abort, redirect, request, session, url_for
 
 
 LANGUAGE_COOKIE_NAME = "lang"
 DEFAULT_LOCALE = "en"
+# Where a locale negotiated from an OIDC ``ui_locales`` hint is remembered for
+# the rest of the browser session, see remember_ui_locales().
+UI_LOCALE_SESSION_KEY = "ui_locale"
 i18n_bp = Blueprint("i18n", __name__)
 SUPPORTED_LANGUAGES = (
     {"code": "en", "name": "English"},
@@ -21,17 +25,33 @@ def match_ui_locales(ui_locales):
 
     ``ui_locales`` is a space-separated, preference-ordered list of BCP 47
     language tags (e.g. ``"fr-CA fr en"``), as defined by OpenID Connect Core
-    1.0 section 3.1.2.1. Matching is done on the primary language subtag
-    against the supported locale codes. Returns None if nothing matches.
+    1.0 section 3.1.2.1. Returns None if nothing matches.
     """
     if not ui_locales:
         return None
-    supported = get_supported_locale_codes()
-    for tag in ui_locales.split():
-        primary_subtag = tag.replace("_", "-").split("-")[0].lower()
-        if primary_subtag in supported:
-            return primary_subtag
-    return None
+
+    # negotiate_locale() matches an exact tag first and only then falls back to
+    # the primary subtag, so a regional catalog (say pt_BR) is preferred over
+    # its base language when both are supported. Both sides are normalised to
+    # lowercase and "-" separators because it compares tags verbatim.
+    canonical = {code.replace("_", "-").lower(): code for code in get_supported_locale_codes()}
+    preferred = [tag.replace("_", "-").lower() for tag in ui_locales.split()]
+    matched = negotiate_locale(preferred, list(canonical), sep="-")
+    return canonical.get(matched)
+
+
+def remember_ui_locales(ui_locales):
+    """Remember the locale an OAuth client asked for via ``ui_locales``.
+
+    The hint only appears on the authorization request itself, but the pages
+    that follow it (sign in, sign up, consent, errors) are separate requests on
+    other blueprints, so it is negotiated once here and kept in the session for
+    the rest of the flow. The user's own language cookie still wins.
+    """
+    locale = match_ui_locales(ui_locales)
+    if locale:
+        session[UI_LOCALE_SESSION_KEY] = locale
+    return locale
 
 
 def get_locale():
@@ -39,18 +59,17 @@ def get_locale():
 
     Precedence:
       1. The user's explicit language cookie (their site-wide choice).
-      2. The OpenID Connect ``ui_locales`` request hint, e.g. from an OAuth
-         client such as MusicBrainz Picard (section 3.1.2.1). This lets the
-         authorization/consent and error pages match the client's language
-         when the user has not set their own preference here.
+      2. A locale remembered from an OpenID Connect ``ui_locales`` hint sent by
+         an OAuth client such as MusicBrainz Picard (section 3.1.2.1), so the
+         sign in, consent and error pages of that flow match the client.
       3. The default locale.
     """
     cookie_locale = request.cookies.get(LANGUAGE_COOKIE_NAME)
     if cookie_locale in get_supported_locale_codes():
         return cookie_locale
 
-    ui_locale = match_ui_locales(request.args.get("ui_locales"))
-    if ui_locale:
+    ui_locale = session.get(UI_LOCALE_SESSION_KEY)
+    if ui_locale in get_supported_locale_codes():
         return ui_locale
 
     return DEFAULT_LOCALE

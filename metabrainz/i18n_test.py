@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from flask import Blueprint, Flask
+from flask import Blueprint, Flask, session
 
 from metabrainz import i18n
 
@@ -16,7 +16,7 @@ class MatchUiLocalesTestCase(TestCase):
         self.assertEqual(i18n.match_ui_locales("de"), "de")
 
     def test_primary_subtag_of_regional_tag(self):
-        # BCP 47 regional tags match on their primary subtag.
+        # BCP 47 regional tags fall back to their primary subtag.
         self.assertEqual(i18n.match_ui_locales("fr-CA"), "fr")
         self.assertEqual(i18n.match_ui_locales("es-419"), "es")
 
@@ -33,13 +33,25 @@ class MatchUiLocalesTestCase(TestCase):
     def test_unsupported_returns_none(self):
         self.assertIsNone(i18n.match_ui_locales("zh ja ko"))
 
+    def test_regional_catalog_preferred_over_its_base_language(self):
+        # A regional catalog must win over its own base language when the
+        # client asked for it exactly, rather than being cut down to "pt".
+        supported = i18n.SUPPORTED_LANGUAGES
+        i18n.SUPPORTED_LANGUAGES = supported + ({"code": "pt_BR", "name": "Português"},)
+        try:
+            self.assertEqual(i18n.match_ui_locales("pt-BR"), "pt_BR")
+            self.assertEqual(i18n.match_ui_locales("pt_BR"), "pt_BR")
+        finally:
+            i18n.SUPPORTED_LANGUAGES = supported
+
 
 class GetLocaleTestCase(TestCase):
 
     def setUp(self):
-        # A minimal app is enough: get_locale() only reads request cookies and
-        # args, so we avoid the heavier DB-backed FlaskTestCase.
+        # A minimal app is enough: get_locale() only reads the language cookie
+        # and the session, so we avoid the heavier DB-backed FlaskTestCase.
         self.app = Flask(__name__)
+        self.app.secret_key = "i18n-test"
 
     def test_default_locale_when_nothing_provided(self):
         with self.app.test_request_context("/"):
@@ -47,22 +59,59 @@ class GetLocaleTestCase(TestCase):
 
     def test_cookie_takes_precedence(self):
         headers = {"Cookie": f"{i18n.LANGUAGE_COOKIE_NAME}=fr"}
-        with self.app.test_request_context("/?ui_locales=de", headers=headers):
+        with self.app.test_request_context("/", headers=headers):
+            session[i18n.UI_LOCALE_SESSION_KEY] = "de"
             self.assertEqual(i18n.get_locale(), "fr")
 
-    def test_ui_locales_used_without_cookie(self):
-        with self.app.test_request_context("/?ui_locales=fr-CA"):
-            self.assertEqual(i18n.get_locale(), "fr")
-
-    def test_ui_locales_ignored_when_cookie_unsupported(self):
-        # An unsupported cookie value falls through to the ui_locales hint.
-        headers = {"Cookie": f"{i18n.LANGUAGE_COOKIE_NAME}=zz"}
-        with self.app.test_request_context("/?ui_locales=de", headers=headers):
+    def test_remembered_ui_locale_used_without_cookie(self):
+        with self.app.test_request_context("/"):
+            session[i18n.UI_LOCALE_SESSION_KEY] = "de"
             self.assertEqual(i18n.get_locale(), "de")
 
-    def test_unsupported_ui_locales_falls_back_to_default(self):
-        with self.app.test_request_context("/?ui_locales=ja"):
+    def test_remembered_ui_locale_used_when_cookie_unsupported(self):
+        headers = {"Cookie": f"{i18n.LANGUAGE_COOKIE_NAME}=zz"}
+        with self.app.test_request_context("/", headers=headers):
+            session[i18n.UI_LOCALE_SESSION_KEY] = "de"
+            self.assertEqual(i18n.get_locale(), "de")
+
+    def test_unsupported_remembered_locale_falls_back_to_default(self):
+        # A locale that has since been dropped from SUPPORTED_LANGUAGES must
+        # not linger in an old session.
+        with self.app.test_request_context("/"):
+            session[i18n.UI_LOCALE_SESSION_KEY] = "ja"
             self.assertEqual(i18n.get_locale(), i18n.DEFAULT_LOCALE)
+
+    def test_ui_locales_query_param_alone_does_not_change_locale(self):
+        # ui_locales is an OIDC authorization request parameter, not a
+        # site-wide language switch: it only takes effect once an OAuth
+        # endpoint has recorded it with remember_ui_locales().
+        with self.app.test_request_context("/donate?ui_locales=de"):
+            self.assertEqual(i18n.get_locale(), i18n.DEFAULT_LOCALE)
+
+
+class RememberUiLocalesTestCase(TestCase):
+
+    def setUp(self):
+        self.app = Flask(__name__)
+        self.app.secret_key = "i18n-test"
+
+    def test_supported_hint_is_remembered(self):
+        with self.app.test_request_context("/"):
+            self.assertEqual(i18n.remember_ui_locales("de-AT fr"), "de")
+            self.assertEqual(session[i18n.UI_LOCALE_SESSION_KEY], "de")
+            self.assertEqual(i18n.get_locale(), "de")
+
+    def test_unsupported_hint_leaves_the_session_untouched(self):
+        with self.app.test_request_context("/"):
+            session[i18n.UI_LOCALE_SESSION_KEY] = "fr"
+            self.assertIsNone(i18n.remember_ui_locales("ja"))
+            self.assertEqual(session[i18n.UI_LOCALE_SESSION_KEY], "fr")
+
+    def test_missing_hint_leaves_the_session_untouched(self):
+        with self.app.test_request_context("/"):
+            session[i18n.UI_LOCALE_SESSION_KEY] = "fr"
+            self.assertIsNone(i18n.remember_ui_locales(None))
+            self.assertEqual(session[i18n.UI_LOCALE_SESSION_KEY], "fr")
 
 
 class SetLanguageTestCase(TestCase):
