@@ -14,6 +14,7 @@ from metabrainz.model.user import User
 from metabrainz.oauth.authorization_server import authorization_server
 from metabrainz.oauth.forms import AuthorizationForm
 from metabrainz.oauth.oidc_grant import build_user_info
+from metabrainz.oauth.scopes import scope_description
 from metabrainz.oauth.registration_request import (
     create_registration_request,
     delete_registration_request,
@@ -281,7 +282,7 @@ def authorize():
         "client_name": grant.client.name,
         "scopes": [{
             "name": scope.name,
-            "description": scope.description
+            "description": scope_description(scope)
         } for scope in scopes],
         "cancel_url": cancel_url,
         "csrf_token": generate_csrf(),

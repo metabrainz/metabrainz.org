@@ -16,6 +16,18 @@ SUPPORTED_LANGUAGES = (
 )
 
 
+def N_(string):
+    """Mark a string for translation without translating it here.
+
+    ``N_`` is one of pybabel's default extraction keywords, so strings wrapped
+    in it end up in messages.pot and can be translated later, at a point where
+    a request (and therefore an active locale) exists. For example, module level
+    strings. lazy_gettext can be used but requires extra handling with pybabel
+    and json.dumps.
+    """
+    return string
+
+
 def get_supported_locale_codes():
     return [language["code"] for language in SUPPORTED_LANGUAGES]
 
