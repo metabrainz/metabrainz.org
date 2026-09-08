@@ -9,7 +9,13 @@ type Application = {
   website: string;
 };
 
-type SupporterState = "active" | "rejected" | "pending" | "waiting" | "limited";
+type SupporterState =
+  | "active"
+  | "pre_revenue"
+  | "rejected"
+  | "pending"
+  | "waiting"
+  | "limited";
 
 type Tier = {
   name: string;
@@ -24,7 +30,7 @@ type Dataset = {
 type Supporter = {
   datasets: Array<Dataset>;
   is_commercial: boolean;
-  tier: Tier;
+  tier: Tier | null;
   state: SupporterState;
   contact_name: string;
   org_name?: string;

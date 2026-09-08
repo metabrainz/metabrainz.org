@@ -102,6 +102,10 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
   // eslint-disable-next-line jsx-a11y/anchor-has-content
   const contactLink = <a href="/contact" />;
 
+  const isPreRevenue = state === "pre_revenue";
+  const hasDataUsePermission =
+    isPreRevenue || ((state === "active" || state === "limited") && good_standing);
+
   const regenerateToken = useCallback(async () => {
     if (
       !currentToken ||
@@ -212,6 +216,8 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
   let stateLabel;
   if (state === "active") {
     stateLabel = t("Active");
+  } else if (isPreRevenue) {
+    stateLabel = t("Pre-revenue");
   } else if (state === "rejected") {
     stateLabel = t("Rejected");
   } else if (state === "pending") {
@@ -234,7 +240,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                 <strong>{t("Type:")}</strong>{" "}
                 {is_commercial ? t("Commercial") : t("Non-commercial")}
               </div>
-              {is_commercial && (
+              {is_commercial && tier && (
                 <div className="col-sm-4">
                   <strong>{t("Tier:")}</strong> {tier.name}
                 </div>
@@ -341,7 +347,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
       {is_commercial && (
         <div className="row" style={{ marginBottom: "1.5rem" }}>
           <div className="col-md-12">
-            {(state === "active" || state === "limited") && good_standing ? (
+            {hasDataUsePermission ? (
               <div className="panel panel-success">
                 <div className="panel-heading">
                   <h3 className="panel-title">
@@ -351,9 +357,13 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                 <div className="panel-body">
                   <p>
                     <b>
-                      {t(
-                        "Your support agreement has been completed -- thank you!"
-                      )}
+                      {isPreRevenue
+                        ? t(
+                            "You have a temporary agreement for free usage until your income grows."
+                          )
+                        : t(
+                            "Your support agreement has been completed -- thank you!"
+                          )}
                     </b>
                   </p>
                   <p>
@@ -363,15 +373,26 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                   </p>
                   <ul className="text-muted">
                     <li>
-                      {t(
-                        "If your support falls behind by more than 60 days, this permission may be withdrawn."
+                      {isPreRevenue ? (
+                        <Trans
+                          defaults={t(
+                            "We are not asking you for support payments yet. Once your income grows, please honor our agreement and <contactLink>contact us</contactLink> so we can agree on the appropriate level of support."
+                          )}
+                          components={{ contactLink }}
+                        />
+                      ) : (
+                        t(
+                          "If your support falls behind by more than 60 days, this permission may be withdrawn."
+                        )
                       )}
                     </li>
-                    <li>
-                      {t(
-                        "IP addresses from which replication packets are downloaded are logged."
-                      )}
-                    </li>
+                    {state === "active" && (
+                      <li>
+                        {t(
+                          "IP addresses from which replication packets are downloaded are logged."
+                        )}
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -389,7 +410,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         </div>
       )}
 
-      {(state === "active" || state === "limited") && good_standing && (
+      {hasDataUsePermission && (
         <div className="row" style={{ marginBottom: "1.5rem" }}>
           <div className="col-md-12">
             <div className="panel panel-primary">

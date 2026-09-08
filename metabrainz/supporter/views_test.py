@@ -11,6 +11,8 @@ from metabrainz.model import db
 from metabrainz.model.dataset import Dataset
 from metabrainz.model.supporter import (
     STATE_ACTIVE,
+    STATE_PRE_REVENUE,
+    STATE_WAITING,
     Supporter,
     send_supporter_signup_notification,
 )
@@ -125,6 +127,46 @@ class SupportersViewsTestCase(FlaskTestCase):
         data = response.json
         self.assertIn('token', data)
         self.assertEqual(len(data['token']), 40)
+
+    def test_regenerate_token_pre_revenue(self):
+        """Pre-revenue supporters cannot generate replication tokens."""
+        user = User.add(
+            name='pre_revenue_user',
+            unconfirmed_email='pre_revenue@example.com',
+            password='testing',
+        )
+        supporter = Supporter.add(
+            is_commercial=True,
+            contact_name='Pre Revenue User',
+            data_usage_desc='testing',
+            org_name='Pre Revenue Org',
+            user=user,
+        )
+        supporter.state = STATE_PRE_REVENUE
+        db.session.flush()
+        self.temporary_login(supporter.user)
+        response = self.client.post(url_for('supporters.regenerate_token'))
+        self.assertStatus(response, 400)
+
+    def test_regenerate_token_without_data_access(self):
+        """A supporter who has not been granted access cannot get a token."""
+        user = User.add(
+            name='waiting_user',
+            unconfirmed_email='waiting@example.com',
+            password='testing',
+        )
+        supporter = Supporter.add(
+            is_commercial=True,
+            contact_name='Waiting User',
+            data_usage_desc='testing',
+            org_name='Waiting Org',
+            user=user,
+        )
+        supporter.state = STATE_WAITING
+        db.session.flush()
+        self.temporary_login(supporter.user)
+        response = self.client.post(url_for('supporters.regenerate_token'))
+        self.assertStatus(response, 400)
 
     def test_regenerate_token_rate_limit(self):
         """Test that TokenGenerationLimitException returns 429 with error message"""
