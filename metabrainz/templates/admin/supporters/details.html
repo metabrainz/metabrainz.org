@@ -45,7 +45,7 @@
       <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id) }}"
          class="btn btn-success" role="button">Approve</a>
       <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id, pre_revenue=True) }}"
-         title="This supporter gets access to the API and tells us when they have more income."
+         title="This supporter gets limited access (no replication API) for free and should contact us when their income grows."
          class="btn btn-secondary" role="button">Approve (pre-revenue)</a>
       <a href="{{ url_for('supportersview.approve', supporter_id=supporter.id, limited=True) }}"
          title="This supporter is not going to have access to the API."

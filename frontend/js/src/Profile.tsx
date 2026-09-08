@@ -359,7 +359,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                     <b>
                       {isPreRevenue
                         ? t(
-                            "Please use our data, and let us know when you have more income -- thank you!"
+                            "You have a temporary agreement for free usage until your income grows."
                           )
                         : t(
                             "Your support agreement has been completed -- thank you!"
@@ -376,7 +376,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
                       {isPreRevenue ? (
                         <Trans
                           defaults={t(
-                            "We are not asking you for support payments yet. Once your income grows, please <contactLink>contact us</contactLink> so we can agree on a support tier."
+                            "We are not asking you for support payments yet. Once your income grows, please honor our agreement and <contactLink>contact us</contactLink> so we can agree on the appropriate level of support."
                           )}
                           components={{ contactLink }}
                         />
