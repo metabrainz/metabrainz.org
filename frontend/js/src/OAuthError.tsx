@@ -6,6 +6,7 @@ type OAuthErrorProps = {
   error: {
     name: string;
     description: string;
+    message?: string | null;
   };
 };
 
@@ -16,8 +17,11 @@ function OAuthError({ error }: OAuthErrorProps): JSX.Element {
     <>
       <h1>{t("OAuth2 Error")}</h1>
       <p>{t("An error occurred during OAuth authentication process.")}</p>
-      <p>
-        {error.name}: {error.description}
+      {error.message && <p>{error.message}</p>}
+      <p className="text-muted">
+        <small>
+          {error.name}: {error.description}
+        </small>
       </p>
     </>
   );

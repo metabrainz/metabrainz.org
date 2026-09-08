@@ -704,7 +704,7 @@ class AuthorizationCodeGrantTestCase(OAuthTestCase):
             "approval_prompt": "invalid",
         }
         error = {"name": "invalid_request", "description": "Invalid 'approval_prompt' in request."}
-        self.authorize_error_helper(self.user2, query_string, error)
+        self.authorize_error_helper(self.user2, query_string, error, confirm_succeeds=True)
 
     def test_oauth_approval_prompt_scope_mismatch(self):
         redirect_uri1 = "https://example.com/callback1"

@@ -10,186 +10,269 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-25 16:21+0200\n"
+"POT-Creation-Date: 2026-09-08 11:18+0200\n"
 "PO-Revision-Date: 2026-07-29 07:12+0000\n"
 "Last-Translator: silentbird "
 "<silentbird@users.noreply.translations.metabrainz.org>\n"
 "Language: zh_TW\n"
-"Language-Team: Chinese (Traditional Han script) <https://"
-"translations.metabrainz.org/projects/metabrainz/website/zh_Hant/>\n"
+"Language-Team: Chinese (Traditional Han script) "
+"<https://translations.metabrainz.org/projects/metabrainz/website/zh_Hant/>"
+"\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-"X-Generator: Weblate 2026.7.1\n"
 
-#: metabrainz/index/forms.py:46
+#: metabrainz/errors.py:24
+msgid "Authorization was declined."
+msgstr ""
+
+#: metabrainz/errors.py:25
+msgid "The authorization request was invalid."
+msgstr ""
+
+#: metabrainz/errors.py:26
+msgid "The application could not be authenticated."
+msgstr ""
+
+#: metabrainz/errors.py:27
+msgid "This application is not allowed to request authorization."
+msgstr ""
+
+#: metabrainz/errors.py:28
+msgid "The application asked for a response type this server does not support."
+msgstr ""
+
+#: metabrainz/errors.py:29
+msgid "The permissions requested by the application are invalid."
+msgstr ""
+
+#: metabrainz/errors.py:30
+msgid "You need to sign in to continue."
+msgstr ""
+
+#: metabrainz/errors.py:31
+msgid "Your consent is required to continue."
+msgstr ""
+
+#: metabrainz/password.py:12
+#, python-format
+msgid "Password must not exceed %(max_bytes)s bytes."
+msgstr ""
+
+#: metabrainz/index/forms.py:48
 #, python-format
 msgid "'%(value)s' is not a valid choice for this field"
 msgstr "「%(value)s」不是有效選項"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:27
-#: frontend/js/src/forms/SignupCommercial.tsx:154
+#: frontend/js/src/forms/SignupCommercial.tsx:159
 #: frontend/js/src/forms/SignupNonCommercial.tsx:85
-#: frontend/js/src/forms/SignupUser.tsx:70
-#: frontend/js/src/hooks/useEmailValidation.ts:78 metabrainz/index/forms.py:57
-#: metabrainz/user/forms.py:25 metabrainz/user/forms.py:57
-#: metabrainz/user/forms.py:63
+#: frontend/js/src/forms/SignupUser.tsx:76
+#: frontend/js/src/hooks/useEmailValidation.ts:78 metabrainz/index/forms.py:59
+#: metabrainz/user/forms.py:31 metabrainz/user/forms.py:70
+#: metabrainz/user/forms.py:76
 msgid "Email address is required!"
 msgstr "請提供電子信箱地址！"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
-#: metabrainz/index/forms.py:63
+#: metabrainz/index/forms.py:65
 msgid "Current password is required!"
 msgstr "請提供目前密碼！"
 
 #: frontend/js/src/forms/LoginUser.tsx:43
 #: frontend/js/src/forms/ProfileChangePassword.tsx:37
 #: frontend/js/src/forms/ResetPassword.tsx:39
-#: frontend/js/src/forms/SignupCommercial.tsx:156
+#: frontend/js/src/forms/SignupCommercial.tsx:161
 #: frontend/js/src/forms/SignupNonCommercial.tsx:87
-#: frontend/js/src/forms/SignupUser.tsx:72 metabrainz/index/forms.py:66
-#: metabrainz/user/forms.py:29 metabrainz/user/forms.py:46
-#: metabrainz/user/forms.py:52 metabrainz/user/forms.py:69
+#: frontend/js/src/forms/SignupUser.tsx:78 metabrainz/index/forms.py:69
+#: metabrainz/user/forms.py:35 metabrainz/user/forms.py:54
+#: metabrainz/user/forms.py:63 metabrainz/user/forms.py:82
 msgid "Password is required!"
 msgstr "請提供密碼！"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
-#: frontend/js/src/forms/SignupCommercial.tsx:160
+#: frontend/js/src/forms/SignupCommercial.tsx:165
 #: frontend/js/src/forms/SignupNonCommercial.tsx:91
-#: frontend/js/src/forms/SignupUser.tsx:76 metabrainz/index/forms.py:70
-#: metabrainz/user/forms.py:33 metabrainz/user/forms.py:73
+#: frontend/js/src/forms/SignupUser.tsx:82 metabrainz/index/forms.py:74
+#: metabrainz/user/forms.py:40 metabrainz/user/forms.py:87
 msgid "Confirm Password is required!"
 msgstr "請確認密碼！"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:46
 #: frontend/js/src/forms/ResetPassword.tsx:48
-#: frontend/js/src/forms/SignupCommercial.tsx:165
+#: frontend/js/src/forms/SignupCommercial.tsx:170
 #: frontend/js/src/forms/SignupNonCommercial.tsx:96
-#: frontend/js/src/forms/SignupUser.tsx:81 metabrainz/index/forms.py:72
-#: metabrainz/user/forms.py:35 metabrainz/user/forms.py:75
+#: frontend/js/src/forms/SignupUser.tsx:87 metabrainz/index/forms.py:76
+#: metabrainz/user/forms.py:42 metabrainz/user/forms.py:89
 msgid "Confirm Password should match password!"
 msgstr "確認密碼須與密碼相符！"
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
 #: frontend/js/src/Profile.tsx:272 frontend/js/src/Profile.tsx:482
-#: metabrainz/index/forms.py:78
+#: metabrainz/index/forms.py:82
 msgid "Name"
 msgstr "名稱"
 
-#: metabrainz/index/forms.py:79
+#: metabrainz/index/forms.py:83
 msgid "Contact name field is empty."
 msgstr "請提供聯絡人名稱。"
 
-#: metabrainz/index/views.py:234
+#: metabrainz/index/views.py:251
 msgid "Profile updated successfully."
 msgstr "個人資訊已更新。"
 
-#: metabrainz/index/views.py:261
+#: metabrainz/index/views.py:278
 msgid "Current password is incorrect."
 msgstr "目前密碼有誤。"
 
-#: metabrainz/index/views.py:266
+#: metabrainz/index/views.py:283
 msgid "Password changed successfully."
 msgstr "密碼已變更。"
 
-#: metabrainz/index/views.py:372
+#: metabrainz/index/views.py:389
 msgid "You have updated an application!"
 msgstr "應用程式已更新！"
 
-#: metabrainz/index/views.py:424
+#: metabrainz/index/views.py:441
 msgid "You have deleted an application."
 msgstr "應用程式已刪除。"
 
-#: metabrainz/index/views.py:426
+#: metabrainz/index/views.py:443
 msgid "Failed to delete an application."
 msgstr "未能刪除應用程式。"
 
-#: metabrainz/index/views.py:449
+#: metabrainz/index/views.py:466
 msgid "Revoked tokens successfully!"
 msgstr "權杖已撤銷！"
 
-#: metabrainz/index/views.py:478
+#: metabrainz/index/views.py:495
 msgid "Your account has been deleted."
 msgstr "您的帳號已刪除。"
 
-#: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:58
+#: frontend/js/src/forms/CreateApplication.tsx:106 metabrainz/oauth/forms.py:57
 msgid "Application Name"
 msgstr "應用程式名稱"
 
-#: metabrainz/oauth/forms.py:59
+#: metabrainz/oauth/forms.py:58
 msgid "Application name field is empty."
 msgstr "請提供應用程式名稱。"
 
-#: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:60
+#: frontend/js/src/forms/CreateApplication.tsx:60 metabrainz/oauth/forms.py:59
 msgid "Application name needs to be at least 3 characters long."
 msgstr "應用程式名稱不可短於三個字元。"
 
-#: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:61
+#: frontend/js/src/forms/CreateApplication.tsx:64 metabrainz/oauth/forms.py:60
 msgid "Application name needs to be at most 64 characters long."
 msgstr "應用程式名稱不可長於64個字元。"
 
-#: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:63
+#: frontend/js/src/forms/CreateApplication.tsx:114 metabrainz/oauth/forms.py:62
 msgid "Description"
 msgstr "描述"
 
-#: metabrainz/oauth/forms.py:64
+#: metabrainz/oauth/forms.py:63
 msgid "Client description field is empty."
 msgstr "請描述應用程式。"
 
-#: metabrainz/oauth/forms.py:65
+#: metabrainz/oauth/forms.py:64
 msgid "Client description needs to be at least 3 characters long."
 msgstr "應用程式的描述不可短於三個字元。"
 
-#: metabrainz/oauth/forms.py:66
+#: metabrainz/oauth/forms.py:65
 msgid "Client description needs to be at most 512 characters long."
 msgstr "應用程式的描述不可長於512個字元。"
 
-#: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:68
+#: frontend/js/src/forms/CreateApplication.tsx:122 metabrainz/oauth/forms.py:67
 msgid "Homepage"
 msgstr "主頁"
 
-#: metabrainz/oauth/forms.py:69
+#: metabrainz/oauth/forms.py:68
 msgid "Homepage field is empty."
 msgstr "請提供主頁。"
 
-#: metabrainz/oauth/forms.py:70
+#: metabrainz/oauth/forms.py:69
 msgid "Homepage is not a valid URI."
 msgstr "主頁地址無效。"
 
-#: metabrainz/oauth/forms.py:71
+#: metabrainz/oauth/forms.py:70
 msgid "Homepage URL must use http or https"
 msgstr "主頁地址必須使用http或https"
 
-#: metabrainz/oauth/forms.py:73
+#: metabrainz/oauth/forms.py:72
 msgid "Authorization callback URL"
 msgstr "授權回呼地址"
 
-#: metabrainz/oauth/forms.py:74
+#: metabrainz/oauth/forms.py:73
 msgid "Authorization callback URL field is empty."
 msgstr "請提供授權回呼地址。"
 
-#: metabrainz/oauth/forms.py:75
+#: metabrainz/oauth/forms.py:74
 msgid "Authorization callback URL is invalid."
 msgstr "授權回呼地址無效。"
 
-#: metabrainz/oauth/forms.py:76
+#: metabrainz/oauth/forms.py:75
 msgid "Authorization callback URL must use http or https."
 msgstr "授權回呼地址必須使用http或https。"
 
-#: metabrainz/oauth/forms.py:81 metabrainz/oauth/forms.py:85
+#: metabrainz/oauth/forms.py:80 metabrainz/oauth/forms.py:84
 msgid "Confirm"
 msgstr "確定"
+
+#: metabrainz/oauth/scopes.py:15
+msgid "View your public account information"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:16
+msgid "View your email address"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:17
+msgid "View and modify your private tags"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:18
+msgid "View and modify your private ratings"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:19
+msgid "View and modify your private collections"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:20
+msgid "Submit new ISRCs to the database"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:21
+msgid "Submit new barcodes to the database"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:22
+msgid "Sign you in and view your unique user id"
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:23
+msgid "Submit listens to ListenBrainz."
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:24
+msgid "Create and modify CritiqueBrainz reviews."
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:25
+msgid "Submit and delete votes on CritiqueBrainz reviews."
+msgstr ""
+
+#: metabrainz/oauth/scopes.py:26
+msgid "Modify profile info and delete profile on CritiqueBrainz."
+msgstr ""
 
 #: metabrainz/payments/views.py:164
 msgid ""
 "Thank you for making a donation to the MetaBrainz Foundation. Your "
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
-msgstr ""
-"您已向MetaBrainz基金會捐款。非常感謝您的支持！由於我們還要處理捐款，所以您的"
-"名字可能要過一段時間才會出現在列表中。"
+msgstr "您已向MetaBrainz基金會捐款。非常感謝您的支持！由於我們還要處理捐款，所以您的名字可能要過一段時間才會出現在列表中。"
 
 #: metabrainz/payments/views.py:171
 msgid ""
@@ -226,182 +309,185 @@ msgid "Requested annual report was not found."
 msgstr "找不到所要的年度報告。"
 
 #: frontend/js/src/forms/ProfileEdit.tsx:30
-#: frontend/js/src/forms/SignupCommercial.tsx:139
+#: frontend/js/src/forms/SignupCommercial.tsx:144
 #: frontend/js/src/forms/SignupNonCommercial.tsx:70
-#: metabrainz/supporter/forms.py:13
+#: metabrainz/supporter/forms.py:15
 msgid "Contact name is required!"
 msgstr "請提供聯絡人名稱！"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:437
+#: frontend/js/src/forms/SignupCommercial.tsx:441
 #: frontend/js/src/forms/SignupNonCommercial.tsx:264
-#: metabrainz/supporter/forms.py:15
+#: metabrainz/supporter/forms.py:17
 msgid ""
 "Can you please tell us more about the project in which you'd like to use "
 "our data? Do you plan to self host the data or use our APIs?"
-msgstr ""
-"請說明您打算如何在應用程式中使用我們的資料。您打算將資料儲存在主機還是使用我"
-"們的API？"
+msgstr "請說明您打算如何在應用程式中使用我們的資料。您打算將資料儲存在主機還是使用我們的API？"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:137
+#: frontend/js/src/forms/SignupCommercial.tsx:142
 #: frontend/js/src/forms/SignupNonCommercial.tsx:68
-#: metabrainz/supporter/forms.py:17
+#: metabrainz/supporter/forms.py:19
 msgid "Please, tell us how you (will) use our data."
 msgstr "請說明您將如何使用我們的數據。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:138
+#: frontend/js/src/forms/SignupCommercial.tsx:143
 #: frontend/js/src/forms/SignupNonCommercial.tsx:69
-#: metabrainz/supporter/forms.py:18
+#: metabrainz/supporter/forms.py:20
 msgid "Please, limit usage description to 500 characters."
 msgstr "描述不可長於500個字元。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:141
-#: frontend/js/src/forms/SignupCommercial.tsx:142
+#: frontend/js/src/forms/SignupCommercial.tsx:146
+#: frontend/js/src/forms/SignupCommercial.tsx:147
 #: frontend/js/src/forms/SignupNonCommercial.tsx:72
 #: frontend/js/src/forms/SignupNonCommercial.tsx:73
-#: frontend/js/src/forms/SignupUser.tsx:84
-#: frontend/js/src/forms/SignupUser.tsx:85 metabrainz/supporter/forms.py:21
-#: metabrainz/user/forms.py:38
+#: frontend/js/src/forms/SignupUser.tsx:90
+#: frontend/js/src/forms/SignupUser.tsx:91 metabrainz/supporter/forms.py:23
+#: metabrainz/user/forms.py:45
 msgid "You need to accept the agreement!"
 msgstr "請接受協議！"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:342
-#: metabrainz/supporter/forms.py:27
+#: frontend/js/src/forms/SignupCommercial.tsx:347
+#: metabrainz/supporter/forms.py:29
 msgid "Organization name"
 msgstr "組織名稱"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:113
-#: metabrainz/supporter/forms.py:28
+#: frontend/js/src/forms/SignupCommercial.tsx:115
+#: metabrainz/supporter/forms.py:30
 msgid "You need to specify the name of your organization."
 msgstr "請提供機構的名稱。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:373
-#: metabrainz/supporter/forms.py:30
+#: frontend/js/src/forms/SignupCommercial.tsx:378
+#: metabrainz/supporter/forms.py:32
 msgid "Organization description"
 msgstr "組織描述"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:116
-#: metabrainz/supporter/forms.py:31
+#: frontend/js/src/forms/SignupCommercial.tsx:118
+#: metabrainz/supporter/forms.py:33
 msgid "You need to provide description of your organization."
 msgstr "請描述組織。"
 
 #: frontend/js/src/Profile.tsx:278
-#: frontend/js/src/forms/SignupCommercial.tsx:396
-#: metabrainz/supporter/forms.py:34
+#: frontend/js/src/forms/SignupCommercial.tsx:401
+#: metabrainz/supporter/forms.py:36
 msgid "Website URL"
 msgstr "網站地址"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:119
-#: metabrainz/supporter/forms.py:35
-msgid "You need to specify website of the organization."
-msgstr "請提供組織網址。"
+#: frontend/js/src/forms/SignupCommercial.tsx:121
+#: frontend/js/src/forms/SignupCommercial.tsx:123
+#: metabrainz/supporter/forms.py:38 metabrainz/supporter/forms.py:42
+msgid "Website URL must be a valid URL."
+msgstr ""
 
-#: metabrainz/supporter/forms.py:37
+#: metabrainz/supporter/forms.py:45
 msgid "Logo image URL"
 msgstr "標誌圖片網址"
 
 #: frontend/js/src/Profile.tsx:284
-#: frontend/js/src/forms/SignupCommercial.tsx:418
-#: metabrainz/supporter/forms.py:38
+#: frontend/js/src/forms/SignupCommercial.tsx:422
+#: metabrainz/supporter/forms.py:46
 msgid "API URL"
 msgstr "API網址"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:457
-#: metabrainz/supporter/forms.py:40
+#: frontend/js/src/forms/SignupCommercial.tsx:461
+#: metabrainz/supporter/forms.py:48
 msgid "Street"
 msgstr "街道"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:123
-#: metabrainz/supporter/forms.py:41
+#: frontend/js/src/forms/SignupCommercial.tsx:128
+#: metabrainz/supporter/forms.py:49
 msgid "You need to specify street."
 msgstr "請輸入街道。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:465
-#: metabrainz/supporter/forms.py:43
+#: frontend/js/src/forms/SignupCommercial.tsx:469
+#: metabrainz/supporter/forms.py:51
 msgid "City"
 msgstr "城市"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:124
-#: metabrainz/supporter/forms.py:44
+#: frontend/js/src/forms/SignupCommercial.tsx:129
+#: metabrainz/supporter/forms.py:52
 msgid "You need to specify city."
 msgstr "請輸入城市。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:473
-#: metabrainz/supporter/forms.py:46
+#: frontend/js/src/forms/SignupCommercial.tsx:477
+#: metabrainz/supporter/forms.py:54
 msgid "State / Province"
 msgstr "州／省"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:126
-#: metabrainz/supporter/forms.py:47
+#: frontend/js/src/forms/SignupCommercial.tsx:131
+#: metabrainz/supporter/forms.py:55
 msgid "You need to specify state/province."
 msgstr "請輸入州或省。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:481
-#: metabrainz/supporter/forms.py:49
+#: frontend/js/src/forms/SignupCommercial.tsx:485
+#: metabrainz/supporter/forms.py:57
 msgid "Postcode"
 msgstr "郵遞區號"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:128
-#: metabrainz/supporter/forms.py:50
+#: frontend/js/src/forms/SignupCommercial.tsx:133
+#: metabrainz/supporter/forms.py:58
 msgid "You need to specify postcode."
 msgstr "請輸入郵遞區號。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:489
-#: metabrainz/supporter/forms.py:52
+#: frontend/js/src/forms/SignupCommercial.tsx:493
+#: metabrainz/supporter/forms.py:60
 msgid "Country"
 msgstr "國家"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:129
-#: metabrainz/supporter/forms.py:53
+#: frontend/js/src/forms/SignupCommercial.tsx:134
+#: metabrainz/supporter/forms.py:61
 msgid "You need to specify country."
 msgstr "請輸入國家。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:132
-#: metabrainz/supporter/forms.py:64
+#: frontend/js/src/forms/SignupCommercial.tsx:137
+#: metabrainz/supporter/forms.py:72
 msgid ""
 "Custom amount must be more than threshold amount for selected tier or "
 "equal to it!"
 msgstr "自訂金額必須等同或多於已選等級之最低金額。"
 
-#: metabrainz/supporter/views.py:46 metabrainz/supporter/views.py:119
-#: metabrainz/supporter/views.py:220
+#: metabrainz/supporter/views.py:54
+msgid ""
+"The verification email could not be sent. Please request a new one from "
+"your profile."
+msgstr ""
+
+#: metabrainz/supporter/views.py:85 metabrainz/supporter/views.py:158
+#: metabrainz/supporter/views.py:260
 msgid "You are already a supporter."
 msgstr "您已經是支持者。"
 
-#: metabrainz/supporter/views.py:61
+#: metabrainz/supporter/views.py:100
 msgid "Can't find tier with a specified ID."
 msgstr "未能找到指定ID的等級。"
 
-#: metabrainz/supporter/views.py:127
+#: metabrainz/supporter/views.py:166
 msgid "You need to choose support tier before signing up!"
 msgstr "請先選擇支持等級！"
 
-#: metabrainz/supporter/views.py:137
+#: metabrainz/supporter/views.py:176
 msgid "You need to choose existing tier before signing up!"
 msgstr "請先選擇現有的等級！"
 
-#: metabrainz/supporter/views.py:164
+#: metabrainz/supporter/views.py:204
 msgid ""
 "Thanks for becoming a supporter! Your application will be reviewed soon. "
 "We will send you updates via email."
-msgstr ""
-"感謝註冊成為支持者！我們很快就會審視您的申請，並透過電子郵件讓您了解審視進度"
-"。"
+msgstr "感謝註冊成為支持者！我們很快就會審視您的申請，並透過電子郵件讓您了解審視進度。"
 
-#: metabrainz/supporter/views.py:187
+#: metabrainz/supporter/views.py:228
 msgid ""
 "Thanks for signing up! Your application will be reviewed soon. We will "
 "send you updates via email."
 msgstr "感謝註冊！我們很快就會審視您的申請，並透過電子郵件讓您了解審視進度。"
 
-#: metabrainz/supporter/views.py:248
+#: metabrainz/supporter/views.py:288
 msgid "Thanks for becoming a supporter!"
 msgstr "感謝您註冊為支持者！"
 
-#: metabrainz/supporter/views.py:274
+#: metabrainz/supporter/views.py:312
 msgid "Thanks for signing up! Please check your inbox to complete verification."
 msgstr "感謝註冊！請檢查收件匣，並完成確認程序。"
 
-#: metabrainz/supporter/views.py:302
+#: metabrainz/supporter/views.py:340
 msgid "Can't generate new token unless account is active."
 msgstr "只可為活躍的帳號產生新權杖。"
 
@@ -435,7 +521,7 @@ msgstr "商店"
 msgid "Policies"
 msgstr "政策"
 
-#: metabrainz/templates/base.html:55 metabrainz/templates/index/gdpr.html:178
+#: metabrainz/templates/base.html:55
 #: metabrainz/templates/index/social-contract.html:3
 #: metabrainz/templates/index/social-contract.html:6
 #: metabrainz/templates/navbar.html:34
@@ -445,14 +531,15 @@ msgstr "社會契約"
 #: metabrainz/templates/base.html:56
 #: metabrainz/templates/index/code-of-conduct.html:3
 #: metabrainz/templates/index/code-of-conduct.html:16
-#: metabrainz/templates/index/gdpr.html:181 metabrainz/templates/navbar.html:35
+#: metabrainz/templates/navbar.html:35
 msgid "Code of Conduct"
 msgstr "行為準則"
 
+#: frontend/js/src/PrivacySummary.tsx:11
 #: frontend/js/src/forms/ConditionsModal.tsx:21
-#: metabrainz/templates/base.html:57 metabrainz/templates/index/gdpr.html:184
-#: metabrainz/templates/index/privacy.html:6
+#: metabrainz/templates/base.html:57 metabrainz/templates/index/privacy.html:6
 #: metabrainz/templates/navbar.html:36
+#: metabrainz/templates/users/privacy-summary.html:3
 msgid "Privacy Policy"
 msgstr "隱私政策"
 
@@ -485,10 +572,7 @@ msgstr "贊助商"
 msgid "Supporters"
 msgstr "支持者"
 
-#: frontend/js/src/forms/LoginUser.tsx:103
-#: frontend/js/src/forms/SignupCommercial.tsx:574
-#: frontend/js/src/forms/SignupNonCommercial.tsx:339
-#: frontend/js/src/forms/SignupUser.tsx:232 metabrainz/templates/base.html:73
+#: frontend/js/src/forms/LoginUser.tsx:103 metabrainz/templates/base.html:73
 #: metabrainz/templates/navbar.html:66 metabrainz/templates/users/login.html:3
 msgid "Sign in"
 msgstr "登入"
@@ -510,26 +594,26 @@ msgid "Contact us"
 msgstr "聯絡我們"
 
 #: metabrainz/templates/base.html:85
-#: metabrainz/templates/index/contact.html:105
+#: metabrainz/templates/index/contact.html:106
 msgid "Blog"
 msgstr "部落格"
 
-#: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:90
+#: metabrainz/templates/base.html:86 metabrainz/templates/index/contact.html:91
 msgid "Chat"
 msgstr "聊天室"
 
 #: metabrainz/templates/base.html:87
-#: metabrainz/templates/index/contact.html:106
+#: metabrainz/templates/index/contact.html:107
 msgid "Mastodon"
 msgstr "Mastodon"
 
 #: metabrainz/templates/base.html:88
-#: metabrainz/templates/index/contact.html:107
+#: metabrainz/templates/index/contact.html:108
 msgid "Bluesky"
 msgstr ""
 
 #: metabrainz/templates/base.html:89
-#: metabrainz/templates/index/contact.html:108
+#: metabrainz/templates/index/contact.html:109
 msgid "Instagram"
 msgstr ""
 
@@ -585,15 +669,14 @@ msgstr "財務報告"
 msgid "Donate"
 msgstr "捐款"
 
-#: frontend/js/src/forms/LoginUser.tsx:110
-#: frontend/js/src/forms/SignupCommercial.tsx:175
-#: frontend/js/src/forms/SignupCommercial.tsx:555
+#: frontend/js/src/forms/SignupCommercial.tsx:180
+#: frontend/js/src/forms/SignupCommercial.tsx:559
 #: frontend/js/src/forms/SignupNonCommercial.tsx:106
 #: frontend/js/src/forms/SignupNonCommercial.tsx:319
 #: metabrainz/templates/navbar.html:65
-#: metabrainz/templates/supporters/account-type.html:51
-#: metabrainz/templates/supporters/account-type.html:93
-#: metabrainz/templates/supporters/account-type.html:144
+#: metabrainz/templates/supporters/account-type.html:47
+#: metabrainz/templates/supporters/account-type.html:84
+#: metabrainz/templates/supporters/account-type.html:130
 #: metabrainz/templates/users/signup.html:3
 msgid "Sign up"
 msgstr "註冊"
@@ -624,9 +707,7 @@ msgstr "MetaBrainz API"
 msgid ""
 "All endpoints require an access token which you can get from your\n"
 "    <a href=\"%(profile_url)s\">profile page</a>."
-msgstr ""
-"所有終端都需要訪問權杖，權杖可以從<a href=\"%(profile_url)s\">個人資料頁</a>"
-"取得。"
+msgstr "所有終端都需要訪問權杖，權杖可以從<a href=\"%(profile_url)s\">個人資料頁</a>取得。"
 
 #: metabrainz/templates/api/info.html:15
 msgid "MusicBrainz Live Data Feed"
@@ -645,9 +726,7 @@ msgid ""
 "It is possible to get a signature for each replication packet. Just "
 "replace\n"
 "      <code>.tar.bz2</code> with <code>.tar.bz2.asc</code>."
-msgstr ""
-"如要取得每個複製封包的簽章，請將<code>.tar.bz2</code>替代為<code>"
-".tar.bz2.asc</code>。"
+msgstr "如要取得每個複製封包的簽章，請將<code>.tar.bz2</code>替代為<code>.tar.bz2.asc</code>。"
 
 #: metabrainz/templates/api/info.html:34
 msgid "You can find the latest replication packet number from this endpoint:"
@@ -664,8 +743,8 @@ msgid ""
 "instrument, label, place, recording, release, release-group, series, or "
 "work."
 msgstr ""
-"JSON傾印按實體分類，<code>&lt;ENTITY_NAME&gt;</code>可以是area、artist、event"
-"、instrument、label、place、recording、release、release-group、series或work。"
+"JSON傾印按實體分類，<code>&lt;ENTITY_NAME&gt;</code>可以是area、artist、event、instrument、label、place、recording、release"
+"、release-group、series或work。"
 
 #: metabrainz/templates/api/info.html:61
 msgid ""
@@ -678,17 +757,13 @@ msgid ""
 "Each dump contains a file named <code>mbdump/&lt;ENTITY_NAME&gt;</code>. "
 "This file must be read line-by-line; each line contains one changed "
 "entity in JSON format."
-msgstr ""
-"每個傾印包含一個名為<code>mbdump/&lt;ENTITY_NAME&gt;</code>的檔案，此檔案必須"
-"每行讀取，因為每一行均以JSON格式列出一個經更改的實體。"
+msgstr "每個傾印包含一個名為<code>mbdump/&lt;ENTITY_NAME&gt;</code>的檔案，此檔案必須每行讀取，因為每一行均以JSON格式列出一個經更改的實體。"
 
 #: metabrainz/templates/api/info.html:67
 msgid ""
 "As with replication packets, you can obtain a file signature by replacing"
 " <code>.tar.xz</code> with <code>.tar.xz.asc</code>."
-msgstr ""
-"如複製封包一樣，如要取得檔案簽章，請將<code>.tar.xz</code>替代為<code>"
-".tar.xz.asc</code>。"
+msgstr "如複製封包一樣，如要取得檔案簽章，請將<code>.tar.xz</code>替代為<code>.tar.xz.asc</code>。"
 
 #: metabrainz/templates/errors/base.html:8
 msgid "Back to home page"
@@ -713,10 +788,9 @@ msgid ""
 "        collaborating together to build and maintain the MetaBrainz "
 "comprehensive datasets."
 msgstr ""
-"MetaBrainz基金會是個全球社群，負責建立和維護載有音樂藝術詮釋資料的開放百科全"
-"書。在創立初期，我們僅是音樂收藏家的一個資源網；到了現在，我們推動志工、藝術"
-"家和行業領袖之間協作，已經有<a href=\"%(editors_url)s\">數十萬計</a>、來自五"
-"湖四海的編輯加入我們社群，協力建設和維護MetaBrainz廣博的資料集。"
+"MetaBrainz基金會是個全球社群，負責建立和維護載有音樂藝術詮釋資料的開放百科全書。在創立初期，我們僅是音樂收藏家的一個資源網；到了現在，我們推動志工、藝術家和行業領袖之間協作，已經有<a"
+" "
+"href=\"%(editors_url)s\">數十萬計</a>、來自五湖四海的編輯加入我們社群，協力建設和維護MetaBrainz廣博的資料集。"
 
 #: metabrainz/templates/index/about.html:22
 #, python-format
@@ -779,8 +853,8 @@ msgid ""
 "href=\"%(internet_ecosys_url)s\">Internet &amp; Digital Ecosystem "
 "Alliance</a>"
 msgstr ""
-"Nick Ashton-Hart董事兼秘書，<a href=\"%(internet_ecosys_url)s\">Internet "
-"&amp; Digital Ecosystem Alliance</a>的執行董事"
+"Nick Ashton-Hart董事兼秘書，<a href=\"%(internet_ecosys_url)s\">Internet &amp; "
+"Digital Ecosystem Alliance</a>的執行董事"
 
 #: metabrainz/templates/index/about.html:54
 #, python-format
@@ -793,8 +867,8 @@ msgid ""
 "Director <a href=\"%(matthew_url)s\">Matthew Hawn</a> of <a "
 "href=\"%(compass_url)s\">Compass, Map & Key</a>"
 msgstr ""
-"<a href=\"%(matthew_url)s\">Matthew Hawn</a>董事，<a href=\"%(compass_url)"
-"s\">Compass, Map & Key</a>"
+"<a href=\"%(matthew_url)s\">Matthew Hawn</a>董事，<a "
+"href=\"%(compass_url)s\">Compass, Map & Key</a>"
 
 #: metabrainz/templates/index/about.html:56
 #, python-format
@@ -818,8 +892,8 @@ msgid ""
 "Director <a href=\"%(hazel_url)s\">Hazel Savage</a> of <a "
 "href=\"%(leeds_url)s\">Leeds Angels</a>"
 msgstr ""
-"<a href=\"%(hazel_url)s\">Hazel Savage</a>董事，<a href=\"%(leeds_url)s\">"
-"Leeds Angels</a>"
+"<a href=\"%(hazel_url)s\">Hazel Savage</a>董事，<a "
+"href=\"%(leeds_url)s\">Leeds Angels</a>"
 
 #: metabrainz/templates/index/about.html:62
 msgid "Advisor"
@@ -880,10 +954,7 @@ msgid ""
 "business should provide financial\n"
 "      support so that we may continue to cover our expenses and pay our "
 "staff."
-msgstr ""
-"我們所有專案都需要來自終端使用者的捐贈和商業使用者的支援。我們的免費資料集，"
-"對這些公司來說價值龐大，創造不少商業優勢。我們認為，使用我們的資料來拓展業務"
-"的公司，應該支持我們的財務，讓我們能夠應對業務支出和發放員工的薪水。"
+msgstr "我們所有專案都需要來自終端使用者的捐贈和商業使用者的支援。我們的免費資料集，對這些公司來說價值龐大，創造不少商業優勢。我們認為，使用我們的資料來拓展業務的公司，應該支持我們的財務，讓我們能夠應對業務支出和發放員工的薪水。"
 
 #: metabrainz/templates/index/bad-customers.html:20
 #, python-format
@@ -896,9 +967,8 @@ msgid ""
 "href=\"%(account_type_url)s\">signing up\n"
 "      for support</a>."
 msgstr ""
-"如果您喜愛的公司出現在名單中，請聯絡該公司，詢問他們為什麼會拒絕支援我們。如"
-"果您是以下公司的員工，且希望從列表中除名，請<a href=\"%(account_type_url)s\">"
-"註冊成為支持者</a>。"
+"如果您喜愛的公司出現在名單中，請聯絡該公司，詢問他們為什麼會拒絕支援我們。如果您是以下公司的員工，且希望從列表中除名，請<a "
+"href=\"%(account_type_url)s\">註冊成為支持者</a>。"
 
 #: metabrainz/templates/index/bad-customers.html:26
 #, python-format
@@ -930,9 +1000,431 @@ msgstr "……或許，我們正在遊說某企業去做「應做的事」……
 msgid "Introduction"
 msgstr "前言"
 
-#: metabrainz/templates/index/conflict-policy.html:55
+#: metabrainz/templates/index/conflict-policy.html:17
+msgid ""
+"Conflicts between people arise in open source projects constantly and the"
+" projects by the \n"
+"    MetaBrainz Foundation are no different. This policy aims to establish"
+" a clear and unambiguous \n"
+"    policy for reporting and addressing conflicts in our community. In "
+"this policy we aim to \n"
+"    establish a fair practice that balances the need for confidentiality "
+"and our desire for \n"
+"    transparency in our operations."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:25
+#, python-format
+msgid ""
+"Before you continue to read this policy, we encourage you to review our "
+"existing community policies \n"
+"    including our <a href=\"%(social_contract_url)s\">Social "
+"Contract</a>, \n"
+"    <a href=\"%(code_of_conduct_url)s\">the Code of Conduct</a>, \n"
+"    and our <a href=\"%(privacy_policy_url)s\">Privacy Policy</a>. These "
+"policies establish the norms and rules for \n"
+"    participation in our projects; these policies apply equally to the "
+"contractors of the MetaBrainz \n"
+"    Foundation and any participants in our projects."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:37
+msgid ""
+"This policy divides conflicts into two categories: Private and public. "
+"Private conflicts are conflicts \n"
+"    that involve *confidential* information regarding contributors, "
+"contractors or supporters. Otherwise, any conflicts \n"
+"    that do not involve confidential information are considered to be "
+"public conflicts. For instance, a \n"
+"    conflict between a contractor and the Executive Director (aka BDFL) "
+"that involves contractor pay is \n"
+"    considered a private conflict because pay rates are confidential "
+"information. A public conflict in edit \n"
+"    notes between two editors in our community does not involve "
+"confidential information and therefore should \n"
+"    be considered a public conflict."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:47
+msgid ""
+"When conflicts arise we aim to disclose as much information as possible "
+"about the conflict in a timely \n"
+"    fashion. When conflicts contain confidential matters we will aim to "
+"disclose as much information as \n"
+"    possible, while fully respecting the confidentiality of the people "
+"involved in the conflict. With any \n"
+"    private conflict we will aim to extract the relevant lessons for the "
+"team and community in an effort to \n"
+"    evolve our policies to prevent future conflicts. Should the involved "
+"parties disagree whether a conflict \n"
+"    is private or public, the question about the nature of the conflict "
+"will be presented for the next higher \n"
+"    level in the chain of command to decide. (e.g. if a community member "
+"and the community manager disagree on \n"
+"    a conflict being public or private, the Executive Director shall "
+"decide if the conflict is public or private)."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:58
 msgid "Reporting and Response"
 msgstr "檢舉與處理程序"
+
+#: metabrainz/templates/index/conflict-policy.html:61
+msgid ""
+"We aim to not have conflict in our community, but we recognize that in "
+"reality conflicts will arise and we \n"
+"    must be prepared to address them in a fair manner. When conflicts "
+"arise, we prefer to have community or team \n"
+"    members resolve the conflicts among themselves, using our existing "
+"policies as guidelines for resolving the \n"
+"    conflict."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:69
+msgid ""
+"If you do not feel comfortable resolving a conflict on your own, you "
+"should feel free to report the conflict to \n"
+"    us. How you address the conflict depends on who is involved in the "
+"conflict and your comfort level. Please see \n"
+"    the detailed sections below on how and with whom to address your "
+"conflict. We aim to address conflicts as soon \n"
+"    as possible in an effort to prevent them from escalating "
+"unnecessarily."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:75
+msgid "Direct conflict resolution"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:78
+msgid ""
+"In direct conflict resolution, the involved parties will attempt to "
+"resolve the conflict themselves without \n"
+"   involving any MetaBrainz Foundation team member. You should aim to use"
+" direct resolution when the conflict does \n"
+"   not involve the violation of one of our policies or if the conflict is"
+" minor."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:84
+#, python-format
+msgid ""
+"For instance, if a user uses a rude tone, is disruptive or flagrantly "
+"ignores our project guidelines, we suggest \n"
+"    that you use direct conflict resolution to resolve the conflict. Some"
+" resources that might give you some suggestions \n"
+"    on how to go about resolving the conflict might be this <a "
+"href=\"%(conflict_resolution_primer_url)s\">\n"
+"    conflict resolution primer</a> and <a "
+"href=\"%(difficult_conversations_url)s\">how to\n"
+"    have difficult conversations at work</a>."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:93
+msgid "Informal reporting"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:96
+msgid ""
+"You may use informal reporting of a conflict if you aim to communicate a "
+"concern or incident without \n"
+"    seeking a corrective outcome. Informal reporting may also be an "
+"option if you have not been personally \n"
+"    victimized, but you’ve witnessed a violation of our policies or where"
+" you wish to maintain confidentiality \n"
+"    throughout the entire reporting process."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:103
+msgid ""
+"For editing in MusicBrainz you may informally report a user using the "
+"“Report this user for bad behavior” \n"
+"    link from the user’s profile. For reporting bad user behavior in "
+"other of our projects, please report them to our \n"
+"    community manager by mailing <span class=\"backemail\">gro.zniarbatem"
+"@reganam-ytinummoc</span> . For conflicts \n"
+"    that involve the community manager, report them by mailing <span "
+"class=\"backemail\">gro.zniarbatem@de</span> ."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:110
+msgid ""
+"Depending the the severity of the issue, repeated informal complaints may"
+" eventually require a formal response \n"
+"    from the MetaBrainz team. If an involved party requires anonymity, "
+"the conflict becomes a private conflict. If at \n"
+"    all possible minor issues should be resolved in a public forum in "
+"order for all people to witness and learn from \n"
+"    the issue at hand."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:116
+msgid "Formal complaint process"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:119
+msgid ""
+"All complaints about conflicts should be submitted via email. To whom a "
+"complaint should be mailed and who will \n"
+"    carry out the investigation will be described in the next section."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:124
+msgid "All complaint submissions to the Foundation should include the following:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:128
+msgid ""
+"Contact info, if it is different than the email used to submit the "
+"conflict"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:129
+msgid "Who was involved in the conflict"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:130
+msgid "Where and when the incident happened"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:131
+msgid ""
+"A description of what happened -- ideally with links (e.g. chatlogs, edit"
+" notes) that outlines what \n"
+"         happened so that the persons evaluating the conflict may "
+"understand the issue at hand"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:133
+msgid ""
+"Any related pieces of information that provide more context on the "
+"conflict (e.g. links, screenshots)"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:134
+msgid "An indication if this conflict is ongoing or not"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:139
+msgid "The investigation that follows aims to determine:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:143
+msgid "The nature and severity of the incident"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:144
+msgid ""
+"Whether or not the incident is considered a violation of MetaBrainz’ "
+"conduct policies or core values"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:145
+msgid ""
+"The amount of harm experienced by the person who submitted the complaint "
+"and the broader MetaBrainz community \n"
+"         as a result of the incident"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:147
+msgid ""
+"Whether there have been prior complaints against the individual or "
+"individuals reported"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:148
+msgid "Whether the incident is ongoing"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:152
+msgid ""
+"The following potential forms of resolution may apply to any team members"
+" involved in the conflict:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:155
+#: metabrainz/templates/index/conflict-policy.html:168
+msgid "Nothing (if it has been found no violation occurred)"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:156
+msgid "Creating a plan to improve the performance"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:157
+msgid "Creating a negative performance evaluation"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:158
+msgid "Mediation, an intervention by a third party to resolve the conflict"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:159
+msgid "Suspension or forced leave"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:160
+msgid "Termination of contract"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:164
+msgid ""
+"The following potential forms of resolution may apply to non team members"
+" involved in the conflict:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:169
+msgid "A reprimand, either public or private"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:170
+msgid "Suspension of the users’ account"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:171
+msgid "Deletion of the users’ account"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:172
+msgid ""
+"Removal of user privileges (e.g. if an auto editor commits a serious "
+"offence, they may lose their auto editor status)"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:175
+msgid "Filing a complaint"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:178
+msgid ""
+"NOTE: For complaints not about MetaBrainz staff, please see the "
+"<em>Informal reporting</em> section above."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:182
+msgid ""
+"If the complaint does not involve the Executive Director (ED), do the "
+"following:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:186
+msgid ""
+"If team member has directly violated conduct policies or engaged in "
+"otherwise harmful behavior, a formal complaint should be filed."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:187
+msgid ""
+"Mail <span class=\"backemail\">gro.zniarbatem@de</span> and include the "
+"complaint information outlined above."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:188
+msgid ""
+"You should expect a response within a working day acknowledging the "
+"complaint."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:189
+msgid ""
+"The complaint will be investigated by the ED, member(s) of the board of "
+"directors or a neutral third party."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:190
+msgid ""
+"Once the investigation has been completed, the ED, with the support of "
+"others involved in the investigation will respond. The \n"
+"        ED will respond to incidents no later than 7 working days after a"
+" complaint has been filed with either a resolution or an \n"
+"        explanation of why the process must be extended."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:196
+msgid "If a complaint involves the Executive Director, do the following:"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:200
+msgid ""
+"If the Executive Director has directly violated conduct policies or "
+"engaged in otherwise harmful behavior, \n"
+"        a formal complaint should be filed with the board of directors."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:202
+msgid ""
+"Mail <span class=\"backemail\">gro.zniarbatem@noituloser-tcilfnoc</span> "
+"and include the complaint information outlined above."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:203
+msgid ""
+"You should get a response within 5 working days acknowledging the "
+"complaint."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:204
+msgid ""
+"The complaint will be investigated by the member(s) of the board of "
+"directors, the community manager, a neutral \n"
+"        third party or a combination thereof."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:206
+msgid ""
+"Once the investigation has been completed, the board, with the support of"
+" others involved in the investigation \n"
+"        will respond. The board will aim to respond to incidents no later"
+" than 15 working days after a complaint has been filed \n"
+"        with either a resolution or an explanation of why the process "
+"must be extended."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:211
+msgid "Confidentiality"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:214
+msgid ""
+"Confidentiality is an important aspect of conflict resolution and all of "
+"the conflicts brought to the attention of the foundation \n"
+"    will be evaluated with confidentiality in mind and acted upon "
+"accordingly."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:219
+msgid ""
+"We work hard to make all of the actions of the foundation as transparent "
+"and open as possible. In cases where we cannot \n"
+"    disclose all aspects of a conflict we will disclose that a conflict "
+"is or has occurred and we will attempt to disclose the \n"
+"    appropriate amount of information about the conflict while balancing "
+"the need for confidentiality and our desire to learn \n"
+"    from conflicts so that we as a foundation and community can learn "
+"from these conflicts and improve our policies to avoid the \n"
+"    conflicts in the future."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:227
+msgid ""
+"Any breaches of confidentiality will be treated as severe breaches of our"
+" conduct policies."
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:230
+msgid "Retaliation"
+msgstr ""
+
+#: metabrainz/templates/index/conflict-policy.html:233
+msgid ""
+"We will not allow retaliation for any contractor or volunteer that files "
+"a complaint or is involved in an investigation. If you \n"
+"    believe that you are being treated negatively because of your "
+"involvement in a complaint please report this complaint directly \n"
+"    to the ED at <span class=\"backemail\">gro.zniarbatem@de</span> or "
+"the board at \n"
+"    <span class=\"backemail\">gro.zniarbatem@noituloser-tcilfnoc</span>."
+msgstr ""
 
 #: metabrainz/templates/index/contact.html:3
 #: metabrainz/templates/index/contact.html:6
@@ -954,9 +1446,8 @@ msgid ""
 "such as what happened, what you expected\n"
 "    to happen, and the URLs of any pages involved."
 msgstr ""
-"您是否找到一個失效的連結或其他預期之外的行為？您可以在<a href=\"%"
-"(bug_tracker_url)s\">錯誤通報系統</a>中回報，也可以透過聊天室、電子郵件通知我"
-"們。請在報告中描述事發經過、預期的行為、相關網址等細節。"
+"您是否找到一個失效的連結或其他預期之外的行為？您可以在<a "
+"href=\"%(bug_tracker_url)s\">錯誤通報系統</a>中回報，也可以透過聊天室、電子郵件通知我們。請在報告中描述事發經過、預期的行為、相關網址等細節。"
 
 #: metabrainz/templates/index/contact.html:16
 msgid "Have a question about MusicBrainz?"
@@ -973,10 +1464,10 @@ msgid ""
 "    Picard</a>, check its <a "
 "href=\"%(picard_troubleshooting)s\">troubleshooting page</a>."
 msgstr ""
-"請先閱覽<a href=\"%(general_faq_url)s\">一般常見問答集</a>或其他<a href=\"%"
-"(faq_url)s\">常見問答集</a>，或許您的問題已經得到解答了。如果您是<a href=\"%"
-"(picard_homepage)s\">MusicBrainz Picard</a>的使用者，請參見MusicBrainz Picard"
-"的<a href=\"%(picard_troubleshooting)s\">疑難排解頁</a>。"
+"請先閱覽<a href=\"%(general_faq_url)s\">一般常見問答集</a>或其他<a "
+"href=\"%(faq_url)s\">常見問答集</a>，或許您的問題已經得到解答了。如果您是<a "
+"href=\"%(picard_homepage)s\">MusicBrainz Picard</a>的使用者，請參見MusicBrainz "
+"Picard的<a href=\"%(picard_troubleshooting)s\">疑難排解頁</a>。"
 
 #: metabrainz/templates/index/contact.html:25
 msgid "Data removal requests"
@@ -990,8 +1481,8 @@ msgid ""
 "    <a href=\"%(dr_policy_url)s\">data removal policy</a> for more "
 "information."
 msgstr ""
-"MusicBrainz不會按要求編輯或刪除真實資料。想瞭解更多，請閱覽我們的<a href=\"%"
-"(dr_policy_url)s\">資料移除政策</a>。"
+"MusicBrainz不會按要求編輯或刪除真實資料。想瞭解更多，請閱覽我們的<a "
+"href=\"%(dr_policy_url)s\">資料移除政策</a>。"
 
 #: metabrainz/templates/index/contact.html:30
 msgid "Copyright issues"
@@ -1012,12 +1503,10 @@ msgid ""
 "    the infringing material from our website. If you cannot provide us a "
 "link, we cannot help you."
 msgstr ""
-"如果您認為MusicBrainz侵犯了您的著作權，您可以向我們<a href=\"%"
-"(cr_violation_url)s\">檢舉侵權</a>。請注意，MusicBrainz提供音樂的資料，而<i>"
-"不是音樂本身</i>。 如果您在MusicBrainz找到您的音樂，<b>這不代表我們提供或持有"
-"該音樂的檔案</b>。如果您仍然認為我們侵犯了您的著作權，您必須提供一個連結，以"
-"示您能夠在我們的網站下載侵權資料。如果您未能提供連結，我們不可為您提供任何幫"
-"助。"
+"如果您認為MusicBrainz侵犯了您的著作權，您可以向我們<a "
+"href=\"%(cr_violation_url)s\">檢舉侵權</a>。請注意，MusicBrainz提供音樂的資料，而<i>不是音樂本身</i>。"
+" "
+"如果您在MusicBrainz找到您的音樂，<b>這不代表我們提供或持有該音樂的檔案</b>。如果您仍然認為我們侵犯了您的著作權，您必須提供一個連結，以示您能夠在我們的網站下載侵權資料。如果您未能提供連結，我們不可為您提供任何幫助。"
 
 #: metabrainz/templates/index/contact.html:40
 msgid "Advertising requests"
@@ -1027,7 +1516,7 @@ msgstr "廣告事項"
 msgid ""
 "We are currently evaluating our overall online advertising strategy. We "
 "are evaluating advertising, traffic optimization,\n"
-"    search engine optimization and software monitization technologies. If"
+"    search engine optimization and software monetization technologies. If"
 " you provide these professional services, please provide a detailed\n"
 "    deck of your comprehensive services to the following email address. "
 "<em>Please respect our other non-media teams and do not contact us \n"
@@ -1035,10 +1524,6 @@ msgid ""
 " disregard the entirety of your submissions if you contact us any other "
 "way!</em>"
 msgstr ""
-"我們正在評估網路廣告的整體策略，包括廣告投放、流量優化、搜尋引擎優化和軟體獲"
-"利科技等方面。如果您能就上述方面提供專業服務，請向以下電子信箱寄出關於該服務"
-"的詳盡簡報。<em>請尊重我們的非媒體部門，不要向我們其他郵箱寄出有關於廣告服務"
-"的電子郵件，否則我們將不會理會您公司的所有來函。</em>"
 
 #: metabrainz/templates/index/contact.html:52
 #, python-format
@@ -1058,9 +1543,7 @@ msgid ""
 "We cannot license any of the music listed in MusicBrainz, since we have "
 "neither the music itself nor the\n"
 "        rights to license the music."
-msgstr ""
-"我們未能為列在MusicBrainz中的音樂提供授權，因為我們不持有該音樂，也沒有權力授"
-"權該音樂。"
+msgstr "我們未能為列在MusicBrainz中的音樂提供授權，因為我們不持有該音樂，也沒有權力授權該音樂。"
 
 #: metabrainz/templates/index/contact.html:60
 msgid "We are not distributing any of the music listed in MusicBrainz."
@@ -1108,13 +1591,11 @@ msgstr "討論區"
 #, python-format
 msgid ""
 "Please come ask your questions at our <a "
-"href=\"%(forums_url)s\">forums</a>! We would love to\n"
-"    answer any questions you may have."
+"href=\"%(forums_url)s\">forums</a>!\n"
+"    The community and the team will be more than happy to help you."
 msgstr ""
-"歡迎到我們的<a href=\"%(forums_url)s\">討論區</a>發問！我們非常樂意解答您的疑"
-"問。"
 
-#: metabrainz/templates/index/contact.html:92
+#: metabrainz/templates/index/contact.html:93
 #, python-format
 msgid ""
 "The MetaBrainz/MusicBrainz/ListenBrainz team and community hang out\n"
@@ -1129,15 +1610,15 @@ msgstr ""
 "    您也可以瀏覽\n"
 "    <a href=\"%(chatlogs_url)s\">聊天紀錄</a>。"
 
-#: metabrainz/templates/index/contact.html:101
+#: metabrainz/templates/index/contact.html:102
 msgid "Social media"
 msgstr "社群媒體"
 
-#: metabrainz/templates/index/contact.html:103
+#: metabrainz/templates/index/contact.html:104
 msgid "You can follow us on these social channels:"
 msgstr "您可以在這些社群媒體關注我們："
 
-#: metabrainz/templates/index/contact.html:112
+#: metabrainz/templates/index/contact.html:113
 msgid "Mailing address"
 msgstr "地址"
 
@@ -1150,34 +1631,350 @@ msgstr "MetaBrainz資料集"
 msgid "GDPR Compliance Statement"
 msgstr "GDPR法遵聲明"
 
-#: metabrainz/templates/index/gdpr.html:37
+#: metabrainz/templates/index/gdpr.html:10
+msgid ""
+"The General Data Protection Regulation is a complex EU regulation that "
+"stipulates many points for protecting private data of\n"
+"    users on the Internet. Even though this is an EU regulation, it has a"
+" worldwide impact due to the nature of the Internet.\n"
+"    The MetaBrainz Foundation with its collection of projects is also "
+"affected by this regulation. We’ve been learning and adapting\n"
+"    our sites to be compliant with the GDPR – sadly this regulation isn’t"
+" entirely black and white and there is an incredible\n"
+"    amount of room left for interpretation of these rules."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:17
+msgid ""
+"The good news is that this regulation is roughly in line with our "
+"established practices: We’ve always held private information\n"
+"    in a high regard and applied the sort of rules to ourselves as we "
+"wish to have our own private data treated. Luckily, this\n"
+"    makes our compliance effort considerably easier. We’ve made two "
+"significant changes to how we treat your data and also adopted\n"
+"    terminology as used in the GDPR in order to use the same languages "
+"that many other sites are now adopting. Please keep reading\n"
+"    to find out the exact details of what we are doing to comply."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:24
+#, python-format
+msgid ""
+"However, we do ask for your compassion and help in our process of "
+"complying with the GDPR. As we already mentioned, the GDPR is\n"
+"    a complex set of rules that are not fully clarified yet. We’ve taken "
+"action on the steps that are clear to us and we’re following\n"
+"    ongoing conversations on points that are in gray zones or unclear to "
+"us. We’ve made our best initial effort on compliance and\n"
+"    promise to keep working on it as the picture becomes more clear. If "
+"you believe that we could improve our compliance, please\n"
+"    <a href=\"%(contact_url)s\">contact us</a> and let us know what we "
+"can do to improve. It would also help us if you\n"
+"    could provide concrete discussion or examples to help us understand "
+"and take action on your suggestion."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:33
+msgid ""
+"Finally, below are the key sections of the GDPR as we understand them and"
+" how they affect your data in our ecosystem. Where\n"
+"    possible, we provide links for deeper understanding, links for you to"
+" examine our relevant code and links to tickets to follow\n"
+"    the process of improving our compliance."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:38
 msgid "Right to be forgotten"
 msgstr "被遺忘權"
 
-#: metabrainz/templates/index/gdpr.html:77
+#: metabrainz/templates/index/gdpr.html:41
+msgid ""
+"Summary: <i>Provide the user with the ability to remove their private "
+"data from our services</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:44
+msgid ""
+"The most important aspect of the right to be forgotten is the ability to "
+"delete your account. Once you request for us to delete\n"
+"    your account, we will remove any personally identifying information "
+"you may have provided us from your account (name, email\n"
+"    address, gender, biography, URL, etc.). The visible name on your "
+"account will be changed to “Deleted User #####” and effectively\n"
+"    the account will no longer be identifiable as your account."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:50
+msgid ""
+"However, given the nature of our projects where we work on collaborative "
+"databases, your contributions that are not personally\n"
+"    identifying are valuable assets to our database and these "
+"contributions will not be removed from our databases. But we will\n"
+"    ensure that these contributions no longer contain personally "
+"identifying data."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:55
+#, python-format
+msgid ""
+"Our process of automatically deleting your accounts across the MetaBrainz"
+" ecosystem is not complete yet (see below for a set of\n"
+"    tickets where you can track our progress). If you would like to "
+"delete your accounts in the MetaBrainz ecosystem or mark a\n"
+"    donation that is currently public as a private donation, please <a "
+"href=\"%(contact_url)s\">contact us</a>\n"
+"    and we will address your request as soon as possible."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:62
+#: metabrainz/templates/index/gdpr.html:182
+msgid "Links:"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:66
+#, python-format
+msgid ""
+"<a href=\"%(editor_deletion_doc_url)s\">How we delete accounts\n"
+"       in MusicBrainz</a> (warning, geek content ahead!)"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:70
+msgid ""
+"Implement sitewide user account deletion in\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/MBS-9680\">MusicBrainz</a>,"
+"\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/AB-337\">AcousticBrainz</a>,"
+"\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/BB-260\">BookBrainz</a>,\n"
+"         <a href=\"https://tickets.metabrainz.org/browse/MEB-103\">the "
+"MetaBrainz Site</a>,\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/LB-354\">ListenBrainz</a>, "
+"and\n"
+"         <a "
+"href=\"https://tickets.metabrainz.org/browse/CB-307\">CritiqueBrainz</a>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:80
 msgid "Restriction of processing"
 msgstr "運用資料的限制"
 
-#: metabrainz/templates/index/gdpr.html:110
+#: metabrainz/templates/index/gdpr.html:83
+msgid ""
+"Summary: <i>To allow the user to control how their personally identifying"
+" data is being used.</i>"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:86
+msgid ""
+"Except for the ListenBrainz and AcousticBrainz projects, we do not "
+"process personally identifying data. Any personally\n"
+"    identifying data that our projects store is for the purpose of being "
+"able to contact you about your contributions to our database\n"
+"    (email address) or for voluntarily showing information about you to "
+"other users (biography, homepage, location, etc)."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:91
+#, python-format
+msgid ""
+"The ListenBrainz project differs in that the Listens (metadata about what"
+" music you have listened to) are stored on our servers\n"
+"    and <a href=\"%(listenbrainz_data_url)s\">made available to the "
+"public</a>. We believe Listens to be personally identifying\n"
+"    data and furthermore, we have goals of creating open source "
+"recommendation engines with this data, which involves processing the\n"
+"    user’s data. These two points are fundamental goals of the "
+"ListenBrainz project and we do not see a reasonable way to reach another"
+"\n"
+"    compromise position."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:99
+msgid ""
+"Because of this, we are going to require users to either acknowledge that"
+" we may process their Listen data or alternatively to\n"
+"    delete their account, including all of their Listens. Please note "
+"that if you decide to delete your ListenBrainz account, it may\n"
+"    take up to two weeks for all of your listens to no longer be included"
+" in our efforts to build a recommendation engine."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:104
+msgid ""
+"We have always made it clear that the data in ListenBrainz was to be "
+"public and that we plan to build new tools with your data, so\n"
+"    this should not come as a surprise to our users."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:108
+msgid ""
+"The AcousticBrainz project does not track who submits data to the "
+"database. If you create an account and use our data creation\n"
+"    tools (e.g. create a dataset or participate in a challenge) then we "
+"link your participation and the things that you create to\n"
+"    your account. If you choose to delete your account then we keep the "
+"non personally identifying data that you create, but anonymize\n"
+"    it so that it cannot be linked back to you."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:114
 msgid "Right to data portability / exporting your data"
 msgstr "資料可攜性／匯出您的資料"
 
-#: metabrainz/templates/index/gdpr.html:150
+#: metabrainz/templates/index/gdpr.html:117
+msgid ""
+"Summary: <i>You have the right to access/download the data we store about"
+" you</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:120
+msgid ""
+"Except for the ListenBrainz and AcousticBrainz projects, we do not store "
+"personally identifying data beyond the\n"
+"    information that is available in your public profile on each of our "
+"projects. Since this data is plainly available in your\n"
+"    profile we do not provide a means for you to export this data."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:125
+msgid "There are the following exceptions to this:"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:129
+msgid ""
+"<b>IP addresses</b>: If you visit one of our sites the IP address of your"
+" computer is stored in our web logs for 7 days\n"
+"        before our servers automatically delete them. This data is almost"
+" never used by anyone: the only time we look at the\n"
+"        IP addresses is if our sites are adversely impacted by the "
+"actions of some unknown users. In that case, we may investigate\n"
+"        the logs to identify the IP address that needs to be blocked in "
+"order to restore the stability of our service.\n"
+"        This data is not available to anyone but the contractors of the "
+"MetaBrainz Foundation and is not available to download\n"
+"        to anyone at all."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:137
+#, python-format
+msgid ""
+"<b>ListenBrainz Listen data</b>: Users may <a "
+"href=\"%(listenbrainz_export_url)s\">export their ListenBrainz Listen\n"
+"        data</a> directly from the site. The user Listen data is also "
+"included in the <a href=\"%(listenbrainz_data_url)s\">ListenBrainz\n"
+"        data dumps</a> that are available for public download."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:146
+msgid ""
+"All of the non personally identifying data, such as your metadata "
+"contributions, are publicly visible, available for download\n"
+"    and available via the project APIs. For details about this data, "
+"downloads and APIs please check the documentation for the\n"
+"    respective projects you are interested in."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:151
+#, python-format
+msgid ""
+"Anyone wishing to get a list of financial donations they have made to the"
+" MetaBrainz Foundation, please\n"
+"    <a href=\"%(contact_url)s\">contact us</a> and provide your "
+"MusicBrainz editor name so that we can look up\n"
+"    your donations."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:157
 msgid "Right to rectification"
 msgstr "修改權"
 
-#: metabrainz/templates/index/gdpr.html:165
+#: metabrainz/templates/index/gdpr.html:160
+msgid "Summary: <i>You have the right to correct your data</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:163
+msgid ""
+"All of our projects allow their users to update their personally "
+"identifying information in their profiles. Furthermore, most\n"
+"    of our projects allow the editing of their own metadata "
+"contributions. If you find that some of your data is incorrect, please\n"
+"    feel free to edit the data since we provide the tools to do so."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:168
+#, python-format
+msgid ""
+"If anyone who has made a financial donation to the MetaBrainz Foundation "
+"would like to make their donation private, please\n"
+"    <a href=\"%(contact_url)s\">contact us</a>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:173
 msgid "Right to be informed"
 msgstr "知情權"
 
-#: metabrainz/templates/index/gdpr.html:188
+#: metabrainz/templates/index/gdpr.html:175
+msgid ""
+"Summary: <i>You have the right to be informed about how we use your data "
+"in plain English</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:178
+msgid ""
+"Our privacy policy, as well as other policies, have always been written "
+"by humans for human consumption. We abhor legalese and\n"
+"    not speaking in direct terms."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:186
+msgid "Social contract"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:189
+msgid "Code of conduct"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:192
+msgid "Privacy policy"
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:196
 msgid "Right to access"
 msgstr "近用權"
 
-#: metabrainz/templates/index/gdpr.html:198
-#: metabrainz/templates/index/privacy.html:166
+#: metabrainz/templates/index/gdpr.html:199
+msgid ""
+"Summary: <i>You have the right to access the data that we collect about "
+"you</i>."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:202
+msgid ""
+"All of our projects make all of the data we collect on your behalf, "
+"privately identifying or not, available to you. The\n"
+"    only exception to this are the IP addresses we store for 7 days – see"
+" above for details."
+msgstr ""
+
+#: metabrainz/templates/index/gdpr.html:206
+#: metabrainz/templates/index/privacy.html:168
 msgid "Privacy/GDPR Representative"
 msgstr "隱私／GDPR代理人"
+
+#: metabrainz/templates/index/gdpr.html:209
+#, python-format
+msgid ""
+"If you have any questions about our privacy policy, please <a "
+"href=\"%(contact_url)s\">contact us</a>. To report\n"
+"   any privacy problems, violations or leaks, our GDPR representative is "
+"our Interim Executive Director Nicolás Tamargo and for\n"
+"   privacy issues contact him at <strong><a "
+"href=\"mailto:gdpr@metabrainz.org\">gdpr@metabrainz.org</a></strong>."
+msgstr ""
 
 #: metabrainz/templates/index/index.html:6
 msgid "Welcome to MetaBrainz!"
@@ -1190,9 +1987,7 @@ msgid ""
 "        databases and make them available in the public domain or under "
 "Creative\n"
 "        Commons licenses."
-msgstr ""
-"MetaBrainz基金會是一個非營利機構，深信大眾應可以自由和開放地使用資料。基金會"
-"旨在設立由社區管理的資料庫，並在公眾領域或以創用CC條款發布。"
+msgstr "MetaBrainz基金會是一個非營利機構，深信大眾應可以自由和開放地使用資料。基金會旨在設立由社區管理的資料庫，並在公眾領域或以創用CC條款發布。"
 
 #: metabrainz/templates/index/index.html:16
 #, python-format
@@ -1209,11 +2004,10 @@ msgid ""
 "gathering process so\n"
 "        that our data can be as comprehensive as possible."
 msgstr ""
-"我們的資料大部分經志願者蒐集，透過相互評審以確保資料一貫和準確。資料可免費"
-"作<a href=\"%(account_type_url)s\">非商業用途</a>，但我們要求<a href=\"%"
-"(account_type_url)s\">商業用戶</a><a href=\"%(account_type_url)s\">支持我們</"
-"a>，以讓我們能夠繼續營運各專案。我們鼓勵所有資料使用者參與蒐集資料，好使我們"
-"的資料變得更全面。"
+"我們的資料大部分經志願者蒐集，透過相互評審以確保資料一貫和準確。資料可免費作<a "
+"href=\"%(account_type_url)s\">非商業用途</a>，但我們要求<a "
+"href=\"%(account_type_url)s\">商業用戶</a><a "
+"href=\"%(account_type_url)s\">支持我們</a>，以讓我們能夠繼續營運各專案。我們鼓勵所有資料使用者參與蒐集資料，好使我們的資料變得更全面。"
 
 #: metabrainz/templates/index/index.html:38
 msgid ""
@@ -1270,11 +2064,11 @@ msgid ""
 "supporters</a>\n"
 "        who make use of our data sets."
 msgstr ""
-"MetaBrainz基金會認為，<a href=\"%(financial_reports_url)s\">財政透明</a>是非"
-"常重要的。基金會接受來自<a href=\"%(donations_url)s\">使用者</a>和<a href=\"%"
-"(sponsors_url)s\">贊助商</a>的資金，以確保基金會能夠達到其設立的目標。此外"
-"，<a href=\"%(supporters_url)s\">商業支持者</a>也透過使用我們的資料，支持基金"
-"會的運作。"
+"MetaBrainz基金會認為，<a "
+"href=\"%(financial_reports_url)s\">財政透明</a>是非常重要的。基金會接受來自<a "
+"href=\"%(donations_url)s\">使用者</a>和<a "
+"href=\"%(sponsors_url)s\">贊助商</a>的資金，以確保基金會能夠達到其設立的目標。此外，<a "
+"href=\"%(supporters_url)s\">商業支持者</a>也透過使用我們的資料，支持基金會的運作。"
 
 #: metabrainz/templates/index/index.html:133
 #, python-format
@@ -1296,7 +2090,7 @@ msgid ""
 "      <a href=\"%(about_url)s\">about</a> page."
 msgstr "如要取得更多關於基金會的資訊，請參見<a href=\"%(about_url)s\">關於我們</a>。"
 
-#: frontend/js/src/forms/ConditionsModal.tsx:43
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:32
 #: metabrainz/templates/index/privacy.html:3
 msgid "Privacy"
 msgstr "隱私"
@@ -1304,6 +2098,44 @@ msgstr "隱私"
 #: metabrainz/templates/index/privacy.html:8
 msgid "Summary"
 msgstr "摘要"
+
+#: metabrainz/templates/index/privacy.html:12
+msgid ""
+"You do not have to provide any personal data to be able to browse the "
+"contents of the databases published by MetaBrainz."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:15
+msgid ""
+"You do not have to provide any personally-identifying information if you "
+"choose not to."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:18
+msgid ""
+"We will never reveal your email address on MetaBrainz controlled web "
+"sites."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:22
+msgid ""
+"In order to get maximum value out of the MetaBrainz projects, you may "
+"want to create an account and log in. \n"
+"    Doing so grants you the ability to: edit the databases, contribute "
+"your own data, communicate with other users, and keep track \n"
+"    of recently released music from artists in your MusicBrainz "
+"collection. If you choose to create an account then the minimum we \n"
+"    ask is that you: choose a unique username and password, use a web "
+"browser that accepts \"session\" cookies, and provide a verified \n"
+"    email address."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:29
+msgid ""
+"If you do not create an account (or are not logged in) you will not have "
+"access to the above listed features, however, you will \n"
+"    still have full access to browse and examine the databases."
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:33
 msgid "Applicable to all users"
@@ -1313,39 +2145,197 @@ msgstr "適用於所有使用者"
 msgid "Cookies"
 msgstr "Cookies"
 
+#: metabrainz/templates/index/privacy.html:37
+msgid "We use two cookies that contain sensitive information:"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:42
+msgid ""
+"<b>remember_login</b>: If you choose the \"Log in permanently\" option "
+"when logging in to one of our sites; the cookie will be used to \n"
+"      remember your login details."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:46
+msgid ""
+"<b>musicbrainz_server_session, session, or connect.sid</b>: If you are "
+"logged into one of our sites, your current session ID is stored in this "
+"cookie."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:51
+msgid ""
+"We may store dynamic preference information in other cookies, but these "
+"do not contain any sensitive information."
+msgstr ""
+
 #: metabrainz/templates/index/privacy.html:54
 msgid "Web and FTP access logs"
 msgstr "網絡和FTP訪問紀錄"
+
+#: metabrainz/templates/index/privacy.html:57
+msgid ""
+"In a practice similar to other web sites (and APIs) we keep logs of all "
+"web requests made against our servers. These logs include: your IP\n"
+"    address, your browser's (or API client's) \"User-Agent\" string, and "
+"which page (or API endpoint) you requested with which parameters. "
+"Aggregate information about web and FTP traffic is\n"
+"    made available to the public via our site usage pages."
+msgstr ""
 
 #: metabrainz/templates/index/privacy.html:62
 msgid "Third-Party content"
 msgstr "第三方內容"
 
-#: metabrainz/templates/index/privacy.html:92
+#: metabrainz/templates/index/privacy.html:64
+msgid ""
+"Our projects' web pages may load some third-party content. Some, but "
+"possibly not all sites are listed below:"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:69
+#, python-format
+msgid ""
+"Cover art and other images: These are provided by the various cover art "
+"sites that have given MusicBrainz permission to do so and our own \n"
+"      <a href=\"%(caa_url)s\">Cover Art Archive</a>. This means that the "
+"relevant site will know (if they want to) your IP \n"
+"      address, User-Agent string, etc., and which MusicBrainz web page "
+"you were visiting (the one which included the cover art image)."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:75
+msgid ""
+"AcoustID: Our fingerprints tab loads fingerprint information from "
+"acoustid.org."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:78
+msgid ""
+"MTCaptcha: Our account creation page loads third party content in order "
+"to prevent spammers from creating accounts."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:83
+msgid ""
+"<i>The above information assumes that you are using \"normal\" web "
+"browser settings, whereby images are always loaded and HTTP referrer \n"
+"    information is always sent.</i>"
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:88
+msgid ""
+"It is impractical to constantly modify this privacy policy when "
+"MetaBrainz projects change which third party content they utilize. We "
+"will \n"
+"    aim to use common sense, respect to our community and community "
+"review when adding more content from third party sites. We will also \n"
+"    periodically review our policy to ensure that it remains current."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:93
 msgid "Applicable to account holders"
 msgstr "適用於帳號持有人"
 
-#: metabrainz/templates/index/privacy.html:94
+#: metabrainz/templates/index/privacy.html:95
 msgid "Account creation"
 msgstr "建立帳號"
 
-#: metabrainz/templates/index/privacy.html:108
+#: metabrainz/templates/index/privacy.html:97
+msgid ""
+"When creating an account with a MetaBrainz project you need to pick a "
+"unique username and choose a password, the username you pick is the \n"
+"    only name associated with your account and will be what other "
+"MetaBrainz users know you as. You may optionally also tell us other \n"
+"    information about yourself that will be displayed to other MetaBrainz"
+" users and the public."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:103
+msgid ""
+"Additionally, in order to edit the databases you will need to provide a "
+"confirmed email address. This email address will be held in \n"
+"    confidence, the only method of revealing your email address to "
+"another user is if you choose to send a message to another \n"
+"    user and enable the option to \"reveal my email address\". Changing "
+"the email address stored with your account will require you to \n"
+"    verify the new address."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:109
 msgid "Edits and Notes"
 msgstr "編輯和備註"
 
-#: metabrainz/templates/index/privacy.html:114
+#: metabrainz/templates/index/privacy.html:111
+msgid ""
+"If you make any changes to a MetaBrainz project database, such as adding "
+"any data, the details of those changes will be visible to \n"
+"    other logged-in users and the change will be associated with your "
+"username."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:115
 msgid "Subscriptions on MusicBrainz"
 msgstr "MusicBrainz訂閲"
 
-#: metabrainz/templates/index/privacy.html:131
+#: metabrainz/templates/index/privacy.html:117
+msgid ""
+"As a logged-in user you can subscribe to one or more artists, labels, "
+"collections or other editors. The act of subscribing causes \n"
+"    any edits made to (or by in the case of another editor) those "
+"entities to be emailed to you. By default, other users can see your \n"
+"    list of subscriptions, however, you can opt out of this by editing "
+"the appropriate preference."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:123
+msgid ""
+"This does not provide \"perfect\" privacy though, in some cases it will "
+"be possible to infer information about the contents of your \n"
+"    subscription list even though you have disallowed others from viewing"
+" that list directly. This imperfection arises because various \n"
+"    parts of the system behave differently depending on whether or not an"
+" entity has any subscribers; also, the number of users \n"
+"    subscribed to each artist is available via the artist pages. In the "
+"most extreme (possibly contrived) example, imagine that all \n"
+"    users have their subscriptions set to \"public\", except for exactly "
+"one user whose list is \"private\". In that case, any discrepancy \n"
+"    for a given artist between the shown list of subscribers and the "
+"total number of subscribers must be down to that one user. Thus, \n"
+"    you can infer what artists are on that user's list."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:132
 msgid "Third-party sites"
 msgstr "第三方網站"
 
-#: metabrainz/templates/index/privacy.html:145
+#: metabrainz/templates/index/privacy.html:134
+#, python-format
+msgid ""
+"Our code reviews are done on GitHub, which is not under the control of "
+"MetaBrainz. Participating in code reviews or other\n"
+"    tasks carried out on GitHub are subject to <a "
+"href=\"%(github_url)s\">GitHub's privacy policy</a>."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:140
+#, python-format
+msgid ""
+"Our translations platform is provided and hosted by Weblate, which has a "
+"data processing agreement with MetaBrainz.\n"
+"    Participating in translations is subject to <a "
+"href=\"%(weblate_url)s\">dedicated legal terms</a>.\n"
+"    Any translations you make will be submitted to our Git repositories "
+"and publicly associated with your username;\n"
+"    if you so choose, you can also publicly associate them with your own "
+"verified email address."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:147
 msgid "MetaBrainz donors"
 msgstr "MetaBrainz的捐助者"
 
-#: metabrainz/templates/index/privacy.html:147
+#: metabrainz/templates/index/privacy.html:149
 msgid ""
 "When you make a donation to the MetaBrainz Foundation, we are legally\n"
 "    required to collect your personal information and keep it in our "
@@ -1353,11 +2343,9 @@ msgid ""
 "    in case we ever get audited by the IRS. We will not disclose your "
 "personal\n"
 "    information to anyone else, ever."
-msgstr ""
-"當您向MetaBrainz基金會捐款時，法律要求我們收集及記錄您的個人資料，以供美國國"
-"家稅務局審查帳目。我們永遠不會向稅務局以外的人透露您的個人資料。"
+msgstr "當您向MetaBrainz基金會捐款時，法律要求我們收集及記錄您的個人資料，以供美國國家稅務局審查帳目。我們永遠不會向稅務局以外的人透露您的個人資料。"
 
-#: metabrainz/templates/index/privacy.html:153
+#: metabrainz/templates/index/privacy.html:155
 msgid ""
 "We believe in transparent finances, which means that we list all "
 "donations\n"
@@ -1365,15 +2353,36 @@ msgid ""
 "of the\n"
 "    donation, unless you chose to be anonymous during the donation "
 "process."
-msgstr ""
-"我們認為財務狀況應該是透明的。因此，我們會在網站列出所有捐款。除非您選擇保持"
-"匿名，我們只會顯示您的名稱和捐款金額。"
+msgstr "我們認為財務狀況應該是透明的。因此，我們會在網站列出所有捐款。除非您選擇保持匿名，我們只會顯示您的名稱和捐款金額。"
 
-#: metabrainz/templates/index/privacy.html:158
+#: metabrainz/templates/index/privacy.html:160
 msgid "Exceptions"
 msgstr "例外情形"
 
-#: frontend/js/src/Profile.tsx:598
+#: metabrainz/templates/index/privacy.html:162
+msgid ""
+"<i><b>Please note</b>: Reasonable exceptions may apply to the above "
+"policy, for example to comply with applicable laws.\n"
+"    Also, members of the MetaBrainz team and other personnel contracted "
+"to provide services to MetaBrainz may have access to\n"
+"    our infrastructure and could therefore view any information contained"
+" therein. However all personnel are contractually bound\n"
+"    by non-disclosure clauses which prevent them from making any such "
+"information available to others."
+msgstr ""
+
+#: metabrainz/templates/index/privacy.html:171
+#, python-format
+msgid ""
+"If you have any questions about our GDPR statement, please <a "
+"href=\"%(contact_url)s\">contact us</a>. To report\n"
+"   any privacy problems, violations or leaks, our GDPR representative is "
+"our Interim Executive Director Nicolás Tamargo and for\n"
+"   privacy issues contact him at <strong><a "
+"href=\"mailto:gdpr@metabrainz.org\">gdpr@metabrainz.org</a></strong>."
+msgstr ""
+
+#: frontend/js/src/Profile.tsx:603
 #: frontend/js/src/forms/ProfileChangePassword.tsx:22
 #: frontend/js/src/forms/ProfileChangePassword.tsx:111
 #: metabrainz/templates/index/profile-change-password.html:3
@@ -1403,9 +2412,7 @@ msgid ""
 "<a href=\"%(mb_url)s\">MusicBrainz</a> is a community-maintained open "
 "source music encyclopedia that\n"
 "            collects music metadata and makes it available to the public."
-msgstr ""
-"<a href=\"%(mb_url)s\">MusicBrainz</a>是由社群管理的開源音樂百科全書，蒐集音"
-"樂詮釋資料供公眾閱覽和使用。"
+msgstr "<a href=\"%(mb_url)s\">MusicBrainz</a>是由社群管理的開源音樂百科全書，蒐集音樂詮釋資料供公眾閱覽和使用。"
 
 #: metabrainz/templates/index/projects.html:32
 msgid "MusicBrainz Picard"
@@ -1418,8 +2425,8 @@ msgid ""
 "software application for\n"
 "            identifying, tagging, and organizing digital audio recordings."
 msgstr ""
-"<a href=\"%(picard_url)s\">MusicBrainz Picard</a>是一款開源軟件，能讓使用者識"
-"別、標籤和整理數位音訊錄音。"
+"<a href=\"%(picard_url)s\">MusicBrainz "
+"Picard</a>是一款開源軟件，能讓使用者識別、標籤和整理數位音訊錄音。"
 
 #: metabrainz/templates/index/projects.html:47
 msgid "Cover Art Archive"
@@ -1433,9 +2440,9 @@ msgid ""
 "            releases in MusicBrainz. It is a joint project with the <a "
 "href=\"%(archive_org_url)s\">Internet Archive</a>."
 msgstr ""
-"<a href=\"%(caa_url)s\">Cover Art Archive</a>是一個資料庫，存放入列"
-"MusicBrainz專輯的封套圖片。這是一個與<a href=\"%(archive_org_url)s\">"
-"Internet Archive</a>合作的專案。"
+"<a href=\"%(caa_url)s\">Cover Art "
+"Archive</a>是一個資料庫，存放入列MusicBrainz專輯的封套圖片。這是一個與<a "
+"href=\"%(archive_org_url)s\">Internet Archive</a>合作的專案。"
 
 #: metabrainz/templates/index/projects.html:63
 msgid "CritiqueBrainz"
@@ -1448,9 +2455,7 @@ msgid ""
 " book critics and raw data by\n"
 "            providing a platform created for the sole purpose of Creative"
 " Commons licensed reviews."
-msgstr ""
-"<a href=\"%(cb_url)s\">CritiqueBrainz</a>是一個發布創用CC評論的平臺，讓音樂和"
-"文獻評論家能夠接觸原始資料。"
+msgstr "<a href=\"%(cb_url)s\">CritiqueBrainz</a>是一個發布創用CC評論的平臺，讓音樂和文獻評論家能夠接觸原始資料。"
 
 #: metabrainz/templates/index/projects.html:78
 msgid "BookBrainz"
@@ -1464,8 +2469,8 @@ msgid ""
 "            literature. Its aim is to collect and store data about every "
 "publication ever written."
 msgstr ""
-"<a href=\"%(bb_url)s\">BookBrainz</a>是一個載有出版文獻的網路百科全書，目的蒐"
-"集和儲存有史以來所有出版文學的資料。"
+"<a "
+"href=\"%(bb_url)s\">BookBrainz</a>是一個載有出版文獻的網路百科全書，目的蒐集和儲存有史以來所有出版文學的資料。"
 
 #: metabrainz/templates/index/projects.html:93
 msgid "ListenBrainz"
@@ -1479,8 +2484,8 @@ msgid ""
 "            their listen history. One of the goals is for this data to be"
 " used for building open music recommendation systems."
 msgstr ""
-"<a href=\"%(lb_url)s\">ListenBrainz</a>是一個開源的音樂網站，讓使用者導入他們"
-"的聆聽紀錄。專案其中一個目標是使用這些紀錄打造一個開放的音樂推薦系統。"
+"<a "
+"href=\"%(lb_url)s\">ListenBrainz</a>是一個開源的音樂網站，讓使用者導入他們的聆聽紀錄。專案其中一個目標是使用這些紀錄打造一個開放的音樂推薦系統。"
 
 #: metabrainz/templates/index/projects.html:104
 msgid "Past Projects"
@@ -1501,9 +2506,8 @@ msgid ""
 "href=\"%(upf_url)s\">Universitat Pompeu Fabra</a>\n"
 "            in Barcelona."
 msgstr ""
-"<a href=\"%(ab_url)s\">AcousticBrainz</a>眾包和公開世界上所有音樂的聲學資訊。"
-"此專案與巴塞隆納<a href=\"%(upf_url)s\">龐培法布拉大學</a>的<a href=\"%"
-"(mtg_url)s\">音樂科技小組</a>合作。"
+"<a href=\"%(ab_url)s\">AcousticBrainz</a>眾包和公開世界上所有音樂的聲學資訊。此專案與巴塞隆納<a "
+"href=\"%(upf_url)s\">龐培法布拉大學</a>的<a href=\"%(mtg_url)s\">音樂科技小組</a>合作。"
 
 #: metabrainz/templates/index/projects.html:132
 msgid "MessyBrainz"
@@ -1518,9 +2522,8 @@ msgid ""
 "used for AcousticBrainz and is still being\n"
 "            used in ListenBrainz."
 msgstr ""
-"<a href=\"%(messybrainz_url)s\">MessyBrainz</a>找出雜亂的詮釋資料，並儘可能將"
-"它連接至穩定的MusicBrainz識別碼。MessyBrainz目前用於ListenBrainz，曾用於"
-"AcousticBrainz。"
+"<a "
+"href=\"%(messybrainz_url)s\">MessyBrainz</a>找出雜亂的詮釋資料，並儘可能將它連接至穩定的MusicBrainz識別碼。MessyBrainz目前用於ListenBrainz，曾用於AcousticBrainz。"
 
 #: metabrainz/templates/index/shop.html:3
 #: metabrainz/templates/index/shop.html:6
@@ -1543,9 +2546,7 @@ msgid ""
 "    have helped us grow. In either case they played a significant role in"
 " the\n"
 "    success and growth of MusicBrainz."
-msgstr ""
-"以下的組織和個人曾經為我們提供資金或透過提供工具和科技支持我們，對MusicBrainz"
-"的成就和發展扮演重要角色。"
+msgstr "以下的組織和個人曾經為我們提供資金或透過提供工具和科技支持我們，對MusicBrainz的成就和發展扮演重要角色。"
 
 #: metabrainz/templates/index/sponsors.html:18
 msgid "We would not exist without you — <b>Thank You!</b>"
@@ -1557,9 +2558,7 @@ msgid ""
 "<b><a href=\"%(github_url)s\">GitHub</a></b> provides us with a free "
 "Bronze\n"
 "        account for hosting our sysadmin repositories."
-msgstr ""
-"<b><a href=\"%(github_url)s\">GitHub</a></b>為我們提供免費的銅級帳號，寄存我"
-"們的系統管理員倉庫。"
+msgstr "<b><a href=\"%(github_url)s\">GitHub</a></b>為我們提供免費的銅級帳號，寄存我們的系統管理員倉庫。"
 
 #: metabrainz/templates/index/sponsors.html:34
 msgid "Special thanks"
@@ -1574,10 +2573,7 @@ msgid ""
 "    meals. These have become too numerous to list, but we wanted to note "
 "a few individuals\n"
 "    and companies who have made a big difference for us."
-msgstr ""
-"我們在過去得到很多人在各方面的支持，如租借會議場地、支付旅費、作出大量個人捐"
-"款和提供無數次的餐飲服務，等等。這些貢獻雖數之不盡，但我們想在這裡特別感謝為"
-"我們作出巨大貢獻的幾位人士。"
+msgstr "我們在過去得到很多人在各方面的支持，如租借會議場地、支付旅費、作出大量個人捐款和提供無數次的餐飲服務，等等。這些貢獻雖數之不盡，但我們想在這裡特別感謝為我們作出巨大貢獻的幾位人士。"
 
 #: metabrainz/templates/index/sponsors.html:42
 #, python-format
@@ -1603,16 +2599,16 @@ msgid ""
 "    hosting provider between 2006 and 2016 and gave us a discount because"
 " of our non-profit status."
 msgstr ""
-"<a href=\"%(google_url)s\">Google</a></b>一直給予極大支持，作為贊助商多年來累"
-"計捐助超過<b>50萬美元</b>。2010年，<a href=\"%(last_fm_url)s\">Last.fm</a>其"
-"中一位創辦人Richard Jones向MusicBrainz捐助了<b>五萬美元</b>，<a href=\"%"
-"(oracle_url)s\">昇陽電腦</a>和Paul Lamere則捐助了一個資料庫伺服器。<a "
-"href=\"%(oreilly_url)s\">歐萊禮</a>在MetaBrainz基金會尚未成立的時候捐助500美"
-"元，讓MusicBrainz能夠開設銀行賬戶。MetaBrainz基金會不時會遇到有關智慧財產權的"
-"問題，<a href=\"%(ed_url)s\">Ed Cavazos</a>會定期就這些問題提供義務法律諮詢。"
-"此外，<a href=\"%(dan_url)s\">Dan Appleman</a>會定期為我們訂立授權資料使用的"
-"契約。最後，我們要感謝2006年至2016年間的主要寄存服務提供者<a href=\"%(dw_url)"
-"s\">Digital West Networks Inc.</a>，它們考慮到我們並不營利，提供了優惠服務。"
+"<a "
+"href=\"%(google_url)s\">Google</a></b>一直給予極大支持，作為贊助商多年來累計捐助超過<b>50萬美元</b>。2010年，<a"
+" href=\"%(last_fm_url)s\">Last.fm</a>其中一位創辦人Richard "
+"Jones向MusicBrainz捐助了<b>五萬美元</b>，<a href=\"%(oracle_url)s\">昇陽電腦</a>和Paul "
+"Lamere則捐助了一個資料庫伺服器。<a "
+"href=\"%(oreilly_url)s\">歐萊禮</a>在MetaBrainz基金會尚未成立的時候捐助500美元，讓MusicBrainz能夠開設銀行賬戶。MetaBrainz基金會不時會遇到有關智慧財產權的問題，<a"
+" href=\"%(ed_url)s\">Ed Cavazos</a>會定期就這些問題提供義務法律諮詢。此外，<a "
+"href=\"%(dan_url)s\">Dan "
+"Appleman</a>會定期為我們訂立授權資料使用的契約。最後，我們要感謝2006年至2016年間的主要寄存服務提供者<a "
+"href=\"%(dw_url)s\">Digital West Networks Inc.</a>，它們考慮到我們並不營利，提供了優惠服務。"
 
 #: metabrainz/templates/index/sponsors.html:61
 msgid ""
@@ -1641,11 +2637,10 @@ msgid ""
 "working on MusicBrainz, the open music encyclopedia,\n"
 "          and fell in love with Open Source software."
 msgstr ""
-"Robert是<a href=\"%(mb_url)s\">MusicBrainz</a>和MetaBrainz基金會的創辦人和首"
-"席極客。MetaBrainz基金會目標保護和支持MusicBrainz的發展。在加州理工州立大學完"
-"成電腦工程學位後，Robert加入了Xing Technology，鑽研MP3技術。後來，他在網路泡"
-"沫時期加入了EMusic的FreeAmp團隊。Robert在EMusic工作的時候開始建立MusicBrainz"
-"，也同時愛上了開源軟體。"
+"Robert是<a "
+"href=\"%(mb_url)s\">MusicBrainz</a>和MetaBrainz基金會的創辦人和首席極客。MetaBrainz基金會目標保護和支持MusicBrainz的發展。在加州理工州立大學完成電腦工程學位後，Robert加入了Xing"
+" "
+"Technology，鑽研MP3技術。後來，他在網路泡沫時期加入了EMusic的FreeAmp團隊。Robert在EMusic工作的時候開始建立MusicBrainz，也同時愛上了開源軟體。"
 
 #: metabrainz/templates/index/team.html:21
 #, python-format
@@ -1655,13 +2650,17 @@ msgid ""
 "          <a href=\"%(pr_url)s\">Party Robotics</a> where he co-created "
 "Bartendro the open source cocktail robot."
 msgstr ""
-"Robert生前也是一名活躍的硬體駭客，曾在Burning Man和Nowhere展示他的藝術專案。"
-"他是<a href=\"%(pr_url)s\">Party Robotics</a>的創辦人之一，並參與建造開源雞尾"
-"酒機器人Bartendro。"
+"Robert生前也是一名活躍的硬體駭客，曾在Burning Man和Nowhere展示他的藝術專案。他是<a "
+"href=\"%(pr_url)s\">Party Robotics</a>的創辦人之一，並參與建造開源雞尾酒機器人Bartendro。"
 
 #: metabrainz/templates/index/team.html:26
 msgid "He lives on in our hearts and in open source."
 msgstr "他在我們心中和開源世界永垂不朽。"
+
+#: metabrainz/templates/index/team.html:29
+#: metabrainz/templates/index/team.html:315
+msgid "you’re welcome to try"
+msgstr ""
 
 #: metabrainz/templates/index/team.html:39
 msgid ""
@@ -1680,19 +2679,14 @@ msgid ""
 "          ever hear, binge-watching old TV shows, and being the best "
 "drummer in the world on Rock Band 4."
 msgstr ""
-"Michael是MusicBrainz的高級開發者，現住在家鄉芝加哥。他在小學時首次接觸"
-"MusicBrainz，在高中的時候，他開始編輯MusicBrainz，以處理他日漸豐富的音樂珍藏"
-"。到了大學，Michael更參與了三個GSoC專案。在他的空閒時間，Michael會去看演唱會"
-"、製作沒人會聽的音樂、瘋狂觀看舊電視劇和在《搖滾樂團 4》中做世界上最厲害的鼓"
-"手。"
+"Michael是MusicBrainz的高級開發者，現住在家鄉芝加哥。他在小學時首次接觸MusicBrainz，在高中的時候，他開始編輯MusicBrainz，以處理他日漸豐富的音樂珍藏。到了大學，Michael更參與了三個GSoC專案。在他的空閒時間，Michael會去看演唱會、製作沒人會聽的音樂、瘋狂觀看舊電視劇和在《搖滾樂團"
+" 4》中做世界上最厲害的鼓手。"
 
 #: metabrainz/templates/index/team.html:57
 msgid ""
 "<span class=\"name\">Nicolás Tamargo</span> &mdash; Style Leader/Customer"
 " Support/Community Manager/Software Engineer"
-msgstr ""
-"<span class=\"name\">Nicolás Tamargo</span> &mdash; 樣式領袖／客戶聯繫／社群"
-"主管／軟體工程師"
+msgstr "<span class=\"name\">Nicolás Tamargo</span> &mdash; 樣式領袖／客戶聯繫／社群主管／軟體工程師"
 
 #: metabrainz/templates/index/team.html:59
 #, python-format
@@ -1711,11 +2705,8 @@ msgid ""
 "href=\"%(mb_editors_url)s\">editing MusicBrainz</a>\n"
 "          or traveling around trying to watch some wildlife."
 msgstr ""
-"Nicolás初起便是一名勤勞的編輯（他依然以此秘密兼職），因為他非常喜歡整理資料。"
-"不久，他受邀成為樣式領袖，協助社群決定該如何整體各樣資料。後來，他被指派負責"
-"處理技術支援問題，最終也開始撰寫程式碼來解決這些問題（老實說，這些程式有時候"
-"會製造更多錯誤！）公餘時間，他會<a href=\"%(mb_editors_url)s\">編輯"
-"MusicBrainz</a>和四處旅行親近大自然。"
+"Nicolás初起便是一名勤勞的編輯（他依然以此秘密兼職），因為他非常喜歡整理資料。不久，他受邀成為樣式領袖，協助社群決定該如何整體各樣資料。後來，他被指派負責處理技術支援問題，最終也開始撰寫程式碼來解決這些問題（老實說，這些程式有時候會製造更多錯誤！）公餘時間，他會<a"
+" href=\"%(mb_editors_url)s\">編輯MusicBrainz</a>和四處旅行親近大自然。"
 
 #: metabrainz/templates/index/team.html:68
 msgid "Originally from Spain, he now lives in Tartu, Estonia."
@@ -1734,9 +2725,8 @@ msgid ""
 "          more than 1 bit since 1982 and has been an esteemed Linux "
 "system administrator since 1998."
 msgstr ""
-"Laurent Monin是音樂的超級愛好者，在嘗試整理他1500多張CD的時候才了得知"
-"MusicBrainz和Picard的存在。此外，Laurent自1982年開始設計程式，只要是多於一位"
-"元的東西，他都不放過。1998年，他成為了一名受人尊敬的Linux系統管理員。"
+"Laurent "
+"Monin是音樂的超級愛好者，在嘗試整理他1500多張CD的時候才了得知MusicBrainz和Picard的存在。此外，Laurent自1982年開始設計程式，只要是多於一位元的東西，他都不放過。1998年，他成為了一名受人尊敬的Linux系統管理員。"
 
 #: metabrainz/templates/index/team.html:88
 #, python-format
@@ -1753,8 +2743,9 @@ msgid ""
 msgstr ""
 "Laurent興趣和技能種類豐富，曾貢獻於多項開源專案，\n"
 "          其中包括<a href=\"%(elinks_url)s\">ELinks</a>和\n"
-"          <a href=\"%(geeqie_url)s\">Geeqie</a>。他喜歡修補不同音頻硬體，包括"
-"擴大機和揚聲器。Laurent的貢獻不僅如此。他目前在鄰近法國貝桑松的居所\n"
+"          <a "
+"href=\"%(geeqie_url)s\">Geeqie</a>。他喜歡修補不同音頻硬體，包括擴大機和揚聲器。Laurent的貢獻不僅如此。他目前在鄰近法國貝桑松的居所"
+"\n"
 "          維護MetaBrainz的伺服器。"
 
 #: metabrainz/templates/index/team.html:105
@@ -1770,19 +2761,17 @@ msgid ""
 "          in the end. Besides that, he casually plays music, listens to "
 "music, eats music, … music, for an healthy way of life."
 msgstr ""
-"Yvan來自法國南錫，是MusicBrainz的軟體工程師。他以普通使用者的身份接觸"
-"MusicBrainz，\n"
+"Yvan來自法國南錫，是MusicBrainz的軟體工程師。他以普通使用者的身份接觸MusicBrainz，\n"
 "          後來開始編輯、回報錯誤、修正其他人報告的錯誤，最後成為了員工。\n"
-"          此外，他喜歡隨興彈奏音樂、聽音樂、吃音樂、……音樂，他只希望可以健康"
-"地活下去。"
+"          此外，他喜歡隨興彈奏音樂、聽音樂、吃音樂、……音樂，他只希望可以健康地活下去。"
 
 #: metabrainz/templates/index/team.html:120
 msgid ""
 "<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz Lead,  "
 "Software Engineer & Graphic Designer"
 msgstr ""
-"<span class=\"name\">Nicolas Pelletier</span> &mdash; BookBrainz主管、軟體工"
-"程師和平面設計師"
+"<span class=\"name\">Nicolas Pelletier</span> &mdash; "
+"BookBrainz主管、軟體工程師和平面設計師"
 
 #: metabrainz/templates/index/team.html:122
 msgid ""
@@ -1794,8 +2783,7 @@ msgid ""
 "he eventually joined the team."
 msgstr ""
 "Nicolas有平面設計的背景，但卻鍾情電腦和維修電子設備。\n"
-"          他跟隨興趣前往軟體開發的世界，再也沒回頭。他一直對音樂和書感興趣"
-"，\n"
+"          他跟隨興趣前往軟體開發的世界，再也沒回頭。他一直對音樂和書感興趣，\n"
 "          也享受參與MetaBrainz各個專項的工作，最終便加入了團隊。"
 
 #: metabrainz/templates/index/team.html:127
@@ -1816,8 +2804,8 @@ msgid ""
 "ListenBrainz/CritiqueBrainz/Android App Lead &amp; Junior Software "
 "Engineer"
 msgstr ""
-"<span class=\"name\">Kartik Ohri</span> &mdash; ListenBrainz／CritiqueBrainz"
-"／Android程式主管和初級軟體工程師"
+"<span class=\"name\">Kartik Ohri</span> &mdash; "
+"ListenBrainz／CritiqueBrainz／Android程式主管和初級軟體工程師"
 
 #: metabrainz/templates/index/team.html:148
 msgid ""
@@ -1830,8 +2818,7 @@ msgid ""
 msgstr ""
 "Kartik在2018年Google Code-In加入MetaBrainz社群，再也沒有回頭。\n"
 "          Kartik現為MetaBrainz承包者，在主導MusicBrainz Android程式和\n"
-"          CritiqueBrainz專項之外，他也花許多時間在AcousticBrainz和"
-"ListenBrainz專案上。"
+"          CritiqueBrainz專項之外，他也花許多時間在AcousticBrainz和ListenBrainz專案上。"
 
 #: metabrainz/templates/index/team.html:166
 msgid "<span class=\"name\">Adam James</span> &mdash; System Administrator"
@@ -1848,11 +2835,11 @@ msgid ""
 "href=\"https://www.transitiv.co.uk\">Transitiv Technologies</a>,\n"
 "\t  where he is a consultant and technical director."
 msgstr ""
-"Adam是一名系統管理員和業餘開發者，擁有參與Linux和開源軟體15年的經驗。他酷愛音"
-"樂，在整理數字音樂珍藏的時候，成為MusicBrainz的活躍編輯和\n"
+"Adam是一名系統管理員和業餘開發者，擁有參與Linux和開源軟體15年的經驗。他酷愛音樂，在整理數字音樂珍藏的時候，成為MusicBrainz的活躍編輯和"
+"\n"
 "\t  MetaBrainz社群的一分子。\n"
-"\t  Adam是<a href=\"https://www.transitiv.co.uk\">Transitiv Technologies</a>"
-"的\n"
+"\t  Adam是<a href=\"https://www.transitiv.co.uk\">Transitiv "
+"Technologies</a>的\n"
 "\t  顧問和科技長，義務參與本社群的工作。"
 
 #: metabrainz/templates/index/team.html:189
@@ -1878,8 +2865,7 @@ msgid ""
 msgstr ""
 "Julian一接觸終端機就對它產生興趣，在高中時期，他便開始組建、\n"
 "      拆解和重建虛擬機器，來了解它是如何運作的。在之後十年裡，\n"
-"      他不斷精進技能，最終加入資訊科技行業，專注於協助各組織充分使用數位基礎"
-"設施。過程中，他累積了大量音樂，感到須要管理這\n"
+"      他不斷精進技能，最終加入資訊科技行業，專注於協助各組織充分使用數位基礎設施。過程中，他累積了大量音樂，感到須要管理這\n"
 "      個日益龐大的資料庫；就是這樣，他加入了MetaBrainz社群。\n"
 "\n"
 "      除了協助MetaBrainz團隊管理系統，Julian還喜歡聆聽各式各樣的\n"
@@ -1889,9 +2875,7 @@ msgstr ""
 msgid ""
 "<span class=\"name\">Simon Hartman</span> &mdash; Design, UX Consultant &"
 " Social Media Jockey"
-msgstr ""
-"<span class=\"name\">Simon Hartman</span> &mdash; 設計、使用者體驗顧問、社群"
-"媒體高手"
+msgstr "<span class=\"name\">Simon Hartman</span> &mdash; 設計、使用者體驗顧問、社群媒體高手"
 
 #: metabrainz/templates/index/team.html:217
 msgid ""
@@ -1902,10 +2886,8 @@ msgid ""
 "          and has 15 years experience across various graphic "
 "design/comms/marketing roles."
 msgstr ""
-"自2009年起，Simon便持續向MusicBrainz貢獻資料，並針對使用者體驗與設計提出意見"
-"。\n"
-"          2022年，他開始以官方身分針對使用者體驗與設計提出意見。他現居紐西蘭"
-"，\n"
+"自2009年起，Simon便持續向MusicBrainz貢獻資料，並針對使用者體驗與設計提出意見。\n"
+"          2022年，他開始以官方身分針對使用者體驗與設計提出意見。他現居紐西蘭，\n"
 "          並在平面設計、傳播和行銷等領域累積了15年的工作經驗。"
 
 #: metabrainz/templates/index/team.html:236
@@ -1922,10 +2904,9 @@ msgid ""
 "          In his leisure moments, Ansh enjoys binge-watching movies and "
 "listening to music."
 msgstr ""
-"Ansh是一名軟體工程師，目前居住於印度新德里。他於2022年以Google Summer of Code"
-"實習生的身分加入MetaBrainz，自此便成為社群的一員。\n"
-"          他最初貢獻於CritiqueBrainz和BookBrainz，目前也參與開發ListenBrainz"
-"。\n"
+"Ansh是一名軟體工程師，目前居住於印度新德里。他於2022年以Google Summer of "
+"Code實習生的身分加入MetaBrainz，自此便成為社群的一員。\n"
+"          他最初貢獻於CritiqueBrainz和BookBrainz，目前也參與開發ListenBrainz。\n"
 "          閒暇之餘，Ansh喜歡一口氣追看電影和聽音樂。"
 
 #: metabrainz/templates/index/team.html:250
@@ -1950,10 +2931,10 @@ msgid ""
 "          Akshat has always been fascinated by the creativity of people. "
 "He resides in New Delhi, India."
 msgstr ""
-"Akshat出於對MusicBrainz Android應用程式的熱愛，開始為該專案貢獻。在深入了解"
-"MetaBrainz的各項專案後，他決定專注於MusicBrainz。他曾獲選為Google Summer of "
-"Code實習生，目前是MetaBrainz的承包者，致力於改善MusicBrainz的使用者介面與體驗"
-"。Akshat一直受他人的創意啟發。他現居於印度新德里。"
+"Akshat出於對MusicBrainz "
+"Android應用程式的熱愛，開始為該專案貢獻。在深入了解MetaBrainz的各項專案後，他決定專注於MusicBrainz。他曾獲選為Google"
+" Summer of "
+"Code實習生，目前是MetaBrainz的承包者，致力於改善MusicBrainz的使用者介面與體驗。Akshat一直受他人的創意啟發。他現居於印度新德里。"
 
 #: metabrainz/templates/index/team.html:278
 msgid ""
@@ -1972,18 +2953,16 @@ msgid ""
 "          When not staring at a screen, Param plays some chess and tries "
 "to listen to new music."
 msgstr ""
-"Param是一名軟體工程師，也是ListenBrainz專案的前主管。他於2017年以Google "
-"Summer of Code實習生身分加入MetaBrainz，自此便一直是MetaBrainz的一員。Param熱"
-"愛程式設計和音樂，所以MetaBrainz對他而言可說是「一見鍾情」。當不在盯著螢幕的"
-"時候，Param會下下棋，並發掘新音樂。"
+"Param是一名軟體工程師，也是ListenBrainz專案的前主管。他於2017年以Google Summer of "
+"Code實習生身分加入MetaBrainz，自此便一直是MetaBrainz的一員。Param熱愛程式設計和音樂，所以MetaBrainz對他而言可說是「一見鍾情」。當不在盯著螢幕的時候，Param會下下棋，並發掘新音樂。"
 
 #: metabrainz/templates/index/team.html:301
 msgid ""
 "<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
 "MusicBrainz Areas"
 msgstr ""
-"<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; MusicBrainz地"
-"區"
+"<span class=\"name\">David \"drsaunde\" Saunders</span> &mdash; "
+"MusicBrainz地區"
 
 #: metabrainz/templates/index/team.html:303
 #, python-format
@@ -2000,11 +2979,9 @@ msgid ""
 "href=\"%(gnt_url)s\">GnT's</a>,\n"
 "          as well as cheering for the Toronto Raptors."
 msgstr ""
-"應社群要求，David負責在MusicBrainz中新增地區。他在MusicBrainz活躍超過十年，是"
-"少數幾位修改次數多於100萬的編輯。身為一位引以為傲的加拿大人，當David不在參與"
-"MusicBrainz時，他會享受自己喜愛的東西，例如<a href=\"%(thc_url)s\">THC</a>"
-"、<a href=\"%(tfc_url)s\">TFC</a>、<a href=\"%(cts_url)s\">CTS</a>和<a "
-"href=\"%(gnt_url)s\">GnT's</a>和為多倫多暴龍加油。"
+"應社群要求，David負責在MusicBrainz中新增地區。他在MusicBrainz活躍超過十年，是少數幾位修改次數多於100萬的編輯。身為一位引以為傲的加拿大人，當David不在參與MusicBrainz時，他會享受自己喜愛的東西，例如<a"
+" href=\"%(thc_url)s\">THC</a>、<a href=\"%(tfc_url)s\">TFC</a>、<a "
+"href=\"%(cts_url)s\">CTS</a>和<a href=\"%(gnt_url)s\">GnT's</a>和為多倫多暴龍加油。"
 
 #: metabrainz/templates/index/team.html:328
 msgid "<span class=\"name\">Akira Holm</span> &mdash; MusicBrainz Instruments"
@@ -2022,11 +2999,7 @@ msgid ""
 "listening to all sorts of different music, Lupin \n"
 "          III, colouring, and collecting all sorts of things, from "
 "stickers and stamps to bottlecaps."
-msgstr ""
-"ApeKattQuest（又名MonkeyPython）在2004年成為MusicBrainz編輯，是MusicBrainz的"
-"「樂器新增員」（這個職銜聽起來好像不太嚴肅，但新增及完善樂器資料的人卻是相當"
-"重要的）。當他不在網路上（或在圖書館裡！）四處搜尋樂器資料的時候，他喜歡玩遊"
-"戲、聆聽各式各樣的音樂、看《魯邦三世》、著色和收集貼紙、郵票、瓶蓋等物品。"
+msgstr "ApeKattQuest（又名MonkeyPython）在2004年成為MusicBrainz編輯，是MusicBrainz的「樂器新增員」（這個職銜聽起來好像不太嚴肅，但新增及完善樂器資料的人卻是相當重要的）。當他不在網路上（或在圖書館裡！）四處搜尋樂器資料的時候，他喜歡玩遊戲、聆聽各式各樣的音樂、看《魯邦三世》、著色和收集貼紙、郵票、瓶蓋等物品。"
 
 #: frontend/js/src/Profile.tsx:409
 #: metabrainz/templates/index/datasets/download.html:3
@@ -2082,8 +3055,8 @@ msgid ""
 "name\n"
 "      on the card used to set up the payment."
 msgstr ""
-"如果您使用Stripe，我們會手動取消您的捐款。請<a href=\"%(contact_url)s\">聯絡"
-"我們</a>，並提供您的姓名和最初用於申請捐款的付款卡。"
+"如果您使用Stripe，我們會手動取消您的捐款。請<a "
+"href=\"%(contact_url)s\">聯絡我們</a>，並提供您的姓名和最初用於申請捐款的付款卡。"
 
 #: metabrainz/templates/payments/cancel_recurring.html:20
 #, python-format
@@ -2091,8 +3064,8 @@ msgid ""
 "For PayPal, you will need to cancel from their site.\n"
 "      See <a href=\"%(paypal_cancel_url)s\">their documentation</a>."
 msgstr ""
-"如果您使用PayPal，您要在PayPal網站取消付款。請瀏覽<a href=\"%"
-"(paypal_cancel_url)s\">他們的說明文件</a>。"
+"如果您使用PayPal，您要在PayPal網站取消付款。請瀏覽<a "
+"href=\"%(paypal_cancel_url)s\">他們的說明文件</a>。"
 
 #: metabrainz/templates/payments/donate.html:3
 #: metabrainz/templates/payments/donate.html:7
@@ -2112,10 +3085,8 @@ msgid ""
 "donation off your taxes if you are a\n"
 "      US taxpayer."
 msgstr ""
-"如果您認為我們的專案是值得支持的，請考慮向MetaBrainz基金會捐款。基金會總部位"
-"於美國加州，是一個<a href=\"%(wikipedia_non_profit_url)s\">501(c)(3)免稅非營"
-"利組織</a>。若您是美國納稅人，所有捐款均可抵稅，您將收到一份收據，讓您在報稅"
-"時抵扣捐款金額。"
+"如果您認為我們的專案是值得支持的，請考慮向MetaBrainz基金會捐款。基金會總部位於美國加州，是一個<a "
+"href=\"%(wikipedia_non_profit_url)s\">501(c)(3)免稅非營利組織</a>。若您是美國納稅人，所有捐款均可抵稅，您將收到一份收據，讓您在報稅時抵扣捐款金額。"
 
 #: metabrainz/templates/payments/donate.html:18
 msgid ""
@@ -2133,9 +3104,7 @@ msgstr ""
 msgid ""
 "Where has my contribution gone? See our <a "
 "href=\"%(finance_reports_url)s\">transparent finances</a>."
-msgstr ""
-"我的捐款都去哪裡了？請參見我們透明的<a href=\"%(finance_reports_url)s\">財務"
-"報告</a>。"
+msgstr "我的捐款都去哪裡了？請參見我們透明的<a href=\"%(finance_reports_url)s\">財務報告</a>。"
 
 #: metabrainz/templates/payments/donate.html:24
 #, python-format
@@ -2152,8 +3121,8 @@ msgid ""
 "actual\n"
 "        donation, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
-"<b>注意！</b>本站是網站的開發版，請不要提供您的信用卡資料！如要作出捐款，請前"
-"往<a href=\"%(mb_url)s\">metabrainz.org</a>。"
+"<b>注意！</b>本站是網站的開發版，請不要提供您的信用卡資料！如要作出捐款，請前往<a "
+"href=\"%(mb_url)s\">metabrainz.org</a>。"
 
 #: metabrainz/templates/payments/donate.html:39
 #: metabrainz/templates/payments/payment.html:31
@@ -2167,8 +3136,8 @@ msgid ""
 "            <a href=\"%(mail_link)s\">donations@metabrainz.org</a>\n"
 "            before you do."
 msgstr ""
-"如果您想作出一次大額捐款，請先透過<a href=\"%(mail_link)s\">"
-"donations@metabrainz.org</a>聯絡我們。"
+"如果您想作出一次大額捐款，請先透過<a "
+"href=\"%(mail_link)s\">donations@metabrainz.org</a>聯絡我們。"
 
 #: metabrainz/templates/payments/donate.html:65
 msgid "I want this to be a recurring monthly donation"
@@ -2234,9 +3203,7 @@ msgstr "透過其他方式捐款"
 msgid ""
 "If you use GitHub to sponsor your favourite projects, you can click below"
 " to Sponsor @metabrainz on GitHub Sponsors:"
-msgstr ""
-"如果您在GitHub會贊助喜歡的專案，您可以按一下以下按鈕，在GitHub Sponsors上贊"
-"助@metabrainz："
+msgstr "如果您在GitHub會贊助喜歡的專案，您可以按一下以下按鈕，在GitHub Sponsors上贊助@metabrainz："
 
 #: metabrainz/templates/payments/donate.html:140
 #: metabrainz/templates/payments/payment_base.html:29
@@ -2254,9 +3221,7 @@ msgstr "您可以透過銀行轉賬至以下IBAN，作出定期或一次性的�
 msgid ""
 "Please indicate your name and use the word "
 "<em>%(donation_fixed_string)s</em> in the description field."
-msgstr ""
-"請提供您的姓名，以及在描述欄中使用「<em>%(donation_fixed_string)s</em>」一詞"
-"。"
+msgstr "請提供您的姓名，以及在描述欄中使用「<em>%(donation_fixed_string)s</em>」一詞。"
 
 #: metabrainz/templates/payments/donate.html:145
 msgid "US Check"
@@ -2264,9 +3229,11 @@ msgstr "美國支票"
 
 #: metabrainz/templates/payments/donate.html:146
 msgid ""
-"Due to the increased unreliability of the US Postal Service we have "
-"stopped accepting paper checks. Sorry!"
-msgstr "由於美國郵政署的服務越來越不穩定，我們不再接受支票。抱歉！"
+"Due to the increased unreliability of the US Postal Service and the "
+"relatively large fees involved, we ask you to only send a paper check if "
+"it is the only possible option. Due to the fees, we will not cash checks "
+"for less than $25."
+msgstr ""
 
 #: metabrainz/templates/payments/donate.html:241
 msgid ""
@@ -2335,8 +3302,8 @@ msgid ""
 "actual\n"
 "      payment, go to <a href=\"%(mb_url)s\">metabrainz.org</a>."
 msgstr ""
-"<b>注意！</b>本站是網站的開發版，請不要提供您的信用卡資料！如果您要付款，請前"
-"往<a href=\"%(mb_url)s\">metabrainz.org</a>。"
+"<b>注意！</b>本站是網站的開發版，請不要提供您的信用卡資料！如果您要付款，請前往<a "
+"href=\"%(mb_url)s\">metabrainz.org</a>。"
 
 #: metabrainz/templates/payments/payment.html:17
 msgid "Organization:"
@@ -2353,8 +3320,8 @@ msgid ""
 "          <a href=\"%(mail_link)s\">payments@metabrainz.org</a>\n"
 "          before you do."
 msgstr ""
-"如果您想作出一次大型付款，請先透過<a href=\"%(mail_link)s\">"
-"payments@metabrainz.org</a>聯絡我們。"
+"如果您想作出一次大型付款，請先透過<a "
+"href=\"%(mail_link)s\">payments@metabrainz.org</a>聯絡我們。"
 
 #: metabrainz/templates/payments/payment.html:52
 #: metabrainz/templates/payments/payment.html:159
@@ -2379,8 +3346,8 @@ msgid ""
 "      please take a look at our <a href=\"%(privacy_policy_url)s\">\n"
 "      privacy policy</a>."
 msgstr ""
-"在付款過程中向MetaBrainz基金會提供的個人資料不會向任何人透露。詳情請參見我們"
-"的<a href=\"%(privacy_policy_url)s\">隱私政策</a>。"
+"在付款過程中向MetaBrainz基金會提供的個人資料不會向任何人透露。詳情請參見我們的<a "
+"href=\"%(privacy_policy_url)s\">隱私政策</a>。"
 
 #: metabrainz/templates/payments/payment.html:93
 #, python-format
@@ -3177,8 +4144,8 @@ msgid "Monthly balance sheets"
 msgstr "每月財務狀況表"
 
 #: frontend/js/src/Profile.tsx:520
-#: frontend/js/src/forms/SignupCommercial.tsx:175
-#: frontend/js/src/forms/SignupCommercial.tsx:554
+#: frontend/js/src/forms/SignupCommercial.tsx:180
+#: frontend/js/src/forms/SignupCommercial.tsx:558
 #: frontend/js/src/forms/SignupNonCommercial.tsx:106
 #: frontend/js/src/forms/SignupNonCommercial.tsx:318
 #: metabrainz/templates/supporters/account-type.html:3
@@ -3199,6 +4166,7 @@ msgid "Non-commercial / Personal"
 msgstr "非商業或個人用戶"
 
 #: frontend/js/src/Profile.tsx:235
+#: frontend/js/src/forms/SignupNonCommercial.tsx:107
 #: frontend/js/src/forms/SignupNonCommercial.tsx:151
 #: metabrainz/templates/supporters/account-type.html:42
 msgid "Non-commercial"
@@ -3212,57 +4180,46 @@ msgstr ""
 msgid "Personal or university assignment user."
 msgstr ""
 
-#: metabrainz/templates/supporters/account-type.html:48
-#: metabrainz/templates/supporters/account-type.html:90
-#: metabrainz/templates/supporters/account-type.html:141
-msgid "Upgrade"
-msgstr ""
-
 #: frontend/js/src/Profile.tsx:235
-#: frontend/js/src/forms/SignupCommercial.tsx:176
-#: frontend/js/src/forms/SignupCommercial.tsx:228
-#: metabrainz/templates/supporters/account-type.html:61
+#: frontend/js/src/forms/SignupCommercial.tsx:181
+#: frontend/js/src/forms/SignupCommercial.tsx:233
+#: metabrainz/templates/supporters/account-type.html:56
 msgid "Commercial"
 msgstr "商業用戶"
 
-#: metabrainz/templates/supporters/account-type.html:83
-#: metabrainz/templates/supporters/account-type.html:135
+#: metabrainz/templates/supporters/account-type.html:78
+#: metabrainz/templates/supporters/account-type.html:125
 #, python-format
 msgid "$%(tier_price)s/month and up"
 msgstr "每月$%(tier_price)s或以上"
 
-#: metabrainz/templates/supporters/account-type.html:87
-#: metabrainz/templates/supporters/account-type.html:138
+#: metabrainz/templates/supporters/account-type.html:82
+#: metabrainz/templates/supporters/account-type.html:128
 msgid "More info"
 msgstr "更多資料"
 
-#: metabrainz/templates/supporters/account-type.html:104
+#: metabrainz/templates/supporters/account-type.html:94
 msgid "View all tiers"
 msgstr "檢視所有等級"
 
-#: metabrainz/templates/supporters/account-type.html:112
+#: metabrainz/templates/supporters/account-type.html:102
 msgid "Some of our Unicorn members"
 msgstr "我們一些獨角獸成員"
 
-#: metabrainz/templates/supporters/account-type.html:123
+#: metabrainz/templates/supporters/account-type.html:113
 msgid "See all our supporters"
 msgstr "參見所有支持者"
 
-#: metabrainz/templates/supporters/account-type.html:151
+#: metabrainz/templates/supporters/account-type.html:136
 msgid "View featured tiers"
 msgstr "檢視特色等級"
 
-#: metabrainz/templates/supporters/account-type.html:158
+#: metabrainz/templates/supporters/account-type.html:143
 #, python-format
 msgid ""
 "If you are not sure which tier to pick, please\n"
 "      <a href=\"%(contact_url)s\">contact us</a>."
 msgstr "如果您不確定應該選哪一等級，請<a href=\"%(contact_url)s\">聯繫我們</a>。"
-
-#: metabrainz/templates/supporters/account-type.html:166
-#, fuzzy
-msgid "Back to Profile"
-msgstr "您的帳號"
 
 #: metabrainz/templates/supporters/bad-standing.html:3
 #: metabrainz/templates/supporters/bad-standing.html:6
@@ -3323,9 +4280,9 @@ msgid "Forgot your username"
 msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:79
-#: frontend/js/src/forms/SignupCommercial.tsx:320
+#: frontend/js/src/forms/SignupCommercial.tsx:325
 #: frontend/js/src/forms/SignupNonCommercial.tsx:227
-#: frontend/js/src/forms/SignupUser.tsx:169
+#: frontend/js/src/forms/SignupUser.tsx:175
 #: metabrainz/templates/users/reauthenticate.html:3
 #: metabrainz/templates/users/reauthenticate.html:6
 msgid "Confirm Password"
@@ -3335,17 +4292,22 @@ msgstr ""
 msgid "Please re-enter your password to continue."
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:108
+#: frontend/js/src/ProfileDelete.tsx:110
 #: frontend/js/src/forms/DeleteApplication.tsx:53
 #: frontend/js/src/forms/OAuthPrompt.tsx:54
 #: frontend/js/src/forms/ProfileChangePassword.tsx:104
 #: frontend/js/src/forms/ProfileEdit.tsx:105
-#: metabrainz/templates/users/reauthenticate.html:23
+#: metabrainz/templates/users/reauthenticate.html:28
 msgid "Cancel"
 msgstr ""
 
-#: metabrainz/templates/users/reauthenticate.html:24
+#: metabrainz/templates/users/reauthenticate.html:29
 msgid "Continue"
+msgstr ""
+
+#: frontend/js/src/forms/utils.tsx:202
+#: metabrainz/templates/users/reauthenticate.html:40
+msgid "Password must not exceed 72 bytes."
 msgstr ""
 
 #: frontend/js/src/forms/ResetPassword.tsx:27
@@ -3353,38 +4315,38 @@ msgstr ""
 msgid "Reset your password"
 msgstr ""
 
-#: frontend/js/src/hooks/useEmailValidation.ts:41 metabrainz/user/forms.py:15
+#: frontend/js/src/hooks/useEmailValidation.ts:41 metabrainz/user/forms.py:16
 msgid "Registration from this email domain is not allowed."
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:50
 #: frontend/js/src/forms/LostPassword.tsx:45
-#: frontend/js/src/forms/SignupCommercial.tsx:270
+#: frontend/js/src/forms/SignupCommercial.tsx:275
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
-#: frontend/js/src/forms/SignupUser.tsx:114 metabrainz/user/forms.py:20
-#: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
+#: frontend/js/src/forms/SignupUser.tsx:120 metabrainz/user/forms.py:22
+#: metabrainz/user/forms.py:52 metabrainz/user/forms.py:75
 msgid "Username"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:42
 #: frontend/js/src/forms/LostPassword.tsx:37
-#: frontend/js/src/forms/SignupCommercial.tsx:153
+#: frontend/js/src/forms/SignupCommercial.tsx:158
 #: frontend/js/src/forms/SignupNonCommercial.tsx:84
-#: frontend/js/src/forms/SignupUser.tsx:67 metabrainz/user/forms.py:21
-#: metabrainz/user/forms.py:45 metabrainz/user/forms.py:62
+#: frontend/js/src/forms/SignupUser.tsx:73 metabrainz/user/forms.py:26
+#: metabrainz/user/forms.py:52 metabrainz/user/forms.py:75
 msgid "Username is required!"
 msgstr ""
 
 #: frontend/js/src/forms/LoginUser.tsx:63
 #: frontend/js/src/forms/ResetPassword.tsx:72
-#: frontend/js/src/forms/SignupCommercial.tsx:308
+#: frontend/js/src/forms/SignupCommercial.tsx:313
 #: frontend/js/src/forms/SignupNonCommercial.tsx:214
-#: frontend/js/src/forms/SignupUser.tsx:157 metabrainz/user/forms.py:46
-#: metabrainz/user/forms.py:52
+#: frontend/js/src/forms/SignupUser.tsx:163 metabrainz/user/forms.py:53
+#: metabrainz/user/forms.py:62
 msgid "Password"
 msgstr ""
 
-#: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:47
+#: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:57
 msgid "Remember me"
 msgstr ""
 
@@ -3396,11 +4358,11 @@ msgstr ""
 msgid "Username contains invalid or invisible characters."
 msgstr ""
 
-#: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:181
+#: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:220
 msgid "Hide password"
 msgstr ""
 
-#: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:181
+#: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:220
 msgid "Show password"
 msgstr ""
 
@@ -3459,11 +4421,11 @@ msgstr ""
 msgid "Revoke access"
 msgstr ""
 
-#: frontend/js/src/OAuthError.tsx:17
+#: frontend/js/src/OAuthError.tsx:18
 msgid "OAuth2 Error"
 msgstr ""
 
-#: frontend/js/src/OAuthError.tsx:18
+#: frontend/js/src/OAuthError.tsx:19
 msgid "An error occurred during OAuth authentication process."
 msgstr ""
 
@@ -3493,8 +4455,8 @@ msgstr ""
 
 #: frontend/js/src/Profile.tsx:109
 msgid ""
-"Are you sure you want to generate new access token? Current token will be"
-" revoked!"
+"Are you sure you want to generate a new access token? The current token "
+"will be revoked!"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:118
@@ -3610,8 +4572,8 @@ msgid "Contact Information"
 msgstr ""
 
 #: frontend/js/src/Profile.tsx:310 frontend/js/src/forms/ProfileEdit.tsx:70
-#: frontend/js/src/forms/SignupCommercial.tsx:284
-#: frontend/js/src/forms/SignupCommercial.tsx:333
+#: frontend/js/src/forms/SignupCommercial.tsx:289
+#: frontend/js/src/forms/SignupCommercial.tsx:338
 #: frontend/js/src/forms/SignupNonCommercial.tsx:189
 #: frontend/js/src/forms/SignupNonCommercial.tsx:241
 msgid "Contact name"
@@ -3727,7 +4689,7 @@ msgstr ""
 msgid "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:105
+#: frontend/js/src/Profile.tsx:550 frontend/js/src/ProfileDelete.tsx:107
 msgid "Delete My Account"
 msgstr ""
 
@@ -3739,39 +4701,39 @@ msgstr ""
 msgid "Need to delete your account?"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:574
+#: frontend/js/src/Profile.tsx:575
 msgid ""
 "Deletion of supporter accounts requires manual review. Please contact us "
-"at"
+"at <email />."
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:594
+#: frontend/js/src/Profile.tsx:599
 msgid "Security"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:626
+#: frontend/js/src/Profile.tsx:631
 msgid "MetaBrainz Applications"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:630
+#: frontend/js/src/Profile.tsx:635
 msgid ""
 "With your MetaBrainz account, you can access every project in the "
 "MetaBrainz family:"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:643
+#: frontend/js/src/Profile.tsx:648
 msgid "The open-source music encyclopedia"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:655
+#: frontend/js/src/Profile.tsx:660
 msgid "Track, visualise and share the music you listen to"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:667
+#: frontend/js/src/Profile.tsx:672
 msgid "The open-source book database"
 msgstr ""
 
-#: frontend/js/src/Profile.tsx:679
+#: frontend/js/src/Profile.tsx:684
 msgid "Creative Commons licensed reviews"
 msgstr ""
 
@@ -3794,7 +4756,7 @@ msgid "Permanently remove all your account information"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:64
-msgid "Revoke all your API tokens and access"
+msgid "Revoke all your tokens and access to the replication API"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:65
@@ -3806,14 +4768,16 @@ msgid "Log you out of all MetaBrainz services"
 msgstr ""
 
 #: frontend/js/src/ProfileDelete.tsx:70
-msgid "Your username will be reserved and cannot be reused."
+msgid ""
+"Your username will be reserved and cannot be reused without the "
+"intervention of an administrator."
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:82
+#: frontend/js/src/ProfileDelete.tsx:84
 msgid "To confirm, type your username '<username />' below:"
 msgstr ""
 
-#: frontend/js/src/ProfileDelete.tsx:105
+#: frontend/js/src/ProfileDelete.tsx:107
 msgid "Deleting..."
 msgstr "刪除中……"
 
@@ -3825,64 +4789,7 @@ msgstr "個人資料"
 msgid "Close"
 msgstr "關閉"
 
-#: frontend/js/src/forms/ConditionsModal.tsx:23
-msgid "Licensing"
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:25
-msgid ""
-"Any contributions you make to any MetaBrainz service will be released "
-"into the Public Domain and/or licensed under a Creative Commons by-nc-sa "
-"license. Furthermore, you give the MetaBrainz Foundation the right to "
-"license this data for commercial use."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:30
-msgid "Please read our <licenseLink>license page</licenseLink> for more details."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:45
-msgid ""
-"MetaBrainz strongly believes in the privacy of its users. Any personal "
-"information you choose to provide will not be sold or shared with anyone "
-"else."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:50
-msgid ""
-"Please read our <privacyLink>privacy policy</privacyLink> for more "
-"details."
-msgstr "如要了解更多，請參閱我們的<gdprLink>隱私政策</gdprLink>。"
-
-#: frontend/js/src/forms/ConditionsModal.tsx:59
-msgid "GDPR compliance"
-msgstr "GDPR法遵"
-
-#: frontend/js/src/forms/ConditionsModal.tsx:61
-msgid ""
-"You may remove your personal information from our services anytime by "
-"deleting your account."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:66
-msgid ""
-"Please read our <gdprLink>GDPR compliance statement</gdprLink> for more "
-"details."
-msgstr "如要了解更多，請參閱我們的<gdprLink>GDPR法遵聲明</gdprLink>。"
-
-#: frontend/js/src/forms/ConditionsModal.tsx:78
-msgid ""
-"Creating an account on MetaBrainz will give you access to all of our "
-"projects, such as MusicBrainz, ListenBrainz, BookBrainz, and more."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:82
-msgid ""
-"We create a placeholder account for all the MetaBrainz projects when you "
-"sign up, and you are one log-in away from activating them."
-msgstr ""
-
-#: frontend/js/src/forms/ConditionsModal.tsx:91
+#: frontend/js/src/forms/ConditionsModal.tsx:29
 msgid "Sounds good"
 msgstr ""
 
@@ -3968,9 +4875,9 @@ msgstr "忘記使用者名稱？"
 msgid "Forgot your password?"
 msgstr "忘記密碼？"
 
-#: frontend/js/src/forms/LoginUser.tsx:109
-msgid "Don't have an account?"
-msgstr "沒有帳號？"
+#: frontend/js/src/forms/LoginUser.tsx:110
+msgid "Don't have an account? <signupLink>Sign up</signupLink>"
+msgstr ""
 
 #: frontend/js/src/forms/LostPassword.tsx:38
 #: frontend/js/src/forms/LostUsername.tsx:36
@@ -3998,15 +4905,72 @@ msgstr ""
 msgid "Allow access"
 msgstr "批准存取權"
 
-#: frontend/js/src/forms/ProfileChangePassword.tsx:71
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:10
+msgid "Licensing"
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:12
+msgid ""
+"Any contributions you make to any MetaBrainz service will be released "
+"into the Public Domain and/or licensed under a Creative Commons by-nc-sa "
+"license. Furthermore, you give the MetaBrainz Foundation the right to "
+"license this data for commercial use."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:17
+msgid "Please read our <licenseLink>license page</licenseLink> for more details."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:34
+msgid ""
+"MetaBrainz strongly believes in the privacy of its users. Any personal "
+"information you choose to provide will not be sold or shared with anyone "
+"else."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:39
+msgid ""
+"Please read our <privacyLink>privacy policy</privacyLink> for more "
+"details."
+msgstr "如要了解更多，請參閱我們的<gdprLink>隱私政策</gdprLink>。"
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:50
+msgid "GDPR compliance"
+msgstr "GDPR法遵"
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:52
+msgid ""
+"You may remove your personal information from our services anytime by "
+"deleting your account."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:57
+msgid ""
+"Please read our <gdprLink>GDPR compliance statement</gdprLink> for more "
+"details."
+msgstr "如要了解更多，請參閱我們的<gdprLink>GDPR法遵聲明</gdprLink>。"
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:71
+msgid ""
+"Creating an account on MetaBrainz will give you access to all of our "
+"projects, such as MusicBrainz, ListenBrainz, BookBrainz, and more."
+msgstr ""
+
+#: frontend/js/src/forms/PrivacySummaryContent.tsx:75
+msgid ""
+"We create a placeholder account for all the MetaBrainz projects when you "
+"sign up, and you are one log-in away from activating them."
+msgstr ""
+
+#: frontend/js/src/forms/ProfileChangePassword.tsx:70
 msgid "Current Password"
 msgstr "目前密碼"
 
-#: frontend/js/src/forms/ProfileChangePassword.tsx:80
+#: frontend/js/src/forms/ProfileChangePassword.tsx:79
 msgid "New Password"
 msgstr "新密碼"
 
-#: frontend/js/src/forms/ProfileChangePassword.tsx:89
+#: frontend/js/src/forms/ProfileChangePassword.tsx:88
 msgid "Confirm New Password"
 msgstr "確認新密碼"
 
@@ -4018,205 +4982,189 @@ msgstr "更新"
 msgid "Reset Password"
 msgstr "重設密碼"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:38
-msgid "If you would like to support us with more than $"
+#: frontend/js/src/forms/SignupCommercial.tsx:40
+msgid ""
+"If you would like to support us with more than ${{minPledge}}, please "
+"enter the actual amount here:"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:39
-msgid ", please enter the actual amount here:"
-msgstr ""
-
-#: frontend/js/src/forms/SignupCommercial.tsx:144
+#: frontend/js/src/forms/SignupCommercial.tsx:149
 #: frontend/js/src/forms/SignupNonCommercial.tsx:75
-#: frontend/js/src/forms/SignupUser.tsx:87
+#: frontend/js/src/forms/SignupUser.tsx:93
 msgid "Captcha is required!"
 msgstr "Captcha不能留空！"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:179
+#: frontend/js/src/forms/SignupCommercial.tsx:184
 #: frontend/js/src/forms/SignupNonCommercial.tsx:110
 #: frontend/js/src/forms/SignupUser.tsx:46
 #, fuzzy
 msgid "Access all MetaBrainz projects"
 msgstr "MetaBrainz專案"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:182
+#: frontend/js/src/forms/SignupCommercial.tsx:187
 msgid "Note:"
 msgstr "備註："
 
-#: frontend/js/src/forms/SignupCommercial.tsx:184
+#: frontend/js/src/forms/SignupCommercial.tsx:189
 msgid ""
 "Signing up for any tier other than the <italic>Stealth startup</italic> "
 "tier will publicly list your company on this web site. However, we will "
 "not publish any of your private details."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:221
+#: frontend/js/src/forms/SignupCommercial.tsx:226
 #: frontend/js/src/forms/SignupNonCommercial.tsx:145
 msgid "Account type"
 msgstr "帳號類型"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:234
+#: frontend/js/src/forms/SignupCommercial.tsx:239
 msgid "Selected tier"
 msgstr "已選等級"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:242
-msgid "month and up"
+#: frontend/js/src/forms/SignupCommercial.tsx:247
+msgid "${{tierPrice}}/month and up"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:250
+#: frontend/js/src/forms/SignupCommercial.tsx:255
 msgid "Change account type or tier"
 msgstr "變更帳號類型或分類"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:261
+#: frontend/js/src/forms/SignupCommercial.tsx:266
 #: frontend/js/src/forms/SignupNonCommercial.tsx:166
 msgid "Your account:"
 msgstr "您的帳號："
 
-#: frontend/js/src/forms/SignupCommercial.tsx:271
+#: frontend/js/src/forms/SignupCommercial.tsx:276
 #: frontend/js/src/forms/SignupNonCommercial.tsx:176
-#: frontend/js/src/forms/SignupUser.tsx:114
+#: frontend/js/src/forms/SignupUser.tsx:120
 msgid "(public)"
 msgstr "（公開）"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:291
+#: frontend/js/src/forms/SignupCommercial.tsx:296
 #: frontend/js/src/forms/SignupNonCommercial.tsx:196
-#: frontend/js/src/forms/SignupUser.tsx:127
+#: frontend/js/src/forms/SignupUser.tsx:133
 msgid "E-mail address"
 msgstr "電子信箱地址"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:295
+#: frontend/js/src/forms/SignupCommercial.tsx:300
 #: frontend/js/src/forms/SignupNonCommercial.tsx:200
-#: frontend/js/src/forms/SignupUser.tsx:131
+#: frontend/js/src/forms/SignupUser.tsx:137
 msgid "(checking...)"
 msgstr "（檢查中……）"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:314
+#: frontend/js/src/forms/SignupCommercial.tsx:319
 #: frontend/js/src/forms/SignupNonCommercial.tsx:220
-#: frontend/js/src/forms/SignupUser.tsx:163
+#: frontend/js/src/forms/SignupUser.tsx:169
 msgid "Must be at least 8 characters"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:348
+#: frontend/js/src/forms/SignupCommercial.tsx:353
 msgid ""
 "If you don't have an organization name, you probably want to become a "
 "supporter as a <nonCommercialLink>Non-commercial / "
 "Personal</nonCommercialLink> supporter."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:358
+#: frontend/js/src/forms/SignupCommercial.tsx:363
 msgid ""
 "If you don't have an organization name, you probably want to sign up as a"
 " <nonCommercialLink>Non-commercial / Personal</nonCommercialLink> user."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:378
+#: frontend/js/src/forms/SignupCommercial.tsx:383
 msgid ""
 "Please tell us a little about your company and whether you plan to use "
 "our <apiLink>API</apiLink> or to <hostLink>host your own copy</hostLink> "
 "of the data."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:404
+#: frontend/js/src/forms/SignupCommercial.tsx:408
 msgid "Logo URL"
 msgstr "標誌圖片網址"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:405
+#: frontend/js/src/forms/SignupCommercial.tsx:409
 msgid "(preferably in SVG format)"
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:408
+#: frontend/js/src/forms/SignupCommercial.tsx:412
 msgid ""
 "Image should be about 250 pixels wide on a white or transparent "
 "background. We will host it on our site."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:421
+#: frontend/js/src/forms/SignupCommercial.tsx:425
 msgid ""
 "URL to where developers can use your APIs using MusicBrainz IDs, if "
-"available.."
+"available."
 msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:430
+#: frontend/js/src/forms/SignupCommercial.tsx:434
 msgid "Your project"
 msgstr "您的專案"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:434
+#: frontend/js/src/forms/SignupCommercial.tsx:438
 #: frontend/js/src/forms/SignupNonCommercial.tsx:261
 msgid "(max 150 characters)"
 msgstr "（最多150個字元）"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:451
+#: frontend/js/src/forms/SignupCommercial.tsx:455
 msgid "Billing address"
 msgstr "帳單地址"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:502
+#: frontend/js/src/forms/SignupCommercial.tsx:506
 msgid ""
 "I agree to support the MetaBrainz Foundation when my organization is able"
 " to do so."
-msgstr ""
-"我承諾，當我的組織能夠支持MetaBrainz基金會的時候，我的組織將會支持MetaBrainz"
-"基金會。"
+msgstr "我承諾，當我的組織能夠支持MetaBrainz基金會的時候，我的組織將會支持MetaBrainz基金會。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:507
+#: frontend/js/src/forms/SignupCommercial.tsx:511
+#: frontend/js/src/forms/SignupNonCommercial.tsx:284
 msgid ""
-"I also agree that if I generate a Live Data Feed access token, that I "
-"treat my access token as a secret and will not share this token publicly "
-"or commit it to a source code repository."
-msgstr ""
-"我也同意，如果我發行實時資料源的存取權杖，我會將存取權杖視作秘密，不會公開分"
-"享此權杖或在原始碼儲存庫發布。"
+"I also agree that if I generate a Live Data Feed access token, then I "
+"will treat my access token as a secret and will not share this token "
+"publicly or commit it to a source code repository."
+msgstr "我也同意，如果我發行存取權杖，我會將存取權杖視作秘密，不會公開分享此權杖或在原始碼儲存庫發布。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:515
+#: frontend/js/src/forms/SignupCommercial.tsx:519
 msgid ""
 "The following information will be shown publicly: organization name, "
 "logo, website and API URLs, data usage description."
 msgstr "以下資訊將公開展示：組織名稱、標誌、網站、API地址和資料使用的描述。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:520
+#: frontend/js/src/forms/SignupCommercial.tsx:524
 msgid ""
 "We'll send you more details about payment process once your application "
 "is approved."
 msgstr "您的申請被接納後，我們會為您提供更詳盡的付款教學。"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:552
+#: frontend/js/src/forms/SignupCommercial.tsx:556
 #: frontend/js/src/forms/SignupNonCommercial.tsx:316
-#: frontend/js/src/forms/SignupUser.tsx:224
+#: frontend/js/src/forms/SignupUser.tsx:230
 msgid "Validating..."
 msgstr "核實中……"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:564
+#: frontend/js/src/forms/SignupCommercial.tsx:568
 #: frontend/js/src/forms/SignupNonCommercial.tsx:329
 msgid "Back to profile"
 msgstr "返回個人資料"
 
-#: frontend/js/src/forms/SignupCommercial.tsx:569
-#: frontend/js/src/forms/SignupNonCommercial.tsx:334
-msgid "Not a supporter?"
-msgstr "不是支持者？"
-
-#: frontend/js/src/forms/SignupCommercial.tsx:570
+#: frontend/js/src/forms/SignupCommercial.tsx:574
 #: frontend/js/src/forms/SignupNonCommercial.tsx:335
-msgid "Create a user account"
-msgstr "建立使用者帳號"
+msgid "Not a supporter? <signupLink>Create a user account</signupLink>"
+msgstr ""
 
-#: frontend/js/src/forms/SignupCommercial.tsx:573
-#: frontend/js/src/forms/SignupNonCommercial.tsx:338
-#: frontend/js/src/forms/SignupUser.tsx:231
-msgid "Already have an account?"
-msgstr "您已經有帳號了？"
-
-#: frontend/js/src/forms/SignupNonCommercial.tsx:107
-msgid "non-commercial"
-msgstr "非商業"
+#: frontend/js/src/forms/SignupCommercial.tsx:583
+#: frontend/js/src/forms/SignupNonCommercial.tsx:344
+#: frontend/js/src/forms/SignupUser.tsx:238
+msgid "Already have an account? <loginLink>Sign in</loginLink>"
+msgstr ""
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:113
 msgid ""
 "Please be aware that misuse of the non-commercial service for commercial "
 "purposes will result in us revoking your access token and then billing "
 "you for your commercial use of our datasets or the Live Data Feed."
-msgstr ""
-"請注意，以商業用途濫用非商業服務會使我們撤銷您的存取權杖，然後收取商業使用資"
-"料集或實時資料源的相關費用。"
+msgstr "請注意，以商業用途濫用非商業服務會使我們撤銷您的存取權杖，然後收取商業使用資料集或實時資料源的相關費用。"
 
 #: frontend/js/src/forms/SignupNonCommercial.tsx:157
 msgid "Change account type"
@@ -4236,50 +5184,40 @@ msgid ""
 "income per year) or personal uses only."
 msgstr "我同意僅以個人或非商業（收入少於每年500美元）用途使用MetaBrainz資料。"
 
-#: frontend/js/src/forms/SignupNonCommercial.tsx:284
-msgid ""
-"I also agree that if I generate a Live Data Feed access token, then I "
-"will treat my access token as a secret and will not share this token "
-"publicly or commit it to a source code repository."
-msgstr ""
-"我也同意，如果我發行存取權杖，我會將存取權杖視作秘密，不會公開分享此權杖或在"
-"原始碼儲存庫發布。"
-
 #: frontend/js/src/forms/SignupUser.tsx:43
 msgid "Create your account"
 msgstr "建立帳號"
 
-#: frontend/js/src/forms/SignupUser.tsx:50
-msgid "Registration started by"
-msgstr "註冊啟動源"
+#: frontend/js/src/forms/SignupUser.tsx:51
+msgid "Registration started by <client />"
+msgstr ""
 
-#: frontend/js/src/forms/SignupUser.tsx:69
+#: frontend/js/src/forms/SignupUser.tsx:75
+#: frontend/js/src/hooks/useEmailValidation.ts:82
 msgid "Invalid email address."
 msgstr "電子信箱地址無效。"
 
-#: frontend/js/src/forms/SignupUser.tsx:150
+#: frontend/js/src/forms/SignupUser.tsx:156
 msgid ""
 "This username and email were provided by the app that started "
 "registration. You can change them later from MetaBrainz settings."
-msgstr ""
-"此使用者名稱和電子信箱地址由啟動註冊的應用程式提供，您可以日後在MetaBrainz設"
-"定中變更。"
+msgstr "此使用者名稱和電子信箱地址由啟動註冊的應用程式提供，您可以日後在MetaBrainz設定中變更。"
 
-#: frontend/js/src/forms/SignupUser.tsx:182
+#: frontend/js/src/forms/SignupUser.tsx:188
 msgid ""
 "I accept that my contributions will be released into the public domain or"
 " licensed for use."
 msgstr "我接收我的貢獻將以公有領域發布或授權使用。"
 
-#: frontend/js/src/forms/SignupUser.tsx:191
+#: frontend/js/src/forms/SignupUser.tsx:197
 msgid "We will never share your personal information."
 msgstr "我們永遠不會分享您的個人資訊。"
 
-#: frontend/js/src/forms/SignupUser.tsx:200
+#: frontend/js/src/forms/SignupUser.tsx:206
 msgid "Click here to read more"
 msgstr "按此了解更多"
 
-#: frontend/js/src/forms/SignupUser.tsx:224
+#: frontend/js/src/forms/SignupUser.tsx:230
 msgid "Create account"
 msgstr "建立帳號"
 
@@ -4290,10 +5228,6 @@ msgstr "此電子信箱地址已經註冊。"
 #: frontend/js/src/hooks/useEmailValidation.ts:47
 msgid "Email validation failed"
 msgstr "未能確認電子信箱"
-
-#: frontend/js/src/hooks/useEmailValidation.ts:82
-msgid "Invalid email address"
-msgstr "電子信箱地址無效"
 
 #~ msgid "You need to specify amount!"
 #~ msgstr "請輸入付款金額！"
@@ -4999,7 +5933,7 @@ msgstr "電子信箱地址無效"
 #~ "Are you sure you want to generate"
 #~ " new access token? Current token will"
 #~ " be revoked!"
-#~ msgstr "您確定要產生新的訪問令牌？您現在的令牌將會被撤銷。"
+#~ msgstr ""
 
 #~ msgid "Sign up <small>Commercial</small>"
 #~ msgstr "<small>商用</small>註冊"
@@ -5044,9 +5978,6 @@ msgstr "電子信箱地址無效"
 #~ "your APIs using MusicBrainz IDs, if "
 #~ "available.."
 #~ msgstr ""
-#~ "URL to where developers can use "
-#~ "your APIs using MusicBrainz IDs, if "
-#~ "available.."
 
 #~ msgid "(max 150 characters)"
 #~ msgstr "（最多150個字元）"
@@ -5349,3 +6280,96 @@ msgstr "電子信箱地址無效"
 
 #~ msgid "Privacy policy"
 #~ msgstr "隱私政策"
+
+#~ msgid "You need to specify website of the organization."
+#~ msgstr "請提供組織網址。"
+
+#~ msgid ""
+#~ "We are currently evaluating our overall"
+#~ " online advertising strategy. We are "
+#~ "evaluating advertising, traffic optimization,\n"
+#~ ""
+#~ "    search engine optimization and "
+#~ "software monitization technologies. If you "
+#~ "provide these professional services, please"
+#~ " provide a detailed\n"
+#~ "    deck of your comprehensive services"
+#~ " to the following email address. "
+#~ "<em>Please respect our other non-media"
+#~ " teams and do not contact us \n"
+#~ "    regarding these services on any "
+#~ "other of our email addresses. We "
+#~ "will disregard the entirety of your "
+#~ "submissions if you contact us any "
+#~ "other way!</em>"
+#~ msgstr "我們正在評估網路廣告的整體策略，包括廣告投放、流量優化、搜尋引擎優化和軟體獲利科技等方面。如果您能就上述方面提供專業服務，請向以下電子信箱寄出關於該服務的詳盡簡報。<em>請尊重我們的非媒體部門，不要向我們其他郵箱寄出有關於廣告服務的電子郵件，否則我們將不會理會您公司的所有來函。</em>"
+
+#~ msgid ""
+#~ "Please come ask your questions at "
+#~ "our <a href=\"%(forums_url)s\">forums</a>! We "
+#~ "would love to\n"
+#~ "    answer any questions you may have."
+#~ msgstr "歡迎到我們的<a href=\"%(forums_url)s\">討論區</a>發問！我們非常樂意解答您的疑問。"
+
+#~ msgid ""
+#~ "Due to the increased unreliability of"
+#~ " the US Postal Service we have "
+#~ "stopped accepting paper checks. Sorry!"
+#~ msgstr "由於美國郵政署的服務越來越不穩定，我們不再接受支票。抱歉！"
+
+#~ msgid "Upgrade"
+#~ msgstr ""
+
+#~ msgid "Back to Profile"
+#~ msgstr "您的帳號"
+
+#~ msgid ""
+#~ "Deletion of supporter accounts requires "
+#~ "manual review. Please contact us at"
+#~ msgstr ""
+
+#~ msgid "Revoke all your API tokens and access"
+#~ msgstr ""
+
+#~ msgid "Your username will be reserved and cannot be reused."
+#~ msgstr ""
+
+#~ msgid "Don't have an account?"
+#~ msgstr "沒有帳號？"
+
+#~ msgid "If you would like to support us with more than $"
+#~ msgstr ""
+
+#~ msgid ", please enter the actual amount here:"
+#~ msgstr ""
+
+#~ msgid "month and up"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "I also agree that if I generate"
+#~ " a Live Data Feed access token, "
+#~ "that I treat my access token as"
+#~ " a secret and will not share "
+#~ "this token publicly or commit it "
+#~ "to a source code repository."
+#~ msgstr "我也同意，如果我發行實時資料源的存取權杖，我會將存取權杖視作秘密，不會公開分享此權杖或在原始碼儲存庫發布。"
+
+#~ msgid "Not a supporter?"
+#~ msgstr "不是支持者？"
+
+#~ msgid "Create a user account"
+#~ msgstr "建立使用者帳號"
+
+#~ msgid "Already have an account?"
+#~ msgstr "您已經有帳號了？"
+
+#~ msgid "non-commercial"
+#~ msgstr "非商業"
+
+#~ msgid "Registration started by"
+#~ msgstr "註冊啟動源"
+
+#~ msgid "Invalid email address"
+#~ msgstr "電子信箱地址無效"
+

@@ -60,6 +60,15 @@ Redirect the user's browser to the authorization endpoint.
       ``auto``, if the user has already granted the requested scopes to your
       client, consent is skipped and a code is returned immediately. With
       ``force`` the consent screen is always shown.
+   :query ui_locales: Optional. Space-separated list of preferred BCP 47
+      language tags, in order of preference, as defined by `OpenID Connect
+      Core 1.0 section 3.1.2.1
+      <https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest>`_,
+      e.g. ``de-AT de en``. The first tag matching a language MetaBrainz
+      supports is used for the sign in, sign up, consent and error pages of
+      this flow. A language the user has explicitly chosen on the site takes
+      precedence. The supported values are listed as ``ui_locales_supported``
+      in the :doc:`discovery document <openid-connect>`.
 
 Example:
 

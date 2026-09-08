@@ -7,12 +7,14 @@ from flask_login import login_required, current_user
 from flask_wtf.csrf import generate_csrf
 
 from metabrainz.decorators import nocache, crossdomain
+from metabrainz.i18n import get_supported_locale_codes, remember_ui_locales
 from metabrainz.model import db, OAuth2Scope, get_scopes, OAuth2AccessToken
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.user import User
 from metabrainz.oauth.authorization_server import authorization_server
 from metabrainz.oauth.forms import AuthorizationForm
 from metabrainz.oauth.oidc_grant import build_user_info
+from metabrainz.oauth.scopes import scope_description
 from metabrainz.oauth.registration_request import (
     create_registration_request,
     delete_registration_request,
@@ -34,11 +36,23 @@ REGISTRATION_REQUEST_AUTHORIZE_KEYS = {
     "code_challenge_method",
     "nonce",
     "response_mode",
+    "ui_locales",
 }
 REGISTRATION_REQUEST_STORED_AUTHORIZE_KEYS = REGISTRATION_REQUEST_AUTHORIZE_KEYS | {
     "approval_prompt",
     "login_hint",
 }
+
+
+@oauth2_bp.before_request
+def before_oauth2_request():
+    """Remember the client's ``ui_locales`` hint for the rest of the flow.
+
+    This runs before the view, and so before @login_required can redirect an
+    anonymous user to the sign in or sign up page, where the hint is no longer
+    part of the query string.
+    """
+    remember_ui_locales(request.args.get("ui_locales"))
 
 
 @oauth2_bp.after_request
@@ -204,12 +218,11 @@ def create_oauth_registration_request():
 def begin_registration_request(request_id):
     registration_request = get_registration_request(request_id)
     if registration_request is None:
-        return render_template("oauth/error.html", props=json.dumps({
-            "error": {
-                "name": "invalid_request",
-                "description": "Registration request is invalid or expired.",
-            }
-        })), 400
+        raise InvalidRequestError(description="Registration request is invalid or expired.")
+
+    # The hint was sent when the registration request was created, not on this
+    # URL, so it has to be picked up from the stored request.
+    remember_ui_locales(registration_request.get("ui_locales"))
 
     next_url = url_for(".begin_registration_request", request_id=request_id)
     if current_user.is_anonymous:
@@ -264,7 +277,7 @@ def authorize():
         "client_name": grant.client.name,
         "scopes": [{
             "name": scope.name,
-            "description": scope.description
+            "description": scope_description(scope)
         } for scope in scopes],
         "cancel_url": cancel_url,
         "csrf_token": generate_csrf(),
@@ -374,4 +387,5 @@ def well_known_oauth_authorization_server():
         "grant_types_supported": ["authorization_code", "refresh_token", "implicit"],
         "id_token_signing_alg_values_supported": ["ES256", "none"],
         "subject_types_supported": ["public"],
+        "ui_locales_supported": get_supported_locale_codes(),
     }

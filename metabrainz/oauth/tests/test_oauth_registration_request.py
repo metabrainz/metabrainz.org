@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, urlparse
 from brainzutils import cache
 from flask import g
 
+from metabrainz.errors import OAUTH_ERROR_MESSAGES
 from metabrainz.model import OAuth2AuthorizationCode, OAuth2Client, db
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.domain_blacklist import DomainBlacklist
@@ -296,6 +297,36 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json["error"], "invalid_request")
 
+    def test_registration_request_carries_ui_locales_through_signup(self):
+        application = self.create_oauth_app()
+        self._allow_registration_request_client(application)
+
+        response = self._create_registration_request(application, ui_locales="de-AT de")
+        self.assertEqual(response.status_code, 201)
+        cached_request = cache.get(response.json["request_id"], namespace=REGISTRATION_REQUEST_NAMESPACE)
+        self.assertEqual(cached_request["ui_locales"], "de-AT de")
+
+        signup_url = self._assert_redirects_to_signup(response.json["redirect_to"])
+        self.client.get(signup_url)
+        global_props = json.loads(self.get_context_variable("global_props"))
+        self.assertEqual(global_props["locale"], "de")
+
+    def test_registration_request_without_ui_locales_uses_the_default_locale(self):
+        self.client.delete_cookie(self.app.config["SESSION_COOKIE_NAME"])
+
+        application = self.create_oauth_app()
+        self._allow_registration_request_client(application)
+
+        response = self._create_registration_request(application)
+        self.assertEqual(response.status_code, 201)
+        self.assertNotIn("ui_locales", cache.get(
+            response.json["request_id"], namespace=REGISTRATION_REQUEST_NAMESPACE))
+
+        signup_url = self._assert_redirects_to_signup(response.json["redirect_to"])
+        self.client.get(signup_url)
+        global_props = json.loads(self.get_context_variable("global_props"))
+        self.assertEqual(global_props["locale"], "en")
+
     def test_registration_request_expired(self):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
@@ -306,3 +337,9 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         response = self.client.get(response.json["redirect_to"])
         self.assertEqual(response.status_code, 400)
         self.assertTemplateUsed("oauth/error.html")
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(props["error"], {
+            "name": "invalid_request",
+            "description": "Registration request is invalid or expired.",
+            "message": OAUTH_ERROR_MESSAGES["invalid_request"],
+        })

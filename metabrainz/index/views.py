@@ -21,6 +21,7 @@ from metabrainz.model.user import User
 from metabrainz.model.webhook import EVENT_USER_DELETED
 from metabrainz.oauth.forms import ApplicationForm, DeleteApplicationForm
 from metabrainz.oauth.generator import create_client_id, create_client_secret
+from metabrainz.oauth.scopes import scope_description
 from metabrainz.user.email import send_verification_email
 
 
@@ -322,7 +323,7 @@ def profile_applications():
             "name": token.client.name,
             "scopes": [{
                 "name": scope.name,
-                "description": scope.description
+                "description": scope_description(scope)
             } for scope in token.scopes],
             "client_id": token.client.client_id,
             "website": token.client.website,
