@@ -203,7 +203,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
   }
 
   let stateClass;
-  if (state === "active" || isPreRevenue) {
+  if (state === "active") {
     stateClass = "text-success";
   } else if (state === "rejected") {
     stateClass = "text-danger";
