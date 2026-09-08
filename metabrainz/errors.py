@@ -65,6 +65,10 @@ def init_error_handlers(app):
 
     @app.errorhandler(OAuth2Error)
     def oauth_error_handler(error: OAuth2Error):
+        # Only the status code is carried over from the error. get_headers()
+        # describes a JSON API response (Content-Type, and a WWW-Authenticate
+        # challenge that would pop a browser credentials dialog), none of which
+        # belongs on an HTML page.
         return render_template("oauth/error.html", props=json.dumps({
             "error": {
                 "name": error.error,
@@ -74,4 +78,4 @@ def init_error_handlers(app):
                 # generic translated message.
                 "message": oauth_error_message(error.error),
             }
-        }))
+        })), error.status_code

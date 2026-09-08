@@ -5,6 +5,7 @@ from flask import g
 from flask_login import logout_user
 from sqlalchemy import delete
 
+from metabrainz.errors import OAUTH_ERROR_MESSAGES
 from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model import db, OAuth2AccessToken, OAuth2RefreshToken, OAuth2Client, OAuth2AuthorizationCode
@@ -218,14 +219,17 @@ class OAuthTestCase(FlaskTestCase):
         self.assertEqual(parsed.fragment, "_")
         return query_args["code"][0]
 
-    def authorize_error_helper(self, user, query_string, error):
+    def authorize_error_helper(self, user, query_string, error, confirm_succeeds=False):
+        expected = {**error, "message": OAUTH_ERROR_MESSAGES.get(error["name"])}
+
         response = self.client.get(
             "/oauth2/authorize",
             query_string=query_string,
         )
+        self.assertEqual(response.status_code, 400)
         self.assertTemplateUsed("oauth/error.html")
         props = json.loads(self.get_context_variable("props"))
-        self.assertEqual(props["error"], error)
+        self.assertEqual(props["error"], expected)
 
         response = self.client.post(
             "/oauth2/authorize/confirm",
@@ -235,9 +239,18 @@ class OAuthTestCase(FlaskTestCase):
                 "csrf_token": g.csrf_token
             }
         )
-        self.assertTemplateUsed("oauth/error.html")
-        props = json.loads(self.get_context_variable("props"))
-        self.assertEqual(props["error"], error)
+        if response.status_code == 302:
+            location = urlparse(response.location)
+            reported = parse_qs(location.query or location.fragment)
+            if confirm_succeeds:
+                self.assertNotIn("error", reported)
+            else:
+                self.assertEqual(reported["error"], [error["name"]])
+        else:
+            self.assertEqual(response.status_code, 400)
+            self.assertTemplateUsed("oauth/error.html")
+            props = json.loads(self.get_context_variable("props"))
+            self.assertEqual(props["error"], expected)
 
         self.assert_security_headers(response)
 

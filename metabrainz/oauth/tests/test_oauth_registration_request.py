@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, urlparse
 from brainzutils import cache
 from flask import g
 
+from metabrainz.errors import OAUTH_ERROR_MESSAGES
 from metabrainz.model import OAuth2AuthorizationCode, OAuth2Client, db
 from metabrainz.model.oauth.client import OAuth2ClientPrivilege
 from metabrainz.model.domain_blacklist import DomainBlacklist
@@ -336,3 +337,9 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         response = self.client.get(response.json["redirect_to"])
         self.assertEqual(response.status_code, 400)
         self.assertTemplateUsed("oauth/error.html")
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(props["error"], {
+            "name": "invalid_request",
+            "description": "Registration request is invalid or expired.",
+            "message": OAUTH_ERROR_MESSAGES["invalid_request"],
+        })

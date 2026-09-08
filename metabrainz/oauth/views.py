@@ -218,12 +218,7 @@ def create_oauth_registration_request():
 def begin_registration_request(request_id):
     registration_request = get_registration_request(request_id)
     if registration_request is None:
-        return render_template("oauth/error.html", props=json.dumps({
-            "error": {
-                "name": "invalid_request",
-                "description": "Registration request is invalid or expired.",
-            }
-        })), 400
+        raise InvalidRequestError(description="Registration request is invalid or expired.")
 
     # The hint was sent when the registration request was created, not on this
     # URL, so it has to be picked up from the stored request.

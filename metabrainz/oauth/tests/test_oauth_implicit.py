@@ -289,7 +289,7 @@ class ImplicitGrantTestCase(OAuthTestCase):
         error = {"name": "invalid_request", "description": "Invalid 'approval_prompt' in request."}
 
         self.temporary_login(self.user2)
-        self.authorize_error_helper(self.user2, query_string, error)
+        self.authorize_error_helper(self.user2, query_string, error, confirm_succeeds=True)
 
     def test_oauth_approval_prompt_scope_mismatch(self):
         redirect_uri1 = "https://example.com/callback1"
