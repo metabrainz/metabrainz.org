@@ -77,6 +77,10 @@ ListenBrainz
    * - ``listenbrainz:submit-listens``
      - Submit listens to ListenBrainz.
      - *Submit listens to ListenBrainz.*
+   * - ``listenbrainz:connect-services``
+     - Connect external services to ListenBrainz on the user's behalf.
+       **Restricted**, see below.
+     - *Connect external services to your ListenBrainz account.*
 
 CritiqueBrainz
 ^^^^^^^^^^^^^^
@@ -97,6 +101,31 @@ CritiqueBrainz
    * - ``critiquebrainz:profile``
      - Modify profile info and delete profile on CritiqueBrainz.
      - *Modify profile info and delete profile on CritiqueBrainz.*
+
+Restricted scopes
+-----------------
+
+Some scopes are **restricted**: only the applications that have been explicitly
+granted them may request them.
+
+Requesting a restricted scope your application has not been granted fails with
+``invalid_scope``. Authorization requests, and token requests made with the
+client credentials grant, are refused with an error description naming the scopes
+that were refused; the other token endpoint errors carry the generic
+``invalid_scope`` description.
+
+A grant can also be withdrawn after tokens have been issued. Refreshing a token
+whose scopes include a restricted scope your application is no longer granted
+fails with ``invalid_scope``, and it fails for the whole request, not just for
+the restricted scope, unless you narrow the request with a ``scope`` parameter
+listing only scopes you are still allowed to request. Otherwise the user has to
+authorize your application again, at which point it can ask for the scopes it is
+still allowed to request.
+
+Restricted scopes are left out of the ``scopes_supported`` field of the
+:ref:`discovery document <oauth/openid-connect:discovery>`, so a scope listed
+there can be requested by any application. If your application needs a restricted
+scope, `contact us <https://metabrainz.org/contact>`_ to have it granted.
 
 Notes
 -----
