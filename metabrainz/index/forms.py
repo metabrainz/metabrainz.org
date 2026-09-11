@@ -56,7 +56,11 @@ class DatasetsField(SelectMultipleField):
 
 class UserEditForm(MeBFlaskForm):
     """ Login form for existing users. """
-    email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])
+    email = EmailField(
+        default="",
+        filters=[lambda value: (value or "").strip().lower()],
+        validators=[DataRequired(gettext("Email address is required!"))],
+    )
 
 
 class UserChangePasswordForm(MeBFlaskForm):
@@ -79,9 +83,14 @@ class UserChangePasswordForm(MeBFlaskForm):
 
 class SupporterEditForm(UserEditForm):
     """Supporter profile editing form."""
-    contact_name = StringField(gettext("Name"), [
-        validators.DataRequired(message=gettext("Contact name field is empty.")),
-    ])
+    contact_name = StringField(
+        gettext("Name"),
+        default="",
+        filters=[lambda value: (value or "").strip()],
+        validators=[
+            validators.DataRequired(message=gettext("Contact name field is empty.")),
+        ],
+    )
 
 class NonCommercialSupporterEditForm(SupporterEditForm):
     datasets = DatasetsField()

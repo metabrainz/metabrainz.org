@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from metabrainz.testing import FlaskTestCase
 from metabrainz.model import db
 from metabrainz.model.supporter import Supporter
@@ -9,6 +11,24 @@ class PaymentsViewsTestCase(FlaskTestCase):
 
     def test_donate(self):
         self.assert200(self.client.get(url_for('payments.donate')))
+
+    def test_donate_prefills_trimmed_editor_query_param(self):
+        self.assert200(self.client.get(url_for("payments.donate", editor=" tester \t")))
+
+        form = self.get_context_variable("form")
+        self.assertEqual(form.editor.data, "tester")
+
+    @patch("metabrainz.payments.views.requests.get")
+    def test_check_editor_trims_editor_query_param(self, mock_get):
+        mock_get.return_value.json.return_value = [{"name": "tester"}]
+
+        response = self.client.get(url_for("payments.check_editor", q=" tester \t"))
+
+        self.assert200(response)
+        self.assertEqual(response.json, {"editor": "tester", "found": True})
+        mock_get.assert_called_once_with(
+            self.app.config["MUSICBRAINZ_BASE_URL"] + "ws/js/editor/?q=tester"
+        )
 
     def test_payment_selector_is_public(self):
         self.assert200(self.client.get(url_for('payments.payment_selector')))

@@ -128,6 +128,18 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertIsNotNone(user)
         self.assertEqual(user.name, "test_user_1")
 
+    def test_user_signup_normalizes_email(self):
+        self._test_user_signup_helper({
+            "username": "test_user_1",
+            "email": " TEST@EXAMPLE.COM \t",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+        }, 302)
+
+        user = User.get(name="test_user_1")
+        self.assertIsNotNone(user)
+        self.assertEqual(user.unconfirmed_email, "test@example.com")
+
     def test_user_signup_regular_flow_is_not_registration_request_signup(self):
         self.client.get("/signup")
         props = json.loads(self.get_context_variable("props"))
@@ -286,6 +298,15 @@ class UsersViewsTestCase(FlaskTestCase):
         self.client.get("/logout")
         self.assertTrue(current_user.is_anonymous)
 
+    def test_user_login_trims_username_whitespace(self):
+        self.create_user()
+
+        self._test_user_login_helper({
+            "username": " \ttest_user_1  ",
+            "password": "<PASSWORD>",
+        }, 302)
+        self.assertEqual(current_user.name, "test_user_1")
+
     def test_user_login_records_remember_me(self):
         self.create_user()
 
@@ -341,6 +362,19 @@ class UsersViewsTestCase(FlaskTestCase):
         self._test_user_login_error({
             "username": "test_user_1",
         }, {"password": "Password is required!"})
+        self.assertTrue(current_user.is_anonymous)
+
+    def test_user_login_null_username(self):
+        self.client.get("/login")
+        response = self.client.post("/login", json={
+            "username": None,
+            "password": "<PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(props["initial_errors"], {"username": "Username is required!"})
         self.assertTrue(current_user.is_anonymous)
 
     def test_user_login_missing_csrf_token(self):
@@ -680,6 +714,18 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(self.get_context_variable("username"), "test_user_1")
         self.assertMessageFlashed("Username recovery email sent!", "success")
 
+    def test_forgot_username_normalizes_email(self):
+        self.create_user()
+
+        self.client.get("/lost-username")
+        response = self.client.post("/lost-username", data={
+            "email": " TEST@EXAMPLE.COM  ",
+            "csrf_token": g.csrf_token
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.get_context_variable("username"), "test_user_1")
+        self.assertMessageFlashed("Username recovery email sent!", "success")
+
     def test_forgot_username_delivery_failure(self):
         self.create_user()
         self.client.get("/lost-username")
@@ -774,6 +820,18 @@ class UsersViewsTestCase(FlaskTestCase):
         response = self.client.post("/lost-password", data={
             "username": "test_user_1",
             "email": "test@example.com",
+            "csrf_token": g.csrf_token
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed("Password reset link sent!", "success")
+
+    def test_forgot_password_normalizes_username_and_email(self):
+        self.create_user()
+
+        self.client.get("/lost-password")
+        response = self.client.post("/lost-password", data={
+            "username": " \ttest_user_1  ",
+            "email": " TEST@EXAMPLE.COM  ",
             "csrf_token": g.csrf_token
         })
         self.assertEqual(response.status_code, 302)

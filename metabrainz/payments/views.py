@@ -28,6 +28,7 @@ def donate():
     form = DonationForm()
 
     if editor := request.args.get('editor'):
+        editor = editor.strip()
         form.editor.data = editor
     else:
         if current_user is not None and not current_user.is_anonymous:
@@ -134,10 +135,11 @@ def check_editor():
     editor = request.args.get('q')
     if editor is None:
         return jsonify({'error': 'Editor not specified.'}), 400
+    editor = editor.strip()
 
     try:
         resp = requests.get(current_app.config['MUSICBRAINZ_BASE_URL'] +
-                            'ws/js/editor/?q=' + request.args.get('q')).json()
+                            'ws/js/editor/?q=' + editor).json()
     except RequestException as e:
         return jsonify({'error': e})
 

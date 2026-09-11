@@ -32,7 +32,7 @@ class SupporterEditForm(FlaskForm):
     # The email address is deliberately not editable here. It is changed from the
     # supporter page through ChangeEmailForm, which is the same path the user page
     # uses, so an admin cannot confirm an address without saying that is what they meant.
-    username = StringField("Username", validators=[validate_username])
+    username = StringField("Username", default="", filters=[lambda value: (value or "").strip()], validators=[validate_username])
 
     contact_name = StringField("Name")
 
@@ -85,6 +85,8 @@ class ChangeEmailForm(FlaskForm):
     """
     email = EmailField(
         "New email address",
+        default="",
+        filters=[lambda value: (value or "").strip().lower()],
         validators=[
             DataRequired(message="Email cannot be empty"),
             Email(message="This is not a valid email address"),
@@ -108,6 +110,8 @@ class EditUsernameForm(FlaskForm):
     """Form for editing a user's username."""
     username = StringField(
         "New Username",
+        default="",
+        filters=[lambda value: (value or "").strip()],
         validators=[
             DataRequired(message="Username cannot be empty"),
             Length(min=1, max=255, message="Username must be between 1 and 255 characters"),

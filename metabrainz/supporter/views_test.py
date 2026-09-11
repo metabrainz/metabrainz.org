@@ -484,7 +484,7 @@ class SupportersViewsTestCase(FlaskTestCase):
             url_for('supporters.signup_commercial', tier_id=self.tier.id),
             data={
                 "username": "new_commercial_user",
-                "email": "commercial@example.com",
+                "email": " COMMERCIAL@EXAMPLE.COM \t",
                 "password": "securepassword123",
                 "confirm_password": "securepassword123",
                 "contact_name": "New Commercial Contact",
@@ -596,7 +596,7 @@ class SupportersViewsTestCase(FlaskTestCase):
             url_for('supporters.signup_noncommercial'),
             data={
                 "username": "new_noncommercial_user",
-                "email": "noncommercial@example.com",
+                "email": " NONCOMMERCIAL@EXAMPLE.COM \t",
                 "password": "securepassword123",
                 "confirm_password": "securepassword123",
                 "contact_name": "New NonCommercial Contact",
@@ -805,6 +805,25 @@ class SupportersViewsTestCase(FlaskTestCase):
     def test_signup_noncommercial_rate_limit(self):
         self._test_signup_rate_limit(is_commercial=False)
 
+    def test_user_profile_edit_normalizes_email(self):
+        self.temporary_login(self.existing_user)
+
+        new_email = "updated-existing-user@gmail.com"
+        self.client.get(url_for("index.profile_edit"))
+        response = self.client.post(
+            url_for("index.profile_edit"),
+            data={
+                "email": " UPDATED-EXISTING-USER@GMAIL.COM \t",
+                "csrf_token": g.csrf_token,
+            },
+            follow_redirects=False,
+        )
+        self.assertRedirects(response, url_for("index.profile"))
+
+        self.assertIsNone(self.existing_user.email)
+        self.assertEqual(self.existing_user.unconfirmed_email, new_email)
+        self.assertMessageFlashed(f"Email verification link sent to {new_email}", "success")
+
     def test_noncommercial_supporter_profile_edit(self):
         """Test that non-commercial supporters can update only contact_name, contact_email
          and dataset via profile edit."""
@@ -830,8 +849,8 @@ class SupportersViewsTestCase(FlaskTestCase):
         response = self.client.post(
             url_for('index.profile_edit'),
             data={
-                "contact_name": "Updated Contact Name",
-                "email": new_email,
+                "contact_name": " Updated Contact Name \t",
+                "email": " UPDATED-EXISTING-USER@GMAIL.COM \t",
                 "usage_desc": "Trying to change usage description",
                 "datasets": dataset2.id,
                 "csrf_token": g.csrf_token,
@@ -948,13 +967,14 @@ class SupportersViewsTestCase(FlaskTestCase):
         original_website_url = supporter.website_url
         original_amount_pledged = supporter.amount_pledged
         original_good_standing = supporter.good_standing
+        original_contact_name = supporter.contact_name
 
         self.client.get(url_for("index.profile_edit"))
         response = self.client.post(
             url_for("index.profile_edit"),
             data={
-                "contact_name": supporter.contact_name,
-                "email": "updated@example.com",
+                "contact_name": f" {supporter.contact_name} \t",
+                "email": " UPDATED@EXAMPLE.COM \t",
                 "org_name": "Trying to change org name",
                 "website_url": "https://malicious.com",
                 "amount_pledged": "125",
@@ -970,6 +990,7 @@ class SupportersViewsTestCase(FlaskTestCase):
         self.assertEqual(supporter.website_url, original_website_url)
         self.assertEqual(supporter.amount_pledged, original_amount_pledged)
         self.assertEqual(supporter.good_standing, original_good_standing)
+        self.assertEqual(supporter.contact_name, original_contact_name)
         self.assertEqual(self.existing_user.email, original_email)
         self.assertEqual(self.existing_user.unconfirmed_email, "updated@example.com")
         self.assertEqual(supporter.state, original_state)

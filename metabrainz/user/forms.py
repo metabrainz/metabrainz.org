@@ -21,16 +21,20 @@ class UserSignupForm(MeBFlaskForm):
     username = StringField(
         gettext("Username"),
         default="",
-        filters=[str.strip],
+        filters=[lambda value: (value or "").strip()],
         validators=[
             DataRequired(gettext("Username is required!")),
             validate_username,
         ],
     )
-    email = EmailField(validators=[
-        DataRequired(gettext("Email address is required!")),
-        validate_email_domain
-    ])
+    email = EmailField(
+        default="",
+        filters=[lambda value: (value or "").strip().lower()],
+        validators=[
+            DataRequired(gettext("Email address is required!")),
+            validate_email_domain
+        ],
+    )
     password = PasswordField(validators=[
         DataRequired(gettext("Password is required!")),
         Length(min=8, max=64),
@@ -49,7 +53,12 @@ class UserSignupForm(MeBFlaskForm):
 
 class UserLoginForm(MeBFlaskForm):
     """ Login form for existing users. """
-    username = StringField(gettext("Username"), validators=[DataRequired(gettext("Username is required!"))])
+    username = StringField(
+        gettext("Username"),
+        default="",
+        filters=[lambda value: (value or "").strip()],
+        validators=[DataRequired(gettext("Username is required!"))]
+    )
     password = PasswordField(gettext("Password"), validators=[
         DataRequired(gettext("Password is required!")),
         validate_bcrypt_password_length,
@@ -67,13 +76,26 @@ class UserReauthenticationForm(MeBFlaskForm):
 
 class ForgotUsernameForm(MeBFlaskForm):
     """ Form to request lost username email. """
-    email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])
+    email = EmailField(
+        default="",
+        filters=[lambda value: (value or "").strip().lower()],
+        validators=[DataRequired(gettext("Email address is required!"))]
+    )
 
 
 class ForgotPasswordForm(MeBFlaskForm):
     """ Form to request reset password link. """
-    username = StringField(gettext("Username"), validators=[DataRequired(gettext("Username is required!"))])
-    email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])
+    username = StringField(
+        gettext("Username"),
+        default="",
+        filters=[lambda value: (value or "").strip()],
+        validators=[DataRequired(gettext("Username is required!"))]
+    )
+    email = EmailField(
+        default="",
+        filters=[lambda value: (value or "").strip().lower()],
+        validators=[DataRequired(gettext("Email address is required!"))]
+    )
 
 
 class ResetPasswordForm(MeBFlaskForm):
