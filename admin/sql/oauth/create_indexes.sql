@@ -25,6 +25,10 @@ CREATE INDEX refresh_token_authorization_code_id_idx ON oauth.refresh_token (aut
 CREATE INDEX refresh_token_cleanup_idx ON oauth.refresh_token (issued_at, id)
     WHERE issued_at IS NOT NULL;
 
+-- an account is provisioned once, by the one client that created it
+CREATE UNIQUE INDEX provisioned_user_user_id_uniq_idx ON oauth.provisioned_user (user_id);
+CREATE INDEX provisioned_user_client_id_idx ON oauth.provisioned_user (client_id);
+
 -- a client is granted a restricted scope at most once
 CREATE UNIQUE INDEX l_client_scope_uniq_idx ON oauth.l_client_scope (client_id, scope_id);
 CREATE INDEX l_client_scope_scope_id_idx ON oauth.l_client_scope (scope_id);

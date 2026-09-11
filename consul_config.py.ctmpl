@@ -18,6 +18,7 @@ DEBUG = False
 EMAIL_VERIFICATION_SECRET_KEY = '''{{template "KEY" "email_verification_secret_key"}}'''
 EMAIL_VERIFICATION_EXPIRY = timedelta(hours=24)
 EMAIL_RESET_PASSWORD_EXPIRY = timedelta(hours=24)
+EMAIL_SET_PASSWORD_EXPIRY = timedelta(days=7)
 
 # Bcrypt
 BCRYPT_HASH_PREFIX = "2a"
@@ -175,4 +176,6 @@ WEBHOOK_PROCESSING_DELIVERY_TIMEOUT = 300  # Recover deliveries abandoned by dea
 STATIC_RESOURCES_DIR = '/static'
 
 SIGNUP_RATE_LIMIT_PER_IP = 5
+# Accounts an OAuth client may provision per day through /oauth2/registration-requests
+REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT = 1000
 REMEMBER_COOKIE_DURATION = timedelta(days=365)

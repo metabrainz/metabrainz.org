@@ -631,6 +631,22 @@ class UsersViewsTestCase(FlaskTestCase):
         props = json.loads(self.get_context_variable("props"))
         self.assertEqual(props["initial_errors"], {"email": "Another user with email 'test@example.com' exists."})
 
+    def test_user_exists_email_in_another_case(self):
+        self.create_user()
+
+        self._test_user_signup_helper({
+            "username": "test_user_2",
+            "email": "Test@Example.com",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+        }, 200)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(
+            props["initial_errors"],
+            {"email": "Another user with email 'Test@Example.com' exists."},
+        )
+        self.assertIsNone(User.get(name="test_user_2"))
+
     def test_multiple_users_verify_same_email_fails(self):
         """ Ideally, it shouldn't be possible to create two users with the same unconfirmed email but assuming
             it happens due to some race condition etc. handle the case.

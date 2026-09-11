@@ -80,6 +80,12 @@ class User(db.Model, UserMixin):
         return query.first() is not None
 
     @classmethod
+    def email_in_use(cls, email):
+        """ Whether any account already holds this address, confirmed or pending.
+        """
+        return bool(cls.get_others_using_email(email, limit=1))
+
+    @classmethod
     def get_others_using_email(cls, email, exclude_user_id=None, limit=10):
         """ Accounts other than ``exclude_user_id`` holding this address, confirmed or pending.
 
@@ -169,7 +175,11 @@ class User(db.Model, UserMixin):
             raise UsernameNotAllowedException()
 
         password = kwargs.pop("password")
-        password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+        password_hash = (
+            bcrypt.generate_password_hash(password).decode("utf-8")
+            if password is not None
+            else ""
+        )
         unconfirmed_email = kwargs.pop("unconfirmed_email", None)
         if not unconfirmed_email or not unconfirmed_email.strip():
             raise ValueError("Email address is required.")

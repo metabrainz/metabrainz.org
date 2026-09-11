@@ -43,3 +43,21 @@ def check_signup_rate_limit(form) -> bool:
         return True
 
     return False
+
+
+REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX = "registration_request_client:"
+
+
+def check_registration_request_rate_limit(client_id: int) -> bool:
+    """Whether the OAuth client has exhausted its daily provisioning allowance."""
+    limit = current_app.config.get("REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT", 100)
+    key = f"{REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX}{client_id}"
+    count = cache.get(key) or 0
+    return count >= limit
+
+
+def increment_registration_request_count(client_id: int) -> None:
+    """Count one provisioned account against the OAuth client's daily allowance."""
+    key = f"{REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX}{client_id}"
+    count = cache.get(key) or 0
+    cache.set(key, count + 1, SECONDS_IN_DAY)

@@ -1,5 +1,5 @@
 from authlib.oauth2.rfc6749.util import scope_to_list
-from sqlalchemy import Column, Text, Integer
+from sqlalchemy import Boolean, Column, Text, Integer
 from sqlalchemy.orm import relationship
 
 from metabrainz.model import db
@@ -14,6 +14,8 @@ class OAuth2AccessToken(db.Model, OAuth2BaseToken):
     # null for tokens issued for client credentials grant
     user_id = Column(Integer, nullable=True)
     access_token = Column(Text, nullable=False, unique=True)
+    # true for a token handed to a client that provisioned the account itself.
+    provisioned = Column(Boolean, nullable=False, default=False, server_default="false")
     scopes = relationship(OAuth2Scope, secondary=OAuth2AccessTokenScope)
 
     def get_scope(self):

@@ -18,6 +18,7 @@ from .oauth.scope import OAuth2Scope, get_scopes
 from .oauth.code import OAuth2AuthorizationCode
 from .oauth.access_token import OAuth2AccessToken
 from .oauth.refresh_token import OAuth2RefreshToken
+from .oauth.provisioned_user import OAuth2ProvisionedUser
 from .oauth.base_token import save_token
 
 from .webhook_delivery import WebhookDelivery
