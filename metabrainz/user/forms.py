@@ -72,13 +72,26 @@ class UserReauthenticationForm(MeBFlaskForm):
 
 class ForgotUsernameForm(MeBFlaskForm):
     """ Form to request lost username email. """
-    email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])
+    email = EmailField(
+        default="",
+        filters=[str.strip, str.lower],
+        validators=[DataRequired(gettext("Email address is required!"))]
+    )
 
 
 class ForgotPasswordForm(MeBFlaskForm):
     """ Form to request reset password link. """
-    username = StringField(gettext("Username"), validators=[DataRequired(gettext("Username is required!"))])
-    email = EmailField(validators=[DataRequired(gettext("Email address is required!"))])
+    username = StringField(
+        gettext("Username"),
+        default="",
+        filters=[str.strip],
+        validators=[DataRequired(gettext("Username is required!"))]
+    )
+    email = EmailField(
+        default="",
+        filters=[str.strip, str.lower],
+        validators=[DataRequired(gettext("Email address is required!"))]
+    )
 
 
 class ResetPasswordForm(MeBFlaskForm):

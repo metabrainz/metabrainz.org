@@ -689,6 +689,18 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertEqual(self.get_context_variable("username"), "test_user_1")
         self.assertMessageFlashed("Username recovery email sent!", "success")
 
+    def test_forgot_username_normalizes_email(self):
+        self.create_user()
+
+        self.client.get("/lost-username")
+        response = self.client.post("/lost-username", data={
+            "email": " TEST@EXAMPLE.COM  ",
+            "csrf_token": g.csrf_token
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.get_context_variable("username"), "test_user_1")
+        self.assertMessageFlashed("Username recovery email sent!", "success")
+
     def test_forgot_username_delivery_failure(self):
         self.create_user()
         self.client.get("/lost-username")
