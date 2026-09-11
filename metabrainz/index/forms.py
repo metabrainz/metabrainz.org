@@ -58,7 +58,7 @@ class UserEditForm(MeBFlaskForm):
     """ Login form for existing users. """
     email = EmailField(
         default="",
-        filters=[str.strip, str.lower],
+        filters=[lambda value: (value or "").strip().lower()],
         validators=[DataRequired(gettext("Email address is required!"))],
     )
 
@@ -86,7 +86,7 @@ class SupporterEditForm(UserEditForm):
     contact_name = StringField(
         gettext("Name"),
         default="",
-        filters=[str.strip],
+        filters=[lambda value: (value or "").strip()],
         validators=[
             validators.DataRequired(message=gettext("Contact name field is empty.")),
         ],

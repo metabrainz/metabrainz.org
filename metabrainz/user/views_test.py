@@ -364,6 +364,19 @@ class UsersViewsTestCase(FlaskTestCase):
         }, {"password": "Password is required!"})
         self.assertTrue(current_user.is_anonymous)
 
+    def test_user_login_null_username(self):
+        self.client.get("/login")
+        response = self.client.post("/login", json={
+            "username": None,
+            "password": "<PASSWORD>",
+            "csrf_token": g.csrf_token,
+        })
+
+        self.assert200(response)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(props["initial_errors"], {"username": "Username is required!"})
+        self.assertTrue(current_user.is_anonymous)
+
     def test_user_login_missing_csrf_token(self):
         self.create_user()
 

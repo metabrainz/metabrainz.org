@@ -21,7 +21,7 @@ class UserSignupForm(MeBFlaskForm):
     username = StringField(
         gettext("Username"),
         default="",
-        filters=[str.strip],
+        filters=[lambda value: (value or "").strip()],
         validators=[
             DataRequired(gettext("Username is required!")),
             validate_username,
@@ -29,7 +29,7 @@ class UserSignupForm(MeBFlaskForm):
     )
     email = EmailField(
         default="",
-        filters=[str.strip, str.lower],
+        filters=[lambda value: (value or "").strip().lower()],
         validators=[
             DataRequired(gettext("Email address is required!")),
             validate_email_domain
@@ -56,7 +56,7 @@ class UserLoginForm(MeBFlaskForm):
     username = StringField(
         gettext("Username"),
         default="",
-        filters=[str.strip],
+        filters=[lambda value: (value or "").strip()],
         validators=[DataRequired(gettext("Username is required!"))]
     )
     password = PasswordField(gettext("Password"), validators=[
@@ -78,7 +78,7 @@ class ForgotUsernameForm(MeBFlaskForm):
     """ Form to request lost username email. """
     email = EmailField(
         default="",
-        filters=[str.strip, str.lower],
+        filters=[lambda value: (value or "").strip().lower()],
         validators=[DataRequired(gettext("Email address is required!"))]
     )
 
@@ -88,12 +88,12 @@ class ForgotPasswordForm(MeBFlaskForm):
     username = StringField(
         gettext("Username"),
         default="",
-        filters=[str.strip],
+        filters=[lambda value: (value or "").strip()],
         validators=[DataRequired(gettext("Username is required!"))]
     )
     email = EmailField(
         default="",
-        filters=[str.strip, str.lower],
+        filters=[lambda value: (value or "").strip().lower()],
         validators=[DataRequired(gettext("Email address is required!"))]
     )
 
