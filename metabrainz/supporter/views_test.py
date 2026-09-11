@@ -484,7 +484,7 @@ class SupportersViewsTestCase(FlaskTestCase):
             url_for('supporters.signup_commercial', tier_id=self.tier.id),
             data={
                 "username": "new_commercial_user",
-                "email": "commercial@example.com",
+                "email": " COMMERCIAL@EXAMPLE.COM \t",
                 "password": "securepassword123",
                 "confirm_password": "securepassword123",
                 "contact_name": "New Commercial Contact",
@@ -596,7 +596,7 @@ class SupportersViewsTestCase(FlaskTestCase):
             url_for('supporters.signup_noncommercial'),
             data={
                 "username": "new_noncommercial_user",
-                "email": "noncommercial@example.com",
+                "email": " NONCOMMERCIAL@EXAMPLE.COM \t",
                 "password": "securepassword123",
                 "confirm_password": "securepassword123",
                 "contact_name": "New NonCommercial Contact",

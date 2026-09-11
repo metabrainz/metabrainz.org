@@ -27,10 +27,14 @@ class UserSignupForm(MeBFlaskForm):
             validate_username,
         ],
     )
-    email = EmailField(validators=[
-        DataRequired(gettext("Email address is required!")),
-        validate_email_domain
-    ])
+    email = EmailField(
+        default="",
+        filters=[str.strip, str.lower],
+        validators=[
+            DataRequired(gettext("Email address is required!")),
+            validate_email_domain
+        ],
+    )
     password = PasswordField(validators=[
         DataRequired(gettext("Password is required!")),
         Length(min=8, max=64),
