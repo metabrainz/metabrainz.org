@@ -286,6 +286,15 @@ class UsersViewsTestCase(FlaskTestCase):
         self.client.get("/logout")
         self.assertTrue(current_user.is_anonymous)
 
+    def test_user_login_trims_username_whitespace(self):
+        self.create_user()
+
+        self._test_user_login_helper({
+            "username": " \ttest_user_1  ",
+            "password": "<PASSWORD>",
+        }, 302)
+        self.assertEqual(current_user.name, "test_user_1")
+
     def test_user_login_records_remember_me(self):
         self.create_user()
 
@@ -774,6 +783,18 @@ class UsersViewsTestCase(FlaskTestCase):
         response = self.client.post("/lost-password", data={
             "username": "test_user_1",
             "email": "test@example.com",
+            "csrf_token": g.csrf_token
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed("Password reset link sent!", "success")
+
+    def test_forgot_password_normalizes_username_and_email(self):
+        self.create_user()
+
+        self.client.get("/lost-password")
+        response = self.client.post("/lost-password", data={
+            "username": " \ttest_user_1  ",
+            "email": " TEST@EXAMPLE.COM  ",
             "csrf_token": g.csrf_token
         })
         self.assertEqual(response.status_code, 302)

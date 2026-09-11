@@ -49,7 +49,12 @@ class UserSignupForm(MeBFlaskForm):
 
 class UserLoginForm(MeBFlaskForm):
     """ Login form for existing users. """
-    username = StringField(gettext("Username"), validators=[DataRequired(gettext("Username is required!"))])
+    username = StringField(
+        gettext("Username"),
+        default="",
+        filters=[str.strip],
+        validators=[DataRequired(gettext("Username is required!"))]
+    )
     password = PasswordField(gettext("Password"), validators=[
         DataRequired(gettext("Password is required!")),
         validate_bcrypt_password_length,
