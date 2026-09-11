@@ -21,7 +21,7 @@ class BasePaymentForm(FlaskForm):
 
 
 class DonationForm(BasePaymentForm):
-    editor = StringField()  # MusicBrainz username
+    editor = StringField(default="", filters=[str.strip])  # MusicBrainz username
     can_contact = BooleanField()
     anonymous = BooleanField()
 

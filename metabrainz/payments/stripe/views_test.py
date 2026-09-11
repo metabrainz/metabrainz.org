@@ -141,13 +141,14 @@ class StripePayViewTestCase(FlaskTestCase):
             data={
                 "amount": "100",
                 "currency": "usd",
-                "editor": "tester",
+                "editor": " tester \t",
             },
         )
 
         call_kwargs = mock_session.create.call_args[1]
         metadata = call_kwargs["payment_intent_data"]["metadata"]
         self.assertNotIn("supporter_id", metadata)
+        self.assertEqual(metadata["editor"], "tester")
 
 
 class StripeWebhookViewTestCase(FlaskTestCase):
