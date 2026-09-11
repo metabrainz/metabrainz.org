@@ -1,6 +1,7 @@
 import hashlib
 import hmac
 from datetime import datetime
+from urllib.parse import urljoin
 
 from flask import url_for, request, render_template, current_app
 
@@ -12,6 +13,19 @@ RESET_PASSWORD = "reset-password"
 
 # The timestamp travels as "ts": "&times" is an HTML entity for × that parsers decode even
 # without the trailing semicolon, so mail clients turned "&timestamp=" into "×tamp=".
+
+
+def email_link(endpoint: str, **values) -> str:
+    """Build an absolute link for an email out of the configured base URL.
+
+    Never url_for(_external=True): that derives the host from the incoming request,
+    so whoever controls the Host header of the request that triggers the email also
+    controls where its recipient lands.
+    """
+    return urljoin(
+        current_app.config["SERVER_BASE_URL"],
+        url_for(endpoint, _external=False, **values),
+    )
 
 
 def create_email_link_checksum(purpose: str, user_id: int, email: str, timestamp: int) -> str:
@@ -41,10 +55,17 @@ def create_reset_password_checksum(user: User, timestamp: int) -> str:
 
 
 def _send_user_email(email: str, subject: str, content: str):
-    if not current_app.config["DEBUG"]:
-        if not email:
-            raise ValueError("Cannot send user email without a recipient address")
-        send_mail(subject=subject, text=content, recipients=[email])
+    if not email:
+        raise ValueError("Cannot send user email without a recipient address")
+    if current_app.config["DEBUG"]:
+        # A debug deployment has no mail infrastructure, so log the message rather
+        # than dropping it on the floor.
+        current_app.logger.info(
+            "Not sending email in debug mode. To: %s\nSubject: %s\n\n%s",
+            email, subject, content,
+        )
+        return
+    send_mail(subject=subject, text=content, recipients=[email])
 
 
 def send_verification_email(user: User, subject, template):
@@ -53,12 +74,11 @@ def send_verification_email(user: User, subject, template):
     email = user.unconfirmed_email
 
     checksum = create_email_link_checksum(VERIFY_EMAIL, user.id, email, timestamp)
-    verification_link = url_for(
+    verification_link = email_link(
         "users.verify_email",
         user_id=user.id,
         ts=timestamp,
         checksum=checksum,
-        _external=True
     )
     content = render_template(
         template,
@@ -74,7 +94,7 @@ def send_forgot_username_email(user: User):
     content = render_template(
         "email/user-forgot-username.txt",
         username=user.name,
-        forgot_password_link=url_for("users.lost_password")
+        forgot_password_link=email_link("users.lost_password"),
     )
     _send_user_email(user.get_email_any(), "Lost username", content)
 
@@ -83,7 +103,7 @@ def send_forgot_password_email(user: User):
     """ Send email for resetting the user's password. """
     timestamp = int(datetime.now().timestamp())
     checksum = create_reset_password_checksum(user, timestamp)
-    reset_password_link = url_for("users.reset_password", user_id=user.id, ts=timestamp, checksum=checksum, _external=True)
+    reset_password_link = email_link("users.reset_password", user_id=user.id, ts=timestamp, checksum=checksum)
     content = render_template(
         "email/user-password-reset.txt",
         reset_password_link=reset_password_link,

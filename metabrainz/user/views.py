@@ -56,7 +56,9 @@ def _parse_email_link_args():
 
 def _checksum_matches(expected: str, received) -> bool:
     """Compare an email link checksum against the one we expect, in constant time."""
-    if not received:
+    # compare_digest raises on a non ASCII str, and these links are mailed to users,
+    # so mail clients and link scanners do mangle them.
+    if not received or not isinstance(received, str) or not received.isascii():
         return False
     return hmac.compare_digest(expected, received)
 
@@ -154,10 +156,18 @@ def login():
     form = UserLoginForm()
     if form.validate_on_submit():
         user = User.get(name=form.username.data)
-        if user is None:
+        if user is None or user.deleted:
+            # a deleted account keeps its row under a predictable "deleted-<id>" name
             form.username.errors.append(f"Username {form.username.data} not found.")
         else:
-            if not bcrypt.check_password_hash(user.password, form.password.data):
+            if not user.password:
+                # An account can hold an empty hash, bcrypt raises on an empty hash
+                # rather than reporting a mismatch.
+                form.password.errors.append(
+                    "This account does not have a password set. Use the password reset "
+                    "link to choose one, or contact support."
+                )
+            elif not bcrypt.check_password_hash(user.password, form.password.data):
                 form.password.errors.append("Invalid username or password.")
             else:
                 if user.is_blocked:
@@ -200,7 +210,7 @@ def reauthenticate():
     redirect_to = request.args.get("next") or url_for("index.profile")
 
     if form.validate_on_submit():
-        if not bcrypt.check_password_hash(current_user.password, form.password.data):
+        if not current_user.password or not bcrypt.check_password_hash(current_user.password, form.password.data):
             form.password.errors.append("Invalid password.")
         else:
             confirm_login()
