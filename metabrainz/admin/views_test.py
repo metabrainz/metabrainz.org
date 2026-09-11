@@ -438,11 +438,13 @@ class AdminViewsTestCase(FlaskTestCase):
 
         response = self._edit_username(
             user,
-            "RenamedUser",
+            " RenamedUser \t",
             reason="  Requested by the account owner.  ",
         )
 
         self.assertEqual(response.status_code, 302)
+        db.session.refresh(user)
+        self.assertEqual(user.name, "RenamedUser")
         log = ModerationLog.query.filter_by(
             user_id=user.id,
             action="edit_username",
@@ -495,7 +497,7 @@ class AdminViewsTestCase(FlaskTestCase):
     def test_admin_supporter_edit_reserves_previous_username(self):
         supporter = self.create_supporter()
 
-        response = self._edit_supporter_username(supporter, "RenamedUser")
+        response = self._edit_supporter_username(supporter, " RenamedUser \t")
 
         self.assertEqual(response.status_code, 302)
         db.session.refresh(supporter.user)
@@ -770,7 +772,10 @@ class AdminViewsTestCase(FlaskTestCase):
         user_id = user.id
 
         response = self._change_email_from_user_page(
-            user_id, "new@example.com", confirmed=True, reason="Owner asked over the phone."
+            user_id,
+            " NEW@EXAMPLE.COM \t",
+            confirmed=True,
+            reason="Owner asked over the phone.",
         )
         self.assertEqual(response.status_code, 302)
 
