@@ -274,7 +274,9 @@ def profile_edit():
 def profile_change_password():
     form = UserChangePasswordForm()
     if form.validate_on_submit():
-        if not bcrypt.check_password_hash(current_user.password, form.current_password.data):
+        # an account that has no password holds an empty hash, which bcrypt refuses
+        # outright rather than reporting as a mismatch
+        if not current_user.password or not bcrypt.check_password_hash(current_user.password, form.current_password.data):
             form.current_password.errors.append(gettext("Current password is incorrect."))
         else:
             current_user.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")

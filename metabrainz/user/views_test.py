@@ -410,6 +410,43 @@ class UsersViewsTestCase(FlaskTestCase):
         },  {"password": "Invalid username or password."})
         self.assertTrue(current_user.is_anonymous)
 
+    def test_user_login_without_a_password_prompts_for_a_reset(self):
+        user = User.add(
+            name="passwordless-user",
+            unconfirmed_email="passwordless-user@example.com",
+            password="<PASSWORD>",
+        )
+        user.password = ""
+        db.session.commit()
+
+        # bcrypt raises on an empty hash rather than reporting a mismatch, so an
+        # account the MusicBrainz import has no password for used to 500 here
+        self._test_user_login_error({
+            "username": "passwordless-user",
+            "password": "<PASSWORD>",
+        }, {
+            "password": (
+                "This account does not have a password set. Use the password reset "
+                "link to choose one, or contact support."
+            )
+        })
+        self.assertTrue(current_user.is_anonymous)
+
+    def test_user_login_does_not_reveal_a_deleted_account(self):
+        self.create_user()
+        user = User.get(name="test_user_1")
+        user.delete()
+        db.session.commit()
+
+        # deletion empties the password and renames the account to a predictable
+        # "deleted-<id>", so anything but "not found" would say which ids were once
+        # accounts
+        self._test_user_login_error({
+            "username": f"deleted-{user.id}",
+            "password": "<PASSWORD>",
+        }, {"username": f"Username deleted-{user.id} not found."})
+        self.assertTrue(current_user.is_anonymous)
+
     def test_user_login_logged_in(self):
         data = {
             "username": "test_user_1",
@@ -914,6 +951,32 @@ class UsersViewsTestCase(FlaskTestCase):
         response = self.client.post("/reset-password")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, "/")
+
+    def test_reset_password_rejects_a_non_ascii_checksum(self):
+        self.create_user()
+        user = User.get(name="test_user_1")
+
+        # mail clients and link scanners mangle these links, and comparing a non
+        # ASCII checksum in constant time raises rather than simply not matching
+        response = self.client.get("/reset-password", query_string={
+            "user_id": user.id,
+            "ts": int(datetime.now(timezone.utc).timestamp()),
+            "checksum": "\u00e9",
+        })
+
+        self.assertEqual(response.status_code, 302)
+        self.assertMessageFlashed("Unable to reset password.", "error")
+
+    def test_email_links_come_from_the_configured_base_url(self):
+        self.create_user()
+
+        # not from the request: url_for(_external=True) would have built this from
+        # the host the request arrived on, which is whatever the caller says it is
+        verification_link = self.get_context_variable("verification_link")
+        self.assertTrue(
+            verification_link.startswith(self.app.config["SERVER_BASE_URL"]),
+            verification_link,
+        )
 
     def test_reset_password_success(self):
         self._test_forgot_password_helper({
