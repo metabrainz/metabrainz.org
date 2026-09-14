@@ -1273,6 +1273,43 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertTrue(data["valid"])
         self.assertIsNone(data["reason"])
 
+    def test_check_username(self):
+        db.session.add(User(name="Existing", password="abc"))
+        db.session.add(OldUsername(username="Retired"))
+        db.session.commit()
+        for username, reason in [
+            (" new-user ", None),
+            (" EXISTING ", "username_taken"),
+            ("retired", "username_not_allowed"),
+        ]:
+            with self.subTest(username=username):
+                response = self.client.post("/check-username", json={"username": username})
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.json, {"valid": reason is None, "reason": reason})
+
+    def test_availability_invalid_bodies(self):
+        for field in ("username", "email"):
+            for body in ([], [field], {}, {field: None}, {field: 12}, {field: []}, {field: ""},
+                         {field: "a\u200bb"}):
+                with self.subTest(field=field, body=body):
+                    response = self.client.post(f"/check-{field}", json=body)
+                    self.assertEqual(response.status_code, 400)
+                    self.assertIn("error", response.json)
+
+    def test_availability_shared_ip_rate_limit(self):
+        with patch.dict(self.app.config, AVAILABILITY_RATE_LIMIT_PER_IP=2):
+            with freeze_time("2099-09-14 12:00:10"):
+                self.assertEqual(self._check_email_helper("new@example.com").status_code, 200)
+                self.assertEqual(self.client.post("/check-username", json={}).status_code, 400)
+                response = self._check_email_helper("new@example.com")
+                self.assertEqual(response.status_code, 429)
+                self.assertEqual(response.headers["Retry-After"], "50")
+                response = self.client.post("/check-username", json={"username": "new"},
+                                            environ_base={"REMOTE_ADDR": "192.0.2.1"})
+                self.assertEqual(response.status_code, 200)
+            with freeze_time("2099-09-14 12:01:00"):
+                self.assertEqual(self._check_email_helper("new@example.com").status_code, 200)
+
     def test_check_email_already_registered(self):
         self.create_user()
 

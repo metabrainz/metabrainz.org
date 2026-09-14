@@ -15,6 +15,7 @@ from metabrainz.index.forms import MeBFlaskForm
 from metabrainz.model import db
 from metabrainz.model.user import User, UsernameNotAllowedException
 from metabrainz.model.webhook import EVENT_USER_CREATED, EVENT_USER_UPDATED
+from metabrainz.rate_limit import rate_limit
 from metabrainz.user import login_forbidden
 from metabrainz.user.email import (
     SET_PASSWORD,
@@ -27,8 +28,12 @@ from metabrainz.user.email import (
 )
 from metabrainz.user.forms import UserLoginForm, UserReauthenticationForm, UserSignupForm, ForgotPasswordForm, \
     ForgotUsernameForm, ResetPasswordForm
-from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup_count
-from metabrainz.user.registration import validate_registration_email
+from metabrainz.user.rate_limit import (
+    availability_rate_limit_policy,
+    check_signup_rate_limit,
+    increment_signup_count,
+)
+from metabrainz.user.registration import validate_registration_email, validate_registration_username
 
 users_bp = Blueprint("users", __name__)
 
@@ -266,6 +271,7 @@ def verify_email():
 
 
 @users_bp.post("/check-email")
+@rate_limit("availability", availability_rate_limit_policy)
 def check_email():
     """Check if an email is valid for registration.
 
@@ -288,9 +294,11 @@ def check_email():
             "reason": "email_taken" | "domain_blacklisted" | null
         }
     """
-    data = request.get_json()
-    if not data or "email" not in data:
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict) or "email" not in data:
         return jsonify({"error": "Email is required"}), 400
+    if not isinstance(data["email"], str):
+        return jsonify({"error": "Invalid email format"}), 400
 
     email, email_error = validate_registration_email(data["email"])
     if email_error in {"missing_email", "invalid_email"}:
@@ -309,6 +317,22 @@ def check_email():
         })
 
     return jsonify({"valid": True, "reason": None})
+
+
+@users_bp.post("/check-username")
+@rate_limit("availability", availability_rate_limit_policy)
+def check_username():
+    """Check username validity and availability using registration's rules."""
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict) or "username" not in data:
+        return jsonify({"error": "Username is required"}), 400
+    if not isinstance(data["username"], str):
+        return jsonify({"error": "Invalid username format"}), 400
+
+    _, error = validate_registration_username(data["username"])
+    if error in {"missing_username", "invalid_username"}:
+        return jsonify({"error": "Invalid username format"}), 400
+    return jsonify({"valid": error is None, "reason": error})
 
 
 @users_bp.route("/resend-verification-email", methods=["POST"])

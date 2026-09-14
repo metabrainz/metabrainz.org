@@ -134,18 +134,41 @@ Common errors:
 Check availability
 ------------------
 
-There is no separate public endpoint to check username availability. Submit the
-requested username to ``POST /oauth2/registration-requests`` and handle its
-``400 invalid_request`` response if the name is already taken or cannot be used.
-A successful request creates the account; this is not a validation-only call.
+These public endpoints share an allowance of 30 requests per minute per IP.
+Optionally send ``Authorization: Bearer ACCESS_TOKEN`` with a valid OAuth access
+token to use a higher allowance of 300 requests per minute per OAuth client,
+shared across its tokens and both endpoints. No specific scope is required;
+client-credentials tokens are also accepted. Exceeding it returns ``429`` with
+``{"error": "rate_limit_exceeded"}`` and a ``Retry-After`` header in seconds.
+An invalid, expired, or revoked bearer token returns ``401 invalid_token``.
 
-To check an email before provisioning, use the following public endpoint. It
-does not require OAuth client authentication.
+.. http:post:: /check-username
+
+   :json string username: **Required.** The username to check.
+   :reqheader Content-Type: **Required.** ``application/json``.
+   :reqheader Authorization: Optional OAuth bearer token.
+
+Example:
+
+.. code-block:: bash
+
+   curl -X POST https://metabrainz.org/check-username \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer ACCESS_TOKEN" \
+     -d '{"username": "alice"}'
+
+A ``200 OK`` response contains ``{"valid": true, "reason": null}`` if the
+username is available. Otherwise, ``valid`` is ``false`` and ``reason`` is
+``username_taken`` or ``username_not_allowed`` (a retired username). Checks use
+the same trimming, character validation, and case-insensitive matching as
+registration. Missing or malformed usernames return ``400`` with an ``error``
+message.
 
 .. http:post:: /check-email
 
    :json string email: **Required.** The email address to check.
    :reqheader Content-Type: **Required.** ``application/json``.
+   :reqheader Authorization: Optional OAuth bearer token.
 
 Example:
 
@@ -161,8 +184,8 @@ address is available. Otherwise, ``valid`` is ``false`` and ``reason`` is
 ``domain_blacklisted``. Missing or malformed addresses return ``400`` with an
 ``error`` message.
 
-This check does not reserve the address. Always handle a conflicting email in
-the provisioning response even if the earlier check succeeded.
+These checks do not reserve the username or address. Always handle conflicts
+in the provisioning response even if the earlier checks succeeded.
 
 After account setup
 -------------------

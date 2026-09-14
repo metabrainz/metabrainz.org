@@ -1,10 +1,35 @@
 from datetime import datetime, timedelta, timezone
 
 from brainzutils import cache
-from flask import current_app, request
+from flask import abort, current_app, jsonify, make_response, request
+
+from metabrainz.model import db, OAuth2AccessToken
 
 SIGNUP_RATE_LIMIT_KEY_PREFIX = "signup_ip:"
 SECONDS_IN_DAY = 86400
+
+
+def availability_rate_limit_policy():
+    """Choose the shared availability allowance for this IP or OAuth client."""
+    authorization = request.headers.get("Authorization")
+    if authorization is None:
+        return (
+            f"ip:{request.remote_addr}",
+            current_app.config.get("AVAILABILITY_RATE_LIMIT_PER_IP", 30),
+        )
+
+    parts = authorization.split()
+    token = None
+    if len(parts) == 2 and parts[0].lower() == "bearer":
+        token = db.session.query(OAuth2AccessToken).filter_by(access_token=parts[1]).first()
+    if token is None or token.is_expired() or token.is_revoked():
+        abort(make_response(jsonify({"error": "invalid_token"}), 401, {
+            "WWW-Authenticate": 'Bearer error="invalid_token"',
+        }))
+    return (
+        f"client:{token.client_id}",
+        current_app.config.get("AVAILABILITY_RATE_LIMIT_PER_CLIENT", 300),
+    )
 
 
 def get_signup_count(ip_address: str) -> int:

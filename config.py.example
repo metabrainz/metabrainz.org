@@ -176,6 +176,9 @@ WEBHOOK_PENDING_DELIVERY_TIMEOUT = 600  # Requeue pending deliveries not claimed
 WEBHOOK_PROCESSING_DELIVERY_TIMEOUT = 300  # Recover deliveries abandoned by dead workers
 
 SIGNUP_RATE_LIMIT_PER_IP = 5
+# Shared username/email availability checks per minute.
+AVAILABILITY_RATE_LIMIT_PER_IP = 30
+AVAILABILITY_RATE_LIMIT_PER_CLIENT = 300
 # Accounts an OAuth client may provision per day through /oauth2/registration-requests
 REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT = 100
 REMEMBER_COOKIE_DURATION = timedelta(days=365)
