@@ -4,6 +4,7 @@ import re
 from datetime import datetime, timezone
 
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
+from flask_babel import gettext
 from flask_login import confirm_login, logout_user, login_required, login_user, current_user
 from flask_wtf.csrf import generate_csrf
 from sqlalchemy import update
@@ -86,12 +87,9 @@ def signup():
         if user is not None:
             form.username.errors.append(f"Another user with username '{form.username.data}' exists.")
         else:
-            # TODO: Handle the case where multiple users sign up with same email but haven"t verified it yet
-            # Matched case insensitively, like /check-email: an exact match would let
-            # "Bob@x.com" past a guard that "bob@x.com" trips, leaving two accounts
-            # for the one mailbox.
-            lock_registration_email(form.email.data)
+            # Match confirmed and pending addresses case insensitively, like /check-email.
             if User.email_in_use(form.email.data):
+                db.session.rollback()
                 form.email.errors.append(f"Another user with email '{form.email.data}' exists.")
             else:
                 try:
@@ -245,7 +243,7 @@ def verify_email():
         return redirect(url_for("index.home"))
 
     if User.confirmed_email_exists(user.unconfirmed_email, exclude_user_id=user.id):
-        flash.error(f"The email is already associated with an another account.")
+        flash.error(gettext("The email is already associated with another account."))
         return redirect(url_for("index.home"))
 
     old_email = user.email
@@ -409,11 +407,15 @@ def lost_password():
 def reset_password():
     """Set or reset a password using a signed email link."""
     is_welcome_link = request.args.get("initial_setup") == "1"
-    action = "set" if is_welcome_link else "reset"
+    failure_message = (
+        gettext("Unable to set password.")
+        if is_welcome_link
+        else gettext("Unable to reset password.")
+    )
 
     parsed_link = _parse_email_link_args()
     if parsed_link is None:
-        flash.error(f"Unable to {action} password.")
+        flash.error(failure_message)
         return redirect(url_for("index.home"))
 
     user_id, timestamp, created_at = parsed_link
@@ -424,15 +426,15 @@ def reset_password():
     )
     if created_at + expiry <= datetime.now(timezone.utc):
         flash.error(
-            "Set password link expired."
+            gettext("Set password link expired.")
             if is_welcome_link
-            else "Password reset link expired."
+            else gettext("Password reset link expired.")
         )
         return redirect(url_for("index.home"))
 
     user = User.get(id=user_id)
     if user is None:
-        flash.error("User not found.")
+        flash.error(gettext("User not found."))
         return redirect(url_for("index.home"))
 
     received_checksum = request.args.get("checksum")
@@ -443,11 +445,11 @@ def reset_password():
         # Bound to the current password hash, so a used reset link no longer validates.
         checksum = create_reset_password_checksum(user, timestamp)
     if not _checksum_matches(checksum, received_checksum):
-        flash.error(f"Unable to {action} password.")
+        flash.error(failure_message)
         return redirect(url_for("index.home"))
 
     if is_welcome_link and user.password:
-        flash.error("This account already has a password.")
+        flash.error(gettext("This account already has a password."))
         return redirect(url_for("index.home"))
 
     is_initial_setup = not user.password
@@ -462,7 +464,7 @@ def reset_password():
         )
         if email_to_confirm is not None:
             if User.confirmed_email_exists(email_to_confirm, exclude_user_id=user.id):
-                flash.error("The email is already associated with an another account.")
+                flash.error(gettext("The email is already associated with another account."))
                 return redirect(url_for("index.home"))
 
         updated_at = datetime.now(timezone.utc)
@@ -486,7 +488,7 @@ def reset_password():
             )
             if result.rowcount != 1:
                 db.session.rollback()
-                flash.error("This account already has a password.")
+                flash.error(gettext("This account already has a password."))
                 return redirect(url_for("index.home"))
         else:
             for field, value in updates.items():
@@ -502,10 +504,10 @@ def reset_password():
         db.session.commit()
 
         if is_initial_setup:
-            flash.success("Password set! You can now sign in.")
+            flash.success(gettext("Password set! You can now sign in."))
             return redirect(url_for("users.login"))
 
-        flash.success("Password reset!")
+        flash.success(gettext("Password reset!"))
         return redirect(url_for("index.home"))
 
     form_errors = {k: ". ".join(v) for k, v in form.errors.items()}

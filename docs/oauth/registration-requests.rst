@@ -17,7 +17,10 @@ requested, the response includes access and refresh tokens for the new user.
 Every account created this way is recorded against the client that created it,
 so the origin of the account outlives the tokens issued alongside it.
 
-The number of accounts a client may provision per day is capped. The tokens
+The number of accounts a client may provision per day is capped, resetting at
+midnight UTC. Requests rejected before account creation and accounts discarded
+after a welcome-email failure do not consume the allowance. Requests already
+in flight may finish even if they take the client over its allowance. The tokens
 issued here are marked as provisioned: the user never saw a consent screen for
 those scopes, so they never stand in for the user's approval, and a later
 :doc:`Authorization Code grant <authorization-code-grant>` for the same scopes
@@ -38,18 +41,21 @@ browser or mobile application.
 .. http:post:: /oauth2/registration-requests
 
    :json string username: **Required.** The requested MetaBrainz username. It must
-      pass normal username validation and must not already be in use.
+      pass normal username validation and must not already be in use. See
+      `Check availability`_ for the available checks.
    :json string email: **Required.** The user's email address. It is normalized, must
       pass normal email validation, must not already be in use by another
       account, whether confirmed or pending and matched case insensitively, and
-      must not be from a blocked domain.
+      must not be from a blocked domain. Use the ``POST /check-email`` endpoint
+      described in `Check availability`_ to check it before provisioning.
    :json boolean email_confirmed: Optional. Set to ``true`` if your trusted
       backend has already confirmed that the email belongs to the user.
       Defaults to ``false``.
    :json string scope: Optional. A space-separated list of OAuth scopes to
       grant to the requesting client for the newly created user. Unknown scopes
       are rejected, and so is ``openid``: this endpoint issues the token
-      directly and cannot return an ID token. Restricted scopes are accepted
+      directly and cannot return an ID token.
+      :ref:`Restricted scopes <oauth/scopes:restricted scopes>` are accepted
       only when they have been granted to the OAuth client by the MetaBrainz
       OAuth provider.
    :reqheader Authorization: **Required.** HTTP Basic client authentication.
@@ -105,7 +111,8 @@ Common errors:
      - The client lacks the *Registration requests* privilege.
    * - ``400``
      - ``invalid_request``
-     - The body is not a JSON object, a required field is missing,
+     - Malformed request or username/email in use. This can be one of:
+       the body is not a JSON object, a required field is missing,
        ``username``, ``email``, or ``scope`` has the wrong type,
        ``email_confirmed`` is not a boolean, or the username or email cannot be
        used.
@@ -119,13 +126,49 @@ Common errors:
        permits.
    * - ``500``
      - ``server_error``
-     - The account could not be created, or its welcome email could not be
-       sent. No account is left behind in either case.
+     - The account could not be created, its welcome email could not be sent,
+       or an unexpected server error occurred. Errors after the account was
+       created and its welcome email sent do not undo creation; the account
+       still counts toward the allowance.
+
+Check availability
+------------------
+
+There is no separate public endpoint to check username availability. Submit the
+requested username to ``POST /oauth2/registration-requests`` and handle its
+``400 invalid_request`` response if the name is already taken or cannot be used.
+A successful request creates the account; this is not a validation-only call.
+
+To check an email before provisioning, use the following public endpoint. It
+does not require OAuth client authentication.
+
+.. http:post:: /check-email
+
+   :json string email: **Required.** The email address to check.
+   :reqheader Content-Type: **Required.** ``application/json``.
+
+Example:
+
+.. code-block:: bash
+
+   curl -X POST https://metabrainz.org/check-email \
+     -H "Content-Type: application/json" \
+     -d '{"email": "alice@example.com"}'
+
+A ``200 OK`` response contains ``{"valid": true, "reason": null}`` if the
+address is available. Otherwise, ``valid`` is ``false`` and ``reason`` is
+``email_taken`` (including pending addresses, matched case insensitively) or
+``domain_blacklisted``. Missing or malformed addresses return ``400`` with an
+``error`` message.
+
+This check does not reserve the address. Always handle a conflicting email in
+the provisioning response even if the earlier check succeeded.
 
 After account setup
 -------------------
 
-The user can sign in normally after choosing a password. If the provisioning
-request did not include ``scope``, start the normal :doc:`Authorization Code
-grant <authorization-code-grant>` when the application later needs the user to
+The user **must** follow the link in the welcome email and choose a password
+before they can sign in normally. If the provisioning request did not include
+``scope``, start the normal :doc:`Authorization Code grant
+<authorization-code-grant>` when the application later needs the user to
 authorize access.

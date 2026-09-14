@@ -19,9 +19,10 @@ below:
 {{ password_link }}
 
 This link expires in {{ link_expiry }}. If clicking the link above doesn't work,
-please copy and paste the URL into a new browser window instead.
+please copy and paste it into your browser instead.
 
-If you did not give "{{ oauth_client_name }}" permission to create this account,
+If you did not give "{{ oauth_client_name }}" permission to create this account in your name,
 please contact us immediately at {{ contact_url }}.
 
 -- The MetaBrainz Team
+https://metabrainz.org

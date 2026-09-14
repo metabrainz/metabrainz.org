@@ -12,9 +12,6 @@ VERIFY_EMAIL = "verify-email"
 RESET_PASSWORD = "reset-password"
 SET_PASSWORD = "set-password"
 
-# The timestamp travels as "ts": "&times" is an HTML entity for × that parsers decode even
-# without the trailing semicolon, so mail clients turned "&timestamp=" into "×tamp=".
-
 
 def describe_expiry(expiry: timedelta) -> str:
     """Render an expiry as the plain English an email can put in front of a user."""
@@ -26,12 +23,15 @@ def describe_expiry(expiry: timedelta) -> str:
     return f"{seconds} seconds"
 
 
+# The timestamp travels as "ts": "&times" is an HTML entity for × that parsers decode even
+# without the trailing semicolon, so mail clients turned "&timestamp=" into "×tamp=".
+
+
 def email_link(endpoint: str, **values) -> str:
     """Build an absolute link for an email out of the configured base URL.
 
-    Never url_for(_external=True): that derives the host from the incoming request,
-    and links are also sent on behalf of a third party through the Host header, where
-    the recipient of the email lands.
+    Never use url_for(_external=True): it derives the host from the incoming
+    request, allowing its Host header to control where the email sends the user.
     """
     return urljoin(
         current_app.config["SERVER_BASE_URL"],
@@ -129,7 +129,7 @@ def send_welcome_email(
     oauth_client_description: str,
     granted_scopes: list[dict[str, str]],
 ):
-    """Send a newly provisioned user a link for choosing their password."""
+    """Send a user provisioned by a third party a link for choosing their password."""
     timestamp = int(datetime.now(timezone.utc).timestamp())
     email = user.get_email_any()
     checksum = create_email_link_checksum(SET_PASSWORD, user.id, email, timestamp)

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-11 12:22+0000\n"
+"POT-Creation-Date: 2026-09-14 16:16+0200\n"
 "PO-Revision-Date: 2026-08-04 06:12+0000\n"
 "Last-Translator: \"salo.rock\" "
 "<salo.rock@users.noreply.translations.metabrainz.org>\n"
@@ -69,14 +69,14 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:159
 #: frontend/js/src/forms/SignupNonCommercial.tsx:85
 #: frontend/js/src/forms/SignupUser.tsx:60
-#: frontend/js/src/hooks/useEmailValidation.ts:78 metabrainz/index/forms.py:59
-#: metabrainz/user/forms.py:31 metabrainz/user/forms.py:70
-#: metabrainz/user/forms.py:76
+#: frontend/js/src/hooks/useEmailValidation.ts:78 metabrainz/index/forms.py:62
+#: metabrainz/user/forms.py:34 metabrainz/user/forms.py:82
+#: metabrainz/user/forms.py:97
 msgid "Email address is required!"
 msgstr "È necessario fornire un indirizzo email!"
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:34
-#: metabrainz/index/forms.py:65
+#: metabrainz/index/forms.py:69
 msgid "Current password is required!"
 msgstr ""
 
@@ -85,17 +85,17 @@ msgstr ""
 #: frontend/js/src/forms/ResetPassword.tsx:43
 #: frontend/js/src/forms/SignupCommercial.tsx:161
 #: frontend/js/src/forms/SignupNonCommercial.tsx:87
-#: frontend/js/src/forms/SignupUser.tsx:62 metabrainz/index/forms.py:69
-#: metabrainz/user/forms.py:35 metabrainz/user/forms.py:54
-#: metabrainz/user/forms.py:63 metabrainz/user/forms.py:82
+#: frontend/js/src/forms/SignupUser.tsx:62 metabrainz/index/forms.py:73
+#: metabrainz/user/forms.py:39 metabrainz/user/forms.py:63
+#: metabrainz/user/forms.py:72 metabrainz/user/forms.py:104
 msgid "Password is required!"
 msgstr ""
 
 #: frontend/js/src/forms/ProfileChangePassword.tsx:41
 #: frontend/js/src/forms/SignupCommercial.tsx:165
 #: frontend/js/src/forms/SignupNonCommercial.tsx:91
-#: frontend/js/src/forms/SignupUser.tsx:66 metabrainz/index/forms.py:74
-#: metabrainz/user/forms.py:40 metabrainz/user/forms.py:87
+#: frontend/js/src/forms/SignupUser.tsx:66 metabrainz/index/forms.py:78
+#: metabrainz/user/forms.py:44 metabrainz/user/forms.py:109
 msgid "Confirm Password is required!"
 msgstr ""
 
@@ -103,18 +103,18 @@ msgstr ""
 #: frontend/js/src/forms/ResetPassword.tsx:52
 #: frontend/js/src/forms/SignupCommercial.tsx:170
 #: frontend/js/src/forms/SignupNonCommercial.tsx:96
-#: frontend/js/src/forms/SignupUser.tsx:71 metabrainz/index/forms.py:76
-#: metabrainz/user/forms.py:42 metabrainz/user/forms.py:89
+#: frontend/js/src/forms/SignupUser.tsx:71 metabrainz/index/forms.py:80
+#: metabrainz/user/forms.py:46 metabrainz/user/forms.py:111
 msgid "Confirm Password should match password!"
 msgstr ""
 
 #: frontend/js/src/Applications.tsx:56 frontend/js/src/Applications.tsx:86
 #: frontend/js/src/Profile.tsx:278 frontend/js/src/Profile.tsx:503
-#: metabrainz/index/forms.py:82
+#: metabrainz/index/forms.py:87
 msgid "Name"
 msgstr "Nome"
 
-#: metabrainz/index/forms.py:83
+#: metabrainz/index/forms.py:91
 msgid "Contact name field is empty."
 msgstr "Il campo nome di contatto è vuoto."
 
@@ -266,7 +266,7 @@ msgstr ""
 msgid "Modify profile info and delete profile on CritiqueBrainz."
 msgstr ""
 
-#: metabrainz/payments/views.py:164
+#: metabrainz/payments/views.py:166
 msgid ""
 "Thank you for making a donation to the MetaBrainz Foundation. Your "
 "support is greatly appreciated! It may take some time before your "
@@ -277,7 +277,7 @@ msgstr ""
 "prima che la tua donazione appaia nell'elenco a causa dei tempi di "
 "elaborazione."
 
-#: metabrainz/payments/views.py:171
+#: metabrainz/payments/views.py:173
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
@@ -285,19 +285,19 @@ msgstr ""
 "Grazie per aver fatto un pagamento alla MetaBrainz Foundation. "
 "Apprezziamo molto il tuo sostegno!"
 
-#: metabrainz/payments/views.py:182
+#: metabrainz/payments/views.py:184
 msgid ""
 "We're sorry to see that you won't be donating today. We hope that you'll "
 "change your mind!"
 msgstr "Ci spiace che tu non faccia una donazione oggi. Speriamo che cambi idea!"
 
-#: metabrainz/payments/views.py:188
+#: metabrainz/payments/views.py:190
 msgid ""
 "We're sorry to see that you won't be paying today. We hope that you'll "
 "change your mind!"
 msgstr "Ci spiace che tu non faccia un pagamento oggi. Speriamo che cambi idea!"
 
-#: metabrainz/payments/views.py:202
+#: metabrainz/payments/views.py:204
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your donation."
@@ -305,7 +305,7 @@ msgstr ""
 "Spiacenti, non ci è possibile processare la tua donazione a causa di un "
 "errore."
 
-#: metabrainz/payments/views.py:208
+#: metabrainz/payments/views.py:210
 msgid ""
 "We're sorry, but it appears we've run into an error and can't process "
 "your payment."
@@ -350,7 +350,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupNonCommercial.tsx:73
 #: frontend/js/src/forms/SignupUser.tsx:74
 #: frontend/js/src/forms/SignupUser.tsx:75 metabrainz/supporter/forms.py:23
-#: metabrainz/user/forms.py:45
+#: metabrainz/user/forms.py:49
 msgid "You need to accept the agreement!"
 msgstr "È necessario accettare l'accordo!"
 
@@ -4508,7 +4508,7 @@ msgstr ""
 #: frontend/js/src/forms/SignupCommercial.tsx:275
 #: frontend/js/src/forms/SignupNonCommercial.tsx:175
 #: frontend/js/src/forms/SignupUser.tsx:104 metabrainz/user/forms.py:22
-#: metabrainz/user/forms.py:52 metabrainz/user/forms.py:75
+#: metabrainz/user/forms.py:57 metabrainz/user/forms.py:89
 msgid "Username"
 msgstr "Nome utente"
 
@@ -4517,7 +4517,7 @@ msgstr "Nome utente"
 #: frontend/js/src/forms/SignupCommercial.tsx:158
 #: frontend/js/src/forms/SignupNonCommercial.tsx:84
 #: frontend/js/src/forms/SignupUser.tsx:57 metabrainz/user/forms.py:26
-#: metabrainz/user/forms.py:52 metabrainz/user/forms.py:75
+#: metabrainz/user/forms.py:60 metabrainz/user/forms.py:92
 msgid "Username is required!"
 msgstr ""
 
@@ -4525,12 +4525,12 @@ msgstr ""
 #: frontend/js/src/forms/ResetPassword.tsx:76
 #: frontend/js/src/forms/SignupCommercial.tsx:313
 #: frontend/js/src/forms/SignupNonCommercial.tsx:214
-#: frontend/js/src/forms/SignupUser.tsx:133 metabrainz/user/forms.py:53
-#: metabrainz/user/forms.py:62
+#: frontend/js/src/forms/SignupUser.tsx:133 metabrainz/user/forms.py:62
+#: metabrainz/user/forms.py:71
 msgid "Password"
 msgstr "Password"
 
-#: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:57
+#: frontend/js/src/forms/LoginUser.tsx:76 metabrainz/user/forms.py:66
 msgid "Remember me"
 msgstr ""
 
@@ -4540,6 +4540,42 @@ msgstr ""
 
 #: metabrainz/user/username.py:183
 msgid "Username contains invalid or invisible characters."
+msgstr ""
+
+#: metabrainz/user/views.py:246 metabrainz/user/views.py:467
+msgid "The email is already associated with another account."
+msgstr ""
+
+#: metabrainz/user/views.py:411
+msgid "Unable to set password."
+msgstr ""
+
+#: metabrainz/user/views.py:413
+msgid "Unable to reset password."
+msgstr ""
+
+#: metabrainz/user/views.py:429
+msgid "Set password link expired."
+msgstr ""
+
+#: metabrainz/user/views.py:431
+msgid "Password reset link expired."
+msgstr ""
+
+#: metabrainz/user/views.py:437
+msgid "User not found."
+msgstr ""
+
+#: metabrainz/user/views.py:452 metabrainz/user/views.py:491
+msgid "This account already has a password."
+msgstr ""
+
+#: metabrainz/user/views.py:507
+msgid "Password set! You can now sign in."
+msgstr ""
+
+#: metabrainz/user/views.py:510
+msgid "Password reset!"
 msgstr ""
 
 #: frontend/js/src/ApplicationRow.tsx:27 frontend/js/src/forms/utils.tsx:220

@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta, timezone
+
 from brainzutils import cache
 from flask import current_app, request
 
@@ -45,19 +47,31 @@ def check_signup_rate_limit(form) -> bool:
     return False
 
 
-REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX = "registration_request_client:"
+# A separate key format keeps these raw Redis counters apart from the old
+# msgpack-encoded cache values. Each allowance resets at midnight UTC.
+REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX = "registration_request_client_daily:"
+
+
+def _registration_request_window(client_id):
+    now = datetime.now(timezone.utc)
+    key = f"{REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX}{client_id}:{now.date().isoformat()}"
+    expires_at = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
+    return key, int(expires_at.timestamp())
 
 
 def check_registration_request_rate_limit(client_id: int) -> bool:
-    """Whether the OAuth client has exhausted its daily provisioning allowance."""
+    """Reject new requests after the client reaches its daily allowance."""
     limit = current_app.config.get("REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT", 100)
-    key = f"{REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX}{client_id}"
-    count = cache.get(key) or 0
-    return count >= limit
+    key, _ = _registration_request_window(client_id)
+    return int(cache.get(key, decode=False) or 0) >= limit
 
 
 def increment_registration_request_count(client_id: int) -> None:
-    """Count one provisioned account against the OAuth client's daily allowance."""
-    key = f"{REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX}{client_id}"
-    count = cache.get(key) or 0
-    cache.set(key, count + 1, SECONDS_IN_DAY)
+    """Count a completed provisioning without losing concurrent increments.
+
+    In-flight requests can take the client over its allowance; subsequent
+    requests will be rejected by the limit check.
+    """
+    key, expires_at = _registration_request_window(client_id)
+    cache.increment(key)
+    cache.expireat(key, expires_at)

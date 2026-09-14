@@ -23,7 +23,10 @@ from metabrainz.oauth.forms import AuthorizationForm
 from metabrainz.oauth.oidc_grant import build_user_info
 from metabrainz.oauth.scopes import scope_description
 from metabrainz.user.email import send_welcome_email
-from metabrainz.user.rate_limit import check_registration_request_rate_limit, increment_registration_request_count
+from metabrainz.user.rate_limit import (
+    check_registration_request_rate_limit,
+    increment_registration_request_count,
+)
 from metabrainz.user.registration import (
     validate_registration_email,
     validate_registration_username,

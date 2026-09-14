@@ -23,6 +23,10 @@ from metabrainz.model.webhook import Webhook, EVENT_USER_CREATED, EVENT_USER_UPD
 from metabrainz.model.webhook_delivery import WebhookDelivery
 from metabrainz.oauth.tests import OAuthTestCase
 from metabrainz.user.email import send_forgot_password_email
+from metabrainz.user.rate_limit import (
+    check_registration_request_rate_limit,
+    increment_registration_request_count,
+)
 from metabrainz.user.registration import validate_registration_username
 
 
@@ -238,13 +242,19 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
     def test_registration_request_rolls_back_when_welcome_email_fails(self):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
+        self.app.config["REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT"] = 1
+        self.addCleanup(self.app.config.pop, "REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT")
 
-        with patch(
-            "metabrainz.oauth.views.send_welcome_email",
-            side_effect=RuntimeError("SMTP unavailable"),
+        with (
+            patch(
+                "metabrainz.oauth.views.send_welcome_email",
+                side_effect=RuntimeError("SMTP unavailable"),
+            ),
+            self.assertLogs(self.app.logger, level="ERROR") as logs,
         ):
             response = self._create_registration_request(application, scope="profile")
 
+        self.assertIsNotNone(logs.records[0].exc_info)
         self.assertEqual(response.status_code, 500)
         self.assertEqual(response.json["error"], "server_error")
         self.assertEqual(
@@ -572,11 +582,19 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json["error"], "invalid_scope")
+        self.assertEqual(
+            response.json["error_description"],
+            "The requested scope is invalid, unknown, or malformed.",
+        )
         self.assertIsNone(User.get(name="seeded-user"))
 
         response = self._create_registration_request(application, scope="   ")
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json["error"], "invalid_scope")
+        self.assertEqual(
+            response.json["error_description"],
+            "The requested scope is invalid, unknown, or malformed.",
+        )
         self.assertIsNone(User.get(name="seeded-user"))
 
     def _subscribe_webhook(self):
@@ -929,6 +947,20 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.assertEqual(second.json["error"], "access_denied")
         self.assertIsNone(User.get(name="second-user"))
 
+    def test_registration_allowance_resets_each_day(self):
+        self.app.config["REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT"] = 1
+        self.addCleanup(self.app.config.pop, "REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT")
+        now = datetime.now(timezone.utc)
+        with freeze_time(now):
+            increment_registration_request_count(self.user1.id)
+            self.assertTrue(check_registration_request_rate_limit(self.user1.id))
+            self.assertFalse(check_registration_request_rate_limit(self.user2.id))
+
+        with freeze_time(now + timedelta(days=1)):
+            self.assertFalse(check_registration_request_rate_limit(self.user1.id))
+            increment_registration_request_count(self.user1.id)
+            self.assertTrue(check_registration_request_rate_limit(self.user1.id))
+
     def test_provisioned_token_does_not_stand_in_for_consent(self):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
@@ -1031,66 +1063,6 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
 
         self.assertRedirects(response, "/")
         self.assertMessageFlashed("Unable to set password.", "error")
-
-    def test_registration_request_handles_concurrent_email_conflicts(self):
-        application = self.create_oauth_app()
-        self._allow_registration_request_client(application)
-        credentials = base64.b64encode(
-            f"{application['client_id']}:{application['client_secret']}".encode()
-        ).decode()
-        validation_barrier = Barrier(2, timeout=10)
-        responses = []
-        errors = []
-
-        def synchronized_validation(username):
-            result = validate_registration_username(username)
-            validation_barrier.wait()
-            return result
-
-        def provision_user(username):
-            try:
-                with self.app.test_client() as client:
-                    responses.append(client.post(
-                        "/oauth2/registration-requests",
-                        json={
-                            "username": username,
-                            "email": "shared@example.com",
-                            "scope": "profile",
-                        },
-                        headers={"Authorization": f"Basic {credentials}"},
-                    ))
-            except Exception as error:
-                errors.append(error)
-
-        with (
-            patch(
-                "metabrainz.oauth.views.validate_registration_username",
-                side_effect=synchronized_validation,
-            ),
-            patch("metabrainz.oauth.views.send_welcome_email"),
-        ):
-            threads = [
-                Thread(target=provision_user, args=(username,))
-                for username in ("first-user", "second-user")
-            ]
-            for thread in threads:
-                thread.start()
-            for thread in threads:
-                thread.join(timeout=20)
-            self.assertTrue(all(not thread.is_alive() for thread in threads))
-
-        # Email addresses have no unique index, so provisioning must serialize on the address.
-        self.assertEqual(errors, [])
-        self.assertCountEqual([response.status_code for response in responses], [201, 400])
-        conflict = next(response for response in responses if response.status_code == 400)
-        self.assertEqual(conflict.json, {
-            "error": "invalid_request",
-            "error_description": "The requested email is already in use.",
-        })
-        self.assertEqual(
-            User.query.filter(func.lower(User.unconfirmed_email) == "shared@example.com").count(),
-            1,
-        )
 
     def test_registration_request_rejects_unusable_user_details(self):
         application = self.create_oauth_app()

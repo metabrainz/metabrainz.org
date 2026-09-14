@@ -1,9 +1,5 @@
-import hashlib
-
 from email_validator import EmailNotValidError, validate_email
-from sqlalchemy import text
 
-from metabrainz.model import db
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.user import User
