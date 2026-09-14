@@ -85,11 +85,11 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
             "user_id": user.id,
             "username": "seeded-user",
             "email": "seeded.user@example.com",
-            "email_confirmed": False,
         })
         self.assertEqual(user.password, "")
-        self.assertIsNone(user.email)
-        self.assertEqual(user.unconfirmed_email, "seeded.user@example.com")
+        self.assertEqual(user.email, "seeded.user@example.com")
+        self.assertIsNone(user.unconfirmed_email)
+        self.assertIsNotNone(user.email_confirmed_at)
         self.assertNotIn("Location", response.headers)
         self.assert_security_headers(response)
 
@@ -139,7 +139,6 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
             json={
                 "username": "json-user",
                 "email": "JSON.User@example.com",
-                "email_confirmed": True,
             },
             headers={"Authorization": f"Basic {credentials}"},
         )
@@ -147,7 +146,6 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json["username"], "json-user")
         self.assertEqual(response.json["email"], "json.user@example.com")
-        self.assertTrue(response.json["email_confirmed"])
         user = User.get(name="json-user")
         self.assertEqual(user.password, "")
         self.assertEqual(user.email, "json.user@example.com")
@@ -277,9 +275,8 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self._allow_registration_request_client(application)
 
         with patch("metabrainz.user.email.send_mail") as send_mail:
-            response = self._create_registration_request(application, email_confirmed=True)
+            response = self._create_registration_request(application)
         self.assertEqual(response.status_code, 201)
-        self.assertTrue(response.json["email_confirmed"])
 
         send_mail.assert_called_once()
         self.assertEqual(send_mail.call_args.kwargs["subject"], "Welcome to MetaBrainz")
@@ -313,7 +310,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
     def _assert_password_setup_preserves_pending_email(self, is_welcome_link):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
-        response = self._create_registration_request(application, email_confirmed=True)
+        response = self._create_registration_request(application)
         self.assertEqual(response.status_code, 201)
         password_link = self.get_context_variable("password_link")
 
@@ -351,7 +348,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
     def test_reset_link_does_not_confirm_a_different_pending_email_during_setup(self):
         self._assert_password_setup_preserves_pending_email(is_welcome_link=False)
 
-    def test_welcome_link_sets_password_and_confirms_email(self):
+    def test_welcome_link_sets_password_for_verified_account(self):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
         response = self._create_registration_request(application)
@@ -547,19 +544,6 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.assertEqual(response.json["error"], "invalid_request")
         self.assertEqual(response.json["error_description"], "Invalid 'email' in request.")
 
-    def test_registration_request_rejects_invalid_email_confirmation(self):
-        application = self.create_oauth_app()
-        self._allow_registration_request_client(application)
-
-        response = self._create_registration_request(application, email_confirmed="true")
-
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json["error"], "invalid_request")
-        self.assertEqual(
-            response.json["error_description"],
-            "Invalid 'email_confirmed' in request; expected a boolean.",
-        )
-
     def test_registration_request_rejects_non_string_scope(self):
         application = self.create_oauth_app()
         self._allow_registration_request_client(application)
@@ -628,7 +612,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         webhook = self._subscribe_webhook()
 
         with patch("metabrainz.webhooks.tasks.publish_new_webhook_delivery"):
-            response = self._create_registration_request(application, email_confirmed=True)
+            response = self._create_registration_request(application)
 
         self.assertEqual(response.status_code, 201)
         user = User.get(name="seeded-user")
@@ -645,17 +629,6 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
             "new": {"email": "seeded.user@example.com"},
             "updated_at": user.email_confirmed_at.isoformat(),
         })
-
-    def test_registration_request_defers_user_updated_for_unconfirmed_email(self):
-        application = self.create_oauth_app()
-        self._allow_registration_request_client(application)
-        webhook = self._subscribe_webhook()
-
-        with patch("metabrainz.webhooks.tasks.publish_new_webhook_delivery"):
-            response = self._create_registration_request(application)
-
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(self._delivered_event_types(webhook), [EVENT_USER_CREATED])
 
     def test_registration_request_rejects_openid_scope(self):
         application = self.create_oauth_app()
@@ -680,7 +653,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         self.user2.email = "Seeded.User@example.com"
         db.session.commit()
 
-        response = self._create_registration_request(application, email_confirmed=True)
+        response = self._create_registration_request(application)
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json["error"], "invalid_request")
@@ -852,7 +825,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
                 side_effect=RuntimeError("SMTP unavailable"),
             ),
         ):
-            response = self._create_registration_request(application, email_confirmed=True)
+            response = self._create_registration_request(application)
 
         # emit_event commits internally, so premature events can survive a failed request.
         self.assertEqual(response.status_code, 500)
@@ -865,7 +838,7 @@ class OAuthRegistrationRequestTestCase(OAuthTestCase):
         webhook = self._subscribe_webhook()
 
         with patch("metabrainz.webhooks.tasks.publish_new_webhook_delivery"):
-            response = self._create_registration_request(application, email_confirmed=True)
+            response = self._create_registration_request(application)
 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(

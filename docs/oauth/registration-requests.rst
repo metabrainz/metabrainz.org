@@ -4,15 +4,16 @@ Client-initiated account registration
 =====================================
 
 Trusted clients can provision MetaBrainz accounts from their backend. The
-client supplies a username, email address, and optionally its trusted email
-confirmation status and OAuth scopes. MetaBrainz creates an account without a
-password and sends a welcome email containing the OAuth client's name,
+client supplies a username, email address, and optional OAuth scopes. Emails
+provided by these trusted clients are always treated as verified immediately.
+MetaBrainz creates an account without a password and sends a welcome email
+containing the OAuth client's name,
 description, the exact scopes granted (or that none were granted), and a link
 for the user to choose a password. The welcome email is always sent, since it
 carries the link with which the user can set a password; if it cannot be
-delivered, the account is not created and the request fails. The link verifies
-an unconfirmed email address and expires after seven days. When scopes are
-requested, the response includes access and refresh tokens for the new user.
+delivered, the account is not created and the request fails. The password-setup
+link expires after seven days. When scopes are requested, the response includes
+access and refresh tokens for the new user.
 
 Every account created this way is recorded against the client that created it,
 so the origin of the account outlives the tokens issued alongside it.
@@ -48,9 +49,6 @@ browser or mobile application.
       account, whether confirmed or pending and matched case insensitively, and
       must not be from a blocked domain. Use the ``POST /check-email`` endpoint
       described in `Check availability`_ to check it before provisioning.
-   :json boolean email_confirmed: Optional. Set to ``true`` if your trusted
-      backend has already confirmed that the email belongs to the user.
-      Defaults to ``false``.
    :json string scope: Optional. A space-separated list of OAuth scopes to
       grant to the requesting client for the newly created user. Unknown scopes
       are rejected, and so is ``openid``: this endpoint issues the token
@@ -71,7 +69,7 @@ Example:
    curl -X POST https://metabrainz.org/oauth2/registration-requests \
      -u "YOUR_CLIENT_ID:YOUR_CLIENT_SECRET" \
      -H "Content-Type: application/json" \
-     -d '{"username": "alice", "email": "alice@example.com", "email_confirmed": true, "scope": "profile email"}'
+     -d '{"username": "alice", "email": "alice@example.com", "scope": "profile email"}'
 
 Successful response:
 
@@ -81,7 +79,6 @@ Successful response:
      "user_id": 123,
      "username": "alice",
      "email": "alice@example.com",
-     "email_confirmed": true,
      "token_type": "Bearer",
      "access_token": "ACCESS_TOKEN",
      "expires_in": 3600,
@@ -114,8 +111,7 @@ Common errors:
      - Malformed request or username/email in use. This can be one of:
        the body is not a JSON object, a required field is missing,
        ``username``, ``email``, or ``scope`` has the wrong type,
-       ``email_confirmed`` is not a boolean, or the username or email cannot be
-       used.
+       or the username or email cannot be used.
    * - ``400``
      - ``invalid_scope``
      - A requested scope is unknown, is empty, is ``openid``, or is restricted
