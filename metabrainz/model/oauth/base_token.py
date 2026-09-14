@@ -57,14 +57,54 @@ class OAuth2BaseToken(TokenMixin):
         return self.revoked
 
 
-def save_token(token_data, request: FlaskOAuth2Request):
+def create_tokens(
+    client_id,
+    user_id,
+    token_data,
+    access_token_scopes,
+    refresh_token=None,
+    refresh_token_scopes=(),
+    authorization_code_id=None,
+    provisioned=False,
+):
+    """Add the token rows for a newly issued token to the session, without committing.
+
+    Every token the provider hands out is written here, so a new field on either row
+    reaches all of them at once.
+    """
     from metabrainz.model.oauth.access_token import OAuth2AccessToken
     from metabrainz.model.oauth.refresh_token import OAuth2RefreshToken
 
+    db.session.add(OAuth2AccessToken(
+        client_id=client_id,
+        user_id=user_id,
+        access_token=token_data["access_token"],
+        expires_in=token_data["expires_in"],
+        scopes=access_token_scopes,
+        authorization_code_id=authorization_code_id,
+        provisioned=provisioned,
+    ))
+
+    if refresh_token is not None:
+        # refresh tokens are long lived compared to access tokens, the expiry is renewed
+        # every time the refresh token is used to obtain a new access token.
+        db.session.add(OAuth2RefreshToken(
+            client_id=client_id,
+            user_id=user_id,
+            refresh_token=refresh_token,
+            expires_in=current_app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"],
+            scopes=refresh_token_scopes,
+            authorization_code_id=authorization_code_id,
+            provisioned=provisioned,
+        ))
+
+
+def save_token(token_data, request: FlaskOAuth2Request):
     refresh_token = None
     access_token_scopes = []
     refresh_token_scopes = []
     authorization_code_id = None
+    provisioned = False
     
     data = request.payload.data
 
@@ -90,6 +130,7 @@ def save_token(token_data, request: FlaskOAuth2Request):
 
         refresh_token = token_data.get("refresh_token") or request.refresh_token.refresh_token
         refresh_token_scopes = request.refresh_token.scopes
+        provisioned = request.refresh_token.provisioned
     elif data.get("grant_type") == "client_credentials":
         access_token_scopes = get_scopes(db.session, data.get("scope"))
 
@@ -98,27 +139,14 @@ def save_token(token_data, request: FlaskOAuth2Request):
     else:
         user_id = request.user.id
 
-    access_token = OAuth2AccessToken(
+    create_tokens(
         client_id=request.client.id,
         user_id=user_id,
-        access_token=token_data["access_token"],
-        expires_in=token_data["expires_in"],
-        scopes=access_token_scopes,
-        authorization_code_id=authorization_code_id
+        token_data=token_data,
+        access_token_scopes=access_token_scopes,
+        refresh_token=refresh_token,
+        refresh_token_scopes=refresh_token_scopes,
+        authorization_code_id=authorization_code_id,
+        provisioned=provisioned,
     )
-    db.session.add(access_token)
-
-    if refresh_token is not None:
-        # refresh tokens are long lived compared to access tokens, the expiry is renewed
-        # every time the refresh token is used to obtain a new access token.
-        refresh_token = OAuth2RefreshToken(
-            client_id=request.client.id,
-            user_id=user_id,
-            refresh_token=refresh_token,
-            expires_in=current_app.config["OAUTH2_REFRESH_TOKEN_EXPIRES_IN"],
-            scopes=refresh_token_scopes,
-            authorization_code_id=authorization_code_id
-        )
-        db.session.add(refresh_token)
-
     db.session.commit()

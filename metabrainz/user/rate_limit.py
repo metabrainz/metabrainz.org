@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta, timezone
+
 from brainzutils import cache
 from flask import current_app, request
 
@@ -43,3 +45,33 @@ def check_signup_rate_limit(form) -> bool:
         return True
 
     return False
+
+
+# A separate key format keeps these raw Redis counters apart from the old
+# msgpack-encoded cache values. Each allowance resets at midnight UTC.
+REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX = "registration_request_client_daily:"
+
+
+def _registration_request_window(client_id):
+    now = datetime.now(timezone.utc)
+    key = f"{REGISTRATION_REQUEST_RATE_LIMIT_KEY_PREFIX}{client_id}:{now.date().isoformat()}"
+    expires_at = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
+    return key, int(expires_at.timestamp())
+
+
+def check_registration_request_rate_limit(client_id: int) -> bool:
+    """Reject new requests after the client reaches its daily allowance."""
+    limit = current_app.config.get("REGISTRATION_REQUEST_RATE_LIMIT_PER_CLIENT", 100)
+    key, _ = _registration_request_window(client_id)
+    return int(cache.get(key, decode=False) or 0) >= limit
+
+
+def increment_registration_request_count(client_id: int) -> None:
+    """Count a completed provisioning without losing concurrent increments.
+
+    In-flight requests can take the client over its allowance; subsequent
+    requests will be rejected by the limit check.
+    """
+    key, expires_at = _registration_request_window(client_id)
+    cache.increment(key)
+    cache.expireat(key, expires_at)

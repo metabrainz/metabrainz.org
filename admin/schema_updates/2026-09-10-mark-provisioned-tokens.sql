@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE oauth.access_token ADD COLUMN provisioned BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE oauth.refresh_token ADD COLUMN provisioned BOOLEAN NOT NULL DEFAULT FALSE;
+
+COMMIT;

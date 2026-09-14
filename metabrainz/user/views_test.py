@@ -140,11 +140,11 @@ class UsersViewsTestCase(FlaskTestCase):
         self.assertIsNotNone(user)
         self.assertEqual(user.unconfirmed_email, "test@example.com")
 
-    def test_user_signup_regular_flow_is_not_registration_request_signup(self):
-        self.client.get("/signup")
+    def test_user_signup_ignores_removed_registration_request_parameter(self):
+        self.client.get("/signup?registration_request=obsolete-request")
         props = json.loads(self.get_context_variable("props"))
-        self.assertFalse(props["is_registration_request_signup"])
-        self.assertIsNone(props["registration_request_client_name"])
+        self.assertFalse(props["initial_form_data"]["username"])
+        self.assertFalse(props["initial_form_data"]["email"])
 
     def test_privacy_summary(self):
         response = self.client.get(url_for("users.privacy_summary"))
@@ -631,6 +631,22 @@ class UsersViewsTestCase(FlaskTestCase):
         props = json.loads(self.get_context_variable("props"))
         self.assertEqual(props["initial_errors"], {"email": "Another user with email 'test@example.com' exists."})
 
+    def test_user_exists_email_in_another_case(self):
+        self.create_user()
+
+        self._test_user_signup_helper({
+            "username": "test_user_2",
+            "email": "Test@Example.com",
+            "password": "<PASSWORD>",
+            "confirm_password": "<PASSWORD>",
+        }, 200)
+        props = json.loads(self.get_context_variable("props"))
+        self.assertEqual(
+            props["initial_errors"],
+            {"email": "Another user with email 'test@example.com' exists."},
+        )
+        self.assertIsNone(User.get(name="test_user_2"))
+
     def test_multiple_users_verify_same_email_fails(self):
         """ Ideally, it shouldn't be possible to create two users with the same unconfirmed email but assuming
             it happens due to some race condition etc. handle the case.
@@ -661,7 +677,7 @@ class UsersViewsTestCase(FlaskTestCase):
         user2 = User.get(name="test_user_2")
         self.assertIsNone(user2.email)
         self.assertEqual(user2.unconfirmed_email, "test@example.com")
-        self.assertMessageFlashed("The email is already associated with an another account.", "error")
+        self.assertMessageFlashed("The email is already associated with another account.", "error")
 
     def test_resend_verification_email(self):
         self.create_user()

@@ -124,11 +124,21 @@ class OAuth2Client(db.Model, ClientMixin):
         return True
 
     def check_already_approved(self, user_id, requested_scopes):
-        """ Check if the user has previously approved all the scopes for a given client """
+        """ Check if the user has previously approved all the scopes for a given client
+
+        Only a token the user themselves consented to counts. A token minted by the
+        client provisioning the account was never shown to them, so treating it as
+        approval would let a client skip the consent screen it never displayed.
+        """
         from metabrainz.model.oauth.access_token import OAuth2AccessToken
 
         requested_scopes = {s.name for s in requested_scopes}
-        tokens = db.session.query(OAuth2AccessToken).filter_by(client_id=self.id, user_id=user_id, revoked=False).all()
+        tokens = (
+            db.session
+            .query(OAuth2AccessToken)
+            .filter_by(client_id=self.id, user_id=user_id, revoked=False, provisioned=False)
+            .all()
+        )
         for token in tokens:
             existing_scopes = {s.name for s in token.scopes}
             if existing_scopes.issuperset(requested_scopes):

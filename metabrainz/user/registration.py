@@ -1,9 +1,5 @@
-import hashlib
-
 from email_validator import EmailNotValidError, validate_email
-from sqlalchemy import text
 
-from metabrainz.model import db
 from metabrainz.model.domain_blacklist import DomainBlacklist
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.user import User
@@ -44,6 +40,6 @@ def validate_registration_email(email: str | None) -> tuple[str, str | None]:
         return email, "invalid_email"
     if DomainBlacklist.is_email_blacklisted(email):
         return email, "domain_blacklisted"
-    if User.get(email=email) is not None:
+    if User.email_in_use(email):
         return email, "email_taken"
     return email, None
