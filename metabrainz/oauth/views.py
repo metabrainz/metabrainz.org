@@ -115,20 +115,6 @@ REGISTRATION_REQUEST_EMAIL_ERRORS = {
 }
 
 
-def _registration_request_email_confirmed(data):
-    if "email_confirmed" not in data:
-        return False, None
-
-    value = data.get("email_confirmed")
-    if isinstance(value, bool):
-        return value, None
-
-    return None, _oauth_error(
-        "invalid_request",
-        "Invalid 'email_confirmed' in request; expected a boolean.",
-    )
-
-
 def _registration_request_scope(data, client):
     if "scope" not in data:
         return None, None
@@ -190,14 +176,9 @@ def _registration_request_user_details(data):
     if email_error:
         return None, _oauth_error("invalid_request", REGISTRATION_REQUEST_EMAIL_ERRORS[email_error])
 
-    email_confirmed, error = _registration_request_email_confirmed(data)
-    if error is not None:
-        return None, error
-
     return {
         "username": username,
         "email": email,
-        "email_confirmed": email_confirmed,
     }, None
 
 
@@ -269,7 +250,6 @@ def create_oauth_registration_request():
 
     token = None
     scopes = []
-    confirmed_at = None
     try:
         if User.email_in_use(user_details["email"]):
             db.session.rollback()
@@ -280,12 +260,11 @@ def create_oauth_registration_request():
             unconfirmed_email=user_details["email"],
             password=None,
         )
-        if user_details["email_confirmed"]:
-            confirmed_at = datetime.now(timezone.utc)
-            user.email = user.unconfirmed_email
-            user.unconfirmed_email = None
-            user.email_confirmed_at = confirmed_at
-            user.last_updated = confirmed_at
+        confirmed_at = datetime.now(timezone.utc)
+        user.email = user.unconfirmed_email
+        user.unconfirmed_email = None
+        user.email_confirmed_at = confirmed_at
+        user.last_updated = confirmed_at
 
         db.session.flush()
 
@@ -365,17 +344,15 @@ def create_oauth_registration_request():
         "user_id": user.id,
         "username": user.name,
         "email": user.get_email_any(),
-        "email_confirmed": user.is_email_confirmed(),
     }
 
     user.emit_event(EVENT_USER_CREATED)
-    if confirmed_at is not None:
-        user.emit_event(
-            EVENT_USER_UPDATED,
-            old={"email": None},
-            new={"email": user.email},
-            updated_at=confirmed_at.isoformat(),
-        )
+    user.emit_event(
+        EVENT_USER_UPDATED,
+        old={"email": None},
+        new={"email": user.email},
+        updated_at=confirmed_at.isoformat(),
+    )
 
     if token is not None:
         response.update(token)

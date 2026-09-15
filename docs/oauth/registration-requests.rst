@@ -4,15 +4,16 @@ Client-initiated account registration
 =====================================
 
 Trusted clients can provision MetaBrainz accounts from their backend. The
-client supplies a username, email address, and optionally its trusted email
-confirmation status and OAuth scopes. MetaBrainz creates an account without a
-password and sends a welcome email containing the OAuth client's name,
+client supplies a username, email address, and optional OAuth scopes. Emails
+provided by these trusted clients are always treated as verified immediately.
+MetaBrainz creates an account without a password and sends a welcome email
+containing the OAuth client's name,
 description, the exact scopes granted (or that none were granted), and a link
 for the user to choose a password. The welcome email is always sent, since it
 carries the link with which the user can set a password; if it cannot be
-delivered, the account is not created and the request fails. The link verifies
-an unconfirmed email address and expires after seven days. When scopes are
-requested, the response includes access and refresh tokens for the new user.
+delivered, the account is not created and the request fails. The password-setup
+link expires after seven days. When scopes are requested, the response includes
+access and refresh tokens for the new user.
 
 Every account created this way is recorded against the client that created it,
 so the origin of the account outlives the tokens issued alongside it.
@@ -48,9 +49,6 @@ browser or mobile application.
       account, whether confirmed or pending and matched case insensitively, and
       must not be from a blocked domain. Use the ``POST /check-email`` endpoint
       described in `Check availability`_ to check it before provisioning.
-   :json boolean email_confirmed: Optional. Set to ``true`` if your trusted
-      backend has already confirmed that the email belongs to the user.
-      Defaults to ``false``.
    :json string scope: Optional. A space-separated list of OAuth scopes to
       grant to the requesting client for the newly created user. Unknown scopes
       are rejected, and so is ``openid``: this endpoint issues the token
@@ -71,7 +69,7 @@ Example:
    curl -X POST https://metabrainz.org/oauth2/registration-requests \
      -u "YOUR_CLIENT_ID:YOUR_CLIENT_SECRET" \
      -H "Content-Type: application/json" \
-     -d '{"username": "alice", "email": "alice@example.com", "email_confirmed": true, "scope": "profile email"}'
+     -d '{"username": "alice", "email": "alice@example.com", "scope": "profile email"}'
 
 Successful response:
 
@@ -81,7 +79,6 @@ Successful response:
      "user_id": 123,
      "username": "alice",
      "email": "alice@example.com",
-     "email_confirmed": true,
      "token_type": "Bearer",
      "access_token": "ACCESS_TOKEN",
      "expires_in": 3600,
@@ -114,8 +111,7 @@ Common errors:
      - Malformed request or username/email in use. This can be one of:
        the body is not a JSON object, a required field is missing,
        ``username``, ``email``, or ``scope`` has the wrong type,
-       ``email_confirmed`` is not a boolean, or the username or email cannot be
-       used.
+       or the username or email cannot be used.
    * - ``400``
      - ``invalid_scope``
      - A requested scope is unknown, is empty, is ``openid``, or is restricted
@@ -134,18 +130,41 @@ Common errors:
 Check availability
 ------------------
 
-There is no separate public endpoint to check username availability. Submit the
-requested username to ``POST /oauth2/registration-requests`` and handle its
-``400 invalid_request`` response if the name is already taken or cannot be used.
-A successful request creates the account; this is not a validation-only call.
+These public endpoints share an allowance of 30 requests per minute per IP.
+Optionally send ``Authorization: Bearer ACCESS_TOKEN`` with a valid OAuth access
+token to use a higher allowance of 300 requests per minute per OAuth client,
+shared across its tokens and both endpoints. No specific scope is required;
+client-credentials tokens are also accepted. Exceeding it returns ``429`` with
+``{"error": "rate_limit_exceeded"}`` and a ``Retry-After`` header in seconds.
+An invalid, expired, or revoked bearer token returns ``401 invalid_token``.
 
-To check an email before provisioning, use the following public endpoint. It
-does not require OAuth client authentication.
+.. http:post:: /check-username
+
+   :json string username: **Required.** The username to check.
+   :reqheader Content-Type: **Required.** ``application/json``.
+   :reqheader Authorization: Optional OAuth bearer token.
+
+Example:
+
+.. code-block:: bash
+
+   curl -X POST https://metabrainz.org/check-username \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer ACCESS_TOKEN" \
+     -d '{"username": "alice"}'
+
+A ``200 OK`` response contains ``{"valid": true, "reason": null}`` if the
+username is available. Otherwise, ``valid`` is ``false`` and ``reason`` is
+``username_taken`` or ``username_not_allowed`` (a retired username). Checks use
+the same trimming, character validation, and case-insensitive matching as
+registration. Missing or malformed usernames return ``400`` with an ``error``
+message.
 
 .. http:post:: /check-email
 
    :json string email: **Required.** The email address to check.
    :reqheader Content-Type: **Required.** ``application/json``.
+   :reqheader Authorization: Optional OAuth bearer token.
 
 Example:
 
@@ -161,8 +180,8 @@ address is available. Otherwise, ``valid`` is ``false`` and ``reason`` is
 ``domain_blacklisted``. Missing or malformed addresses return ``400`` with an
 ``error`` message.
 
-This check does not reserve the address. Always handle a conflicting email in
-the provisioning response even if the earlier check succeeded.
+These checks do not reserve the username or address. Always handle conflicts
+in the provisioning response even if the earlier checks succeeded.
 
 After account setup
 -------------------
