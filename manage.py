@@ -13,6 +13,7 @@ from metabrainz import create_app
 from metabrainz.model.access_log import AccessLog
 from metabrainz.invoices.send_invoices import QuickBooksInvoiceSender
 from metabrainz.webhooks.cli import webhooks
+from metabrainz.crm.cli import crm_sync
 
 from metabrainz.supporter.copy_mb_row_ids import copy_row_ids
 from metabrainz.user.migrate_mb_users import (
@@ -28,6 +29,7 @@ cli = click.Group()
 application = create_app()
 
 cli.add_command(webhooks)
+cli.add_command(crm_sync)
 
 
 def _configure_cli_logging(app, level=logging.INFO):

@@ -108,7 +108,10 @@ def create_app(debug=None, config_path=None, service=SERVICE_ALL):
         print("Unable to retrieve git commit. Use docker/push.sh to push images for production.")
 
     print('Configuration values are as follows: ')
-    print(pprint.pformat(app.config, indent=4))
+    logged_config = dict(app.config)
+    if "CRM_API_KEY" in logged_config:
+        logged_config["CRM_API_KEY"] = "[redacted]"
+    print(pprint.pformat(logged_config, indent=4))
 
     sentry_config = app.config.get('LOG_SENTRY')
     if sentry_config:

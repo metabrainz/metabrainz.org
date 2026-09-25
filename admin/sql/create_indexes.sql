@@ -1,5 +1,7 @@
 BEGIN;
 
+CREATE INDEX crm_sync_pending_idx ON crm_sync (next_attempt_at) WHERE pending;
+
 CREATE INDEX payment_supporter_id_idx ON payment (supporter_id);
 
 CREATE UNIQUE INDEX user_login_id_idx ON "user" (login_id);

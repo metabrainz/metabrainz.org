@@ -20,8 +20,15 @@ from metabrainz.model.webhook import EVENT_USER_CREATED
 from metabrainz.supporter.forms import CommercialSignUpForm, NonCommercialSignUpForm, CommercialUpgradeForm, NonCommercialUpgradeForm
 from metabrainz.user.email import send_verification_email
 from metabrainz.user.rate_limit import check_signup_rate_limit, increment_signup_count
+from metabrainz.crm.tasks import prepare_signup_sync, publish_signup_sync
 
 supporters_bp = Blueprint('supporters', __name__)
+
+
+def _commit_supporter_signup(supporter):
+    prepare_signup_sync(supporter)
+    db.session.commit()
+    publish_signup_sync(supporter.id)
 
 
 def _notify_signup(supporter):
@@ -126,7 +133,7 @@ def _create_commercial_supporter(form, tier_id, user):
 
 def _create_noncommercial_supporter(form, user):
     """Create a non-commercial supporter record."""
-    Supporter.add(
+    return Supporter.add(
         is_commercial=False,
         contact_name=form.contact_name.data,
         data_usage_desc=form.usage_desc.data,
@@ -197,7 +204,7 @@ def signup_commercial():
         if existing_user:
             # Existing user becoming a supporter
             supporter = _create_commercial_supporter(form, tier_id, current_user)
-            db.session.commit()
+            _commit_supporter_signup(supporter)
             _notify_signup(supporter)
 
             flash.success(gettext(
@@ -219,7 +226,7 @@ def signup_commercial():
 
             user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
             supporter = _create_commercial_supporter(form, tier_id, user)
-            db.session.commit()
+            _commit_supporter_signup(supporter)
             _notify_signup(supporter)
             increment_signup_count()
 
@@ -282,8 +289,8 @@ def signup_noncommercial():
     if form.validate_on_submit():
         if existing_user:
             # Existing user becoming a supporter
-            _create_noncommercial_supporter(form, current_user)
-            db.session.commit()
+            supporter = _create_noncommercial_supporter(form, current_user)
+            _commit_supporter_signup(supporter)
 
             flash.success(gettext("Thanks for becoming a supporter!"))
             return redirect(url_for('index.profile'))
@@ -300,8 +307,8 @@ def signup_noncommercial():
                 }))
 
             user = User.add(name=form.username.data, unconfirmed_email=form.email.data, password=form.password.data)
-            _create_noncommercial_supporter(form, user)
-            db.session.commit()
+            supporter = _create_noncommercial_supporter(form, user)
+            _commit_supporter_signup(supporter)
             increment_signup_count()
 
             user.emit_event(EVENT_USER_CREATED)

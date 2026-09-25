@@ -97,6 +97,17 @@ CREATE TABLE dataset_supporter (
     dataset_id      INTEGER NOT NULL
 );
 
+CREATE TABLE crm_sync (
+    supporter_id INTEGER PRIMARY KEY,
+    pending BOOLEAN NOT NULL DEFAULT TRUE,
+    next_attempt_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    attempts INTEGER NOT NULL DEFAULT 0,
+    last_error TEXT,
+    synced_at TIMESTAMPTZ,
+    person_id UUID,
+    company_id UUID
+);
+
 CREATE TABLE token (
   value     CHARACTER VARYING NOT NULL, -- PK
   is_active BOOLEAN           NOT NULL,

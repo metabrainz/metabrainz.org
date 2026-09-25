@@ -1,5 +1,8 @@
 BEGIN;
 
+ALTER TABLE crm_sync ADD CONSTRAINT crm_sync_supporter_id_fkey
+  FOREIGN KEY (supporter_id) REFERENCES supporter (id) ON DELETE CASCADE;
+
 ALTER TABLE token
   ADD CONSTRAINT token_owner_id_fkey FOREIGN KEY (owner_id)
   REFERENCES supporter (id) MATCH SIMPLE

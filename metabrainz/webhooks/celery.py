@@ -28,6 +28,8 @@ def init_celery(app: Flask) -> Celery:
 
     celery.conf.update(
         task_routes={
+            "metabrainz.crm.tasks.sync_supporter_to_crm": {"queue": "crm"},
+            "metabrainz.crm.tasks.requeue_pending_supporters": {"queue": "webhooks_maintenance"},
             "metabrainz.webhooks.tasks.deliver_webhook": {"queue": "webhooks"},
             "metabrainz.webhooks.tasks.retry_failed_webhooks": {"queue": "webhooks_maintenance"},
             "metabrainz.oauth.tasks.cleanup_old_tokens": {"queue": "webhooks_maintenance"},
@@ -62,6 +64,11 @@ def init_celery(app: Flask) -> Celery:
     )
 
     celery.conf.beat_schedule.update({
+        "crm-requeue-pending-supporters": {
+            "task": "metabrainz.crm.tasks.requeue_pending_supporters",
+            "schedule": 300.0,
+            "options": {"queue": "webhooks_maintenance", "expires": 240.0},
+        },
         "webhook-retry-failed": {
             "task": "metabrainz.webhooks.tasks.retry_failed_webhooks",
             "schedule": 300.0,

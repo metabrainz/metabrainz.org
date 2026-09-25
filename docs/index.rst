@@ -39,3 +39,4 @@ Contents
    :caption: Developer Documentation
 
    developers/devel-env
+   developers/crm-sync

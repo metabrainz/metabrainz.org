@@ -8,3 +8,4 @@ celery = app.extensions["celery"]
 # This must happen after celery app is created
 import metabrainz.webhooks.tasks  # noqa: F401, E402
 import metabrainz.oauth.tasks  # noqa: F401, E402
+import metabrainz.crm.tasks  # noqa: F401, E402
