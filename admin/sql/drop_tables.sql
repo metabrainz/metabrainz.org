@@ -1,5 +1,7 @@
 BEGIN;
 
+DROP TABLE IF EXISTS crm_sync;
+
 DROP TABLE IF EXISTS "user"             CASCADE;
 DROP TABLE IF EXISTS old_username       CASCADE;
 DROP TABLE IF EXISTS payment            CASCADE;

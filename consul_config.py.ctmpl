@@ -163,6 +163,13 @@ OIDC_JWT_PUBLIC_KEY = {{template "KEY" "oidc/jwt_public_key"}}
 
 STATIC_RESOURCES_DIR = '/static'
 
+# Disabled unless explicitly configured; create the CRM schema before enabling.
+CRM_ENABLED = {{template "KEY_OR_NONE" "crm/enabled"}}
+CRM_URL = '''{{keyOrDefault (printf "docker-server-configs/MeB/config.%s.json/crm/url" (env "DEPLOY_ENV")) ""}}'''
+CRM_API_KEY = '''{{keyOrDefault (printf "docker-server-configs/MeB/config.%s.json/crm/api_key" (env "DEPLOY_ENV")) ""}}'''
+CRM_SOURCE = '''{{keyOrDefault (printf "docker-server-configs/MeB/config.%s.json/crm/source" (env "DEPLOY_ENV")) "metabrainz.org"}}'''
+CRM_HTTP_TIMEOUT = 10
+
 WEBHOOK_MAX_RETRIES = {{template "KEY" "webhook/max_retries"}}
 WEBHOOK_DELIVERY_TIMEOUT = {{template "KEY" "webhook/delivery_timeout"}}
 WEBHOOK_TASK_TIME_LIMIT = {{template "KEY" "webhook/task_time_limit"}}

@@ -25,6 +25,12 @@ then
     rm -f /etc/service/webhook-worker/down
 fi
 
+if [ "${CONTAINER_NAME}" = "metabrainz-crm-worker-${DEPLOY_ENV}" ]
+then
+    log Enabling crm-worker
+    rm -f /etc/service/crm-worker/down
+fi
+
 if [ "${CONTAINER_NAME}" = "metabrainz-webhook-maintenance-${DEPLOY_ENV}" ]
 then
     log Enabling webhook-maintenance

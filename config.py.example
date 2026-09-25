@@ -165,6 +165,13 @@ OIDC_JWT_PUBLIC_KEY = {
 STATIC_RESOURCES_DIR = path.join(path.dirname(__file__), 'frontend')
 
 # Webhooks
+# Twenty supporter synchronization (see docs/developers/crm-sync.rst).
+CRM_ENABLED = False
+CRM_URL = 'https://crm.metabrainz.org'
+CRM_API_KEY = ''
+CRM_SOURCE = 'metabrainz.org'  # Stable namespace; use a different value in staging.
+CRM_HTTP_TIMEOUT = 10
+
 WEBHOOK_MAX_RETRIES = 5  # Maximum number of retry attempts for failed webhook deliveries
 WEBHOOK_DELIVERY_TIMEOUT = 30  # Timeout in seconds for webhook delivery attempts
 WEBHOOK_TASK_TIME_LIMIT = 120  # Hard timeout for Celery tasks (seconds)

@@ -67,6 +67,20 @@ services:
       - ../frontend:/code/frontend:z
       - ../metabrainz/translations:/code/metabrainz/translations:z
 
+  crm-worker:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: metabrainz-dev
+    command: celery -A celery_worker:celery worker --loglevel=info --concurrency=1 --queues=crm --hostname=crm-worker@%h
+    depends_on:
+      - redis
+      - meb_db
+    volumes:
+      - ..:/code/metabrainz
+    profiles:
+      - crm
+
   webhook-worker:
     build:
       context: ..
@@ -94,6 +108,7 @@ services:
       - ..:/code/metabrainz
     profiles:
       - webhooks
+      - crm
 
   webhook-beat:
     build:
@@ -108,6 +123,7 @@ services:
       - ..:/code/metabrainz
     profiles:
       - webhooks
+      - crm
 
   webhook-flower:
     build:

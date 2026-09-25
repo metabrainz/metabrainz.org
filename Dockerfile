@@ -116,6 +116,11 @@ COPY ./docker/webhook-worker/webhook-worker.service /etc/service/webhook-worker/
 RUN chmod 755 /etc/service/webhook-worker/run
 RUN touch /etc/service/webhook-worker/down
 
+COPY ./docker/crm-worker/consul-template-crm-worker.conf /etc/
+COPY ./docker/crm-worker/crm-worker.service /etc/service/crm-worker/run
+RUN chmod 755 /etc/service/crm-worker/run
+RUN touch /etc/service/crm-worker/down
+
 COPY ./docker/webhook-maintenance/consul-template-webhook-maintenance.conf /etc/
 COPY ./docker/webhook-maintenance/webhook-maintenance.service /etc/service/webhook-maintenance/run
 RUN chmod 755 /etc/service/webhook-maintenance/run
