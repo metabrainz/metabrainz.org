@@ -264,7 +264,7 @@ export function AuthCardCheckboxInput({
   const [field, meta] = useField(props);
   const hasError = meta.touched && meta.error;
   return (
-    <div className={`form-group ${hasError ? "has-error" : ""}`}>
+    <div className={`form-group checkbox ${hasError ? "has-error" : ""}`}>
       <label className="control-label" htmlFor={props.id}>
         <input {...props} {...field} />
         {label}
