@@ -79,7 +79,7 @@ function SignupUser({
             })}
             onSubmit={() => {}}
           >
-            {({ errors, isValid }) => (
+            {({ errors, isValid, values }) => (
               <form method="POST">
                 <FormLevelAlert errors={initial_errors} />
                 <div className="form-group">
@@ -109,6 +109,12 @@ function SignupUser({
                   id="username"
                   required
                 />
+                {Boolean(values.username) &&
+                  Yup.string().email().isValidSync(values.username) && (
+                    <div className="alert alert-warning">
+                      {t("This looks like an email address. Are you sure you want that as your *public* username?")}
+                    </div>
+                  )}
 
                 <AuthCardTextInput
                   label={
