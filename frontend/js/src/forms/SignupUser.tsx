@@ -22,6 +22,10 @@ type SignupUserProps = {
   initial_errors: any;
 };
 
+function looksLikeEmail(value: string | undefined): boolean {
+  return Boolean(value) && Yup.string().email().isValidSync(value);
+}
+
 function SignupUser({
   csrf_token,
   mtcaptcha_site_key,
@@ -47,6 +51,7 @@ function SignupUser({
               email: initial_form_data.email ?? "",
               password: initial_form_data.password ?? "",
               confirm_password: initial_form_data.confirm_password ?? "",
+              confirm_email_username: false,
               agreement: initial_form_data.agreement ?? false,
               mtcaptcha: "",
               csrf_token,
@@ -54,7 +59,18 @@ function SignupUser({
             initialErrors={initial_errors}
             initialTouched={initial_errors}
             validationSchema={Yup.object({
-              username: Yup.string().required(t("Username is required!")),
+              username: Yup.string()
+                .required(t("Username is required!"))
+                .test(
+                  "email-username-confirmed",
+                  t(
+                    "Confirm that you want to use an email as your public username."
+                  ),
+                  (value, context) =>
+                    !looksLikeEmail(value) ||
+                    context.parent.confirm_email_username
+                ),
+              confirm_email_username: Yup.boolean(),
               email: Yup.string()
                 .email(t("Invalid email address."))
                 .required(t("Email address is required!")),
@@ -79,7 +95,7 @@ function SignupUser({
             })}
             onSubmit={() => {}}
           >
-            {({ errors, isValid }) => (
+            {({ errors, isValid, values }) => (
               <form method="POST">
                 <FormLevelAlert errors={initial_errors} />
                 <div className="form-group">
@@ -109,6 +125,21 @@ function SignupUser({
                   id="username"
                   required
                 />
+                {looksLikeEmail(values.username) && (
+                  <div className="alert alert-warning">
+                    <p>
+                      {t(
+                        "This username looks like an email address. Did you mean to use it as your public username?"
+                      )}
+                    </p>
+                    <AuthCardCheckboxInput
+                      id="confirm_email_username"
+                      name="confirm_email_username"
+                      type="checkbox"
+                      label={t("I want to use this email as my public username")}
+                    />
+                  </div>
+                )}
 
                 <AuthCardTextInput
                   label={
