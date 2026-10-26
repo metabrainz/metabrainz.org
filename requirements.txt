@@ -1,6 +1,6 @@
 Authlib==1.7.2
 celery==5.6.3
-certifi==2026.5.20
+certifi==2026.10.19
 click==8.4.1
 email_validator==2.3.0
 Flask==3.1.3
