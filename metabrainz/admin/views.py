@@ -707,13 +707,14 @@ class StatsView(AdminBaseView):
 class UserModelView(AdminModelView):
     column_list = ('name', 'email', 'member_since', 'is_blocked')
     column_labels = {
+        'id': 'User ID',
         'name': 'Username',
         'email': 'Email',
         'member_since': 'Member Since',
         'is_blocked': 'Status'
     }
     column_searchable_list = ('name', 'email', 'unconfirmed_email')
-    column_filters = ('name', 'email', 'member_since', 'is_blocked',)
+    column_filters = ('name', 'email', 'member_since', 'is_blocked', 'id')
     column_default_sort = ('name', True)
     can_create = False
     can_delete = False
