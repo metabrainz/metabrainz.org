@@ -17,8 +17,11 @@ from quickbooks.objects.detailline import SalesItemLineDetail
 from intuitlib.exceptions import AuthClientError
 from werkzeug.exceptions import InternalServerError
 
-from metabrainz.admin.quickbooks.quickbooks import get_client
+from metabrainz.admin.quickbooks.quickbooks import get_client, create_auth_client, query_all
 from brainzutils import cache
+
+# How far back to load invoices. Must cover the previous invoice of annual and in arrears customers.
+INVOICE_HISTORY_DAYS = 550
 
 class QuickBooksView(BaseView):
 
@@ -116,10 +119,29 @@ class QuickBooksView(BaseView):
                 flash("failed to create invoice for %s (%s -- %s)" % (new_invoice.CustomerRef.name, str(err), err.detail))
 
 
+    @staticmethod
+    def save_tokens(client):
+        '''
+        Store the client's current tokens in the session, since a refresh rotates them.
+        '''
+        session['access_token'] = client.auth_client.access_token
+        session['refresh_token'] = client.auth_client.refresh_token
+
+
+    @staticmethod
+    def clear_tokens(err):
+        flash("Authorization failed, please log in again: %s" % err)
+        current_app.logger.debug("Auth failed, logging out, starting over.")
+        session['realm'] = None
+        session['access_token'] = None
+        session['refresh_token'] = None
+        return redirect(url_for("quickbooks/.index"))
+
+
     @expose('/', methods=['GET'])
     def index(self):
         '''
-        Load all customers and 100 invoices and the correlate them.
+        Load all active customers and recent invoices and then correlate them.
         Customers get put into three bins: Ready to invoice, current (no need for an invoice) and WTF (we couldn't sort what should happen).
         Send all this to the caller to render.
         '''
@@ -135,39 +157,34 @@ class QuickBooksView(BaseView):
             session['refresh_token'] = refresh_token
             return render_template("quickbooks/login.html")
 
+        invoice_history_start = (datetime.date.today() - datetime.timedelta(days=INVOICE_HISTORY_DAYS)).isoformat()
         refreshed = False
         while True:
             # Now fetch customers and invoices
             try:
-                client = get_client(realm, refresh_token)
-                customers = Customer.filter(Active=True, qb=client)
-                invoices = Invoice.query("select * from invoice order by metadata.createtime desc maxresults 300", qb=client)
+                client = get_client(realm, access_token, refresh_token)
+                customers = query_all(Customer, "Active = true", "Id", qb=client)
+                invoices = query_all(Invoice, "TxnDate >= '%s'" % invoice_history_start, "Id", qb=client)
                 break
 
             except AuthClientError as err:
-                session['realm'] = None
-                session['access_token'] = None
-                session['refresh_token'] = None
-                flash("Authorization failed, please try again: %s" % str(err))
-                current_app.logger.debug("Auth failed, logging out, starting over.")
-                session['access_token'] = None
-                return redirect(url_for("quickbooks/.index"))
+                return self.clear_tokens(err)
 
             except quickbooks.exceptions.AuthorizationException as err:
-                if not refreshed:
-                    current_app.logger.debug("Auth failed, trying refresh")
-                    refreshed = True
-                    current_app.quickbooks_auth_client.refresh()
-                    continue
+                if refreshed:
+                    return self.clear_tokens(err)
 
-                flash("Authorization failed, please try again: %s" % err)
-                current_app.logger.debug("Auth failed, logging out, starting over.")
-                session['access_token'] = None
-                return redirect(url_for("quickbooks/.index"))
+                # The access token has likely expired, retry without it so that get_client refreshes it
+                current_app.logger.debug("Auth failed, trying refresh")
+                refreshed = True
+                access_token = None
+                continue
 
             except quickbooks.exceptions.QuickbooksException as err:
                 flash("Query failed loading all customers: %s" % err)
                 raise InternalServerError
+
+        self.save_tokens(client)
 
         # Calculate a pile of dates, based on today date. Figure out
         # which quarter we're in, and the dates of this and 2 prior quarters
@@ -243,16 +260,17 @@ class QuickBooksView(BaseView):
         current = []
         for customer in customers:
             invoices = invoice_dict.get(customer.Id, [])
+            # Don't display customers without any invoices
+            if not invoices:
+                continue
+
             invoices = sorted(invoices, key=lambda invoice: invoice['sortdate'], reverse=True)
 
             # If there are comments in the customer notes field that indicates # arrears or # donotinvoice,
             # or donotsend we use those as hints to properly create new invoices or to ignore customers
             name = customer.DisplayName or customer.CompanyName;
             desc = customer.Notes.lower()
-            try:
-                price = invoices[0]['price']
-            except IndexError:
-                price = 0
+            price = invoices[0]['price']
 
             if desc.find("arrears") >= 0:
                 name += " (arrears)"
@@ -270,11 +288,6 @@ class QuickBooksView(BaseView):
             cust = { 'name' : name, 'invoices' : invoices, 'id' : customer.Id }
             if do_not_invoice:
                 current.append(cust)
-                continue
-
-            # If there are no previous invoices, go WTF!
-            if not invoices:
-                wtf.append(cust)
                 continue
 
             # If this customer should not be invoiced or if the last invoice corresponds to this quarter,
@@ -335,6 +348,9 @@ class QuickBooksView(BaseView):
             # Everyone else, WTF?
             wtf.append(cust)
 
+        for customer_bin in (ready_to_invoice, wtf, current):
+            customer_bin.sort(key=lambda cust: cust['name'].casefold())
+
         cache.set("qb_realm", session['realm'], 3600)
         cache.set("qb_access_token", session['access_token'], 3600)
         cache.set("qb_refresh_token", session['refresh_token'], 3600)
@@ -393,19 +409,12 @@ class QuickBooksView(BaseView):
 
         # Now call create invoices and deal with possible errors
         try:
-            client = get_client(realm, refresh_token)
+            client = get_client(realm, access_token, refresh_token)
             self.create_invoices(client, invoices, latest_invoice)
+            self.save_tokens(client)
 
-        except AuthClientError as err:
-            flash("Authorization failed, please try again: %s" % err)
-            session['access_token'] = None
-            session['realm'] = None
-            return redirect(url_for("quickbooks/.index"))
-        except quickbooks.exceptions.AuthorizationException as err:
-            flash("Authorization failed, please try again: %s" % err)
-            session['access_token'] = None
-            session['realm'] = None
-            return redirect(url_for("quickbooks/.index"))
+        except (AuthClientError, quickbooks.exceptions.AuthorizationException) as err:
+            return self.clear_tokens(err)
 
         except quickbooks.exceptions.QuickbooksException as err:
             flash("Failed to submit some invoices!" % err)
@@ -420,7 +429,7 @@ class QuickBooksView(BaseView):
         '''
         Login to quickbooks, oauth2 callback
         '''
-        return redirect(current_app.quickbooks_auth_client.get_authorization_url([Scopes.ACCOUNTING]))
+        return redirect(create_auth_client().get_authorization_url([Scopes.ACCOUNTING]))
 
 
     @expose('/logout/')
@@ -430,6 +439,7 @@ class QuickBooksView(BaseView):
         '''
 
         session['access_token'] = None
+        session['refresh_token'] = None
         session['realm'] = None
 
         return redirect(url_for("quickbooks/.index"))
@@ -442,11 +452,11 @@ class QuickBooksView(BaseView):
         '''
         code = request.args.get('code')
         realm = request.args.get('realmId')
-        refresh_token = request.args.get('realmId')
 
-        current_app.quickbooks_auth_client.get_bearer_token(code, realm_id=realm)
-        session['access_token'] = current_app.quickbooks_auth_client.access_token
-        session['refresh_token'] = current_app.quickbooks_auth_client.refresh_token
+        auth_client = create_auth_client()
+        auth_client.get_bearer_token(code, realm_id=realm)
+        session['access_token'] = auth_client.access_token
+        session['refresh_token'] = auth_client.refresh_token
         session['realm'] = realm
 
         return redirect(url_for("quickbooks/.index"))

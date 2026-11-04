@@ -89,11 +89,14 @@ class QuickBooksInvoiceSender():
             return None
 
         try:
-            return QuickBooks(
+            client = QuickBooks(
                 auth_client=self.auth_client,
                 refresh_token=refresh_token,
                 company_id=realm
             )
+            # Refreshing may rotate the refresh token, so store the new one for the next run
+            cache.set("qb_refresh_token", self.auth_client.refresh_token, 3600)
+            return client
         except intuitlib.exceptions.AuthClientError as err:
             current_app.logger.warn("Could not log into quickbooks. Re-log in on the web to fix.")
             return None
