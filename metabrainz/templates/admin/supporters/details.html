@@ -135,7 +135,8 @@
         <h3>Data access</h3>
         <p>State decides whether this supporter can reach the MetaBrainz Live Data Feed API.</p>
       </div>
-      <span class="badge {{ 'badge-success' if supporter.state in ['active', 'pre_revenue'] else 'badge-secondary' }}">{{ supporter.state }}</span>
+      {% from 'admin/supporters/_state.html' import state_badge %}
+      {{ state_badge(supporter.state, state_names) }}
     </div>
     <ul class="text-muted">
       <li><code>Active</code> — full access to the API</li>
@@ -145,6 +146,8 @@
       <li><code>Waiting</code> — old supporter in the waiting list</li>
       <li><code>Rejected</code> — refused access to the API</li>
       <li><code>Limited</code> — cannot access the replication API</li>
+      <li><code>Cancelled</code> — used to be a supporter but has cancelled the deal</li>
+      <li><code>Closed</code> — no longer in operation</li>
     </ul>
   </div>
 

@@ -103,6 +103,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
   const contactLink = <a href="/contact" />;
 
   const isPreRevenue = state === "pre_revenue";
+  const isFormerSupporter = state === "closed" || state === "cancelled";
   const hasDataUsePermission =
     isPreRevenue || ((state === "active" || state === "limited") && good_standing);
 
@@ -162,17 +163,14 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         </p>
       </>
     );
-  } else if (state === "closed" || state === "cancelled") {
-    const stateString = state === "closed"
-      ? "Your organization has been marked as no longer active."
-      : "Your agreement with us has been marked as cancelled.";
+  } else if (isFormerSupporter) {
     applicationState = (
       <>
         <p>
           <b>
-            {t(
-              stateString
-            )}
+            {state === "closed"
+              ? t("Your organization has been marked as no longer active.")
+              : t("Your agreement with us has been marked as cancelled.")}
           </b>
         </p>
         <p>
@@ -230,37 +228,17 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     applicationState = <p>{t("Unknown. :(")}</p>;
   }
 
-  let stateClass;
-  if (state === "active") {
-    stateClass = "text-success";
-  } else if (['rejected', 'cancelled', 'closed'].includes(state)) {
-    stateClass = "text-danger";
-  } else if (state === "pending") {
-    stateClass = "text-primary";
-  } else {
-    stateClass = "text-warning";
-  }
-
-  let stateLabel;
-  if (state === "active") {
-    stateLabel = t("Active");
-  } else if (isPreRevenue) {
-    stateLabel = t("Pre-revenue");
-  } else if (state === "rejected") {
-    stateLabel = t("Rejected");
-  } else if (state === "cancelled") {
-    stateLabel = t("Cancelled");
-  } else if (state === "closed") {
-    stateLabel = t("Closed");
-  } else if (state === "pending") {
-    stateLabel = t("Pending");
-  } else if (state === "waiting") {
-    stateLabel = t("Waiting");
-  } else if (state === "limited") {
-    stateLabel = t("Limited");
-  } else {
-    stateLabel = t("Unknown");
-  }
+  const stateDisplay: Record<SupporterState, { label: string; className: string }> = {
+    active: { label: t("Active"), className: "text-success" },
+    pre_revenue: { label: t("Pre-revenue"), className: "text-warning" },
+    pending: { label: t("Pending"), className: "text-primary" },
+    waiting: { label: t("Waiting"), className: "text-warning" },
+    limited: { label: t("Limited"), className: "text-warning" },
+    rejected: { label: t("Rejected"), className: "text-danger" },
+    cancelled: { label: t("Cancelled"), className: "text-danger" },
+    closed: { label: t("Closed"), className: "text-danger" },
+  };
+  const { label: stateLabel, className: stateClass } = stateDisplay[state];
 
   return (
     <>
@@ -376,7 +354,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         </div>
       </div>
 
-      {is_commercial && (
+      {(is_commercial || isFormerSupporter) && (
         <div className="row" style={{ marginBottom: "1.5rem" }}>
           <div className="col-md-12">
             {hasDataUsePermission ? (
