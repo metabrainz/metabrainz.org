@@ -16,7 +16,9 @@ CREATE TYPE state_types AS ENUM (
   'pending',
   'waiting',
   'rejected',
-  'limited'
+  'limited',
+  'cancelled',
+  'closed'
 );
 
 CREATE TYPE token_log_action_types AS ENUM (
