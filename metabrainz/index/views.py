@@ -175,10 +175,8 @@ def profile():
             ],
             "good_standing": supporter.good_standing
         }
-        if supporter.token:
-            user["supporter"]["token"] = supporter.token.value
-        else:
-            user["supporter"]["token"] = None
+        token = supporter.token if supporter.has_api_access else None
+        user["supporter"]["token"] = token.value if token else None
 
         if supporter.is_commercial and supporter.tier:
             user["supporter"]["tier"] = {
