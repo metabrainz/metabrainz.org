@@ -26,7 +26,9 @@ Create custom object ``supporterAccount`` / ``supporterAccounts``:
 * ``contactName``, ``tierId``, ``tierName``, ``dataUsageDescription``: TEXT.
 * ``isCommercial``, ``goodStanding``: BOOLEAN.
 * ``state``: SELECT with values ``ACTIVE``, ``PRE_REVENUE``, ``PENDING``,
-  ``WAITING``, ``REJECTED``, ``LIMITED``.
+  ``WAITING``, ``REJECTED``, ``LIMITED``, ``CANCELLED``, ``CLOSED``. Add any new
+  value here before deploying the code that uses it, or syncs of supporters in
+  that state are rejected and retried.
 * ``amountPledged``: CURRENCY (USD).
 * ``datasets``: TEXT containing a JSON array of dataset IDs and names.
 * ``sourceCreatedAt``, ``lastSyncedAt``: DATE_TIME.

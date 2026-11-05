@@ -1,10 +1,34 @@
+import json
 from urllib.parse import urlparse
 from flask import url_for
 from metabrainz import create_app
+from metabrainz.model import db
+from metabrainz.model.supporter import STATE_ACTIVE, STATE_CANCELLED, STATE_CLOSED, Supporter
+from metabrainz.model.user import User
 from metabrainz.testing import FlaskTestCase
 
 
 class IndexViewsTestCase(FlaskTestCase):
+
+    def test_profile_only_exposes_token_to_active_supporters(self):
+        user = User.add(name="token_owner", unconfirmed_email="owner@example.com", password="password123")
+        supporter = Supporter.add(is_commercial=False, contact_name="Owner", data_usage_desc="Test", user=user)
+        db.session.commit()
+        token = supporter.generate_token()
+        self.temporary_login(user)
+
+        def profile_token():
+            self.assert200(self.client.get(url_for('index.profile')))
+            return json.loads(self.get_context_variable("props"))["user"]["supporter"]["token"]
+
+        self.assertEqual(profile_token(), token)
+        for state in (STATE_CANCELLED, STATE_CLOSED):
+            with self.subTest(state=state):
+                supporter.update(state=state)
+                self.assertIsNone(profile_token())
+
+        supporter.update(state=STATE_ACTIVE)
+        self.assertEqual(profile_token(), token)
 
     def test_homepage(self):
         response = self.client.get(url_for('index.home'))

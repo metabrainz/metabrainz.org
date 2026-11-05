@@ -102,6 +102,11 @@ class Supporter(db.Model):
     def token(self):
         return Token.get(owner_id=self.id, is_active=True)
 
+    @property
+    def has_api_access(self):
+        """Whether this supporter's tokens may be used to access the replication API."""
+        return self.state == STATE_ACTIVE
+
     @classmethod
     def add(cls, **kwargs):
         new_supporter = cls(
@@ -241,6 +246,8 @@ class Supporter(db.Model):
     def get_featured(cls, limit=None, **kwargs):
         """Get list of featured supporters which is randomly sorted.
 
+        Former supporters (cancelled or closed) are never included.
+
         Args:
             limit: Max number of supporters to return.
             in_deadbeat_club: Returns only supporters from deadbeat club if set to True.
@@ -252,6 +259,7 @@ class Supporter(db.Model):
             List of supporters according to filters described above.
         """
         query = cls.query.filter(cls.featured == True)
+        query = query.filter(cls.state.notin_([STATE_CANCELLED, STATE_CLOSED]))
         query = query.filter(cls.in_deadbeat_club == kwargs.pop('in_deadbeat_club', False))
         with_logos = kwargs.pop('with_logos', None)
         if with_logos:
@@ -291,7 +299,7 @@ class Supporter(db.Model):
 
     def generate_token(self):
         """Generates new access token for this supporter."""
-        if self.state == STATE_ACTIVE:
+        if self.has_api_access:
             return Token.generate_token(self.id)
         else:
             raise InactiveSupporterException("Can't generate token for inactive supporter.")

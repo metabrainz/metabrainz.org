@@ -73,9 +73,9 @@ class Token(db.Model):
 
     @classmethod
     def is_valid(cls, token_value):
-        """Checks if token exists and is active."""
+        """Checks if token exists, is active and its owner (if any) still has API access."""
         token = cls.get(value=token_value)
-        return token and token.is_active
+        return token and token.is_active and (token.owner is None or token.owner.has_api_access)
 
     def revoke(self):
         self.is_active = False
