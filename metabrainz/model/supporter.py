@@ -17,6 +17,8 @@ STATE_PENDING = "pending"
 STATE_WAITING = "waiting"
 STATE_REJECTED = "rejected"
 STATE_LIMITED = "limited"
+STATE_CANCELLED = "cancelled"
+STATE_CLOSED = "closed"
 
 # Keep the order in sync with the state_types enum in admin/sql/create_types.sql.
 STATE_NAMES = {
@@ -26,6 +28,8 @@ STATE_NAMES = {
     STATE_WAITING: "Waiting",
     STATE_REJECTED: "Rejected",
     STATE_LIMITED: "Limited",
+    STATE_CANCELLED: "Cancelled",
+    STATE_CLOSED: "Closed",
 }
 
 SUPPORTER_STATES = list(STATE_NAMES)
@@ -36,11 +40,11 @@ class Supporter(db.Model):
 
     Supporters are either commercial or non-commercial (see `is_commercial`). Their
     access to the API is determined by their `state` (active, pre_revenue, pending,
-    waiting, rejected or limited). All non-commercial supporters have active state
-    by default, but commercial supporters need to be approved by one of the admins
-    first. Only supporters in the active state can access the replication API;
-    pre_revenue and limited supporters may use our data but do not get a replication
-    token, pre_revenue ones for free until their income grows.
+    waiting, rejected, limited, closed or cancelled). All non-commercial supporters
+    have active state by default, but commercial supporters need to be approved
+    by one of the admins first. Only supporters in the active state can access
+    the replication API; pre_revenue and limited supporters may use our data but
+    do not get a replication token, pre_revenue ones for free until their income grows.
     """
     __tablename__ = 'supporter'
 
@@ -197,7 +201,7 @@ class Supporter(db.Model):
         Args:
             limit: Maximum number of results to return
             offset: Number of results to skip
-            state: Filter by supporter state (active, pre_revenue, pending, waiting, rejected, limited)
+            state: Filter by supporter state (active, pre_revenue, pending, waiting, rejected, limited, closed, cancelled)
             is_commercial: Filter by commercial status (True/False/None for all)
             featured: Filter by featured status (True/False/None for all)
             good_standing: Filter by good standing status (True/False/None for all)

@@ -32,6 +32,8 @@
             <option value="waiting" {% if request.args.get('state') == 'waiting' %}selected{% endif %}>Waiting</option>
             <option value="rejected" {% if request.args.get('state') == 'rejected' %}selected{% endif %}>Rejected</option>
             <option value="limited" {% if request.args.get('state') == 'limited' %}selected{% endif %}>Limited</option>
+            <option value="cancelled" {% if request.args.get('state') == 'cancelled' %}selected{% endif %}>Cancelled</option>
+            <option value="closed" {% if request.args.get('state') == 'closed' %}selected{% endif %}>Closed</option>
           </select>
         </div>
       </div>
@@ -113,6 +115,10 @@
                 <span class="badge badge-secondary">Limited</span>
               {% elif supporter.state == 'rejected' %}
                 <span class="badge badge-danger">Rejected</span>
+              {% elif supporter.state == 'cancelled' %}
+                <span class="badge badge-danger">Cancelled</span>
+              {% elif supporter.state == 'closed' %}
+                <span class="badge badge-danger">Closed</span>
               {% else %}
                 <span class="badge badge-secondary">Unknown</span>
               {% endif %}

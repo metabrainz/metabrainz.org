@@ -162,6 +162,34 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
         </p>
       </>
     );
+  } else if (state === "closed" || state === "cancelled") {
+    const stateString = state === "closed"
+      ? "Your organization has been marked as no longer active."
+      : "Your agreement with us has been marked as cancelled.";
+    applicationState = (
+      <>
+        <p>
+          <b>
+            {t(
+              stateString
+            )}
+          </b>
+        </p>
+        <p>
+          {t(
+            "You do not have permission to use our data in a public commercial product."
+          )}
+        </p>
+        <p>
+          <Trans
+            defaults={t(
+              "If this is incorrect or you want to start using the data again, please <contactLink>contact us</contactLink>."
+            )}
+            components={{contactLink}}
+          />
+        </p>
+      </>
+    );
   } else if (state === "waiting") {
     applicationState = (
       <>
@@ -205,7 +233,7 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
   let stateClass;
   if (state === "active") {
     stateClass = "text-success";
-  } else if (state === "rejected") {
+  } else if (['rejected', 'cancelled', 'closed'].includes(state)) {
     stateClass = "text-danger";
   } else if (state === "pending") {
     stateClass = "text-primary";
@@ -220,6 +248,10 @@ function SupporterProfile({ user, csrf_token }: ProfileProps) {
     stateLabel = t("Pre-revenue");
   } else if (state === "rejected") {
     stateLabel = t("Rejected");
+  } else if (state === "cancelled") {
+    stateLabel = t("Cancelled");
+  } else if (state === "closed") {
+    stateLabel = t("Closed");
   } else if (state === "pending") {
     stateLabel = t("Pending");
   } else if (state === "waiting") {

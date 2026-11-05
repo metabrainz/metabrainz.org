@@ -15,7 +15,9 @@ type SupporterState =
   | "rejected"
   | "pending"
   | "waiting"
-  | "limited";
+  | "limited"
+  | "cancelled"
+  | "closed";
 
 type Tier = {
   name: string;
