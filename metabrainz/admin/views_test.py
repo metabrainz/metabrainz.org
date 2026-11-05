@@ -11,7 +11,7 @@ from metabrainz.model import db
 from metabrainz.model.moderation_log import ModerationLog
 from metabrainz.model.oauth.client import OAuth2Client, OAuth2ClientPrivilege
 from metabrainz.model.old_username import OldUsername
-from metabrainz.model.supporter import STATE_ACTIVE, STATE_PENDING, STATE_PRE_REVENUE, Supporter
+from metabrainz.model.supporter import STATE_ACTIVE, STATE_CANCELLED, STATE_CLOSED, STATE_PENDING, STATE_PRE_REVENUE, Supporter
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.user import User
@@ -1035,6 +1035,88 @@ class AdminViewsTestCase(FlaskTestCase):
         self.assert200(self.client.get(url_for("supportersview.details", supporter_id=supporter.id)))
         self.assert200(self.client.get(url_for("supportersview.edit", supporter_id=supporter.id)))
         self.assert200(self.client.get(url_for("supporter_admin.index")))
+
+    def test_supporters_lists_can_be_filtered_by_former_states(self):
+        self._login_admin()
+        supporter = self.create_supporter()
+        supporter.update(is_commercial=True, org_name="Former Org")
+
+        for state, name in ((STATE_CANCELLED, "Cancelled"), (STATE_CLOSED, "Closed")):
+            supporter.update(state=state)
+            for endpoint in ("supportersview.index", "commercialsupportersview.index"):
+                with self.subTest(state=state, endpoint=endpoint):
+                    response = self.client.get(url_for(endpoint), query_string={"state": state})
+                    self.assert200(response)
+                    self.assertEqual(self.get_context_variable("supporters"), [supporter])
+                    html = response.get_data(as_text=True)
+                    self.assertIn(f'<span class="badge badge-danger">{name}</span>', html)
+                    self.assertIn(f'<option value="{state}" selected>{name}</option>', html)
+
+                    self.client.get(url_for(endpoint), query_string={"state": STATE_ACTIVE})
+                    self.assertEqual(self.get_context_variable("supporters"), [])
+
+    def test_supporters_lists_ignore_invalid_state_filter(self):
+        self._login_admin()
+        supporter = self.create_supporter()
+        supporter.update(is_commercial=True, org_name="Some Org")
+
+        for endpoint in ("supportersview.index", "commercialsupportersview.index"):
+            with self.subTest(endpoint=endpoint):
+                response = self.client.get(url_for(endpoint), query_string={"state": "bogus"})
+                self.assert200(response)
+                self.assertEqual(self.get_context_variable("supporters"), [supporter])
+
+    def test_former_supporter_pages_render(self):
+        self._login_admin()
+        supporter = self.create_supporter()
+
+        for state, name in ((STATE_CANCELLED, "Cancelled"), (STATE_CLOSED, "Closed")):
+            with self.subTest(state=state):
+                supporter.update(state=state)
+                response = self.client.get(url_for("supportersview.details", supporter_id=supporter.id))
+                self.assert200(response)
+                html = response.get_data(as_text=True)
+                self.assertIn(f'<span class="badge badge-danger">{name}</span>', html)
+                self.assertIn(f"<code>{name}</code>", html)
+                self.assert200(self.client.get(url_for("supportersview.edit", supporter_id=supporter.id)))
+
+    def _edit_supporter_state(self, supporter, state):
+        response = self.client.get(url_for("supportersview.edit", supporter_id=supporter.id))
+        form = self.get_context_variable("form")
+        return self.client.post(
+            url_for("supportersview.edit", supporter_id=supporter.id),
+            data={
+                "username": supporter.user.name,
+                "contact_name": supporter.contact_name,
+                "state": state,
+                "tier": "None",
+                "amount_pledged": "0",
+                "csrf_token": form.csrf_token.current_token,
+            },
+        )
+
+    def test_edit_form_notifies_supporter_of_state_change(self):
+        self._login_admin()
+        supporter = self.create_supporter()
+
+        with patch("metabrainz.model.supporter.send_mail") as send_mail:
+            response = self._edit_supporter_state(supporter, STATE_CLOSED)
+
+        self.assertStatus(response, 302)
+        self.assertEqual(Supporter.get(id=supporter.id).state, STATE_CLOSED)
+        send_mail.assert_called_once()
+        self.assertEqual(send_mail.call_args.kwargs["recipients"], ["regular@example.com"])
+        self.assertIn("CLOSED", send_mail.call_args.kwargs["text"])
+
+    def test_edit_form_does_not_notify_without_state_change(self):
+        self._login_admin()
+        supporter = self.create_supporter()
+
+        with patch("metabrainz.model.supporter.send_mail") as send_mail:
+            response = self._edit_supporter_state(supporter, supporter.state)
+
+        self.assertStatus(response, 302)
+        send_mail.assert_not_called()
 
     def create_oauth_client(self, **overrides):
         client = OAuth2Client(

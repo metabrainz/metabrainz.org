@@ -26,7 +26,7 @@ from metabrainz.model.oauth.client import (
 from metabrainz.model.oauth.scope import OAuth2Scope
 from metabrainz.model.old_username import OldUsername
 from metabrainz.model.domain_blacklist import DomainBlacklist
-from metabrainz.model.supporter import Supporter, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED, STATE_PRE_REVENUE
+from metabrainz.model.supporter import Supporter, STATE_NAMES, STATE_PENDING, STATE_ACTIVE, STATE_REJECTED, STATE_WAITING, STATE_LIMITED, STATE_PRE_REVENUE, SUPPORTER_STATES
 from metabrainz.model.token import Token
 from metabrainz.model.token_log import TokenLog
 from metabrainz.model.access_log import AccessLog
@@ -189,6 +189,12 @@ def _apply_admin_email_change(user, form):
             flash.error("The change was saved but downstream services could not be notified.")
 
 
+def _get_state_param():
+    """Return the supporter state filter, ignoring values that are not valid states."""
+    state = request.args.get('state')
+    return state if state in SUPPORTER_STATES else None
+
+
 class SupportersView(AdminBaseView):
 
     @expose('/')
@@ -199,7 +205,7 @@ class SupportersView(AdminBaseView):
         limit = 20
         offset = (page - 1) * limit
 
-        state = request.args.get('state') or None
+        state = _get_state_param()
         search = request.args.get('search') or None
 
         is_commercial = _get_boolean_param("is_commercial")
@@ -225,7 +231,8 @@ class SupportersView(AdminBaseView):
                            supporters=supporters,
                            page=page,
                            limit=limit,
-                           count=count)
+                           count=count,
+                           state_names=STATE_NAMES)
 
     @expose('/<int:supporter_id>')
     def details(self, supporter_id):
@@ -236,6 +243,7 @@ class SupportersView(AdminBaseView):
             'admin/supporters/details.html',
             supporter=supporter,
             active_tokens=active_tokens,
+            state_names=STATE_NAMES,
             change_email_form=ChangeEmailForm(),
             change_supporter_type_form=ChangeSupporterTypeForm(target_type=target_type),
         )
@@ -333,7 +341,6 @@ class SupportersView(AdminBaseView):
 
             update_data = {
                 'contact_name': form.contact_name.data,
-                'state': form.state.data,
                 'is_commercial': form.is_commercial.data,
                 'org_name': form.org_name.data,
                 'org_desc': form.org_desc.data,
@@ -394,6 +401,9 @@ class SupportersView(AdminBaseView):
                     new={"name": new_name},
                     updated_at=updated_at.isoformat(),
                 )
+
+            # set_state notifies the supporter if the state has changed
+            supporter.set_state(form.state.data)
 
             return redirect(url_for('.details', supporter_id=supporter.id))
 
@@ -529,7 +539,7 @@ class CommercialSupportersView(AdminBaseView):
         limit = 20
         offset = (page - 1) * limit
 
-        state = request.args.get('state') or None
+        state = _get_state_param()
         search = request.args.get('search') or None
 
         featured = _get_boolean_param('featured')
@@ -550,7 +560,7 @@ class CommercialSupportersView(AdminBaseView):
             search=search
         )
         return self.render('admin/commercial-supporters/index.html', supporters=supporters,
-                           page=page, limit=limit, count=count)
+                           page=page, limit=limit, count=count, state_names=STATE_NAMES)
 
 
 class PaymentsView(AdminBaseView):

@@ -1,0 +1,19 @@
+{% macro state_options(state_names, selected) %}
+  {% for value, name in state_names.items() %}
+    <option value="{{ value }}" {% if value == selected %}selected{% endif %}>{{ name }}</option>
+  {% endfor %}
+{% endmacro %}
+
+{% macro state_badge(state, state_names) %}
+  {% set badge_classes = {
+    'active': 'badge-success',
+    'pre_revenue': 'badge-success',
+    'pending': 'badge-warning',
+    'waiting': 'badge-warning',
+    'limited': 'badge-secondary',
+    'rejected': 'badge-danger',
+    'cancelled': 'badge-danger',
+    'closed': 'badge-danger',
+  } %}
+  <span class="badge {{ badge_classes.get(state, 'badge-secondary') }}">{{ state_names.get(state, 'Unknown') }}</span>
+{% endmacro %}
