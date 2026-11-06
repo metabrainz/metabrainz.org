@@ -27,7 +27,8 @@ Invoice amount: {invoice_amount} {currency}
 ================================"""
 MAIL_BODY = """To {supporter_name},
 
-Here is your next invoice! For information on how to pay us, please see https://metabrainz.org/payment
+Here is your next invoice! For information on how to pay us, please see the attached invoice
+or go to https://metabrainz.org/payment
 
 Thanks!
 
