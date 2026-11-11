@@ -112,9 +112,13 @@ Synapse
    * - Scope
      - Grants access to
      - Shown to the user as
+   * - ``synapse:notifications:read``
+     - Read the user's notifications in Synapse, the MetaBrainz notification
+       service, and mark them as read. **Restricted**, see below.
+     - *View your notifications and mark them as read.*
    * - ``synapse:notifications``
-     - Read and manage the user's notifications, notification channels and
-       subscriptions in Synapse, the MetaBrainz notification service.
+     - Everything ``synapse:notifications:read`` grants, and manage the user's
+       notification channels, subscriptions and preferences in Synapse.
        **Restricted**, see below.
      - *View and manage your notifications and how you receive them.*
 
