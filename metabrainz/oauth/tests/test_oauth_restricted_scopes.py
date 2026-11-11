@@ -216,24 +216,25 @@ class RestrictedScopesTestCase(OAuthTestCase):
         self.assert200(response)
         self.assertNotIn("listenbrainz:connect-services", response.json["scopes_supported"])
 
-    def test_synapse_notifications_scope_ships_restricted(self):
-        scope = db.session.query(OAuth2Scope).filter_by(name="synapse:notifications").first()
-        self.assertIsNotNone(scope)
-        self.assertTrue(scope.restricted)
-
+    def test_synapse_scopes_ship_restricted(self):
         application = self.create_oauth_app()
         self.temporary_login(self.user2)
-        query_string = self._authorization_query(application, "code", "synapse:notifications")
-        error = {
-            "name": "invalid_scope",
-            "description": "The client is not allowed to request the following scopes:"
-                           " synapse:notifications",
-        }
-        self.authorize_error_helper(self.user2, query_string, error)
-
         response = self.client.get("/.well-known/openid-configuration")
         self.assert200(response)
-        self.assertNotIn("synapse:notifications", response.json["scopes_supported"])
+
+        for name in ("synapse:notifications:read", "synapse:notifications"):
+            with self.subTest(scope=name):
+                scope = db.session.query(OAuth2Scope).filter_by(name=name).first()
+                self.assertIsNotNone(scope)
+                self.assertTrue(scope.restricted)
+
+                query_string = self._authorization_query(application, "code", name)
+                error = {
+                    "name": "invalid_scope",
+                    "description": "The client is not allowed to request the following scopes: " + name,
+                }
+                self.authorize_error_helper(self.user2, query_string, error)
+                self.assertNotIn(name, response.json["scopes_supported"])
 
     def test_restricted_scopes_are_not_advertised(self):
         response = self.client.get("/.well-known/openid-configuration")

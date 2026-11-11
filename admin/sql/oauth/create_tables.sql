@@ -30,6 +30,7 @@ INSERT INTO oauth.scope (name, description)
 
 INSERT INTO oauth.scope (name, description, restricted)
      VALUES ('listenbrainz:connect-services', 'Connect external services to your ListenBrainz account.', TRUE)
+          , ('synapse:notifications:read', 'View your notifications and mark them as read.', TRUE)
           , ('synapse:notifications', 'View and manage your notifications and how you receive them.', TRUE);
 
 CREATE TABLE oauth.client (
