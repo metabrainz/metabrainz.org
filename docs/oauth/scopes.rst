@@ -102,6 +102,22 @@ CritiqueBrainz
      - Modify profile info and delete profile on CritiqueBrainz.
      - *Modify profile info and delete profile on CritiqueBrainz.*
 
+Synapse
+^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 40 30
+
+   * - Scope
+     - Grants access to
+     - Shown to the user as
+   * - ``synapse:notifications``
+     - Read and manage the user's notifications, notification channels and
+       subscriptions in Synapse, the MetaBrainz notification service.
+       **Restricted**, see below.
+     - *View and manage your notifications and how you receive them.*
+
 Restricted scopes
 -----------------
 
