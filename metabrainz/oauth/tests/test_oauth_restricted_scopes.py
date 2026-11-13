@@ -222,7 +222,7 @@ class RestrictedScopesTestCase(OAuthTestCase):
         response = self.client.get("/.well-known/openid-configuration")
         self.assert200(response)
 
-        for name in ("synapse:notifications:read", "synapse:notifications"):
+        for name in ("synapse:notifications:inbox", "synapse:notifications"):
             with self.subTest(scope=name):
                 scope = db.session.query(OAuth2Scope).filter_by(name=name).first()
                 self.assertIsNotNone(scope)
