@@ -48,11 +48,6 @@ function LoginUser({
               <form method="POST">
                 <AuthCardTextInput
                   label={t("Username")}
-                  labelLink={
-                    <a className="form-label-link small" href="/lost-username">
-                      {t("Forgot your username?")}
-                    </a>
-                  }
                   type="text"
                   name="username"
                   id="username"
@@ -61,15 +56,15 @@ function LoginUser({
 
                 <AuthCardPasswordInput
                   label={t("Password")}
-                  labelLink={
-                    <a className="form-label-link small" href="/lost-password">
-                      {t("Forgot your password?")}
-                    </a>
-                  }
                   name="password"
                   id="password"
                   required
                 />
+
+                <div className="login-help-links small">
+                  <a href="/lost-username">{t("Forgot your username?")}</a>
+                  <a href="/lost-password">{t("Forgot your password?")}</a>
+                </div>
 
                 <small className="checkbox">
                   <AuthCardCheckboxInput
